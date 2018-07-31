@@ -36,7 +36,7 @@
 	if(..())  //Checks for power outages
 		return
 
-	if(user.mind.cm_skills && user.mind.cm_skills.leadership < SKILL_LEAD_EXPERT)
+	if(1 == 2) //i think this disables the check to see if you have the training to use the overwatch console
 		user << "<span class='warning'>You don't have the training to use [src].</span>"
 		return
 

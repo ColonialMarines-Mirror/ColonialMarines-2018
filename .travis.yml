@@ -24,14 +24,9 @@ addons:
       - libgcc1:i386
       - libstdc++6:i386
 
-install:
-  - tools/travis/install_build_tools.sh
-
 before_script:
-  - tools/travis/before_build_tools.sh
   - tools/travis/before_build_byond.sh
 
 script:
-  - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh
+  - tools/travis/check_filedirs.sh ColonialMarinesALPHA.dme
   - tools/travis/build_byond.sh

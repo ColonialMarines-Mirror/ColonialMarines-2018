@@ -15,8 +15,8 @@
 	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
 		var/mob/living/silicon/robot/R = M
 		if (R.getBruteLoss() || R.getFireLoss() )
-			R.adjustBruteLoss(-15)
-			R.adjustFireLoss(-15)
+			R.adjustBruteLoss(-20)
+			R.adjustFireLoss(-20)
 			R.updatehealth()
 			use(1)
 			user.visible_message("<span class='notice'>\The [user] applied some [src] at [R]'s damaged areas.</span>",\

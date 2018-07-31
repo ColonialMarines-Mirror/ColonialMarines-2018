@@ -861,19 +861,13 @@
 		var/reason = ""
 		switch(alert("Are you sure you want to lazyban this person?", , "Yes", "No"))
 			if("Yes")
-				switch(alert("Reason?", , "Disobeying staff", "Arguing with staff", "EORG"))
-					if("Disobeying staff")
+				switch(alert("Reason?", , "erp", "griff"))
+					if("erp")
+						mins = 100000
+						reason = "Expressly erping"
+					if("griff")
 						mins = 4320
-						reason = "Expressly disobeying staff"
-					if("Arguing with staff")
-						mins = 4320
-						reason = "Needlessly talking back and/or arguing with staff members"
-					if("EORG")
-						switch(alert("Which offense?", ,"1st", "2nd", "3rd or more"))
-							if("1st") mins = 180
-							if("2nd") mins = 720
-							if("3rd or more") mins = 1440
-						reason = "EORG"
+						reason = "Needlessly griffing"
 			if("No")
 				return
 		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)

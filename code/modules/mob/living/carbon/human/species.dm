@@ -376,9 +376,11 @@
 
 	reagent_tag = IS_VOX
 
+	/*
 	inherent_verbs = list(
 		/mob/living/carbon/human/proc/leap
 		)
+	*/
 
 	has_organ = list(
 		"heart" =    /datum/internal_organ/heart,
@@ -425,11 +427,13 @@
 
 	reagent_tag = IS_VOX
 
+	/*
 	inherent_verbs = list(
 		/mob/living/carbon/human/proc/leap,
 		/mob/living/carbon/human/proc/gut,
 		/mob/living/carbon/human/proc/commune
 		)
+	*/
 
 /datum/species/machine
 	name = "Machine"

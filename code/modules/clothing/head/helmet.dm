@@ -272,8 +272,8 @@
 		update_icon()
 		desc += "\n<b>This helmet seems to be scratched up and damaged, particularly around the face area...</b>"
 
-//Macros used to speed up making helmets for vox heads
-#define EXCLUDE_VOX species_restricted = list("exclude", "Vox")
+//Macros used to speed up making helmets for nonhumans
+#define EXCLUDE_NONHUMAN species_restricted = list("exclude", "Vox")
 #define INCLUDE_VOX species_restricted = list("Vox", "Vox Armalis"); icon_state_override = "helmet_vox";
 
 /obj/item/clothing/head/helmet/marine/vox
@@ -283,7 +283,7 @@
 
 /obj/item/clothing/head/helmet/marine/tech
 	name = "\improper M10 technician helmet"
-	EXCLUDE_VOX
+	EXCLUDE_NONHUMAN
 
 /obj/item/clothing/head/helmet/marine/tech/vox
 	name = "\improper M10 vox technician helmet"
@@ -297,7 +297,7 @@
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "\improper M10 medic helmet"
-	EXCLUDE_VOX
+	EXCLUDE_NONHUMAN
 
 /obj/item/clothing/head/helmet/marine/medic/vox
 	name = "\improper M10 vox medic helmet"
@@ -314,7 +314,7 @@
 	name = "\improper M11 pattern leader helmet"
 	desc = "A slightly fancier helmet for marine leaders. This one contains a small built-in camera and has cushioning to project your fragile brain."
 	armor = list(melee = 75, bullet = 45, laser = 40, energy = 40, bomb = 35, bio = 10, rad = 10)
-	EXCLUDE_VOX
+	EXCLUDE_NONHUMAN
 
 /obj/item/clothing/head/helmet/marine/leader/vox
 	name = "\improper M10 vox leader helmet"
@@ -332,7 +332,7 @@
 	armor = list(melee = 95, bullet = 105, laser = 75, energy = 65, bomb = 70, bio = 15, rad = 15)
 	unacidable = 1
 	anti_hug = 6
-	EXCLUDE_VOX
+	EXCLUDE_NONHUMAN
 
 /obj/item/clothing/head/helmet/marine/specialist/vox
 	name = "\improper B18 vox helmet"

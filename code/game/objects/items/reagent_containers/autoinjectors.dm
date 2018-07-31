@@ -151,4 +151,4 @@
 	New()
 		..()
 		reagents.add_reagent("inaprovaline", 15)
-update_icon()
+		update_icon()

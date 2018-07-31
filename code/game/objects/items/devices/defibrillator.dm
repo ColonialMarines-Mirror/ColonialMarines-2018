@@ -53,13 +53,6 @@
 
 	if(defib_cooldown > world.time)
 		return
-
-	//Job knowledge requirement
-	if (istype(user))
-		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-			user << "<span class='warning'>You don't seem to know how to use [src]...</span>"
-			return
-
 	defib_cooldown = world.time + 20 //2 seconds cooldown every time the defib is toggled
 	ready = !ready
 	user.visible_message("<span class='notice'>[user] turns [src] [ready? "on and takes the paddles out" : "off and puts the paddles back in"].</span>",
@@ -93,15 +86,7 @@
 	if(user.action_busy) //Currently deffibing
 		return
 
-	var/defib_heal_amt = damage_threshold
-
-	//job knowledge requirement
-	if(user.mind && user.mind.cm_skills)
-		if(user.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-			user << "<span class='warning'>You don't seem to know how to use [src]...</span>"
-			return
-		else
-			defib_heal_amt *= user.mind.cm_skills.medical*0.5 //more healing power when used by a doctor
+	var/defib_heal_amt = damage_threshold * 2 //Stripped CM skill code makes this the amount the defib would heal for a CMO skilled level person
 
 	if(!ishuman(H) || isYautja(H))
 		user << "<span class='warning'>You can't defibrilate [H]. You don't even know where to put the paddles!</span>"

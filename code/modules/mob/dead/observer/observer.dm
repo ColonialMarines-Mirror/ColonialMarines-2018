@@ -354,6 +354,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		following = target
 		loc = target.loc
 		src << "\blue Now following [target]"
+		spawn(0) //Backup
+			while(target && following == target && client)
+				var/turf/T = get_turf(target)
+				if(!T)
+					break
+				// To stop the ghost flickering.
+				if(loc != T)
+					loc = T
+				sleep(15)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

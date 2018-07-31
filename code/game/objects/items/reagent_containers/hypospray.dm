@@ -1,3 +1,4 @@
+
 ////////////////////////////////////////////////////////////////////////////////
 /// HYPOSPRAY
 ////////////////////////////////////////////////////////////////////////////////
@@ -13,8 +14,6 @@
 	possible_transfer_amounts = null
 	flags_atom = FPRINT|OPENCONTAINER
 	flags_equip_slot = SLOT_WAIST
-	var/skilllock = 1
-
 /obj/item/reagent_container/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -25,11 +24,7 @@
 	if (!istype(M))
 		return
 	if (reagents.total_volume)
-		if(skilllock && user.mind && user.mind.cm_skills && user.mind.cm_skills.medical < SKILL_MEDICAL_CHEM)
-			user << "<span class='warning'>You can't figure out to use \the [src], guess it must have some sort of ID lock.</span>"
-			return 0
-
-		if(M != user && M.stat != DEAD && M.a_intent != "help" && !M.is_mob_incapacitated() && ((M.mind && M.mind.cm_skills && M.mind.cm_skills.cqc >= SKILL_CQC_MP) || isYautja(M))) // preds have null skills
+		if(M != user && M.stat != DEAD && M.a_intent != "help" && !M.is_mob_incapacitated() && prob(20)) 
 			user.KnockDown(3)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Used cqc skill to stop [user.name] ([user.ckey]) injecting them.</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Was stopped from injecting [M] ([M.ckey]) by their cqc skill.</font>")
@@ -68,4 +63,3 @@
 /obj/item/reagent_container/hypospray/tricordrazine/New()
 	..()
 	reagents.add_reagent("tricordrazine", 30)
-

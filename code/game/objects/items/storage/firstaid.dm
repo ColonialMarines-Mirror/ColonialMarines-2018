@@ -214,9 +214,6 @@
 			new pill_type_to_fill(src)
 
 /obj/item/storage/pill_bottle/attack_self(mob/living/user)
-	if(skilllock && user.mind && user.mind.cm_skills && user.mind.cm_skills.medical < SKILL_MEDICAL_CHEM)
-		user << "<span class='notice'>It must have some kind of ID lock...</span>"
-		return
 	if(user.get_inactive_hand())
 		user << "<span class='warning'>You need an empty hand to take out a pill.</span>"
 		return

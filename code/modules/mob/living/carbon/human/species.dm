@@ -417,7 +417,7 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN|NO_BLOOD|NO_PAIN
+	flags = NO_SCAN|NO_BLOOD|NO_PAIN|IS_WHITELISTED
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -427,13 +427,11 @@
 
 	reagent_tag = IS_VOX
 
-	/*
 	inherent_verbs = list(
 		/mob/living/carbon/human/proc/leap,
 		/mob/living/carbon/human/proc/gut,
 		/mob/living/carbon/human/proc/commune
 		)
-	*/
 
 /datum/species/machine
 	name = "Machine"

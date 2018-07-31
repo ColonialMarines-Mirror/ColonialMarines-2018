@@ -690,6 +690,12 @@ var/global/list/damage_icon_parts = list()
 
 		if(istype(head,/obj/item/clothing/head/helmet/marine))
 			var/obj/item/clothing/head/helmet/marine/marine_helmet = head
+
+			if(isvox(src) && marine_helmet.has_vox_alternative())
+				standing.icon_state = marine_helmet.vox_icon_state
+			else
+				standing.icon_state = initial(marine_helmet.icon_state)
+
 			if(marine_helmet.flags_marine_helmet & HELMET_SQUAD_OVERLAY)
 				if(assigned_squad)
 					var/datum/squad/S = assigned_squad

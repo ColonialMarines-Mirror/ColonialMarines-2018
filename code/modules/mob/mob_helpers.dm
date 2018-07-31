@@ -13,6 +13,12 @@
 		return 0
 	return 0
 
+/proc/isvox(A)
+	if(ishuman(A))
+		var/mob/living/carbon/human/V = A
+		return istype(V.species, /datum/species/vox)
+	return 0
+
 /proc/ismonkey(A)
 	if(A && istype(A, /mob/living/carbon/monkey))
 		return 1

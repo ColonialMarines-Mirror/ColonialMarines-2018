@@ -171,7 +171,8 @@
 	var/helmet_overlays[]
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS
-	var/flags_marine_helmet = HELMET_SQUAD_OVERLAY|HELMET_GARB_OVERLAY|HELMET_DAMAGE_OVERLAY|HELMET_STORE_GARB
+	var/flags_marine_helmet = HELMET_SQUAD_OVERLAY|HELMET_GARB_OVERLAY|HELMET_DAMAGE_OVERLAY|HELMET_STORE_GARB|HELMET_VOX_ALTERNATIVE
+	var/vox_icon_state = "helmet_vox"
 	var/obj/item/storage/internal/pockets
 	var/list/allowed_helmet_items = list(
 						/obj/item/tool/lighter/random = "helmet_lighter_",
@@ -261,6 +262,10 @@
 		camera.c_tag = "Unknown"
 	..()
 
+//Returns true if there's a vox alternative for the helmet
+//Prevents update_icons from thinking EVERY helmet needs to have a vox alternative
+/obj/item/clothing/head/helmet/marine/proc/has_vox_alternative()
+	return (src.type == /obj/item/clothing/head/helmet/marine) || (src.flags_marine_helmet & HELMET_VOX_ALTERNATIVE)
 
 /obj/item/clothing/head/helmet/marine/proc/add_hugger_damage() //This is called in XenoFacehuggers.dm to first add the overlay and set the var.
 	if(flags_marine_helmet & HELMET_DAMAGE_OVERLAY && !(flags_marine_helmet & HELMET_IS_DAMAGED))

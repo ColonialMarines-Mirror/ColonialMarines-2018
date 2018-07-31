@@ -824,8 +824,8 @@
 
 	if (href_list["scanreport"])
 		if(hasHUD(usr,"medical"))
-			if(!has_species(src, "Human"))
-				to_chat(usr, "<span class='warning'>This only works on humans.</span>")
+			if(!ishuman(src))
+				usr << "<span class='warning'>This only works on humanoids.</span>"
 				return
 			if(get_dist(usr, src) > 7)
 				to_chat(usr, "<span class='warning'>[src] is too far away.</span>")

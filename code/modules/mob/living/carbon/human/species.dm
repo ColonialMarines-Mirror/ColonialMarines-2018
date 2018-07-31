@@ -365,8 +365,8 @@
 
 	eyes = "vox_eyes_s"
 
-	breath_type = "oxygen"//"nitrogen"
-	poison_type = "phoron"//"oxygen"
+	breath_type = "nitrogen"
+	poison_type = "oxygen"
 	insulated = 1
 
 	flags = NO_SCAN
@@ -391,6 +391,16 @@
 		"eyes" =     /datum/internal_organ/eyes,
 		"stack" =    /datum/internal_organ/stack/vox
 		)
+
+/datum/species/vox/handle_post_spawn(var/mob/living/carbon/human/H)
+	..()
+
+	spawn(10)
+		H.equip_to_slot(new /obj/item/clothing/mask/breath(H), WEAR_FACE)
+		H.equip_to_slot(new /obj/item/tank/nitrogen(H), WEAR_R_HAND)
+		H.internal = H.r_hand
+		if(H.hud_used && H.hud_used.internals)
+			H.hud_used.internals.icon_state = "internal1"
 
 /datum/species/vox/armalis
 	name = "Vox Armalis"

@@ -8,10 +8,8 @@
 	max_heat_protection_temperature = ARMOR_max_heat_protection_temperature
 	siemens_coefficient = 0.6
 	w_class = 5
-	allowed = list(/obj/item/weapon/gun)//Guns only.
+	allowed = list(/obj/item/weapon/gun)
 	uniform_restricted = list(/obj/item/clothing/under)
-
-
 
 //armored vest
 
@@ -36,7 +34,7 @@
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 50, bullet = 60, laser = 35, energy = 20, bomb = 25, bio = 0, rad = 0)
 	allowed = list(/obj/item/weapon/gun/,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/storage/fancy/cigarettes,
@@ -139,7 +137,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/handcuffs,/obj/item/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/handcuffs,/obj/item/tank)
 	slowdown = 1
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 100)
 	flags_inventory = BLOCKSHARPOBJ|NOPRESSUREDMAGE
@@ -222,7 +220,7 @@
 	item_state = "centcom"
 	w_class = 4//bulky item
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/baton,/obj/item/handcuffs,/obj/item/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/baton,/obj/item/handcuffs,/obj/item/tank)
 	flags_inventory = NOFLAGS
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS

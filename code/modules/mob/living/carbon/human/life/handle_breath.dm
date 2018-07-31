@@ -185,6 +185,23 @@
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
 
+		if(GAS_TYPE_NITROGEN)
+			var/O2_pp = air_info[3]
+			if(breath_type != "nitrogen" || O2_pp < safe_pressure_min)// Too little NITROGEN
+				if(prob(20))
+					spawn(0) emote("gasp")
+				if (O2_pp == 0)
+					O2_pp = 0.01
+				var/ratio = O2_pp/safe_pressure_min
+				//Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+				adjustOxyLoss(max(HUMAN_MAX_OXYLOSS * (1 - ratio), 0))
+				failed_inhale = 1
+				oxygen_alert = max(oxygen_alert, 1)
+
+			else 									// We're in safe limits
+				adjustOxyLoss(-5)
+				oxygen_alert = 0
+
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			failed_inhale = 1

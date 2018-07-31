@@ -15,7 +15,7 @@
 	fire_sound = 'sound/weapons/gun_flamethrower2.ogg'
 	aim_slowdown = SLOWDOWN_ADS_INCINERATOR
 	current_mag = /obj/item/ammo_magazine/flamer_tank
-	var/max_range = 5
+	var/max_range = 7
 	var/lit = 0 //Turn the flamer on/off
 
 	attachable_allowed = list( //give it some flexibility.
@@ -136,22 +136,22 @@
 	var/fire_color = "red"
 	switch(current_mag.caliber)
 		if("UT-Napthal Fuel") //This isn't actually Napalm actually
-			burnlevel = 24
+			burnlevel = 27
 			burntime = 17
 			max_range = 5
 
-		// Area denial, light damage, large AOE, long burntime
+		// Area denial, light damage, large AOE, long burntime. Its fucking napalm what are you on about. 
 		if("Napalm B")
-			burnlevel = 10
-			burntime = 50
+			burnlevel = 25
+			burntime = 60
 			max_range = 4
 			playsound(user, fire_sound, 50, 1)
 			triangular_flame(target, user, burntime, burnlevel)
 			return
 
-		if("Napalm X") //Probably can end up as a spec fuel or DS flamer fuel. Also this was the original fueltype, the madman i am.
-			burnlevel = 50
-			burntime = 40
+		if("Napalm X") //Probably can end up as a spec fuel or DS flamer fuel. It fucking melts your skin off. 
+			burnlevel = 60
+			burntime = 50
 			max_range = 7
 			fire_color = "blue"
 		if("Fuel") //This is welding fuel and thus pretty weak. Not ment to be exactly used for flamers either.

@@ -105,6 +105,7 @@
 #define HELMET_DAMAGE_OVERLAY	4
 #define HELMET_STORE_GARB		8
 #define HELMET_IS_DAMAGED		16
+#define HELMET_VOX_ALTERNATIVE	32
 //===========================================================================================
 
 //ITEM INVENTORY SLOT BITMASKS

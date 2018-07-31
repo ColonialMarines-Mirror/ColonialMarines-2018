@@ -589,6 +589,7 @@
 					/obj/item/clothing/under/marine = 20,
 					/obj/item/clothing/suit/storage/marine = 20,
 					/obj/item/clothing/head/helmet/marine = 20,
+					/obj/item/clothing/head/helmet/marine/vox = 10,
 					/obj/item/clothing/mask/rebreather/scarf = 10,
 					)
 

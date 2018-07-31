@@ -171,8 +171,7 @@
 	var/helmet_overlays[]
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS
-	var/flags_marine_helmet = HELMET_SQUAD_OVERLAY|HELMET_GARB_OVERLAY|HELMET_DAMAGE_OVERLAY|HELMET_STORE_GARB|HELMET_VOX_ALTERNATIVE
-	var/vox_icon_state = "helmet_vox"
+	var/flags_marine_helmet = HELMET_SQUAD_OVERLAY|HELMET_GARB_OVERLAY|HELMET_DAMAGE_OVERLAY|HELMET_STORE_GARB
 	var/obj/item/storage/internal/pockets
 	var/list/allowed_helmet_items = list(
 						/obj/item/tool/lighter/random = "helmet_lighter_",
@@ -207,6 +206,10 @@
 
 	camera = new /obj/machinery/camera(src)
 	camera.network = list("LEADER")
+
+	//I don't want helmets that extend marine (all of them) to exclude other species.
+	if(type == /obj/item/clothing/head/helmet/marine)
+		species_restricted = list("exclude", "Vox")
 
 /obj/item/clothing/head/helmet/marine/attack_hand(mob/user)
 	if (pockets.handle_attack_hand(user))
@@ -262,11 +265,6 @@
 		camera.c_tag = "Unknown"
 	..()
 
-//Returns true if there's a vox alternative for the helmet
-//Prevents update_icons from thinking EVERY helmet needs to have a vox alternative
-/obj/item/clothing/head/helmet/marine/proc/has_vox_alternative()
-	return (src.type == /obj/item/clothing/head/helmet/marine) || (src.flags_marine_helmet & HELMET_VOX_ALTERNATIVE)
-
 /obj/item/clothing/head/helmet/marine/proc/add_hugger_damage() //This is called in XenoFacehuggers.dm to first add the overlay and set the var.
 	if(flags_marine_helmet & HELMET_DAMAGE_OVERLAY && !(flags_marine_helmet & HELMET_IS_DAMAGED))
 		helmet_overlays["damage"] = image('icons/obj/clothing/cm_hats.dmi',icon_state = "hugger_damage")
@@ -274,7 +272,11 @@
 		update_icon()
 		desc += "\n<b>This helmet seems to be scratched up and damaged, particularly around the face area...</b>"
 
-
+/obj/item/clothing/head/helmet/marine/vox
+	name = "\improper vox M10 pattern marine helmet"
+	desc = "A standard M10 pattern marine helmet shaped for the heads of a vox."
+	icon_state_override = "helmet_vox"
+	species_restricted = list("Vox", "Vox Armalis")
 
 /obj/item/clothing/head/helmet/marine/tech
 	name = "\improper M10 technician helmet"

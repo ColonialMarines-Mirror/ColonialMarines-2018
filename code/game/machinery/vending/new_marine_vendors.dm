@@ -211,10 +211,13 @@
 
 			if(type_p == /obj/item/device/radio/headset/almayer/marine)
 				type_p = headset_type
-
 			else if(type_p == /obj/item/clothing/gloves/marine)
 				type_p = gloves_type
-
+			
+			if(L["species_alternatives"])
+				var/species_type = L["species_alternatives"][H.species.name]
+				if(species_type)
+					type_p = species_type
 
 			var/obj/item/IT = new type_p(loc)
 			IT.add_fingerprint(usr)
@@ -272,7 +275,7 @@
 							list("STANDARD EQUIPMENT (take all)", 0, null, null, null),
 							list("Uniform", 0, /obj/item/clothing/under/marine, MARINE_CAN_BUY_UNIFORM, "white"),
 							list("Boots", 0, /obj/item/clothing/shoes/marine, MARINE_CAN_BUY_SHOES, "white"),
-							list("Helmet", 0, /obj/item/clothing/head/helmet/marine, MARINE_CAN_BUY_HELMET, "white"),
+							list("Helmet", 0, /obj/item/clothing/head/helmet/marine, MARINE_CAN_BUY_HELMET, "white", species_alternatives=list("Vox" = /obj/item/clothing/head/helmet/marine/vox)),
 							list("Armor", 0, /obj/item/clothing/suit/storage/marine, MARINE_CAN_BUY_ARMOR, "white"),
 							list("Gloves", 0, /obj/item/clothing/gloves/marine, MARINE_CAN_BUY_GLOVES, "white"),
 							list("Headset", 0, /obj/item/device/radio/headset/almayer/marine, MARINE_CAN_BUY_EAR, "white"),//maybe an arg for empty line next?

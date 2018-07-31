@@ -683,6 +683,8 @@ var/global/list/damage_icon_parts = list()
 
 		if(head.icon_override)
 			standing = image("icon" = head.icon_override, "icon_state" = "[head.icon_state]", "layer" =-HEAD_LAYER)
+		else if(head.icon_state_override)
+			standing = image("icon" = head.sprite_sheet_id?'icons/mob/head_1.dmi':'icons/mob/head_0.dmi', "icon_state" = head.icon_state_override, layer =-HEAD_LAYER)
 		else if(head.sprite_sheets && head.sprite_sheets[species.name])
 			standing = image("icon" = head.sprite_sheets[species.name], "icon_state" = "[head.icon_state]", "layer" =-HEAD_LAYER)
 		else
@@ -690,11 +692,6 @@ var/global/list/damage_icon_parts = list()
 
 		if(istype(head,/obj/item/clothing/head/helmet/marine))
 			var/obj/item/clothing/head/helmet/marine/marine_helmet = head
-
-			if(isvox(src) && marine_helmet.has_vox_alternative())
-				standing.icon_state = marine_helmet.vox_icon_state
-			else
-				standing.icon_state = initial(marine_helmet.icon_state)
 
 			if(marine_helmet.flags_marine_helmet & HELMET_SQUAD_OVERLAY)
 				if(assigned_squad)

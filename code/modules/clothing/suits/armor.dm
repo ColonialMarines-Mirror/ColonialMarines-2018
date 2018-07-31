@@ -103,8 +103,6 @@
 	flags_armor_protection = UPPER_TORSO
 	armor = list(melee = 20, bullet = 50, laser = 25, energy = 10, bomb = 15, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
-	time_to_unequip = 20
-	time_to_equip = 20
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -117,8 +115,6 @@
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
-	time_to_unequip = 20
-	time_to_equip = 20
 
 /obj/item/clothing/suit/armor/riot/marine
 	name = "\improper M5 riot control armor"
@@ -127,8 +123,6 @@
 	item_state = "swat_suit"
 	slowdown = SLOWDOWN_ARMOR_VERY_HEAVY
 	armor = list(melee = 70, bullet = 70, laser = 35, energy = 20, bomb = 35, bio = 10, rad = 10)
-	time_to_unequip = 20
-	time_to_equip = 20
 
 
 /obj/item/clothing/suit/armor/swat

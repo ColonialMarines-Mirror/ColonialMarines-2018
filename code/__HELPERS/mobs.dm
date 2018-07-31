@@ -58,6 +58,15 @@ proc/random_skin_tone()
 		else				. = rand(-185,34)
 	return min(max( .+rand(-25, 25), -185),34)
 
+proc/get_playable_species(mob/M)
+	var/list/playable_species = list()
+
+	for(var/species in all_species)
+		if(is_alien_whitelisted(M, species))
+			playable_species += species
+
+	return playable_species
+
 proc/skintone2racedescription(tone)
 	switch (tone)
 		if(30 to INFINITY)		return "albino"
@@ -82,7 +91,6 @@ proc/age2agedescription(age)
 		if(60 to 70)		return "aging"
 		if(70 to INFINITY)	return "elderly"
 		else				return "unknown"
-
 
 proc/has_species(var/mob/M, var/species)
 	if(!M || !istype(M,/mob/living/carbon/human)) return 0

@@ -141,6 +141,7 @@
 	S["age"]				>> age
 	S["ethnicity"]			>> ethnicity
 	S["body_type"]			>> body_type
+	S["species"]			>> species
 	S["language"]			>> language
 	S["spawnpoint"]			>> spawnpoint
 
@@ -230,6 +231,7 @@
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	ethnicity		= sanitize_ethnicity(ethnicity)
 	body_type		= sanitize_body_type(body_type)
+	species			= sanitize_species(species)
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -293,6 +295,7 @@
 	S["age"]				<< age
 	S["ethnicity"]			<< ethnicity
 	S["body_type"]			<< body_type
+	S["species"]			<< species
 	S["language"]			<< language
 	S["hair_red"]			<< r_hair
 	S["hair_green"]			<< g_hair

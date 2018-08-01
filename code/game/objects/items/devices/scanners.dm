@@ -94,13 +94,6 @@ REAGENT SCANNER
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
-	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-		user << "<span class='warning'>You start fumbling around with [src]...</span>"
-		var/fduration = 60
-		if(user.mind.cm_skills.medical > 0)
-			fduration = 30
-		if(!do_after(user, fduration, TRUE, 5, BUSY_ICON_FRIENDLY) || !user.Adjacent(M))
-			return
 	if(isXeno(M))
 		user << "<span class='warning'>[src] can't make sense of this creature.</span>"
 		return

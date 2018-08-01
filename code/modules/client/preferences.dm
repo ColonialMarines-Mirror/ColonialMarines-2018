@@ -300,6 +300,7 @@ datum/preferences
 	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'><b>[age]</b></a><br>"
 	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
 	dat += "<b>Ethnicity:</b> <a href='?_src_=prefs;preference=ethnicity;task=input'><b>[ethnicity]</b></a><br>"
+	dat += "<b>Species:</b> <a href='?_src_=prefs;preference=species;task=input'><b>[species]</b></a><br>"
 	dat += "<b>Body Type:</b> <a href='?_src_=prefs;preference=body_type;task=input'><b>[body_type]</b></a><br>"
 	dat += "<b>Poor Eyesight:</b> <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
 	dat += "<br>"
@@ -1138,6 +1139,11 @@ datum/preferences
 
 					if (new_body_type)
 						body_type = new_body_type
+				
+				if("species")
+					var/new_species = input(user, "Choose your species:", "Character Preferences") as null|anything in get_playable_species(user)
+					if(is_alien_whitelisted(user, new_species))
+						species = new_species
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null

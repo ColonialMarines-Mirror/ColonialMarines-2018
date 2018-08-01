@@ -225,6 +225,7 @@
 	brute_mod = 0.55
 	burn_mod = 0.55
 	unarmed_type = /datum/unarmed_attack/punch/strong
+	flags = IS_WHITELISTED
 
 	cold_level_1 = 220
 	cold_level_2 = 180
@@ -244,7 +245,7 @@
 	brute_mod = 0.15
 	burn_mod = 1.50
 	reagent_tag = IS_HORROR
-	flags = HAS_SKIN_COLOR|NO_BREATHE|NO_POISON|HAS_LIPS|NO_PAIN|NO_SCAN|NO_POISON|NO_BLOOD|NO_SLIP|NO_CHEM_METABOLIZATION
+	flags = HAS_SKIN_COLOR|NO_BREATHE|NO_POISON|HAS_LIPS|NO_PAIN|NO_SCAN|NO_POISON|NO_BLOOD|NO_SLIP|NO_CHEM_METABOLIZATION|IS_WHITELISTED
 	unarmed_type = /datum/unarmed_attack/punch/strong
 	secondary_unarmed_type = /datum/unarmed_attack/bite/strong
 	death_message = "doubles over, unleashes a horrible, ear-shattering scream, then falls motionless and still..."
@@ -368,7 +369,7 @@
 	poison_type = "phoron"//"oxygen"
 	insulated = 1
 
-	flags = NO_SCAN
+	flags = NO_SCAN|IS_WHITELISTED
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -414,7 +415,7 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN|NO_BLOOD|NO_PAIN
+	flags = NO_SCAN|NO_BLOOD|NO_PAIN|IS_WHITELISTED
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -542,7 +543,7 @@
 	death_message = "seizes up and falls limp... But is it dead?"
 	language = "Zombie"
 	default_language = "Zombie"
-	flags = NO_PAIN|NO_BREATHE|NO_SCAN|NO_POISON
+	flags = NO_PAIN|NO_BREATHE|NO_SCAN|NO_POISON|IS_WHITELISTED
 	brute_mod = 0.25 //EXTREME BULLET RESISTANCE
 	burn_mod = 2 //IT BURNS
 	speech_chance  = 5

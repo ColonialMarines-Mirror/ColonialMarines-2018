@@ -10,10 +10,9 @@
 	if (!ticker)
 		src << "You can't commit suicide before the game starts!"
 		return
-	for(var/obj/item/alien_embryo/embryo in src)
-		if(embryo)
-			src << "You can't suicide, something is preventing you from mustering the willpower"
-			return
+	for (var/obj/item/alien_embryo/E in contents)
+		src << "You can't suicide, something is preventing you from mustering the willpower"
+		return
 
 	if (suiciding)
 		src << "You're already committing suicide! Be patient!"

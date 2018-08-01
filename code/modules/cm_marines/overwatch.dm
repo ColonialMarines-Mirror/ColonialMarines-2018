@@ -36,11 +36,6 @@
 	if(..())  //Checks for power outages
 		return
 
-	if(1 == 2) //i think this disables the check to see if you have the training to use the overwatch console
-		user << "<span class='warning'>You don't have the training to use [src].</span>"
-		return
-
-
 	user.set_interaction(src)
 	var/dat = "<head><title>Overwatch Console</title></head><body>"
 

@@ -808,8 +808,8 @@
 		if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
 			usr << "<span class='warning'>You're not trained to use this.</span>"
 			return
-		if(!has_species(src, "Human"))
-			usr << "<span class='warning'>Triage holocards only works on humans.</span>"
+		if(!ishuman(src))
+			usr << "<span class='warning'>Triage holocards only works on humanoids.</span>"
 			return
 		var/newcolor = input("Choose a triage holo card to add to the patient:", "Triage holo card", null, null) in list("black", "red", "orange", "none")
 		if(!newcolor) return
@@ -830,8 +830,8 @@
 			if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
 				usr << "<span class='warning'>You're not trained to use this.</span>"
 				return
-			if(!has_species(src, "Human"))
-				usr << "<span class='warning'>This only works on humans.</span>"
+			if(!ishuman(src))
+				usr << "<span class='warning'>This only works on humanoids.</span>"
 				return
 			if(get_dist(usr, src) > 7)
 				usr << "<span class='warning'>[src] is too far away.</span>"

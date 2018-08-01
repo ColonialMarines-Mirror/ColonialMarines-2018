@@ -69,6 +69,7 @@
 	*/
 	var/list/sprite_sheets = null
 	var/icon_override = null  //Used to override hardcoded ON-MOB clothing dmis in human clothing proc (i.e. not the icon_state sprites).
+	var/icon_state_override = null //Same as above but for icon_states
 	var/sprite_sheet_id = 0 //Select which sprite sheet ID to use due to the sprite limit per .dmi. 0 is default, 1 is the new one.
 
 	/* Species-specific sprite sheets for inventory sprites

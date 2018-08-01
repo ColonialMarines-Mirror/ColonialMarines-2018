@@ -207,6 +207,10 @@
 	camera = new /obj/machinery/camera(src)
 	camera.network = list("LEADER")
 
+	//I don't want helmets that extend marine (all of them) to exclude other species.
+	if(type == /obj/item/clothing/head/helmet/marine)
+		species_restricted = list("exclude", "Vox")
+
 /obj/item/clothing/head/helmet/marine/attack_hand(mob/user)
 	if (pockets.handle_attack_hand(user))
 		..()
@@ -261,7 +265,6 @@
 		camera.c_tag = "Unknown"
 	..()
 
-
 /obj/item/clothing/head/helmet/marine/proc/add_hugger_damage() //This is called in XenoFacehuggers.dm to first add the overlay and set the var.
 	if(flags_marine_helmet & HELMET_DAMAGE_OVERLAY && !(flags_marine_helmet & HELMET_IS_DAMAGED))
 		helmet_overlays["damage"] = image('icons/obj/clothing/cm_hats.dmi',icon_state = "hugger_damage")
@@ -269,10 +272,23 @@
 		update_icon()
 		desc += "\n<b>This helmet seems to be scratched up and damaged, particularly around the face area...</b>"
 
+//Macros used to speed up making helmets for nonhumans
+#define EXCLUDE_NONHUMAN species_restricted = list("exclude", "Vox")
+#define INCLUDE_VOX species_restricted = list("Vox", "Vox Armalis"); icon_state_override = "helmet_vox";
 
+/obj/item/clothing/head/helmet/marine/vox
+	name = "\improper M10 pattern vox marine helmet"
+	desc = "A standard M10 pattern marine helmet shaped for the heads of a vox."
+	INCLUDE_VOX
 
 /obj/item/clothing/head/helmet/marine/tech
 	name = "\improper M10 technician helmet"
+	EXCLUDE_NONHUMAN
+
+/obj/item/clothing/head/helmet/marine/tech/vox
+	name = "\improper M10 vox technician helmet"
+	desc = "A standard M10 technician helmet. It is shaped for the head of a vox."
+	INCLUDE_VOX
 
 /obj/item/clothing/head/helmet/marine/tech/New(loc,expected_type 		= type,
 	new_name[] 			= list(MAP_ICE_COLONY = "\improper M10 technician snow helmet"),
@@ -281,6 +297,12 @@
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "\improper M10 medic helmet"
+	EXCLUDE_NONHUMAN
+
+/obj/item/clothing/head/helmet/marine/medic/vox
+	name = "\improper M10 vox medic helmet"
+	desc = "A standard M10 medic helmet. It is shaped for the head of a vox."
+	INCLUDE_VOX
 
 /obj/item/clothing/head/helmet/marine/medic/New(loc,expected_type 		= type,
 	new_name[] 			= list(MAP_ICE_COLONY = "\improper M10 medic snow helmet"),
@@ -292,6 +314,12 @@
 	name = "\improper M11 pattern leader helmet"
 	desc = "A slightly fancier helmet for marine leaders. This one contains a small built-in camera and has cushioning to project your fragile brain."
 	armor = list(melee = 75, bullet = 45, laser = 40, energy = 40, bomb = 35, bio = 10, rad = 10)
+	EXCLUDE_NONHUMAN
+
+/obj/item/clothing/head/helmet/marine/leader/vox
+	name = "\improper M10 vox leader helmet"
+	desc = "A standard M10 leader helmet. It is shaped for the head of a vox."
+	INCLUDE_VOX
 
 /obj/item/clothing/head/helmet/marine/leader/New(loc,expected_type 		= type,
 	new_name[] 			= list(MAP_ICE_COLONY = "\improper M11 pattern leader snow helmet"),
@@ -304,6 +332,12 @@
 	armor = list(melee = 95, bullet = 105, laser = 75, energy = 65, bomb = 70, bio = 15, rad = 15)
 	unacidable = 1
 	anti_hug = 6
+	EXCLUDE_NONHUMAN
+
+/obj/item/clothing/head/helmet/marine/specialist/vox
+	name = "\improper B18 vox helmet"
+	desc = "The B18 Helmet that goes along with the B18 Defensive Armor. It's heavy, reinforced, and protects more of the face. This one is shaped for the head of a vox."
+	INCLUDE_VOX
 
 /obj/item/clothing/head/helmet/marine/specialist/New(loc,expected_type 		= type,
 	new_name[] 			= list(MAP_ICE_COLONY = "\improper B18 snow helmet"),

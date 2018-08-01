@@ -73,7 +73,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	siemens_coefficient = 0.7
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 	allowed = list(/obj/item/weapon/gun/,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/storage/fancy/cigarettes,
@@ -210,7 +210,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 40, bullet = 70, laser = 35, energy = 20, bomb = 25, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/storage/fancy/cigarettes,
@@ -261,7 +261,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 55, bullet = 75, laser = 35, energy = 35, bomb = 35, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
-	allowed = list(/obj/item/tank/emergency_oxygen,
+	allowed = list(/obj/item/tank,
 					/obj/item/device/flashlight,
 					/obj/item/ammo_magazine,
 					/obj/item/explosive/mine,
@@ -432,7 +432,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 55, bullet = 62, laser = 42, energy = 38, bomb = 40, bio = 15, rad = 15)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/weapon/baton,
@@ -521,7 +521,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	siemens_coefficient = 0.7
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine,
 		/obj/item/explosive/grenade,
@@ -670,7 +670,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 30, bomb = 60, bio = 30, rad = 30)
 	uniform_restricted = list(/obj/item/clothing/under/colonist)
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine,
 		/obj/item/explosive/grenade,
@@ -707,7 +707,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 75, bullet = 62, laser = 42, energy = 38, bomb = 40, bio = 15, rad = 15)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/weapon/baton,
@@ -727,7 +727,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 50, bullet = 42, laser = 42, energy = 38, bomb = 25, bio = 15, rad = 15)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/weapon/baton,
@@ -747,7 +747,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 55, bullet = 52, laser = 42, energy = 38, bomb = 30, bio = 15, rad = 15)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun,
-		/obj/item/tank/emergency_oxygen,
+		/obj/item/tank,
 		/obj/item/device/flashlight,
 		/obj/item/ammo_magazine/,
 		/obj/item/weapon/baton,

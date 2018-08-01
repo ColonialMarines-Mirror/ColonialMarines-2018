@@ -845,50 +845,6 @@
 
 		cdel(mob_client)
 
-	else if(href_list["lazyban"])
-		if(!check_rights(R_MOD,0) && !check_rights(R_BAN))  return
-
-		var/mob/M = locate(href_list["lazyban"])
-		if(!ismob(M)) return
-
-		if(M.client && M.client.holder)	return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
-
-		if(!M.ckey)
-			usr << "\red <B>Warning: Mob ckey for [M.name] not found.</b>"
-			return
-
-		var/mins = 0
-		var/reason = ""
-		switch(alert("Are you sure you want to lazyban this person?", , "Yes", "No"))
-			if("Yes")
-				switch(alert("Reason?", , "erp", "griff"))
-					if("erp")
-						mins = 100000
-						reason = "Expressly erping"
-					if("griff")
-						mins = 4320
-						reason = "Needlessly griffing"
-			if("No")
-				return
-		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-		ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]|Duration: [mins] minutes|Reason: [reason]")
-		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-		M << "\red This is a temporary ban, it will be removed in [mins] minutes."
-		M << "\blue This ban was made using a one-click ban system. If you think an error has been made, please visit our forums' ban appeal section."
-		M << "\blue If you make sure to mention that this was a one-click ban, MadSnailDisease will personally double-check this code for you."
-		if(config.banappeals)
-			M << "\blue The ban appeal forums are located here: [config.banappeals]"
-		else
-			M << "\blue Unfortunately, no ban appeals URL has been set."
-		feedback_inc("ban_tmp", 1)
-		DB_ban_record(BANTYPE_TEMP, M, mins, reason)
-		feedback_inc("ban_tmp_mins", mins)
-		log_admin("[usr.client.ckey] has banned [M.ckey]|Duration: [mins] minutes|Reason: [reason]")
-		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-		notes_add(M.ckey, "Banned by [usr.client.ckey]|Duration: [mins] minutes|Reason: [reason]", usr)
-		cdel(M.client)
-
-
 	else if(href_list["mute"])
 		if(!check_rights(R_MOD,0) && !check_rights(R_ADMIN))  return
 

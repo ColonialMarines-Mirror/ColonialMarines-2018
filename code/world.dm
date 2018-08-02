@@ -112,7 +112,6 @@ var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
-	if(findtext(T, "mapdaemon") == 0) diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
 
 	if (T == "ping")
 		var/x = 1
@@ -175,8 +174,8 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return player_notes_show_irc(input["notes"])
 
-
-	//START: MAPDAEMON PROCESSING
+// Commented out because we removed mapdaemon.
+/ *
 	if(addr == "127.0.0.1") //Verify that instructions are coming from the local machine
 
 		var/list/md_args = splittext(T,"&")
@@ -293,7 +292,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			return next_map
 
 
-
+*/
 /world/Reboot(var/reason)
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
@@ -462,7 +461,8 @@ proc/establish_old_db_connection()
 		return setup_old_database_connection()
 	else
 		return 1
-
+//More unused stuff.
+/*
 /proc/MapDaemonHandleRestart()
 	set waitfor = 0
 
@@ -478,5 +478,5 @@ proc/establish_old_db_connection()
 
 	sleep(30)
 	world.Reboot() //Whatever this is the important part
-
+*/
 #undef FAILED_DB_CONNECTION_CUTOFF

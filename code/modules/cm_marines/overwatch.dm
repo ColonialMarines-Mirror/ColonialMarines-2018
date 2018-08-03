@@ -38,8 +38,10 @@
 
 	user.set_interaction(src)
 	var/dat = "<head><title>Overwatch Console</title></head><body>"
-	req_access = list(ACCESS_MARINE_BRIDGE)
-	if(!operator)
+	if(!allowed(user))
+		user << "\red You don't have access."
+		return
+	else if(!operator)
 		dat += "<BR><B>Operator:</b> <A href='?src=\ref[src];operation=change_operator'>----------</A><BR>"
 	else
 		dat += "<BR><B>Operator:</b> <A href='?src=\ref[src];operation=change_operator'>[operator.name]</A><BR>"

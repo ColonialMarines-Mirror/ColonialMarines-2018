@@ -845,7 +845,7 @@
 
 		cdel(mob_client)
 
-	if(href_list["mute"])
+	else if(href_list["mute"])
 		if(!check_rights(R_MOD,0) && !check_rights(R_ADMIN))  return
 
 		var/mob/M = locate(href_list["mute"])

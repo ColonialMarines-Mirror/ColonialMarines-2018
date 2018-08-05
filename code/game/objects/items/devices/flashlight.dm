@@ -256,6 +256,7 @@
 		heat_source = 1500
 		damtype = "fire"
 		processing_objects += src
+		user.throw_mode_on()
 
 /obj/item/device/flashlight/flare/on
 

@@ -605,8 +605,8 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 
 	//Need to the what the hell you're doing
 	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_MT)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [O] on the [src].</span>",
-		"<span class='notice'>You fumble around figuring out what to do with [O] on the [src].</span>")
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [O] on [src].</span>",
+		"<span class='notice'>You fumble around figuring out what to do with [O] on [src].</span>")
 		var/fumbling_time = 50 * ( SKILL_ENGINEER_MT - user.mind.cm_skills.engineer )
 		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
@@ -702,8 +702,8 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/root/cm_armored/proc/install_hardpoint(var/obj/item/hardpoint/HP, var/mob/user)
 
 	if(!user.mind || !(!user.mind.cm_skills || user.mind.cm_skills.engineer >= SKILL_ENGINEER_MT))
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [HP] on the [src].</span>",
-		"<span class='notice'>You fumble around figuring out what to do with [HP] on the [src].</span>")
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [HP] on [src].</span>",
+		"<span class='notice'>You fumble around figuring out what to do with [HP] on [src].</span>")
 		var/fumbling_time = 50 * ( SKILL_ENGINEER_MT - user.mind.cm_skills.engineer )
 		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
@@ -744,8 +744,8 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/root/cm_armored/proc/uninstall_hardpoint(var/obj/item/O, var/mob/user)
 
 	if(!user.mind || !(!user.mind.cm_skills || user.mind.cm_skills.engineer >= SKILL_ENGINEER_MT))
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [O] on the [src].</span>",
-		"<span class='notice'>You fumble around figuring out what to do with [O] on the [src].</span>")
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [O] on [src].</span>",
+		"<span class='notice'>You fumble around figuring out what to do with [O] on [src].</span>")
 		var/fumbling_time = 50 * ( SKILL_ENGINEER_MT - user.mind.cm_skills.engineer )
 		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 

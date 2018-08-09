@@ -245,7 +245,6 @@
 			click_empty(H)
 			return 0
 
-
 /obj/item/weapon/gun/smartgun/load_into_chamber(mob/user)
 //	if(active_attachable) active_attachable = null
 	return ready_in_chamber()

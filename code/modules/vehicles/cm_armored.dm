@@ -605,8 +605,10 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 
 	//Need to the what the hell you're doing
 	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_MT)
-		to_chat(user, "<span class='warning'>You don't know what to do with [O] on [src].</span>")
-		return
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [O] on [src].</span>",
+		"<span class='notice'>You fumble around figuring out what to do with [O] on [src].</span>")
+		var/fumbling_time = 50 * ( SKILL_ENGINEER_MT - user.mind.cm_skills.engineer )
+		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 	if(!damaged_hps.len)
 		to_chat(user, "<span class='notice'>All of the hardpoints are in working order.</span>")
@@ -700,8 +702,10 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/root/cm_armored/proc/install_hardpoint(var/obj/item/hardpoint/HP, var/mob/user)
 
 	if(!user.mind || !(!user.mind.cm_skills || user.mind.cm_skills.engineer >= SKILL_ENGINEER_MT))
-		to_chat(user, "<span class='warning'>You don't know what to do with [HP] on [src].</span>")
-		return
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [HP] on [src].</span>",
+		"<span class='notice'>You fumble around figuring out what to do with [HP] on [src].</span>")
+		var/fumbling_time = 50 * ( SKILL_ENGINEER_MT - user.mind.cm_skills.engineer )
+		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 	if(damaged_hps.Find(HP.slot))
 		to_chat(user, "<span class='warning'>You need to fix the hardpoint first.</span>")
@@ -740,8 +744,10 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/root/cm_armored/proc/uninstall_hardpoint(var/obj/item/O, var/mob/user)
 
 	if(!user.mind || !(!user.mind.cm_skills || user.mind.cm_skills.engineer >= SKILL_ENGINEER_MT))
-		to_chat(user, "<span class='warning'>You don't know what to do with [O] on [src].</span>")
-		return
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out what to do with [O] on [src].</span>",
+		"<span class='notice'>You fumble around figuring out what to do with [O] on [src].</span>")
+		var/fumbling_time = 50 * ( SKILL_ENGINEER_MT - user.mind.cm_skills.engineer )
+		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 	var/slot = input("Select a slot to try and remove") in hardpoints
 

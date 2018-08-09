@@ -60,8 +60,8 @@
 //construction skill
 #define SKILL_CONSTRUCTION_DEFAULT	0
 #define SKILL_CONSTRUCTION_METAL 	1	//metal barricade construction (CT)
-#define SKILL_CONSTRUCTION_PLASTEEL 2	//plasteel barricade,(Req)(combat engi)
-#define SKILL_CONSTRUCTION_ADVANCED	3	//windows and girder construction
+#define SKILL_CONSTRUCTION_PLASTEEL 2	//plasteel barricade,(RO, SL)
+#define SKILL_CONSTRUCTION_ADVANCED	3	//windows and girder construction (combat engi, CO)
 #define SKILL_CONSTRUCTION_MASTER	4	//building machine&computer frames (MT, CE)
 
 

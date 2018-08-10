@@ -222,6 +222,7 @@
 		if(!do_after(M, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 	to_chat(M, "<span class='notice'>You start climbing into [src].</span>")
+
 	for(var/obj/item/I in M.contents)
 		if(I.zoom)
 			I.zoom() // cancel zoom.

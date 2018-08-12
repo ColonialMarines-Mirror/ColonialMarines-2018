@@ -100,15 +100,10 @@
 	//job knowledge requirement
 	if(user.mind && user.mind.cm_skills)
 		if(user.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-<<<<<<< HEAD
-			to_chat(user, "<span class='warning'>You don't seem to know how to use [src]...</span>")
-			return
-=======
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 			var/fumbling_time = SKILL_TASK_AVERAGE - ( SKILL_TASK_VERY_EASY * ( SKILL_MEDICAL_MEDIC - user.mind.cm_skills.medical ) ) // 3 seconds with medical skill, 5 without
 			if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
->>>>>>> Surgery skills made broader. Task-length defines made. Medical HUD, scan reports and medevac stretchers available for everyone. Defib, syringes, autodoc and surgery without hard locks, but with skill-related delays (and sometimes effectiveness variation).
 		else
 			defib_heal_amt *= user.mind.cm_skills.medical*0.5 //more healing power when used by a doctor (this means non-trained don't heal)
 

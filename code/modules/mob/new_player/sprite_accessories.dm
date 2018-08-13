@@ -102,11 +102,11 @@
 /datum/sprite_accessory/hair/longalt
 	name = "Shoulder-length Hair Alt"
 	icon_state = "hair_longfringe"
-/*
+
 /datum/sprite_accessory/hair/longish
 	name = "Longer Hair"
 	icon_state = "hair_b2"
-*/
+
 /datum/sprite_accessory/hair/longer
 	name = "Long Hair"
 	icon_state = "hair_vlong"
@@ -115,11 +115,9 @@
 	name = "Long Hair Alt"
 	icon_state = "hair_vlongfringe"
 
-/*
-longest
+/datum/sprite_accessory/hair/longest
 	name = "Very Long Hair"
 	icon_state = "hair_longest"
-*/
 
 /datum/sprite_accessory/hair/longfringe
 	name = "Long Fringe"
@@ -150,7 +148,6 @@ longest
 	name = "Ponytail 3"
 	icon_state = "hair_ponytail3"
 
-/*
 /datum/sprite_accessory/hair/ponytail4
 	name = "Ponytail 4"
 	icon_state = "hair_ponytail4"
@@ -160,11 +157,11 @@ longest
 	name = "Side Ponytail"
 	icon_state = "hair_stail"
 	gender = FEMALE
-*/
+
 /datum/sprite_accessory/hair/parted
 	name = "Parted"
 	icon_state = "hair_parted"
-/*
+
 /datum/sprite_accessory/hair/pompadour
 	name = "Pompadour"
 	icon_state = "hair_pompadour"
@@ -196,7 +193,7 @@ longest
 	name = "Beehive 2"
 	icon_state = "hair_beehive2"
 	gender = FEMALE
-*/
+
 /datum/sprite_accessory/hair/bobcurl
 	name = "Bobcurl"
 	icon_state = "hair_bobcurl"
@@ -221,7 +218,7 @@ longest
 	name = "Combover"
 	icon_state = "hair_combover"
 	gender = MALE
-/*
+
 /datum/sprite_accessory/hair/father
 	name = "Father"
 	icon_state = "hair_father"
@@ -239,11 +236,11 @@ longest
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
 	icon_state = "hair_dreads"
-*/
+
 /datum/sprite_accessory/hair/curls
 	name = "Curls"
 	icon_state = "hair_curls"
-/*
+
 /datum/sprite_accessory/hair/afro
 	name = "Afro"
 	icon_state = "hair_afro"
@@ -261,7 +258,7 @@ longest
 	name = "Flat Top"
 	icon_state = "hair_sargeant"
 	gender = MALE
-*/
+
 /datum/sprite_accessory/hair/emo
 	name = "Emo"
 	icon_state = "hair_emo"
@@ -275,31 +272,27 @@ longest
 	name = "Overeye Short"
 	icon_state = "hair_shortovereye"
 
-/*
 /datum/sprite_accessory/hair/longovereye
 	name = "Overeye Long"
 	icon_state = "hair_longovereye"
-*/
 
 /datum/sprite_accessory/hair/fag
 	name = "Flow Hair"
 	icon_state = "hair_f"
 
-/*
 /datum/sprite_accessory/hair/feather
 	name = "Feather"
 	icon_state = "hair_feather"
-*/
+
 /datum/sprite_accessory/hair/hitop
 	name = "Hitop"
 	icon_state = "hair_hitop"
 	gender = MALE
 
-/*
 /datum/sprite_accessory/hair/mohawk
 	name = "Mohawk"
 	icon_state = "hair_d"
-*/
+
 /datum/sprite_accessory/hair/jensen
 	name = "Adam Jensen Hair"
 	icon_state = "hair_jensen"
@@ -314,25 +307,25 @@ longest
 	name = "Gentle"
 	icon_state = "hair_gentle"
 	gender = FEMALE
-/*
+
 /datum/sprite_accessory/hair/spiky
 	name = "Spiky"
 	icon_state = "hair_spikey"
-*/
+
 /datum/sprite_accessory/hair/kusangi
 	name = "Kusanagi Hair"
 	icon_state = "hair_kusanagi"
-/*
+
 /datum/sprite_accessory/hair/kagami
 	name = "Pigtails"
 	icon_state = "hair_kagami"
 	gender = FEMALE
-*/
+
 /datum/sprite_accessory/hair/himecut
 	name = "Hime Cut"
 	icon_state = "hair_himecut"
 	gender = FEMALE
-/*
+
 /datum/sprite_accessory/hair/braid
 	name = "Floorlength Braid"
 	icon_state = "hair_braid"
@@ -352,17 +345,17 @@ longest
 	name = "Odango"
 	icon_state = "hair_odango"
 	gender = FEMALE
-*/
+
 /datum/sprite_accessory/hair/ombre
 	name = "Ombre"
 	icon_state = "hair_ombre"
 	gender = FEMALE
-/*
+
 /datum/sprite_accessory/hair/updo
 	name = "Updo"
 	icon_state = "hair_updo"
 	gender = FEMALE
-*/
+
 /datum/sprite_accessory/hair/skinhead
 	name = "Skinhead"
 	icon_state = "hair_skinhead"
@@ -372,7 +365,6 @@ longest
 	icon_state = "hair_e"
 	gender = MALE // turnoff!
 
-/*
 /datum/sprite_accessory/hair/familyman
 	name = "The Family Man"
 	icon_state = "hair_thefamilyman"
@@ -402,7 +394,7 @@ longest
 	name = "Vegeta"
 	icon_state = "hair_toriyama2"
 	gender = MALE
-*/
+
 /datum/sprite_accessory/hair/cia
 	name = "CIA"
 	icon_state = "hair_cia"
@@ -422,12 +414,12 @@ longest
 	name = "Nitori"
 	icon_state = "hair_nitori"
 	gender = FEMALE
-/*
+
 /datum/sprite_accessory/hair/joestar
 	name = "Joestar"
 	icon_state = "hair_joestar"
 	gender = MALE
-*/
+
 /datum/sprite_accessory/hair/flat_top_fade
 	name = "Flat Top Fade"
 	icon_state = "hair_mflattopfade"

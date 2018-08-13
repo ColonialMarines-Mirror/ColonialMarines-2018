@@ -165,7 +165,7 @@
 
 /proc/get_all_jobs_titles()
 	var/all_jobs_titles[] = new
-	var/all_datums[] = typesof(/datum/job) - list(/datum/job, /datum/job/pmc)
+	var/all_datums[] = typesof(/datum/job) - list(/datum/job, /datum/job/pmc) //subtypesof(/datum/job - /datum/job/pmc)
 	var/datum/job/jobdatum
 	for(var/jobtype in all_datums)
 		jobdatum = new jobtype

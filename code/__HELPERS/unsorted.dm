@@ -1638,3 +1638,7 @@ var/list/WALLITEMS = list(
 			error -= deltax
 	return line
 
+//hidden subtypes of
+/proc/subtypesof(typepath)
+	. = typesof(typepath) - typepath
+	.

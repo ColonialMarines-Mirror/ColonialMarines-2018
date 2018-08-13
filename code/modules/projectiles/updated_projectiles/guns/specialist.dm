@@ -224,9 +224,7 @@
 	attachable_allowed = list(
 						/obj/item/attachable/heavy_barrel,
 						/obj/item/attachable/burstfire_assembly,
-						/obj/item/attachable/bipod,
-						/obj/item/attachable/scope,
-						/obj/item/attachable/scope/mini)
+						/obj/item/attachable/bipod)
 
 	flags_gun_features = GUN_INTERNAL_MAG|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
 

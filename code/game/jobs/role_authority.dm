@@ -39,8 +39,9 @@ var/global/datum/authority/branch/role/RoleAuthority
 												/datum/job/logistics,
 												/datum/job/logistics/tech,
 												/datum/job/marine,
-												/datum/job/pmc/elite_responder)
-		var/squads_all[] = typesof(/datum/squad) - /datum/squad
+												/datum/job/pmc/elite_responder) //subtypesof(/datum/job - list(/datum/job, /datum/job/pmc, /datum/job/command, /datum/job/civilian, /datum/job/logistics, /datum/job/logistics/tech, /datum/job/marine, /datum/job/pmc/elite_responder))
+
+		var/squads_all[] = subtypesof(/datum/squad)
 
 		if(!roles_all.len)
 			world << "<span class='debug'>Error setting up jobs, no job datums found.</span>"

@@ -1639,6 +1639,4 @@ var/list/WALLITEMS = list(
 	return line
 
 //hidden subtypes of
-/proc/subtypesof(typepath)
-	. = typesof(typepath) - typepath
-	.
+#define subtypesof(typepath) ( typesof(typepath) - typepath )

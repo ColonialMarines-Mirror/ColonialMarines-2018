@@ -93,11 +93,11 @@
 				src.blinded = 0
 
 		else	//Not stunned.
-			src.stat = 0
+			src.stat = CONSCIOUS
 
 	else //Dead.
 		src.blinded = 1
-		src.stat = 2
+		src.stat = DEAD
 
 	if (src.stuttering) src.stuttering--
 

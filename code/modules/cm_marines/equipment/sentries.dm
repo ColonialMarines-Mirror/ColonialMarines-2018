@@ -295,35 +295,35 @@
 	var/datum/ammo/bullet/turret/ammo = /datum/ammo/bullet/turret
 	var/obj/item/projectile/in_chamber = null
 
-	New()
-		spark_system = new /datum/effect_system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		cell = new (src)
-		camera = new (src)
-		camera.network = list("military")
-		camera.c_tag = "[name] ([rand(0, 1000)])"
-		spawn(2)
-			stat = 0
-			//processing_objects.Add(src)
-		ammo = ammo_list[ammo]
-		start_processing()
+/obj/machinery/marine_turret/New()
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	cell = new (src)
+	camera = new (src)
+	camera.network = list("military")
+	camera.c_tag = "[name] ([rand(0, 1000)])"
+	spawn(2) //>spawn
+		stat = 0
+		//processing_objects.Add(src)
+	ammo = ammo_list[ammo]
+	start_processing()
 
-	Dispose() //Clear these for safety's sake.
-		if(operator)
-			operator.unset_interaction()
-			operator = null
-		if(camera)
-			cdel(camera)
-			camera = null
-		if(cell)
-			cdel(cell)
-			cell = null
-		if(target)
-			target = null
-		SetLuminosity(0)
-		//processing_objects.Remove(src)
-		. = ..()
+/obj/machinery/marine_turret/Dispose() //Clear these for safety's sake.
+	if(operator)
+		operator.unset_interaction()
+		operator = null
+	if(camera)
+		cdel(camera)
+		camera = null
+	if(cell)
+		cdel(cell)
+		cell = null
+	if(target)
+		target = null
+	SetLuminosity(0)
+	//processing_objects.Remove(src)
+	. = ..()
 
 /obj/machinery/marine_turret/attack_hand(mob/user as mob)
 	if(isYautja(user))

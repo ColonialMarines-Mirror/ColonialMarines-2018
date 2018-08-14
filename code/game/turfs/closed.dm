@@ -6,9 +6,6 @@
 	opacity = 1
 
 
-
-
-
 /turf/closed/mineral //mineral deposits
 	name = "Rock"
 	icon = 'icons/turf/walls.dmi'
@@ -23,8 +20,6 @@
 
 			if(istype(turf_to_check,/turf/open))
 				turf_to_check.overlays += image('icons/turf/walls.dmi', "rock_side_[direction]", 2.99) //Really high since it's an overhead turf and it shouldn't collide with anything else
-
-
 
 //Ground map dense jungle
 /turf/closed/gm
@@ -55,23 +50,12 @@
 		else
 			icon_state = "wall2"
 
-
-
-
 //desertdam rock
 /turf/closed/desertdamrockwall
     name = "rockwall"
     icon = 'icons/turf/desertdam_map.dmi'
     icon_state = "cavewall1"
 
-
-
-
-
-
-
-
-//ICE WALLS-----------------------------------//
 //Ice Wall
 /turf/closed/ice
 	name = "dense ice wall"
@@ -96,8 +80,6 @@
 
 /turf/closed/ice/intersection
 	icon_state = "Intersection"
-
-
 
 //Ice Thin Wall
 /turf/closed/ice/thin
@@ -276,3 +258,69 @@
 
 /turf/closed/shuttle/elevator/button/arrivals
 	icon_state = "wall_button_arrivals"
+
+
+/turf/closed/wall/indestructible
+	name = "wall"
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "riveted"
+	opacity = 1
+	hull = 1
+
+/turf/closed/wall/indestructible/ex_act(severity) //Should make it indestructable
+	return
+
+/turf/closed/wall/indestructible/fire_act(exposed_temperature, exposed_volume)
+	return
+
+/turf/closed/wall/indestructible/attackby() //This should fix everything else. No cables, etc
+	return
+
+/turf/closed/wall/indestructible/can_be_dissolved()
+	return 0
+
+
+//indestructable memes
+/turf/closed/wall/indestructible
+	name = "wall"
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "riveted"
+	opacity = 1
+	hull = 1
+
+/turf/closed/wall/indestructible/ex_act(severity) //Should make it indestructable
+	return
+
+/turf/closed/wall/indestructible/fire_act(exposed_temperature, exposed_volume)
+	return
+
+/turf/closed/wall/indestructible/attackby() //This should fix everything else. No cables, etc
+	return
+
+/turf/closed/wall/indestructible/can_be_dissolved()
+	return FALSE
+
+/turf/closed/wall/indestructible/bulkhead
+	name = "bulkhead"
+	desc = "It is a large metal bulkhead."
+	icon_state = "hull"
+
+/turf/closed/wall/indestructible/fakeglass
+	name = "window"
+	icon_state = "fakewindows"
+	opacity = 0
+
+/turf/closed/wall/indestructible/splashscreen
+	name = "Space Station 13"
+	icon = 'icons/misc/title.dmi'
+	icon_state = "title_painting1"
+//	icon_state = "title_holiday"
+	layer = FLY_LAYER
+
+/turf/closed/wall/indestructible/splashscreen/New()
+	..()
+	if(icon_state == "title_painting1") // default
+		icon_state = "title_painting[rand(1,4)]"
+
+/turf/closed/wall/indestructible/other
+	icon_state = "r_wall"

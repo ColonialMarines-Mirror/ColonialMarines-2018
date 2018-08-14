@@ -203,8 +203,8 @@
 			if(M.mind && M.mind.cm_skills && M.mind.cm_skills.pilot < SKILL_PILOT_TRAINED) //everyone can activate the fire mission mode while fumbling, but everyone can reset it back to transport without.
 				M.visible_message("<span class='notice'>[M] fumbles around figuring out how to set the autopilot.</span>",
 				"<span class='notice'>You fumble around figuring out how to set the autopilot.</span>")
-				var/fumbling_time = 100 - 20 * M.mind.cm_skills.pilot
-				if(!do_after(M, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
+				var/fumbling_time = 100 - 20 * usr.mind.cm_skills.pilot
+				if(!do_after(usr, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 			to_chat(M, "<span class='notice'>You upload a flight plan for a low altitude flyby above the planet.</span>")
 			shuttle.transit_gun_mission = !shuttle.transit_gun_mission
 		else

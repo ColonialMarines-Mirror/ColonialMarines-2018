@@ -336,7 +336,7 @@
 	var/max_grenades = 6
 	aim_slowdown = SLOWDOWN_ADS_SPECIALIST
 	attachable_allowed = list(
-				/obj/item/attachable/magnetic_harness)
+						/obj/item/attachable/magnetic_harness)
 
 	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_SPEC

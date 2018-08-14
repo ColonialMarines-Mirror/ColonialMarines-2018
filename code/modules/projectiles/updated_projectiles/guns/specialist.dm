@@ -578,19 +578,6 @@
 	if(current_mag.current_rounds)  to_chat(user, "It's ready to rocket.")
 	else 							to_chat(user, "It's empty.")
 
-/obj/item/weapon/gun/launcher/rocket/able_to_fire(mob/living/user)
-	. = ..()
-	/*if (. && istype(user)) //Let's check all that other stuff first.
-		/*var/turf/current_turf = get_turf(user)
-		if (current_turf.z == 3 || current_turf.z == 4) //Can't fire on the Almayer, bub.
-			click_empty(user)
-			user << "<span class='warning'>You can't fire that here!</span>"
-			return 0*/
-		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.spec_weapons < SKILL_SPEC_TRAINED && user.mind.cm_skills.spec_weapons != SKILL_SPEC_ROCKET)
-			user << "<span class='warning'>You don't seem to know how to use [src]...</span>"
-			return 0*/ //GUN_SPECIALIST does the job
->>>>>>> Substitute mind restrictions for ID checks. MPs and specs can still fire without an ID. Scouts can fire shotguns again.
-
 /obj/item/weapon/gun/launcher/rocket/load_into_chamber(mob/user)
 //	if(active_attachable) active_attachable = null
 	return ready_in_chamber()

@@ -115,7 +115,6 @@
 					/obj/item/weapon/gun/rifle/lmg = 0,
 					/obj/item/weapon/gun/shotgun/pump = 5,
 					/obj/item/weapon/gun/shotgun/combat = 2,
-					/obj/item/weapon/gun/launcher/m81 = 4,
 					/obj/item/explosive/mine = 1,
 					/obj/item/storage/box/nade_box = 4,
 					/obj/item/explosive/grenade/frag = 2,

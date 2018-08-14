@@ -149,6 +149,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 //mob/var/stat things
 #define CONSCIOUS	0
+//#define SOFT_CRIT	1
 #define UNCONSCIOUS	1
 #define DEAD		2
 

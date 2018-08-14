@@ -50,28 +50,17 @@
 				if(FLOOR_WET_ICE) // Ice
 					if(!C.slip("icy floor", 4, 3, FALSE, TRUE, 1))
 						C.inertia_dir = 0
-
-
 	..()
-
-
-
 
 /turf/open/examine(mob/user)
 	..()
 	ceiling_desc(user)
 
-
-
-
-/turf/open/river
+/turf/open/river	//who the fuck made this even a thing
 	can_bloody = FALSE
 
 
-
-
 // Mars grounds
-
 /turf/open/mars
 	name = "sand"
 	icon = 'icons/turf/bigred.dmi'
@@ -289,10 +278,7 @@
 	..()
 	overlays += image("icon"='icons/turf/ground_map.dmi',"icon_state"="water","layer"=MOB_LAYER+0.1)
 
-
-
-
-//ELEVATOR SHAFT-----------------------------------//
+//ELEVATOR SHAFT
 /turf/open/gm/empty
 	name = "empty space"
 	icon = 'icons/turf/floors.dmi'
@@ -302,10 +288,7 @@
 /turf/open/gm/empty/is_weedable()
 	return FALSE
 
-
-
 //Nostromo turfs
-
 /turf/open/nostromowater
 	name = "ocean"
 	desc = "Its a long way down to the ocean from here."
@@ -313,18 +296,14 @@
 	icon_state = "seadeep"
 	can_bloody = FALSE
 
-
-
-
 //Desert Map
-
 /turf/open/desertdam //Basic groundmap turf parent
 	name = "desert dirt"
 	icon = 'icons/turf/desertdam_map.dmi'
 	icon_state = "desert1"
 	is_groundmap_turf = TRUE
 
-/turf/open/desert/dam/ex_act(severity) //Should make it indestructable
+/turf/open/desertdam/ex_act(severity) //Should make it indestructable
 	return
 
 /turf/open/desertdam/fire_act(exposed_temperature, exposed_volume)
@@ -338,13 +317,10 @@
 	name = "desert"
 	icon_state = "desert1"
 
-
 //asphalt road
 /turf/open/desertdam/asphault
 	name = "asphault"
 	icon_state = "sunbleached_asphalt1"
-
-
 
 //CAVE
 /turf/open/desertdam/cave
@@ -374,23 +350,26 @@
 /turf/open/desertdam/river
 	icon_state = "shallow_water_clean"
 
-
 //shallow water
 /turf/open/desertdam/river/clean/shallow
 	name = "river"
 	icon_state = "shallow_water_clean"
+
 //shallow water transition to deep
 /turf/open/desertdam/river/clean/shallow_edge
 	name = "river"
 	icon_state = "shallow_to_deep_clean_water1"
+
 //deep water
 /turf/open/desertdam/river/clean/deep_water_clean
 	name = "river"
 	icon_state = "deep_water_clean"
+
 //shallow water coast
 /turf/open/desertdam/river/clean/shallow_water_desert_coast
 	name = "river"
 	icon_state = "shallow_water_desert_coast1"
+
 //desert floor waterway
 /turf/open/desertdam/river/clean/shallow_water_desert_waterway
 	name = "river"
@@ -407,7 +386,6 @@
 //TOXIC
 /turf/open/desertdam/river/toxic
 	icon_state = "shallow_water_toxic"
-
 //shallow water
 /turf/open/desertdam/river/toxic/shallow_water_toxic
 	name = "river"
@@ -437,29 +415,17 @@
 	name = "river"
 	icon_state = "shallow_water_cave_waterway_toxic1"
 
-
-
-
-
-
-
 //Ice Colony grounds
-
 //Ice Floor
 /turf/open/ice
 	name = "ice floor"
 	icon = 'icons/turf/ice.dmi'
 	icon_state = "ice_floor"
 
-
 //Randomize ice floor sprite
 /turf/open/ice/New()
 	..()
 	dir = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
-
-
-
-
 
 // Colony tiles
 /turf/open/asphalt
@@ -468,11 +434,7 @@
 	icon_state = "asphalt"
 
 
-
-
 // Jungle turfs (Whiksey Outpost)
-
-
 /turf/open/jungle
 	allow_construction = FALSE
 	var/bushes_spawn = 1

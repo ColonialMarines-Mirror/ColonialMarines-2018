@@ -92,8 +92,6 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 //////////////////////////
 
 /proc/makeDatumRefLists()
-	var/list/paths
-
 	// Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
 
@@ -101,12 +99,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 
 	// Ethnicity - Initialise all /datum/ethnicity into a list indexed by ethnicity name
-	for (var/path in subtypesof(/datum/ethnicity))
+	for(var/path in subtypesof(/datum/ethnicity))
 		var/datum/ethnicity/E = new path()
 		ethnicities_list[E.name] = E
 
 	// Body Type - Initialise all /datum/body_type into a list indexed by body_type name
-	for (var/path in subtypesof(/datum/body_type))
+	for(var/path in subtypesof(/datum/body_type))
 		var/datum/body_type/B = new path()
 		body_types_list[B.name] = B
 
@@ -131,13 +129,13 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 		var/datum/language/L = new T
 		all_languages[L.name] = L
 
-	for (var/language_name in all_languages)
+	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
 		language_keys[":[lowertext(L.key)]"] = L
 		language_keys[".[lowertext(L.key)]"] = L
 		language_keys["#[lowertext(L.key)]"] = L
-
 	var/rkey = 0
+
 	// Species
 	for(var/T in subtypesof(/datum/species))
 		rkey++
@@ -149,13 +147,10 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 			whitelisted_species += S.name
 
 	// Our ammo stuff is initialized here.
-	var/blacklist[] = list(/datum/ammo,/datum/ammo/energy, /datum/ammo/energy/yautja, /datum/ammo/energy/yautja/rifle, /datum/ammo/bullet/shotgun, /datum/ammo/xeno)
-	paths = typesof(/datum/ammo) - blacklist
-	//for(var/T in subtypesof(/datum/ammo - blacklist)) <--does this work?
-	for(var/T in paths)
+	var/blacklist = list(/datum/ammo/energy, /datum/ammo/energy/yautja, /datum/ammo/energy/yautja/rifle, /datum/ammo/bullet/shotgun, /datum/ammo/xeno)
+	for(var/t in subtypesof(/datum/ammo) - blacklist)
 		var/datum/ammo/A = new T
 		ammo_list[A.type] = A
-
 	return 1
 
 /* // Uncomment to debug chemical reaction list.

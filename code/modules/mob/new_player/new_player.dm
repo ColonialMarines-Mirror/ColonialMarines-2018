@@ -13,7 +13,7 @@
 	stat = 2
 	canmove = 0
 
-	anchored = FALSE	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 
 	New()
 		mob_list += src

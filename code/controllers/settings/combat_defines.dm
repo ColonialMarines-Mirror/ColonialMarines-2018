@@ -168,7 +168,6 @@
 		if("base_hit_damage_mult") base_hit_damage_mult = value
 		if("min_hit_damage_mult") min_hit_damage_mult = value
 		if("low_hit_damage_mult") low_hit_damage_mult = value
-		if("lmed_damage_falloff_mult") low_hit_damage_mult = value
 		if("med_hit_damage_mult") med_hit_damage_mult = value
 		if("hmed_hit_damage_mult") hmed_hit_damage_mult = value
 		if("high_hit_damage_mult") high_hit_damage_mult = value
@@ -179,6 +178,7 @@
 		if("base_damage_falloff_mult") base_damage_falloff_mult = value
 		if("min_damage_falloff_mult") min_damage_falloff_mult = value
 		if("low_damage_falloff_mult") low_damage_falloff_mult = value
+		if("lmed_damage_falloff_mult") low_hit_damage_mult = value
 		if("med_damage_falloff_mult") med_damage_falloff_mult = value
 		if("hmed_damage_falloff_mult") hmed_damage_falloff_mult = value
 		if("high_damage_falloff_mult") high_damage_falloff_mult = value

@@ -21,7 +21,7 @@
 		if(!canmove || is_mob_restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 			return
-		if(mind.assignedrole != "Squad Marine") // We don't care about squad marine suicides
+		if(mind && src.mind.assignedrole != "Squad Marine") // We don't care about squad marine suicides
 			message_admins("[ckey] as suicided as a [src.mind.assignedrole]", 1)
 		suiciding = 1
 		var/obj/item/held_item = get_active_hand()

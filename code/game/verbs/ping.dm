@@ -1,4 +1,3 @@
-/*
 /client/verb/update_ping(time as num)
 	set instant = TRUE
 	set name = ".update_ping"
@@ -21,4 +20,3 @@
 	set name = "Ping"
 	set category = "OOC"
 	winset(src, null, "command=.display_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")
-*/

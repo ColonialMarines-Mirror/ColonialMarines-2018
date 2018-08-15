@@ -218,7 +218,6 @@ datum/preferences
 
 
 	var/HTML = "<body>"
-	HTML += "<b>Select your Skills</b><br>"
 	HTML += "Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>"
 	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;skill_select=preconfigured;\">Use preconfigured skillset</a><br>"
 	HTML += "<table>"
@@ -242,7 +241,10 @@ datum/preferences
 	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;skill_select=cancel;\">\[Done\]</a>"
 
 	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=show_skills;size=600x800")
+	var/datum/browser/popup = new(src, "show_skills", "<b>Select your Skills</b><br>", 600, 800)
+	popup.set_window_options("can_close=1")
+	popup.set_content(HTML)
+	popup.open(0)
 	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
@@ -425,7 +427,10 @@ datum/preferences
 	dat += "<br>"
 
 	dat += "</div></body></html>"
-	user << browse(dat, "window=preferences;size=670x830")
+	var/datum/browser/popup = new(src, "preferences", "<b>Preferences</b><hr>", 670, 830)
+	popup.set_window_options("can_close=1")
+	popup.set_content(dat)
+	popup.open(0)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 22, list/splitJobs = list(), width = 450, height = 650)
 	if(!RoleAuthority) return
@@ -1554,9 +1559,11 @@ datum/preferences
 			dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 
 	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
 	dat += "</center></tt>"
-	user << browse(dat, "window=saves;size=300x390")
+	var/datum/browser/popup = new(src, "saves", "<b>Select a character slot to load</b><hr>", 300, 390)
+	popup.set_window_options("can_close=1")
+	popup.set_content(dat)
+	popup.open(0)
 
 /datum/preferences/proc/close_load_dialog(mob/user)
 	user << browse(null, "window=saves")

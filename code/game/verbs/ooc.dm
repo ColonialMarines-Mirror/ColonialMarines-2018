@@ -121,17 +121,16 @@ var/global/normal_ooc_colour = "#002eb8" //why is this a var, this should be a d
 	normal_ooc_colour = newColor
 
 /client/verb/round_info()
-	set name = "round_info"
+	set name = "Round info"
 	set desc = "Information about the current round"
 	set category = "OOC"
 	usr << "The current map is [map_tag]"
 
-/client/verb/set_charachter()
-	set name = "set_charachter" //this is mantadory. for $reasons
-	set desc = "Information about the current round"
-	set category = "OOC"
-
-	src.prefs.ShowChoices(usr)
+/client/verb/setup_character()
+	set name = "Game Preferences"
+	set category = "Preferences"
+	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
+	prefs.ShowChoices(usr)
 
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"
@@ -178,7 +177,7 @@ var/global/normal_ooc_colour = "#002eb8" //why is this a var, this should be a d
 
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
-
+/*
 /client/verb/motd()
 	set name = "MOTD"
 	set category = "OOC"
@@ -189,3 +188,4 @@ var/global/normal_ooc_colour = "#002eb8" //why is this a var, this should be a d
 		src << "<div class=\"motd\">[motd]</div>"
 	else
 		src << "<span class='notice'>The Message of the Day has not been set.</span>"
+*/

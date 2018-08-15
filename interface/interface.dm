@@ -68,6 +68,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \te = equip
 \tr = throw
 \tt = say
+\to = ooc
 \tx = swap-hand
 \tz = activate held object (or y)
 \t1 = help-intent

@@ -438,7 +438,8 @@
 /mob/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window
-	src.stop_sound_channel(CHANNEL_LOBBYMUSIC)	// Stops lobby music.
+	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+//	src.stop_sound_channel(CHANNEL_LOBBYMUSIC)	// Stops lobby music.
 
 /mob/new_player/proc/has_admin_rights()
 	return client.holder.rights & R_ADMIN
@@ -508,8 +509,8 @@
 
 	observer.client.change_view(world.view)
 //	observer.update_icon()
-//	observer << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) //shitty stopsound thing
-	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	observer << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) //shitty stopsound thing
+//	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 //	QDEL_NULL(mind)
 	cdel(src)
 	return TRUE

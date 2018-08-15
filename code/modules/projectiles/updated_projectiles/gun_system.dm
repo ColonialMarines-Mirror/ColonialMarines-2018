@@ -712,6 +712,7 @@ and you're good to go.
 					projectile_to_fire.damage *= (config.base_hit_damage_mult+config.low_hit_damage_mult) //Multiply the damage for point blank.
 					user.visible_message("<span class='danger'>[user] fires [src] point blank at [M]!</span>")
 					apply_bullet_effects(projectile_to_fire, user) //We add any damage effects that we need.
+					projectile_to_fire.dir = get_dir(user, M)
 					simulate_recoil(1, user)
 
 					if(projectile_to_fire.ammo.bonus_projectiles_amount)
@@ -719,6 +720,7 @@ and you're good to go.
 						for(var/i = 1 to projectile_to_fire.ammo.bonus_projectiles_amount)
 							BP = rnew(/obj/item/projectile, M.loc)
 							BP.generate_bullet(ammo_list[projectile_to_fire.ammo.bonus_projectiles_type])
+							BP.dir = get_dir(user, M)
 							BP.ammo.on_hit_mob(M, BP)
 							M.bullet_act(BP)
 							cdel(BP)
@@ -729,7 +731,6 @@ and you're good to go.
 
 					if(!delete_bullet(projectile_to_fire)) cdel(projectile_to_fire)
 					reload_into_chamber(user) //Reload into the chamber if the gun supports it.
-					return TRUE
 
 	return ..() //Pistolwhippin'
 
@@ -856,7 +857,7 @@ and you're good to go.
 
 	projectile_to_fire.accuracy = round(projectile_to_fire.accuracy * gun_accuracy_mult) // Apply gun accuracy multiplier to projectile accuracy
 	projectile_to_fire.damage = round(projectile_to_fire.damage * damage_mult) 		// Apply gun damage multiplier to projectile damage
-	projectile_to_fire.damage_falloff	= round(projectile_to_fire.damage * damage_falloff_mult) 	// Apply gun damage bleed multiplier to projectile damage bleed
+	projectile_to_fire.damage_falloff	= round(projectile_to_fire.damage_falloff * damage_falloff_mult) 	// Apply gun damage bleed multiplier to projectile damage bleed
 
 	projectile_to_fire.shot_from = src
 	projectile_to_fire.scatter += gun_scatter					//Add gun scatter value to projectile's scatter value

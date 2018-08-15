@@ -107,7 +107,7 @@
 	proc/fire_bonus_projectiles(obj/item/projectile/original_P)
 		set waitfor = 0
 		var/i
-		for(i = 0 to bonus_projectiles_amount) //Want to run this for the number of bonus projectiles.
+		for(i = 1 to bonus_projectiles_amount) //Want to run this for the number of bonus projectiles.
 			var/scatter_x = rand(-1,1)
 			var/scatter_y = rand(-1,1)
 			var/turf/new_target = locate(original_P.target_turf.x + round(scatter_x),original_P.target_turf.y + round(scatter_y),original_P.target_turf.z)

@@ -52,6 +52,15 @@
 	var/buckshot_damage_falloff = 5
 	var/extra_damage_falloff = 10
 
+	var/base_damage_falloff_mult = 1
+	var/min_damage_falloff_mult = 0.1
+	var/low_damage_falloff_mult = 0.25
+	var/lmed_damage_falloff_mult = 0.4
+	var/med_damage_falloff_mult = 0.5
+	var/hmed_damage_falloff_mult = 0.75
+	var/high_damage_falloff_mult = 1.5
+	var/max_damage_falloff_mult = 2
+
 	var/min_burst_value = 1
 	var/low_burst_value = 2
 	var/med_burst_value = 3
@@ -159,6 +168,7 @@
 		if("base_hit_damage_mult") base_hit_damage_mult = value
 		if("min_hit_damage_mult") min_hit_damage_mult = value
 		if("low_hit_damage_mult") low_hit_damage_mult = value
+		if("lmed_damage_falloff_mult") low_hit_damage_mult = value
 		if("med_hit_damage_mult") med_hit_damage_mult = value
 		if("hmed_hit_damage_mult") hmed_hit_damage_mult = value
 		if("high_hit_damage_mult") high_hit_damage_mult = value
@@ -166,6 +176,13 @@
 		if("reg_damage_falloff") reg_damage_falloff = value
 		if("buckshot_damage_falloff") buckshot_damage_falloff = value
 		if("extra_damage_falloff") extra_damage_falloff = value
+		if("base_damage_falloff_mult") base_damage_falloff_mult = value
+		if("min_damage_falloff_mult") min_damage_falloff_mult = value
+		if("low_damage_falloff_mult") low_damage_falloff_mult = value
+		if("med_damage_falloff_mult") med_damage_falloff_mult = value
+		if("hmed_damage_falloff_mult") hmed_damage_falloff_mult = value
+		if("high_damage_falloff_mult") high_damage_falloff_mult = value
+		if("max_damage_falloff_mult") max_damage_falloff_mult = value
 		if("min_burst_value") min_burst_value = value
 		if("low_burst_value") low_burst_value = value
 		if("med_burst_value") med_burst_value = value

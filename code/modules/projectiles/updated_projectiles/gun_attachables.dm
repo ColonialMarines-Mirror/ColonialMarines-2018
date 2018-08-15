@@ -252,7 +252,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 		recoil_unwielded_mod = -config.min_recoil_value
 		scatter_unwielded_mod = -config.min_scatter_value
-		damage_falloff_mod = 0.4
+		damage_falloff_mod = config.lmed_damage_falloff_mult
 
 /obj/item/attachable/bayonet
 	name = "bayonet"
@@ -334,7 +334,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 		damage_mod = -config.low_hit_damage_mult
 		recoil_mod = -config.med_recoil_value
 
-		damage_falloff_mod = 0.4
+		damage_falloff_mod = config.lmed_damage_falloff_mult
 		accuracy_unwielded_mod = config.med_hit_accuracy_mult
 		recoil_unwielded_mod = -config.low_recoil_value
 

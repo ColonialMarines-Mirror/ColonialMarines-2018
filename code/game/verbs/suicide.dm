@@ -11,19 +11,6 @@
 		src << "You can't commit suicide before the game starts!"
 		return
 
-
-	var/permitted = 0
-	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
-	for(var/T in allowed)
-		if(mind.special_role == T)
-			permitted = 1
-			break
-
-	if(!permitted)
-		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human.", 1)
-		src << "No. Adminhelp if there is a legitimate reason."
-		return
-
 	if (suiciding)
 		src << "You're already committing suicide! Be patient!"
 		return
@@ -34,6 +21,8 @@
 		if(!canmove || is_mob_restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 			return
+		if(src.mind.assignedrole != "Squad Marine") // We don't care about squad marine suicides
+			message_admins("[ckey] as suicided as a [src.mind.assignedrole]", 1)
 		suiciding = 1
 		var/obj/item/held_item = get_active_hand()
 		if(held_item)

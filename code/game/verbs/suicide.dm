@@ -24,7 +24,7 @@
 		if(src.mind && src.mind.assigned_role != "Squad Marine") // We don't care about squad marine suicides or people suiciding without minds.
 			message_admins("[ckey] as suicided as a [src.mind.assigned_role]", 1)
 		
-		if(do_after(user, 40, TRUE, 5, BUSY_ICON_HOSTILE))
+		if(do_after(src, 40, TRUE, 5, BUSY_ICON_HOSTILE))
 			suiciding = 1
 			var/obj/item/held_item = get_active_hand()
 			if(held_item)

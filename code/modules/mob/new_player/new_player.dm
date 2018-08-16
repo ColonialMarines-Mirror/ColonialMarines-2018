@@ -40,12 +40,12 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
+		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join the USCM!</A></p>"
 		output += "<p><a href='byond://?src=\ref[src];late_join_xeno=1'>Join the Hive!</A></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 		if(ticker.mode.flags_round_type & MODE_PREDATOR)
-			if(ticker.mode.check_predator_late_join(src,0)) output += "<p><a href='byond://?src=\ref[src];lobby_choice=late_join_pred'>Join the Hunt!</A></p>"
+			if(ticker.mode.check_predator_late_join(src,0)) output += "<br><p><a href='byond://?src=\ref[src];lobby_choice=late_join_pred'>Join the Hunt!</A></p>"
 
 	if(!IsGuestKey(src.key))
 		establish_db_connection()

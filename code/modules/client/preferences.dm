@@ -241,11 +241,10 @@ datum/preferences
 	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;skill_select=cancel;\">\[Done\]</a>"
 
 	user << browse(null, "window=preferences")
-	var/datum/browser/popup = new(src, "show_skills", "<b>Select your Skills</b><br>", 600, 800)
+	var/datum/browser/popup = new(user, "show_skills", "<b>Select your Skills</b><hr /><br>", 600, 800)
 	popup.set_window_options("can_close=1")
 	popup.set_content(HTML)
 	popup.open(0)
-	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
@@ -259,7 +258,6 @@ datum/preferences
 	dat += "#right			{position: absolute; top: 201px; left: 300px;}"
 	dat += "</style></head>"
 	dat += "<body>"
-
 	if(path)
 		dat += "<center>"
 		dat += "Slot <b>[slot_name]</b> - "
@@ -269,7 +267,6 @@ datum/preferences
 		dat += "</center>"
 	else
 		dat += "Please create an account to save your preferences."
-
 	//dat += "</center><hr><table><tr><td width='340px' height='350px'>"
 	if(RoleAuthority.roles_whitelist[user.ckey] & WHITELIST_PREDATOR)
 		dat += "<br><b>Yautja name:</b> <a href='?_src_=prefs;preference=pred_name;task=input'>[predator_name]</a><br>"
@@ -281,7 +278,6 @@ datum/preferences
 	if(RoleAuthority.roles_whitelist[user.ckey] & WHITELIST_SYNTHETIC)
 		dat += "<br><b>Synthetic name:</b> <a href='?_src_=prefs;preference=synth_name;task=input'>[synthetic_name]</a><br>"
 		dat += "<br><b>Synthetic Type:</b> <a href='?_src_=prefs;preference=synth_type;task=input'>[synthetic_type]</a><br>"
-
 	dat += "<div id='wrapper'>"
 	dat += "<big><big><b>Name:</b> "
 	dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
@@ -289,13 +285,8 @@ datum/preferences
 	dat += "<br>"
 	dat += "Always Pick Random Name: <a href='?_src_=prefs;preference=name'>[be_random_name ? "Yes" : "No"]</a>"
 	dat += "<br><br>"
-
-
 	//dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
-
 	//dat += "</td><td width='300px' height='300px'>"
-
-
 	dat += "<big><b><u>Physical Information:</u></b>"
 	dat += " (<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)</big>"
 	dat += "<br>"
@@ -308,25 +299,19 @@ datum/preferences
 
 	dat += "<big><b><u>Occupation Choices:</u></b></big>"
 	dat += "<br>"
-
 	var/n = 0
-
 	for (var/i in special_roles)
 		var/ban_check_name
 
 		switch (special_roles[i])
 			if ("Xenomorph")
 				ban_check_name = "Alien"
-
 			if ("Xenomorph Queen")
 				ban_check_name = "Queen"
-
 			if ("Survivor")
 				ban_check_name = "Survivor"
-
 			if ("Predator")
 				ban_check_name = "Predator"
-
 			if ("WO Commander")
 				ban_check_name = "WO Commander"
 
@@ -417,17 +402,13 @@ datum/preferences
 	dat += "<b>Ghost Sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles_chat & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
 	dat += "<b>Ghost Radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles_chat & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
 	dat += "<b>Ghost Hivemind:</b> <a href='?_src_=prefs;preference=ghost_hivemind'><b>[(toggles_chat & CHAT_GHOSTHIVEMIND) ? "Show Hivemind" : "Hide Hivemind"]</b></a><br>"
-
 	if(config.allow_Metadata)
 		dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
-
 	dat += "<br>"
 	dat += "</div>"
-
 	dat += "<br>"
-
 	dat += "</div></body></html>"
-	var/datum/browser/popup = new(src, "preferences", "<b>Preferences</b><hr>", 670, 830)
+	var/datum/browser/popup = new(user, "preferences", "<b><center>Preferences</b></center>", 670, 830)
 	popup.set_window_options("can_close=1")
 	popup.set_content(dat)
 	popup.open(0)
@@ -452,8 +433,7 @@ datum/preferences
 	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 	var/datum/job/lastJob
 	var/datum/job/job
-	var/i
-	for(i in RoleAuthority.roles_for_mode)
+	for(var/i in RoleAuthority.roles_for_mode)
 		job = RoleAuthority.roles_for_mode[i]
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
@@ -461,73 +441,100 @@ datum/preferences
 				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
 				//the last job's selection color. Creating a rather nice effect.
 				for(var/j = 0, j < (limit - index), j += 1)
-					HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
+					HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 			HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
 			index = 0
 
 		HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 		lastJob = job
-		if(jobban_isbanned(user, job.title))
-			HTML += "<del>[job.disp_title]</del></td><td><b> \[BANNED]</b></td></tr>"
+		if(jobban_isbanned(user, job.title)) //jobban
+			HTML += "<font color=red>[job.disp_title]</td></font><td><b>BANNED</b></td></tr>"
 			continue
-		else if(!job.player_old_enough(user.client))
+		if(!job.player_old_enough(user.client)) //old age-system job thing
 			var/available_in_days = job.available_in_days(user.client)
-			HTML += "<del>[job.disp_title]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
+			HTML += "<font color=red>[job.disp_title]</td></font><font color=red><td> \[IN [(available_in_days)] DAYS]</td></tr></font>"
 			continue
-//		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-//			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
+//		if((job_civilian_low & ASSISTANT) && (rank != "Assistant")) //>marinebanned
+//			HTML += "<font color=orange>[job.disp_title]</font></td><td></td></tr>"
 //			continue
-		else if(job.flags_startup_parameters & ROLE_WHITELISTED && !(RoleAuthority.roles_whitelist[user.ckey] & job.flags_whitelist))
-			HTML += "<del>[job.disp_title]</del></td><td> \[WHITELISTED]</td></tr>"
+		if(job.flags_startup_parameters & ROLE_WHITELISTED && !(RoleAuthority.roles_whitelist[user.ckey] & job.flags_whitelist))
+			HTML += "<font color=orange>[job.disp_title]</td><td> WHITELISTED</td></tr></font>"
 			continue
-		else HTML += (job.title in ROLES_COMMAND) || job.title == "AI" ? "<b>[job.disp_title]</b>" : "[job.disp_title]"
+		if(job.title in ROLES_COMMAND || job.title == "AI") //<b> command
+			HTML += "<b><span class='dark'>[job.disp_title]</b><span class='dark'>"
+		else
+			HTML += "<span class='dark'>[job.disp_title]<span class='dark'>"
 
 		HTML += "</td><td width='40%'>"
 
-		HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[job.title]'>"
-
-//		if(rank == "Assistant")//Assistant is special
-//			if(job_civilian_low & ASSISTANT)
-//				HTML += " <font color=green>\[Yes]</font>"
-//			else
-//				HTML += " <font color=red>\[No]</font>"
-//			HTML += "</a></td></tr>"
-//			continue
+		var/prefLevelLabel = "ERROR"
+		var/prefLevelColor = "pink"
+		var/prefUpperLevel = -1 // level to assign on left click
+		var/prefLowerLevel = -1 // level to assign on right click
 
 		if(GetJobDepartment(job, 1) & job.flag)
-			HTML += " <font color=blue>\[High]</font>"
+			prefLevelLabel = "High"
+			prefLevelColor = "slateblue"
+			prefUpperLevel = 4
+			prefLowerLevel = 2
 		else if(GetJobDepartment(job, 2) & job.flag)
-			HTML += " <font color=green>\[Medium]</font>"
+			prefLevelLabel = "Medium"
+			prefLevelColor = "green"
+			prefUpperLevel = 1
+			prefLowerLevel = 3
 		else if(GetJobDepartment(job, 3) & job.flag)
-			HTML += " <font color=orange>\[Low]</font>"
+			prefLevelLabel = "Low"
+			prefLevelColor = "orange"
+			prefUpperLevel = 2
+			prefLowerLevel = 4
 		else
-			HTML += " <font color=red>\[NEVER]</font>"
+			prefLevelLabel = "NEVER"
+			prefLevelColor = "red"
+			prefUpperLevel = 3
+			prefLowerLevel = 1
+
+		HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[job.title]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[job.flag]\");'>"
+		//HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[job.title]'>"
+	/*
+		if(rank == "Assistant")//Assistant is special
+			if(job_civilian_low & ASSISTANT)
+				HTML += " <font color=green>\[Yes]</font>"
+			else
+				HTML += " <font color=red>\[No]</font>"
+			HTML += "</a></td></tr>"
+			continue
+	*/
 		if(job.alt_titles)
 			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+
+		HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 		HTML += "</a></td></tr>"
 
+	for(var/j = 1, j < (limit - index), j += 1) // Finish the column so it is even
+		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 	HTML += "</td'></tr></table>"
 	HTML += "</center></table>"
 
 	if(user.client.prefs) //Just makin sure
 		if(user.client.prefs.alternate_option == GET_RANDOM_JOB)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>Get random job if preferences unavailable</a></center><br>"
 		if(user.client.prefs.alternate_option == BE_ASSISTANT)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be marine if preference unavailable</font></a></u></center><br>"
+			HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>Be marine if preference unavailable</a></center><br>"
 		if(user.client.prefs.alternate_option == RETURN_TO_LOBBY)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>Return to lobby if preference unavailable</a></center><br>"
 
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
+	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 	HTML += "</tt>"
 
 	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
-	return
+	var/datum/browser/popup = new(user, "mob_occupation", "<b><center>Occupation Preferences</b></center>", width, height)
+	popup.set_window_options("can_close=0")
+	popup.set_content(HTML)
+	popup.open(0)
 
 /datum/preferences/proc/SetDisabilities(mob/user)
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Choose disabilities</b><br>"
 
 	HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
 	HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
@@ -540,14 +547,14 @@ datum/preferences
 	HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=disabil;size=350x300")
-	return
+	var/datum/browser/popup = new(user, "disabil", "<b><center>Choose disabilities</b></center>", 350, 300)
+	popup.set_window_options("can_close=1")
+	popup.set_content(HTML)
+	popup.open(0)
 
 /datum/preferences/proc/SetRecords(mob/user)
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Set Character Records</b><br>"
 
 	HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
 
@@ -565,16 +572,16 @@ datum/preferences
 	HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=records;size=350x300")
-	return
+	var/datum/browser/popup = new(user, "records", "<b><center>Set Character Records</b></center>", 350, 300)
+	popup.set_window_options("can_close=1")
+	popup.set_content(HTML)
+	popup.open(0)
 
 /datum/preferences/proc/SetAntagoptions(mob/user)
 	if(uplinklocation == "" || !uplinklocation)
 		uplinklocation = "PDA"
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Antagonist Options</b> <hr />"
 	HTML += "<br>"
 	HTML +="Uplink Type : <b><a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype;active=1'>[uplinklocation]</a></b>"
 	HTML +="<br>"
@@ -590,14 +597,14 @@ datum/preferences
 
 	HTML += "</center></tt>"
 
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=antagoptions")
-	return
+	var/datum/browser/popup = new(user, "antagoptions", "<b><center>Antagonist Options</b></center>", 430, 300)
+	popup.set_window_options("can_close=1")
+	popup.set_content(HTML)
+	popup.open(0)
 
 /datum/preferences/proc/SetFlavorText(mob/user)
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Set Flavor Text</b> <hr />"
 	HTML += "<br></center>"
 	HTML += "<a href='byond://?src=\ref[user];preference=flavor_text;task=general'>General:</a> "
 	HTML += TextPreview(flavor_texts["general"])
@@ -631,9 +638,10 @@ datum/preferences
 	HTML += "<hr />"
 	HTML +="<a href='?src=\ref[user];preference=flavor_text;task=done'>\[Done\]</a>"
 	HTML += "<tt>"
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=flavor_text;size=430x300")
-	return
+	var/datum/browser/popup = new(user, "flavor_text", "<b><center>Set Flavor Text</b></center>", 430, 300)
+	popup.set_window_options("can_close=1")
+	popup.set_content(HTML)
+	popup.open(0)
 
 /datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
 	if(player_alt_titles) . = player_alt_titles[job.title]
@@ -1560,7 +1568,7 @@ datum/preferences
 
 	dat += "<hr>"
 	dat += "</center></tt>"
-	var/datum/browser/popup = new(src, "saves", "<b>Select a character slot to load</b><hr>", 300, 390)
+	var/datum/browser/popup = new(user, "saves", "<b>Select a character slot to load</b><hr>", 300, 390)
 	popup.set_window_options("can_close=1")
 	popup.set_content(dat)
 	popup.open(0)

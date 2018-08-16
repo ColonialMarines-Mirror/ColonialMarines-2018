@@ -68,6 +68,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \te = equip
 \tr = throw
 \tt = say
+\tm = me
 \to = ooc
 \tx = swap-hand
 \tz = activate held object (or y)
@@ -102,10 +103,12 @@ Any-Mode: (hotkey doesn't need to be on)
 
 	var/admin = {"<font color='purple'>
 Admin:
+\tF3 = asay
 \tF5 = Aghost (admin-ghost)
 \tF6 = player-panel
-\tF7 = admin-pm
+\tF7 = Buildmode
 \tF8 = Invisimin
+\tCtrl+F8 = Stealthmin
 </font>"}
 
 	src << hotkey_mode

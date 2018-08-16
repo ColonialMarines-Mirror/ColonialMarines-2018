@@ -97,28 +97,22 @@ macro "macro"
 		command = ".options"
 	elem 
 		name = "F2"
-		command = "ooc"
-	elem 
-		name = "F2+REP"
 		command = ".screenshot auto"
 	elem 
-		name = "SHIFT+F2+REP"
+		name = "SHIFT+F2"
 		command = ".screenshot"
 	elem 
 		name = "F3"
-		command = ".say"
-	elem 
-		name = "F4"
-		command = ".me"
+		command = "asay"
 	elem 
 		name = "F5"
-		command = "asay"
+		command = "aghost"
 	elem 
 		name = "F6"
 		command = "Player-Panel"
 	elem 
 		name = "F7"
-		command = "Admin-PM"
+		command = "Toggle Build Mode Self"
 	elem 
 		name = "F8"
 		command = "Invisimin"
@@ -224,6 +218,9 @@ macro "hotkeymode"
 		name = "CTRL+H"
 		command = "holster"
 	elem 
+		name = "M"
+		command = "me"
+	elem 
 		name = "O"
 		command = "ooc"
 	elem 
@@ -278,26 +275,26 @@ macro "hotkeymode"
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 	elem 
-		name = "F2+REP"
+		name = "F2"
 		command = ".screenshot auto"
 	elem 
-		name = "SHIFT+F2+REP"
+		name = "SHIFT+F2"
 		command = ".screenshot"
 	elem 
 		name = "F3"
-		command = ".say"
+		command = "asay"
 	elem 
 		name = "F4"
-		command = ".me"
+		command = ".say"
 	elem 
 		name = "F5"
-		command = "asay"
+		command = "aghost"
 	elem 
 		name = "F6"
 		command = "Player-Panel"
 	elem 
 		name = "F7"
-		command = "Admin-PM"
+		command = "Toggle Build Mode Self"
 	elem 
 		name = "F8"
 		command = "Invisimin"
@@ -366,41 +363,41 @@ menu "menu"
 		name = "&48x48 (1.5x)"
 		command = ".winset \"mapwindow.map.icon-size=48\""
 		category = "&Icons"
+		can-check = true
+		group = "size"
 		saved-params = "is-checked"
 	elem "icon32"
 		name = "&32x32 (1x)"
 		command = ".winset \"mapwindow.map.icon-size=32\""
 		category = "&Icons"
 		can-check = true
+		group = "size"
 		saved-params = "is-checked"
 	elem 
-		name = ""
-		command = ""
-		category = "&Icons"
-		saved-params = "is-checked"
-	elem "textmode"
-		name = "&Text"
-		command = ".winset \"menu.textmode.is-checked=true?mapwindow.map.text-mode=true:mapwindow.map.text-mode=false\""
-		category = "&Icons"
-		saved-params = "is-checked"
-	elem 
-		name = "Scaling Mode"
+		name = "Scaling"
 		command = ""
 		saved-params = "is-checked"
 	elem "nearestneighbor"
 		name = "Nearest Neighbor"
 		command = ".winset \"mapwindow.map.zoom-mode=distort\""
-		category = "Scaling Mode"
+		category = "Scaling"
+		can-check = true
+		group = "smode"
 		saved-params = "is-checked"
 	elem "pointsampling"
 		name = "Point Sampling"
 		command = ".winset \"mapwindow.map.zoom-mode=normal\""
-		category = "Scaling Mode"
+		category = "Scaling"
+		is-checked = true
+		can-check = true
+		group = "smode"
 		saved-params = "is-checked"
 	elem "bilinear"
 		name = "Bilinear"
 		command = ".winset \"mapwindow.map.zoom-mode=blur\""
-		category = "Scaling Mode"
+		category = "Scaling"
+		can-check = true
+		group = "smode"
 		saved-params = "is-checked"
 	elem 
 		name = "&Help"
@@ -421,7 +418,7 @@ menu "menu"
 window "Telecomms IDE"
 	elem "Telecomms IDE"
 		type = MAIN
-		pos = 536,43
+		pos = 281,0
 		size = 569x582
 		anchor1 = none
 		anchor2 = none
@@ -602,7 +599,6 @@ window "chemdispenser_reagents"
 		size = 340x448
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		titlebar = false
 		statusbar = false
@@ -617,7 +613,6 @@ window "chemdispenser_reagents"
 		size = 64x32
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Dispense"
@@ -631,7 +626,6 @@ window "chemdispenser_reagents"
 		anchor1 = none
 		anchor2 = none
 		font-size = 15
-		background-color = none
 		is-visible = false
 		saved-params = ""
 		text = "Chloral Hydrate"
@@ -645,6 +639,7 @@ window "mainwindow"
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "DMCAstation13 - USS Almayer"
@@ -658,6 +653,7 @@ window "mainwindow"
 		size = 80x20
 		anchor1 = 100,100
 		anchor2 = none
+		background-color = none
 		saved-params = ""
 		text = "Hotkey Toggle"
 		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
@@ -668,6 +664,7 @@ window "mainwindow"
 		size = 634x416
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "splitter"
 		right = "rpane"
 		is-vert = true
@@ -687,6 +684,7 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
+		background-color = none
 		saved-params = "is-checked"
 		text = "Chat"
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
@@ -699,6 +697,7 @@ window "mapwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		titlebar = false
 		statusbar = false
@@ -714,7 +713,6 @@ window "mapwindow"
 		anchor2 = 100,100
 		font-family = "Arial Rounded MT Bold,Arial Black,Arial,sans-serif"
 		font-size = 7
-		text-color = none
 		is-default = true
 		saved-params = "icon-size"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
@@ -727,6 +725,7 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		titlebar = false
 		statusbar = false

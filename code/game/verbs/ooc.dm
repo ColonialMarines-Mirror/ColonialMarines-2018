@@ -128,64 +128,29 @@ var/global/normal_ooc_colour = "#002eb8" //why is this a var, this should be a d
 
 /client/verb/setup_character()
 	set name = "Game Preferences"
-	set category = "Preferences"
+	set category = "OOC"
 	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
 	prefs.ShowChoices(usr)
 
-/client/verb/fit_viewport()
-	set name = "Fit Viewport"
-	set category = "OOC"
-	set desc = "Fit the width of the map window to match the viewport"
-
-	// Fetch aspect ratio
-	var/view_size = getviewsize(view)
-	var/aspect_ratio = view_size[1] / view_size[2]
-
-	// Calculate desired pixel width using window size and aspect ratio
-	var/sizes = params2list(winget(src, "mainwindow.split;mapwindow", "size"))
-	var/map_size = splittext(sizes["mapwindow.size"], "x")
-	var/height = text2num(map_size[2])
-	var/desired_width = round(height * aspect_ratio)
-	if (text2num(map_size[1]) == desired_width)
-		// Nothing to do
-		return
-
-	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
-	var/split_width = text2num(split_size[1])
-
-	// Calculate and apply a best estimate
-	// +4 pixels are for the width of the splitter's handle
-	var/pct = 100 * (desired_width + 4) / split_width
-	winset(src, "mainwindow.split", "splitter=[pct]")
-
-	// Apply an ever-lowering offset until we finish or fail
-	var/delta
-	for(var/safety in 1 to 10)
-		var/after_size = winget(src, "mapwindow", "size")
-		map_size = splittext(after_size, "x")
-		var/got_width = text2num(map_size[1])
-
-		if (got_width == desired_width)
-			// success
-			return
-		else if (isnull(delta))
-			// calculate a probable delta value based on the difference
-			delta = 100 * (desired_width - got_width) / split_width
-		else if ((delta > 0 && got_width > desired_width) || (delta < 0 && got_width < desired_width))
-			// if we overshot, halve the delta and reverse direction
-			delta = -delta/2
-
-		pct += delta
-		winset(src, "mainwindow.split", "splitter=[pct]")
-/*
 /client/verb/motd()
 	set name = "MOTD"
 	set category = "OOC"
 	set desc ="Check the Message of the Day"
+	var/join_motd = file2text("config/motd.txt")
 
-	var/motd = global.config.motd
-	if(motd)
-		src << "<div class=\"motd\">[motd]</div>"
+	if( join_motd )
+		src << "<span class='motd'>[join_motd]</span>"
 	else
-		src << "<span class='notice'>The Message of the Day has not been set.</span>"
-*/
+		src << "\red The motd is not set in the server configuration."
+	return
+
+/client/verb/Stop_Sound_Pls()
+	set name = "Stop Sounds"
+	set category = "Preferences"
+	set desc = "Stop Current Sounds"
+	playsound(src, null, 0)
+	var/sound/break_sound = new() //stop adminbus
+	break_sound.priority = 250
+	break_sound.channel = 777
+	src << break_sound
+	feedback_add_details("admin_verb","Stop Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

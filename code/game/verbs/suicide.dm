@@ -21,7 +21,7 @@
 
 	if(!permitted)
 		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human.", 1)
-		src << "No. Adminhelp if there is a legitimate reason."
+		src << "Suicide is easy! Just attack yourself with a gun, while targeting your mouth. Please don't do so flippantly!"
 		return
 
 	if (suiciding)

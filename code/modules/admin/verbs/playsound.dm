@@ -18,7 +18,7 @@
 	var/res = alert(usr, "Show the title of this song to the players?",, "Yes","No", "Cancel")
 	switch(res)
 		if("Yes")
-			world << "<b><font color='#6699CC' size='4'>An admin played: [S]</b></font>"
+			world << "<b><font color='#002eb9' size='2'>An admin played: [S]</b></font>"
 		if("Cancel")
 			return
 
@@ -67,5 +67,5 @@
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
 	for(var/mob/M in player_list)
 		if(M.client)
-			playsound(M, null)
+			M << sound(null)
 	feedback_add_details("admin_verb","Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

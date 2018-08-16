@@ -146,11 +146,6 @@ var/global/normal_ooc_colour = "#002eb8" //why is this a var, this should be a d
 
 /client/verb/Stop_Sound_Pls()
 	set name = "Stop Sounds"
-	set category = "Preferences"
+	set category = "OOC"
 	set desc = "Stop Current Sounds"
-	playsound(src, null, 0)
-	var/sound/break_sound = new() //stop adminbus
-	break_sound.priority = 250
-	break_sound.channel = 777
-	src << break_sound
-	feedback_add_details("admin_verb","Stop Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	src << sound(null)

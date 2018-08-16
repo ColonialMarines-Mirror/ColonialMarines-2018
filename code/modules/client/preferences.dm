@@ -228,17 +228,17 @@ datum/preferences
 			var/level = skills[S.ID]
 			HTML += "<tr style='text-align:left;'>"
 			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=info;skillinfo=\ref[S]'>[S.name]</a></th>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"
+			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>Untrained</font></a></th>"
 			// secondary skills don't have an amateur level
 			if(S.secondary)
 				HTML += "<th></th>"
 			else
-				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></a></th>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>Amateur</font></a></th>"
+			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>Trained</font></a></th>"
+			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skill_select=set;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>Professional</font></a></th>"
 			HTML += "</tr>"
 	HTML += "</table>"
-	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;skill_select=cancel;\">\[Done\]</a>"
+	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;skill_select=cancel;\">Done</a>"
 
 	user << browse(null, "window=preferences")
 	var/datum/browser/popup = new(user, "show_skills", "<b>Select your Skills</b><hr /><br>", 600, 800)
@@ -278,7 +278,7 @@ datum/preferences
 	if(RoleAuthority.roles_whitelist[user.ckey] & WHITELIST_SYNTHETIC)
 		dat += "<br><b>Synthetic name:</b> <a href='?_src_=prefs;preference=synth_name;task=input'>[synthetic_name]</a><br>"
 		dat += "<br><b>Synthetic Type:</b> <a href='?_src_=prefs;preference=synth_type;task=input'>[synthetic_type]</a><br>"
-	dat += "<div id='wrapper'>"
+	dat += "<div id='wrapper'><br>"
 	dat += "<big><big><b>Name:</b> "
 	dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
 	dat += " (<a href='?_src_=prefs;preference=name;task=random'>&reg</A>)</big></big>"
@@ -316,7 +316,7 @@ datum/preferences
 				ban_check_name = "WO Commander"
 
 		if(jobban_isbanned(user, ban_check_name))
-			dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+			dat += "<b>Be [i]:</b> <font color=red><b> BANNED</b></font><br>"
 		else
 			dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 		n++
@@ -345,16 +345,16 @@ datum/preferences
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
 				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] points) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
+				dat += "[gear[i]] ([G.cost] points) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>Remove</a><br>"
 
 		dat += "<b>Used:</b> [total_cost] points."
 	else
 		dat += "None"
 
 	if(total_cost < MAX_GEAR_COST)
-		dat += " <a href='byond://?src=\ref[user];preference=loadout;task=input'>\[add\]</a>"
+		dat += " <a href='byond://?src=\ref[user];preference=loadout;task=input'>Add</a>"
 		if(gear && gear.len)
-			dat += " <a href='byond://?src=\ref[user];preference=loadout;task=clear'>\[clear\]</a>"
+			dat += " <a href='byond://?src=\ref[user];preference=loadout;task=clear'>Clear</a>"
 
 	dat += "<br><br>"
 
@@ -424,8 +424,8 @@ datum/preferences
 
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br><br>"
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
+	HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br>"
+	HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 	var/index = -1
@@ -448,72 +448,50 @@ datum/preferences
 		HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 		lastJob = job
 		if(jobban_isbanned(user, job.title)) //jobban
-			HTML += "<font color=red>[job.disp_title]</td></font><td><b>BANNED</b></td></tr>"
+			HTML += "<font color=red>[job.disp_title]</td></font><td><b>  BANNED</b></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client)) //old age-system job thing
 			var/available_in_days = job.available_in_days(user.client)
-			HTML += "<font color=red>[job.disp_title]</td></font><font color=red><td> \[IN [(available_in_days)] DAYS]</td></tr></font>"
+			HTML += "<font color=red>[job.disp_title]</td></font><font color=red><td> IN [(available_in_days)] DAYS</td></tr></font>"
 			continue
 //		if((job_civilian_low & ASSISTANT) && (rank != "Assistant")) //>marinebanned
 //			HTML += "<font color=orange>[job.disp_title]</font></td><td></td></tr>"
 //			continue
 		if(job.flags_startup_parameters & ROLE_WHITELISTED && !(RoleAuthority.roles_whitelist[user.ckey] & job.flags_whitelist))
-			HTML += "<font color=orange>[job.disp_title]</td><td> WHITELISTED</td></tr></font>"
+			HTML += "<font color=orange>[job.disp_title]</td><td>  WHITELISTED</td></tr></font>"
 			continue
 		if(job.title in ROLES_COMMAND || job.title == "AI") //<b> command
-			HTML += "<b><span class='dark'>[job.disp_title]</b><span class='dark'>"
+			HTML += "<b><span class='dark'>[job.disp_title]</b></span>"
 		else
-			HTML += "<span class='dark'>[job.disp_title]<span class='dark'>"
+			HTML += "<span class='dark'>[job.disp_title]</span>"
 
 		HTML += "</td><td width='40%'>"
-
-		var/prefLevelLabel = "ERROR"
-		var/prefLevelColor = "pink"
-		var/prefUpperLevel = -1 // level to assign on left click
-		var/prefLowerLevel = -1 // level to assign on right click
-
-		if(GetJobDepartment(job, 1) & job.flag)
-			prefLevelLabel = "High"
-			prefLevelColor = "slateblue"
-			prefUpperLevel = 4
-			prefLowerLevel = 2
-		else if(GetJobDepartment(job, 2) & job.flag)
-			prefLevelLabel = "Medium"
-			prefLevelColor = "green"
-			prefUpperLevel = 1
-			prefLowerLevel = 3
-		else if(GetJobDepartment(job, 3) & job.flag)
-			prefLevelLabel = "Low"
-			prefLevelColor = "orange"
-			prefUpperLevel = 2
-			prefLowerLevel = 4
-		else
-			prefLevelLabel = "NEVER"
-			prefLevelColor = "red"
-			prefUpperLevel = 3
-			prefLowerLevel = 1
-
-		HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[job.title]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[job.flag]\");'>"
-		//HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[job.title]'>"
+		HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[job.title]'>"
 	/*
 		if(rank == "Assistant")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
-				HTML += " <font color=green>\[Yes]</font>"
+				HTML += " <font color=green>Yes</font>"
 			else
-				HTML += " <font color=red>\[No]</font>"
+				HTML += " <font color=red>No</font>"
 			HTML += "</a></td></tr>"
 			continue
 	*/
+		if(GetJobDepartment(job, 1) & job.flag)
+			HTML += " <font color=blue>High</font>"
+		else if(GetJobDepartment(job, 2) & job.flag)
+			HTML += " <font color=green>Medium</font>"
+		else if(GetJobDepartment(job, 3) & job.flag)
+			HTML += " <font color=orange>Low</font>"
+		else
+			HTML += " <font color=red>NEVER</font>"
 		if(job.alt_titles)
-			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">[GetPlayerAltTitle(job)]</a></td></tr>"
 
-		HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 		HTML += "</a></td></tr>"
-
 	for(var/j = 1, j < (limit - index), j += 1) // Finish the column so it is even
 		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 	HTML += "</td'></tr></table>"
-	HTML += "</center></table>"
+	HTML += "</center></table></body>"
 
 	if(user.client.prefs) //Just makin sure
 		if(user.client.prefs.alternate_option == GET_RANDOM_JOB)
@@ -544,7 +522,7 @@ datum/preferences
 	HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
 
 	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
+	HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">Done</a>"
 	HTML += "</center></tt>"
 
 	var/datum/browser/popup = new(user, "disabil", "<b><center>Choose disabilities</b></center>", 350, 300)
@@ -569,7 +547,7 @@ datum/preferences
 	HTML += TextPreview(sec_record,40)
 
 	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
+	HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">Done</a>"
 	HTML += "</center></tt>"
 
 	var/datum/browser/popup = new(user, "records", "<b><center>Set Character Records</b></center>", 350, 300)
@@ -593,7 +571,7 @@ datum/preferences
 		HTML +="<b><a href=\"byond://?src=\ref[user];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
 	HTML +="<br>"
 	HTML +="<hr />"
-	HTML +="<a href='?src=\ref[user];preference=antagoptions;antagtask=done;active=1'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[user];preference=antagoptions;antagtask=done;active=1'>Done</a>"
 
 	HTML += "</center></tt>"
 
@@ -636,7 +614,7 @@ datum/preferences
 	HTML += "<br>"
 	*/
 	HTML += "<hr />"
-	HTML +="<a href='?src=\ref[user];preference=flavor_text;task=done'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[user];preference=flavor_text;task=done'>Done</a>"
 	HTML += "<tt>"
 	var/datum/browser/popup = new(user, "flavor_text", "<b><center>Set Flavor Text</b></center>", 430, 300)
 	popup.set_window_options("can_close=1")

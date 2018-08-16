@@ -62,7 +62,6 @@
 			output += "<p><b><a href='byond://?src=\ref[src];lobby_choice=showpoll'>Show Player Polls</A>[newpoll?" (NEW!)":""]</b></p>"
 	output += "</div>"
 
-	//src << browse(output,"window=playersetup;size=240x300;can_close=0")
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
@@ -96,21 +95,20 @@
 	if(!client)
 		return FALSE
 
-	//switch(href_list["lobby_choice"])
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
 		return TRUE
 
 	if(href_list["ready"])
 		var/tready = text2num(href_list["ready"])
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
+		if(!ticker.current_state || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
 			ready = tready
 		//if it's post initialisation and they're trying to observe we do the needful
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+		if(!ticker.current_state || ticker.current_state <= GAME_STATE_PLAYING && tready == PLAYER_READY_TO_OBSERVE)
 			ready = tready
 			make_me_an_observer()
 			return
-			//new_player_panel_proc() // call not need, the window is not (yet) closed
+
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
 		new_player_panel_proc()
@@ -122,7 +120,6 @@
 		if(ticker.mode.flags_round_type	& MODE_NO_LATEJOIN)
 			src << "<span class='warning'>Sorry, you cannot late join during [ticker.mode.name]. You have to start at the beginning of the round. You may observe or try to join as an alien, if possible.</span>"
 			return
-
 		if(client.prefs.species != "Human")
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				src << alert("You are currently not whitelisted to play [client.prefs.species].")
@@ -137,14 +134,16 @@
 	if(href_list["late_join_xeno"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)
 			src << "<span class='warning'>The round is either not ready, or has already finished...</span>"
-		return
-
-		if(alert(src,"Are you sure you want to attempt joining as a xenomorph?","Confirmation","Yes","No") == "Yes" )
-			if(ticker.mode.check_xeno_late_join(src))
-				var/mob/new_xeno = ticker.mode.attempt_to_join_as_xeno(src, 0)
-				if(new_xeno)
-					close_spawn_windows(new_xeno)
-					ticker.mode.transfer_xeno(src, new_xeno)
+			return
+		switch(alert("Are you sure you want to attempt joining as a xenomorph?","Confirmation","Yes","No"))
+			if("Yes")
+				if(ticker.mode.check_xeno_late_join(src))
+					var/mob/new_xeno = ticker.mode.attempt_to_join_as_xeno(src, 0)
+					if(new_xeno)
+						close_spawn_windows(new_xeno)
+						ticker.mode.transfer_xeno(src, new_xeno)
+			if("No")
+				return
 
 	if(href_list["late_join_pred"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)
@@ -340,31 +339,30 @@
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
-
-	var/dat = "<html><body><center>"
-	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
+	var/dat = "<center>Round Duration: [round(hours)]h [round(mins)]m<br>"
 
 	if(EvacuationAuthority)
 		switch(EvacuationAuthority.evac_status)
-			if(EVACUATION_STATUS_INITIATING) dat += "<font color='red'><b>The [MAIN_SHIP_NAME] is being evacuated.</b></font><br>"
-			if(EVACUATION_STATUS_COMPLETE) dat += "<font color='red'>The [MAIN_SHIP_NAME] has undergone evacuation.</font><br>"
+			if(EVACUATION_STATUS_INITIATING)
+				dat += "<font color='red'><b>The [MAIN_SHIP_NAME] is being evacuated.</b></font><br>"
+			if(EVACUATION_STATUS_COMPLETE)
+				dat += "<font color='red'>The [MAIN_SHIP_NAME] has undergone evacuation.</font><br>"
 
 	dat += "Choose from the following open positions:<br>"
 	var/datum/job/J
-	var/i
-	for(i in RoleAuthority.roles_for_mode)
+	for(var/i in RoleAuthority.roles_for_mode)
 		J = RoleAuthority.roles_for_mode[i]
-		if(!RoleAuthority.check_role_entry(src, J, 1)) continue
+		if(!RoleAuthority.check_role_entry(src, J, 1))
+			continue
 		var/active = 0
 		// Only players with the job assigned and AFK for less than 10 minutes count as active
 		for(var/mob/M in player_list)
 			if(M.mind && M.client && M.mind.assigned_role == J.title && M.client.inactivity <= 10 * 60 * 10)
 				active++
-		dat += "<a href='byond://?src=\ref[src];lobby_choice=SelectedJob;job_selected=[J.title]'>[J.disp_title] ([J.current_positions]) (Active: [active])</a><br>"
+		dat += "<a href='byond://?src=\ref[src];lobby_choice=SelectedJob;job_selected=[J.title]'>[J.disp_title] ([J.current_positions])</a> (Active: [active])<br>"
 
 	dat += "</center>"
-	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+	var/datum/browser/popup = new(src, "latechoices", "<center>Choose Profession</center>", 440, 500)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc

@@ -187,7 +187,7 @@ FORUMURL https://tgstation13.org/phpBB/
 WIKIURL https://tgstation13.org/wiki
 
 ## Rules address
-RULESURL https://tgstation13.org/wiki/Rules/DMCA_Addendum
+RULESURL https://tgstation13.org/wiki/DMCA_Rules
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 BANAPPEALS https://cm-ss13.com/viewforum.php?f=76

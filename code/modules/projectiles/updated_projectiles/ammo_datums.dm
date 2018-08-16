@@ -79,9 +79,9 @@
 
 	proc/knockback(mob/M, obj/item/projectile/P, var/max_range = 2)
 		if(!M || M == P.firer) return
-		if(P.distance_travelled > max_range || M.lying) shake_camera(M, 2, 1) //Two tiles away or more, basically.
+		if(P.distance_travelled > max_range || M.lying) shake_camera(M, 2, 1) //Three tiles away or more, basically.
 
-		else //One tile away or less.
+		else //Two tiles away or less.
 			shake_camera(M, 3, 4)
 			if(isliving(M)) //This is pretty ugly, but what can you do.
 				if(isXeno(M))
@@ -94,6 +94,31 @@
 						var/mob/living/target = M
 						target.apply_effects(1,2) //Humans get stunned a bit.
 						to_chat(target, "<span class='highdanger'>The blast knocks you off your feet!</span>")
+			step_away(M,P)
+
+	proc/staggerstun(mob/M, obj/item/projectile/P, var/max_range = 2, var/stun = 0, var/weaken = 1, var/stagger = 2, var/slowdown = 2, var/size_threshold = 2, var/knockback = 1, var/shake = 1)
+		if(!M || M == P.firer) return
+		if(shake && (P.distance_travelled > max_range || M.lying))
+			shake_camera(M, shake+1, shake)
+			return
+		if(!isliving(M) || (isYautja(M) && size_threshold < 4) || (M.mob_size == MOB_SIZE_BIG && size_threshold < 3) || (isXeno(M) && size_threshold < 2) || ( ishuman(M) && size_threshold < 1))
+			return
+		if(shake)
+			shake_camera(M, shake+2, shake+3)
+		if(isXeno(M))
+			var/mob/living/carbon/Xenomorph/target = M
+			target.apply_effects(stun,weaken)
+			target.adjust_stagger(stagger)
+			target.adjust_slowdown(slowdown)
+			target << "<span class='xenodanger'>You are shaken by the sudden impact!</span>"
+		else
+			if(!(isYautja(M)))
+				stun += 1
+				weaken += 1
+			var/mob/living/target = M
+			target.apply_effects(stun,weaken)
+			target << "<span class='highdanger'>The blast knocks you off your feet!</span>"
+		for(var/i=0, i<knockback, i++)
 			step_away(M,P)
 
 	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE)
@@ -389,7 +414,7 @@
 		shell_speed = config.fast_shell_speed
 
 	on_hit_mob(mob/M, obj/item/projectile/P)
-		knockback(M, P, config.max_shell_range)	// Can knockback basically at max range
+		knockback(M, P, config.max_shell_range)
 
 /datum/ammo/bullet/rifle/mar40
 	name = "heavy rifle bullet"
@@ -416,8 +441,7 @@
 		penetration= config.low_armor_penetration
 
 	on_hit_mob(mob/M,obj/item/projectile/P)
-		knockback(M, P, 5)
-
+		knockback(M, P, config.close_shell_range)
 
 
 /datum/ammo/bullet/shotgun/beanbag
@@ -550,6 +574,18 @@
 	New()
 		..()
 		damage = config.low_hit_damage
+
+/datum/ammo/bullet/shotgun/stagger
+	name = "stagger slug"
+	icon_state = "stagger"
+	New()
+		..()
+		max_range = config.short_shell_range
+		damage = config.high_hit_damage
+		penetration= config.low_armor_penetration
+
+	on_hit_mob(mob/M,obj/item/projectile/P)
+		staggerstun(M, P, config.close_shell_range)
 
 
 /*

@@ -181,7 +181,8 @@
 					adjustHalLoss(-3)
 				else
 					adjustHalLoss(-1)
-
+		handle_stagger()
+		handle_slowdown()
 		handle_statuses()//natural decrease of stunned, knocked_down, etc...
 
 		//Deal with dissolving/damaging stuff in stomach.
@@ -491,3 +492,28 @@ updatehealth()
 	if(knocked_down && client)
 		knocked_down = max(knocked_down-2,0)
 	return knocked_down
+
+/mob/living/carbon/Xenomorph/proc/handle_stagger()
+	if(stagger)
+		adjust_stagger(-1)
+	return stagger
+
+/mob/living/carbon/Xenomorph/proc/adjust_stagger(amount)
+	if(stagger)
+		stagger = max(stagger + amount,0)
+	return stagger
+
+/mob/living/carbon/Xenomorph/proc/handle_slowdown()
+	if(slowdown)
+		adjust_slowdown(-XENO_SLOWDOWN_REGEN)
+	return slowdown
+
+/mob/living/carbon/Xenomorph/proc/adjust_slowdown(amount)
+	if(slowdown)
+		slowdown = max(slowdown + amount,0)
+	return slowdown
+
+/mob/living/carbon/Xenomorph/proc/add_slowdown(amount)
+	if(slowdown)
+		slowdown = adjust_slowdown(amount*XENO_SLOWDOWN_REGEN)
+	return slowdown

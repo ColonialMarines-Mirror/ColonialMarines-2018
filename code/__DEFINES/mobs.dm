@@ -1,3 +1,8 @@
+//Ready states at roundstart for mob/dead/new_player
+#define PLAYER_NOT_READY 0
+#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_READY_TO_OBSERVE 2
+
 //Some mob defines below
 #define AI_CAMERA_LUMINOSITY 6
 
@@ -149,6 +154,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 //mob/var/stat things
 #define CONSCIOUS	0
+//#define SOFT_CRIT	1
 #define UNCONSCIOUS	1
 #define DEAD		2
 

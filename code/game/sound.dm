@@ -10,7 +10,7 @@
 //falloff: how the sound's volume decreases with distance, low is fast decrease and high is slow decrease.
 //A good representation is: 'byond applies a volume reduction to the sound every X tiles', where X is falloff.
 
-/proc/playsound(atom/source, soundin, vol, vary, sound_range, falloff, is_global)
+/proc/playsound(atom/source, soundin, vol as num, vary, sound_range as num, falloff, is_global)
 
 	if(!sound_range) sound_range = round(0.5*vol) //if no specific range, the max range is equal to half the volume.
 

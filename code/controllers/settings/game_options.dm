@@ -30,6 +30,8 @@
 	var/remove_gun_restrictions = 0
 	var/allow_synthetic_gun_use = 0
 
+	var/emojis = 0
+
 /datum/configuration/proc/initialize_game_options(name,value)
 	value = text2num(value)
 	switch(name)
@@ -70,10 +72,13 @@
 		if("animal_delay")
 			config.animal_delay = value
 
-
 		if("use_loyalty_implants")
 			config.use_loyalty_implants = 1
 		if("remove_gun_restrictions")
 			config.remove_gun_restrictions = 1
+
+		if ("emojis")
+			config.emojis = 1
+
 		else
 			log_misc("Unknown setting in game options: '[name]'")

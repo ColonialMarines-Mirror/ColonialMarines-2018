@@ -360,13 +360,14 @@
 	New()
 		..()
 		accurate_range = config.short_shell_range
-		damage = config.lmed_hit_damage
+		damage = config.lmmed_hit_damage
 
 /datum/ammo/bullet/rifle/ap
 	name = "armor-piercing rifle bullet"
 	New()
 		..()
-		penetration = config.med_armor_penetration
+		damage = config.hlow_hit_damage
+		penetration = config.high_armor_penetration
 
 /datum/ammo/bullet/rifle/incendiary
 	name = "incendiary rifle bullet"

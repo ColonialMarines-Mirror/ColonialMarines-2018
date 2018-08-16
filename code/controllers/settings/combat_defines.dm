@@ -27,18 +27,20 @@
 	var/high_hit_accuracy_mult = 0.25
 	var/max_hit_accuracy_mult = 0.35
 
-	var/base_hit_damage = 5
-	var/min_hit_damage = 10
-	var/mlow_hit_damage = 15
-	var/low_hit_damage = 20
-	var/lmed_hit_damage = 25
-	var/med_hit_damage = 30
-	var/hmed_hit_damage = 35
-	var/high_hit_damage = 40
-	var/mhigh_hit_damage = 50
-	var/max_hit_damage = 60
-	var/super_hit_damage = 70
-	var/ultra_hit_damage = 80
+	var/base_hit_damage = 10
+	var/min_hit_damage = 15
+	var/mlow_hit_damage = 20
+	var/low_hit_damage = 30
+	var/hlow_hit_damage = 35
+	var/lmed_hit_damage = 40
+	var/lmmed_hit_damage = 45
+	var/med_hit_damage = 50
+	var/hmed_hit_damage = 55
+	var/high_hit_damage = 70
+	var/mhigh_hit_damage = 80
+	var/max_hit_damage = 90
+	var/super_hit_damage = 120
+	var/ultra_hit_damage = 150
 
 	var/base_hit_damage_mult = 1
 	var/min_hit_damage_mult = 0.01
@@ -157,7 +159,9 @@
 		if("min_hit_damage") min_hit_damage = value
 		if("mlow_hit_damage") mlow_hit_damage = value
 		if("low_hit_damage") low_hit_damage = value
+		if("hlow_hit_damage") hlow_hit_damage = value
 		if("lmed_hit_damage") lmed_hit_damage = value
+		if("lmmed_hit_damage") lmed_hit_damage = value
 		if("med_hit_damage") med_hit_damage = value
 		if("hmed_hit_damage") hmed_hit_damage = value
 		if("high_hit_damage") high_hit_damage = value

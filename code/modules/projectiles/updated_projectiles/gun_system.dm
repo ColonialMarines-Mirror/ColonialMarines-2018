@@ -709,10 +709,10 @@ and you're good to go.
 					active_attachable.activate_attachment(src, null, TRUE)//No way.
 				var/obj/item/projectile/projectile_to_fire = load_into_chamber(user)
 				if(projectile_to_fire) //We actually have a projectile, let's move on. We're going to simulate the fire cycle.
-					projectile_to_fire.damage *= (config.base_hit_damage_mult+config.low_hit_damage_mult) //Multiply the damage for point blank.
 					user.visible_message("<span class='danger'>[user] fires [src] point blank at [M]!</span>")
 					apply_bullet_effects(projectile_to_fire, user) //We add any damage effects that we need.
 					projectile_to_fire.dir = get_dir(user, M)
+					projectile_to_fire.distance_travelled = 1
 					simulate_recoil(1, user)
 
 					if(projectile_to_fire.ammo.bonus_projectiles_amount)
@@ -721,6 +721,7 @@ and you're good to go.
 							BP = rnew(/obj/item/projectile, M.loc)
 							BP.generate_bullet(ammo_list[projectile_to_fire.ammo.bonus_projectiles_type])
 							BP.dir = get_dir(user, M)
+							BP.distance_travelled = 1
 							BP.ammo.on_hit_mob(M, BP)
 							M.bullet_act(BP)
 							cdel(BP)

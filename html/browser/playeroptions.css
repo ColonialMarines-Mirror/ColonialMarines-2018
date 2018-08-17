@@ -1,0 +1,23 @@
+.jobs
+{
+	width: 400px;
+	margin: 0 auto;
+	font-family: Verdana, Geneva, sans-serif; /*i had to do this, default font is shit*/
+}
+
+.jobsColumn
+{
+	float: left;
+	width: 200px;
+	text-align: center;
+}
+
+.commandPosition
+{
+	font-weight: bold;
+}
+
+.otherPosition
+{
+	
+}

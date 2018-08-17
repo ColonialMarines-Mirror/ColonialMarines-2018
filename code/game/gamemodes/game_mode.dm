@@ -83,7 +83,7 @@
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/new_player/player in player_list)
-		if((player.client)&&(player.ready))
+		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
 			playerC++
 
 	if(master_mode=="secret")
@@ -277,7 +277,7 @@
 
 	//Assemble a list of active players without jobbans.
 	for(var/mob/new_player/player in player_list)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext))
 				players += player
 
@@ -310,14 +310,14 @@
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
-			if(player.client && player.ready)
+			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(player.client.prefs.be_special & role)) //We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
 		for(var/mob/new_player/player in players)
-			if (player.client && player.ready)
+			if (player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
 
@@ -351,7 +351,7 @@
 /datum/game_mode/proc/num_players()
 	. = 0
 	for(var/mob/new_player/P in player_list)
-		if(P.client && P.ready)
+		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
 

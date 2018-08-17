@@ -85,7 +85,8 @@
 		for(var/mob/new_player/player in player_list)
 			stat("[player.key]", (player.ready == PLAYER_READY_TO_PLAY)?("(Playing)"):(null))
 			totalPlayers++
-			if(player.ready)totalPlayersReady++
+			if(player.ready == PLAYER_READY_TO_PLAY)
+				totalPlayersReady++
 	return TRUE
 
 /mob/new_player/Topic(href, href_list[])

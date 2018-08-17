@@ -18,42 +18,13 @@
 		usr.say(message)
 		return
 
-
-
 	set_typing_indicator(0)
 	usr.say(message)
 	usr.talked = 1
-	spawn (10)
-		if (usr.talked ==2)
-			return
-		usr.talked = 0
-
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
-
-	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
-		return
-
-	if(usr.talked == 2)
-		usr << "\red Your spam has been consumed for it's nutritional value."
-		return
-	if((usr.talked == 1) && (usr.chatWarn >= 5))
-		usr.talked = 2
-		usr << "\red You have been flagged for spam.  You may not speak for at least [usr.chatWarn] seconds (if you spammed alot this might break and never unmute you).  This number will increase each time you are flagged for spamming"
-		if(usr.chatWarn >= 5)
-			message_admins("[key_name(usr, usr.client)] is spamming like crazy. Their current chatwarn is [usr.chatWarn]. ")
-		spawn(usr.chatWarn*10)
-			usr.talked = 0
-			usr << "\blue You may now speak again."
-			usr.chatWarn++
-		return
-	else if(usr.talked == 1)
-		usr << "\blue You just said something, take a breath."
-		usr.chatWarn++
-		return
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -62,11 +33,6 @@
 		usr.emote("me",usr.emote_type,message, TRUE)
 	else
 		usr.emote(message, 1, null, TRUE)
-	usr.talked = 1
-	spawn (10)
-		if (usr.talked ==2)
-			return
-		usr.talked = 0
 
 /mob/proc/say_dead(var/message)
 	var/name = src.real_name

@@ -15,6 +15,8 @@
 #define AMMO_BALLISTIC		4096
 */
 
+#define DEBUG_STAGGER_SLOWDOWN	0
+
 /datum/ammo
 	var/name 		= "generic bullet"
 	var/icon 		= 'icons/obj/items/projectiles.dmi'
@@ -96,7 +98,7 @@
 						to_chat(target, "<span class='highdanger'>The blast knocks you off your feet!</span>")
 			step_away(M,P)
 
-	proc/staggerstun(mob/M, obj/item/projectile/P, var/max_range = 2, var/stun = 0, var/weaken = 1, var/stagger = 2, var/slowdown = 2, var/size_threshold = 2, var/knockback = 1, var/shake = 1)
+	proc/staggerstun(mob/M, obj/item/projectile/P, var/max_range = 2, var/stun = 0, var/weaken = 1, var/stagger = 2, var/slowdown = 1, var/knockback = 1, var/size_threshold = 2, var/shake = 1)
 		if(!M || M == P.firer) return
 		if(shake && (P.distance_travelled > max_range || M.lying))
 			shake_camera(M, shake+1, shake)
@@ -108,13 +110,22 @@
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/target = M
 			target.apply_effects(stun,weaken)
+			#if DEBUG_STAGGER_SLOWDOWN
+			world << "<span class='debuginfo'>Damage: Initial stagger is: <b>[target.stagger]</b></span>"
+			#endif
 			target.adjust_stagger(stagger)
-			target.adjust_slowdown(slowdown)
+			#if DEBUG_STAGGER_SLOWDOWN
+			world << "<span class='debuginfo'>Damage: Final stagger is: <b>[target.stagger]</b></span>"
+			#endif
+			#if DEBUG_STAGGER_SLOWDOWN
+			world << "<span class='debuginfo'>Damage: Initial slowdown is: <b>[target.slowdown]</b></span>"
+			#endif
+			target.add_slowdown(slowdown)
+			#if DEBUG_STAGGER_SLOWDOWN
+			world << "<span class='debuginfo'>Damage: Final slowdown is: <b>[target.slowdown]</b></span>"
+			#endif
 			target << "<span class='xenodanger'>You are shaken by the sudden impact!</span>"
 		else
-			if(!(isYautja(M)))
-				stun += 1
-				weaken += 1
 			var/mob/living/target = M
 			target.apply_effects(stun,weaken)
 			target << "<span class='highdanger'>The blast knocks you off your feet!</span>"
@@ -280,12 +291,14 @@
 
 /datum/ammo/bullet/revolver
 	name = "revolver bullet"
-	debilitate = list(1,0,0,0,0,0,0,0)
 	New()
 		..()
 		accuracy = -config.med_hit_accuracy
 		damage = config.lmed_hit_damage
 		penetration= config.min_armor_penetration
+
+	on_hit_mob(mob/M,obj/item/projectile/P)
+		staggerstun(M, P, config.close_shell_range, 0, 0, 1, 0.5, 0)
 
 /datum/ammo/bullet/revolver/small
 	name = "small revolver bullet"
@@ -312,6 +325,9 @@
 		damage = config.med_hit_damage
 		penetration= config.min_armor_penetration
 		accuracy = -config.med_hit_accuracy
+
+	on_hit_mob(mob/M,obj/item/projectile/P)
+		staggerstun(M, P, config.close_shell_range, 0, 0, 1, 0.5, 0)
 
 /datum/ammo/bullet/revolver/highimpact
 	name = "high-impact revolver bullet"
@@ -582,11 +598,11 @@
 	New()
 		..()
 		max_range = config.short_shell_range
-		damage = config.high_hit_damage
+		damage = config.min_hit_damage
 		penetration= config.low_armor_penetration
 
 	on_hit_mob(mob/M,obj/item/projectile/P)
-		staggerstun(M, P, config.close_shell_range)
+		staggerstun(M, P, config.close_shell_range, 0, 1, 2, 2)
 
 
 /*

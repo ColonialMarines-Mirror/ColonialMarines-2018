@@ -22,11 +22,7 @@
 		Other versions (search for [world.byond_build] or higher): http://www.byond.com/download/build/[world.byond_version]</span>"
 		cdel(client)
 
-/mob/new_player/verb/new_player_panel()
-	set src = usr
-	new_player_panel_proc()
-
-/mob/new_player/proc/new_player_panel_proc()
+/mob/new_player/proc/new_player_panel()
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 	if(!ticker || !ticker.mode || ticker.current_state <= GAME_STATE_PREGAME)
@@ -65,6 +61,7 @@
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open(0)
+
 
 /mob/new_player/Stat()
 	if (!..())
@@ -114,7 +111,7 @@
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
-		new_player_panel_proc()
+		new_player_panel()
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)

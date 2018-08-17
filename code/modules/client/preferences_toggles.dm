@@ -104,9 +104,7 @@
 		src << "You will now hear any music played by an admin."
 	else
 		src << "You will no longer hear any music played by an admin."
-		var/sound/break_sound = new()
-		break_sound.priority = 250
-		break_sound.channel = 777
+		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = 777)
 		src << break_sound	//breaks the client's sound output on channel 777
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

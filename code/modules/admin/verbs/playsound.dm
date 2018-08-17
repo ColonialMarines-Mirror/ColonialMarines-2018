@@ -2,11 +2,12 @@
 	set category = "Fun"
 	set name = "Play Imported Sound"
 	set desc = "Play a sound imported from anywhere on your computer."
-
 	if(!check_rights(R_SOUNDS))
 		return
+
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
-	if(!vol)
+	if(!vol || vol < 0 || vol > 100)
+		usr << "\red Invalid volume!"
 		return
 	var/sound/admin_sound = new()
 	admin_sound.priority = 250
@@ -22,7 +23,7 @@
 			return
 
 	for(var/mob/M in player_list)
-		if(M.client.prefs.toggles_sound && SOUND_MIDI)
+		if(M.client.prefs.toggles_sound & SOUND_MIDI)
 			playsound(M, S, vol)
 
 	log_admin("[key_name(src)] played sound [S]")
@@ -35,7 +36,7 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
-	log_admin("[key_name(src)] played sound [S]")
+	log_admin("[key_name(src)] locally played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]", 1)
 	playsound(get_turf(src.mob),S, 50, 0, 0)
 	feedback_add_details("admin_verb","Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -44,14 +45,15 @@
 	set category = "Fun"
 	set name = "Play Sound From List"
 	set desc = "Play a sound already in the project from a pre-made list."
-	if(!check_rights(R_SOUNDS))	return
+	if(!check_rights(R_SOUNDS))
+		return
 
 	var/list/sounds = file2list("sound/soundlist.txt");
 	sounds += "--CANCEL--"
 
 	var/melody = input("Select a sound to play", "Sound list", "--CANCEL--") in sounds
-
-	if(melody == "--CANCEL--")	return
+	if(melody == "--CANCEL--")
+		return
 
 	play_imported_sound(melody)
 	feedback_add_details("admin_verb","PDS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

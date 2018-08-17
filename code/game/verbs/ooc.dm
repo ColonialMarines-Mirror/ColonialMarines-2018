@@ -5,10 +5,16 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
+	if(!mob)
+		return
+	if(IsGuestKey(key))
+		src << "Guests may not use OOC."
+		return
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
 		return
-	if(usr.talked == 2)
+
+	if(usr.talked == 2) // anti-spam
 		usr << "\red Your spam has been consumed for it's nutritional value."
 		return
 	if((usr.talked == 1) && (usr.chatWarn >= 5))
@@ -26,23 +32,18 @@ var/global/normal_ooc_colour = "#002eb8"
 		usr.chatWarn++
 		return
 
-	if(!mob)
-		return
-	if(IsGuestKey(key))
-		src << "Guests may not use OOC."
-		return
-
 	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	if(!msg)
 		return
 	msg = emoji_parse(msg)
-	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say"))) // stops ick-ocky by 25%
 		if(alert("Your message \"[msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
+
 	if(!(prefs.toggles_chat & CHAT_OOC))
 		src << "\red You have OOC muted."
 		return
-
 	if(!holder)
 		if(!ooc_allowed)
 			src << "\red OOC is globally muted"
@@ -104,9 +105,11 @@ var/global/normal_ooc_colour = "#002eb8"
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
 			*/
 	usr.talked = 1
-	spawn (5)
-		if(!usr) return
-		if (usr.talked ==2) return
+	spawn(5)
+		if(!usr)
+			return
+		if(usr.talked ==2)
+			return
 		usr.talked = 0
 
 /client/proc/set_ooc_color_global(newColor as color)

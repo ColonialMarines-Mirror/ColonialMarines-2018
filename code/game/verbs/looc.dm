@@ -24,7 +24,6 @@
 		usr.chatWarn++
 		return
 
-
 	if(!mob)
 		return
 	if(IsGuestKey(key))
@@ -61,13 +60,12 @@
 
 	var/list/heard = get_mobs_in_view(7, src.mob)
 	var/mob/S = src.mob
-
 	var/display_name = S.key
+
 	if(S.stat != DEAD)
 		display_name = S.name
 
-	// Handle non-admins
-	for(var/mob/M in heard)
+	for(var/mob/M in heard) // Handle non-admins
 		if(!M.client)
 			continue
 		var/client/C = M.client
@@ -83,8 +81,7 @@
 						display_name = holder.fakekey
 			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 
-	// Now handle admins
-	display_name = S.key
+	display_name = S.key // Now handle admins
 	if(S.stat != DEAD)
 		display_name = "[S.name]/([S.key])"
 

@@ -1418,7 +1418,7 @@
 	T.add_vomit_floor(src)
 
 /mob/living/carbon/human/slip(slip_source_name, stun_level, weaken_level, run_only, override_noslip, slide_steps)
-	if(shoes && !override_noslip) && (shoes.flags_inventory & NOSLIPPING)) // Slipping is saved!
+	if((shoes && !override_noslip) && (shoes.flags_inventory & NOSLIPPING)) // Slipping is saved!
 		return FALSE
 	. = ..()
 

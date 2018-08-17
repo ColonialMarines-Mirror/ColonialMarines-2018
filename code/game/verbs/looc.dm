@@ -6,7 +6,6 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
 		return
-		
 	if(!mob)
 		return
 	if(IsGuestKey(key))

@@ -458,7 +458,7 @@
 		penetration= config.low_armor_penetration
 
 	on_hit_mob(mob/M,obj/item/projectile/P)
-		knockback(M, P, config.close_shell_range)
+		staggerstun(M, P, config.close_shell_range, 0, 1, 2, 2)
 
 
 /datum/ammo/bullet/shotgun/beanbag
@@ -592,7 +592,7 @@
 		..()
 		damage = config.low_hit_damage
 
-/datum/ammo/bullet/shotgun/stagger
+/datum/ammo/bullet/shotgun/stagger //test ammo for staggerstun
 	name = "stagger slug"
 	icon_state = "stagger"
 	New()

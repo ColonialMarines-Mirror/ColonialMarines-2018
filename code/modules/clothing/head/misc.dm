@@ -238,3 +238,9 @@
 	siemens_coefficient = 2.0
 	flags_armor_protection = HEAD|FACE|EYES
 	anti_hug = 10 //Lel
+
+/obj/item/clothing/head/boonie
+	name = "Boonie Hat"
+	desc = "Also known as Australian Army giggle hat or hat ridiculous-for-the-use-of."
+	icon_state = "booniehat"
+	item_state = "booniehat"

@@ -99,7 +99,7 @@
 	var/pressure_dangerlevel = 0
 	var/oxygen_dangerlevel = 0
 	var/co2_dangerlevel = 0
-	var/phoron_dangerlevel = 0
+	var/plasma_dangerlevel = 0
 	var/temperature_dangerlevel = 0
 	var/other_dangerlevel = 0
 
@@ -148,7 +148,7 @@
 	// breathable air according to human/Life()
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
-	TLV["phoron"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
+	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
@@ -623,7 +623,7 @@ Pressure: <span class='dl[pressure_dangerlevel]'>[environment_pressure]</span>kP
 
 	//'Local Status' should report the LOCAL status, damnit.
 	output += "Local Status: "
-	switch(max(pressure_dangerlevel,oxygen_dangerlevel,co2_dangerlevel,phoron_dangerlevel,other_dangerlevel,temperature_dangerlevel))
+	switch(max(pressure_dangerlevel,oxygen_dangerlevel,co2_dangerlevel,plasma_dangerlevel,other_dangerlevel,temperature_dangerlevel))
 		if(2)
 			output += "<span class='dl2'>DANGER: Internals Required</span><br>"
 		if(1)
@@ -752,7 +752,7 @@ siphoning
 Carbon Dioxide
 <A href='?src=\ref[src];id_tag=[id_tag];command=co2_scrub;val=[!data["filter_co2"]]'>[data["filter_co2"]?"on":"off"]</A>;
 Toxins
-<A href='?src=\ref[src];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_phoron"]]'>[data["filter_phoron"]?"on":"off"]</A>;
+<A href='?src=\ref[src];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_plasma"]]'>[data["filter_plasma"]?"on":"off"]</A>;
 Nitrous Oxide
 <A href='?src=\ref[src];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
 <BR>
@@ -801,7 +801,7 @@ table tr:first-child th:first-child { border: none;}
 			var/list/gases = list(
 				"oxygen"         = "O<sub>2</sub>",
 				"carbon dioxide" = "CO<sub>2</sub>",
-				"phoron"         = "Toxin",
+				"plasma"         = "Toxin",
 				"other"          = "Other",)
 
 			var/list/selected
@@ -1087,7 +1087,7 @@ table tr:first-child th:first-child { border: none;}
 	req_one_access = list(ACCESS_CIVILIAN_ENGINEERING)
 	TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
-	TLV["phoron"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
+	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(0,ONE_ATMOSPHERE*0.10,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60) /* kpa */
 	TLV["temperature"] =	list(20, 40, 140, 160) // K

@@ -132,9 +132,9 @@
 
 // Needs to be converted to new system that does not use overlays
 // using default secure crate for now
-/obj/structure/closet/crate/secure/phoron
-	name = "phoron crate"
-	desc = "A secure phoron crate."
+/obj/structure/closet/crate/secure/plasma
+	name = "plasma crate"
+	desc = "A secure plasma crate."
 
 // Needs to be converted to new system that does not use overlays
 // using Wayland crate for now

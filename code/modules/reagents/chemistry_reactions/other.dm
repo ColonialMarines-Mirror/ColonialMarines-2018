@@ -104,7 +104,7 @@
 	name = "Lexorin"
 	id = "lexorin"
 	result = "lexorin"
-	required_reagents = list("phoron" = 1, "hydrogen" = 1, "nitrogen" = 1)
+	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/space_drugs
@@ -204,7 +204,7 @@
 	name = "Napalm"
 	id = "napalm"
 	result = null
-	required_reagents = list("aluminum" = 1, "phoron" = 1, "sacid" = 1 )
+	required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 )
 	result_amount = 1
 
 	on_reaction(var/datum/reagents/holder, var/created_volume, var/radius)
@@ -259,7 +259,7 @@
 	name = "Potassium Chlorophoride"
 	id = "potassium_chlorophoride"
 	result = "potassium_chlorophoride"
-	required_reagents = list("potassium_chloride" = 1, "phoron" = 1, "chloralhydrate" = 1)
+	required_reagents = list("potassium_chloride" = 1, "plasma" = 1, "chloralhydrate" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/stoxin
@@ -297,15 +297,15 @@
 	required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/phoronsolidification
-	name = "Solid Phoron"
-	id = "solidphoron"
+/datum/chemical_reaction/plasmasolidification
+	name = "Solid Plasma"
+	id = "solidplasma"
 	result = null
-	required_reagents = list("iron" = 5, "frostoil" = 5, "phoron" = 20)
+	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
 	result_amount = 1
 	on_reaction(var/datum/reagents/holder, var/created_volume)
 		var/location = get_turf(holder.my_atom)
-		new /obj/item/stack/sheet/mineral/phoron(location)
+		new /obj/item/stack/sheet/mineral/plasma(location)
 		return
 
 /datum/chemical_reaction/plastication

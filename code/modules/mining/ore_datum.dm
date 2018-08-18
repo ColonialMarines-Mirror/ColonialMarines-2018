@@ -23,10 +23,10 @@
 	compresses_to = /obj/item/stack/sheet/mineral/sandstone
 	oretag = "sand"
 
-/datum/ore/phoron
+/datum/ore/plasma
 	//smelts_to = something that explodes violently on the conveyor, huhuhuhu
-	compresses_to = /obj/item/stack/sheet/mineral/phoron
-	oretag = "phoron"
+	compresses_to = /obj/item/stack/sheet/mineral/plasma
+	oretag = "plasma"
 
 /datum/ore/silver
 	smelts_to = /obj/item/stack/sheet/mineral/silver

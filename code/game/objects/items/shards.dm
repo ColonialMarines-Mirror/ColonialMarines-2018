@@ -94,13 +94,13 @@
 
 
 
-/obj/item/shard/phoron
-	name = "phoron shard"
-	desc = "A shard of phoron glass. Considerably tougher then normal glass shards. Apparently not tough enough to be a window."
+/obj/item/shard/plasma
+	name = "plasma shard"
+	desc = "A shard of plasma glass. Considerably tougher then normal glass shards. Apparently not tough enough to be a window."
 	force = 8
 	throwforce = 15
-	icon_state = "phoron"
-	source_sheet_type = /obj/item/stack/sheet/glass/phoronglass
+	icon_state = "plasma"
+	source_sheet_type = /obj/item/stack/sheet/glass/plasmaglass
 
 
 

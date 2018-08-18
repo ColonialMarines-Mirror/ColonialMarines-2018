@@ -23,7 +23,7 @@
 	flags_cold_protection = HEAD
 	flags_inventory = COVEREYES|COVERMOUTH|NOPRESSUREDMAGE|ALLOWINTERNALS|ALLOWREBREATH|BLOCKGASEFFECT|BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS|HIDEEYES|HIDEFACE|HIDELOWHAIR
-	filtered_gases = list("phoron", "sleeping_agent", "carbon_dioxide")
+	filtered_gases = list("plasma", "sleeping_agent", "carbon_dioxide")
 	gas_filter_strength = 3
 	eye_protection = 2
 	var/current_goggles = 0 //0: OFF. 1: NVG. 2: Thermals. 3: Mesons

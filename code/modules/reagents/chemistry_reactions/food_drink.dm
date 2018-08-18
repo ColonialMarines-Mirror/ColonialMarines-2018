@@ -61,7 +61,7 @@
 	id = "condensedcapsaicin"
 	result = "condensedcapsaicin"
 	required_reagents = list("capsaicin" = 2)
-	required_catalysts = list("phoron" = 5)
+	required_catalysts = list("plasma" = 5)
 	result_amount = 1
 
 /datum/chemical_reaction/sodiumchloride
@@ -312,11 +312,11 @@
 	required_reagents = list("tequilla" = 2, "orangejuice" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/phoron_special
+/datum/chemical_reaction/plasma_special
 	name = "Toxins Special"
-	id = "phoronspecial"
-	result = "phoronspecial"
-	required_reagents = list("rum" = 2, "vermouth" = 1, "phoron" = 2)
+	id = "plasmaspecial"
+	result = "plasmaspecial"
+	required_reagents = list("rum" = 2, "vermouth" = 1, "plasma" = 2)
 	result_amount = 5
 
 /datum/chemical_reaction/beepsky_smash

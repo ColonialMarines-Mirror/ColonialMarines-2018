@@ -387,7 +387,7 @@
 "hw" = (/obj/machinery/light/small{tag = "icon-bulb1 (NORTH)"; icon_state = "bulb1"; dir = 1},/obj/machinery/atmospherics/portables_connector,/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
 "hx" = (/obj/machinery/atmospherics/portables_connector,/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
 "hy" = (/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{tag = "icon-intact (SOUTHEAST)"; icon_state = "intact"; dir = 6},/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
-"hz" = (/obj/effect/decal/cleanable/cobweb2,/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 24},/obj/machinery/atmospherics/pipe/tank/phoron{tag = "icon-intact (WEST)"; icon_state = "intact"; dir = 8},/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
+"hz" = (/obj/effect/decal/cleanable/cobweb2,/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 24},/obj/machinery/atmospherics/pipe/tank/plasma{tag = "icon-intact (WEST)"; icon_state = "intact"; dir = 8},/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
 "hA" = (/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{tag = "icon-intact (NORTHEAST)"; icon_state = "intact"; dir = 5},/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
 "hB" = (/obj/machinery/atmospherics/tvalve{tag = "icon-tvalve0 (WEST)"; icon_state = "tvalve0"; dir = 8},/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)
 "hC" = (/obj/machinery/atmospherics/pipe/manifold/visible/scrubbers{tag = "icon-manifold (WEST)"; icon_state = "manifold"; dir = 8},/obj/machinery/atmospherics/pipe/manifold4w/visible/scrubbers,/turf/simulated/floor/plating,/area/ship/scrap/maintenance/engine)

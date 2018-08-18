@@ -559,12 +559,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/obj/machinery/power/rad_collector/Rad in machines)
 		if(Rad.anchored)
 			if(!Rad.P)
-				var/obj/item/tank/phoron/Phoron = new/obj/item/tank/phoron(Rad)
-				Phoron.gas_type = GAS_TYPE_PHORON
-				Phoron.pressure = ONE_ATMOSPHERE * 3
+				var/obj/item/tank/plasma/Plasma = new/obj/item/tank/plasma(Rad)
+				Plasma.gas_type = GAS_TYPE_PLASMA
+				Plasma.pressure = ONE_ATMOSPHERE * 3
 				Rad.drainratio = 0
-				Rad.P = Phoron
-				Phoron.loc = Rad
+				Rad.P = Plasma
+				Plasma.loc = Rad
 
 			if(!Rad.active)
 				Rad.toggle_power()
@@ -602,12 +602,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				Rad.anchored = 1
 				Rad.connect_to_network()
 
-				var/obj/item/tank/phoron/Phoron = new/obj/item/tank/phoron(Rad)
+				var/obj/item/tank/plasma/Plasma = new/obj/item/tank/plasma(Rad)
 
-				Phoron.pressure = ONE_ATMOSPHERE * 4
-				Rad.P = Phoron
+				Plasma.pressure = ONE_ATMOSPHERE * 4
+				Rad.P = Plasma
 
-				Phoron.loc = Rad
+				Plasma.loc = Rad
 
 				if(!Rad.active)
 					Rad.toggle_power()

@@ -123,7 +123,7 @@
 				hud_used.pressure_icon.icon_state = "pressure[pressure_alert]"
 
 			if(hud_used.toxin_icon)
-				if(hal_screwyhud == 4 || phoron_alert)	hud_used.toxin_icon.icon_state = "tox1"
+				if(hal_screwyhud == 4 || plasma_alert)	hud_used.toxin_icon.icon_state = "tox1"
 				else									hud_used.toxin_icon.icon_state = "tox0"
 			if(hud_used.oxygen_icon)
 				if(hal_screwyhud == 3 || oxygen_alert)	hud_used.oxygen_icon.icon_state = "oxy1"

@@ -368,7 +368,7 @@
 						/obj/item/explosive/grenade/frag = 2,
 						/obj/item/explosive/grenade/incendiary = 2,
 //						/obj/item/weapon/gun/flamer = 1,
-//						/obj/item/tank/phoron/m240 = 3,
+//						/obj/item/tank/plasma/m240 = 3,
 						///obj/item/weapon/shield/riot = 1,
 						/obj/item/storage/pouch/magazine/large = 1,
 						/obj/item/storage/pouch/general/medium = 1,

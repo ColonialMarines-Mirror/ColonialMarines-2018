@@ -60,9 +60,9 @@
 	my_ladder.id = rand(999)
 	my_ladder.height = -1
 
-	//loop over the walls in the temple and make them a random pre-chosen mineral (null is a stand in for phoron, which the walls already are)
-	//treat phoron slightly differently because it's the default wall type
-	var/mineral = pick("uranium","sandstone","gold","iron","silver","diamond","clown","phoron")
+	//loop over the walls in the temple and make them a random pre-chosen mineral (null is a stand in for plasma, which the walls already are)
+	//treat plasma slightly differently because it's the default wall type
+	var/mineral = pick("uranium","sandstone","gold","iron","silver","diamond","clown","plasma")
 	//world << "init [mineral]"
 	var/area/my_area = get_area(src)
 	var/list/temple_turfs = get_area_turfs(my_area.type)
@@ -86,8 +86,8 @@
 			cdel(D)
 
 	for(var/turf/closed/wall/T in temple_turfs)
-		if(mineral != "phoron")
-			T.icon_state = oldreplacetext(T.icon_state, "phoron", mineral)
+		if(mineral != "plasma")
+			T.icon_state = oldreplacetext(T.icon_state, "plasma", mineral)
 
 		/*for(var/obj/effect/landmark/falsewall_spawner/F in T.contents)
 			//world << "falsewall_spawner found in wall"

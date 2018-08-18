@@ -194,12 +194,12 @@ proc/populate_seed_list()
 
 	if(prob(5))
 		consume_gasses = list()
-		var/gas = pick("oxygen","nitrogen","phoron","carbon_dioxide")
+		var/gas = pick("oxygen","nitrogen","plasma","carbon_dioxide")
 		consume_gasses[gas] = rand(3,9)
 
 	if(prob(5))
 		exude_gasses = list()
-		var/gas = pick("oxygen","nitrogen","phoron","carbon_dioxide")
+		var/gas = pick("oxygen","nitrogen","plasma","carbon_dioxide")
 		exude_gasses[gas] = rand(3,9)
 
 	chems = list()
@@ -232,7 +232,7 @@ proc/populate_seed_list()
 			"cryptobiolin",
 			"dermaline",
 			"dexalin",
-			"phoron",
+			"plasma",
 			"synaptizine",
 			"impedrezene",
 			"hyronalin",

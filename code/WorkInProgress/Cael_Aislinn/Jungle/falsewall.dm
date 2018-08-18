@@ -7,11 +7,11 @@
 	name = "wall"
 	anchored = 1
 	icon = 'icons/turf/walls.dmi'
-	icon_state = "phoron0"
+	icon_state = "plasma0"
 	opacity = 1
 	var/closed_wall_dir = 0
 	var/opening = 0
-	var/mineral = "phoron"
+	var/mineral = "plasma"
 	var/is_metal = 0
 
 /obj/structure/temple_falsewall/New()

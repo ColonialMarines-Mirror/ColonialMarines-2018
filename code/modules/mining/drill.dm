@@ -24,7 +24,7 @@
 		"gold" = /obj/item/ore/gold,
 		"silver" = /obj/item/ore/silver,
 		"diamond" = /obj/item/ore/diamond,
-		"phoron" = /obj/item/ore/phoron,
+		"plasma" = /obj/item/ore/plasma,
 		"osmium" = /obj/item/ore/osmium,
 		"hydrogen" = /obj/item/ore/hydrogen,
 		"silicates" = /obj/item/ore/glass,

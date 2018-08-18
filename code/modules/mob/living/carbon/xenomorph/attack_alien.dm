@@ -224,10 +224,12 @@
 				M.start_pulling(src)
 
 		if("hurt")
-			if(isXeno(src) && xeno_hivenumber(src) == M.hivenumber)
-				M.visible_message("<span class='warning'>\The [M] nibbles [src].</span>", \
-				"<span class='warning'>You nibble [src].</span>", null, 5)
-				return 1
+			// Aliens may attack each other after the round ends
+			if(!ticker.mode || !ticker.mode.round_finished)
+				if(isXeno(src) && xeno_hivenumber(src) == M.hivenumber)
+					M.visible_message("<span class='warning'>\The [M] nibbles [src].</span>", \
+					"<span class='warning'>You nibble [src].</span>", null, 5)
+					return 1
 
 			var/datum/hive_status/hive
 			if(M.hivenumber && M.hivenumber <= hive_datum.len)

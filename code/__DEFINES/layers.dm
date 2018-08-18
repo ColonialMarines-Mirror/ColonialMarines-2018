@@ -20,10 +20,8 @@
 #define ATMOS_PIPE_SUPPLY_LAYER 2.39
 #define ATMOS_PIPE_LAYER 2.4
 
-
 #define WIRE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
-
 
 #define UNDERFLOOR_OBJ_LAYER 2.5 //bluespace beacon, navigation beacon, etc
 
@@ -65,7 +63,6 @@
 #define DOOR_CLOSED_LAYER 3.1	//Above most items if closed
 #define FIREDOOR_CLOSED_LAYER 3.189		//Right under poddoors
 #define PODDOOR_CLOSED_LAYER 3.19	//Above doors which are at 3.1
-
 
 #define WINDOW_LAYER 3.2 //above closed doors
 

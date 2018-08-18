@@ -83,7 +83,6 @@
 	inv_box.layer = HUD_LAYER
 	static_inventory += inv_box
 
-
 	throw_icon = new /obj/screen/throw_catch()
 	throw_icon.icon = ui_style
 	hotkeybuttons += throw_icon
@@ -154,11 +153,6 @@
 	gun_run_icon.update_icon(owner)
 	static_inventory +=	gun_run_icon
 
-
-
-
-
-
 /datum/hud/monkey/persistant_inventory_update()
 	if(!mymob)
 		return
@@ -177,7 +171,6 @@
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = null
 
-
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(M.r_hand)
 			M.r_hand.screen_loc = ui_rhand
@@ -190,8 +183,6 @@
 			M.r_hand.screen_loc = null
 		if(M.l_hand)
 			M.l_hand.screen_loc = null
-
-
 
 /mob/living/carbon/monkey/create_hud()
 	if(client && !hud_used)

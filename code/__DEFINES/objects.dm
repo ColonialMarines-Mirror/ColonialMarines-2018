@@ -103,7 +103,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define STASIS_IN_BAG 		1
 #define STASIS_IN_CRYO_CELL 2
 
-
 // Diagonal movement for movable atoms
 #define FIRST_DIAG_STEP 	1
 #define SECOND_DIAG_STEP 	2
@@ -115,15 +114,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define SHUTTLE_COOLING_FACTOR_RECHARGE 0.5
 #define SHUTTLE_FUEL_ENHANCE_FACTOR_TRAVEL 0.75
 
-
 //sharp item defines
 #define IS_SHARP_ITEM_SIMPLE 		1 //not easily usable to cut or slice. e.g. shard, wirecutters, spear
 #define IS_SHARP_ITEM_ACCURATE		2 //knife, scalpel
 #define IS_SHARP_ITEM_BIG			3 //fireaxe, hatchet, energy sword
 
-
 //pry capable item defines
 #define IS_PRY_CAPABLE_SIMPLE		1
 #define IS_PRY_CAPABLE_CROWBAR		2 //actual crowbar
 #define IS_PRY_CAPABLE_FORCE		3 //can force open even powered airlocks
-

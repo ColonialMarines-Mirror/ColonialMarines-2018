@@ -84,7 +84,6 @@
 		hex = text("0[]", hex)
 	return hex
 
-
 // Concatenates a list of strings into a single string.  A seperator may optionally be provided.
 /proc/list2text(list/ls, sep)
 	if(ls.len <= 1) // Early-out code for empty or singleton lists.
@@ -171,16 +170,14 @@
 		#undef S4
 		#undef S1
 
-
 //slower then list2text, but correctly processes associative lists.
-proc/tg_list2text(list/list, glue=",")
+/proc/tg_list2text(list/list, glue=",")
 	if(!istype(list) || !list.len)
 		return
 	var/output
 	for(var/i=1 to list.len)
 		output += (i!=1? glue : null)+(!isnull(list["[list[i]]"])?"[list["[list[i]]"]]":"[list[i]]")
 	return output
-
 
 //Converts a string into a list by splitting the string at each delimiter found. (discarding the seperator)
 /proc/text2list(text, delimiter="\n")
@@ -212,9 +209,7 @@ proc/tg_list2text(list/list, glue=",")
 /proc/file2list(filename, seperator="\n")
 	return text2list(return_file_text(filename),seperator)
 
-
 //Turns a direction into text
-
 /proc/num2dir(direction)
 	switch(direction)
 		if(1.0) return NORTH
@@ -223,8 +218,6 @@ proc/tg_list2text(list/list, glue=",")
 		if(8.0) return WEST
 		else
 			world.log << "UNKNOWN DIRECTION: [direction]"
-
-
 
 //Turns a direction into text
 /proc/dir2text(direction)
@@ -246,7 +239,6 @@ proc/tg_list2text(list/list, glue=",")
 		if(10.0)
 			return "southwest"
 
-
 //Turns a direction into text
 /proc/dir2text_short(direction)
 	switch(direction)
@@ -266,8 +258,6 @@ proc/tg_list2text(list/list, glue=",")
 			return "NW"
 		if(10)
 			return "SW"
-
-
 
 //Turns text into proper directions
 /proc/text2dir(direction)

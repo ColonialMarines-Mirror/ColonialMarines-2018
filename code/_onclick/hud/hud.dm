@@ -56,7 +56,6 @@
 	var/obj/screen/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
 
-
 /datum/hud/New(mob/owner)
 	mymob = owner
 	hide_actions_toggle = new
@@ -120,10 +119,8 @@
 
 	. = ..()
 
-
 /mob/proc/create_hud()
 	return
-
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)
@@ -192,8 +189,6 @@
 	mymob.update_action_buttons(TRUE)
 	mymob.reload_fullscreens()
 
-
-
 /datum/hud/human/show_hud(version = 0)
 	..()
 	hidden_inventory_update()
@@ -203,9 +198,6 @@
 
 /datum/hud/proc/persistant_inventory_update()
 	return
-
-
-
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()

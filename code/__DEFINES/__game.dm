@@ -74,7 +74,6 @@ These are used with cdel (clean delete). For example, cdel(atom, TA_REVIVE_ME) w
 //Object specific defines
 #define CANDLE_LUM 3 //For how bright candles are
 
-
 //Preference toggles//
 //toggles_sound
 #define SOUND_ADMINHELP	1
@@ -101,7 +100,6 @@ These are used with cdel (clean delete). For example, cdel(atom, TA_REVIVE_ME) w
 #define TOGGLES_CHAT_DEFAULT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC|CHAT_GHOSTHIVEMIND)
 
 #define TOGGLES_SOUND_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY)
-
 
 /*
 	Shuttles
@@ -164,7 +162,6 @@ These are used with cdel (clean delete). For example, cdel(atom, TA_REVIVE_ME) w
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
-
 //=================================================
 
 //computer3 error codes, move lower in the file when it passes dev -Sayu
@@ -185,7 +182,6 @@ var/list/accessable_z_levels = list("1" = 10, "3" = 10, "4" = 10, "5" = 70)
 //Go away Urist, I'm restoring this to the longer list. ~Errorage
 
 #define TRANSITIONEDGE	3 //Distance from edge to move to another z-level
-
 
 var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 //Flags for zone sleeping

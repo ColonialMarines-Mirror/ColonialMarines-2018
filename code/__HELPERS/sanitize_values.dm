@@ -16,8 +16,6 @@
 	if(default)			return default
 	if(List && List.len)return List[1]
 
-
-
 //more specialised stuff
 /proc/sanitize_gender(gender,neuter=0,plural=0, default="male")
 	switch(gender)

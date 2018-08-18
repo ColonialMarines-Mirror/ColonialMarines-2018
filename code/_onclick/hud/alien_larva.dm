@@ -17,8 +17,6 @@
 	locate_leader = new /obj/screen/queen_locator()
 	infodisplay += locate_leader
 
-
-
 /mob/living/carbon/Xenomorph/Larva/create_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/larva(src)

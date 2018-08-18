@@ -96,7 +96,6 @@ var/religion_name = null
 		if(13)
 			station_name += pick("13","XIII","Thirteen")
 
-
 	if (config && config.server_name)
 		world.name = "[config.server_name]: [name]"
 	else
@@ -144,7 +143,6 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
-
 
 //Traitors and traitor silicons will get these. Revs will not.
 var/syndicate_code_phrase//Code phrase for traitors.
@@ -238,7 +236,6 @@ var/syndicate_code_response//Code response for traitors.
 
 	world << "\red Code Phrase is: \black [generate_code_phrase()]"
 	return
-
 
 	This was an earlier attempt at code phrase system, aside from an even earlier attempt (and failure).
 	This system more or less works as intended--aside from being unfinished--but it's still very predictable.

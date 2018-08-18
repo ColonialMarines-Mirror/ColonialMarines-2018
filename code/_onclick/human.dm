@@ -23,7 +23,6 @@
 		H << "\red You can't bite your hand again yet..."
 		return
 
-
 	if (!H.handcuffed) return
 	if (H.a_intent != "hurt") return
 	if (H.zone_selected != "mouth") return
@@ -44,7 +43,6 @@
 	last_chew = world.time
 
 /mob/living/carbon/human/UnarmedAttack(var/atom/A, var/proximity)
-
 	if(lying) //No attacks while laying down
 		return 0
 
@@ -64,7 +62,6 @@
 	A.attack_hand(src)
 
 /mob/living/carbon/human/RangedAttack(var/atom/A)
-
 	if(!gloves && !mutations.len) return
 	var/obj/item/clothing/gloves/G = gloves
 	if((LASER in mutations) && a_intent == "hurt")

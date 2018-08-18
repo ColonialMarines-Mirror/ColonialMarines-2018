@@ -33,11 +33,9 @@
 /obj/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
 
-
 /obj/screen/close
 	name = "close"
 	icon_state = "x"
-
 
 /obj/screen/close/clicked(var/mob/user)
 	if(master)
@@ -45,7 +43,6 @@
 			var/obj/item/storage/S = master
 			S.close(user)
 	return 1
-
 
 /obj/screen/action_button
 	icon = 'icons/mob/actions.dmi'
@@ -76,8 +73,6 @@
 	var/coord_row_offset = 26
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
 
-
-
 /obj/screen/action_button/hide_toggle
 	name = "Hide Buttons"
 	icon = 'icons/mob/actions.dmi'
@@ -96,10 +91,8 @@
 	user.update_action_buttons()
 	return 1
 
-
 /obj/screen/storage
 	name = "storage"
-
 
 /obj/screen/storage/proc/update_fullness(obj/item/storage/S)
 	if(!S.contents.len)
@@ -114,8 +107,6 @@
 			if(7 to 9) color = "#ffa500"
 			else color = null
 
-
-
 /obj/screen/gun
 	name = "gun"
 	dir = 2
@@ -126,17 +117,17 @@
 	icon_state = "no_walk0"
 	screen_loc = ui_gun2
 
-	update_icon(mob/user)
-		if(user.gun_mode)
-			if(user.target_can_move)
-				icon_state = "no_walk1"
-				name = "Disallow Walking"
-			else
-				icon_state = "no_walk0"
-				name = "Allow Walking"
-			screen_loc = initial(screen_loc)
-			return
-		screen_loc = null
+/obj/screen/gun/move/update_icon(mob/user)
+	if(user.gun_mode)
+		if(user.target_can_move)
+			icon_state = "no_walk1"
+			name = "Disallow Walking"
+		else
+			icon_state = "no_walk0"
+			name = "Allow Walking"
+		screen_loc = initial(screen_loc)
+		return
+	screen_loc = null
 
 /obj/screen/gun/move/clicked(var/mob/user)
 	if (..())
@@ -151,24 +142,23 @@
 	gun_click_time = world.time
 	return 1
 
-
 /obj/screen/gun/run
 	name = "Allow Running"
 	icon_state = "no_run0"
 	screen_loc = ui_gun3
 
-	update_icon(mob/user)
-		if(user.gun_mode)
-			if(user.target_can_move)
-				if(user.target_can_run)
-					icon_state = "no_run1"
-					name = "Disallow Running"
-				else
-					icon_state = "no_run0"
-					name = "Allow Running"
-				screen_loc = initial(screen_loc)
-				return
-		screen_loc = null
+/obj/screen/gun/run/update_icon(mob/user)
+	if(user.gun_mode)
+		if(user.target_can_move)
+			if(user.target_can_run)
+				icon_state = "no_run1"
+				name = "Disallow Running"
+			else
+				icon_state = "no_run0"
+				name = "Allow Running"
+			screen_loc = initial(screen_loc)
+			return
+	screen_loc = null
 
 /obj/screen/gun/run/clicked(var/mob/user)
 	if (..())
@@ -183,23 +173,22 @@
 	gun_click_time = world.time
 	return 1
 
-
 /obj/screen/gun/item
 	name = "Allow Item Use"
 	icon_state = "no_item0"
 	screen_loc = ui_gun1
 
-	update_icon(mob/user)
-		if(user.gun_mode)
-			if(user.target_can_click)
-				icon_state = "no_item1"
-				name = "Allow Item Use"
-			else
-				icon_state = "no_item0"
-				name = "Disallow Item Use"
-			screen_loc = initial(screen_loc)
-			return
-		screen_loc = null
+/obj/screen/gun/item/update_icon(mob/user)
+	if(user.gun_mode)
+		if(user.target_can_click)
+			icon_state = "no_item1"
+			name = "Allow Item Use"
+		else
+			icon_state = "no_item0"
+			name = "Disallow Item Use"
+		screen_loc = initial(screen_loc)
+		return
+	screen_loc = null
 
 /obj/screen/gun/item/clicked(var/mob/user)
 	if (..())
@@ -214,22 +203,20 @@
 	gun_click_time = world.time
 	return 1
 
-
 /obj/screen/gun/mode
 	name = "Toggle Gun Mode"
 	icon_state = "gun0"
 	screen_loc = ui_gun_select
 
-	update_icon(mob/user)
-		if(user.gun_mode) icon_state = "gun1"
-		else icon_state = "gun0"
+/obj/screen/gun/mode/update_icon(mob/user)
+	if(user.gun_mode) icon_state = "gun1"
+	else icon_state = "gun0"
 
 /obj/screen/gun/mode/clicked(var/mob/user)
 	if (..())
 		return 1
 	user.ToggleGunMode()
 	return 1
-
 
 /obj/screen/zone_sel
 	name = "damage zone"
@@ -305,18 +292,11 @@
 		update_icon(user)
 	return 1
 
-
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen1_alien.dmi'
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen1_robot.dmi'
-
-
-
-
-
-
 
 /obj/screen/clicked(var/mob/user)
 	if(!user)	return 1
@@ -403,7 +383,6 @@
 
 	return 0
 
-
 /obj/screen/inventory/clicked(var/mob/user)
 	if (..())
 		return 1
@@ -438,10 +417,6 @@
 				return 1
 	return 0
 
-
-
-
-
 /obj/screen/throw_catch
 	name = "throw/catch"
 	icon = 'icons/mob/screen1_Midnight.dmi'
@@ -465,7 +440,6 @@
 	user.drop_item_v()
 	return 1
 
-
 /obj/screen/resist
 	name = "resist"
 	icon = 'icons/mob/screen1_Midnight.dmi'
@@ -482,7 +456,6 @@
 /obj/screen/resist/alien
 	icon = 'icons/mob/screen1_alien.dmi'
 	screen_loc = ui_storage2
-
 
 /obj/screen/mov_intent
 	name = "run/walk toggle"
@@ -511,7 +484,6 @@
 		user.update_icons()
 	return 1
 
-
 /obj/screen/act_intent
 	name = "intent"
 	icon_state = "intent_help"
@@ -538,7 +510,6 @@
 		user.a_intent_change("disarm")
 
 	return 1
-
 
 /obj/screen/internals
 	name = "toggle internals"
@@ -609,14 +580,11 @@
 						C << "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>"
 						C.internal = tankcheck[best]
 
-
 					if(C.internal)
 						icon_state = "internal1"
 					else
 						C << "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>"
 	return 1
-
-
 
 /obj/screen/healths
 	name = "health"
@@ -631,8 +599,6 @@
 /obj/screen/healths/robot
 	icon = 'icons/mob/screen1_robot.dmi'
 	screen_loc = ui_borg_health
-
-
 
 /obj/screen/pull
 	name = "stop pulling"
@@ -653,8 +619,6 @@
 	else
 		icon_state = "pull0"
 
-
-
 /obj/screen/squad_leader_locator
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "trackoff"
@@ -668,7 +632,6 @@
 	icon_state = "trackoff"
 	name = "queen locator"
 	screen_loc = ui_queen_locator
-
 
 /obj/screen/xenonightvision
 	icon = 'icons/mob/screen1_alien.dmi'
@@ -688,7 +651,6 @@
 		icon_state = "nightvision1"
 	return 1
 
-
 /obj/screen/bodytemp
 	name = "body temperature"
 	icon_state = "temp0"
@@ -703,7 +665,6 @@
 	name = "fire"
 	icon_state = "fire0"
 	screen_loc = ui_fire
-
 
 /obj/screen/toggle_inv
 	name = "toggle"

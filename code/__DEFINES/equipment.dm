@@ -1,6 +1,5 @@
 //FLAGS BITMASK
 
-
 //turf-only flags
 #define NOJAUNT		1
 
@@ -43,7 +42,6 @@
 
 //==========================================================================================
 
-
 //flags_inv_hide
 //Bit flags for the flags_inv_hide variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 
@@ -59,7 +57,6 @@
 #define HIDEALLHAIR		512		// temporarily removes the user's hair, facial and otherwise.
 #define HIDETAIL 		1024
 #define HIDEFACE		2056	//Dictates whether we appear as unknown.
-
 
 //==========================================================================================
 
@@ -85,10 +82,6 @@
 #define BLOCKSHARPOBJ 	128  //From /tg: prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define NOPRESSUREDMAGE 256 //This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage.
 //SUITS AND HELMETS====================================================================================
-
-
-
-
 
 //===========================================================================================
 //Marine armor only, use for flags_marine_armor.

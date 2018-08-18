@@ -48,7 +48,8 @@ MAX_HIT_ACCURACY_MULT 0.50
 ##Damage of the projectile, though the gun itself can modify it. This is the main source of projectile damage.
 BASE_HIT_DAMAGE 10
 MIN_HIT_DAMAGE 15
-MLOW_HIT_DAMAGE 20
+LLOW_HIT_DAMAGE 20
+MLOW_HIT_DAMAGE 25
 LOW_HIT_DAMAGE 30
 HLOW_HIT_DAMAGE 35
 LMED_HIT_DAMAGE 40

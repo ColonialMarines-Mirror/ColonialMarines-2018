@@ -90,7 +90,7 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/play_sound_from_list,
 	/client/proc/play_imported_sound,
 	/client/proc/play_local_sound,
-	/client/proc/stop_sounds
+	/client/proc/stop_everyone_sounds
 	)
 var/list/admin_verbs_fun = list(
 	// /client/proc/object_talk,

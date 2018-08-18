@@ -61,9 +61,8 @@ var/global/datum/authority/branch/role/RoleAuthority
 	var/L = new
 	var/datum/job/J
 	var/datum/squad/S
-	var/i
 
-	for(i in roles_all) //Setting up our roles.
+	for(var/i in roles_all) //Setting up our roles.
 		J = new i
 
 		if(!J.title) //In case you forget to subtract one of those variable holder jobs.
@@ -80,11 +79,11 @@ var/global/datum/authority/branch/role/RoleAuthority
 	//	if(J.faction == FACTION_TO_JOIN)  //TODO Initialize non-faction jobs? //TODO Do we really need this?
 
 	//TODO Come up with some dynamic method of doing this.
-	for(i in ROLES_REGULAR_ALL) //We're going to re-arrange the list for mode to look better, starting with the officers.
+	for(var/i in ROLES_REGULAR_ALL) //We're going to re-arrange the list for mode to look better, starting with the officers.
 		J = roles_for_mode[i]
-			if(J)
-				L[J.title] = J
-	roles_for_mode = L
+		if(J)
+			L[J.title] = J
+		roles_for_mode = L
 
 	for(i in squads_all) //Setting up our squads.
 		S = new i()

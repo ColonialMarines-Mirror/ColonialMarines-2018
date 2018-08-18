@@ -241,6 +241,6 @@
 
 /obj/item/clothing/head/boonie
 	name = "Boonie Hat"
-	desc = "Also known as Australian Army giggle hat or hat ridiculous-for-the-use-of."
+	desc = "The pinnacle of tacticool technology."
 	icon_state = "booniehat"
 	item_state = "booniehat"

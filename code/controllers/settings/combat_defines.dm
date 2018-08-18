@@ -29,7 +29,8 @@
 
 	var/base_hit_damage = 10
 	var/min_hit_damage = 15
-	var/mlow_hit_damage = 20
+	var/llow_hit_damage = 20
+	var/mlow_hit_damage = 25
 	var/low_hit_damage = 30
 	var/hlow_hit_damage = 35
 	var/lmed_hit_damage = 40
@@ -51,6 +52,7 @@
 	var/max_hit_damage_mult = 0.35
 
 	var/reg_damage_falloff = 1
+	var/smg_damage_falloff = 2
 	var/buckshot_damage_falloff = 5
 	var/extra_damage_falloff = 10
 
@@ -157,6 +159,7 @@
 		if("max_hit_accuracy_mult") max_hit_accuracy_mult = value
 		if("base_hit_damage") base_hit_damage = value
 		if("min_hit_damage") min_hit_damage = value
+		if("llow_hit_damage") llow_hit_damage = value
 		if("mlow_hit_damage") mlow_hit_damage = value
 		if("low_hit_damage") low_hit_damage = value
 		if("hlow_hit_damage") hlow_hit_damage = value
@@ -177,6 +180,7 @@
 		if("high_hit_damage_mult") high_hit_damage_mult = value
 		if("max_hit_damage_mult") max_hit_damage_mult = value
 		if("reg_damage_falloff") reg_damage_falloff = value
+		if("smg_damage_falloff") smg_damage_falloff = value
 		if("buckshot_damage_falloff") buckshot_damage_falloff = value
 		if("extra_damage_falloff") extra_damage_falloff = value
 		if("base_damage_falloff_mult") base_damage_falloff_mult = value

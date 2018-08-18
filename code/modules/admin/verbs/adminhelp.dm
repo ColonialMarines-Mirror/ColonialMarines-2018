@@ -26,9 +26,11 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		msg = input("Please enter your message:", "Admin Help", null, null) as message|null
 
 	if(selected_type == "Suggestion / Bug Report")
-		switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our Github, and suggestions on our forums. #WHENYOUCODEIT",,"Go to Gitlab","Cancel"))
+		switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our Github, and suggestions on our forums. #WHENYOUCODEIT",,"Go to Githuh","Go to forums","Cancel"))
 			if("Go to Github")
 				src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues")
+			if("Go to forums")
+				src << link("https://tgstation13.org/phpBB/viewforum.php?f=65")
 			else
 				return
 		if(selected_type == "Admins Spawn Shit")

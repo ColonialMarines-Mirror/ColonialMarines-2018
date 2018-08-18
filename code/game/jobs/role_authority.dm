@@ -32,7 +32,14 @@ var/global/datum/authority/branch/role/RoleAuthority
  
 	//Whenever the controller is created, we want to set up the basic role lists.
 /datum/authority/branch/role/New()
-	var/roles_all = subtypesof(/datum/job) - list(/datum/job/pmc, /datum/job/command, /datum/job/civilian, /datum/job/logistics, /datum/job/logistics/tech, /datum/job/marine, /datum/job/pmc/elite_responder)
+	var/roles_all = subtypesof(/datum/job) - list(
+							/datum/job/pmc,
+							/datum/job/command,
+							/datum/job/civilian,
+							/datum/job/logistics,
+							/datum/job/logistics/tech,
+							/datum/job/marine,
+							/datum/job/pmc/elite_responder)
 	var/squads_all = subtypesof(/datum/squad)
 
 	if(!roles_all.len)
@@ -65,15 +72,18 @@ var/global/datum/authority/branch/role/RoleAuthority
 			continue
 
 		roles_by_path[J.type] = J
-		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT) roles_by_name[J.title] = J
-		if(J.flags_startup_parameters & ROLE_ADD_TO_MODE) roles_for_mode[J.title] = J
+		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT)
+			roles_by_name[J.title] = J
+		if(J.flags_startup_parameters & ROLE_ADD_TO_MODE)
+			roles_for_mode[J.title] = J
 
 	//	if(J.faction == FACTION_TO_JOIN)  //TODO Initialize non-faction jobs? //TODO Do we really need this?
 
 	//TODO Come up with some dynamic method of doing this.
 	for(i in ROLES_REGULAR_ALL) //We're going to re-arrange the list for mode to look better, starting with the officers.
 		J = roles_for_mode[i]
-			if(J) L[J.title] = J
+			if(J)
+				L[J.title] = J
 	roles_for_mode = L
 
 	for(i in squads_all) //Setting up our squads.

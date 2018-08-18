@@ -34,8 +34,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			else
 				return
 		if(selected_type == "Admins Spawn Shit")
-			alert("No",,"Ok")
-				return
+			src << "\red <B>No</B>"
 			
 	var/selected_upper = uppertext(selected_type)
 

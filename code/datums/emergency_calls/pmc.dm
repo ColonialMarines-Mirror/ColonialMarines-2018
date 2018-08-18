@@ -1,8 +1,8 @@
 
 
-//Weyland Yutani commandos. Friendly to USCM, hostile to xenos.
+//Nanotrasen commandos. Friendly to USCM, hostile to xenos.
 /datum/emergency_call/pmc
-	name = "Weyland-Yutani PMC (Squad)"
+	name = "Nanotrasen PMC (Squad)"
 	mob_max = 6
 	probability = 25
 	shuttle_id = "Distress_PMC"
@@ -11,7 +11,7 @@
 	New()
 		..()
 		arrival_message = "[MAIN_SHIP_NAME], this is USCSS Royce responding to your distress call. We are boarding. Any hostile actions will be met with lethal force."
-		objectives = "Secure the Corporate Liaison and the [MAIN_SHIP_NAME] Commander, and eliminate any hostile threats. Do not damage W-Y property."
+		objectives = "Secure the Corporate Liaison and the [MAIN_SHIP_NAME] Commander, and eliminate any hostile threats. Do not damage NT property."
 
 
 /datum/emergency_call/pmc/create_member(datum/mind/M)
@@ -53,24 +53,24 @@
 		if(!leader)       //First one spawned is always the leader.
 			leader = mob
 			mob.mind.set_cm_skills(/datum/skills/SL/pmc)
-			mob.arm_equipment(mob, "Weyland-Yutani PMC (Leader)")
+			mob.arm_equipment(mob, "Nanotrasen PMC (Leader)")
 			mob.mind.special_role = "MODE"
 			mob.mind.assigned_role = "PMC Leader"
 		else
 			mob.mind.special_role = "MODE"
 			if(prob(55)) //Randomize the heavy commandos and standard PMCs.
 				mob.mind.set_cm_skills(/datum/skills/pfc/pmc)
-				mob.arm_equipment(mob, "Weyland-Yutani PMC (Standard)")
-				mob << "<font size='3'>\red You are a Weyland Yutani mercenary!</font>"
+				mob.arm_equipment(mob, "Nanotrasen PMC (Standard)")
+				mob << "<font size='3'>\red You are a Nanotrasen mercenary!</font>"
 			else
 				if(prob(30))
 					mob.mind.set_cm_skills(/datum/skills/specialist/pmc)
-					mob.arm_equipment(mob, "Weyland-Yutani PMC (Sniper)")
-					mob << "<font size='3'>\red You are a Weyland Yutani sniper!</font>"
+					mob.arm_equipment(mob, "Nanotrasen PMC (Sniper)")
+					mob << "<font size='3'>\red You are a Nanotrasen sniper!</font>"
 				else
 					mob.mind.set_cm_skills(/datum/skills/smartgunner/pmc)
-					mob.arm_equipment(mob, "Weyland-Yutani PMC (Gunner)")
-					mob << "<font size='3'>\red You are a Weyland Yutani heavy gunner!</font>"
+					mob.arm_equipment(mob, "Nanotrasen PMC (Gunner)")
+					mob << "<font size='3'>\red You are a Nanotrase heavy gunner!</font>"
 		print_backstory(mob)
 
 	spawn(10)
@@ -82,19 +82,19 @@
 
 /datum/emergency_call/pmc/print_backstory(mob/living/carbon/human/M)
 	M << "<B>You were born [pick(75;"in Europe", 15;"in Asia", 10;"on Mars")] to a [pick(75;"well-off", 15;"well-established", 10;"average")] family.</b>"
-	M << "<B>Joining the ranks of Weyland Yutani has proven to be very profitable for you.</b>"
+	M << "<B>Joining the ranks of Nanotrasen has proven to be very profitable for you.</b>"
 	M << "<B>While you are officially an employee, much of your work is off the books. You work as a skilled mercenary.</b>"
 	M << "<B>You are [pick(50;"unaware of the xenomorph threat", 15;"acutely aware of the xenomorph threat", 10;"well-informed of the xenomorph threat")]</b>"
 	M << ""
 	M << ""
-	M << "<B>You are part of  Weyland Yutani Task Force Oberon that arrived in 2182 following the UA withdrawl of the Tychon's Rift sector.</b>"
-	M << "<B>Task-force Oberon is stationed aboard the USCSS Royce, a powerful Weyland-Yutani cruiser that patrols the outer edges of Tychon's Rift. </b>"
-	M << "<B>Under the directive of Weyland-Yutani board member Johan Almric, you act as private security for Weyland Yutani science teams.</b>"
+	M << "<B>You are part of  Nanotrasen Task Force Oberon that arrived in 2182 following the UA withdrawl of the Tychon's Rift sector.</b>"
+	M << "<B>Task-force Oberon is stationed aboard the USCSS Royce, a powerful Nanotrasen cruiser that patrols the outer edges of Tychon's Rift. </b>"
+	M << "<B>Under the directive of Nanotrasen board member Johan Almric, you act as private security for Nanotrasen science teams.</b>"
 	M << "<B>The USCSS Royce contains a crew of roughly two hundred PMCs, and one hundred scientists and support personnel.</b>"
 	M << ""
 	M << ""
-	M << "<B>Ensure no damage is incurred against Weyland Yutani. Make sure the CL is safe.</b>"
-	M << "<B>Deny Weyland-Yutani's involvement and do not trust the UA/USCM forces.</b>"
+	M << "<B>Ensure no damage is incurred against Nanotrasen. Make sure the CL is safe.</b>"
+	M << "<B>Deny Nanotrasen's involvement and do not trust the UA/USCM forces.</b>"
 
 
 
@@ -162,7 +162,7 @@
 
 
 /datum/emergency_call/pmc/platoon
-	name = "Weyland-Yutani PMC (Platoon)"
+	name = "Nanotrasen PMC (Platoon)"
 	mob_min = 8
 	mob_max = 25
 	probability = 0

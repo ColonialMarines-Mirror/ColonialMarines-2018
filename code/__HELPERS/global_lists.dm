@@ -93,10 +93,27 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
 /proc/makeDatumRefLists()
 	// Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
-
-	// Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
+	for(var/path in subtypesof(/datum/sprite_accessory/hair))
+		var/datum/sprite_accessory/hair/H = new path()
+		hair_styles_list[H.name] = H
+		switch(H.gender)
+			if(MALE)
+				hair_styles_male_list += H.name
+			if(FEMALE)
+				hair_styles_female_list += H.name
+			else
+				hair_styles_list += H.name
+ 	// Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
+		var/datum/sprite_accessory/facial_hair/H = new path()
+		facial_hair_styles_list[H.name] = H
+		switch(H.gender)
+			if(MALE)
+				facial_hair_styles_male_list += H.name
+			if(FEMALE)
+				facial_hair_styles_female_list += H.name
+			else
+				facial_hair_styles_list += H.name
 
 	// Ethnicity - Initialise all /datum/ethnicity into a list indexed by ethnicity name
 	for(var/path in subtypesof(/datum/ethnicity))

@@ -2,42 +2,45 @@
 	set category = "Fun"
 	set name = "Play Imported Sound"
 	set desc = "Play a sound imported from anywhere on your computer."
-	if(!check_rights(R_SOUNDS))	return
-
-	if(midi_playing)
-		usr << "No. An Admin already played a midi recently."
+	if(!check_rights(R_SOUNDS))
 		return
 
-	var/sound/uploaded_sound = sound(S, repeat = 0, wait = 1, channel = 777)
-	uploaded_sound.priority = 250
+	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
+	if(!vol || vol < 0 || vol > 100)
+		usr << "\red Invalid volume!"
+		return
 
-	switch( alert("Play sound globally or locally?", "Sound", "Global", "Local", "Cancel") )
-		if("Global")
-			for(var/mob/M in player_list)
-				if(M.client.prefs.toggles_sound & SOUND_MIDI)
-					M << uploaded_sound
-					heard_midi++
-		if("Local")
-			playsound(get_turf(src.mob), uploaded_sound, 50, 0)
-			for(var/mob/M in view())
-				heard_midi++
+	var/sound/admin_sound = new()
+	admin_sound.priority = 250
+	admin_sound.file = S
+	admin_sound.volume = vol
+	admin_sound.channel = 777
+
+	var/res = alert(usr, "Show the title of this song to the players?",, "Yes","No", "Cancel")
+	switch(res)
+		if("Yes")
+			world << "<b><font color='#002eb9' size='2'>An admin played: [S]</b></font>"
 		if("Cancel")
 			return
 
-	log_admin("[key_name(src)] played sound `[S]` for [heard_midi] player(s). [clients.len - heard_midi] player(s) have disabled admin midis.")
-	message_admins("[key_name_admin(src)] played sound `[S]` for [heard_midi] player(s). [clients.len - heard_midi] player(s) have disabled admin midis.", 1)
+	for(var/mob/M in player_list)
+		if(M.client.prefs.toggles_sound & SOUND_MIDI)
+			playsound(M, S, vol)
+
+	log_admin("[key_name(src)] played sound [S]")
+	message_admins("[key_name_admin(src)] played sound [S]", 1)
 	feedback_add_details("admin_verb","PCS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	// A 30 sec timer used to show Admins how many players are silencing the sound after it starts - see preferences_toggles.dm
-	var/midi_playing_timer = 300 // Should match with the midi_silenced spawn() in preferences_toggles.dm
-	midi_playing = 1
-	spawn(midi_playing_timer)
-		midi_playing = 0
-		message_admins("'Silence Current Midi' usage reporting 30-sec timer has expired. [total_silenced] player(s) silenced the midi in the first 30 seconds out of [heard_midi] total player(s) that have 'Play Admin Midis' enabled. <span style='color: red'>[round((total_silenced / heard_midi) * 100)]% of players don't want to hear it, and likely more if the midi is longer than 30 seconds.</span>")
-		heard_midi = 0
-		total_silenced = 0
+/client/proc/play_local_sound(S as sound)
+	set category = "Fun"
+	set name = "Play Local Sound"
+	if(!check_rights(R_SOUNDS))
+		return
 
-
+	log_admin("[key_name(src)] played sound [S]")
+	message_admins("[key_name_admin(src)] played sound [S]", 1)
+	playsound(get_turf(src.mob),S, 50, 0, 0)
+	feedback_add_details("admin_verb","Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_sound_from_list()
 	set category = "Fun"
@@ -49,8 +52,21 @@
 	sounds += "--CANCEL--"
 
 	var/melody = input("Select a sound to play", "Sound list", "--CANCEL--") in sounds
-
-	if(melody == "--CANCEL--")	return
+	if(melody == "--CANCEL--")
+		return
 
 	play_imported_sound(melody)
 	feedback_add_details("admin_verb","PDS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/stop_everyone_sounds()
+	set category = "Debug"
+	set name = "Stop All Playing Sounds"
+	if(!src.holder)
+		return
+
+	log_admin("[key_name(src)] stopped all currently playing sounds.")
+	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
+	for(var/mob/M in player_list)
+		if(M.client)
+			M << sound(null)
+	feedback_add_details("admin_verb","Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

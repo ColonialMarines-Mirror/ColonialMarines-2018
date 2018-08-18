@@ -653,23 +653,23 @@
 /datum/sprite_accessory/facial_hair/vandyke
 	name = "Van Dyke Mustache"
 	icon_state = "facial_vandyke"
-/*
+
 /datum/sprite_accessory/facial_hair/chaplin
 	name = "Square Mustache"
 	icon_state = "facial_chaplin"
-*/
+
 /datum/sprite_accessory/facial_hair/selleck
 	name = "Selleck Mustache"
 	icon_state = "facial_selleck"
-/*
+
 /datum/sprite_accessory/facial_hair/neckbeard
 	name = "Neckbeard"
 	icon_state = "facial_neckbeard"
-*/
+
 /datum/sprite_accessory/facial_hair/fullbeard
 	name = "Full Beard"
 	icon_state = "facial_fullbeard"
-/*
+
 /datum/sprite_accessory/facial_hair/longbeard
 	name = "Long Beard"
 	icon_state = "facial_longbeard"
@@ -677,7 +677,7 @@
 /datum/sprite_accessory/facial_hair/vlongbeard
 	name = "Very Long Beard"
 	icon_state = "facial_wise"
-*/
+
 /datum/sprite_accessory/facial_hair/elvis
 	name = "Elvis Sideburns"
 	icon_state = "facial_elvis"
@@ -689,11 +689,11 @@
 /datum/sprite_accessory/facial_hair/chinstrap
 	name = "Chinstrap"
 	icon_state = "facial_chin"
-/*
+
 /datum/sprite_accessory/facial_hair/hip
 	name = "Hipster Beard"
 	icon_state = "facial_hip"
-*/
+
 /datum/sprite_accessory/facial_hair/gt
 	name = "Goatee"
 	icon_state = "facial_gt"

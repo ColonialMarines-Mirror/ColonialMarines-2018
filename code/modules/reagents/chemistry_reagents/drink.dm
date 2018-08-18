@@ -117,7 +117,7 @@
 /datum/reagent/drink/wy_beer
 	name = "Aspen Beer"
 	id = "aspen"
-	description = "Pretty good when you get past the fact that it tastes like piss. Canned by the Weyland-Yutani Corporation."
+	description = "Pretty good when you get past the fact that it tastes like piss. Canned by the Nanotrasen Corporation."
 	color = "#ffcc66"
 
 /datum/reagent/drink/grapesoda

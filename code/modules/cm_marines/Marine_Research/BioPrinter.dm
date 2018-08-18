@@ -4,7 +4,7 @@ Basically a cheap knock-off of the Protolathe that I wrote in the middle of the 
 
 */
 /obj/machinery/r_n_d/bioprinter
-	name = "Weyland Yutani Brand Bio-Organic Printer(TM)"
+	name = "Nanotrasen Brand Bio-Organic Printer(TM)"
 	icon_state = "protolathe"
 	flags_atom = OPENCONTAINER
 
@@ -88,10 +88,10 @@ Basically a cheap knock-off of the Protolathe that I wrote in the middle of the 
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\The Weyland Yutani Brand Bioprinter(TM) must be linked to an R&D console first!"
+		user << "\The Nanotrasen Brand Bioprinter(TM) must be linked to an R&D console first!"
 		return 1
 	if (busy)
-		user << "\red The Weyland Yutani Brand Bioprinter(TM) is busy. Please wait for completion of previous operation."
+		user << "\red The Nanotrasen Brand Bioprinter(TM) is busy. Please wait for completion of previous operation."
 		return 1
 	if (!istype(O, /obj/item/XenoBio))
 		user << "\red You cannot insert this item into the protolathe!"

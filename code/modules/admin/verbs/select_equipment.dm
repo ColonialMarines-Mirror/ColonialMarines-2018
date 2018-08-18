@@ -92,10 +92,10 @@
 		"USCM Officer (USCM Command)",
 		"USCM Admiral (USCM Command)",
 		"USCM Combat Synth (Smartgunner)",
-		"Weyland-Yutani PMC (Standard)",
-		"Weyland-Yutani PMC (Leader)",
-		"Weyland-Yutani PMC (Gunner)",
-		"Weyland-Yutani PMC (Sniper)",
+		"Nanotrasen PMC (Standard)",
+		"Nanotrasen PMC (Leader)",
+		"Nanotrasen PMC (Gunner)",
+		"Nanotrasen PMC (Sniper)",
 		"UPP Soldier (Standard)",
 		"UPP Soldier (Medic)",
 		"UPP Soldier (Heavy)",
@@ -112,7 +112,7 @@
 		"Mercenary (Heavy)",
 		"Mercenary (Miner)",
 		"Mercenary (Engineer)",
-		"Weyland-Yutani Deathsquad",
+		"Nanotrasen Deathsquad",
 		"Business Person",
 		"UPP Spy",
 		"Mk50 Compression Suit",
@@ -362,7 +362,7 @@
 				M.mind.assigned_role = "Commander"
 				M.mind.set_cm_skills(/datum/skills/XO)
 
-		if("Weyland-Yutani PMC (Standard)")
+		if("Nanotrasen PMC (Standard)")
 			var/choice = rand(1,4)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/PMC(M), WEAR_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/marine/veteran/PMC(M), WEAR_BODY)
@@ -410,7 +410,7 @@
 				M.mind.special_role = "MODE"
 				M.mind.set_cm_skills(/datum/skills/pfc)
 
-		if("Weyland-Yutani PMC (Leader)")
+		if("Nanotrasen PMC (Leader)")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/PMC(M), WEAR_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/marine/veteran/PMC/leader(M), WEAR_BODY)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/veteran/PMC/leader(M), WEAR_JACKET)
@@ -445,7 +445,7 @@
 				M.mind.special_role = "MODE"
 				M.mind.set_cm_skills(/datum/skills/SL/pmc)
 
-		if("Weyland-Yutani PMC (Gunner)")
+		if("Nanotrasen PMC (Gunner)")
 			if(M.mind)
 				M.mind.role_comm_title = "Spc"
 				M.mind.assigned_role = "PMC"
@@ -478,7 +478,7 @@
 			M.equip_to_slot_or_del(W, WEAR_ID)
 
 
-		if("Weyland-Yutani PMC (Sniper)")
+		if("Nanotrasen PMC (Sniper)")
 			if(M.mind)
 				M.mind.role_comm_title = "Spc"
 				M.mind.assigned_role = "PMC"
@@ -513,7 +513,7 @@
 			M.equip_to_slot_or_del(W, WEAR_ID)
 
 
-		if("Weyland-Yutani Deathsquad")
+		if("Nanotrasen Deathsquad")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/commando(M), WEAR_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/m42_goggles	(M), WEAR_EYES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/marine/veteran/PMC/commando(M), WEAR_BODY)

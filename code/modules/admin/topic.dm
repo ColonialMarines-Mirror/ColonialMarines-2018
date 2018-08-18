@@ -1558,7 +1558,7 @@
 					if(!addressed_to) return
 				else
 					return
-				var/message_body = input(src.owner, "Enter Message Body, use <p></p> for paragraphs", "Outgoing message from Weyland USCM", "") as message|null
+				var/message_body = input(src.owner, "Enter Message Body, use <p></p> for paragraphs", "Outgoing message from Nanotrasen USCM", "") as message|null
 				if(!message_body) return
 				var/sent_by = input(src.owner, "Enter the name and rank you are sending from.", "Outgoing message from USCM", "") as message|null
 				if(!sent_by) return
@@ -1615,26 +1615,26 @@
 		var/fax_message = ""
 		switch(template_choice)
 			if("Custom")
-				var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Weyland Yutani", "") as message|null
+				var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Nanotrasen", "") as message|null
 				if(!input)	return
 				fax_message = "[input]"
 			if("Template")
-				var/subject = input(src.owner, "Enter subject line", "Outgoing message from Weyland Yutani", "") as message|null
+				var/subject = input(src.owner, "Enter subject line", "Outgoing message from Nanotrasen", "") as message|null
 				if(!subject) return
 				var/addressed_to = ""
 				var/address_option = input("Address it to the sender or custom?") in list("Sender", "Custom")
 				if(address_option == "Sender")
 					addressed_to = "[H.real_name]"
 				else if(address_option == "Custom")
-					addressed_to = input(src.owner, "Enter Addressee Line", "Outgoing message from Weyland Yutani", "") as message|null
+					addressed_to = input(src.owner, "Enter Addressee Line", "Outgoing message from Nanotrasen", "") as message|null
 					if(!addressed_to) return
 				else
 					return
-				var/message_body = input(src.owner, "Enter Message Body, use <p></p> for paragraphs", "Outgoing message from Weyland Yutani", "") as message|null
+				var/message_body = input(src.owner, "Enter Message Body, use <p></p> for paragraphs", "Outgoing message from Nanotrasen", "") as message|null
 				if(!message_body) return
-				var/sent_by = input(src.owner, "Enter JUST the name you are sending this from", "Outgoing message from Weyland Yutani", "") as message|null
+				var/sent_by = input(src.owner, "Enter JUST the name you are sending this from", "Outgoing message from Nanotrasen", "") as message|null
 				if(!sent_by) return
-				fax_message = generate_templated_fax(1,"WEYLAND-YUTANI CORPORATE AFFAIRS - USS ALMAYER",subject,addressed_to,message_body,sent_by,"Corporate Affairs Director","Weyland-Yutani")
+				fax_message = generate_templated_fax(1,"NANOTRASEN CORPORATE AFFAIRS - USS ALMAYER",subject,addressed_to,message_body,sent_by,"Corporate Affairs Director","Nanotrasen")
 		usr << browse(fax_message, "window=clfaxpreview;size=600x600")
 		var/send_choice = input("Send this fax?") in list("Send", "Cancel")
 		if(send_choice == "Cancel") return
@@ -1654,7 +1654,7 @@
 					// give the sprite some time to flick
 					spawn(20)
 						var/obj/item/paper/P = new /obj/item/paper( F.loc )
-						P.name = "Weyland Yutani - [customname]"
+						P.name = "Nanotrasen - [customname]"
 						P.info = fax_message
 						P.update_icon()
 
@@ -1667,7 +1667,7 @@
 							P.stamped = new
 						P.stamped += /obj/item/tool/stamp
 						P.overlays += stampoverlay
-						P.stamps += "<HR><i>This paper has been stamped and encrypted by the Weyland Yutani Quantum Relay (tm).</i>"
+						P.stamps += "<HR><i>This paper has been stamped and encrypted by the Nanotrasen Quantum Relay (tm).</i>"
 
 				src.owner << "Message reply to transmitted successfully."
 				log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [fax_message]")

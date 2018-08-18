@@ -161,7 +161,7 @@ Your role involves a lot of roleplaying, but you can perform the function of a r
 	department_flag = ROLEGROUP_MARINE_COMMAND
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the W-Y corporate office"
+	supervisors = "the NT corporate office"
 	selection_color = "#ffeedd"
 	access = list(ACCESS_IFF_MARINE, ACCESS_WY_CORPORATE, ACCESS_ILLEGAL_PIRATE, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_LOGISTICS)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_WY_CORPORATE, ACCESS_ILLEGAL_PIRATE, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_LOGISTICS)
@@ -179,9 +179,9 @@ Your role involves a lot of roleplaying, but you can perform the function of a r
 
 
 	generate_entry_message(mob/living/carbon/human/H)
-		. = {"As a representative of Weyland-Yutani Corporation, your job requires you to stay in character at all times.
+		. = {"As a representative of Nanotrasen Corporation, your job requires you to stay in character at all times.
 You are not required to follow military orders; however, you cannot give military orders.
-Your primary job is to observe and report back your findings to Weyland-Yutani. Follow regular game rules unless told otherwise by your superiors.
+Your primary job is to observe and report back your findings to Nanotrasen. Follow regular game rules unless told otherwise by your superiors.
 Use your office fax machine to communicate with corporate headquarters or to acquire new directives. You may not receive anything back, and this is normal."}
 
 	generate_entry_conditions(mob/living/carbon/human/H)
@@ -195,7 +195,7 @@ Use your office fax machine to communicate with corporate headquarters or to acq
 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"It was just a regular day in the office when the higher up decided to send you in to this hot mess. If only you called in sick that day...
-The W-Y mercs were hired to protect some important science experiment, and W-Y expects you to keep them in line.
+The NT mercs were hired to protect some important science experiment, and NT expects you to keep them in line.
 These are hardened killers, and you write on paper for a living. It won't be easy, that's for damn sure.
 Best to let the mercs do the killing and the dying, but remind them who pays the bills."}
 

@@ -33,7 +33,7 @@
 \
 								50; /obj/item/storage/firstaid/regular, \
 								50; /obj/item/storage/firstaid/fire, \
-								75; /obj/item/storage/box/wy_mre, \
+								75; /obj/item/storage/box/nt_mre, \
 \
 								100; /obj/item/storage/backpack/commando, \
 								100; /obj/item/storage/backpack/yautja, \
@@ -172,7 +172,7 @@ var/waiting_for_drop_votes = 0
 
 	spawn(10)
 		world << "<B>The current game mode is - HUNTER GAMES!</B>"
-		world << "You have been dropped off on a Weyland Yutani colony overrun with alien Predators who have turned it into a game preserve.."
+		world << "You have been dropped off on a Nanotrasen colony overrun with alien Predators who have turned it into a game preserve.."
 		world << "And you are both the hunter and the hunted!"
 		world << "Be the <B>last survivor</b> and <B>win glory</B>! Fight in any way you can! Team up or be a loner, it's up to you."
 		world << "Be warned though - if someone hasn't died in 3 minutes, the watching Predators get irritated!"

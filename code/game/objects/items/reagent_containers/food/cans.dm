@@ -92,7 +92,7 @@
 
 /obj/item/reagent_container/food/drinks/cans/cola
 	name = "\improper Fruit-Beer"
-	desc = "In theory, Mango flavored root beer sounds like a pretty good idea. Weyland Yutani has disproved yet another theory with its latest line of cola. Canned by the Weyland-Yutani Corporation."
+	desc = "In theory, Mango flavored root beer sounds like a pretty good idea. Nanotrasen has disproved yet another theory with its latest line of cola. Canned by the Nanotrasen Corporation."
 	icon_state = "fruit_beer"
 	center_of_mass = list("x"=16, "y"=10)
 	New()
@@ -100,9 +100,9 @@
 		reagents.add_reagent("cola", 30)
 
 /obj/item/reagent_container/food/drinks/cans/waterbottle
-	name = "\improper Weyland-Yutani Bottled Spring Water"
-	desc = "Overpriced 'Spring' water. Bottled by the Weyland-Yutani Corporation."
-	icon_state = "wy_water"
+	name = "\improper Nanotrasen Bottled Spring Water"
+	desc = "Overpriced 'Spring' water. Bottled by the Nanotrasen Corporation."
+	icon_state = "nt_water"
 	center_of_mass = list("x"=15, "y"=8)
 	New()
 		..()
@@ -258,8 +258,8 @@
 		reagents.add_reagent("water", 25)
 
 /obj/item/reagent_container/food/drinks/cans/aspen
-	name = "\improper Weyland Yutani Aspen Beer"
-	desc = "Pretty good when you get past the fact that it tastes like piss. Canned by the Weyland-Yutani Corporation."
+	name = "\improper Nanotrasen Aspen Beer"
+	desc = "Pretty good when you get past the fact that it tastes like piss. Canned by the Nanotrasen Corporation."
 	icon_state = "6_pack_1"
 	center_of_mass = list("x"=16, "y"=10)
 	New()

@@ -236,9 +236,9 @@
 
 
 
-/obj/item/storage/box/wy_mre
-	name = "\improper Weyland-Yutani brand MRE"
-	desc = "A prepackaged, long-lasting food box from Weyland Yutani Industries.\nOn the box is the Weyland Yutani logo, with a slogan surrounding it: \n<b>WEYLAND-YUTANI. BUILDING BETTER LUNCHES</b>"
+/obj/item/storage/box/nt_mre
+	name = "\improper Nanotrasen brand MRE"
+	desc = "A prepackaged, long-lasting food box from Nanotrasen Industries.\nOn the box is the Nanotrasen logo, with a slogan surrounding it: \n<b>NANOTRASEN. BUILDING BETTER LUNCHES</b>"
 	icon_state = "mre2"
 	can_hold = list("/obj/item/reagent_container/food/snacks")
 	w_class = 4

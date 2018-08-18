@@ -156,7 +156,7 @@
 
 /obj/item/reagent_container/food/snacks/mre_pack/meal5
 	name = "\improper USCM Prepared Meal (monkey)"
-	desc = "EE EEE!"
+	desc = "Sopa de Macaco, Uma Delicia."
 	icon_state = "MREe"
 
 	New()
@@ -166,7 +166,7 @@
 
 /obj/item/reagent_container/food/snacks/mre_pack/meal6
 	name = "\improper USCM Prepared Meal (tofu)"
-	desc = "BBQ tofu in a bun, hand crafted by Hungarian children who believe in a galaxy with soldiers that kill people, not animals."
+	desc = "BBQ sticky tofu in a bun, hand crafted by Hungarian children who believe in a galaxy with soldiers that kill people, not animals."
 	icon_state = "MREf"
 
 	New()

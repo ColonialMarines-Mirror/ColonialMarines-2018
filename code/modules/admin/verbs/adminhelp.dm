@@ -31,10 +31,9 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 				src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues")
 			if("Go to forums")
 				src << link("https://tgstation13.org/phpBB/viewforum.php?f=65")
-			else
-				return
-		if(selected_type == "Admins Spawn Shit")
-			src << "\red <B>No</B>"
+
+	if(selected_type == "Admins Spawn Shit")
+		src << "\red <B>No</B>"
 			
 	var/selected_upper = uppertext(selected_type)
 

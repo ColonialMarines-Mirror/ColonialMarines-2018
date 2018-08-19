@@ -144,13 +144,14 @@
 		set waitfor = 0
 		var/i
 		for(i = 1 to bonus_projectiles_amount) //Want to run this for the number of bonus projectiles.
-			var/scatter_x = rand(-1,1)
-			var/scatter_y = rand(-1,1)
-			var/turf/new_target = locate(original_P.target_turf.x + round(scatter_x),original_P.target_turf.y + round(scatter_y),original_P.target_turf.z)
-			if(!istype(new_target) || isnull(new_target)) continue	//If we didn't find anything, make another pass.
 			var/obj/item/projectile/P = rnew(/obj/item/projectile, original_P.shot_from)
 			P.generate_bullet(ammo_list[bonus_projectiles_type]) //No bonus damage or anything.
-			P.original = new_target
+			if(prob(P.scatter))
+				var/scatter_x = rand(-1,1)
+				var/scatter_y = rand(-1,1)
+				var/turf/new_target = locate(original_P.target_turf.x + round(scatter_x),original_P.target_turf.y + round(scatter_y),original_P.target_turf.z)
+				if(!istype(new_target) || isnull(new_target)) continue	//If we didn't find anything, make another pass.
+				P.original = new_target
 			P.accuracy = round(P.accuracy * original_P.accuracy/initial(original_P.accuracy)) //if the gun changes the accuracy of the main projectile, it also affects the bonus ones.
 			P.fire_at(new_target,original_P.firer,original_P.shot_from,P.ammo.max_range,P.ammo.shell_speed) //Fire!
 
@@ -336,7 +337,7 @@
 	name = "heavy revolver bullet"
 
 /datum/ammo/bullet/revolver/heavy/New()
-		..()
+	..()
 	damage = config.med_hit_damage
 	penetration= config.min_armor_penetration
 	accuracy = -config.med_hit_accuracy
@@ -407,7 +408,8 @@
 /datum/ammo/bullet/rifle/New()
 	..()
 	accurate_range = config.short_shell_range
-	damage = config.lmmed_hit_damage
+	damage = config.lmed_hit_damage
+	penetration = config.mlow_armor_penetration
 
 /datum/ammo/bullet/rifle/ap
 	name = "armor-piercing rifle bullet"
@@ -554,7 +556,7 @@
 	accuracy_var_low = config.med_proj_variance
 	accuracy_var_high = config.med_proj_variance
 	max_range = config.short_shell_range
-	damage = config.lmed_hit_damage
+	damage = config.hlow_hit_damage
 	damage_var_low = -config.low_proj_variance
 	damage_var_high = config.low_proj_variance
 	penetration	= config.high_armor_penetration
@@ -569,10 +571,11 @@
 	accuracy_var_low = config.med_proj_variance
 	accuracy_var_high = config.med_proj_variance
 	max_range = config.short_shell_range
-	damage = config.low_hit_damage
+	damage = config.hlow_hit_damage
 	damage_var_low = -config.low_proj_variance
 	damage_var_high = config.low_proj_variance
 	penetration	= config.high_armor_penetration
+	scatter = max_scatter_value*2 //bonus projectiles run their own scatter chance
 
 /datum/ammo/bullet/shotgun/buckshot
 	name = "shotgun buckshot shell"
@@ -617,8 +620,10 @@
 	damage = config.med_hit_damage
 	damage_var_low = -config.med_proj_variance
 	damage_var_high = config.med_proj_variance
-	damage_falloff = config.extra_damage_falloff
+	damage_falloff = config.buckshot_damage_falloff
+	penetration	= -config.mlow_armor_penetration
 	shell_speed = config.reg_shell_speed
+	scatter = max_scatter_value*4 //bonus projectiles run their own scatter chance
 
 /datum/ammo/bullet/shotgun/spread/masterkey/New()
 	..()
@@ -1166,18 +1171,18 @@
 	drop_resin(get_turf(P))
 
 /datum/ammo/xeno/sticky/proc/drop_resin(turf/T)
-		if(T.density)
+	if(T.density)
+		return
+	for(var/obj/O in T.contents)
+		if(istype(O, /obj/item/clothing/mask/facehugger))
 			return
-		for(var/obj/O in T.contents)
-			if(istype(O, /obj/item/clothing/mask/facehugger))
-				return
-			if(istype(O, /obj/effect/alien/egg))
-				return
-			if(istype(O, /obj/structure/mineral_door) || istype(O, /obj/effect/alien/resin) || istype(O, /obj/structure/bed))
-				return
-			if(O.density && !(O.flags_atom & ON_BORDER))
-				return
-		new /obj/effect/alien/resin/sticky/thin(T)
+		if(istype(O, /obj/effect/alien/egg))
+			return
+		if(istype(O, /obj/structure/mineral_door) || istype(O, /obj/effect/alien/resin) || istype(O, /obj/structure/bed))
+			return
+		if(O.density && !(O.flags_atom & ON_BORDER))
+			return
+	new /obj/effect/alien/resin/sticky/thin(T)
 
 /datum/ammo/xeno/acid
 	name = "acid spit"

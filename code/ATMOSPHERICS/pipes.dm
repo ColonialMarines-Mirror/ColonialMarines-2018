@@ -1143,13 +1143,13 @@
 	..()
 	icon_state = "co2"
 
-/obj/machinery/atmospherics/pipe/tank/phoron
-	name = "Pressure Tank (Phoron)"
-	icon_state = "phoron_map"
+/obj/machinery/atmospherics/pipe/tank/plasma
+	name = "Pressure Tank (Plasma)"
+	icon_state = "plasma_map"
 
-/obj/machinery/atmospherics/pipe/tank/phoron/New()
+/obj/machinery/atmospherics/pipe/tank/plasma/New()
 	..()
-	icon_state = "phoron"
+	icon_state = "plasma"
 
 /obj/machinery/atmospherics/pipe/tank/nitrous_oxide
 	name = "Pressure Tank (Nitrous Oxide)"

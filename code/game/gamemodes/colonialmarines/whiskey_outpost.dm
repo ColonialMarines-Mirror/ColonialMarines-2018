@@ -1248,7 +1248,7 @@
 			var/path = pick(randomitems)
 			var/obj/I = new path(crate)
 			if(OT == "sup")
-				if(I && istype(I,/obj/item/stack/sheet/mineral/phoron) || istype(I,/obj/item/stack/rods) || istype(I,/obj/item/stack/sheet/glass) || istype(I,/obj/item/stack/sheet/metal) || istype(I,/obj/item/stack/sheet/plasteel) || istype(I,/obj/item/stack/sheet/wood))
+				if(I && istype(I,/obj/item/stack/sheet/mineral/plasma) || istype(I,/obj/item/stack/rods) || istype(I,/obj/item/stack/sheet/glass) || istype(I,/obj/item/stack/sheet/metal) || istype(I,/obj/item/stack/sheet/plasteel) || istype(I,/obj/item/stack/sheet/wood))
 					I:amount = rand(30,50) //Give them more building materials.
 				if(I && istype(I,/obj/machinery/floodlight))
 					I.anchored = 0

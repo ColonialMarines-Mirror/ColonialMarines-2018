@@ -38,8 +38,8 @@
 	can_label = 0
 	gas_type = GAS_TYPE_OXYGEN
 
-/obj/machinery/portable_atmospherics/canister/phoron
-	name = "Canister \[Phoron\]"
+/obj/machinery/portable_atmospherics/canister/plasma
+	name = "Canister \[Plasma\]"
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
@@ -65,8 +65,8 @@
 	icon_state = "blue"
 	canister_color = "blue"
 
-/obj/machinery/portable_atmospherics/canister/empty/phoron
-	name = "Canister \[Phoron\]"
+/obj/machinery/portable_atmospherics/canister/empty/plasma
+	name = "Canister \[Plasma\]"
 	icon_state = "orange"
 	canister_color = "orange"
 
@@ -293,7 +293,7 @@ update_flag
 
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/phoron/New()
+/obj/machinery/portable_atmospherics/canister/plasma/New()
 	..()
 	src.update_icon()
 	return 1

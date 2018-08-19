@@ -13,7 +13,7 @@
 	power_rating = 7500 //7500 W ~ 10 HP
 	power_losses = 150
 
-	var/list/scrubbing_gas = list("phoron", "carbon_dioxide", "sleeping_agent", "oxygen_agent_b")
+	var/list/scrubbing_gas = list("plasma", "carbon_dioxide", "sleeping_agent", "oxygen_agent_b")
 
 /obj/machinery/portable_atmospherics/powered/scrubber/New()
 	..()

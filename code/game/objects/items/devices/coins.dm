@@ -31,9 +31,9 @@
 	name = "iron coin"
 	icon_state = "coin_iron"
 
-/obj/item/coin/phoron
-	name = "solid phoron coin"
-	icon_state = "coin_phoron"
+/obj/item/coin/plasma
+	name = "solid plasma coin"
+	icon_state = "coin_plasma"
 
 /obj/item/coin/uranium
 	name = "uranium coin"

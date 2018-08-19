@@ -1034,7 +1034,7 @@ About the new airlock wires panel:
 		return ..()
 
 
-///obj/machinery/door/airlock/phoron/attackby(C as obj, mob/user as mob)
+///obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
 //	if(C)
 //		ignite(is_hot(C))
 //	..()

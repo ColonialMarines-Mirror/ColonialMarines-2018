@@ -2,7 +2,7 @@
 
 /mob/living/carbon/monkey
 	var/oxygen_alert = 0
-	var/phoron_alert = 0
+	var/plasma_alert = 0
 	var/fire_alert = 0
 	var/pressure_alert = 0
 
@@ -467,7 +467,7 @@
 
 			if(hud_used.pressure_icon)	hud_used.pressure_icon.icon_state = "pressure[pressure_alert]"
 
-			if (hud_used.toxin_icon)	hud_used.toxin_icon.icon_state = "tox[phoron_alert ? 1 : 0]"
+			if (hud_used.toxin_icon)	hud_used.toxin_icon.icon_state = "tox[plasma_alert ? 1 : 0]"
 			if (hud_used.oxygen_icon)	hud_used.oxygen_icon.icon_state = "oxy[oxygen_alert ? 1 : 0]"
 			if (hud_used.fire_icon)	hud_used.fire_icon.icon_state = "fire[fire_alert ? 2 : 0]"
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,

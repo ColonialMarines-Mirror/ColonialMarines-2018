@@ -293,12 +293,12 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/phoron
-	name = "phoron wall"
-	desc = "A wall with phoron plating. This is definately a bad idea."
-	icon_state = "phoron0"
-	walltype = "phoron"
-	mineral = "phoron"
+/turf/closed/wall/mineral/plasma
+	name = "plasma wall"
+	desc = "A wall with plasma plating. This is definately a bad idea."
+	icon_state = "plasma0"
+	walltype = "plasma"
+	mineral = "plasma"
 
 
 

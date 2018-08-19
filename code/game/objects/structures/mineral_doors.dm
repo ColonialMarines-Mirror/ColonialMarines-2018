@@ -183,21 +183,21 @@
 	..()
 	opacity = 0
 
-/obj/structure/mineral_door/transparent/phoron
-	mineralType = "phoron"
+/obj/structure/mineral_door/transparent/plasma
+	mineralType = "plasma"
 
-/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/tool/weldingtool))
 		var/obj/item/tool/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			TemperatureAct(100)
 	..()
 
-/obj/structure/mineral_door/transparent/phoron/fire_act(exposed_temperature, exposed_volume)
+/obj/structure/mineral_door/transparent/plasma/fire_act(exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		TemperatureAct(exposed_temperature)
 
-/obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
+/obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct(temperature)
 
 
 /obj/structure/mineral_door/transparent/diamond

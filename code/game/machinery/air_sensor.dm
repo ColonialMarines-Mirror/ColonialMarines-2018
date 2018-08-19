@@ -16,7 +16,7 @@
 	// 2 for temperature
 	// Output >= 4 includes gas composition
 	// 4 for oxygen concentration
-	// 8 for phoron concentration
+	// 8 for plasma concentration
 	// 16 for nitrogen concentration
 	// 32 for carbon dioxide concentration
 
@@ -43,7 +43,7 @@
 
 		if(output>4)
 			signal.data["oxygen"] = 0
-			signal.data["phoron"] = 0
+			signal.data["plasma"] = 0
 			signal.data["nitrogen"] = 0
 			signal.data["carbon_dioxide"] = 0
 		signal.data["sigtype"]="status"

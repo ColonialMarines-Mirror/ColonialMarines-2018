@@ -1965,12 +1965,12 @@ SCIENCE
 *******************************************************************************/
 
 
-/datum/supply_packs/phoron
-	name = "phoron assembly crate"
+/datum/supply_packs/plasma
+	name = "plasma assembly crate"
 	contains = list(
-					/obj/item/tank/phoron,
-					/obj/item/tank/phoron,
-					/obj/item/tank/phoron,
+					/obj/item/tank/plasma,
+					/obj/item/tank/plasma,
+					/obj/item/tank/plasma,
 					/obj/item/device/assembly/igniter,
 					/obj/item/device/assembly/igniter,
 					/obj/item/device/assembly/igniter,
@@ -1982,8 +1982,8 @@ SCIENCE
 					/obj/item/device/assembly/timer
 					)
 	cost = RO_PRICE_PRICY
-	containertype = /obj/structure/closet/crate/secure/phoron
-	containername = "phoron assembly crate"
+	containertype = /obj/structure/closet/crate/secure/plasma
+	containername = "plasma assembly crate"
 	access = ACCESS_MARINE_ENGINEERING
 	group = "Science"
 

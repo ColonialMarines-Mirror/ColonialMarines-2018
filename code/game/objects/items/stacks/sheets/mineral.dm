@@ -4,7 +4,7 @@ Mineral Sheets
 		- Sandstone
 		- Diamond
 		- Uranium
-		- Phoron
+		- Plasma
 		- Gold
 		- Silver
 		- Enriched Uranium
@@ -35,8 +35,8 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/phoron_recipes = list ( \
-	new/datum/stack_recipe("phoron door", /obj/structure/mineral_door/transparent/phoron, 10, one_per_turf = 1, on_floor = 1), \
+var/global/list/datum/stack_recipe/plasma_recipes = list ( \
+	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 var/global/list/datum/stack_recipe/plastic_recipes = list ( \
@@ -124,24 +124,24 @@ obj/item/stack/sheet/mineral/iron/New()
 	..()
 	recipes = uranium_recipes
 
-/obj/item/stack/sheet/mineral/phoron
-	name = "solid phoron"
-	desc = "Phoron is an extremely rare mineral with exotic properties, often used in cutting-edge research. Just getting it into a stable, solid form is already hard enough."
-	singular_name = "phoron ingot"
-	icon_state = "sheet-phoron"
-	origin_tech = "phorontech=2;materials=2"
+/obj/item/stack/sheet/mineral/plasma
+	name = "solid plasma"
+	desc = "Plasma is an extremely rare mineral with exotic properties, often used in cutting-edge research. Just getting it into a stable, solid form is already hard enough."
+	singular_name = "plasma ingot"
+	icon_state = "sheet-plasma"
+	origin_tech = "plasmatech=2;materials=2"
 	perunit = 2000
-	sheettype = "phoron"
-	stack_id = "phoron"
+	sheettype = "plasma"
+	stack_id = "plasma"
 
-/obj/item/stack/sheet/mineral/phoron/New()
+/obj/item/stack/sheet/mineral/plasma/New()
 	..()
-	// recipes = phoron_recipes // Disabled phoron doors
+	// recipes = plasma_recipes // Disabled plasma doors
 
-/obj/item/stack/sheet/mineral/phoron/small_stack
+/obj/item/stack/sheet/mineral/plasma/small_stack
 	amount = 10
 
-/obj/item/stack/sheet/mineral/phoron/medium_stack
+/obj/item/stack/sheet/mineral/plasma/medium_stack
 	amount = 30
 
 /obj/item/stack/sheet/mineral/plastic

@@ -39,7 +39,7 @@
 					sensor_part += "   <B>Pressure:</B> [data["pressure"]] kPa<BR>"
 				if(data["temperature"])
 					sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
-				if(data["oxygen"]||data["phoron"]||data["nitrogen"]||data["carbon_dioxide"])
+				if(data["oxygen"]||data["plasma"]||data["nitrogen"]||data["carbon_dioxide"])
 					sensor_part += "   <B>Gas Composition :</B>"
 					if(data["oxygen"])
 						sensor_part += "[data["oxygen"]]% O2; "
@@ -47,8 +47,8 @@
 						sensor_part += "[data["nitrogen"]]% N; "
 					if(data["carbon_dioxide"])
 						sensor_part += "[data["carbon_dioxide"]]% CO2; "
-					if(data["phoron"])
-						sensor_part += "[data["phoron"]]% TX; "
+					if(data["plasma"])
+						sensor_part += "[data["plasma"]]% TX; "
 				sensor_part += "<HR>"
 
 			else

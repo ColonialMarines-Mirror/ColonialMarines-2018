@@ -18,8 +18,8 @@
 	name = "Dexalin"
 	id = "dexalin"
 	result = "dexalin"
-	required_reagents = list("oxygen" = 2, "phoron" = 0.1)
-	required_catalysts = list("phoron" = 5)
+	required_reagents = list("oxygen" = 2, "plasma" = 0.1)
+	required_catalysts = list("plasma" = 5)
 	result_amount = 1
 
 /datum/chemical_reaction/dermaline
@@ -68,8 +68,8 @@
 	name = "Clonexadone"
 	id = "clonexadone"
 	result = "clonexadone"
-	required_reagents = list("cryoxadone" = 1, "sodium" = 1, "phoron" = 0.1)
-	required_catalysts = list("phoron" = 5)
+	required_reagents = list("cryoxadone" = 1, "sodium" = 1, "plasma" = 0.1)
+	required_catalysts = list("plasma" = 5)
 	result_amount = 2
 
 /datum/chemical_reaction/spaceacillin
@@ -141,7 +141,7 @@
 	id = "oxycodone"
 	result = "oxycodone"
 	required_reagents = list("ethanol" = 1, "tramadol" = 1)
-	required_catalysts = list("phoron" = 1)
+	required_catalysts = list("plasma" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/synaptizine
@@ -156,7 +156,7 @@
 	id = "leporazine"
 	result = "leporazine"
 	required_reagents = list("silicon" = 1, "copper" = 1)
-	required_catalysts = list("phoron" = 5)
+	required_catalysts = list("plasma" = 5)
 	result_amount = 2
 
 /datum/chemical_reaction/hyronalin
@@ -185,7 +185,7 @@
 	id = "peridaxon"
 	result = "peridaxon"
 	required_reagents = list("bicaridine" = 2, "clonexadone" = 2)
-	required_catalysts = list("phoron" = 5)
+	required_catalysts = list("plasma" = 5)
 	result_amount = 2
 
 /datum/chemical_reaction/quickclot
@@ -193,7 +193,7 @@
 	id = "quickclot"
 	result = "quickclot"
 	required_reagents = list("kelotane" = 2, "clonexadone" = 2)
-	required_catalysts = list("phoron" = 5)
+	required_catalysts = list("plasma" = 5)
 	result_amount = 1
 
 

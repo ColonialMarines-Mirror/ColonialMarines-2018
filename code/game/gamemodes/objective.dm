@@ -255,7 +255,7 @@ datum/objective/steal
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/uscm,
-		"28 moles of phoron (full tank)" = /obj/item/tank,
+		"28 moles of plasma (full tank)" = /obj/item/tank,
 		"a piece of corgi meat" = /obj/item/reagent_container/food/snacks/meat/corgi,
 		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
 		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
@@ -314,16 +314,16 @@ datum/objective/steal
 		if(!isliving(owner.current))	return 0
 		var/list/all_items = owner.current.get_contents()
 		switch (target_name)
-			if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
+			if("28 moles of plasma (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
 				var/target_amount = text2num(target_name)//Non-numbers are ignored.
 				var/found_amount = 0.0//Always starts as zero.
 
-				for(var/obj/item/I in all_items) //Check for phoron tanks
+				for(var/obj/item/I in all_items) //Check for plasma tanks
 					if(istype(I, steal_target))
-						if(target_name == "28 moles of phoron (full tank)")
+						if(target_name == "28 moles of plasma (full tank)")
 							if(istype(I, /obj/item/tank))
 								var/obj/item/tank/TAK = I
-								if(TAK.gas_type == GAS_TYPE_PHORON)
+								if(TAK.gas_type == GAS_TYPE_PLASMA)
 									found_amount += TAK.pressure
 						else
 							found_amount += I:amount

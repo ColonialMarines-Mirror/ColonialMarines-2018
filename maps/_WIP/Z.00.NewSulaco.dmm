@@ -238,7 +238,7 @@
 "eD" = (/obj/item/device/radio/intercom{anyai = 1; dir = 1; freerange = 1; name = "General Listening Channel"; pixel_x = 0; pixel_y = -30},/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"; dir = 2},/area/space)
 "eE" = (/obj/machinery/status_display{pixel_y = -30},/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"; dir = 2},/area/space)
 "eF" = (/turf/simulated/floor{tag = "icon-whitered (SOUTHEAST)"; icon_state = "whitered"; dir = 6},/area/space)
-"eG" = (/obj/structure/table,/obj/machinery/reagentgrinder,/obj/item/stack/sheet/mineral/phoron{amount = 25},/turf/simulated/floor{tag = "icon-purple (SOUTHWEST)"; icon_state = "purple"; dir = 10},/area/sulaco/research)
+"eG" = (/obj/structure/table,/obj/machinery/reagentgrinder,/obj/item/stack/sheet/mineral/plasma{amount = 25},/turf/simulated/floor{tag = "icon-purple (SOUTHWEST)"; icon_state = "purple"; dir = 10},/area/sulaco/research)
 "eH" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/simulated/floor{tag = "icon-purple (SOUTHEAST)"; icon_state = "purple"; dir = 6},/area/sulaco/research)
 "eI" = (/obj/machinery/shower{tag = "icon-shower (EAST)"; icon_state = "shower"; dir = 4},/obj/structure/window/reinforced/tinted/frosted,/turf/simulated/floor{tag = "icon-showroomfloor"; icon_state = "showroomfloor"},/area/sulaco/research)
 "eJ" = (/obj/structure/closet/l3closet/general,/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor{tag = "icon-purple (EAST)"; icon_state = "purple"; dir = 4},/area/sulaco/research)

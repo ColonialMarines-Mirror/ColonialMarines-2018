@@ -61,8 +61,8 @@
 				return_name = "Gold"
 			if("silver")
 				return_name = "Silver"
-			if("phoron")
-				return_name = "Solid Phoron"
+			if("plasma")
+				return_name = "Solid Plasma"
 			if("uranium")
 				return_name = "Uranium"
 			if("diamond")
@@ -311,8 +311,8 @@
 									linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]))
 								if("$silver")
 									linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
-								if("$phoron")
-									linked_lathe.phoron_amount = max(0, (linked_lathe.phoron_amount-being_built.materials[M]))
+								if("$plasma")
+									linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
 								if("$uranium")
 									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
 								if("$diamond")
@@ -405,9 +405,9 @@
 			if("silver")
 				type = /obj/item/stack/sheet/mineral/silver
 				res_amount = "silver_amount"
-			if("phoron")
-				type = /obj/item/stack/sheet/mineral/phoron
-				res_amount = "phoron_amount"
+			if("plasma")
+				type = /obj/item/stack/sheet/mineral/plasma
+				res_amount = "plasma_amount"
 			if("uranium")
 				type = /obj/item/stack/sheet/mineral/uranium
 				res_amount = "uranium_amount"
@@ -733,8 +733,8 @@
 								if(D.materials[M] > linked_lathe.gold_amount) check_materials = 0
 							if("$silver")
 								if(D.materials[M] > linked_lathe.silver_amount) check_materials = 0
-							if("$phoron")
-								if(D.materials[M] > linked_lathe.phoron_amount) check_materials = 0
+							if("$plasma")
+								if(D.materials[M] > linked_lathe.plasma_amount) check_materials = 0
 							if("$uranium")
 								if(D.materials[M] > linked_lathe.uranium_amount) check_materials = 0
 							if("$diamond")
@@ -778,12 +778,12 @@
 			if(linked_lathe.silver_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
 			if(linked_lathe.silver_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 			dat += "<BR>"
-			//Phoron
-			dat += "* [linked_lathe.phoron_amount] cm<sup>3</sup> of Solid Phoron || "
+			//Plasma
+			dat += "* [linked_lathe.plasma_amount] cm<sup>3</sup> of Solid Plasma || "
 			dat += "Eject: "
-			if(linked_lathe.phoron_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=phoron;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
-			if(linked_lathe.phoron_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=phoron;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-			if(linked_lathe.phoron_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=phoronlathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+			if(linked_lathe.plasma_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+			if(linked_lathe.plasma_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+			if(linked_lathe.plasma_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasmalathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 			dat += "<BR>"
 			//Uranium
 			dat += "* [linked_lathe.uranium_amount] cm<sup>3</sup> of Uranium || "

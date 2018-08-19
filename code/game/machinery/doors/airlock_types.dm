@@ -174,11 +174,11 @@
 		L.apply_effect(15,IRRADIATE,0)
 	return
 
-/obj/machinery/door/airlock/phoron
-	name = "\improper Phoron Airlock"
+/obj/machinery/door/airlock/plasma
+	name = "\improper Plasma Airlock"
 	desc = "No way this can end badly."
-	icon = 'icons/obj/doors/Doorphoron.dmi'
-	mineral = "phoron"
+	icon = 'icons/obj/doors/Doorplasma.dmi'
+	mineral = "plasma"
 
 
 

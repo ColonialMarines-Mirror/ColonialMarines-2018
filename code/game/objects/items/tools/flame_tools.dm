@@ -293,9 +293,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!heat_source)
 		heat_source = 1000
 		damtype = "fire"
-		if(reagents.get_reagent_amount("phoron")) // the phoron explodes when exposed to fire
+		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 			var/datum/effect_system/reagents_explosion/e = new()
-			e.set_up(round(reagents.get_reagent_amount("phoron") / 2.5, 1), get_turf(src), 0, 0)
+			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
 			e.start()
 			cdel(src)
 			return

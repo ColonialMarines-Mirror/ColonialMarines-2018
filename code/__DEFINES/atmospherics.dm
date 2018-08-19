@@ -37,7 +37,7 @@
 #define O2STANDARD 0.21
 #define N2STANDARD 0.79
 
-#define MOLES_PHORON_VISIBLE 0.7 //Moles in a standard cell after which phoron is visible
+#define MOLES_PLASMA_VISIBLE 0.7 //Moles in a standard cell after which plasma is visible
 #define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD	// O2 standard value (21%)
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
 
@@ -85,13 +85,13 @@
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
 #define CARBON_LIFEFORM_FIRE_DAMAGE		4
 
-//Phoron fire properties
-#define PHORON_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define PHORON_FLASHPOINT 					246+T0C
-#define PHORON_UPPER_TEMPERATURE			1370+T0C
-#define PHORON_MINIMUM_OXYGEN_NEEDED		2
-#define PHORON_MINIMUM_OXYGEN_PHORON_RATIO	20
-#define PHORON_OXYGEN_FULLBURN				10
+//Plasma fire properties
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+#define PLASMA_FLASHPOINT 					246+T0C
+#define PLASMA_UPPER_TEMPERATURE			1370+T0C
+#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
+#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	20
+#define PLASMA_OXYGEN_FULLBURN				10
 
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
@@ -102,7 +102,7 @@
 #define GAS_TYPE_OXYGEN		"oxygen"
 #define GAS_TYPE_NITROGEN	"nitrogen"
 #define GAS_TYPE_N2O		"anesthetic"
-#define GAS_TYPE_PHORON		"phoron"
+#define GAS_TYPE_PLASMA		"plasma"
 #define GAS_TYPE_CO2		"carbon dioxyde"
 
 

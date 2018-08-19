@@ -3,7 +3,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
-	desc = "A device which uses Hawking Radiation and phoron to produce power."
+	desc = "A device which uses Hawking Radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
 	anchored = 0
@@ -11,7 +11,7 @@ var/global/list/rad_collectors = list()
 	directwired = 1
 	req_access = list(ACCESS_MARINE_ENGINEERING)
 //	use_power = 0
-	var/obj/item/tank/phoron/P = null
+	var/obj/item/tank/plasma/P = null
 	var/last_power = 0
 	var/last_power_new = 0
 	var/active = 0
@@ -34,7 +34,7 @@ var/global/list/rad_collectors = list()
 
 
 	if(P)
-		if(P.gas_type != GAS_TYPE_PHORON || P.pressure == 0)
+		if(P.gas_type != GAS_TYPE_PLASMA || P.pressure == 0)
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")
 			eject()
 		else
@@ -57,12 +57,12 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/tank/phoron))
+	if(istype(W, /obj/item/tank/plasma))
 		if(!src.anchored)
 			user << "\red The [src] needs to be secured to the floor first."
 			return 1
 		if(src.P)
-			user << "\red There's already a phoron tank loaded."
+			user << "\red There's already a plasma tank loaded."
 			return 1
 		if(user.drop_inv_item_to_loc(W, src))
 			P = W
@@ -74,7 +74,7 @@ var/global/list/rad_collectors = list()
 			return 1
 	else if(istype(W, /obj/item/tool/wrench))
 		if(P)
-			user << "\blue Remove the phoron tank first."
+			user << "\blue Remove the plasma tank first."
 			return 1
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 25, 1)
 		src.anchored = !src.anchored
@@ -113,7 +113,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/tank/phoron/Z = src.P
+	var/obj/item/tank/plasma/Z = src.P
 	if (!Z)
 		return
 	Z.loc = get_turf(src)

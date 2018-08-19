@@ -3,7 +3,7 @@
  *		Oxygen
  *		Anesthetic
  *		Air
- *		Phoron
+ *		Plasma
  *		Emergency Oxygen
  */
 
@@ -49,12 +49,12 @@
 
 
 /*
- * Phoron
+ * Plasma
  */
-/obj/item/tank/phoron
-	name = "phoron tank"
-	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
-	icon_state = "phoron"
+/obj/item/tank/plasma
+	name = "plasma tank"
+	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
+	icon_state = "plasma"
 	flags_atom = FPRINT|CONDUCT
 	flags_equip_slot = NOFLAGS	//they have no straps!
 

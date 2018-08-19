@@ -55,7 +55,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/circuitboard/machine/pacman
 	name = "Circuit Board (PACMAN-type Generator)"
 	build_path = "/obj/machinery/power/port_gen/pacman"
-	origin_tech = "programming=3;powerstorage=3;phorontech=3;engineering=3"
+	origin_tech = "programming=3;powerstorage=3;plasmatech=3;engineering=3"
 	frame_desc = "Requires 1 Matter Bin, 1 Micro-Laser, 2 Pieces of Cable, and 1 Capacitor."
 	req_components = list(
 							"/obj/item/stock_parts/matter_bin" = 1,

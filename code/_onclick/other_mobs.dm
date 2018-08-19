@@ -14,7 +14,6 @@
 
 	return ..()
 
-
 /*
 	Animals & All Unspecified
 */
@@ -23,8 +22,6 @@
 
 /atom/proc/attack_animal(mob/user as mob)
 	return
-
-
 
 /*
 	Monkeys
@@ -67,8 +64,6 @@
 */
 /mob/new_player/click()
 	return 1
-
-
 
 /*
 	Hell Hound

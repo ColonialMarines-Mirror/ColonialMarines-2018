@@ -42,7 +42,6 @@
 	if(A > upper) return 0
 	return 1
 
-
 /proc/Get_Angle(atom/start,atom/end)//For beams.
 	if(!start || !end) return 0
 	if(!start.z || !end.z) return 0 //Atoms are not on turfs.
@@ -184,7 +183,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return destination
 
-
 //among other things, used by flamethrower and boiler spray to calculate if flame/spray can pass through.
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -223,8 +221,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 1
 	return 0
 
-
-
 /proc/sign(x)
 	return x!=0?x/abs(x):0
 
@@ -256,8 +252,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Turns 1479 into 147.9
 /proc/format_frequency(var/f)
 	return "[round(f / 10)].[f % 10]"
-
-
 
 //This will update a mob's name, real_name, mind.name, data_core records, pda and id
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
@@ -301,8 +295,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					search_pda = 0
 	return 1
 
-
-
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 //Last modified by Carn
 /mob/proc/rename_self(var/role, var/allow_numbers=0)
@@ -340,10 +332,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				// Set eyeobj name
 				A.SetName(newname)
 
-
 		fully_replace_character_name(oldname,newname)
-
-
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()
@@ -589,7 +578,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(M < 0)
 		return -M
 
-
 /proc/key_name(var/whom, var/include_link = null, var/include_name = 1, var/highlight_special_characters = 1)
 	var/mob/M
 	var/client/C
@@ -635,7 +623,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else if(M.name)
 			name = M.name
 
-
 		if(include_link && is_special_character(M) && highlight_special_characters)
 			. += "/(<font color='#FFA500'>[name]</font>)" //Orange
 		else
@@ -645,7 +632,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
-
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -688,7 +674,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
-
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
 /proc/get_offset_target_turf(var/atom/A, var/dx, var/dy)
@@ -700,12 +685,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
 
-proc/arctan(x)
+/proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
 //returns random gauss number
-proc/GaussRand(var/sigma)
+/proc/GaussRand(var/sigma)
   var/x,y,rsq
   do
     x=2*rand()-1
@@ -715,10 +700,10 @@ proc/GaussRand(var/sigma)
   return sigma*y*sqrt(-2*log(rsq)/rsq)
 
 //returns random gauss number, rounded to 'roundto'
-proc/GaussRandRound(var/sigma,var/roundto)
+/proc/GaussRandRound(var/sigma,var/roundto)
 	return round(GaussRand(sigma),roundto)
 
-proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
+/proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
 //This proc throws up either an icon or an animation for a specified amount of time.
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
@@ -798,7 +783,6 @@ proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as te
 
 	else return get_step(ref, base_dir)
 
-
 var/global/image/busy_indicator_clock
 var/global/image/busy_indicator_medical
 var/global/image/busy_indicator_build
@@ -831,8 +815,6 @@ var/global/image/busy_indicator_hostile
 			busy_indicator_hostile = image('icons/mob/mob.dmi', null, "busy_hostile", "pixel_y" = 22)
 			busy_indicator_hostile.layer = FLY_LAYER
 		return busy_indicator_hostile
-
-
 
 /proc/do_mob(mob/user , mob/target, time = 30, show_busy_icon, show_target_icon, selected_zone_check)
 	if(!user || !target) return 0
@@ -886,7 +868,6 @@ var/global/image/busy_indicator_hostile
 
 	user.action_busy = FALSE
 
-
 /proc/do_after(mob/user, delay, needhand = TRUE, numticks = 5, show_busy_icon, selected_zone_check) //hacky, will suffice for now.
 	if(!istype(user) || delay <= 0) return FALSE
 
@@ -935,7 +916,6 @@ var/global/image/busy_indicator_hostile
 		user.overlays -= busy_icon
 
 	user.action_busy = FALSE
-
 
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
@@ -1065,11 +1045,9 @@ var/global/image/busy_indicator_hostile
 						if(!nextturf || !istype(nextturf, /turf/open/space))
 							nextturf = get_step(corner, turn(direction, 180))
 
-
 						// Take on the icon of a neighboring scrolling space icon
 						X.icon = nextturf.icon
 						X.icon_state = nextturf.icon_state
-
 
 					for(var/obj/O in T)
 						// Reset the shuttle corners
@@ -1122,7 +1100,7 @@ var/global/image/busy_indicator_hostile
 			else
 				air_master.tiles_to_update += T2*/
 
-proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
+/proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)
 		return null
 
@@ -1139,7 +1117,6 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
 					O.vars[V] = original.vars[V]
 	return O
-
 
 /area/proc/copy_contents_to(var/area/A , var/platingRequired = 0 )
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
@@ -1185,7 +1162,6 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 	var/copiedobjs = list()
 
-
 	moving:
 		for (var/turf/T in refined_src)
 			var/datum/coords/C_src = refined_src[T]
@@ -1206,7 +1182,6 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
-
 					var/list/objs = new/list()
 					var/list/newobjs = new/list()
 					var/list/mobs = new/list()
@@ -1219,10 +1194,8 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 						objs += O
 
-
 					for(var/obj/O in objs)
 						newobjs += DuplicateObject(O , 1)
-
 
 					for(var/obj/O in newobjs)
 						O.loc = X
@@ -1241,8 +1214,6 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 					copiedobjs += newobjs
 					copiedobjs += newmobs
 
-
-
 					for(var/V in T.vars)
 						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")))
 							X.vars[V] = T.vars[V]
@@ -1259,18 +1230,15 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 					refined_trg -= B
 					continue moving
 
-
 	return copiedobjs
 
-
-
-proc/get_cardinal_dir(atom/A, atom/B)
+/proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 //I dont understand the above proc so I'm writing my own shittier one
-proc/get_cardinal_dir2(var/atom/A, var/atom/B)
+/proc/get_cardinal_dir2(var/atom/A, var/atom/B)
 	var/dx = B.x - A.x
 	var/dy = B.y - A.y
 	if(abs(dx) > abs(dy))
@@ -1278,17 +1246,17 @@ proc/get_cardinal_dir2(var/atom/A, var/atom/B)
 	return (dy > 0) ? NORTH : SOUTH
 
 //Returns the 2 dirs perpendicular to the arg
-proc/get_perpen_dir(var/dir)
+/proc/get_perpen_dir(var/dir)
 	if(dir & (dir-1)) return 0 //diagonals
 	if(dir in list(EAST, WEST))
 		return list(SOUTH, NORTH)
 	else return list(EAST, WEST)
 
 //chances are 1:value. anyprob(1) will always return true
-proc/anyprob(value)
+/proc/anyprob(value)
 	return (rand(1,value)==value)
 
-proc/view_or_range(distance = world.view , center = usr , type)
+/proc/view_or_range(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
 			. = view(distance,center)
@@ -1296,7 +1264,7 @@ proc/view_or_range(distance = world.view , center = usr , type)
 			. = range(distance,center)
 	return
 
-proc/oview_or_orange(distance = world.view , center = usr , type)
+/proc/oview_or_orange(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
 			. = oview(distance,center)
@@ -1304,13 +1272,12 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 			. = orange(distance,center)
 	return
 
-proc/get_mob_with_client_list()
+/proc/get_mob_with_client_list()
 	var/list/mobs = list()
 	for(var/mob/M in mob_list)
 		if (M.client)
 			mobs += M
 	return mobs
-
 
 /proc/parse_zone(zone)
 	if(zone == "r_hand") return "right hand"
@@ -1336,7 +1303,6 @@ proc/get_mob_with_client_list()
 
 /proc/get_turf_or_move(turf/location)
 	return get_turf(location)
-
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
@@ -1393,7 +1359,7 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-proc/is_hot(obj/item/I)
+/proc/is_hot(obj/item/I)
 	return I.heat_source
 
 //Whether or not the given item counts as sharp in terms of dealing damage
@@ -1428,9 +1394,6 @@ proc/is_hot(obj/item/I)
 	istype(W, /obj/item/tool/surgery/bonesetter)
 	)
 
-
-
-
 /proc/reverse_direction(direction)
 	switch(direction)
 		if(NORTH)
@@ -1460,7 +1423,6 @@ proc/is_hot(obj/item/I)
 		if(SOUTHWEST) 	. = list(NORTHEAST, NORTH,     EAST)
 		if(WEST) 		. = list(EAST,      NORTHEAST, SOUTHEAST)
 		if(NORTHWEST) 	. = list(SOUTHEAST, SOUTH,     EAST)
-
 
 /*
 Checks if that loc and dir has a item on the wall
@@ -1496,7 +1458,6 @@ var/list/WALLITEMS = list(
 					if(EAST)
 						if(O.pixel_x < -10)
 							return 1
-
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in get_step(loc, dir))
@@ -1589,7 +1550,6 @@ var/list/WALLITEMS = list(
 		else
 			cur_x += dx2
 			cur_y += dy2
-
 
 	return turfs
 

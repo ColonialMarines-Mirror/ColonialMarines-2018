@@ -22,7 +22,6 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			handle_ventcrawl(A)
 		return 1
 
-
 /mob/proc/start_ventcrawl()
 	var/atom/pipe
 	var/list/pipes = list()
@@ -134,8 +133,6 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			pipes_shown += A.pipe_vision_img
 			if(client)
 				client.images += A.pipe_vision_img
-
-
 
 /mob/living/proc/remove_ventcrawl()
 	is_ventcrawling = 0

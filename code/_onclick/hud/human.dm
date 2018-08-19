@@ -54,8 +54,6 @@
 		static_inventory += using
 		action_intent = using
 
-
-
 	if(hud_data.has_m_intent)
 		using = new /obj/screen/mov_intent()
 		using.icon = ui_style
@@ -155,12 +153,10 @@
 		pull_icon.update_icon(owner)
 		hotkeybuttons += pull_icon
 
-
 	if(hud_data.has_internals)
 		internals = new /obj/screen/internals()
 		internals.icon = ui_style
 		infodisplay += internals
-
 
 	if(hud_data.has_warnings)
 		oxygen_icon = new /obj/screen/oxygen()
@@ -194,7 +190,6 @@
 		bodytemp_icon = new /obj/screen/bodytemp()
 		bodytemp_icon.icon = ui_style
 		infodisplay += bodytemp_icon
-
 
 	if(hud_data.has_nutrition)
 		nutrition_icon = new /obj/screen()
@@ -281,8 +276,6 @@
 	gun_run_icon.update_icon(owner)
 	static_inventory += gun_run_icon
 
-
-
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"
 	set name = "Toggle hotkey buttons"
@@ -295,7 +288,6 @@
 		client.screen -= hud_used.hotkeybuttons
 		hud_used.hotkey_ui_hidden = 1
 
-
 //Used for new human mobs created by cloning/goleming/etc.
 /mob/living/carbon/human/proc/set_cloned_appearance()
 	f_style = "Shaved"
@@ -307,8 +299,6 @@
 	else
 		underwear = underwear_f.Find("None")
 	regenerate_icons()
-
-
 
 /datum/hud/human/hidden_inventory_update()
 	if(!mymob) return
@@ -359,7 +349,6 @@
 		if(H.head)
 			H.head.screen_loc = null
 
-
 /datum/hud/human/persistant_inventory_update()
 	if(!mymob) return
 	var/mob/living/carbon/human/H = mymob
@@ -409,8 +398,6 @@
 			H.r_hand.screen_loc = null
 		if(H.l_hand)
 			H.l_hand.screen_loc = null
-
-
 
 /mob/living/carbon/human/create_hud()
 	if(client && !hud_used)

@@ -9,7 +9,6 @@
 	static_inventory += using
 	action_intent = using
 
-
 	using = new /obj/screen/mov_intent()
 	using.icon = 'icons/mob/screen1_alien.dmi'
 	using.icon_state = (owner.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
@@ -61,7 +60,6 @@
 	using.layer = HUD_LAYER
 	static_inventory += using
 
-
 	using = new /obj/screen/resist/alien()
 	hotkeybuttons += using
 
@@ -95,8 +93,6 @@
 	zone_sel.update_icon(owner)
 	static_inventory += zone_sel
 
-
-
 /datum/hud/alien/persistant_inventory_update()
 	if(!mymob)
 		return
@@ -113,7 +109,6 @@
 			H.r_hand.screen_loc = null
 		if(H.l_hand)
 			H.l_hand.screen_loc = null
-
 
 /mob/living/carbon/Xenomorph/create_hud()
 	if(client && !hud_used)

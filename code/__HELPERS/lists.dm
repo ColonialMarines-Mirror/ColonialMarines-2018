@@ -31,7 +31,7 @@
 		return "[output][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
-proc/listgetindex(var/list/list,index)
+/proc/listgetindex(var/list/list,index)
 	if(istype(list) && list.len)
 		if(isnum(index))
 			if(InRange(index,1,list.len))
@@ -40,19 +40,19 @@ proc/listgetindex(var/list/list,index)
 			return list[index]
 	return
 
-proc/islist(list/list)
+/proc/islist(list/list)
 	if(istype(list))
 		return 1
 	return 0
 
 //Return either pick(list) or null if list is not of type /list or is empty
-proc/safepick(list/list)
+/proc/safepick(list/list)
 	if(!islist(list) || !list.len)
 		return
 	return pick(list)
 
 //Checks if the list is empty
-proc/isemptylist(list/list)
+/proc/isemptylist(list/list)
 	if(!list.len)
 		return 1
 	return 0
@@ -65,13 +65,13 @@ proc/isemptylist(list/list)
 	return 0
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
-proc/clearlist(list/list)
+/proc/clearlist(list/list)
 	if(istype(list))
 		list.len = 0
 	return
 
 //Removes any null entries from the list
-proc/listclearnulls(list/list)
+/proc/listclearnulls(list/list)
 	if(istype(list))
 		while(null in list)
 			list -= null
@@ -233,9 +233,6 @@ proc/listclearnulls(list/list)
 		return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
 
-
-
-
 //Mergesort: Specifically for record datums in a list.
 /proc/sortRecord(var/list/datum/data/record/L, var/field = "name", var/order = 1)
 	if(isnull(L))
@@ -269,9 +266,6 @@ proc/listclearnulls(list/list)
 			return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
 
-
-
-
 //Mergesort: any value in a list
 /proc/sortList(var/list/L)
 	if(L.len < 2)
@@ -300,7 +294,6 @@ proc/listclearnulls(list/list)
 		return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
 
-
 // List of lists, sorts by element[key] - for things like crew monitoring computer sorting records by name.
 /proc/sortByKey(var/list/L, var/key)
 	if(L.len < 2)
@@ -324,7 +317,6 @@ proc/listclearnulls(list/list)
 	if(Li <= L.len)
 		return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
-
 
 //Mergesort: any value in a list, preserves key=value structure
 /proc/sortAssoc(var/list/L)
@@ -404,13 +396,13 @@ proc/listclearnulls(list/list)
 	//world.log << "	output: [out.len]"
 	return reverselist(out)
 
-proc/dd_sortedObjectList(list/incoming)
-	/*
-	   Use binary search to order by dd_SortValue().
-	   This works by going to the half-point of the list, seeing if the node in
-	   question is higher or lower cost, then going halfway up or down the list
-	   and checking again. This is a very fast way to sort an item into a list.
-	*/
+/*
+	Use binary search to order by dd_SortValue().
+	This works by going to the half-point of the list, seeing if the node in
+	question is higher or lower cost, then going halfway up or down the list
+	and checking again. This is a very fast way to sort an item into a list.
+*/
+/proc/dd_sortedObjectList(list/incoming)
 	var/list/sorted_list = new()
 	var/low_index
 	var/high_index
@@ -461,13 +453,14 @@ proc/dd_sortedObjectList(list/incoming)
 		sorted_list += list_bottom
 	return sorted_list
 
-
-proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
-	// Returns a new list with the text values sorted.
-	// Use binary search to order by sortValue.
-	// This works by going to the half-point of the list, seeing if the node in question is higher or lower cost,
-	// then going halfway up or down the list and checking again.
-	// This is a very fast way to sort an item into a list.
+/*
+	Returns a new list with the text values sorted.
+	Use binary search to order by sortValue.
+	This works by going to the half-point of the list, seeing if the node in question is higher or lower cost,
+	then going halfway up or down the list and checking again.
+	This is a very fast way to sort an item into a list.
+*/
+/proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
 	var/list/sorted_text = new()
 	var/low_index
 	var/high_index
@@ -520,13 +513,11 @@ proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
 		sorted_text += list_bottom
 	return sorted_text
 
-
-proc/dd_sortedTextList(list/incoming)
+/proc/dd_sortedTextList(list/incoming)
 	var/case_sensitive = 1
 	return dd_sortedtextlist(incoming, case_sensitive)
 
-
-datum/proc/dd_SortValue()
+/datum/proc/dd_SortValue()
 	return "[src]"
 
 /obj/machinery/dd_SortValue()

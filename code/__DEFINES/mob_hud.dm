@@ -18,7 +18,6 @@
 #define PHEROMONE_HUD		"14" //indicates which pheromone is active on a xeno.
 #define QUEEN_OVERWATCH_HUD	"15" //indicates which xeno the queen is overwatching.
 
-
 //data HUD (medhud, sechud) defines
 #define MOB_HUD_SECURITY_BASIC		1
 #define MOB_HUD_SECURITY_ADVANCED	2
@@ -28,4 +27,3 @@
 #define MOB_HUD_XENO_INFECTION		6
 #define MOB_HUD_XENO_STATUS			7
 #define MOB_HUD_SQUAD				8
-

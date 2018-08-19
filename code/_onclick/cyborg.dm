@@ -30,7 +30,6 @@
 		if (!A.BorgAltClick(src))
 			return 1
 
-
 	if(aiCamera.in_camera_mode)
 		aiCamera.camera_mode_off()
 		if(is_component_functioning("camera"))
@@ -87,8 +86,6 @@
 			return 1
 	return 0
 
-
-
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs
 
@@ -103,7 +100,6 @@
 
 /obj/machinery/door/airlock/BorgShiftClick()  // Opens and closes doors! Forwards to AI code.
 	AIShiftClick()
-
 
 /atom/proc/BorgCtrlClick(var/mob/living/silicon/robot/user) //forward to human click if not overriden
 	return 1

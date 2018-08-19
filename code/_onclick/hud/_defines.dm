@@ -13,7 +13,6 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-
 //Lower left, persistant menu
 #define ui_inventory "WEST:6,1:5"
 

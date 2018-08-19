@@ -26,9 +26,7 @@
 	return 0 //not in range and not telekinetic
 
 // Like view but bypasses luminosity check
-
 /proc/hear(var/range, var/atom/source)
-
 	var/lum = source.luminosity
 	source.luminosity = 6
 
@@ -36,9 +34,6 @@
 	source.luminosity = lum
 
 	return heard
-
-
-
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
 //They should approximate pythagoras theorem well enough for our needs.
@@ -53,7 +48,6 @@
 #undef k2
 
 /proc/circlerange(center=usr,radius=3)
-
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)
@@ -68,7 +62,6 @@
 	return turfs
 
 /proc/circleview(center=usr,radius=3)
-
 	var/turf/centerturf = get_turf(center)
 	var/list/atoms = new/list()
 	var/rsq = radius * (radius+0.5)
@@ -99,7 +92,6 @@
 	return dist
 
 /proc/circlerangeturfs(center=usr,radius=3)
-
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)
@@ -111,8 +103,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
-
+/proc/circleviewturfs(center=usr,radius=3)	//Is there even a difference between this proc and circlerangeturfs()?
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)
@@ -124,16 +115,10 @@
 			turfs += T
 	return turfs
 
-
-
-//var/debug_mob = 0
-
 // Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
-
 /proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
-
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
@@ -161,9 +146,8 @@
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
 
+// Returns a list of mobs in range of R from source. Used in radio and say code.
 /proc/get_mobs_in_view(var/R, var/atom/source)
-	// Returns a list of mobs in range of R from source. Used in radio and say code.
-
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
@@ -186,12 +170,10 @@
 
 	return hear
 
-
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
-
 	set background = 1
-
 	. = list()
+	
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
@@ -211,7 +193,6 @@
 				for(var/turf/T in hear(R.canhear_range,speaker))
 					speaker_coverage[T] = T
 
-
 	// Try to find all the players who can hear the message
 	for(var/i = 1; i <= player_list.len; i++)
 		var/mob/M = player_list[i]
@@ -224,40 +205,38 @@
 	return .
 
 #define SIGN(X) ((X<0)?-1:1)
-
-proc
-	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
-		var/turf/T
-		if(X1==X2)
-			if(Y1==Y2)
-				return 1 //Light cannot be blocked on same tile
-			else
-				var/s = SIGN(Y2-Y1)
-				Y1+=s
-				while(Y1!=Y2)
-					T=locate(X1,Y1,Z)
-					if(T.opacity)
-						return 0
-					Y1+=s
+/proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
+	var/turf/T
+	if(X1==X2)
+		if(Y1==Y2)
+			return 1 //Light cannot be blocked on same tile
 		else
-			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			var/signX = SIGN(X2-X1)
-			var/signY = SIGN(Y2-Y1)
-			if(X1<X2)
-				b+=m
-			while(X1!=X2 || Y1!=Y2)
-				if(round(m*X1+b-Y1))
-					Y1+=signY //Line exits tile vertically
-				else
-					X1+=signX //Line exits tile horizontally
+			var/s = SIGN(Y2-Y1)
+			Y1+=s
+			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
 					return 0
-		return 1
+				Y1+=s
+	else
+		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
+		if(X1<X2)
+			b+=m
+		while(X1!=X2 || Y1!=Y2)
+			if(round(m*X1+b-Y1))
+				Y1+=signY //Line exits tile vertically
+			else
+				X1+=signX //Line exits tile horizontally
+			T=locate(X1,Y1,Z)
+			if(T.opacity)
+				return 0
+	return 1
 #undef SIGN
 
-proc/isInSight(var/atom/A, var/atom/B)
+/proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
@@ -270,8 +249,8 @@ proc/isInSight(var/atom/A, var/atom/B)
 	else
 		return 0
 
+//returns only NORTH, SOUTH, EAST, or WEST
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
-	//returns only NORTH, SOUTH, EAST, or WEST
 	var/dx = finish.x - start.x
 	var/dy = finish.y - start.y
 	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
@@ -291,10 +270,8 @@ proc/isInSight(var/atom/A, var/atom/B)
 			return M
 	return null
 
-
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 /proc/get_active_candidates(var/buffer = 1)
-
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
@@ -345,7 +322,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 			for(var/client/C in group)
 				C.screen -= O
 
-datum/projectile_data
+/datum/projectile_data
 	var/src_x
 	var/src_y
 	var/time
@@ -366,12 +343,10 @@ datum/projectile_data
 	src.dest_x = dest_x
 	src.dest_y = dest_y
 
+// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
+// rotated at [rotation] and with the power of [power]
+// Thanks to VistaPOWA for this function
 /proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
-
-	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
-	// rotated at [rotation] and with the power of [power]
-	// Thanks to VistaPOWA for this function
-
 	var/power_x = power * cos(angle)
 	var/power_y = power * sin(angle)
 	var/time = 2* power_y / 10 //10 = g
@@ -416,11 +391,8 @@ datum/projectile_data
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
 
-
-
 /proc/convert_k2c(var/temp)
 	return ((temp - T0C))
 
 /proc/convert_c2k(var/temp)
 	return ((temp + T0C))
-

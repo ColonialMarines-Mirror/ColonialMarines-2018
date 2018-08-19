@@ -1,5 +1,3 @@
-
-
 /mob
 	var/list/fullscreens = list()
 
@@ -40,11 +38,9 @@
 		client.screen -= FS
 	cdel(FS)
 
-
 /mob/proc/clear_fullscreens()
 	for(var/category in fullscreens)
 		clear_fullscreen(category)
-
 
 /mob/proc/hide_fullscreens()
 	if(client)
@@ -57,8 +53,6 @@
 			var/obj/screen/fullscreen/FS = fullscreens[category]
 			FS.update_for_view(client.view)
 			client.screen |= fullscreens[category]
-
-
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen1_full.dmi'
@@ -74,13 +68,11 @@
 	severity = 0
 	return TA_REVIVE_ME
 
-
 /obj/screen/fullscreen/proc/update_for_view(client_view)
 	if (screen_loc == "CENTER-7,CENTER-7" && fs_view != client_view)
 		var/list/actualview = getviewsize(client_view)
 		fs_view = client_view
 		transform = matrix(actualview[1]/15, 0, 0, 0, actualview[2]/15, 0)
-
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
@@ -140,8 +132,6 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "meson_hud"
 
-
 /obj/screen/fullscreen/pain
 	icon_state = "painoverlay"
 	layer = FULLSCREEN_PAIN_LAYER
-

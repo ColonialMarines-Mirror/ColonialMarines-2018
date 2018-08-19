@@ -21,7 +21,6 @@
 #define FLAGS_SELF_DESTRUCT_DENY 2
 //=================================================
 
-
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 
 #define MODE_INFESTATION		1
@@ -37,7 +36,6 @@
 #define BE_SURVIVOR		4
 #define BE_RESPONDER	8
 #define BE_PREDATOR		16
-
 
 #define BE_REV        32
 #define BE_TRAITOR    64
@@ -150,5 +148,4 @@ var/list/be_special_flags = list(
 #define WHITELIST_ARCTURIAN			64
 #define WHITELIST_ALL				(WHITELIST_YAUTJA_UNBLOODED|WHITELIST_YAUTJA_BLOODED|WHITELIST_YAUTJA_ELITE|WHITELIST_YAUTJA_ELDER|WHITELIST_COMMANDER|WHITELIST_SYNTHETIC|WHITELIST_ARCTURIAN)
 //=================================================
-
 

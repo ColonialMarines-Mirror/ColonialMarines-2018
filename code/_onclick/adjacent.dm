@@ -17,7 +17,6 @@
 /area/Adjacent(var/atom/neighbor)
 	CRASH("Call to /area/Adjacent(), unimplemented proc")
 
-
 /*
 	Adjacency (to turf):
 	* If you are in the same turf, always true
@@ -110,7 +109,6 @@ Quick adjacency (to turf):
 		BOD.throwpass = 0
 		return .
 	return ..()
-
 
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.

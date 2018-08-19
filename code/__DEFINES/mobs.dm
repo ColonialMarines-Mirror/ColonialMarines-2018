@@ -5,7 +5,6 @@
 #define BORGTHERM 2
 #define BORGXRAY  4
 
-
 /*
 	reagents defines
 */
@@ -37,7 +36,6 @@
 #define PAIN_REDUCTION_HEAVY		-50 //paracetamol
 #define PAIN_REDUCTION_VERY_HEAVY	-80 //tramadol
 #define PAIN_REDUCTION_FULL			-200 //oxycodone, neuraline
-
 
 //=================================================
 /*
@@ -221,7 +219,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define LIMB_AMPUTATED 128 //limb was amputated cleanly or destroyed limb was cleaned up, thus causing no pain
 #define LIMB_REPAIRED 256 //we just repaired the bone, stops the gelling after setting
 
-
 /////////////////MOVE DEFINES//////////////////////
 #define MOVE_INTENT_WALK        1
 #define MOVE_INTENT_RUN         2
@@ -229,7 +226,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 #define ORGAN_ASSISTED	1
 #define ORGAN_ROBOT		2
-
 
 ///////////////SURGERY DEFINES///////////////
 #define SPECIAL_SURGERY_INVALID	"special_surgery_invalid"
@@ -371,7 +367,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define MOB_SIZE_XENO			2
 #define MOB_SIZE_BIG		3
 
-
 //defines for the busy icons when the mob does something that takes time using do_after proc
 #define BUSY_ICON_GENERIC	1
 #define BUSY_ICON_MEDICAL	2
@@ -379,14 +374,12 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define BUSY_ICON_FRIENDLY	4
 #define BUSY_ICON_HOSTILE	5
 
-
 //defins for datum/hud
 
 #define HUD_STYLE_STANDARD	1
 #define HUD_STYLE_REDUCED	2
 #define HUD_STYLE_NOHUD		3
 #define HUD_VERSIONS		3
-
 
 //Blood levels
 #define BLOOD_VOLUME_MAXIMUM	600
@@ -397,7 +390,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define BLOOD_VOLUME_SURVIVE	122
 
 #define HUMAN_MAX_PALENESS	30 //this is added to human skin tone to get value of pale_max variable
-
 
 //diseases
 
@@ -411,7 +403,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 #define SCANNER 1
 #define PANDEMIC 2
-
 
 //forcesay types
 #define SUDDEN 0

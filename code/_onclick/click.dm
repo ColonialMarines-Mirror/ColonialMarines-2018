@@ -19,7 +19,6 @@
 	if (control)	// No .click macros allowed
 		return usr.do_click(A, location, params)
 
-
 /mob/proc/do_click(atom/A, location, params)
 	// No clicking on atoms with the NOINTERACT flag
 	if ((A.flags_atom & NOINTERACT))
@@ -116,7 +115,6 @@
 
 	RangedAttack(A, mods)
 	return
-
 
 /*	OLD DESCRIPTION
 	Standard mob ClickOn()
@@ -271,12 +269,7 @@
 		buckled.dir = direction
 		buckled.handle_rotation()
 
-
-
-
-
 // click catcher stuff
-
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen1.dmi'
@@ -286,7 +279,6 @@
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
 	flags_atom = NOINTERACT
-
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/mob/screen1.dmi', "catcher")
@@ -302,8 +294,6 @@
 	var/matrix/M = new
 	M.Scale(px/sx, py/sy)
 	transform = M
-
-
 
 /client/proc/change_view(new_size)
 	view = new_size
@@ -333,7 +323,6 @@
 	tX = Clamp(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
 	tY = Clamp(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
-
 
 /proc/getviewsize(view)
 	var/viewX

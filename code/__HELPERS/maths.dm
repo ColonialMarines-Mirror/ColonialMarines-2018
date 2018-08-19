@@ -84,7 +84,6 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 		sum += val
 	return sum / values
 
-
 // Returns the nth root of x.
 /proc/Root(n, x)
 	return x ** (1 / n)

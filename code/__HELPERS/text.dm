@@ -8,7 +8,6 @@
  *			Misc
  */
 
-
 /*
  * SQL sanitization
  */
@@ -64,7 +63,6 @@
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
-
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(var/text, var/max_length=512)
@@ -156,7 +154,7 @@
 //checks text for html tags
 //if tag is not in whitelist (var/list/paper_tag_whitelist in global.dm)
 //relpaces < with &lt;
-proc/checkhtml(var/t)
+/proc/checkhtml(var/t)
 	t = sanitize_simple(t, list("&#"="."))
 	var/p = findtext(t,"<",1)
 	while (p)	//going through all the tags
@@ -278,7 +276,6 @@ proc/checkhtml(var/t)
 		return message
 	return copytext(message, 1, length + 1)
 
-
 /proc/stringmerge(var/text,var/compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
@@ -320,7 +317,7 @@ proc/checkhtml(var/t)
 
 //Used in preferences' SetFlavorText and human's set_flavor verb
 //Previews a string of len or less length
-proc/TextPreview(var/string,var/len=40)
+/proc/TextPreview(var/string,var/len=40)
 	if(lentext(string) <= len)
 		if(!lentext(string))
 			return "\[...\]"

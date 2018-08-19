@@ -52,7 +52,6 @@
 
 	next_move = world.time + 9
 
-
 	A.add_hiddenprint(src)
 	A.attack_ai(src)
 	return 1

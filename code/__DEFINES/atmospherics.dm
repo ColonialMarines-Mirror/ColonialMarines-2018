@@ -20,7 +20,6 @@
 #define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
 #define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
-
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
 #define IDEAL_GAS_ENTROPY_CONSTANT 	1164	//(mol^3 * s^3) / (kg^3 * L). Equal to (4*pi/(avrogadro's number * planck's constant)^2)^(3/2) / (avrogadro's number * 1000 Liters per m^3).
@@ -79,8 +78,6 @@
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
 
-
-
 // Fire Damage
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
 #define CARBON_LIFEFORM_FIRE_DAMAGE		4
@@ -105,8 +102,6 @@
 #define GAS_TYPE_PHORON		"phoron"
 #define GAS_TYPE_CO2		"carbon dioxyde"
 
-
-
 //Used to be used by FEA
 //var/turf/open/space/Space_Tile = locate(/turf/open/space) // A space tile to reference when atmos wants to remove excess heat.
 
@@ -120,7 +115,6 @@
 //This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
 var/MAX_EXPLOSION_RANGE = 14
 //#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
-
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation

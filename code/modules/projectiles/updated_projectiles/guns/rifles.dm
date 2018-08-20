@@ -63,7 +63,9 @@
 						/obj/item/attachable/scope/mini)
 
 	flags_gun_features = GUN_AUTO_EJECTOR|GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER
-	starting_attachment_types = list(/obj/item/attachable/attached_gun/grenade)
+	starting_attachment_types = list(
+						/obj/item/attachable/attached_gun/grenade,
+						/obj/item/attachable/flashlight)
 
 /obj/item/weapon/gun/rifle/m41a/New()
 	select_gamemode_skin(/obj/item/weapon/gun/rifle/m41a)

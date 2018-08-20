@@ -21,7 +21,8 @@ can cause issues with ammo types getting mixed up during the burst.
 	aim_slowdown = SLOWDOWN_ADS_SHOTGUN
 	wield_delay = WIELD_DELAY_FAST //Shotguns are really easy to put up to fire, since they are designed for CQC (at least compared to a rifle)
 	gun_skill_category = GUN_SKILL_SHOTGUNS
-
+	starting_attachment_types = list(
+	/obj/item/attachable/flashlight)
 /obj/item/weapon/gun/shotgun/New()
 	..()
 	replace_tube(current_mag.current_rounds) //Populate the chamber.
@@ -395,7 +396,8 @@ can cause issues with ammo types getting mixed up during the burst.
 						/obj/item/attachable/magnetic_harness,
 						/obj/item/attachable/attached_gun/flamer,
 						/obj/item/attachable/stock/shotgun)
-
+	starting_attachment_types = list(
+						/obj/item/attachable/flashlight)
 /obj/item/weapon/gun/shotgun/pump/New()
 	select_gamemode_skin(/obj/item/weapon/gun/shotgun/pump)
 	..()

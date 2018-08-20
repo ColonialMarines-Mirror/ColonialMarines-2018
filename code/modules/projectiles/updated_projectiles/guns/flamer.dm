@@ -195,10 +195,6 @@
 
 	new /obj/flamer_fire(T, heat, burn, f_color)
 
-	for(var/obj/structure/jungle/vines/V in T)
-		cdel(V)
-		if(prob(25)) //Don't wanna spam this
-			V.visible_message("<span class='warning'>The vines burn away from the immense heat!</span>")
 	// Melt a single layer of snow
 	if (istype(T, /turf/open/snow))
 		var/turf/open/snow/S = T

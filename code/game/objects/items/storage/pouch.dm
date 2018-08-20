@@ -287,7 +287,7 @@
 	name = "auto-injector pouch"
 	desc = "A pouch specifically for auto-injectors."
 	icon_state = "autoinjector"
-	storage_slots = 4
+	storage_slots = 8
 	can_hold = list(
 	    "/obj/item/reagent_container/hypospray/autoinjector"
 	)

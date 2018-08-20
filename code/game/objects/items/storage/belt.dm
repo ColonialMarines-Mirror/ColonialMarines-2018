@@ -183,6 +183,7 @@
 	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/Oxycodone(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/Hypervene(src)
 
 /obj/item/storage/belt/combatLifesaver/upp
 	icon_state = "medicalbag_u"

@@ -143,3 +143,13 @@
 		..()
 		reagents.add_reagent("inaprovaline", 15)
 		update_icon()
+
+/obj/item/reagent_container/hypospray/autoinjector/Hypervene
+	name = "\improper Hypervene autoinjector"
+	desc = "An auto-injector loaded with 10 units of Hypervene, a very potent binding agent used to render other chemicals inert."
+	icon_state = "hypervene"
+	
+	New()
+		..()
+		reagents.add_reagent("hypervene", 10)
+		update_icon()

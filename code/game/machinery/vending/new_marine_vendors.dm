@@ -266,6 +266,7 @@
 	name = "ColMarTech Automated Closet"
 	desc = "An automated closet hooked up to a colossal storage of standard-issue uniform and armor."
 	icon_state = "uniform_marine"
+	use_points = TRUE
 
 	vendor_role = "Squad Marine"
 
@@ -295,7 +296,23 @@
 							list("Pistol pouch", 0, /obj/item/storage/pouch/pistol, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("MASKS", 0, null, null, null),
 							list("Gas mask", 0, /obj/item/clothing/mask/gas, MARINE_CAN_BUY_MASK, "black"),
-
+							list("SPECIALTY ITEMS", 0, null, null, null),
+							list("Webbing", 30, /obj/item/clothing/tie/storage/webbing, null, "black"),
+							list("Deluxe webbing", 50, /obj/item/clothing/tie/storage/brown_vest, null, "black"), //Forever out of reach
+							list("Shotgun stock", 15, /obj/item/attachable/stock/shotgun, null, "black"),
+							list("Submachinegun stock", 15, /obj/item/attachable/stock/smg, null, "black"),
+							list("Rifle stock", 15, /obj/item/attachable/stock/rifle, null, "black"),
+							list("Vertical grip", 15, /obj/item/attachable/verticalgrip, null, "black"),
+							list("Angled grip", 15, /obj/item/attachable/angledgrip, null, "black"),
+							list("Extended barrel", 15, /obj/item/attachable/extended_barrel, null, "black"),
+							list("Red-dot sight", 15, /obj/item/attachable/reddot, null, "black"),
+							list("Recoil compensator", 20, /obj/item/attachable/compensator, null, "black"),
+							list("Quickfire adapter", 20, /obj/item/attachable/quickfire, null, "black"),
+							list("Burstfire adapter", 20, /obj/item/attachable/burstfire_assembly, null, "black"),
+							list("Laser sight", 30, /obj/item/attachable/lasersight, null, "black"),
+							list("Gyroscopic stabilizer", 30, /obj/item/attachable/gyro, null, "black"),
+							list("Barrel charger", 45, /obj/item/attachable/heavy_barrel, null, "black"),
+							list("Mini rail scope", 45, /obj/item/attachable/scope/mini, null, "black"),
 							)
 
 

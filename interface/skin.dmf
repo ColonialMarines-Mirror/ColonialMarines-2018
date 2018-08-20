@@ -128,52 +128,52 @@ macro "macro"
 
 macro "hotkeymode"
 	elem 
-		name = "TAB"
+		name = "Tab"
 		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true\""
 	elem 
-		name = "CENTER+REP"
+		name = "Center+REP"
 		command = ".center"
 	elem 
-		name = "NORTHEAST"
+		name = "Northeast"
 		command = ".northeast"
 	elem 
-		name = "SOUTHEAST"
+		name = "Southeast"
 		command = ".southeast"
 	elem 
-		name = "SOUTHWEST"
+		name = "Southwest"
 		command = ".southwest"
 	elem 
-		name = "NORTHWEST"
+		name = "Northwest"
 		command = ".northwest"
 	elem 
-		name = "CTRL+WEST"
+		name = "CTRL+West"
 		command = "westface"
 	elem 
-		name = "WEST+REP"
+		name = "West+REP"
 		command = ".west"
 	elem 
-		name = "CTRL+NORTH"
+		name = "CTRL+North"
 		command = "northface"
 	elem 
-		name = "NORTH+REP"
+		name = "North+REP"
 		command = ".north"
 	elem 
-		name = "CTRL+EAST"
+		name = "CTRL+East"
 		command = "eastface"
 	elem 
-		name = "EAST+REP"
+		name = "East+REP"
 		command = ".east"
 	elem 
-		name = "CTRL+SOUTH"
+		name = "CTRL+South"
 		command = "southface"
 	elem 
-		name = "SOUTH+REP"
+		name = "South+REP"
 		command = ".south"
 	elem 
-		name = "INSERT"
+		name = "Insert"
 		command = "a-intent right"
 	elem 
-		name = "DELETE"
+		name = "Delete"
 		command = "delete-key-pressed"
 	elem 
 		name = "1"
@@ -223,6 +223,9 @@ macro "hotkeymode"
 	elem 
 		name = "CTRL+H"
 		command = "holster"
+	elem 
+		name = "O"
+		command = "ooc"
 	elem 
 		name = "Q"
 		command = ".northwest"
@@ -274,9 +277,6 @@ macro "hotkeymode"
 	elem 
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
-	elem 
-		name = "F2"
-		command = "ooc"
 	elem 
 		name = "F2+REP"
 		command = ".screenshot auto"
@@ -700,7 +700,6 @@ window "rpane"
 		size = 859x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "rpanewindow"
@@ -709,7 +708,6 @@ window "rpane"
 		size = 859x499
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		saved-params = "splitter"
 		right = "outputwindow"
 		is-vert = false
@@ -719,7 +717,6 @@ window "rpane"
 		size = 106x20
 		anchor1 = 67,0
 		anchor2 = 79,0
-		background-color = none
 		saved-params = "is-checked"
 		text = "Submit Bug"
 		command = "submit-bug"
@@ -741,7 +738,6 @@ window "rpane"
 		size = 106x20
 		anchor1 = 30,0
 		anchor2 = 42,0
-		background-color = none
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -752,7 +748,6 @@ window "rpane"
 		size = 111x20
 		anchor1 = 18,0
 		anchor2 = 31,0
-		background-color = none
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "Changelog"
@@ -763,7 +758,6 @@ window "rpane"
 		size = 106x20
 		anchor1 = 55,0
 		anchor2 = 67,0
-		background-color = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -774,7 +768,6 @@ window "rpane"
 		size = 106x20
 		anchor1 = 42,0
 		anchor2 = 55,0
-		background-color = none
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -785,7 +778,6 @@ window "rpane"
 		size = 67x20
 		anchor1 = 0,0
 		anchor2 = 8,0
-		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Text"
@@ -799,7 +791,6 @@ window "rpane"
 		size = 70x20
 		anchor1 = 8,0
 		anchor2 = 15,0
-		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Info"

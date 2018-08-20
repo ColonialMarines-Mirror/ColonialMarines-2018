@@ -285,7 +285,8 @@
 						/obj/item/attachable/scope,
 						/obj/item/attachable/lasersight,
 						/obj/item/attachable/scope/mini)
-
+	starting_attachment_types = list(
+						/obj/item/attachable/flashlight)
 	New()
 		..()
 		attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 21,"rail_x" = 17, "rail_y" = 23, "under_x" = 22, "under_y" = 17, "stock_x" = 22, "stock_y" = 19)

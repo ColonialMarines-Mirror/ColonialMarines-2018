@@ -50,6 +50,13 @@
 	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
 	result_amount = 3
 
+/datum/chemical_reaction/hypervene
+	name = "Hypervene"
+	id = "hypervene"
+	result = "hypervene"
+	required_reagents = list("arithrazine" = 1, "dylovene" = 1, "ethylredoxrazine" = 1,)
+	result_amount = 3
+
 /datum/chemical_reaction/ryetalyn
 	name = "Ryetalyn"
 	id = "ryetalyn"

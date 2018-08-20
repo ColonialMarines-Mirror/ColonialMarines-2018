@@ -60,6 +60,10 @@
 			src << "You boop."
 			message = "<B>[src]</B> boops."
 			m_type = 2
+		if("dab")
+			src << "You dab."
+			message = "<B>[src]</B> dabs."
+			m_type = 1
 		if ("help")
 			src << "alarm,alert,notice,flash,blink,whistle,beep,boop"
 		else

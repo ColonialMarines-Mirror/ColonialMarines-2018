@@ -57,10 +57,10 @@
 		. = ..()
 		for(var/datum/reagent/R in M.reagents.reagent_list)
 			if(R != src)
-				M.reagents.remove_reagent(R.id,5 * REM)
+				M.reagents.remove_reagent(R.id,4 * REM)
 		M.reagent_shock_modifier += 50 //Significant pain while metabolized.
-		M.adjustToxLoss(-5 * REM)
-		M.radiation = max(M.radiation-10*REM,0)
+		M.adjustToxLoss(-4 * REM)
+		M.radiation = max(M.radiation-8*REM,0)
 
 	on_overdose(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return
@@ -514,7 +514,6 @@
 	custom_metabolism = 0.4
 	overdose = 2
 	overdose_critical = 3
-	scannable = 0
 
 	on_mob_life(mob/living/M)
 		. = ..()

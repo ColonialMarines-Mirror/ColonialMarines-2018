@@ -1,11 +1,11 @@
 //Hunter Code - Colonial Marines - Last Edit: Apophis775 - 11JUN16
 
-/mob/living/carbon/Xenomorph/Lurker
-	caste = "Lurker"
-	name = "Lurker"
+/mob/living/carbon/Xenomorph/Hunter
+	caste = "Hunter"
+	name = "Hunter"
 	desc = "A beefy, fast alien with sharp claws."
 	icon = 'icons/Xeno/xenomorph_48x48.dmi'
-	icon_state = "Lurker Walking"
+	icon_state = "Hunter Walking"
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 	health = 150

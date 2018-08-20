@@ -53,8 +53,8 @@
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/giant_spider/hunter
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
-	icon_state = "Lurker"
-	icon_living = "Lurker"
+	icon_state = "Hunter"
+	icon_living = "Hunter"
 	icon_dead = "hunter_dead"
 	maxHealth = 120
 	health = 120

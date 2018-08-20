@@ -68,7 +68,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tacklemax = 4
 					tackle_chance = 50
 					pounce_delay = 35
-				if("Lurker")
+				if("Hunter")
 					melee_damage_lower = 25
 					melee_damage_upper = 35
 					health = 170
@@ -283,7 +283,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tacklemax = 5
 					tackle_chance = 60
 					pounce_delay = 30
-				if("Lurker")
+				if("Hunter")
 					melee_damage_lower = 35
 					melee_damage_upper = 50
 					health = 200
@@ -497,7 +497,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tacklemax = 5
 					tackle_chance = 70
 					pounce_delay = 25
-				if("Lurker")
+				if("Hunter")
 					src << "<span class='xenoannounce'>You are the epitome of the hunter. Few can stand against you in open combat.</span>"
 					melee_damage_lower = 50
 					melee_damage_upper = 60
@@ -795,15 +795,15 @@ Queen		 0.0	 0.1	 0.2	 0.3
 	..()
 	upgrade_xeno(3)
 
-/mob/living/carbon/Xenomorph/Lurker/mature/New()
+/mob/living/carbon/Xenomorph/Hunter/mature/New()
 	..()
 	upgrade_xeno(1)
 
-/mob/living/carbon/Xenomorph/Lurker/elite/New()
+/mob/living/carbon/Xenomorph/Hunter/elite/New()
 	..()
 	upgrade_xeno(2)
 
-/mob/living/carbon/Xenomorph/Lurker/ancient/New()
+/mob/living/carbon/Xenomorph/Hunter/ancient/New()
 	..()
 	upgrade_xeno(3)
 

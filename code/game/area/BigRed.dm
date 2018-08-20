@@ -321,12 +321,12 @@
 	ceiling = CEILING_UNDERGROUND
 
 /area/bigredv2/outside/weyland_lab/outside
-	name = "\improper Weyland Yutani Compound"
+	name = "\improper Nanotrasen Compound"
 	icon_state = "yellow"
 	ceiling = CEILING_NONE
 
 /area/bigredv2/outside/weyland_lab/inside
-	name = "\improper Weyland Yutani Research Lab"
+	name = "\improper Nanotrasen Research Lab"
 	icon_state = "engine"
 	ceiling = CEILING_UNDERGROUND_METAL
 

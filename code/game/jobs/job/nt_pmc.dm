@@ -1,7 +1,7 @@
 /datum/job/pmc
 	special_role = "PMC"
 	comm_title = "WY"
-	faction = "Weyland-Yutani"
+	faction = "Nanotrasen"
 	supervisors = "the team leader"
 	idtype = /obj/item/card/id/centcom
 	//flag = WY_PMC
@@ -295,7 +295,7 @@
 /datum/job/pmc/team_leader
 	title = "PMC Leader"
 	paygrade = "PMC4"
-	supervisors = "the W-Y corporate office"
+	supervisors = "the NT corporate office"
 	total_positions = 2
 	spawn_positions = 2
 	minimal_player_age = 10

@@ -42,7 +42,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 
 	generate_entry_message()
 		. = {"Your job is HEAVY ROLE PLAY and requires you to stay IN CHARACTER at all times.
-While you support Weyland-Yutani, you report to the USCM High Command, not the corporate office.
+While you support Nanotrasen, you report to the USCM High Command, not the corporate office.
 Your primary task is the safety of the ship and her crew, and ensuring the survival and success of the marines.
 Your first order of business should be briefing the marines on the mission they are about to undertake.
 If you require any help, use adminhelp to talk to game staff about what you're supposed to do.

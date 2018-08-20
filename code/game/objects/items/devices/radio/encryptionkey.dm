@@ -69,7 +69,7 @@
 
 
 /obj/item/device/encryptionkey/ert
-	name = "W-Y ERT Radio Encryption Key"
+	name = "NT ERT Radio Encryption Key"
 	channels = list("Response Team" = 1, "Command" = 1, "MedSci" = 1, "Engi" = 1)
 
 
@@ -127,8 +127,8 @@
 	channels = list("Colonist" = 1)
 
 /obj/item/device/encryptionkey/PMC
-	name = "\improper Weyland Yutani encryption key"
-	channels = list("WY PMC" = 1)
+	name = "\improper Nanotrasen encryption key"
+	channels = list("NT PMC" = 1)
 
 /obj/item/device/encryptionkey/bears
 	name = "\improper UPP encryption key"

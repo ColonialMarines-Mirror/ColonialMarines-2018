@@ -3,7 +3,7 @@
 
 //Deathsquad Commandos
 /datum/emergency_call/death
-	name = "Weyland Deathsquad"
+	name = "Deathsquad"
 	mob_max = 8
 	mob_min = 5
 	arrival_message = "Intercepted Transmission: '!`2*%slau#*jer t*h$em a!l%. le&*ve n(o^ w&*nes%6es.*v$e %#d ou^'"
@@ -45,12 +45,12 @@
 			spawn_officer(mob)
 			mob << "<font size='3'>\red You are the Death Squad Leader!</font>"
 			mob << "<B> You must clear out any traces of the infestation and its survivors..</b>"
-			mob << "<B> Follow any orders directly from Weyland-Yutani!</b>"
+			mob << "<B> Follow any orders directly from Nanotrasen!</b>"
 		else
 			spawn_standard(mob)
 			mob << "<font size='3'>\red You are a Death Squad Commando!!</font>"
 			mob << "<B> You must clear out any traces of the infestation and its survivors..</b>"
-			mob << "<B> Follow any orders directly from Weyland-Yutani!</b>"
+			mob << "<B> Follow any orders directly from Nanotrasen!</b>"
 
 	spawn(10)
 		M << "<B>Objectives:</b> [objectives]"

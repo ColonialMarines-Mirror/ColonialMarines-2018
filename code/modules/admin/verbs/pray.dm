@@ -30,7 +30,7 @@
 		if(C.prefs.toggles_chat & CHAT_PRAYER)
 			C << msg
 	if(liaison)
-		usr << "Your corporate overlords at Weyland-Yutani have received your message."
+		usr << "Your corporate overlords at Nanotrasen have received your message."
 	else
 		usr << "Your prayers have been received by the gods."
 

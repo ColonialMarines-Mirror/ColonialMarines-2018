@@ -320,7 +320,7 @@
 
 /obj/item/device/omega_array
 	name = "omega wave destablization array"
-	desc = "It's hard to say just what this thing is, but the eggheads at W-Y central must have some reason for creating it."
+	desc = "It's hard to say just what this thing is, but the eggheads at NT central must have some reason for creating it."
 	icon_state = "omega_control"
 	anchored = 1
 	density = 1
@@ -468,7 +468,7 @@
 					H << "________________________"
 					H << "\red <b>You are the [H.mind.assigned_role]!<b>"
 					H << "It was just a regular day in the office when the higher up decided to send you in to this hot mess. If only you called in sick that day..."
-					H << "The W-Y mercs were hired to protect some important science experiment, and W-Y expects you to keep them in line."
+					H << "The NT mercs were hired to protect some important science experiment, and NT expects you to keep them in line."
 					H << "These are hardened killers, and you write on paper for a living. It won't be easy, that's for damn sure."
 					H << "Best to let the mercs do the killing and the dying, but <b>remind them who pays the bills.</b>"
 					H << "________________________"
@@ -657,7 +657,7 @@
 		H.equip_to_slot_or_del(ID, WEAR_ID)
 		H.mind.special_role = "PMC"
 		H.mind.role_alt_title = H.mind.assigned_role
-		H.mind.role_comm_title = "W-Y"
+		H.mind.role_comm_title = "NT"
 		spawn(40)
 			if(H)
 				H << "________________________"
@@ -898,7 +898,7 @@
 				H << "________________________"
 				H << "\red <b>You are the [H.mind.assigned_role]!<b>"
 				H << "Gear up, maggot! You have been dropped off in this God-forsaken place to complete some wetworks for Uncle Sam! Not even your mother knows that you're here!"
-				H << "Some W-Y mercs are camping out north of the colony, and they got some doo-hickie doomsday device they are planning to use. Make sure they don't!"
+				H << "Some NT mercs are camping out north of the colony, and they got some doo-hickie doomsday device they are planning to use. Make sure they don't!"
 				H << "Wipe them out and destroy their tech! The [MAIN_SHIP_NAME] will maintain radio silence for the duration of the mission!"
 				H << "You've got an hour. And watch out... That colony ain't right, it ain't right at all. <b>DISMISSED!</b>"
 				H << "________________________"
@@ -1282,9 +1282,9 @@
 	generate_supply_crate(supply_spawn,supply_manifest,"ammo crate (smg)", "A crate containing SMG ammo. By the looks of it, it isn't standard issue.")
 
 	supply_manifest=list(
-		/obj/item/storage/box/wy_mre = 12
+		/obj/item/storage/box/nt_mre = 12
 		)
-	generate_supply_crate(supply_spawn,supply_manifest,"\improper W-Y MRE crate", "A crate containing Weyland-Yutani MREs. An army marches on its stomach, right?")
+	generate_supply_crate(supply_spawn,supply_manifest,"\improper NT MRE crate", "A crate containing Nanotrasen MREs. An army marches on its stomach, right?")
 
 	supply_manifest=list(
 		/obj/item/storage/firstaid/regular = 1,

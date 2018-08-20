@@ -514,6 +514,6 @@
 
 /obj/machinery/computer/med_data/laptop
 	name = "Medical Laptop"
-	desc = "Cheap Weyland Yutani Laptop."
+	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
 	density = 0

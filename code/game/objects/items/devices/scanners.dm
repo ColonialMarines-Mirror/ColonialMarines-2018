@@ -205,7 +205,7 @@ REAGENT SCANNER
 	// Show red messages - broken bokes, infection, etc
 	if (rad)
 		if(rad > 5)
-			dat += "\t<span class='scanner'> *Dangerous levels of ionizing radiation detected.</span>\n"
+			dat += "\t<span class='scanner'> *<b>Dangerous levels of ionizing radiation</b> detected.</span>\n"
 		else
 			dat += "\t<span class='scanner'> *Ionizing radiation detected.</span>\n"	
 	if (M.getCloneLoss())

@@ -154,11 +154,11 @@
 
 			var/obj/item/card/id/I = H.wear_id
 			if(!istype(I)) //not wearing an ID
-				to_chat(H, "<span class='warning'>Access denied. No ID card detected</span>")
+				H << "<span class='warning'>Access denied. No ID card detected</span>"
 				return
 
 			if(I.registered_name != H.real_name)
-				H << "<span class='warning'>Access denied. No ID card detected</span>"
+				H << "<span class='warning'>Wrong ID card owner detected.</span>"
 				return
 
 			if(vendor_role && I.rank != vendor_role)

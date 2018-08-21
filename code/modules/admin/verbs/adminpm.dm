@@ -36,41 +36,46 @@
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 
-/client/proc/cmd_admin_pm(var/client/C, var/msg = null)
+/client/proc/cmd_admin_pm(var/client/C, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PMs (muted).</font>")
 		return
 
 	if(!istype(C,/client))
-		if(holder)	to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
-		else		to_chat(src, "<font color='red'>Error: Private-Message: Client not found. They may have lost connection, so try using an adminhelp!</font>")
+		if(holder)
+			to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
+		else
+			to_chat(src, "<font color='red'>Error: Private-Message: Client not found. They may have lost connection, so try using an adminhelp!</font>")
 		return
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0)]") as message|null
 
-		if(!msg)	return
+		if(!msg)
+			return
 		if(!C)
-			if(holder)	to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
-			else		to_chat(src, "<font color='red'>Error: Private-Message: Client not found. They may have lost connection, so try using an adminhelp!</font>")
+			if(holder)
+				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
+			else
+				to_chat(src, "<font color='red'>Error: Private-Message: Client not found. They may have lost connection, so try using an adminhelp!</font>")
 			return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)	return
+		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+		if(!msg)
+			return
+		msg = emoji_parse(msg)
 
 	var/recieve_color = "purple"
-	var/send_pm_type = " "
+	var/send_pm_type = ""
 	var/recieve_pm_type = "Player"
 
-
-	if(holder)
-		//PMs sent from admins and mods display their rank
+	if(C.holder) //PMs sent from admins and mods display their rank
 		if(holder)
 			recieve_color = "#009900"
 			send_pm_type = holder.rank + " "

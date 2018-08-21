@@ -5,9 +5,10 @@
 	if(!check_rights(R_ADMIN))	return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)	return
-
+	if(!msg)
+		return
 	log_admin("[key_name(src)] : [msg]")
+	msg = emoji_parse(msg)
 
 	var/color = "adminsay"
 	if(ishost(usr))
@@ -26,13 +27,15 @@
 	set name = "Msay"
 	set hidden = 1
 
-	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR))	return
+	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR))
+		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	log_admin("MOD: [key_name(src)] : [msg]")
-
 	if (!msg)
 		return
+	log_admin("MOD: [key_name(src)] : [msg]")
+	msg = emoji_parse(msg)
+
 	var/color = "mod"
 	if (check_rights(R_ADMIN,0))
 		color = "adminmod"

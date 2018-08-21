@@ -292,12 +292,11 @@
 //gets paygrade from ID
 //paygrade is a user's actual rank, as defined on their ID.  size 1 returns an abbreviation, size 0 returns the full rank name, the third input is used to override what is returned if no paygrade is assigned.
 /mob/living/carbon/human/proc/get_paygrade(size = 1)
-	switch(species.name)
-		if("Human","Human Hero")
-			var/obj/item/card/id/id = wear_id
-			if(istype(id)) . = get_paygrades(id.paygrade, size, gender)
-			else return ""
-		else return ""
+	if(species.show_paygrade)
+		var/obj/item/card/id/id = wear_id
+		if(istype(id))
+			return get_paygrades(id.paygrade, size, gender)
+	return ""
 
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere

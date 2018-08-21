@@ -368,7 +368,8 @@
 			var/datum/effect_system/smoke_spread/S = new/datum/effect_system/smoke_spread()
 			S.set_up(1,0,T,null)
 			S.start()
-		new/obj/item/device/flashlight/flare/on/cas(T) 
+		spawn(5)
+			new/obj/item/device/flashlight/flare/on/cas(T) 
 		if(!ammo_count && loc)
 			cdel(src) //deleted after last minirocket is fired and impact the ground.
 
@@ -378,7 +379,7 @@
 	icon_state = "" //No sprite
 	invisibility = 101
 	mouse_opacity = 0
-	brightness_on = 8 //Magnesium/sodium fires (White star) really are bright
+	brightness_on = 7 //Magnesium/sodium fires (White star) really are bright
 
 /obj/item/device/flashlight/flare/on/cas/New()
 	..()

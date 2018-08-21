@@ -42,6 +42,44 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1)
 	return ..()
 
+/obj/item/weapon/claymore/highlander
+	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
+	flags_item = NODROP
+	flags_equip_slot = null
+	//block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
+	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
+	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
+	var/obj/item/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
+
+/obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target) && target.stat == DEAD)
+		user.revive() //STEAL THE LIFE OF OUR FALLEN FOES NOTE: Fully heal dosen't exist
+		notches++
+		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
+		dust(target)
+/obj/item/weapon/claymore/highlander/IsShield()
+	return TRUE
+
+/obj/item/weapon/claymore/highlander/Dispose()
+	if(nuke_disk)
+		var/list/heard = get_mobs_in_view(7, nuke_disk)
+		nuke_disk.forceMove(get_turf(src))
+		heard << "<span class='warning'>The nuke disk is vulnerable!</span>"
+		nuke_disk = null
+	..()
+
+/obj/item/weapon/claymore/highlander/attack_self(mob/user)
+	var/closest_victim
+	var/closest_distance = 255
+	for(var/mob/living/carbon/human/H in player_list - user)
+		if(H.client && H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+			closest_victim = H
+	if(!closest_victim)
+		user << "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>"
+		return
+	user << "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>"
+
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "A finely made Japanese sword, with a well sharpened blade. The blade has been filed to a molecular edge, and is extremely deadly. Commonly found in the hands of mercenaries and yakuza."

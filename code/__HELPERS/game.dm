@@ -424,3 +424,7 @@ datum/projectile_data
 /proc/convert_c2k(var/temp)
 	return ((temp + T0C))
 
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)
+  for(var/M in player_list)
+    if(M && !isnewplayer(M))
+      M << thing //no to_chat yet

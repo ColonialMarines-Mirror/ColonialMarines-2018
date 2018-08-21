@@ -55,6 +55,7 @@
 
 	on_mob_life(mob/living/M, alien)
 		. = ..()
+		if(!.) return
 		for(var/datum/reagent/R in M.reagents.reagent_list)
 			if(R != src)
 				M.reagents.remove_reagent(R.id,4 * REM)

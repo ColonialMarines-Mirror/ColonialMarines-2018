@@ -255,9 +255,6 @@
 	if(.)
 		if(!ishuman(user)) return 0
 		var/mob/living/carbon/human/H = user
-		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.smartgun < SKILL_SMART_USE)
-			to_chat(user, "<span class='warning'>You don't seem to know how to use [src]...</span>")
-			return 0
 		if ( !istype(H.wear_suit,/obj/item/clothing/suit/storage/marine/smartgunner) || !istype(H.back,/obj/item/smartgun_powerpack))
 			click_empty(H)
 			return 0

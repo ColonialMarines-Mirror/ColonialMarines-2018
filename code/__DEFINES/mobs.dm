@@ -351,9 +351,10 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define HAS_SKIN_COLOR 256
 #define HAS_LIPS 512
 #define HAS_UNDERWEAR 1024
-#define IS_PLANT 2048
-#define IS_WHITELISTED 4096
-#define IS_SYNTHETIC 8192
+#define HAS_NO_HAIR	2048
+#define IS_PLANT 4096
+#define IS_WHITELISTED 8192
+#define IS_SYNTHETIC 16384
 //=================================================
 
 //Some on_mob_life() procs check for alien races.
@@ -363,6 +364,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define IS_XENOS 5
 #define IS_YAUTJA 6
 #define IS_HORROR 7
+#define IS_MOTH 8
 //=================================================
 
 //Mob sizes

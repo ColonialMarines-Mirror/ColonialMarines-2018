@@ -27,6 +27,7 @@
 	var/language                  // Default racial language, if any.
 	// Default language is used when 'say' is used without modifiers.
 	var/default_language = "English"
+	var/speech_verb_override
 	var/secondary_langs = list()  // The names of secondary languages that are available to this species.
 	var/mutantrace                // Safeguard due to old code.
 	var/list/speech_sounds        // A list of sounds to potentially play when speaking.
@@ -70,6 +71,8 @@
 	var/flags = 0       // Various specific features.
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
+	var/list/preferences = list()
+	var/list/screams = list()
 
 	var/blood_color = "#A10808" //Red.
 	var/flesh_color = "#FFC896" //Pink.
@@ -154,6 +157,10 @@
 	H.visible_message("<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>", \
 					"<span class='notice'>You hug [target] to make [t_him] feel better!</span>", null, 4)
 
+/datum/species/proc/random_name(var/gender)
+	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+
 //special things to change after we're no longer that species
 /datum/species/proc/post_species_loss(mob/living/carbon/human/H)
 	return
@@ -207,6 +214,9 @@
 /datum/species/proc/can_understand(var/mob/other)
 	return
 
+/datum/species/proc/handle_fire(var/mob/living/carbon/human/H)
+	return
+
 /datum/species/human
 	name = "Human"
 	name_plural = "Humans"
@@ -214,6 +224,8 @@
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 	flags = HAS_SKIN_TONE|HAS_LIPS|HAS_UNDERWEAR
+
+	screams = list("male" = "male_scream", "female" = "female_scream")
 
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
@@ -341,6 +353,31 @@
 	flesh_color = "#8CD7A3"
 
 	reagent_tag = IS_SKRELL
+
+/datum/species/moth
+	name = "Moth"
+	name_plural = "Moth"
+	icobase = 'icons/mob/human_races/r_moth.dmi'
+	deform = 'icons/mob/human_races/r_moth.dmi'
+	eyes = "blank_eyes"
+	speech_verb_override = "flutters"
+
+	flags = HAS_LIPS|HAS_NO_HAIR
+	preferences = list("moth_wings" = "Wings")
+	screams = list("neuter" = 'sound/voice/moth_scream.ogg')
+
+	flesh_color = "#E5CD99"
+
+	reagent_tag = IS_MOTH
+
+/datum/species/moth/handle_fire(mob/living/carbon/human/H)
+	if(H.moth_wings != "Burnt Off" && H.bodytemperature >= 400 && H.fire_stacks > 0)
+		H << "<span class='danger'>Your precious wings burn to a crisp!</span>"
+		H.moth_wings = "Burnt Off"
+		H.update_body()
+
+/datum/species/moth/random_name()
+	return "[pick(moth_first)] [pick(moth_last)]"
 
 /datum/species/vox
 	name = "Vox"

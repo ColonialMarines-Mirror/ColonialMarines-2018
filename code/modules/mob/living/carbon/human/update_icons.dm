@@ -61,6 +61,7 @@ There are several things that need to be remembered:
 */
 
 //Human Overlays Indexes/////////
+#define MOTH_WINGS_LAYER		26
 #define MUTANTRACE_LAYER		25
 #define MUTATIONS_LAYER			24
 #define DAMAGE_LAYER			23
@@ -87,11 +88,17 @@ There are several things that need to be remembered:
 #define TARGETED_LAYER			2	//for target sprites when held at gun point, and holo cards.
 #define FIRE_LAYER				1		//If you're on fire		//BS12: Layer for the target overlay from weapon targeting system
 
-#define TOTAL_LAYERS			25
+#define TOTAL_LAYERS			26
+
+#define MOTH_WINGS_BEHIND_LAYER	1
+
+#define TOTAL_UNDERLAYS			1
+
 //////////////////////////////////
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
+	var/list/underlays_standing[TOTAL_UNDERLAYS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
 
 
@@ -106,6 +113,15 @@ There are several things that need to be remembered:
 		overlays -= overlays_standing[cache_index]
 		overlays_standing[cache_index] = null
 
+/mob/living/carbon/human/apply_underlay(cache_index)
+	var/image/I = underlays_standing[cache_index]
+	if(I)
+		underlays += I
+
+/mob/living/carbon/human/remove_underlay(cache_index)
+	if(underlays_standing[cache_index])
+		underlays -= underlays_standing[cache_index]
+		underlays_standing[cache_index] = null
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
@@ -352,13 +368,16 @@ var/global/list/damage_icon_parts = list()
 
 	icon = stand_icon
 
-	//tail
-	update_tail_showing(0)
+	update_moth_wings()
+	update_tail_showing()
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
+
+	if(species.flags & HAS_NO_HAIR)
+		return
 
 	var/datum/limb/head/head_organ = get_limb("head")
 	if( !head_organ || (head_organ.status & LIMB_DESTROYED) )
@@ -543,6 +562,7 @@ var/global/list/damage_icon_parts = list()
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		apply_overlay(UNIFORM_LAYER)
+	update_moth_wings()
 
 /mob/living/carbon/human/update_inv_wear_id()
 	remove_overlay(ID_LAYER)
@@ -712,6 +732,7 @@ var/global/list/damage_icon_parts = list()
 		overlays_standing[HEAD_LAYER] = standing
 
 		apply_overlay(HEAD_LAYER)
+	update_moth_wings()
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)
@@ -772,6 +793,7 @@ var/global/list/damage_icon_parts = list()
 
 		overlays_standing[SUIT_LAYER]	= standing
 
+	update_moth_wings()
 	update_tail_showing()
 	update_collar()
 
@@ -894,6 +916,18 @@ var/global/list/damage_icon_parts = list()
 
 			apply_overlay(TAIL_LAYER)
 
+/mob/living/carbon/human/proc/update_moth_wings()
+	remove_overlay(MOTH_WINGS_LAYER)
+	remove_underlay(MOTH_WINGS_BEHIND_LAYER)
+	
+	if(species.name == "Moth")
+		var/datum/sprite_accessory/moth_wings/wings = moth_wings_list[moth_wings]
+
+		if(wings)
+			overlays_standing[MOTH_WINGS_LAYER] = image(wings.icon, icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+			underlays_standing[MOTH_WINGS_BEHIND_LAYER] = image(wings.icon, icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+			apply_overlay(MOTH_WINGS_LAYER)
+			apply_underlay(MOTH_WINGS_BEHIND_LAYER)
 
 //Adds a collar overlay above the helmet layer if the suit has one
 //	Suit needs an identically named sprite in icons/mob/collar.dmi
@@ -969,6 +1003,7 @@ var/global/list/damage_icon_parts = list()
 
 
 //Human Overlays Indexes/////////
+#undef MOTH_WINGS_LAYER
 #undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
@@ -995,3 +1030,6 @@ var/global/list/damage_icon_parts = list()
 #undef FIRE_LAYER
 #undef BURST_LAYER
 #undef TOTAL_LAYERS
+
+#undef MOTH_WINGS_BEHIND_LAYER
+#undef TOTAL_UNDERLAYS

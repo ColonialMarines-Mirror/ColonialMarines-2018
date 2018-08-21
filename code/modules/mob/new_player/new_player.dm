@@ -132,7 +132,7 @@
 					observer.alpha = 127
 
 					if(client.prefs.be_random_name)
-						client.prefs.real_name = random_name(client.prefs.gender)
+						client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
 					observer.real_name = client.prefs.real_name
 					observer.name = observer.real_name
 	//				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
@@ -156,11 +156,6 @@
 				if(client.prefs.species != "Human")
 					if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 						to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
-						return
-
-					var/datum/species/S = all_species[client.prefs.species]
-					if(!(S.flags & IS_WHITELISTED))
-						to_chat(src, alert("Your current species,[client.prefs.species], is not available for play on the station."))
 						return
 
 				LateChoices()
@@ -202,11 +197,6 @@
 				if(client.prefs.species != "Human")
 					if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 						to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
-						return 0
-
-					var/datum/species/S = all_species[client.prefs.species]
-					if(!(S.flags & IS_WHITELISTED))
-						to_chat(src, alert("Your current species,[client.prefs.species], is not available for play on the station."))
 						return 0
 
 				AttemptLateSpawn(href_list["job_selected"],client.prefs.spawnpoint)
@@ -425,7 +415,7 @@
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
-			client.prefs.real_name = random_name(new_character.gender)
+			client.prefs.real_name = random_name(new_character.gender,new_character.species)
 			client.prefs.randomize_appearance_for(new_character)
 		else
 			client.prefs.copy_to(new_character)

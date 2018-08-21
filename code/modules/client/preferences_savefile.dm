@@ -165,6 +165,9 @@
 	S["backbag"]			>> backbag
 	//S["b_type"]				>> b_type
 
+	//Species specific
+	S["moth_wings"]			>> moth_wings
+
 	//Jobs
 	S["alternate_option"]	>> alternate_option
 	S["job_command_high"]	>> job_command_high
@@ -225,7 +228,7 @@
 	if(isnull(language)) language = "None"
 	if(isnull(spawnpoint)) spawnpoint = "Arrivals Shuttle"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
-	if(!real_name) real_name = random_name(gender)
+	if(!real_name) real_name = random_name(gender,species)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -250,6 +253,8 @@
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	//b_type			= sanitize_text(b_type, initial(b_type))
+
+	moth_wings		= (moth_wings in moth_wings_list) ? moth_wings : "Plain" // Dear CM coders, why do you have sanitize functions that are the equivalent of a ternary?
 
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_command_high = sanitize_integer(job_command_high, 0, 65535, initial(job_command_high))
@@ -316,6 +321,9 @@
 	S["backbag"]			<< backbag
 	//S["b_type"]				<< b_type
 	S["spawnpoint"]			<< spawnpoint
+
+	// Species specific
+	S["moth_wings"]			<< moth_wings
 
 	//Jobs
 	S["alternate_option"]	<< alternate_option

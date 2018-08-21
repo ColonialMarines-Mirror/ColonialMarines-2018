@@ -85,6 +85,8 @@ var/global/list/underwear_f = list("Briefs", "Panties")
 var/global/list/undershirt_t = list("None","Undershirt(Sleeveless)", "Undershirt(Sleeved)", "Rolled Undershirt(Sleeveless)", "Rolled Undershirt(Sleeved)")
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
+	// Species specific
+var/global/list/moth_wings_list = list()
 // var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
 //////////////////////////
@@ -116,6 +118,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 			else
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
+	
+	// Species specific
+	paths = typesof(/datum/sprite_accessory/moth_wings) - /datum/sprite_accessory/moth_wings
+	for(var/path in paths)
+		var/datum/sprite_accessory/moth_wings/wings = new path()
+		moth_wings_list[wings.name] = wings
 
 	// Ethnicity - Initialise all /datum/ethnicity into a list indexed by ethnicity name
 	for(var/path in subtypesof(/datum/ethnicity))

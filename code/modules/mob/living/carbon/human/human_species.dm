@@ -35,3 +35,7 @@
 
 /mob/living/carbon/human/synthetic_old/New(var/new_loc)
 	..(new_loc, "Early Synthetic")
+
+/mob/living/carbon/human/moth/New(var/new_loc)
+	moth_wings = pick(moth_wings_list - "Burnt Off")
+	..(new_loc, "Moth")

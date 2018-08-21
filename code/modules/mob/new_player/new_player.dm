@@ -17,9 +17,9 @@
 
 /mob/new_player/proc/version_check()
 	if(client.byond_version < world.byond_version)
-		client << "<span class='warning'>Your version of Byond differs from the server (v[world.byond_version].[world.byond_build]). You may experience graphical glitches, crashes, or other errors. You will be disconnected until your version matches or exceeds the server version.<br> \
+		to_chat(client, "<span class='warning'>Your version of Byond differs from the server (v[world.byond_version].[world.byond_build]). You may experience graphical glitches, crashes, or other errors. You will be disconnected until your version matches or exceeds the server version.<br> \
 		Direct Download (Windows Installer): http://www.byond.com/download/build/[world.byond_version]/[world.byond_version].[world.byond_build]_byond.exe <br> \
-		Other versions (search for [world.byond_build] or higher): http://www.byond.com/download/build/[world.byond_version]</span>"
+		Other versions (search for [world.byond_build] or higher): http://www.byond.com/download/build/[world.byond_version]</span>")
 		cdel(client)
 
 /mob/new_player/proc/new_player_panel()
@@ -115,10 +115,10 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)
-			src << "<span class='warning'>The round is either not ready, or has already finished...</span>"
+			to_chat(src, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 		if(ticker.mode.flags_round_type	& MODE_NO_LATEJOIN)
-			src << "<span class='warning'>Sorry, you cannot late join during [ticker.mode.name]. You have to start at the beginning of the round. You may observe or try to join as an alien, if possible.</span>"
+			to_chat(src, "<span class='warning'>Sorry, you cannot late join during [ticker.mode.name]. You have to start at the beginning of the round. You may observe or try to join as an alien, if possible.</span>")
 			return
 
 		if(client.prefs.species != "Human")
@@ -134,7 +134,7 @@
 
 	if(href_list["late_join_xeno"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)
-			src << "<span class='warning'>The round is either not ready, or has already finished...</span>"
+			to_chat(src, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(alert(src,"Are you sure you want to attempt joining as a xenomorph?","Confirmation","Yes","No") == "Yes" )
@@ -146,7 +146,7 @@
 
 	if(href_list["late_join_pred"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)
-			src << "<span class='warning'>The round is either not ready, or has already finished...</span>"
+			to_chat(src, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(alert(src,"Are you sure you want to attempt joining as a predator?","Confirmation","Yes","No") == "Yes" )
@@ -154,7 +154,7 @@
 				close_spawn_windows()
 				ticker.mode.attempt_to_join_as_predator(src)
 			else
-				src << "<span class='warning'>You are no longer able to join as predator.</span>"
+				to_chat(src, "<span class='warning'>You are no longer able to join as predator.</span>")
 				new_player_panel()
 
 	if(href_list["manifest"])
@@ -209,11 +209,11 @@
 	observer.started_as_observer = TRUE
 	close_spawn_windows()
 	var/obj/O = locate("landmark*Observer-Start")
-	src << "<span class='notice'>Now teleporting.</span>"
+	to_chat(src ,"<span class='notice'>Now teleporting.</span>")
 	if(O)
 		observer.forceMove(O.loc)
 	else
-		src << "<span class='notice'>Teleporting failed. Ahelp an admin please</span>"
+		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		error("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 	observer.key = key
 	observer.client = client
@@ -232,10 +232,10 @@
 	if (src != usr)
 		return
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-		usr << "<span class='warning'>The round is either not ready, or has already finished!<spawn>"
+		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished!<spawn>")
 		return
 	if(!enter_allowed)
-		usr << "<span class='warning'>There is an administrative lock on entering the game!<spawn>"
+		to_chat(usr, "<span class='warning'>There is an administrative lock on entering the game!<spawn>")
 		return
 	if(!RoleAuthority.assign_role(src, RoleAuthority.roles_for_mode[rank], 1))
 		src << alert("[rank] is not available. Please try another.")

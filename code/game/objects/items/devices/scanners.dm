@@ -83,7 +83,7 @@ REAGENT SCANNER
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	var/dat = ""
 	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user << "<span class='warning'>You try to analyze the floor's vitals!</span>"
+		to_chat(user, "<span class='warning'>You try to analyze the floor's vitals!</span>")
 		for(var/mob/O in viewers(M, null))
 			O.show_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", 1)
 		user.show_message("<span class='notice'>Health Analyzer results for The floor:\n\t Overall Status: Healthy</span>", 1)
@@ -92,19 +92,19 @@ REAGENT SCANNER
 		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-		user << "<span class='warning'>You start fumbling around with [src]...</span>"
+		to_chat(user, "<span class='warning'>You start fumbling around with [src]...</span>")
 		var/fduration = 60
 		if(user.mind.cm_skills.medical > 0)
 			fduration = 30
 		if(!do_after(user, fduration, TRUE, 5, BUSY_ICON_FRIENDLY) || !user.Adjacent(M))
 			return
 	if(isXeno(M))
-		user << "<span class='warning'>[src] can't make sense of this creature.</span>"
+		to_chat(user, "<span class='warning'>[src] can't make sense of this creature.</span>")
 		return
-	user << "<span class='notice'>[user] has analyzed [M]'s vitals."
+	to_chat(user, "<span class='notice'>[user] has analyzed [M]'s vitals.")
 	playsound(src.loc, 'sound/items/healthanalyzer.ogg', 50)
 
 	// Doesn't work on non-humans and synthetics

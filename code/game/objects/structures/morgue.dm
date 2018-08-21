@@ -13,6 +13,10 @@
 	var/tray_path = /obj/structure/morgue_tray
 	var/morgue_open = 0
 	anchored = 1
+	var/obj/item/device/radio/intercom/announce //Intercom for cryo announcements
+	var/mob/living/occupant = null //Person waiting to be despawned.
+	var/time_till_despawn = 3000 //5 minutes-ish safe period before being despawned.
+	var/time_entered = 0 //Used to keep track of the safe period.
 
 /obj/structure/morgue/New()
 	..()
@@ -59,12 +63,17 @@
 		for(var/atom/movable/A in connected.loc)
 			if(!A.anchored)
 				A.forceMove(src)
+				if(ishuman(A))
+					var/mob/living/carbon/human/H = A
+					if(H.stat == DEAD)
+						occupant = H
 		connected.loc = src
 	else
 		if(step(connected, dir))
 			connected.dir = dir
 			for(var/atom/movable/A in src)
 				A.forceMove(connected.loc)
+				occupant = null
 		else
 			connected.loc = src
 			return
@@ -95,6 +104,224 @@
 	if(user.is_mob_incapacitated(TRUE))
 		return
 	toggle_morgue(user)
+
+
+//Lifted from Unity stasis.dm and refactored. ~Zuhayr
+/obj/structure/morgue/process()
+	if(occupant)
+		//Allow a five minute gap between entering the pod and actually despawning.
+		if(world.time - time_entered < time_till_despawn)
+			return
+
+		if(occupant.stat == DEAD) //Occupant is dead
+
+			//Drop all items into the pod.
+			for(var/obj/item/W in occupant)
+				occupant.drop_inv_item_to_loc(W, src)
+
+			//Delete all items not on the preservation list.
+
+			var/list/items = contents.Copy()
+			items -= occupant //Don't delete the occupant
+			items -= announce //or the autosay radio.
+
+			var/list/dept_console = frozen_items["REQ"]
+			if(ishuman(occupant))
+				var/mob/living/carbon/human/H = occupant
+				switch(H.job)
+					if("Military Police","Chief MP")
+						dept_console = frozen_items["MP"]
+					if("Doctor","Researcher","Chief Medical Officer")
+						dept_console = frozen_items["Med"]
+					if("Maintenance Tech","Chief Engineer")
+						dept_console = frozen_items["Eng"]
+
+			var/list/deleteempty = list(/obj/item/storage/backpack/marine/satchel)
+
+			var/list/deleteall = list(/obj/item/clothing/mask/cigarette, \
+			/obj/item/clothing/glasses/sunglasses, \
+			/obj/item/device/pda, \
+			/obj/item/clothing/glasses/mgoggles, \
+			/obj/item/clothing/head/cmberet/red, \
+			/obj/item/clothing/gloves/black, \
+			/obj/item/weapon/baton, \
+			/obj/item/weapon/gun/energy/taser, \
+			/obj/item/clothing/glasses/sunglasses/sechud, \
+			/obj/item/device/radio/headset/almayer, \
+			/obj/item/card/id, \
+			/obj/item/clothing/under/marine, \
+			/obj/item/clothing/shoes/marine, \
+			/obj/item/clothing/head/cmcap)
+
+			var/list/strippeditems = list()
+
+			item_loop:
+				for(var/obj/item/W in items)
+					if((W.flags_inventory & CANTSTRIP) || (W.flags_item & NODROP)) //We don't keep donor items and undroppable/unremovable items
+						if(istype(W, /obj/item/clothing/suit/storage))
+							var/obj/item/clothing/suit/storage/SS = W
+							for(var/obj/item/I in SS.pockets) //But we keep stuff inside them
+								SS.pockets.remove_from_storage(I, loc)
+								strippeditems += I
+								I.loc = null
+						if(istype(W, /obj/item/storage))
+							var/obj/item/storage/S = W
+							for(var/obj/item/I in S)
+								S.remove_from_storage(I, loc)
+								strippeditems += I
+								I.loc = null
+						cdel(W)
+						continue
+
+
+					//special items that store stuff in a nonstandard way, we properly remove those items
+
+					if(istype(W, /obj/item/clothing/suit/storage))
+						var/obj/item/clothing/suit/storage/SS = W
+						for(var/obj/item/I in SS.pockets)
+							SS.pockets.remove_from_storage(I, loc)
+							strippeditems += I
+							I.loc = null
+
+					if(istype(W, /obj/item/clothing/under))
+						var/obj/item/clothing/under/UN = W
+						if(UN.hastie)
+							var/obj/item/TIE = UN.hastie
+							UN.remove_accessory()
+							strippeditems += TIE
+							TIE.loc = null
+
+					if(istype(W, /obj/item/clothing/shoes/marine))
+						var/obj/item/clothing/shoes/marine/MS = W
+						if(MS.knife)
+							strippeditems += MS.knife
+							MS.knife.loc = null
+							MS.knife = null
+
+
+
+					for(var/TT in deleteempty)
+						if(istype(W, TT))
+							if(length(W.contents) == 0)
+								cdel(W) // delete all the empty satchels
+								continue item_loop
+							break // not empty, don't delete
+
+					for(var/DA in deleteall)
+						if(istype(W, DA))
+							cdel(W)
+							continue item_loop
+
+
+
+					dept_console += W
+					W.loc = null
+
+			stripped_items:
+				for(var/obj/item/A in strippeditems)
+					for(var/DAA in deleteall)
+						if(istype(A, DAA))
+							cdel(A)
+							continue stripped_items
+
+					dept_console += A
+					A.loc = null
+
+
+			//Update any existing objectives involving this mob.
+			for(var/datum/objective/O in all_objectives)
+				//We don't want revs to get objectives that aren't for heads of staff. Letting
+				//them win or lose based on cryo is silly so we remove the objective.
+				if(istype(O, /datum/objective/mutiny) && O.target == occupant.mind)
+					cdel(O)
+				else if(O.target && istype(O.target,/datum/mind))
+					if(O.target == occupant.mind)
+						if(O.owner && O.owner.current)
+							O.owner.current << "<span class='danger'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))].</span>"
+						O.target = null
+						spawn(1) //This should ideally fire after the occupant is deleted.
+							if(!O) return
+							O.find_target()
+							if(!(O.target))
+								all_objectives -= O
+								O.owner.objectives -= O
+								cdel(O)
+
+			if(ishuman(occupant))
+				var/mob/living/carbon/human/H = occupant
+				if(H.mind && H.assigned_squad)
+					var/datum/squad/S = H.assigned_squad
+					switch(H.mind.assigned_role)
+						if("Squad Engineer")
+							S.num_engineers--
+						if("Squad Medic")
+							S.num_medics--
+						if("Squad Specialist")
+							S.num_specialists--
+							//we make the set this specialist took if any available again
+							if(H.mind.cm_skills)
+								var/set_name
+								switch(H.mind.cm_skills.spec_weapons)
+									if(SKILL_SPEC_ROCKET)
+										set_name = "Demolitionist Set"
+									if(SKILL_SPEC_GRENADIER)
+										set_name = "Heavy Grenadier Set"
+									if(SKILL_SPEC_PYRO)
+										set_name = "Pyro Set"
+									if(SKILL_SPEC_SCOUT)
+										set_name = "Scout Set"
+									if(SKILL_SPEC_SNIPER)
+										set_name = "Sniper Set"
+
+								if(set_name && !available_specialist_sets.Find(set_name))
+									available_specialist_sets += set_name
+						if("Squad Smartgunner")
+							S.num_smartgun--
+						if("Squad Leader")
+							S.num_leaders--
+					S.count--
+
+			ticker.mode.latejoin_tally-- //Cryoing someone out removes someone from the Marines, blocking further larva spawns until accounted for
+
+			//Handle job slot/tater cleanup.
+			if(occupant.mind)
+				RoleAuthority.free_role(RoleAuthority.roles_for_mode[occupant.mind.assigned_role])
+
+				if(occupant.mind.objectives.len)
+					cdel(occupant.mind.objectives)
+					occupant.mind.objectives = null
+					occupant.mind.special_role = null
+
+			//Delete them from datacore.
+			if(PDA_Manifest.len)
+				PDA_Manifest.Cut()
+			for(var/datum/data/record/R in data_core.medical)
+				if((R.fields["name"] == occupant.real_name))
+					data_core.medical -= R
+					cdel(R)
+			for(var/datum/data/record/T in data_core.security)
+				if((T.fields["name"] == occupant.real_name))
+					data_core.security -= T
+					cdel(T)
+			for(var/datum/data/record/G in data_core.general)
+				if((G.fields["name"] == occupant.real_name))
+					data_core.general -= G
+					cdel(G)
+
+
+			occupant.ghostize(0) //We want to make sure they are not kicked to lobby.
+			//TODO: Check objectives/mode, update new targets if this mob is the target, spawn new antags?
+
+			//Make an announcement and log the person entering storage.
+			frozen_crew += "[occupant.real_name]"
+
+			announce.autosay("[occupant.real_name]'s remains have been consigned to cryogenic storage. Belongings moved to hypersleep inventory.", "Cryo Storage System")
+			visible_message("<span class='notice'>[src] hums and hisses as it moves [occupant.real_name] into cryogenic storage.</span>")
+
+			//Delete the mob.
+
+			cdel(occupant)
+			occupant = null
 
 
 /*
@@ -160,7 +387,7 @@
 
 /obj/structure/morgue/crematorium/toggle_morgue(mob/user)
 	if (cremating)
-		to_chat(user, "<span class='warning'>It's locked.</span>")
+		user << "<span class='warning'>It's locked.</span>"
 		return
 	..()
 
@@ -238,7 +465,7 @@
 				if(!C.cremating)
 					C.cremate(user)
 	else
-		to_chat(user, "\red Access denied.")
+		user << "\red Access denied."
 
 
 

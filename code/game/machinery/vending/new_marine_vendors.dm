@@ -680,6 +680,7 @@
 							list("Firstaid kit", 6, /obj/item/storage/firstaid/regular, null, "black"),
 							list("Advanced firstaid kit", 12, /obj/item/storage/firstaid/adv, null, "orange"),
 							list("Stasis bag", 6, /obj/item/bodybag/cryobag, null, "orange"),
+							list("Pillbottle (Hypervene)", 4, /obj/item/storage/pill_bottle/hypervene, null, "black"),
 							list("Pillbottle (QuickClot)", 4, /obj/item/storage/pill_bottle/quickclot, null, "black"),
 							list("Pillbottle (Bicaridine)", 4, /obj/item/storage/pill_bottle/bicaridine, null, "orange"),
 							list("Pillbottle (Kelotane)", 4, /obj/item/storage/pill_bottle/kelotane, null, "orange"),
@@ -902,6 +903,9 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/storage/firstaid/adv,
 						/obj/item/device/healthanalyzer,
 						/obj/item/roller/medevac,
+						/obj/item/roller,
+						/obj/item/reagent_container/hypospray/,
+						/obj/item/reagent_container/syringe,
 						)
 
 /obj/effect/essentials_set/engi

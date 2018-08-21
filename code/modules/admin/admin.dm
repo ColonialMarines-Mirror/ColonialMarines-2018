@@ -54,6 +54,7 @@ var/global/floorIsLava = 0
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
+
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))

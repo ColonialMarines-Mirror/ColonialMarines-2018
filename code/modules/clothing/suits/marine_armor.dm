@@ -373,7 +373,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	. = ..()
 	if(.)
 		if(!allowed(M))
-			to_chat(user, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
+			to_chat(M, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 			return 0
 
 /obj/item/clothing/suit/storage/marine/M35
@@ -395,7 +395,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	. = ..()
 	if(.)
 		if(!allowed(M))
-			to_chat(user, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
+			to_chat(M, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 			return 0
 
 /obj/item/clothing/suit/storage/marine/sniper

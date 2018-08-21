@@ -26,7 +26,7 @@
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
-		to_chat(world.log, "Attempted use of scripts within a topic call, by [src]")
+		log_world("Attempted use of scripts within a topic call, by [src]")
 		message_admins("Attempted use of scripts within a topic call, by [src]")
 		//del(usr)
 		return
@@ -166,6 +166,12 @@
 		if(src.ckey == line)
 			src.donator = 1
 			verbs += /client/proc/set_ooc_color_self
+
+	if(player_details_list[ckey])
+		player_details = player_details_list[ckey]
+	else
+		player_details = new
+		player_details_list[ckey] = player_details
 
 	//////////////
 	//DISCONNECT//

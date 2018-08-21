@@ -34,7 +34,7 @@ var/global/datum/global_init/init = new ()
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
-		to_chat(world.log, "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
+		log_world("Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
 
 	initialize_marine_armor()
 
@@ -44,6 +44,8 @@ var/global/datum/global_init/init = new ()
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
+
+	SetupLogs()
 
 	callHook("startup")
 	//Emergency Fix
@@ -96,6 +98,24 @@ var/global/datum/global_init/init = new ()
 #undef RECOMMENDED_VERSION
 
 	return
+
+/world/proc/SetupLogs()
+		var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
+		log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-[replacetext(time_stamp(), ":", ".")]"
+		world_game_log = file("[log_directory]/game.log")
+		world_attack_log = file("[log_directory]/attack.log")
+		world_runtime_log = file("[log_directory]/runtime.log")
+		world_ra_log = file("[log_directory]/recycle.log")
+		world_pda_log = file("[log_directory]/pda.log")
+		sql_error_log = file("[log_directory]/sql.log")
+		world_game_log << "\n\nStarting up round [time_stamp()]\n---------------------"
+		world_attack_log << "\n\nStarting up round [time_stamp()]\n---------------------"
+		world_runtime_log << "\n\nStarting up round [time_stamp()]\n---------------------"
+		world_pda_log << "\n\nStarting up round [time_stamp()]\n---------------------"
+		if(fexists(GLOB.config_error_log))
+				fcopy(GLOB.config_error_log, "[log_directory]/config_error.log")
+				fdel(GLOB.config_error_log)
+
 
 //world/Topic(href, href_list[])
 //		to_chat(world, "Received a Topic() call!")
@@ -381,9 +401,9 @@ var/failed_old_db_connections = 0
 
 // /hook/startup/proc/connectDB()
 // 	if(!setup_database_connection())
-// 		to_chat(world.log, "Your server failed to establish a connection with the feedback database.")
+// 		log_world("Your server failed to establish a connection with the feedback database.")
 // 	else
-// 		to_chat(world.log, "Feedback database connection established.")
+// 		log_world("Feedback database connection established.")
 // 	return 1
 
 proc/setup_database_connection()
@@ -406,7 +426,7 @@ proc/setup_database_connection()
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
-		to_chat(world.log, dbcon.ErrorMsg())
+		log_sql(dbcon.ErrorMsg())
 
 	return .
 
@@ -423,9 +443,9 @@ proc/establish_db_connection()
 
 // /hook/startup/proc/connectOldDB()
 // 	if(!setup_old_database_connection())
-// 		to_chat(world.log, "Your server failed to establish a connection with the SQL database.")
+// 		log_world("Your server failed to establish a connection with the SQL database.")
 // 	else
-// 		to_chat(world.log, "SQL database connection established.")
+// 		log_world("SQL database connection established.")
 // 	return 1
 
 //These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
@@ -449,7 +469,7 @@ proc/setup_old_database_connection()
 		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_old_db_connections++		//If it failed, increase the failed connections counter.
-		to_chat(world.log, dbcon.ErrorMsg())
+		log_sql(dbcon.ErrorMsg())
 
 	return .
 

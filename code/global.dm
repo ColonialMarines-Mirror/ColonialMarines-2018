@@ -182,10 +182,16 @@ var/datum/station_state/start_state = null
 var/datum/configuration/config = null
 var/datum/sun/sun = null
 
-var/list/combatlog = list()
-var/list/IClog = list()
-var/list/OOClog = list()
-var/list/adminlog = list()
+//Logging
+var/global/log_directory
+var/global/world_game_log
+var/global/world_attack_log
+var/global/world_runtime_log
+var/global/world_ra_log
+var/global/world_pda_log
+var/global/sql_error_log
+
+var/global/list/all_player_details = list()  // [ckey] = /datum/player_details
 
 
 var/list/powernets = list()

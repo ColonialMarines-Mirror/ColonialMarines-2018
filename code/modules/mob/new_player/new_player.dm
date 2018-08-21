@@ -162,7 +162,10 @@
 
 	if(href_list["SelectedJob"])
 		if(!enter_allowed)
-			usr << "<span class='warning'>There is an administrative lock on entering the game!</span>"
+			to_chat(usr, "<span class='warning'>There is an administrative lock on entering the game!<spawn>")
+			return
+		if(!RoleAuthority.assign_role(src, RoleAuthority.roles_for_mode[rank], 1))
+			to_chat(src, alert("[rank] is not available. Please try another."))
 			return
 
 		if(client.prefs.species != "Human")

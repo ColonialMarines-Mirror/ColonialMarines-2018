@@ -214,19 +214,19 @@
 
 /obj/item/storage/pill_bottle/attack_self(mob/living/user)
 	if(user.get_inactive_hand())
-		to_chat(user, "<span class='warning'>You need an empty hand to take out a pill.</span>")
+		user << "<span class='warning'>You need an empty hand to take out a pill.</span>"
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		if(user.put_in_inactive_hand(I))
 			remove_from_storage(I,user)
-			to_chat(user, "<span class='notice'>You take a pill out of \the [src].</span>")
+			user << "<span class='notice'>You take a pill out of \the [src].</span>"
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.swap_hand()
 			return
 	else
-		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
+		user << "<span class='warning'>\The [src] is empty.</span>"
 		return
 
 
@@ -319,20 +319,20 @@
 	var/mob/living/carbon/human/H = user
 
 	if(!allowed(user))
-		to_chat(user, "<span class='notice'>It must have some kind of ID lock...</span>")
+		user << "<span class='notice'>It must have some kind of ID lock...</span>"
 		return 0
 
 	var/obj/item/card/id/I = H.wear_id
 	if(!istype(I)) //not wearing an ID
-		to_chat(H, "<span class='notice'>It must have some kind of ID lock...</span>")
+		H << "<span class='notice'>It must have some kind of ID lock...</span>"
 		return 0
 
 	if(I.registered_name != H.real_name)
-		to_chat(H, "<span class='warning'>Wrong ID card owner detected.</span>")
+		H << "<span class='warning'>Wrong ID card owner detected.</span>"
 		return 0
 
 	if(req_role && I.rank != req_role)
-		to_chat(H, "<span class='notice'>It must have some kind of ID lock...</span>")
+		H << "<span class='notice'>It must have some kind of ID lock...</span>"
 		return 0
 
 	return 1

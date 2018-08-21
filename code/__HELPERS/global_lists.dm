@@ -102,7 +102,8 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 			if(FEMALE)
 				hair_styles_female_list += H.name
 			else
-				hair_styles_list += H.name
+				hair_styles_male_list += H.name
+				hair_styles_female_list += H.name
  	// Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new path()
@@ -113,7 +114,8 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 			if(FEMALE)
 				facial_hair_styles_female_list += H.name
 			else
-				facial_hair_styles_list += H.name
+				facial_hair_styles_male_list += H.name
+				facial_hair_styles_female_list += H.name
 
 	// Ethnicity - Initialise all /datum/ethnicity into a list indexed by ethnicity name
 	for(var/path in subtypesof(/datum/ethnicity))

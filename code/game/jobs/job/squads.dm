@@ -176,6 +176,7 @@
 				old_lead.mind.role_comm_title = "Mar"
 				if(old_lead.mind.cm_skills)
 					old_lead.mind.cm_skills.leadership = SKILL_LEAD_NOVICE
+		old_lead.update_action_buttons()
 
 	if(!old_lead.mind || old_lead.mind.assigned_role != "Squad Leader" || !leader_killed)
 		if(istype(old_lead.wear_ear, /obj/item/device/radio/headset/almayer/marine))
@@ -196,7 +197,7 @@
 	old_lead.hud_set_squad()
 	old_lead.update_inv_head() //updating marine helmet leader overlays
 	old_lead.update_inv_wear_suit()
-	old_lead << "<font size='3' color='blue'>You're no longer the Squad Leader for [src]!</font>"
+	to_chat(old_lead, "<font size='3' color='blue'>You're no longer the Squad Leader for [src]!</font>")
 
 
 //Not a safe proc. Returns null if squads or jobs aren't set up.

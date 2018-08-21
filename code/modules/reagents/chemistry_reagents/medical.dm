@@ -59,6 +59,10 @@
 			if(R != src)
 				M.reagents.remove_reagent(R.id,4 * REM)
 		M.reagent_shock_modifier += 50 //Significant pain while metabolized.
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(5)) //causes vomiting
+				H.vomit()
 		M.adjustToxLoss(-4 * REM)
 		M.radiation = max(M.radiation-8*REM,0)
 
@@ -66,11 +70,19 @@
 		if(alien == IS_YAUTJA) return
 		M.apply_damages(1, 1) //Starts detoxing, hard
 		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(10)) //heavy vomiting
+				H.vomit()
+		if(ishuman(M))
 			M.reagent_shock_modifier += 100 //Massive pain.
 
 	on_overdose_critical(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return
 		M.apply_damages(3, 3) //Starts detoxing, hard
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(20)) //violent vomiting
+				H.vomit()
 		if(ishuman(M))
 			M.reagent_shock_modifier += 200 //Unlimited agony.
 

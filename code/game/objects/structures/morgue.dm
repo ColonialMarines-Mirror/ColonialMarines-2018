@@ -387,7 +387,7 @@
 
 /obj/structure/morgue/crematorium/toggle_morgue(mob/user)
 	if (cremating)
-		user << "<span class='warning'>It's locked.</span>"
+		to_chat(user, "<span class='warning'>It's locked.</span>")
 		return
 	..()
 
@@ -465,7 +465,7 @@
 				if(!C.cremating)
 					C.cremate(user)
 	else
-		user << "\red Access denied."
+		to_chat(user, "\red Access denied.")
 
 
 

@@ -114,6 +114,8 @@
 		. = ..()
 		if(!.) return
 		M.reagent_pain_modifier += -60 // A bit stronger then paracetamol but weaker then tramadol.
+		holder.remove_reagent("tramadol", 8 * REM) // Think you're smart huh?
+
 
 	on_overdose(mob/living/M)
 		M.hallucination = max(M.hallucination, 2) //Hallucinations and tox damage
@@ -195,7 +197,6 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	scannable = 1
-	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
 
 	on_mob_life(mob/living/M)
@@ -515,6 +516,7 @@
 			M.AdjustKnockedout(-1)
 			M.AdjustStunned(-1)
 			M.AdjustKnockeddown(-1)
+		holder.remove_reagent("synaptizine", 8 * REM) // hahah no
 	on_overdose(mob/living/M)
 		M.apply_damage(2, TOX)
 
@@ -741,7 +743,7 @@
 	on_mob_life(mob/living/M)
 		. = ..()
 		if(!.) return
-
+		holder.remove_reagent("hyperzine", 8 * REM) // stop
 		M.reagent_move_delay_modifier -= 0.25
 
 	on_overdose(mob/living/M)

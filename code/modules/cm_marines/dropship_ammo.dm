@@ -368,7 +368,7 @@
 			var/datum/effect_system/smoke_spread/S = new/datum/effect_system/smoke_spread()
 			S.set_up(1,0,T,null)
 			S.start()
-		spawn(5)
+		spawn(10)
 			new/obj/item/device/flashlight/flare/on/cas(T) 
 		if(!ammo_count && loc)
 			cdel(src) //deleted after last minirocket is fired and impact the ground.
@@ -385,7 +385,5 @@
 	..()
 	var/turf/T = get_turf(src)
 	fuel = rand(1000, 1100) // About the same burn time as a flare, considering it requires it's own CAS run.
-	T.visible_message("<span class='warning'>You see a flare go up in the sky!</span>")
+	T.visible_message("<span class='warning'>You see a tiny flash, and then a blindingly bright light from the flare as it lights off in the sky!</span>")
 	playsound(T, 'sound/weapons/gun_flare.ogg', 50, 1, 4) // stolen from the mortar i'm not even sorry
-	spawn(10) // Sloppy i know but the only way to fix this.
-		update_brightness()

@@ -61,7 +61,7 @@
 				to_chat(src, "<font color='red'>Error: Private-Message: Client not found. They may have lost connection, so try using an adminhelp!</font>")
 			return
 
-	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	//clean the message if it's not sent by a high-rank admin
@@ -69,7 +69,7 @@
 		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 		if(!msg)
 			return
-		msg = emoji_parse(msg)
+	msg = emoji_parse(msg)
 
 	var/recieve_color = "purple"
 	var/send_pm_type = ""

@@ -102,7 +102,7 @@
 /datum/reagent/percocet
 	name = "Percocet"
 	id = "percocet"
-	description = "Percocet is a blend of a NASID and a opioid that delivers weak, but safe pain relief."
+	description = "Percocet is a blend of a NSAID and a opioid that delivers weak, but safe pain relief."
 	reagent_state = LIQUID
 	color = "#C855DC"
 	scannable = 1

@@ -98,6 +98,31 @@
 
 	on_overdose_critical(mob/living/M)
 		M.apply_damage(4, TOX) //Massive liver damage
+		
+/datum/reagent/percocet
+	name = "Percocet"
+	id = "percocet"
+	description = "Percocet is a blend of a NASID and a opioid that delivers weak, but safe pain relief."
+	reagent_state = LIQUID
+	color = "#C855DC"
+	scannable = 1
+	custom_metabolism = 0.1 // Decays quickly.
+	overdose = REAGENTS_OVERDOSE*2
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL*2
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+		M.reagent_pain_modifier += -60 // A bit stronger then paracetamol but weaker then tramadol.
+
+	on_overdose(mob/living/M)
+		M.hallucination = max(M.hallucination, 2) //Hallucinations and tox damage
+		if(prob(25)) // Safer.
+			M.apply_damage(1, TOX)
+
+	on_overdose_critical(mob/living/M)
+		M.apply_damage(2, TOX) // Good job.
+
 
 /datum/reagent/tramadol
 	name = "Tramadol"
@@ -470,6 +495,32 @@
 	on_overdose_critical(mob/living/M)
 		M.apply_damages(1, 1, 3)
 
+/datum/reagent/levoamphetamine
+	name = "levoamphetamine"
+	id = "levoamphetamine"
+	description = "Levoamphetamine is a weak, but safe, stimulant."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	custom_metabolism = 0.1
+	overdose = REAGENTS_OVERDOSE/3
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/3
+	scannable = 1
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+		M.reagent_shock_modifier += PAIN_REDUCTION_VERY_LIGHT
+		M.drowsyness = max(M.drowsyness-2, 0)
+		if(prob(25))
+			M.AdjustKnockedout(-1)
+			M.AdjustStunned(-1)
+			M.AdjustKnockeddown(-1)
+	on_overdose(mob/living/M)
+		M.apply_damage(2, TOX)
+
+	on_overdose_critical(mob/living/M)
+		M.apply_damage(4, TOX)
+
 /datum/reagent/neuraline //injected by neurostimulator implant
 	name = "Neuraline"
 	id = "neuraline"
@@ -676,6 +727,27 @@
 
 	on_overdose_critical(mob/living/M)
 		M.apply_damages(2, 3, 3)
+
+/datum/reagent/hypozine
+	name = "Hypozine"
+	id = "hypozine"
+	description = "Hypozine is a weak stimulant derived from Hyperzine."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	custom_metabolism = 0.2
+	overdose = REAGENTS_OVERDOSE/2
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/2
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+
+		M.reagent_move_delay_modifier -= 0.25
+
+	on_overdose(mob/living/M)
+		M.adjustToxLoss(1)
+	on_overdose_critical(mob/living/M)
+		M.adjustToxLoss(2)
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"

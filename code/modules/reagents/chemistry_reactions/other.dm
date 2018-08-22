@@ -49,14 +49,14 @@
 
 
 /datum/chemical_reaction/hypozine
-	name = "hypozine"
+	name = "Hypozine"
 	id = "hypozine"
 	result = "hypozine"
 	required_reagents = list("hyperzine" = 1, "peridaxon" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/percocet
-	name = "percocet"
+	name = "Percocet"
 	id = "percocet"
 	result = "percocet"
 	required_reagents = list("paracetamol" = 1, "tramadol" = 1)

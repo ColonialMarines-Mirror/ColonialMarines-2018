@@ -7,7 +7,7 @@
 	bound_height = 64
 	density = 1
 	var/damage = 0
-	var/health_max = 300
+	var/health_max = 200
 	var/soak = 10 //how much damage is reduced before affecting health
 	var/max_temperature = 1800
 	opacity = 1
@@ -92,9 +92,13 @@
 		return
 	else
 		var/strike = max(0,(W.force - soak))
+		playsound(loc, 'sound/effects/clang.ogg', 25, 1)
 		if(strike)
 			damage += strike
-			healthcheck(1, 1, user, W)
+			healthcheck(0, 1, user, W)
+		else
+			user.visible_message("<span class='notice'>[user]'s attack with [W] bounces harmlessly off the [src].</span>",
+			"<span class='notice'>Your attack with [W] bounces harmlessly off the [src]")
 		..()
 
 /obj/structure/cargo_container/horizontal

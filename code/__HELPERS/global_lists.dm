@@ -120,8 +120,7 @@ var/global/list/moth_wings_list = list()
 				facial_hair_styles_female_list += H.name
 	
 	// Species specific
-	paths = typesof(/datum/sprite_accessory/moth_wings) - /datum/sprite_accessory/moth_wings
-	for(var/path in paths)
+	for(var/path in subtypesof(/datum/sprite_accessory/moth_wings))
 		var/datum/sprite_accessory/moth_wings/wings = new path()
 		moth_wings_list[wings.name] = wings
 

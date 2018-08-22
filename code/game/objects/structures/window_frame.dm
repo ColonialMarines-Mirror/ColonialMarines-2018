@@ -124,11 +124,15 @@
 
 	else
 		var/strike = max(0,(W.force - soak))
+		playsound(loc, 'sound/effects/clang.ogg', 25, 1)
 		if(strike)
 			damage += strike
-			healthcheck(1, 1, user, W)
+			healthcheck(0, 1, user, W)
+		else
+			user.visible_message("<span class='notice'>[user]'s attack with [W] bounces harmlessly off the [src].</span>",
+			"<span class='notice'>Your attack with [W] bounces harmlessly off the [src]")
 		..()
-
+		
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)
@@ -141,7 +145,7 @@
 				if(do_after(user, 60, TRUE, 5, BUSY_ICON_BUILD))
 					if(!istype(src, /turf/closed/wall)) return
 
-					if(d_state == 1)
+					if(d_state == 0)
 						d_state++
 						user.visible_message("<span class='notice'>[user] unscrews the outer plating.</span>",
 						"<span class='notice'>You unscrew the outer plating; use a crowbar to pry it off.</span>")
@@ -156,7 +160,7 @@
 				if(do_after(user, 60, TRUE, 5, BUSY_ICON_BUILD))
 					if(!istype(src, /obj/structure/window_frame)) return
 
-					if(d_state == 3)
+					if(d_state == 1)
 						d_state++
 						user.visible_message("<span class='notice'>[user] pries off the outer plating.</span>",
 						"<span class='notice'>You pry off the outer plating; use a wrench to loosen its bolts and dismantle the frame.</span>")
@@ -171,7 +175,7 @@
 				if(do_after(user, 60, TRUE, 5, BUSY_ICON_BUILD))
 					if(!istype(src, /obj/structure/window_frame)) return
 
-					if(d_state == 4)
+					if(d_state == 2)
 						d_state++
 						create_debris(2)
 						user.visible_message("<span class='notice'>[user] removes the bolts securing the frame, dismantling it.</span>",

@@ -309,8 +309,11 @@ REAGENT SCANNER
 			unrevivable = 1
 		if(!unrevivable)
 			var/advice = ""
-			if(blood_volume <= 500 && !reagents_in_body["nutriment"])
-				advice += "<span class='scanner'>Low Blood: Administer food, iron, and/or recommend the patient eat.</span>\n"
+			if(blood_volume <= 500 &&  reagents_in_body["nutriment"] < 20)
+				var/iron = ""
+				if(reagents_in_body["iron"] < 5)
+					iron = "Administer a single dose of iron."	
+				advice += "<span class='scanner'>Low Blood Count: Administer food, and/or recommend the patient eat. [iron]</span>\n"
 			if(overdosed && reagents_in_body["hypervene"] < 3)
 				advice += "<span class='scanner'>Overdose: Administer a single dose of hypervene or get patient to a sleeper for dialysis.</span>\n"			
 			if(rad > 5)

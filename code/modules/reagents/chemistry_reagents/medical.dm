@@ -11,7 +11,6 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE*2
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL*2
-
 	scannable = 1
 
 	on_mob_life(mob/living/M, alien)
@@ -43,6 +42,52 @@
 			if(prob(10))
 				M.emote(pick("twitch","blink_r","shiver"))
 
+
+/datum/reagent/hypervene
+	name = "Hypervene"
+	id = "hypervene"
+	description = "Quickly purges the body of toxin damage, radiation and all other chemicals. Causes significant pain."
+	reagent_state = LIQUID
+	color = "#19C832"
+	overdose = REAGENTS_OVERDOSE / 2
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL / 2
+	scannable = 1
+
+	on_mob_life(mob/living/M, alien)
+		. = ..()
+		if(!.) return
+		for(var/datum/reagent/R in M.reagents.reagent_list)
+			if(R != src)
+				M.reagents.remove_reagent(R.id,4 * REM)
+		M.reagent_shock_modifier += 50 //Significant pain while metabolized.
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(5)) //causes vomiting
+				H.vomit()
+		M.adjustToxLoss(-4 * REM)
+		M.radiation = max(M.radiation-8*REM,0)
+
+	on_overdose(mob/living/M, alien)
+		if(alien == IS_YAUTJA) return
+		M.apply_damages(1, 1) //Starts detoxing, hard
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(10)) //heavy vomiting
+				H.vomit()
+		if(ishuman(M))
+			M.reagent_shock_modifier += 100 //Massive pain.
+
+	on_overdose_critical(mob/living/M, alien)
+		if(alien == IS_YAUTJA) return
+		M.apply_damages(3, 3) //Starts detoxing, hard
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(20)) //violent vomiting
+				H.vomit()
+		if(ishuman(M))
+			M.reagent_shock_modifier += 200 //Unlimited agony.
+
+
 /datum/reagent/ryetalyn
 	name = "Ryetalyn"
 	id = "ryetalyn"
@@ -51,6 +96,7 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -82,10 +128,10 @@
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
 	color = "#C855DC"
-	scannable = 1
 	custom_metabolism = 0.025 // Lasts 10 minutes for 15 units
 	overdose = REAGENTS_OVERDOSE*2
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL*2
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -105,10 +151,10 @@
 	description = "A simple, yet effective painkiller."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	scannable = 1
-	custom_metabolism = 0.1 // Lasts 10 minutes for 15 units
+	custom_metabolism = 0.1 // Lasts 2.5 minutes for 15 units
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -128,9 +174,11 @@
 	description = "An effective and very addictive painkiller."
 	reagent_state = LIQUID
 	color = "#C805DC"
-	custom_metabolism = 0.25 // Lasts 10 minutes for 15 units
+	scannable = 1
+	custom_metabolism = 0.25 // Lasts 1 minute for 15 units
 	overdose = REAGENTS_OVERDOSE * 0.66
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL * 0.66
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -169,9 +217,9 @@
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	scannable = 1
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -195,9 +243,9 @@
 	description = "Kelotane is a drug used to treat burns."
 	reagent_state = LIQUID
 	color = "#D8C58C"
-	scannable = 1
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(var/mob/living/M)
 		. = ..()
@@ -300,9 +348,9 @@
 	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 	reagent_state = LIQUID
 	color = "#B865CC"
-	scannable = 1
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(mob/living/M, alien)
 		. = ..()
@@ -329,9 +377,9 @@
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
 	color = "#A8F59C"
-	scannable = 1
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(mob/living/M,alien)
 		. = ..()
@@ -479,7 +527,6 @@
 	custom_metabolism = 0.4
 	overdose = 2
 	overdose_critical = 3
-	scannable = 0
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -525,6 +572,7 @@
 	custom_metabolism = 0.05
 	overdose = REAGENTS_OVERDOSE/2
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/2
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -623,13 +671,25 @@
 /datum/reagent/peridaxon
 	name = "Peridaxon"
 	id = "peridaxon"
-	description = "Used to stabilize internal organs while waiting for surgery. Medicate cautiously."
+	description = "Used to stabilize internal organs while waiting for surgery. Medicate cautiously. Repairs organ damage at cryogenic temperatures."
 	reagent_state = LIQUID
 	color = "#C845DC"
 	overdose = REAGENTS_OVERDOSE/2
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/2
 	custom_metabolism = 0.05
 	scannable = 1
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+		if(M.bodytemperature < 170)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				for(var/datum/internal_organ/I in H.internal_organs)
+					if(I)
+						if(I.robotic != ORGAN_ROBOT)
+							if(I.damage > 0)
+								I.damage = max(I.damage - 2*REM, 0)
 
 	on_overdose(mob/living/M)
 		M.apply_damage(2, BRUTE)
@@ -663,13 +723,25 @@
 /datum/reagent/quickclot
 	name = "Quick Clot"
 	id = "quickclot"
-	description = "A chemical designed to quickly stop all sorts of bleeding by encouraging coagulation."
+	description = "A chemical designed to quickly stop all sorts of bleeding by encouraging coagulation. Heals internal bleeding at cryogenic temperatures."
 	reagent_state = LIQUID
 	color = "#CC00FF"
 	overdose = REAGENTS_OVERDOSE/2 //Was 4, now 6 //Now 15
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/2
-	scannable = 1 //scannable now.  HUZZAH.
 	custom_metabolism = 0.05
+	scannable = 1 //scannable now.  HUZZAH.
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+		if(M.bodytemperature < 170)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				for(var/datum/limb/L in H.limbs)
+					if(L)
+						for(var/datum/wound/W in L.wounds)
+							if(W.internal)
+								W.damage = max(0, W.damage - 2*REM)
 
 	on_overdose(mob/living/M)
 		M.apply_damage(3, BRUTE)
@@ -686,12 +758,13 @@
 	custom_metabolism = 0.2
 	overdose = REAGENTS_OVERDOSE/5
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/5
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
 		if(!.) return
 
-		M.reagent_move_delay_modifier -= 0.5
+		M.reagent_move_delay_modifier -= 9
 
 		if(prob(1))
 			M.emote(pick("twitch","blink_r","shiver"))
@@ -887,6 +960,7 @@
 	color = "#605048" // rgb: 96, 80, 72
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -915,6 +989,7 @@
 	color = "#C8A5DC"
 	custom_metabolism = 0.01
 	data = 0
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -935,6 +1010,7 @@
 	color = "#C8A5DC"
 	custom_metabolism = 0.01
 	data = 0
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()
@@ -956,6 +1032,7 @@
 	color = "#C8A5DC"
 	custom_metabolism = 0.01
 	data = 0
+	scannable = 1
 
 	on_mob_life(mob/living/M)
 		. = ..()

@@ -92,8 +92,10 @@
 
 	if(istype(W, /obj/item/stack/rods) && health < health_max)
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.construction < SKILL_CONSTRUCTION_PLASTEEL)
-			user << "<span class='warning'>You don't have the skill needed to fix [src]'s wiring."
-			return
+			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to fix [src]'s wiring.</span>",
+			"<span class='notice'>You fumble around figuring out how to fix [src]'s wiring.</span>")
+			var/fumbling_time = 100 - 20 * user.mind.cm_skills.construction
+			if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 		var/obj/item/stack/rods/R = W
 		var/amount_needed = 2
 		if(health)
@@ -104,7 +106,7 @@
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 25, 1)
 			if(do_after(user, 30, TRUE, 5, BUSY_ICON_FRIENDLY))
 				if(R.amount < amount_needed)
-					user << "<span class='warning'>You need more metal rods to repair [src]."
+					to_chat(user, "<span class='warning'>You need more metal rods to repair [src].")
 					return
 				R.use(amount_needed)
 				health = health_max
@@ -116,7 +118,7 @@
 				"<span class='notice'>You repair [src] with [R]")
 				return
 		else
-			user << "<span class='warning'>You need more metal rods to repair [src]."
+			to_chat(user, "<span class='warning'>You need more metal rods to repair [src].")
 			return
 
 	if(cut) //Cut/brokn grilles can't be messed with further than this

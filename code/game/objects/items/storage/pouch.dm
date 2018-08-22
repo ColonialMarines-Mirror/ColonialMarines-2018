@@ -13,7 +13,7 @@
 
 /obj/item/storage/pouch/examine(mob/user)
 	..()
-	user << "Can be worn by attaching it to a pocket."
+	to_chat(user, "Can be worn by attaching it to a pocket.")
 
 
 /obj/item/storage/pouch/equipped(mob/user, slot)
@@ -102,8 +102,8 @@
 	storage_slots = 4
 	can_hold = list(
 					"/obj/item/stack/medical/ointment",
-					"/obj/item/reagent_container/hypospray/autoinjector/Tramadol/skillless",
-					"/obj/item/reagent_container/hypospray/autoinjector/tricord/skillless",
+					"/obj/item/reagent_container/hypospray/autoinjector/Tramadol",
+					"/obj/item/reagent_container/hypospray/autoinjector/tricord",
 					"/obj/item/stack/medical/bruise_pack"
 					)
 
@@ -113,8 +113,8 @@
 /obj/item/storage/pouch/firstaid/full/New()
 	..()
 	new /obj/item/stack/medical/ointment (src)
-	new /obj/item/reagent_container/hypospray/autoinjector/Tramadol/skillless (src)
-	new /obj/item/reagent_container/hypospray/autoinjector/tricord/skillless (src)
+	new /obj/item/reagent_container/hypospray/autoinjector/Tramadol (src)
+	new /obj/item/reagent_container/hypospray/autoinjector/tricord (src)
 	new /obj/item/stack/medical/bruise_pack (src)
 
 
@@ -123,7 +123,8 @@
 	desc = "It can contain a pistol. Useful for emergencies."
 	icon_state = "pistol"
 	max_w_class = 3
-	can_hold = list("/obj/item/weapon/gun/pistol")
+	can_hold = list("/obj/item/weapon/gun/pistol",
+					"/obj/item/weapon/gun/revolver")
 	draw_mode = 1
 
 
@@ -336,7 +337,7 @@
 		var/obj/item/storage/box/m94/M = W
 		if(M.contents.len)
 			if(contents.len < storage_slots)
-				user << "<span class='notice'>You start refilling [src] with [M].</span>"
+				to_chat(user, "<span class='notice'>You start refilling [src] with [M].</span>")
 				if(!do_after(user, 15, TRUE, 5, BUSY_ICON_GENERIC)) return
 				for(var/obj/item/I in M)
 					if(contents.len < storage_slots)
@@ -346,9 +347,9 @@
 						break
 				playsound(user.loc, "rustle", 15, 1, 6)
 			else
-				user << "<span class='warning'>[src] is full.</span>"
+				to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			user << "<span class='warning'>[M] is empty.</span>"
+			to_chat(user, "<span class='warning'>[M] is empty.</span>")
 		return TRUE
 	else
 		return ..()

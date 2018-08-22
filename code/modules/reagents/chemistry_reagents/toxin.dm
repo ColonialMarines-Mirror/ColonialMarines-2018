@@ -20,31 +20,6 @@
 			if(alien) holder.remove_reagent(id, custom_metabolism) //Kind of a catch-all for aliens without kidneys.
 			///I don't know what this is supposed to do, since aliens generally have kidneys, but I'm leaving it alone pending rework. /N
 
-/datum/reagent/toxin/hptoxin
-	name = "Toxin"
-	id = "hptoxin"
-	description = "A toxic chemical."
-	custom_metabolism = 1
-	toxpwr = 1
-
-/datum/reagent/toxin/pttoxin
-	name = "Toxin"
-	id = "pttoxin"
-	description = "A toxic chemical."
-	custom_metabolism = 1
-	toxpwr = 1
-
-/datum/reagent/toxin/sdtoxin
-	name = "Toxin"
-	id = "sdtoxin"
-	description = "A toxic chemical."
-	custom_metabolism = 1
-	toxpwr = 0
-	on_mob_life(mob/living/M,alien)
-		. = ..()
-		if(!.) return
-		M.adjustOxyLoss(1)
-
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"

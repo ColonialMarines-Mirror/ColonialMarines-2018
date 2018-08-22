@@ -354,7 +354,7 @@
 	name = "illumination rocket-launched flare stack"
 	desc = "A pack of laser guided mini rockets, each loaded with a payload of white-star illuminant and a parachute, while extremely ineffective at damaging the enemy, it is very effective at lighting the battlefield so marines can damage the enemy."
 	icon_state = "minirocket_ilm"
-	point_cost = 250
+	point_cost = 350 // Not as expensive as actual weaponry but still a hefty sum so we don't have this spammed everywhere
 
 /obj/structure/ship_ammo/minirocket/illumination/detonate_on(turf/impact)
 	impact.ceiling_debris_check(2)
@@ -384,6 +384,6 @@
 /obj/item/device/flashlight/flare/on/cas/New()
 	..()
 	var/turf/T = get_turf(src)
-	fuel = rand(1000, 1100) // About the same burn time as a flare, considering it requires it's own CAS run.
+	fuel = rand(700, 900) // About the same burn time as a flare, considering it requires it's own CAS run.
 	T.visible_message("<span class='warning'>You see a tiny flash, and then a blindingly bright light from the flare as it lights off in the sky!</span>")
 	playsound(T, 'sound/weapons/gun_flare.ogg', 50, 1, 4) // stolen from the mortar i'm not even sorry

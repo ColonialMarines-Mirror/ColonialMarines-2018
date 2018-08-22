@@ -81,14 +81,19 @@
 						 
 /obj/structure/cargo_container/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/tool/weldingtool))
-		user.visible_message("<span class='notice'>[user] starts cutting through [src] with [W].</span>",
-		"<span class='notice'>You start cutting through [src] with [W]")
-		playsound(src, 'sound/items/Welder.ogg', 25, 1)
-		if(do_after(user, 20, TRUE, 5, BUSY_ICON_BUILD))
+		var/obj/item/tool/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
+			user.visible_message("<span class='notice'>[user] starts cutting through [src] with [W].</span>",
+			"<span class='notice'>You start cutting through [src] with [W]")
 			playsound(src, 'sound/items/Welder.ogg', 25, 1)
-			user.visible_message("<span class='notice'>[user] cuts through [src] with [W].</span>",
-			"<span class='notice'>You cut apart the [src] with [W]")
-			create_debris(2)
+			if(do_after(user, max(5, round(damage / 5)), TRUE, 5, BUSY_ICON_FRIENDLY) && istype(src, /obj/structure/window_frame) && WT && WT.isOn())
+				playsound(src, 'sound/items/Welder.ogg', 25, 1)
+				user.visible_message("<span class='notice'>[user] cuts through [src] with [W].</span>",
+				"<span class='notice'>You cut apart the [src] with [W]")
+				create_debris(2)
+		else
+			user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+			return
 		return
 	else
 		var/strike = max(0,(W.force - soak))

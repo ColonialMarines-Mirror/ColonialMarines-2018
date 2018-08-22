@@ -101,10 +101,10 @@
 	src.prefs.toggles_sound ^= SOUND_MIDI // Toggle on/off
 	src.prefs.save_preferences()
 	if(prefs.toggles_sound & SOUND_MIDI)
-		src << "You will now hear any music played by an admin."
+		to_chat(src, "You will now hear any music played by an admin.")
 	else
-		src << "You will no longer hear any music played by an admin."
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 777)	//breaks the client's sound output on channel 777
+		to_chat(src, "You will no longer hear any music played by an admin.")
+		src << sound(null)	//HELP NEEDED! how do i make this disable the admin channel only?
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_ooc()

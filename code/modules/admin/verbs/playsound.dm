@@ -19,7 +19,7 @@
 	var/res = alert(usr, "Show the title of this song to the players?",, "Yes","No", "Cancel")
 	switch(res)
 		if("Yes")
-			world << "<b><font color='#002eb9' size='2'>An admin played: [S]</b></font>"
+			to_chat(world ,"<b><font color='#002eb9' size='2'>An admin played: [S]</b></font>")
 		if("Cancel")
 			return
 

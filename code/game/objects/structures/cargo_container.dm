@@ -7,7 +7,7 @@
 	bound_height = 64
 	density = 1
 	var/damage = 0
-	var/health_max = 200
+	var/health_max = 300
 	var/soak = 10 //how much damage is reduced before affecting health
 	var/max_temperature = 1800
 	opacity = 1

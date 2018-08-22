@@ -100,14 +100,16 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 		return 0
 	if(user.action_busy) //already doing an action
 		return 1
-	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED)
-		user << "<span class='warning'>You have no idea how to do surgery...</span>"
-		return 1
+	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_PROFESSIONAL)
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to operate [M].</span>",
+		"<span class='notice'>You fumble around figuring out how to operate [M].</span>")
+		var/fumbling_time = SKILL_TASK_FORMIDABLE - ( SKILL_TASK_AVERAGE * user.mind.cm_skills.surgery ) // 20 secs non-trained, 15 amateur, 10 semi-prof
+		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 	var/datum/limb/affected = M.get_limb(user.zone_selected)
 	if(!affected)
 		return 0
 	if(affected.in_surgery_op) //two surgeons can't work on same limb at same time
-		user << "<span class='warning'>You can't operate on the patient's [affected.display_name] while it's already being operated on.</span>"
+		to_chat(user, "<span class='warning'>You can't operate on the patient's [affected.display_name] while it's already being operated on.</span>")
 		return 1
 
 	for(var/datum/surgery_step/S in surgery_steps)
@@ -161,15 +163,15 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 							var/mob/living/carbon/human/H = M
 							if(!(H.species.flags & NO_PAIN))
 								M.emote("pain")
-						user << "<span class='danger'>[M] moved during the surgery! Use anesthetics!</span>"
+						to_chat(user, "<span class='danger'>[M] moved during the surgery! Use anesthetics!</span>")
 					S.fail_step(user, M, user.zone_selected, tool, affected) //Malpractice
 				else //This failing silently was a pain.
-					user << "<span class='warning'>You must remain close to your patient to conduct surgery.</span>"
+					to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 				affected.in_surgery_op = FALSE
 				return 1				   //Don't want to do weapony things after surgery
 
 	if(user.a_intent == "help")
-		user << "<span class='warning'>You can't see any useful way to use \the [tool] on [M].</span>"
+		to_chat(user, "<span class='warning'>You can't see any useful way to use \the [tool] on [M].</span>")
 		return 1
 	return 0
 

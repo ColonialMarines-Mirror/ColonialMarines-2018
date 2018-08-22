@@ -158,7 +158,7 @@ datum/attribute/var
 proc/setup_skills()
 	if(SKILLS == null)
 		SKILLS = list()
-		for(var/T in (typesof(/datum/skill)-/datum/skill))
+		for(var/T in subtypesof(/datum/skill))
 			var/datum/skill/S = new T
 			if(S.ID != "none")
 				if(!SKILLS.Find(S.field))
@@ -199,7 +199,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 		setup_skills()
 
 	if(!M.skills || M.skills.len == 0)
-		user << "There are no skills to display."
+		to_chat(user, "There are no skills to display.")
 		return
 
 	var/HTML = "<body>"

@@ -9,7 +9,6 @@
 	var/health_max = 200
 	var/soak = 5 //how much damage is reduced before affecting health
 	var/max_temperature = 1000
-	var/d_state
 	
 //create_debris creates debris like shards and rods. This also includes the window frame for explosions
 //If an user is passed, it will create a "user smashes through the window" message. AM is the item that hits
@@ -193,7 +192,7 @@
 		..()
 
 /obj/structure/showcase/fire_act(exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 800)
+	if(exposed_temperature > max_temperature)
 		damage += round(exposed_volume / 100)
 		healthcheck(0) //Don't make hit sounds, it's dumb with fire/heat
 	..()

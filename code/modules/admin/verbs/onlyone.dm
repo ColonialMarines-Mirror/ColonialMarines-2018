@@ -18,7 +18,7 @@
 				highlander_equip()
 
 	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)
-	log_admin("[key_name(usr)] used there can be only one.")
+	log_admin("[key_name(usr)] used THERE CAN ONLY BE ONE.")
 
 /client/proc/highlander_equip()
 	send_to_playing_players("<b><font size=6 color=red>THERE CAN BE ONLY ONE</font></b></span>")
@@ -35,36 +35,38 @@
 	    //delete their suit and hold object
 		for(var/obj/item/I in H.get_equipped_items())
 			cdel(I)
-		spawn(0)
-			for(var/obj/item/I in H.get_held_item())
-				cdel(I)
-			//give them their shit
-			ticker.mode.traitors += H.mind
-			H.mind.special_role = "highlander"
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), WEAR_BODY)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), WEAR_HEAD)
-			H.equip_to_slot_or_del(new /obj/item/weapon/claymore/highlander, WEAR_L_HAND)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), WEAR_FEET)
-			H.equip_to_slot_or_del(new /obj/item/device/pinpointer(H), WEAR_WAIST)
-			for(var/obj/item/device/pinpointer/P in H) //making sure the pinpointer is active
-				P.attack_self(H)
-			var/obj/item/card/id/W = new(H) //id
-			W.name = "[H.real_name]'s ID Card"
-			W.icon_state = "centcom"
-			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.assignment = "Highlander"
-			W.registered_name = H.real_name
-			W.flags_item = NODROP
-			H.equip_to_slot_or_del(W, WEAR_ID)
-			var/obj/item/bloodcrawl/antiwelder = new(H) //no doublehand ree
-			antiwelder.name = "compulsion of honor"
-			antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
-			antiwelder.icon_state = "bloodhand_right"
-			H.equip_to_slot_or_del(antiwelder, WEAR_R_HAND)
+
+		for(var/obj/item/I in H.get_held_item())
+			cdel(I)
+		//give them their shit
+		ticker.mode.traitors += H.mind
+		H.mind.special_role = "highlander"
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), WEAR_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/device/pinpointer(H), WEAR_WAIST)
+		for(var/obj/item/device/pinpointer/P in H) //making sure the pinpointer is active
+			P.attack_self(H)
+
+		var/obj/item/card/id/W = new(H) //id
+		W.name = "[H.real_name]'s ID Card"
+		W.icon_state = "centcom"
+		W.access = get_all_accesses()
+		W.access += get_all_centcom_access()
+		W.assignment = "Highlander"
+		W.registered_name = H.real_name
+		W.flags_item = NODROP
+		H.equip_to_slot_or_del(W, WEAR_ID)
+
+		H.put_in_hands(new /obj/item/weapon/claymore/highlander)
+		var/obj/item/bloodcrawl/antiwelder = new(H) //no doublehand ree
+		antiwelder.name = "compulsion of honor"
+		antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
+		antiwelder.icon_state = "bloodhand_right"
+		H.put_in_hands(antiwelder)
 
 /obj/item/bloodcrawl // i dont know where to drop this
-  name = "blood crawl"
-  desc = "You are unable to hold anything while in this form."
-  icon = 'icons/effects/blood.dmi'
-  flags_item = NODROP
+	name = "blood crawl"
+	desc = "You are unable to hold anything while in this form."
+	icon = 'icons/effects/blood.dmi'
+	flags_item = NODROP

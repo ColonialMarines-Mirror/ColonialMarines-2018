@@ -702,36 +702,43 @@ and you're good to go.
 			return
 
 		else if(user.a_intent == "hurt") //Point blanking doesn't actually fire the projectile. No reason to.
-			flags_gun_features &= ~GUN_BURST_FIRING
-			//Point blanking simulates firing the bullet proper but without actually firing it.
 			if(able_to_fire(user)) //If you can't fire the gun in the first place, we're just going to hit them with it.
-				if(active_attachable && !(active_attachable.flags_attach_features & ATTACH_PROJECTILE))
-					active_attachable.activate_attachment(src, null, TRUE)//No way.
-				var/obj/item/projectile/projectile_to_fire = load_into_chamber(user)
-				if(projectile_to_fire) //We actually have a projectile, let's move on. We're going to simulate the fire cycle.
-					user.visible_message("<span class='danger'>[user] fires [src] point blank at [M]!</span>")
-					apply_bullet_effects(projectile_to_fire, user) //We add any damage effects that we need.
-					projectile_to_fire.dir = get_dir(user, M)
-					projectile_to_fire.distance_travelled = get_dist(user, M)
-					simulate_recoil(1, user)
+				if(!active_attachable && (flags_gun_features & GUN_BURST_ON) && burst_amount > 1)
+					..()
+					Fire(M, user)
+					return TRUE
+				else
+					..()
+					flags_gun_features &= ~GUN_BURST_FIRING
+					//Point blanking simulates firing the bullet proper but without actually firing it.
+					if(active_attachable && !(active_attachable.flags_attach_features & ATTACH_PROJECTILE))
+						active_attachable.activate_attachment(src, null, TRUE)//No way.
+					var/obj/item/projectile/projectile_to_fire = load_into_chamber(user)
+					if(projectile_to_fire) //We actually have a projectile, let's move on. We're going to simulate the fire cycle.
+						user.visible_message("<span class='danger'>[user] fires [src] point blank at [M]!</span>")
+						apply_bullet_effects(projectile_to_fire, user) //We add any damage effects that we need.
+						projectile_to_fire.dir = get_dir(user, M)
+						projectile_to_fire.distance_travelled = get_dist(user, M)
+						simulate_recoil(1, user)
 
-					if(projectile_to_fire.ammo.bonus_projectiles_amount)
-						var/obj/item/projectile/BP
-						for(var/i = 1 to projectile_to_fire.ammo.bonus_projectiles_amount)
-							BP = rnew(/obj/item/projectile, M.loc)
-							BP.generate_bullet(ammo_list[projectile_to_fire.ammo.bonus_projectiles_type])
-							BP.dir = get_dir(user, M)
-							BP.distance_travelled = get_dist(user, M)
-							BP.ammo.on_hit_mob(M, BP)
-							M.bullet_act(BP)
-							cdel(BP)
+						if(projectile_to_fire.ammo.bonus_projectiles_amount)
+							var/obj/item/projectile/BP
+							for(var/i = 1 to projectile_to_fire.ammo.bonus_projectiles_amount)
+								BP = rnew(/obj/item/projectile, M.loc)
+								BP.generate_bullet(ammo_list	[projectile_to_fire.ammo.bonus_projectiles_type])
+								BP.dir = get_dir(user, M)
+								BP.distance_travelled = get_dist(user, M)
+								BP.ammo.on_hit_mob(M, BP)
+								M.bullet_act(BP)
+								cdel(BP)
 
-					projectile_to_fire.ammo.on_hit_mob(M, projectile_to_fire)
-					M.bullet_act(projectile_to_fire)
-					last_fired = world.time
+						projectile_to_fire.ammo.on_hit_mob(M, projectile_to_fire)
+						M.bullet_act(projectile_to_fire)
+						last_fired = world.time
 
-					if(!delete_bullet(projectile_to_fire)) cdel(projectile_to_fire)
-					reload_into_chamber(user) //Reload into the chamber if the gun supports it.
+						if(!delete_bullet(projectile_to_fire)) cdel(projectile_to_fire)
+						reload_into_chamber(user) //Reload into the chamber if the gun supports it.
+						return TRUE
 
 	return ..() //Pistolwhippin'
 
@@ -748,7 +755,6 @@ and you're good to go.
 	Consequently, predators are able to fire while cloaked.
 	*/
 	if(flags_gun_features & GUN_BURST_FIRING) return
-	if(world.time < wield_time) return //We just put the gun up. Can't do it that fast
 	if(ismob(user)) //Could be an object firing the gun.
 		if(!user.IsAdvancedToolUser())
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -816,7 +822,7 @@ and you're good to go.
 	var/gun_accuracy_mult = accuracy_mult_unwielded
 	var/gun_scatter = scatter_unwielded
 
-	if(flags_item & WIELDED)
+	if(flags_item & WIELDED && wielded_stable())
 		gun_accuracy_mult = accuracy_mult
 		gun_scatter = scatter
 
@@ -881,7 +887,7 @@ and you're good to go.
 				playsound(user, actual_sound, 60)
 				if(bullets_fired == 1)
 					user.visible_message(
-					"<span class='danger'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
+					"<span class='danger'>[user] [src][reflex ? " by reflex":""]!</span>", \
 					"<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[current_mag.current_rounds-1]</b>/[current_mag.max_rounds]" : ""]</span>", \
 					"<span class='warning'>You hear a [istype(projectile_to_fire.ammo, /datum/ammo/bullet) ? "gunshot" : "blast"]!</span>", 4
 					)
@@ -898,7 +904,7 @@ and you're good to go.
 	if(total_scatter_chance > 0)
 		var/targdist = get_dist(target, user)
 		if(flags_gun_features & GUN_BURST_ON && burst_amount > 1)//Much higher chance on a burst.
-			total_scatter_chance += (flags_item & WIELDED) ? burst_amount * (burst_scatter_mult + burst_scatter_bonus) : burst_amount * (5+burst_scatter_bonus)
+			total_scatter_chance += (flags_item & WIELDED && wielded_stable()) ? burst_amount * (burst_scatter_mult + burst_scatter_bonus) : burst_amount * (5+burst_scatter_bonus)
 
 			//long range burst shots have more chance to scatter
 			if(targdist > 7)
@@ -941,7 +947,7 @@ and you're good to go.
 
 /obj/item/weapon/gun/proc/simulate_recoil(recoil_bonus = 0, mob/user, atom/target)
 	var/total_recoil = recoil_bonus
-	if(flags_item & WIELDED)
+	if(flags_item & WIELDED && wielded_stable())
 		total_recoil += recoil
 	else
 		total_recoil += recoil_unwielded

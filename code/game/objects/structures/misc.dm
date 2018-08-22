@@ -186,9 +186,13 @@
 		return	
 	else
 		var/strike = max(0,(W.force - soak))
+		playsound(loc, 'sound/effects/clang.ogg', 25, 1)
 		if(strike)
 			damage += strike
-			healthcheck(1, 1, user, W)
+			healthcheck(0, 1, user, W)
+		else
+			user.visible_message("<span class='notice'>[user]'s attack with [W] bounces harmlessly off the [src].</span>",
+			"<span class='notice'>Your attack with [W] bounces harmlessly off the [src]")
 		..()
 
 /obj/structure/showcase/fire_act(exposed_temperature, exposed_volume)

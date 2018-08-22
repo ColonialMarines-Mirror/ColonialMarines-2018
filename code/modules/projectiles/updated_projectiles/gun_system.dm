@@ -601,7 +601,7 @@ and you're good to go.
 				projectile_to_fire.accuracy *= config.base_hit_accuracy_mult + config.hmed_hit_accuracy_mult //More accuracy.
 				recoil_comp-- //Less recoil.
 				scatter_chance_mod -= config.med_scatter_value
-				burst_scatter_chance_mod = -2
+				burst_scatter_chance_mod = -3
 				if(prob(30)) projectile_to_fire.damage *= config.base_hit_damage_mult + config.low_hit_damage_mult//Lower chance of a damage buff.
 				if(i == 1) to_chat(user, "<span class='notice'>Your bipod keeps [src] steady!</span>")
 		//End of bipods.

@@ -175,7 +175,6 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 			if("DEATH SQUAD","PMC") return 1
 	to_chat(user, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 
-<<<<<<< HEAD
 /obj/item/weapon/gun/proc/spec_allowed_check(mob/living/carbon/human/user)
 	if(config && config.remove_gun_restrictions) return 1 //Not if the config removed it.
 
@@ -192,13 +191,11 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 		if(allowed(user)) return 1
 	to_chat(user, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 
-=======
 /obj/item/weapon/gun/proc/wielded_stable() //soft wield-delay
 	if(world.time > wield_time)
 		return 1
 	else
 		return 0
->>>>>>> Pointblank now melees first and then shoots. Burstfire pointblank is now a thing. Wield delay turned into a soft version, instead of impeding you from wielding you'll just keep the unwielded stats until the stabilization passes; a soft wield delay. Attachments rebalanced.
 /*
 Here we have throwing and dropping related procs.
 This should fix some issues with throwing mag harnessed guns when

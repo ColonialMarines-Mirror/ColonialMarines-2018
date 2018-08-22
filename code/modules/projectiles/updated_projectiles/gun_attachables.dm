@@ -458,7 +458,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	..()
 	accuracy_mod = -config.low_hit_accuracy_mult
 	scatter_mod = config.min_scatter_value
-	delay_mod = -config.mlow_fire_delay
+	delay_mod = -config.min_fire_delay
 	burst_mod = -config.min_burst_value
 	accuracy_unwielded_mod = -config.med_hit_accuracy_mult
 	scatter_unwielded_mod = config.med_scatter_value
@@ -1014,6 +1014,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "bipod"
 	attach_icon = "bipod_a"
 	slot = "under"
+	wield_delay_mod = WIELD_DELAY_SLOW
 	size_mod = 2
 	melee_mod = -10
 	flags_attach_features = ATTACH_REMOVABLE|ATTACH_ACTIVATION
@@ -1022,7 +1023,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/bipod/New()
 	..()
-	delay_mod = config.mlow_fire_delay
+	size_mod = 1
 
 /obj/item/attachable/bipod/activate_attachment(obj/item/weapon/gun/G,mob/living/user, turn_off)
 	if(turn_off)

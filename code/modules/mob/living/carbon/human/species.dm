@@ -253,7 +253,6 @@
 	brute_mod = 0.55
 	burn_mod = 0.55
 	unarmed_type = /datum/unarmed_attack/punch/strong
-	flags = IS_WHITELISTED
 
 	cold_level_1 = 220
 	cold_level_2 = 180
@@ -273,7 +272,7 @@
 	brute_mod = 0.15
 	burn_mod = 1.50
 	reagent_tag = IS_HORROR
-	flags = HAS_SKIN_COLOR|NO_BREATHE|NO_POISON|HAS_LIPS|NO_PAIN|NO_SCAN|NO_POISON|NO_BLOOD|NO_SLIP|NO_CHEM_METABOLIZATION|IS_WHITELISTED
+	flags = HAS_SKIN_COLOR|NO_BREATHE|NO_POISON|HAS_LIPS|NO_PAIN|NO_SCAN|NO_POISON|NO_BLOOD|NO_SLIP|NO_CHEM_METABOLIZATION
 	unarmed_type = /datum/unarmed_attack/punch/strong
 	secondary_unarmed_type = /datum/unarmed_attack/bite/strong
 	death_message = "doubles over, unleashes a horrible, ear-shattering scream, then falls motionless and still..."
@@ -323,7 +322,7 @@
 	heat_level_2 = 480 //Default 400
 	heat_level_3 = 1100 //Default 1000
 
-	flags = IS_WHITELISTED|HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR
+	flags = HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR
 
 	flesh_color = "#34AF10"
 
@@ -350,7 +349,7 @@
 
 	primitive = /mob/living/carbon/monkey/tajara
 
-	flags = IS_WHITELISTED|HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR
+	flags = HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR
 
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
@@ -364,7 +363,7 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = IS_WHITELISTED|HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR
+	flags = HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR
 
 	flesh_color = "#8CD7A3"
 
@@ -451,7 +450,7 @@
 	poison_type = "phoron"//"oxygen"
 	insulated = 1
 
-	flags = NO_SCAN|IS_WHITELISTED
+	flags = NO_SCAN
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -497,7 +496,7 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN|NO_BLOOD|NO_PAIN|IS_WHITELISTED
+	flags = NO_SCAN|NO_BLOOD|NO_PAIN
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -540,7 +539,7 @@
 
 	body_temperature = 350
 
-	flags = IS_WHITELISTED|NO_BREATHE|NO_SCAN|NO_BLOOD|NO_POISON|NO_PAIN|IS_SYNTHETIC|NO_CHEM_METABOLIZATION
+	flags = NO_BREATHE|NO_SCAN|NO_BLOOD|NO_POISON|NO_PAIN|IS_SYNTHETIC|NO_CHEM_METABOLIZATION
 
 	blood_color = "#EEEEEE"
 	flesh_color = "#272757"
@@ -625,7 +624,7 @@
 	death_message = "seizes up and falls limp... But is it dead?"
 	language = "Zombie"
 	default_language = "Zombie"
-	flags = NO_PAIN|NO_BREATHE|NO_SCAN|NO_POISON|IS_WHITELISTED
+	flags = NO_PAIN|NO_BREATHE|NO_SCAN|NO_POISON
 	brute_mod = 0.25 //EXTREME BULLET RESISTANCE
 	burn_mod = 2 //IT BURNS
 	speech_chance  = 5
@@ -723,7 +722,7 @@
 	brute_mod = 0.33 //Beefy!
 	burn_mod = 0.65
 	reagent_tag = IS_YAUTJA
-	flags = IS_WHITELISTED|HAS_SKIN_COLOR|NO_PAIN|NO_SCAN|NO_POISON //Hmm, let's see if this does anything
+	flags = HAS_SKIN_COLOR|NO_PAIN|NO_SCAN|NO_POISON //Hmm, let's see if this does anything
 	language = "Sainja" //"Warrior"
 	default_language = "Sainja"
 	unarmed_type = /datum/unarmed_attack/punch/strong

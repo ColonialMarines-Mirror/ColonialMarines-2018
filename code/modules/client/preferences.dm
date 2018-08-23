@@ -867,7 +867,7 @@ datum/preferences
 
 					for(var/gear_name in gear_datums)
 						var/datum/gear/G = gear_datums[gear_name]
-						if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
+						if(G.whitelisted && !is_alien_whitelisted(G.whitelisted))
 							continue
 						valid_gear_choices += gear_name
 
@@ -1089,7 +1089,7 @@ datum/preferences
 					if(config.usealienwhitelist)
 						for(var/L in all_languages)
 							var/datum/language/lang = all_languages[L]
-							if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
+							if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
 								new_languages += lang
 
 								languages_available = 1
@@ -1151,7 +1151,7 @@ datum/preferences
 				
 				if("species")
 					var/new_species = input(user, "Choose your species:", "Character Preferences") as null|anything in get_playable_species(user)
-					if(new_species && is_alien_whitelisted(user, new_species))
+					if(new_species && is_alien_whitelisted(new_species))
 						species = new_species
 
 				if("facial")

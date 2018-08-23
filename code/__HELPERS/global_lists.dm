@@ -60,7 +60,6 @@ var/list/global/active_laser_targets = list()
 var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					//table of say codes for all languages
-var/global/list/whitelisted_species = list("Human")
 var/global/list/synth_types = list("Synthetic","Early Synthetic")
 
 // Posters
@@ -168,9 +167,6 @@ var/global/list/moth_wings_list = list()
 		var/datum/species/S = new T
 		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
-
-		if(S.flags & IS_WHITELISTED)
-			whitelisted_species += S.name
 
 	// Our ammo stuff is initialized here.
 	var/blacklist = list(/datum/ammo/energy, /datum/ammo/energy/yautja, /datum/ammo/energy/yautja/rifle, /datum/ammo/bullet/shotgun, /datum/ammo/xeno)

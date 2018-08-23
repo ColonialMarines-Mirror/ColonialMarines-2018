@@ -154,7 +154,7 @@
 					return
 
 				if(client.prefs.species != "Human")
-					if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
+					if(!is_alien_whitelisted(client.prefs.species) && config.usealienwhitelist)
 						to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 						return
 
@@ -195,7 +195,7 @@
 					return
 
 				if(client.prefs.species != "Human")
-					if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
+					if(!is_alien_whitelisted(client.prefs.species) && config.usealienwhitelist)
 						to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 						return 0
 
@@ -398,7 +398,7 @@
 			chosen_species = all_species[client.prefs.species]
 		if(chosen_species)
 			// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
-			if(is_species_whitelisted(chosen_species) || has_admin_rights())
+			if(is_alien_whitelisted(chosen_species) || has_admin_rights())
 				new_character = new(loc, client.prefs.species)
 
 		if(!new_character)
@@ -410,7 +410,7 @@
 		if(client.prefs.language)
 			chosen_language = all_languages["[client.prefs.language]"]
 		if(chosen_language)
-			if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED) || (new_character.species && (chosen_language.name in new_character.species.secondary_langs)))
+			if(is_alien_whitelisted(client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED) || (new_character.species && (chosen_language.name in new_character.species.secondary_langs)))
 				new_character.add_language("[client.prefs.language]")
 
 		if(ticker.random_players)
@@ -462,10 +462,6 @@
 	proc/has_admin_rights()
 		return client.holder.rights & R_ADMIN
 
-	proc/is_species_whitelisted(datum/species/S)
-		if(!S) return 1
-		return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !(S.flags & IS_WHITELISTED)
-
 /mob/new_player/get_species()
 	var/datum/species/chosen_species
 	if(client.prefs.species)
@@ -474,7 +470,7 @@
 	if(!chosen_species)
 		return "Human"
 
-	if(is_species_whitelisted(chosen_species) || has_admin_rights())
+	if(is_alien_whitelisted(chosen_species) || has_admin_rights())
 		return chosen_species.name
 
 	return "Human"

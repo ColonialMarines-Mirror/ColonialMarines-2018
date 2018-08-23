@@ -61,7 +61,7 @@ proc/random_skin_tone()
 /proc/get_playable_species(mob/M)
 	var/list/playable_species = list()
 	for(var/species in all_species)
-		if(is_alien_whitelisted(M, species))
+		if(is_alien_whitelisted(species))
 			playable_species += species
 	return playable_species
 

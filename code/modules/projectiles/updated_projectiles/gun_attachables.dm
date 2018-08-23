@@ -71,7 +71,7 @@ Defined in conflicts.dm of the #defines folder.
 	var/bipod_deployed = FALSE //only used by bipod
 	var/current_rounds 	= 0 //How much it has.
 	var/max_rounds 		= 0 //How much ammo it can store
-	var/attach_applied = 0 //Prevents it from getting picked up after being attached
+	var/attach_applied = FALSE //Prevents it from getting picked up after being attached
 
 	var/attachment_action_type
 
@@ -88,15 +88,16 @@ Defined in conflicts.dm of the #defines folder.
 			. = ..()
 
 obj/item/attachable/attack_hand(var/mob/user as mob)
-	if(src.attach_applied == 1) return
-
-	else ..()
+	if(src.attach_applied == TRUE)
+		return
+	else
+		..()
 
 
 
 /obj/item/attachable/proc/Attach(obj/item/weapon/gun/G)
 	if(!istype(G)) return //Guns only
-	attach_applied = 1
+	attach_applied = TRUE
 
 	/*
 	This does not check if the attachment can be removed.
@@ -162,7 +163,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/proc/Detach(obj/item/weapon/gun/G)
 	if(!istype(G)) return //Guns only
-	attach_applied = 0
+	attach_applied = FALSE
 
 
 	if(flags_attach_features & ATTACH_ACTIVATION)

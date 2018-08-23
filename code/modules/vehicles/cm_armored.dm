@@ -91,7 +91,6 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 	//Placeholders
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "cargo_engine"
-	var/cmdevsplzcanyourspam = 0
 /obj/vehicle/multitile/root/cm_armored/Dispose()
 	for(var/i in linked_objs)
 		var/obj/O = linked_objs[i]
@@ -338,7 +337,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/hitbox/cm_armored
 	name = "Armored Vehicle"
 	desc = "Get inside to operate the vehicle."
-
+	var/cmdevsplzcanyourspam = 0
 	luminosity = 7
 	throwpass = 1 //You can lob nades over tanks, and there's some dumb check somewhere that requires this
 

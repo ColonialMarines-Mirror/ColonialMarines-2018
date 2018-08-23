@@ -11,7 +11,7 @@
 		for(var/datum/mind/L in ticker.mode.xenomorphs)
 			var/mob/living/carbon/Xenomorph/M = L.current
 			if(M && istype(M) && !M.stat && M.client && hivenumber == M.hivenumber) //Only living and connected xenos
-				to_chat(M, "<span class='xenodanger'><font size=[size]> [message]</font></span>")
+				M << "<span class='xenodanger'><font size=[size]> [message]</font></span>"
 
 //Adds stuff to your "Status" pane -- Specific castes can have their own, like carrier hugger count
 //Those are dealt with in their caste files.
@@ -92,22 +92,22 @@
 //A simple handler for checking your state. Used in pretty much all the procs.
 /mob/living/carbon/Xenomorph/proc/check_state()
 	if(is_mob_incapacitated() || lying || buckled)
-		to_chat(src, "<span class='warning'>You cannot do this in your current state.</span>")
+		src << "<span class='warning'>You cannot do this in your current state.</span>"
 		return 0
 	return 1
 
 //Checks your plasma levels and gives a handy message.
 /mob/living/carbon/Xenomorph/proc/check_plasma(value)
 	if(stat)
-		to_chat(src, "<span class='warning'>You cannot do this in your current state.</span>")
+		src << "<span class='warning'>You cannot do this in your current state.</span>"
 		return 0
 
 	if(value)
 		if(plasma_stored < value)
 			if(is_robotic)
-				to_chat(src, "<span class='warning'>Beep. You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>")
+				src << "<span class='warning'>Beep. You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>"
 			else
-				to_chat(src, "<span class='warning'>You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>")
+				src << "<span class='warning'>You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>"
 			return 0
 	return 1
 
@@ -153,7 +153,7 @@
 		if(legcuffed)
 			is_charging = 0
 			stop_momentum()
-			to_chat(src, "<span class='xenodanger'>You can't charge with that thing on your leg!</span>")
+			src << "<span class='xenodanger'>You can't charge with that thing on your leg!</span>"
 		else
 			. -= charge_speed
 			charge_timer = 2
@@ -284,7 +284,8 @@
 //Random bite attack. Procs more often on downed people. Returns 0 if the check fails.
 //Does a LOT of damage.
 /mob/living/carbon/Xenomorph/proc/bite_attack(var/mob/living/carbon/human/M, var/damage)
-
+	if(src.critical_proc)
+		return
 	damage += 20
 
 	if(mob_size == MOB_SIZE_BIG)
@@ -307,12 +308,16 @@
 
 	M.apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1) //This should slicey dicey
 	M.updatehealth()
+	src.critical_proc = 1 //Flag the xeno has having critted so it can't RNG crit for the next 3 seconds
+	spawn(src.critical_delay) // RNG crits can normally only happen once every 3 seconds at most.
+		src.critical_proc = 0 //Clear the crit flag
 
 //Tail stab. Checked during a slash, after the above.
 //Deals a monstrous amount of damage based on how long it's been charging, but charging it drains plasma.
 //Toggle is in XenoPowers.dm.
 /mob/living/carbon/Xenomorph/proc/tail_attack(mob/living/carbon/human/M, var/damage)
-
+	if(src.critical_proc)
+		return
 	damage += 20
 
 	if(mob_size == MOB_SIZE_BIG)
@@ -335,6 +340,9 @@
 
 	M.apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1, edge = 1) //This should slicey dicey
 	M.updatehealth()
+	src.critical_proc = 1 //Flag the xeno has having critted so it can't RNG crit for the next 3 seconds
+	spawn(src.critical_delay) // RNG crits can normally only happen once every 3 seconds at most.
+		src.critical_proc = 0 //Clear the crit flag
 
 /mob/living/carbon/Xenomorph/proc/zoom_in(var/tileoffset = 5, var/viewsize = 12)
 	if(stat || resting)
@@ -378,10 +386,10 @@
 	var/has_obstacle
 	for(var/obj/O in current_turf)
 		if(istype(O, /obj/item/clothing/mask/facehugger))
-			to_chat(src, "<span class='warning'>There is a little one here already. Best move it.</span>")
+			src << "<span class='warning'>There is a little one here already. Best move it.</span>"
 			return
 		if(istype(O, /obj/effect/alien/egg))
-			to_chat(src, "<span class='warning'>There's already an egg.</span>")
+			src << "<span class='warning'>There's already an egg.</span>"
 			return
 		if(istype(O, /obj/structure/mineral_door) || istype(O, /obj/effect/alien/resin))
 			has_obstacle = TRUE
@@ -404,7 +412,7 @@
 			break
 
 	if(current_turf.density || has_obstacle)
-		to_chat(src, "<span class='warning'>There's something built here already.</span>")
+		src << "<span class='warning'>There's something built here already.</span>"
 		return
 
 	return 1
@@ -413,7 +421,7 @@
 	var/obj/item/clothing/mask/facehugger/F = get_active_hand()
 	if(istype(F))
 		if(locate(/turf/closed/wall/resin) in loc)
-			to_chat(src, "<span class='warning'>You decide not to drop [F] after all.</span>")
+			src << "<span class='warning'>You decide not to drop [F] after all.</span>"
 			return
 
 	. = ..()
@@ -523,8 +531,8 @@
 	if(!Q || !Q.anchored || !queen_chosen_lead || !Q.current_aura || Q.loc.z != loc.z) //We are no longer a leader, or the Queen attached to us has dropped from her ovi, disabled her pheromones or even died
 		leader_aura_strength = 0
 		leader_current_aura = ""
-		to_chat(src, "<span class='xenowarning'>Your pheromones wane. The Queen is no longer granting you her pheromones.</span>")
+		src << "<span class='xenowarning'>Your pheromones wane. The Queen is no longer granting you her pheromones.</span>"
 	else
 		leader_aura_strength = Q.aura_strength
 		leader_current_aura = Q.current_aura
-		to_chat(src, "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>")
+		src << "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>"

@@ -120,11 +120,29 @@
 			cdel(src)
 		return
 
-proc/flame_radius(radius = 1, turf/turf) //~Art updated fire.
+proc/flame_radius(radius = 1, stacks = 20, duration = 20, turf/turf) //~Art updated fire.
 	if(!turf || !isturf(turf)) return
 	if(radius < 0) radius = 0
 	if(radius > 5) radius = 5
-	new /obj/flamer_fire(turf, 5 + rand(0,11), 15, null, radius)
+	stacks = stacks / 2 //Set up gaussian distribution of stack/duration outcomes
+	duration = duration / 2
+	var/stacks_min = stacks / 2
+	var/stacks_max = stacks * 1.5
+	var/duration_min = duration / 2
+	var/duration_max = duration * 1.5
+	var/stacks_final = rand(stacks_min, stacks_max) + rand(stacks_min, stacks_max)
+	var/duration_final = rand(duration_min, duration_max) + rand(duration_min, duration_max)
+	new /obj/flamer_fire(turf, rand(stacks_final), rand(duration_final),  null, radius)
+	for(var/mob/living/carbon/M in range(2, turf))
+		if(istype(M,/mob/living/carbon/Xenomorph))
+			var/mob/living/carbon/Xenomorph/X = M
+			if(X.fire_immune) continue
+
+		if(M.stat == DEAD) continue
+		M.adjust_fire_stacks(stacks_final)
+		M.IgniteMob()
+		M.adjustFireLoss(rand(stacks_final))
+		M.visible_message("<span class='danger'>[M] bursts into flames!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You burst into flames!</span>")
 
 
 /obj/item/explosive/grenade/incendiary/molotov

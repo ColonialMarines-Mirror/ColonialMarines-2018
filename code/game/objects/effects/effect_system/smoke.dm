@@ -261,7 +261,7 @@
 				M.coughedtime = 0
 
 	//Topical damage (acid on exposed skin)
-	to_chat(M, "<span class='danger'>Your skin feels like it is melting away!</span>")
+	M << "<span class='danger'>Your skin feels like it is melting away!</span>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.adjustFireLoss(amount*rand(15, 20)) //Burn damage, randomizes between various parts //Amount corresponds to upgrade level, 1 to 2.5
@@ -296,11 +296,10 @@
 	//Gas masks protect from inhalation and face contact effects, even without internals. Breath masks don't for balance reasons
 	if(!istype(M.wear_mask, /obj/item/clothing/mask/gas))
 		M.adjustOxyLoss(15) //Causes even more oxyloss damage due to neurotoxin locking up respiratory system
-		M.ear_deaf = max(M.ear_deaf, round(effect_amt*1.5)) //Paralysis of hearing system, aka deafness
-		if(!M.eye_blind) //Eye exposure damage
-			to_chat(M, "<span class='danger'>Your eyes sting. You can't see!</span>")
-		M.eye_blurry = max(M.eye_blurry, effect_amt*2)
-		M.eye_blind = max(M.eye_blind, round(effect_amt))
+		var/neurotox_target = 5 //Target neurotox number per tick
+		var/neurotox_max = neurotox_target / 2 * 1.5 //Target number is 4U, so use half that
+		var/neurotox_min = neurotox_target / 2 * 0.5
+		M.reagents.add_reagent("xeno_toxin", rand(neurotox_min,neurotox_max) + rand(neurotox_min,neurotox_max))
 		if(M.coughedtime != 1 && !M.stat) //Coughing/gasping
 			M.coughedtime = 1
 			if(prob(50))
@@ -311,7 +310,7 @@
 				M.coughedtime = 0
 
 	//Topical damage (neurotoxin on exposed skin)
-	to_chat(M, "<span class='danger'>Your body is going numb, almost as if paralyzed!</span>")
+	M << "<span class='danger'>Your body is going numb, almost as if paralyzed!</span>"
 	if(prob(40 + round(amount*15))) //Highly likely to drop items due to arms/hands seizing up
 		M.drop_held_item()
 	if(ishuman(M))
@@ -369,12 +368,3 @@
 
 /datum/effect_system/smoke_spread/xeno_weaken
 	smoke_type = /obj/effect/particle_effect/smoke/xeno_weak
-
-
-
-
-
-
-
-
-

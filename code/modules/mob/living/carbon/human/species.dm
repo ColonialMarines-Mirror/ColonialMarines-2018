@@ -220,6 +220,18 @@
 /datum/species/proc/handle_fire(var/mob/living/carbon/human/H)
 	return
 
+/datum/species/proc/update_body(var/mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/update_inv_head(var/mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/update_inv_w_uniform(var/mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/update_inv_wear_suit(var/mob/living/carbon/human/H)
+	return
+
 /datum/species/human
 	name = "Human"
 	name_plural = "Humans"
@@ -383,6 +395,34 @@
 
 /datum/species/moth/random_name()
 	return "[pick(moth_first)] [pick(moth_last)]"
+
+/datum/species/moth/proc/update_moth_wings(mob/living/carbon/human/H)
+	H.remove_overlay(MOTH_WINGS_LAYER)
+	H.remove_underlay(MOTH_WINGS_BEHIND_LAYER)
+
+	var/datum/sprite_accessory/moth_wings/wings = moth_wings_list[H.moth_wings]
+
+	if(wings)
+		H.overlays_standing[MOTH_WINGS_LAYER] = image(wings.icon, icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+		H.underlays_standing[MOTH_WINGS_BEHIND_LAYER] = image(wings.icon, icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+		H.apply_overlay(MOTH_WINGS_LAYER)
+		H.apply_underlay(MOTH_WINGS_BEHIND_LAYER)
+
+/datum/species/moth/update_body(var/mob/living/carbon/human/H)
+	update_moth_wings(H)
+
+/datum/species/moth/update_inv_head(var/mob/living/carbon/human/H)
+	update_moth_wings(H)
+
+/datum/species/moth/update_inv_w_uniform(var/mob/living/carbon/human/H)
+	update_moth_wings(H)
+
+/datum/species/moth/update_inv_wear_suit(var/mob/living/carbon/human/H)
+	update_moth_wings(H)
+
+/datum/species/moth/post_species_loss(mob/living/carbon/human/H)
+	H.remove_overlay(MOTH_WINGS_LAYER)
+	H.remove_underlay(MOTH_WINGS_BEHIND_LAYER)
 
 /datum/species/vox
 	name = "Vox"

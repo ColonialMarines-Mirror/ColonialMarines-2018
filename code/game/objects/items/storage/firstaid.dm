@@ -14,7 +14,7 @@
 	throw_speed = 2
 	throw_range = 8
 	cant_hold = list("/obj/item/ammo_magazine",
-							"/obj/item/explosive/grenade") //to prevent powergaming.
+							"/obj/item/explosive/grenade") 
 	var/empty = 0 //whether the kit starts empty
 	var/icon_full //icon state to use when kit is full
 	var/possible_icons_full

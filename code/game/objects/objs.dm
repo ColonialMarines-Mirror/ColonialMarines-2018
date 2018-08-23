@@ -13,7 +13,7 @@
 	var/mob/living/buckled_mob
 	var/buckle_lying = FALSE //Is the mob buckled in a lying position
 	var/can_buckle = FALSE
-	
+
 	var/explosion_resistance = 0
 
 /obj/New()
@@ -165,7 +165,7 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || user.is_mob_restrained() || user.lying || user.stat || buckled_mob || M.buckled )
 		return
 
-	if (M.mob_size > MOB_SIZE_HUMAN)
+	if (M.mob_size > MOB_SIZE_HUMAN && !(isXeno(M) && M.stat == DEAD && (istype(src,/obj/structure/bed/roller)))) // check whether the target is a dead xeno thats being buckled to a roller bed.
 		to_chat(user, "<span class='warning'>[M] is too big to buckle in.</span>")
 		return
 	if (istype(user, /mob/living/carbon/Xenomorph))

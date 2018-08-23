@@ -91,7 +91,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 	//Placeholders
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "cargo_engine"
-
+	var/cmdevsplzcanyourspam = 0
 /obj/vehicle/multitile/root/cm_armored/Dispose()
 	for(var/i in linked_objs)
 		var/obj/O = linked_objs[i]
@@ -380,7 +380,10 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		W.take_damage(30)
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", W)
-		playsound(W, 'sound/effects/metal_crash.ogg', 35)
+		if(!cmdevsplzcanyourspam)
+			playsound(W, 'sound/effects/metal_crash.ogg', 35)
+			spawn(10)
+				cmdevsplzcanyourspam = 0
 	else if(istype(A, /obj/structure/mineral_door/resin))
 		var/obj/structure/mineral_door/resin/R = A
 		R.health = 0
@@ -394,8 +397,10 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		G.dismantle()
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", G)
-		playsound(G, 'sound/effects/metal_crash.ogg', 35)
-
+		if(!cmdevsplzcanyourspam)
+			playsound(W, 'sound/effects/metal_crash.ogg', 35)
+			spawn(10)
+				cmdevsplzcanyourspam = 0
 /obj/vehicle/multitile/hitbox/cm_armored/Move(var/atom/A, var/direction)
 
 	for(var/mob/living/M in get_turf(src))

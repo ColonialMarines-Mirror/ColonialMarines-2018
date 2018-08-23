@@ -201,10 +201,7 @@
 //	icon_state = "title_holiday"
 	layer = FLY_LAYER
 
-/turf/closed/wall/indestructible/splashscreen/New()
-	..()
-	if(icon_state == "title_painting1") // default
-		icon_state = "title_painting[rand(1,4)]"
+
 
 /turf/closed/wall/indestructible/other
 	icon_state = "r_wall"
@@ -460,7 +457,7 @@
 
 
 /turf/closed/wall/resin/attack_hand(mob/user)
-	user << "<span class='warning'>You scrape ineffectively at \the [src].</span>"
+	to_chat(user, "<span class='warning'>You scrape ineffectively at \the [src].</span>")
 
 
 /turf/closed/wall/resin/attack_paw(mob/user)

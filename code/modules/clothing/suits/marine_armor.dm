@@ -11,9 +11,9 @@
 	for(var/X in H.limbs)
 		var/datum/limb/E = X
 		armor = getarmor_organ(E, "bullet")
-		src << "<span class='debuginfo'><b>[E.name]</b> is protected with <b>[armor]</b> armor against bullets.</span>"
+		to_chat(src, "<span class='debuginfo'><b>[E.name]</b> is protected with <b>[armor]</b> armor against bullets.</span>")
 		counter += armor
-	src << "<span class='debuginfo'>The overall armor score is: <b>[counter]</b>.</span>"
+	to_chat(src, "<span class='debuginfo'>The overall armor score is: <b>[counter]</b>.</span>")
 #endif
 
 //=======================================================================\\
@@ -164,7 +164,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in [user.loc].</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='warning'>You cannot turn the light on while in [user.loc].</span>")
 		return
 
 	if(flashlight_cooldown > world.time)
@@ -308,6 +308,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	slowdown = SLOWDOWN_ARMOR_HEAVY
 	var/injections = 4
 	unacidable = 1
+	req_access = list(ACCESS_MARINE_SPECPREP)
 
 	New(loc,expected_type 	= type,
 		new_name[] 		= list(MAP_ICE_COLONY = "\improper B18 defensive snow armor"))
@@ -316,8 +317,8 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 /obj/item/clothing/suit/storage/marine/specialist/mob_can_equip(mob/M, slot, disable_warning = 0)
 	. = ..()
 	if(.)
-		if(M.mind && M.mind.cm_skills && M.mind.cm_skills.spec_weapons < SKILL_SPEC_TRAINED && M.mind.cm_skills.spec_weapons != SKILL_SPEC_GRENADIER)
-			M << "<span class='warning'>You are not trained to use [src]!</span>"
+		if(!allowed(M))
+			to_chat(M, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 			return 0
 
 /obj/item/clothing/suit/storage/marine/specialist/verb/inject()
@@ -329,15 +330,15 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		return 0
 
 	if(!injections)
-		usr << "Your armor is all out of injectors."
+		to_chat(usr, "Your armor is all out of injectors.")
 		return 0
 
 	if(usr.get_active_hand())
-		usr << "Your active hand must be empty."
+		to_chat(usr, "Your active hand must be empty.")
 		return 0
 
-	usr << "You feel a faint hiss and an injector drops into your hand."
-	var/obj/item/reagent_container/hypospray/autoinjector/tricord/skillless/O = new(usr)
+	to_chat(usr, "You feel a faint hiss and an injector drops into your hand.")
+	var/obj/item/reagent_container/hypospray/autoinjector/tricord/O = new(usr)
 	usr.put_in_active_hand(O)
 	injections--
 	playsound(src,'sound/machines/click.ogg', 15, 1)
@@ -350,6 +351,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 70, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun/launcher/rocket)
+	req_access = list(ACCESS_MARINE_SPECPREP)
 
 	New()
 		select_gamemode_skin(type)
@@ -361,6 +363,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	icon_state = "scout_armor"
 	armor = list(melee = 75, bullet = 45, laser = 40, energy = 25, bomb = 55, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
+	req_access = list(ACCESS_MARINE_SPECPREP)
 
 	New()
 		select_gamemode_skin(type)
@@ -369,8 +372,8 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 /obj/item/clothing/suit/storage/marine/M3S/mob_can_equip(mob/M, slot, disable_warning = 0)
 	. = ..()
 	if(.)
-		if(M.mind && M.mind.cm_skills && M.mind.cm_skills.spec_weapons < SKILL_SPEC_TRAINED && M.mind.cm_skills.spec_weapons != SKILL_SPEC_SCOUT)
-			M << "<span class='warning'>You are not trained to use [src]!</span>"
+		if(!allowed(M))
+			to_chat(M, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 			return 0
 
 /obj/item/clothing/suit/storage/marine/M35
@@ -382,6 +385,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
+	req_access = list(ACCESS_MARINE_SPECPREP)
 
 	New()
 		select_gamemode_skin(type)
@@ -390,8 +394,8 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 /obj/item/clothing/suit/storage/marine/M35/mob_can_equip(mob/M, slot, disable_warning = 0)
 	. = ..()
 	if(.)
-		if(M.mind && M.mind.cm_skills && M.mind.cm_skills.spec_weapons < SKILL_SPEC_TRAINED && M.mind.cm_skills.spec_weapons != SKILL_SPEC_PYRO)
-			M << "<span class='warning'>You are not trained to use [src]!</span>"
+		if(!allowed(M))
+			to_chat(M, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
 			return 0
 
 /obj/item/clothing/suit/storage/marine/sniper
@@ -575,7 +579,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/faction/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in [user.loc].</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='warning'>You cannot turn the light on while in [user.loc].</span>")
 		return
 
 	if(flashlight_cooldown > world.time)

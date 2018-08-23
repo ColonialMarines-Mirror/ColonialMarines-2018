@@ -20,14 +20,16 @@
 
 /obj/item/reagent_container/hypospray/attack(mob/M, mob/living/user)
 	if(!reagents.total_volume)
-		user << "\red [src] is empty."
+		to_chat(user, "\red [src] is empty.")
 		return
 	if (!istype(M))
 		return
 	if (reagents.total_volume)
 		if(skilllock && user.mind && user.mind.cm_skills && user.mind.cm_skills.medical < SKILL_MEDICAL_CHEM)
-			user << "<span class='warning'>You can't figure out to use \the [src], guess it must have some sort of ID lock.</span>"
-			return 0
+			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use the [src].</span>",
+			"<span class='notice'>You fumble around figuring out how to use the [src].</span>")
+			var/fumbling_time = SKILL_TASK_EASY
+			if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 		if(M != user && M.stat != DEAD && M.a_intent != "help" && !M.is_mob_incapacitated() && ((M.mind && M.mind.cm_skills && M.mind.cm_skills.cqc >= SKILL_CQC_MP) || isYautja(M))) // preds have null skills
 			user.KnockDown(3)
@@ -39,8 +41,8 @@
 			playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)
 			return 0
 
-		user << "\blue You inject [M] with [src]."
-		M << "\red You feel a tiny prick!"
+		to_chat(user, "\blue You inject [M] with [src].")
+		to_chat(M, "\red You feel a tiny prick!")
 		playsound(loc, 'sound/items/hypospray.ogg', 50, 1)
 
 		src.reagents.reaction(M, INGEST)
@@ -55,7 +57,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in [src]."
+			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in [src].")
 
 	return 1
 

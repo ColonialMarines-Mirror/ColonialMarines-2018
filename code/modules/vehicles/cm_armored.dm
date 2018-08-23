@@ -380,7 +380,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", W)
 		if(!cmdevsplzcanyourspam)
-			playsound(G, 'sound/effects/metal_crash.ogg', 35)
+			playsound(W, 'sound/effects/metal_crash.ogg', 35)
 			spawn(10)
 				cmdevsplzcanyourspam = 0
 	else if(istype(A, /obj/structure/mineral_door/resin))
@@ -397,7 +397,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", G)
 		if(!cmdevsplzcanyourspam)
-			playsound(W, 'sound/effects/metal_crash.ogg', 35)
+			playsound(G, 'sound/effects/metal_crash.ogg', 35)
 			spawn(10)
 				cmdevsplzcanyourspam = 0
 /obj/vehicle/multitile/hitbox/cm_armored/Move(var/atom/A, var/direction)

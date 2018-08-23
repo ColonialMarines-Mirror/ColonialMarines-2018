@@ -115,6 +115,7 @@
 		if(!.) return
 		M.reagent_pain_modifier += -60 // A bit stronger then paracetamol but weaker then tramadol.
 		holder.remove_reagent("tramadol", 8 * REM) // Think you're smart huh?
+		holder.remove_reagent("paracetamol", 8 * REM) // Nop
 
 
 	on_overdose(mob/living/M)

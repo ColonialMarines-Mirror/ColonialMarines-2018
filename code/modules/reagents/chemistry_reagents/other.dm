@@ -557,6 +557,43 @@
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168
 
+/datum/reagent/xeno_neurotoxin
+	name = "Neurotoxin"
+	id = "xeno_toxin"
+	description = "A debilitating nerve toxin. Impedes motor control. Causes temporary blindness, hallucinations and deafness at higher doses."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	custom_metabolism = 0.5 // Fast meta rate.
+	overdose = REAGENTS_OVERDOSE
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+		if(volume > 1) //1st level neurotoxin effects: minor toxin damage, confusion, dizziness/jitteriness; note that most effects scale/accumulate with dosage
+			M.confused += (min(volume / 2))
+			M.make_dizzy(min(40,volume / 2 ))
+			M.make_jittery(min(40,volume / 2))
+			M.reagent_move_delay_modifier += volume / 2.5
+			M.adjustToxLoss(volume/10*REM)
+		if(volume > 5) //2nd level neurotoxin effects: hallucinations, drug overlay, stuttering
+			M.hallucination += volume / 2.5
+			M.druggy += volume / 2.5
+			M.stuttering += volume / 2.5
+		if(volume > 10) //3rd level neurotoxin effects: blindness, deafness
+			M.ear_deaf += volume / 5 //Paralysis of hearing system, aka deafness
+			if(!M.eye_blind) //Eye exposure damage
+				M << "<span class='danger'>Your eyes sting. You can't see!</span>"
+			M.eye_blurry += volume / 5
+			M.eye_blind += volume / 5
+
+	on_overdose(mob/living/M)
+		M.adjustBrainLoss(1) //Overdose starts applying brain damage
+
+	on_overdose_critical(mob/living/M)
+		M.adjustBrainLoss(2) //Massive brain damage
+
+
 /datum/reagent/fuel
 	name = "Welding fuel"
 	id = "fuel"

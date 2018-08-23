@@ -16,12 +16,12 @@
 	set desc = "Shows whether or not a mine is contained within the xenomorph list."
 
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING || !ticker.mode)
-		to_chat(src, "<span class='warning'>The round is either not ready, or has already finished.</span>")
+		src << "<span class='warning'>The round is either not ready, or has already finished.</span>"
 		return
 	if(mind in ticker.mode.xenomorphs)
-		to_chat(src, "<span class='debuginfo'>[src] mind is in the xenomorph list. Mind key is [mind.key].</span>")
-		to_chat(src, "<span class='debuginfo'>Current mob is: [mind.current]. Original mob is: [mind.original].</span>")
-	to_chat(else src, "<span class='debuginfo'>This xenomorph is not in the xenomorph list.</span>")
+		src << "<span class='debuginfo'>[src] mind is in the xenomorph list. Mind key is [mind.key].</span>"
+		src << "<span class='debuginfo'>Current mob is: [mind.current]. Original mob is: [mind.original].</span>"
+	else src << "<span class='debuginfo'>This xenomorph is not in the xenomorph list.</span>"
 #endif
 
 #undef DEBUG_XENO
@@ -47,6 +47,8 @@
 	hand = 1 //Make right hand active by default. 0 is left hand, mob defines it as null normally
 	see_in_dark = 8
 	see_infrared = 1
+	var/critical_proc = 0
+	var/critical_delay = 30
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	hud_possible = list(HEALTH_HUD_XENO, PLASMA_HUD, PHEROMONE_HUD,QUEEN_OVERWATCH_HUD)
 	unacidable = TRUE
@@ -147,30 +149,30 @@
 /mob/living/carbon/Xenomorph/examine(mob/user)
 	..()
 	if(isXeno(user) && caste_desc)
-		to_chat(user, caste_desc)
+		user << caste_desc
 
 	if(stat == DEAD)
-		to_chat(user, "It is DEAD. Kicked the bucket. Off to that great hive in the sky.")
+		user << "It is DEAD. Kicked the bucket. Off to that great hive in the sky."
 	else if(stat == UNCONSCIOUS)
-		to_chat(user, "It quivers a bit, but barely moves.")
+		user << "It quivers a bit, but barely moves."
 	else
 		var/percent = (health / maxHealth * 100)
 		switch(percent)
 			if(95 to 101)
-				to_chat(user, "It looks quite healthy.")
+				user << "It looks quite healthy."
 			if(75 to 94)
-				to_chat(user, "It looks slightly injured.")
+				user << "It looks slightly injured."
 			if(50 to 74)
-				to_chat(user, "It looks injured.")
+				user << "It looks injured."
 			if(25 to 49)
-				to_chat(user, "It bleeds with sizzling wounds.")
+				user << "It bleeds with sizzling wounds."
 			if(1 to 24)
-				to_chat(user, "It is heavily injured and limping badly.")
+				user << "It is heavily injured and limping badly."
 
 	if(hivenumber != XENO_HIVE_NORMAL)
 		if(hivenumber && hivenumber <= hive_datum.len)
 			var/datum/hive_status/hive = hive_datum[hivenumber]
-			to_chat(user, "It appears to belong to the [hive.prefix]hive")
+			user << "It appears to belong to the [hive.prefix]hive"
 	return
 
 /mob/living/carbon/Xenomorph/Dispose()

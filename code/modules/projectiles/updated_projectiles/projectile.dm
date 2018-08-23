@@ -454,6 +454,8 @@
 	var/damage = max(0, P.damage - round(P.distance_travelled * P.ammo.damage_falloff))
 	if(P.ammo.debilitate && stat != DEAD && ( damage || (P.ammo.flags_ammo_behavior & AMMO_IGNORE_RESIST) ) )
 		apply_effects(arglist(P.ammo.debilitate))
+	if(P.ammo.reagent_amount) // Apply Xeno neurotoxin (usually; could be anything)
+		src:reagents.add_reagent(P.ammo.reagent, max(1,P.ammo.reagent_amount))
 
 	if(damage)
 		bullet_message(P)

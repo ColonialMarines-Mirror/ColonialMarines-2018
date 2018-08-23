@@ -80,13 +80,15 @@
 
 			//Check for a special bite attack
 			if(prob(M.bite_chance))
-				M.bite_attack(src, damage)
-				return 1
+				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+					M.bite_attack(src, damage)
+					return 1
 
 			//Check for a special bite attack
 			if(prob(M.tail_chance))
-				M.tail_attack(src, damage)
-				return 1
+				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+					M.tail_attack(src, damage)
+					return 1
 
 			//Somehow we will deal no damage on this attack
 			if(!damage)

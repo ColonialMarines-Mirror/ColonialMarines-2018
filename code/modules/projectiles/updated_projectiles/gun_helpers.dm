@@ -196,6 +196,41 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 		return 1
 	else
 		return 0
+		
+/obj/item/weapon/gun/proc/do_wield(mob/user, wield_time) //a poor way to make timed actions show an icon without affecting them until /tg/'s do_mob is ported.
+	var/delay = wield_time - world.time
+	if(!istype(user) || delay <= 0) return FALSE
+	var/mob/living/L
+	if(istype(user, /mob/living)) L = user
+	var/image/busy_icon
+	busy_icon = get_busy_icon(BUSY_ICON_HOSTILE)
+	user.overlays += busy_icon
+	user.action_busy = TRUE
+	var/delayfraction = round(delay/5)
+	var/obj/holding = user.get_active_hand()
+	. = TRUE
+	for(var/i = 1 to 5)
+		sleep(delayfraction)
+		if(!user || user.stat || user.knocked_down || user.stunned)
+			. = FALSE
+			break
+		if(L && L.health < config.health_threshold_crit)
+			. = FALSE
+			break
+		if(holding)
+			if(!holding.loc || user.get_active_hand() != holding)
+				. = FALSE
+				break
+		else if(user.get_active_hand())
+			. = FALSE
+			break
+		if(world.time > wield_time)
+			. = FALSE
+			break
+	if(user && busy_icon)
+		user.overlays -= busy_icon
+	user.action_busy = FALSE
+
 /*
 Here we have throwing and dropping related procs.
 This should fix some issues with throwing mag harnessed guns when

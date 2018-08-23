@@ -252,6 +252,7 @@
 					skill_value = user.mind.cm_skills.smartgun
 			if(skill_value)
 				wield_time -= 2*skill_value
+	do_wield(user, wield_time)
 	return 1
 
 /obj/item/weapon/gun/unwield(var/mob/user)

@@ -180,9 +180,6 @@ datum/preferences
 		r_skin = red
 		g_skin = green
 		b_skin = blue
-	
-	proc/randomize_species_specific()
-		moth_wings = pick(moth_wings_list - "Burnt Off")
 
 	proc/update_preview_icon()		//seriously. This is horrendous.
 		if(updating_icon)
@@ -597,3 +594,6 @@ datum/preferences
 		cdel(undershirt_s)
 		cdel(clothes_s)
 		updating_icon = 0
+
+/datum/preferences/proc/randomize_species_specific()
+	moth_wings = pick(moth_wings_list - "Burnt Off")

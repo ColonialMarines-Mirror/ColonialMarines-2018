@@ -3066,6 +3066,8 @@
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("coco", 1)
 		reagents.add_reagent("tramadol", 1) //May be powergamed but it's a single unit.
+
+
 //MREs
 
 /obj/item/reagent_container/food/snacks/packaged_meal
@@ -3086,7 +3088,7 @@
 			playsound(loc,'sound/effects/pageturn2.ogg', 15, 1)
 
 			name = "\improper" + flavor
-			desc = "The contents of a USCM Standard issue MRE. This one is " + flavor + "."
+			desc = "The contents of a Military Issue Standard issue MRE. This one is " + flavor + "."
 			icon_state = flavor
 			package = 0
 
@@ -3113,4 +3115,256 @@
 			reagents.add_reagent("sugar", 1)
 			reagents.add_reagent("coco", 1)
 
+
+obj/item/reagent_container/food/snacks/mre_pack/meal1
+	name = "\improper Military Issue Prepared Meal (cornbread)"
+	desc = "A tray of standard Military Issue food. Stale cornbread, tomato paste and some green goop fill this tray."
+	icon_state = "MREa"
+	filling_color = "#ED1169"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 9)
+		bitesize = 3
+
+/obj/item/reagent_container/food/snacks/mre_pack/meal2
+	name = "\improper Military Issue Prepared Meal (pork)"
+	desc = "A tray of standard Military Issue food. Partially raw pork, goopy corn and some water mashed potatos fill this tray."
+	icon_state = "MREb"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 9)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/meal3
+	name = "\improper Military Issue Prepared Meal (pasta)"
+	desc = "A tray of standard Military Issue food. Overcooked spaghetti, waterlogged carrots and two french fries fill this tray."
+	icon_state = "MREc"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 9)
+		bitesize = 3
+
+/obj/item/reagent_container/food/snacks/mre_pack/meal4
+	name = "\improper Military Issue Prepared Meal (pizza)"
+	desc = "A tray of standard Military Issue food. Cold pizza, wet greenbeans and a shitty egg fill this tray. Get something other than pizza, lardass."
+	icon_state = "MREd"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/meal5
+	name = "\improper Military Issue Prepared Meal (chicken)"
+	desc = "A tray of standard Military Issue food. Moist chicken, dry rice and a mildly depressed piece of broccoli fill this tray."
+	icon_state = "MREe"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 3
+
+/obj/item/reagent_container/food/snacks/mre_pack/meal6
+	name = "\improper Military Issue Prepared Meal (tofu)"
+	desc = "The Military Issue doesn't serve tofu you grass sucking hippie. The flag signifies your defeat."
+	icon_state = "MREf"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/ribs
+	name = "\improper Military Issue Prepared Meal (Boneless Pork Rib)"
+	desc = "The most realistic boneless pork rib you've ever seen."
+	icon_state = "boneless pork ribs"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/chicken
+	name = "\improper Military Issue Prepared Meal (Grilled Chicken)"
+	desc = "Everything tastes like this, yet this tastes terrible."
+	icon_state = "grilled chicken"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 7)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/pizzasquare
+	name = "\improper Military Issue Prepared Meal (Pizza Square)"
+	desc = "Tastes like NY pizza, well if you got it out of the garbage."
+	icon_state = "pizza square"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/spaghetteichunks
+	name = "\improper Military Issue Prepared Meal (Spaghetti Chunks)"
+	desc = "Momma mia, this tastes like watered down Italy."
+	icon_state = "spaghetti chunks"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 7)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/cracker
+	name = "\improper Military Issue Prepared Side (cracker)"
+	desc = "Poly might want this."
+	icon_state = "cracker"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/cheesespread
+	name = "\improper Military Issue Prepared Side (cheese spread)"
+	desc = "This should be put on crackers or used to retile your bathroom."
+	icon_state = "cheese spread"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/onigiri
+	name = "\improper Military Issue Prepared Side (rice onigiri)"
+	desc = "Side of rice."
+	icon_state = "rice onigiri"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/mashedpotatoes
+	name = "\improper Military Issue Prepared Snack (mashed potatoes)"
+	desc = "The pack says mashed potates."
+	icon_state = "mashed potatoes"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/biscuit
+	name = "\improper Military Issue Prepared Snack (biscuit)"
+	desc = "Wait why does this biscuit still feel warm?."
+	icon_state = "biscuit"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/meatballs
+	name = "\improper Military Issue Prepared Snack (meatballs)"
+	desc = "One eighth of the daily amount of meat."
+	icon_state = "meatballs"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/pretzels
+	name = "\improper Military Issue Prepared Snack (pretzels)"
+	desc = "Salt and bread, mall rats love these."
+	icon_state = "pretzels"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sodiumchloride", 1)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/peanuts
+	name = "\improper Military Issue Prepared Snack (peanuts)"
+	desc = "Still waiting on those cracker jacks."
+	icon_state = "peanuts"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/spicedapples
+	name = "\improper Military Issue Prepared Desserts (spiced apples)"
+	desc = "That painful vegan option."
+	icon_state = "spiced apples"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/brownie
+	name = "\improper Military Prepared Desserts (chocolate brownie)"
+	desc = "It looks terrible and is hard as a rock, yet tastes like heaven."
+	icon_state = "chocolate brownie"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/sugarcookie
+	name = "\improper Military Prepared Desserts (sugar cookie)"
+	desc = "Delightfully sugary treat."
+	icon_state = "sugar cookie"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/cocobar
+	name = "\improper Military Prepared Desserts (coco bar)"
+	desc = "Not as good as the brownie but tasty."
+	icon_state = "coco bar"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/reagent_container/food/snacks/mre_pack/xmas1
+	name = "\improper Xmas Prepared Meal:sugar cookies"
+	desc = "Delicious Sugar Cookies"
+	icon_state = "mreCookies"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/xmas2
+	name = "\improper Xmas Prepared Meal:gingerbread cookie"
+	desc = "A cookie without a soul."
+	icon_state = "mreGingerbread"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/reagent_container/food/snacks/mre_pack/xmas3
+	name = "\improper Xmas Prepared Meal:fruitcake"
+	desc = "Also known as ''the Commander''."
+	icon_state = "mreFruitcake"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
 

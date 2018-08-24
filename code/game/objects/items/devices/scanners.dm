@@ -286,7 +286,6 @@ REAGENT SCANNER
 
 	// Show body temp
 	dat += "\n\tBody Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)\n"
-	var/hypervene = ""
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		// Show blood level
@@ -309,6 +308,8 @@ REAGENT SCANNER
 			unrevivable = 1
 		if(!unrevivable)
 			var/advice = ""
+			if(M.on_fire)
+				advice += "<span class='scanner'>Patient Combusting: Administer fire extinguisher, pat out patient, or employ other fire suppressant.</span>\n"
 			if(blood_volume <= 500 && !reagents_in_body["nutriment"])
 				advice += "<span class='scanner'>Low Blood: Administer food, iron, and/or recommend the patient eat.</span>\n"
 			if(overdosed && reagents_in_body["hypervene"] < 3)
@@ -316,24 +317,26 @@ REAGENT SCANNER
 			if(rad > 5)
 				var/arithrazine = ""
 				var/hyronalin = ""
-				hypervene = ""
-				if(reagents_in_body["hypervene"] < 3)
-					hypervene = "hypervene"	
+				//var/hypervene = "" //Uncomment if Hypervene added
+				//if(reagents_in_body["hypervene"] < 3)
+				//	hypervene = "hypervene"	
 				if(reagents_in_body["arithrazine"] < 3)
 					arithrazine = "arithrazine"	
 				if(reagents_in_body["hyronalin"] < 3)
 					hyronalin = "hyronalin"	
-				advice += "<span class='scanner'>Radiation: Administer a single dose of: [hypervene] | [arithrazine] | [hyronalin]</span>\n"
+				//advice += "<span class='scanner'>Radiation: Administer a single dose of: [hypervene] | [arithrazine] | [hyronalin]</span>\n"
+				advice += "<span class='scanner'>Radiation: Administer a single dose of: [arithrazine] | [hyronalin]</span>\n"
 			if(internal_bleed_detected && reagents_in_body["quickclot"] < 5)
 				advice += "<span class='scanner'>Internal Bleeding: Administer a single dose of quickclot.</span>\n"
-			if(H.getToxLoss() > 10)
+			if(H.getToxLoss() > 5)
 				var/dylovene = ""
-				hypervene = ""
+				//var/hypervene = ""  //Uncomment if Hypervene added
+				//if(reagents_in_body["hypervene"] < 3)
+				//hypervene = "hypervene"
 				if(reagents_in_body["anti_toxin"] < 5 && !reagents_in_body["synaptizine"])
 					dylovene = "dylovene"
-				if(reagents_in_body["hypervene"] < 3)
-					hypervene = "hypervene"
-				advice += "<span class='scanner'>Toxin Damage: Administer a single dose of: [hypervene] | [dylovene].</span>\n"
+				//advice += "<span class='scanner'>Toxin Damage: Administer a single dose of: [hypervene] | [dylovene].</span>\n"
+				advice += "<span class='scanner'>Toxin Damage: Administer a single dose of: [dylovene].</span>\n"
 			if((H.getToxLoss() > 50 || (H.getOxyLoss() > 50 && blood_volume > 400) || H.getBrainLoss() >= 10) && reagents_in_body["peridaxon"] < 5 && !reagents_in_body["hyperzine"])
 				advice += "<span class='scanner'>Organ Damage/Extreme Toxicity: Administer a single dose of peridaxon.</span>\n"
 			if(infection_present && reagents_in_body["spaceacillin"] < infection_present)

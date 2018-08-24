@@ -61,6 +61,9 @@ ANIMAL_DELAY 0
 ### Miscellaneous ###
 
 ## Config options which, of course, don't fit into previous categories.
-
-## Remove the # in front of this config option to have loyalty implants spawn by default on your server.
+# Remove the # in front of this config option to have loyalty implants spawn by default on your server.
 #USE_LOYALTY_IMPLANTS
+
+### EMOJI ###
+#Comment this out if you want to disable emojis
+EMOJIS

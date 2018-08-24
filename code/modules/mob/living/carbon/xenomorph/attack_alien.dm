@@ -448,7 +448,7 @@
 
 //Slashing mechas
 /obj/mecha/attack_alien(mob/living/carbon/Xenomorph/M)
-	log_message("Attack by claw. Attacker - [M].", 1)
+	log_message("Attack by claw. Attacker - [M].", color="red")
 
 	if(!prob(deflect_chance))
 		take_damage((rand(M.melee_damage_lower, M.melee_damage_upper)/2))

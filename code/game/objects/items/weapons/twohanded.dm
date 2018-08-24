@@ -260,12 +260,16 @@
 	desc = "A cheap piece of cloth, dank with cryo juices. Can be wrung to free some moisture."
 	icon_state = "towel"
 	item_state = "towel"
+	damtype = HALLOSS
+	force = 0
+	sharp = 0
+	edge = 0
 	w_class = 4.0
 	flags_equip_slot = SLOT_OCLOTHING
 	flags_atom = FPRINT|CONDUCT //it's moist
 	flags_item = TWOHANDED|NOBLUDGEON
 	force_wielded = 2
-	attack_verb = list("whomped", "smacked", "slapped", "schaffed")
+	attack_verb = list("whomped", "smacked", "slapped")
 
 /obj/item/weapon/twohanded/towel/wield(mob/user)
 	. = ..()

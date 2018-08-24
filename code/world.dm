@@ -102,7 +102,7 @@ var/global/datum/global_init/init = new ()
 	world_runtime_log = file("[log_directory]/runtime.log")
 	world_ra_log = file("[log_directory]/recycle.log")
 	world_pda_log = file("[log_directory]/pda.log")
-	world_href_log = "[log_directory]/hrefs.log"
+	world_href_log = file("[log_directory]/hrefs.log")
 	sql_error_log = file("[log_directory]/sql.log")
 	world_game_log << "\n\nStarting up round [time_stamp()]\n---------------------"
 	world_attack_log << "\n\nStarting up round [time_stamp()]\n---------------------"
@@ -131,7 +131,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	if(config.log_world_topic)
-		log_topic("\"[T]\", from:[addr], master:[master], key:[key][log_end]")
+		log_topic("\"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1

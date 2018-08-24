@@ -40,6 +40,9 @@ LOG_HIVEMIND
 ## log admin actions
 LOG_ADMIN
 
+## log admin chat
+LOG_ADMINCHAT
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 

@@ -688,7 +688,7 @@ and you're good to go.
 									var/mob/living/carbon/human/HM = user
 									HM.undefibbable = TRUE //can't be defibbed back from self inflicted gunshot to head
 								user.death()
-						user.log_message(t, LOG_ATTACK) //Apply the attack log.
+						user.log_message(t, LOG_ATTACK, "red") //Apply the attack log.
 						last_fired = world.time
 
 						projectile_to_fire.play_damage_effect(user)

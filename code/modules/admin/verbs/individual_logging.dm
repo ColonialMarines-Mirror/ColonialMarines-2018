@@ -52,7 +52,7 @@
 		if(nlog_type & ntype)
 			var/list/reversed = log_source[log_type]
 			if(islist(reversed))
-				reversed = reverselist(reversed.Copy())
+				reversed = reverseRange(reversed.Copy())
 				for(var/entry in reversed)
 					dat += "<font size=2px><b>[entry]</b><br>[reversed[entry]]</font><br>"
 			dat += "<hr>"
@@ -64,4 +64,4 @@
 	if(selected_type == log_type && selected_src == log_src)
 		slabel = "<b>\[[label]\]</b>"
 
-	return "<a href='?src=\ref[src];individuallog=\ref[M];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
+	return "<a href='?_src_=holder;individuallog=\ref[M];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"

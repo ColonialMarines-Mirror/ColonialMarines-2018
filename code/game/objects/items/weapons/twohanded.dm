@@ -279,3 +279,9 @@
 	. = ..()
 	if(!.) return
 	icon_state 	= copytext(icon_state,1,-2)
+	
+/obj/item/weapon/twohanded/towel/attack
+	if(icon_state == "towel_w")
+		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)	
+	else
+		return 0

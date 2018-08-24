@@ -64,4 +64,4 @@
 	if(selected_type == log_type && selected_src == log_src)
 		slabel = "<b>\[[label]\]</b>"
 
-	return "<a href='?src=\ref[src];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
+	return "<a href='?src=\ref[src];individuallog=\ref[M];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"

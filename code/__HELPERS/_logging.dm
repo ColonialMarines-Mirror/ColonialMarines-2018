@@ -23,17 +23,37 @@
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		world_game_log << "\[[time_stamp()]]ADMIN: [text][log_end]"
+		world_game_log << html_decode("\[[time_stamp()]]ADMIN: [text][log_end]")
 
+/proc/log_admin_private(text)
+	admin_log.Add(text)
+	if (config.log_admin)
+		world_game_log << html_decode("\[[time_stamp()]]ADMINPRIVATE: [text][log_end]")
+
+/proc/log_adminsay(text)
+	admin_log.Add(text)
+	if (config.log_adminchat)
+		world_game_log << html_decode("\[[time_stamp()]]ADMINPRIVATE: ASAY: [text][log_end]")
+
+/proc/log_dsay(text)
+	if (config.log_adminchat)
+		world_game_log << html_decode("\[[time_stamp()]]ADMIN: DSAY: [text][log_end]")
+
+/proc/log_topic(text)
+	if (config.log_world_topic)
+		world_game_log << html_decode("\[[time_stamp()]]TOPIC: [text][log_end]")
+
+/proc/log_href(text)
+	if (config.log_world_topic)
+		world_game_log << html_decode("\[[time_stamp()]]HREF: [text][log_end]")
 
 /proc/log_debug(text)
 	if (config.log_debug)
-		world_game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
+		world_game_log << html_decode("\[[time_stamp()]]DEBUG: [text][log_end]")
 
 	for(var/client/C in admins)
 		if(C.prefs.toggles_chat & CHAT_DEBUGLOGS)
 			to_chat(C, "DEBUG: [text]")
-
 
 /proc/log_game(text)
 	if (config.log_game)
@@ -71,10 +91,6 @@
 	if (config.log_attack)
 		world_attack_log << html_decode("\[[time_stamp()]]ATTACK: [text][log_end]")
 
-/proc/log_adminsay(text)
-	if (config.log_adminchat)
-		world_game_log << html_decode("\[[time_stamp()]]ADMINSAY: [text][log_end]")
-
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)
 		world_game_log << html_decode("\[[time_stamp()]]ADMINWARN: [text][log_end]")
@@ -87,8 +103,21 @@
 	world_game_log << html_decode("\[[time_stamp()]]MISC: [text][log_end]")
 
 /proc/log_sql(text)
-	sql_error_log << "\[[time_stamp()]]SQL: [text]"
+	sql_error_log << html_decode("\[[time_stamp()]]SQL: [text][log_end]")
 
 /proc/log_world(text)
-	world_runtime_log << text
+//	world_runtime_log << text
 	world.log << text
+
+/proc/loc_name(atom/A)
+	if(!istype(A))
+		return "(INVALID LOCATION)"
+
+	var/turf/T = A
+	if (!istype(T))
+		T = get_turf(A)
+
+	if(istype(T))
+		return "([AREACOORD(T)])"
+	else if(A.loc)
+		return "(UNKNOWN (?, ?, ?))"

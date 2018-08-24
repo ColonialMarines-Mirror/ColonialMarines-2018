@@ -1712,7 +1712,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/mob/M = locate(href_list["individuallog"]) in GLOB.mob_list
+		var/mob/M = locate(href_list["individuallog"]) in mob_list
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return

@@ -127,7 +127,7 @@
 	set desc = "View/retrieve logfiles for the current round."
 	set category = "Admin"
 
-	browseserverlogs("[GLOB.log_directory]/")
+	browseserverlogs("[log_directory]/")
 
 /client/proc/browseserverlogs(path = "data/logs/")
 	path = browse_files(path)

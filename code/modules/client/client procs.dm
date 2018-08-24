@@ -49,8 +49,8 @@
 
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		to_chat(href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+	if(config && config.log_hrefs)
+		log_href("[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -167,11 +167,11 @@
 			src.donator = 1
 			verbs += /client/proc/set_ooc_color_self
 
-	if(player_details_list[ckey])
-		player_details = player_details_list[ckey]
+	if(all_player_details[ckey])
+		player_details = all_player_details[ckey]
 	else
 		player_details = new
-		player_details_list[ckey] = player_details
+		all_player_details[ckey] = player_details
 
 	//////////////
 	//DISCONNECT//

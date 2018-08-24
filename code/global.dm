@@ -96,10 +96,7 @@ var/hadevent = 0
 var/blobevent = 0
 	///////////////
 
-var/diary = null
 var/diaryofmeanpeople = null
-var/round_stats = null
-var/href_logfile = null
 var/station_name = "[MAIN_SHIP_NAME]"
 var/game_version = "Colonial Marines"
 var/changelog_hash = ""
@@ -189,7 +186,9 @@ var/global/world_attack_log
 var/global/world_runtime_log
 var/global/world_ra_log
 var/global/world_pda_log
+var/global/world_href_log
 var/global/sql_error_log
+var/global/config_error_log
 
 var/global/list/all_player_details = list()  // [ckey] = /datum/player_details
 

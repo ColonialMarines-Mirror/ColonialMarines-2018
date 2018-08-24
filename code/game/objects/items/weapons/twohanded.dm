@@ -269,18 +269,4 @@
 	flags_atom = FPRINT|CONDUCT //it's moist
 	flags_item = TWOHANDED|NOBLUDGEON
 	force_wielded = 2
-	attack_verb = list("whomped", "smacked", "slapped")
-
-/obj/item/weapon/twohanded/towel/wield(mob/user)
-	. = ..()
-	if(!.) return
-	icon_state += "_w"
-
-/obj/item/weapon/twohanded/towel/unwield(mob/user)
-	. = ..()
-	if(!.) return
-	icon_state 	= copytext(icon_state,1,-2)
-
-/obj/item/weapon/twohanded/towel/attack
-	if(icon_state == "towel_w")
-		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)		
+	attack_verb = list("whomped", "smacked", "slapped", "schaffed")

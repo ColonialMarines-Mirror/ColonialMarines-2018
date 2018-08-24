@@ -257,7 +257,7 @@
  */
 /obj/item/weapon/twohanded/towel
 	name = "towel"
-	desc = "A cheap piece of cloth, dank with cryo juices. Can br wrung to free some moisture."
+	desc = "A cheap piece of cloth, dank with cryo juices. Can be wrung to free some moisture."
 	icon_state = "towel"
 	item_state = "towel"
 	damtype = HALLOSS

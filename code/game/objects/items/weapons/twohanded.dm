@@ -260,10 +260,6 @@
 	desc = "A cheap piece of cloth, dank with cryo juices. Can be wrung to free some moisture."
 	icon_state = "towel"
 	item_state = "towel"
-	damtype = HALLOSS
-	force = 0
-	sharp = 0
-	edge = 0
 	w_class = 4.0
 	flags_equip_slot = SLOT_OCLOTHING
 	flags_atom = FPRINT|CONDUCT //it's moist

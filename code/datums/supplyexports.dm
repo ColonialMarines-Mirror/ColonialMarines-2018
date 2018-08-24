@@ -19,7 +19,7 @@
 	export_obj = /mob/living/carbon/Xenomorph/Drone
 
 /datum/supply_export/xemomorph/runner
-	cost = 10
+	cost = 5
 	export_obj = /mob/living/carbon/Xenomorph/Runner
 
 /datum/supply_export/xemomorph/defender

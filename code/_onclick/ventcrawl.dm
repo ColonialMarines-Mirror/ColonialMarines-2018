@@ -126,11 +126,14 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	if(!network)
 		return
 	for(var/datum/pipeline/pipeline in network.line_members)
-		for(var/atom/X in (pipeline.members || pipeline.edges))
+		for(var/X in (pipeline.members || pipeline.edges))
 			var/obj/machinery/atmospherics/A = X
 			if(!A.pipe_vision_img)
 				A.pipe_vision_img = image(A, A.loc, layer = BELOW_MOB_LAYER, dir = A.dir)
 				A.pipe_vision_img.alpha = 180
+			for (var/obj/machinery/atmospherics/unary/vent_pump/V in get_turf(A))
+				A.pipe_vision_img.layer = V.layer - 0.01
+				break
 			pipes_shown += A.pipe_vision_img
 			if(client)
 				client.images += A.pipe_vision_img

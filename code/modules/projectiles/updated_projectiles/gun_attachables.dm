@@ -1014,7 +1014,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "bipod"
 	attach_icon = "bipod_a"
 	slot = "under"
-	wield_delay_mod = WIELD_DELAY_SLOW
+	wield_delay_mod = WIELD_DELAY_NORMAL
 	size_mod = 2
 	melee_mod = -10
 	flags_attach_features = ATTACH_REMOVABLE|ATTACH_ACTIVATION
@@ -1031,24 +1031,31 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 		G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
 		G.wield_delay -= WIELD_DELAY_FAST
 	else
-		bipod_deployed = !bipod_deployed
-		if(user)
-			if(bipod_deployed)
-				var/obj/support = check_bipod_support(G, user)
-				to_chat(user, "<span class='notice'>You deploy [src][support ? " on [support]" : ""].</span>")
-				G.aim_slowdown += SLOWDOWN_ADS_SCOPE
-				G.wield_delay += WIELD_DELAY_FAST
+		if(bipod_deployed)
+			to_chat(user, "<span class='notice'>You retract [src].</span>")
+			G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
+			G.wield_delay -= WIELD_DELAY_FAST
+			bipod_deployed = !bipod_deployed
+		else
+			var/obj/support = check_bipod_support(G, user)
+			if(support)
+				if(do_after(user, 10, TRUE, 5, BUSY_ICON_BUILD))
+					bipod_deployed = !bipod_deployed
+					to_chat(user, "<span class='notice'>You deploy [src] on [support].</span>")
+					G.aim_slowdown += SLOWDOWN_ADS_SCOPE
+					G.wield_delay += WIELD_DELAY_FAST
 			else
-				to_chat(user, "<span class='notice'>You retract [src].</span>")
-				G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
-				G.wield_delay -= WIELD_DELAY_FAST
-
+				to_chat(user, "<span class='notice'>There is nothing to support [src].</span>")
+				return 0
+	//var/image/targeting_icon = image('icons/mob/mob.dmi', null, "busy_targeting", "pixel_y" = 22) //on hold until the bipod is fixed
 	if(bipod_deployed)
 		icon_state = "bipod-on"
 		attach_icon = "bipod_a-on"
+		//user.overlays += targeting_icon
 	else
 		icon_state = "bipod"
 		attach_icon = "bipod_a"
+		//user.overlays -= targeting_icon
 
 	G.update_attachable(slot)
 

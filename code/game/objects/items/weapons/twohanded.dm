@@ -72,13 +72,15 @@
 
 /obj/item/weapon/twohanded/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	if(wieldsound) playsound(user, wieldsound, 15, 1)
 	force 		= force_wielded
 
 /obj/item/weapon/twohanded/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	if(unwieldsound) playsound(user, unwieldsound, 15, 1)
 	force 	 	= initial(force)
 
@@ -142,12 +144,14 @@
 
 /obj/item/weapon/twohanded/fireaxe/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	pry_capable = IS_PRY_CAPABLE_SIMPLE
 
 /obj/item/weapon/twohanded/fireaxe/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	pry_capable = 0
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
@@ -196,12 +200,14 @@
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	icon_state = "[initial(icon_state)]_w"
 
 /obj/item/weapon/twohanded/dualsaber/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	icon_state = initial(icon_state)
 
 /obj/item/weapon/twohanded/spear
@@ -273,16 +279,18 @@
 	
 /obj/item/weapon/twohanded/towel/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	icon_state = "[initial(icon_state)]_w"
 
 /obj/item/weapon/twohanded/towel/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(.)
+		return
 	icon_state = initial(icon_state)
 	
 /obj/item/weapon/twohanded/towel/attack()
-	..()
+	. = ..()
 	if(WIELDED)
 		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)	
 	else

@@ -216,7 +216,7 @@
 	origin_tech = "combat=3;materials=2;syndicate=4"
 	fire_sound = 'sound/weapons/smg_heavy.ogg'
 	current_mag = /obj/item/ammo_magazine/smg/ppsh
-	attachable_allowed = list(,
+	attachable_allowed = list(
 						/obj/item/attachable/flashlight)
 
 	flags_gun_features = GUN_CAN_POINTBLANK

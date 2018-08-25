@@ -342,11 +342,17 @@ should be alright.
 		to_chat(user, "<span class='warning'>The attachment on [src]'s [attachment.slot] cannot be removed!</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] begins attaching [attachment] to [src].</span>",
-	"<span class='notice'>You begin attaching [attachment] to [src].</span>", null, 4)
+
 	var/attach_delay = 30
-	if(attachment == "bayonet" && !src.muzzle) //Attach the bayonet fast if there is no attachment to remove on the barrel
+	if(attachment == "bayonet" && (!src.muzzle || src.muzzle == "bayonet")) //Attach  bayonet fast if no attachment to remove on the barrel, or you're replacing a bayo with another bayo
 		attach_delay = 10
+	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.firearms == 0) //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
+		attach_delay *= 2
+		user.visible_message("<span class='notice'>[user] begins fumbling about, trying to attach the [attachment] to [src].</span>",
+		"<span class='notice'>You begin funmbling about, trying to attach the [attachment] to [src].</span>", null, 4)
+	else //attaching as usual.
+		user.visible_message("<span class='notice'>[user] begins attaching the [attachment] to [src].</span>",
+		"<span class='notice'>You begin attaching the [attachment] to [src].</span>", null, 4)
 	if(do_after(user,attach_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		if(attachment && attachment.loc)
 			user.visible_message("<span class='notice'>[user] attaches [attachment] to [src].</span>",
@@ -496,14 +502,16 @@ should be alright.
 	if(!(A.flags_attach_features & ATTACH_REMOVABLE))
 		return
 
-	usr.visible_message("<span class='notice'>[usr] begins stripping [A] from [src].</span>",
-	"<span class='notice'>You begin stripping [A] from [src].</span>", null, 4)
-	
 	var/detach_delay = 30
 	if(A == "bayonet") //Detach the bayonet fast
 		detach_delay = 10
-	if(!do_after(usr,detach_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
-		return
+	if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.firearms == 0) //If the user has no training, detaching takes twice as long and they fumble about, looking like a retard.
+		detach_delay *= 2
+		usr.visible_message("<span class='notice'>[usr] begins fumbling about, trying to strip the [A] from [src].</span>",
+		"<span class='notice'>You begin fumbling about, trying to strip the [A] from [src].</span>", null, 4)
+	else //attaching as usual.
+		usr.visible_message("<span class='notice'>[usr] begins stripping the [A] from [src].</span>",
+		"<span class='notice'>You begin stripping the [A] from [src].</span>", null, 4)
 
 	if(A != rail && A != muzzle && A != under && A != stock)
 		return

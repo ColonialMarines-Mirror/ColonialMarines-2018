@@ -40,7 +40,7 @@
 	if(wires & 2)
 		return src.attack_hand(user)
 	else
-		user << "Error, no route to host."
+		to_chat(user, "Error, no route to host.")
 
 /obj/machinery/door_control/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -161,7 +161,7 @@
 			for(var/i = 1 to 2)
 				if(istype(A, text2path("/area/shuttle/drop[i]")))
 					S = shuttle_controller.shuttles["[MAIN_SHIP_NAME] Dropship [i]"]
-					if(S.moving_status == SHUTTLE_INTRANSIT) r_FAL
+					if(S.moving_status == SHUTTLE_INTRANSIT) return FALSE
 			if(M.density)
 				spawn()
 					M.open()
@@ -181,11 +181,11 @@
 	if(istype(user,/mob/living/carbon/Xenomorph))
 		return
 	if(stat & (NOPOWER|BROKEN))
-		user << "<span class='warning'>[src] doesn't seem to be working.</span>"
+		to_chat(user, "<span class='warning'>[src] doesn't seem to be working.</span>")
 		return
 
 	if(!allowed(user) && (wires & 1))
-		user << "\red Access Denied"
+		to_chat(user, "\red Access Denied")
 		flick("doorctrl-denied",src)
 		return
 

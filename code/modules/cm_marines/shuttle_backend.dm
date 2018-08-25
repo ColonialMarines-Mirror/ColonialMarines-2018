@@ -317,7 +317,7 @@ sleep(50); \
 ..(); \
 var/datum/shuttle/ferry/marine/S = shuttle_controller.shuttles["[MAIN_SHIP_NAME] [T] [name]"]; \
 if(!S) {log_debug("ERROR CODE SO1: unable to find shuttle with the tag of: ["[MAIN_SHIP_NAME] [T] [name]"]."); \
-r_FAL}; \
+return FALSE}; \
 L[get_turf(src)] = rotation; \
 cdel(src)
 
@@ -332,7 +332,7 @@ cdel(src)
 		var/datum/shuttle/ferry/marine/evacuation_pod/S = shuttle_controller.shuttles["[MAIN_SHIP_NAME] Evac [name]"]
 		if(!S)
 			log_debug("ERROR CODE SO1: unable to find shuttle with the tag of: ["[MAIN_SHIP_NAME] Evac [name]"].")
-			r_FAL
+			return FALSE
 		S.locs_dock[get_turf(src)] = rotation
 		S.link_support_units(get_turf(src)) //Process links.
 		cdel(src)
@@ -460,10 +460,10 @@ cdel(src)
 					var/mob/living/carbon/M = A
 					if(M.client)
 						if(M.buckled && !iselevator)
-							M << "<span class='warning'>Sudden acceleration presses you into [M.buckled]!</span>"
+							to_chat(M, "<span class='warning'>Sudden acceleration presses you into [M.buckled]!</span>")
 							shake_camera(M, 3, 1)
 						else if (!M.buckled)
-							M << "<span class='warning'>The floor lurches beneath you!</span>"
+							to_chat(M, "<span class='warning'>The floor lurches beneath you!</span>")
 							shake_camera(M, iselevator ? 2 : 10, 1)
 
 					if(!iselevator)

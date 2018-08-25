@@ -13,12 +13,12 @@
 		if(M.info_tag == "Almayer Evac" || M.info_tag == "Alt Almayer Evac")
 			spawn(1)
 				M.short_jump()
-				world << "LAUNCHED THING WITH TAG [M.shuttle_tag]"
+				to_chat(world, "LAUNCHED THING WITH TAG [M.shuttle_tag]")
 		else if(M.info_tag == "Almayer Dropship")
 			spawn(1)
 				M.short_jump()
-				world << "LAUNCHED THING WITH TAG [M.shuttle_tag]"
-		else world << "did not launch thing with tag [M.shuttle_tag]"
+				to_chat(world, "LAUNCHED THING WITH TAG [M.shuttle_tag]")
+		to_chat(else world, "did not launch thing with tag [M.shuttle_tag]")
 */
 
 /datum/shuttle/ferry/marine
@@ -102,7 +102,7 @@
 				return .
 			if (skip_docking_checks() || docking_controller.can_launch())
 
-				//world << "shuttle/ferry/process: area_transition=[area_transition], travel_time=[travel_time]"
+				//to_chat(world, "shuttle/ferry/process: area_transition=[area_transition], travel_time=[travel_time]")
 				if (move_time) long_jump()
 				else short_jump()
 
@@ -231,7 +231,7 @@
 
 	sleep(travel_time) //Wait while we fly
 
-	if(EvacuationAuthority.dest_status >= NUKE_EXPLOSION_IN_PROGRESS) r_FAL //If a nuke is in progress, don't attempt a landing.
+	if(EvacuationAuthority.dest_status >= NUKE_EXPLOSION_IN_PROGRESS) return FALSE //If a nuke is in progress, don't attempt a landing.
 
 	playsound(turfs_int[sound_target], sound_landing, 60, 0)
 	playsound(turfs_trg[sound_target], sound_landing, 60, 0)
@@ -243,7 +243,7 @@
 
 	sleep(100) //Wait for it to finish.
 
-	if(EvacuationAuthority.dest_status == NUKE_EXPLOSION_FINISHED) r_FAL //If a nuke finished, don't land.
+	if(EvacuationAuthority.dest_status == NUKE_EXPLOSION_FINISHED) return FALSE //If a nuke finished, don't land.
 
 	target_turf = T_trg
 	target_rotation = trg_rot
@@ -382,7 +382,7 @@
 	if(with_queen.len > left_behind.len) // to stop solo-suiciding by queens
 		ticker.mode.stored_larva = 0
 		for(var/mob/living/carbon/Xenomorph/about_to_die in left_behind)
-			about_to_die << "<span class='xenoannounce'>The Queen has left without you, you quickly find a hiding place to enter hibernation as you lose touch with the hive mind.</span>"
+			to_chat(about_to_die, "<span class='xenoannounce'>The Queen has left without you, you quickly find a hiding place to enter hibernation as you lose touch with the hive mind.</span>")
 			cdel(about_to_die) // just delete them
 	for(var/mob/living/carbon/potential_host in living_mob_list)
 		if(potential_host.loc.z != 1) continue // ground level
@@ -394,7 +394,7 @@
 
 	sleep(travel_time) //Wait while we fly, but give extra time for crashing announcements etc
 
-	if(EvacuationAuthority.dest_status >= NUKE_EXPLOSION_IN_PROGRESS) r_FAL //If a nuke is in progress, don't attempt a landing.
+	if(EvacuationAuthority.dest_status >= NUKE_EXPLOSION_IN_PROGRESS) return FALSE //If a nuke is in progress, don't attempt a landing.
 
 	//This is where things change and shit gets real
 
@@ -404,7 +404,7 @@
 
 	sleep(85)
 
-	if(EvacuationAuthority.dest_status == NUKE_EXPLOSION_FINISHED) r_FAL //If a nuke finished, don't land.
+	if(EvacuationAuthority.dest_status == NUKE_EXPLOSION_FINISHED) return FALSE //If a nuke finished, don't land.
 
 	shake_cameras(turfs_int) //shake for 1.5 seconds before crash, 0.5 after
 
@@ -431,10 +431,10 @@
 	for(var/mob/living/carbon/M in mob_list) //knock down mobs
 		if(M.z != T_trg.z) continue
 		if(M.buckled)
-			M << "\red You are jolted against [M.buckled]!"
+			to_chat(M, "\red You are jolted against [M.buckled]!")
 			shake_camera(M, 3, 1)
 		else
-			M << "\red The floor jolts under your feet!"
+			to_chat(M, "\red The floor jolts under your feet!")
 			shake_camera(M, 10, 1)
 			M.KnockDown(3)
 
@@ -495,7 +495,7 @@
 	if(!istype(T_src) || !istype(T_trg))
 		message_admins("<span class=warning>Error with shuttles: Ref turfs are null. Code: MSD15.\n WARNING: DROPSHIPS MAY NO LONGER BE OPERABLE</span>")
 		log_admin("Error with shuttles: Ref turfs are null. Code: MSD15.")
-		r_FAL
+		return FALSE
 
 	locs_dock -= T_src
 	locs_land -= T_trg
@@ -693,7 +693,7 @@
 
 	var/datum/shuttle/ferry/marine/dropship = shuttle_controller.shuttles[MAIN_SHIP_NAME + " " + tag]
 	if(!dropship)
-		src << "<span class='danger'>Error: Attempted to force a dropship launch but the shuttle datum was null. Code: MSD_FSV_DIN</span>"
+		to_chat(src, "<span class='danger'>Error: Attempted to force a dropship launch but the shuttle datum was null. Code: MSD_FSV_DIN</span>")
 		log_admin("Error: Attempted to force a dropship launch but the shuttle datum was null. Code: MSD_FSV_DIN")
 		return
 
@@ -703,7 +703,7 @@
 				dropship.process_state = WAIT_LAUNCH
 				log_admin("[usr] ([usr.key]) forced a [dropship.iselevator? "elevator" : "shuttle"] using the Force Dropship verb")
 			if("No")
-				src << "<span class='warning'>Aborting shuttle launch.</span>"
+				to_chat(src, "<span class='warning'>Aborting shuttle launch.</span>")
 				return
 	else if(crash)
 		dropship.process_state = FORCE_CRASH

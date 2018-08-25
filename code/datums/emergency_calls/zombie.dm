@@ -11,7 +11,7 @@
 	var/turf/T = get_spawn_point()
 	var/mob/original = M.current
 
-	if(!istype(T)) r_FAL
+	if(!istype(T)) return FALSE
 
 	var/mob/living/carbon/human/H = new(T)
 	H.gender = pick(MALE, FEMALE)
@@ -36,8 +36,8 @@
 
 	spawn(20)
 		if(H && H.loc)
-			H << "<span class='role_header'>You are a Zombie!</span>"
-			H << "<span class='role_body'>Spread... Consume... Infect...</span>"
+			to_chat(H, "<span class='role_header'>You are a Zombie!</span>")
+			to_chat(H, "<span class='role_body'>Spread... Consume... Infect...</span>")
 
 	if(original && original.loc)
 		cdel(original)

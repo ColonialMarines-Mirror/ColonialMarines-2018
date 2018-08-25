@@ -326,7 +326,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					break
 			if(newname)
 				break	//That's a suitable name!
-			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
+			to_chat(src, "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken.")
 
 		if(!newname)	//we'll stick with the oldname then
 			return
@@ -335,7 +335,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(isAI(src))
 				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
+				//to_chat(world, "<b>[newname] is the AI!</b>")
 				//world << sound('sound/AI/newAI.ogg')
 				// Set eyeobj name
 				A.SetName(newname)
@@ -888,7 +888,7 @@ var/global/image/busy_indicator_hostile
 
 
 /proc/do_after(mob/user, delay, needhand = TRUE, numticks = 5, show_busy_icon, selected_zone_check) //hacky, will suffice for now.
-	if(!istype(user) || delay <= 0) r_FAL
+	if(!istype(user) || delay <= 0) return FALSE
 
 	var/mob/living/L
 	if(istype(user, /mob/living)) L = user //No more doing things while you're in crit
@@ -1638,3 +1638,5 @@ var/list/WALLITEMS = list(
 			error -= deltax
 	return line
 
+/proc/to_chat(target, message)
+	target << message

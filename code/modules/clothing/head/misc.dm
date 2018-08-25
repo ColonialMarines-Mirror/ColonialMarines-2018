@@ -161,6 +161,11 @@
 	icon_state = "bandana"
 	item_state = "bandana"
 
+/obj/item/clothing/head/bandana/red
+	name = "red bandana"
+	desc = "For when it comes crashing down and it hurts inside."
+	icon_state = "bandana_red"
+
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
@@ -238,3 +243,9 @@
 	siemens_coefficient = 2.0
 	flags_armor_protection = HEAD|FACE|EYES
 	anti_hug = 10 //Lel
+
+/obj/item/clothing/head/boonie
+	name = "Boonie Hat"
+	desc = "The pinnacle of tacticool technology."
+	icon_state = "booniehat"
+	item_state = "booniehat"

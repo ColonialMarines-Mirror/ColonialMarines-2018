@@ -11,7 +11,7 @@
 		for(var/datum/mind/L in ticker.mode.xenomorphs)
 			var/mob/living/carbon/Xenomorph/M = L.current
 			if(M && istype(M) && !M.stat && M.client && hivenumber == M.hivenumber) //Only living and connected xenos
-				M << "<span class='xenodanger'><font size=[size]> [message]</font></span>"
+				to_chat(M, "<span class='xenodanger'><font size=[size]> [message]</font></span>")
 
 //Adds stuff to your "Status" pane -- Specific castes can have their own, like carrier hugger count
 //Those are dealt with in their caste files.
@@ -92,22 +92,22 @@
 //A simple handler for checking your state. Used in pretty much all the procs.
 /mob/living/carbon/Xenomorph/proc/check_state()
 	if(is_mob_incapacitated() || lying || buckled)
-		src << "<span class='warning'>You cannot do this in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do this in your current state.</span>")
 		return 0
 	return 1
 
 //Checks your plasma levels and gives a handy message.
 /mob/living/carbon/Xenomorph/proc/check_plasma(value)
 	if(stat)
-		src << "<span class='warning'>You cannot do this in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do this in your current state.</span>")
 		return 0
 
 	if(value)
 		if(plasma_stored < value)
 			if(is_robotic)
-				src << "<span class='warning'>Beep. You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>"
+				to_chat(src, "<span class='warning'>Beep. You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>")
 			else
-				src << "<span class='warning'>You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>"
+				to_chat(src, "<span class='warning'>You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>")
 			return 0
 	return 1
 
@@ -153,7 +153,7 @@
 		if(legcuffed)
 			is_charging = 0
 			stop_momentum()
-			src << "<span class='xenodanger'>You can't charge with that thing on your leg!</span>"
+			to_chat(src, "<span class='xenodanger'>You can't charge with that thing on your leg!</span>")
 		else
 			. -= charge_speed
 			charge_timer = 2
@@ -188,11 +188,11 @@
 
 	if(!charge_type || stat || (!throwing && usedPounce)) //No charge type, unconscious or dead, or not throwing but used pounce.
 		..() //Do the parent instead.
-		r_FAL
+		return FALSE
 
 	if(isobj(hit_atom)) //Deal with smacking into dense objects. This overwrites normal throw code.
 		var/obj/O = hit_atom
-		if(!O.density) r_FAL//Not a dense object? Doesn't matter then, pass over it.
+		if(!O.density) return FALSE//Not a dense object? Doesn't matter then, pass over it.
 		if(!O.anchored) step(O, dir) //Not anchored? Knock the object back a bit. Ie. canisters.
 
 		switch(charge_type) //Determine how to handle it depending on charge type.
@@ -205,7 +205,7 @@
 					visible_message("<span class='danger'>[src] plows straight through [S]!</span>", null, null, 5)
 					S.destroy() //We want to continue moving, so we do not reset throwing.
 				else O.hitby(src, speed) //This resets throwing.
-		r_TRU
+		return TRUE
 
 	if(ismob(hit_atom)) //Hit a mob! This overwrites normal throw code.
 		var/mob/living/carbon/M = hit_atom
@@ -217,7 +217,7 @@
 						if(H.check_shields(15, "the pounce")) //Human shield block.
 							KnockDown(3)
 							throwing = FALSE //Reset throwing manually.
-							r_FAL
+							return FALSE
 
 						if(isYautja(H))
 							if(H.check_shields(0, "the pounce", 1))
@@ -225,13 +225,13 @@
 												"<span class='xenodanger'>[H] blocks your pouncing form with the combistick!</span>", null, 5)
 								KnockDown(5)
 								throwing = FALSE
-								r_FAL
+								return FALSE
 							else if(prob(75)) //Body slam the fuck out of xenos jumping at your front.
 								visible_message("<span class='danger'>[H] body slams [src]!</span>",
 												"<span class='xenodanger'>[H] body slams you!</span>", null, 5)
 								KnockDown(4)
 								throwing = FALSE
-								r_FAL
+								return FALSE
 
 					visible_message("<span class='danger'>[src] pounces on [M]!</span>",
 									"<span class='xenodanger'>You pounce on [M]!</span>", null, 5)
@@ -253,7 +253,7 @@
 					M.attack_alien(src) //Free hit/grab/tackle. Does not weaken, and it's just a regular slash if they choose to do that.
 
 		throwing = FALSE //Resert throwing since something was hit.
-		r_TRU
+		return TRUE
 
 	..() //Do the parent otherwise, for turfs.
 
@@ -378,10 +378,10 @@
 	var/has_obstacle
 	for(var/obj/O in current_turf)
 		if(istype(O, /obj/item/clothing/mask/facehugger))
-			src << "<span class='warning'>There is a little one here already. Best move it.</span>"
+			to_chat(src, "<span class='warning'>There is a little one here already. Best move it.</span>")
 			return
 		if(istype(O, /obj/effect/alien/egg))
-			src << "<span class='warning'>There's already an egg.</span>"
+			to_chat(src, "<span class='warning'>There's already an egg.</span>")
 			return
 		if(istype(O, /obj/structure/mineral_door) || istype(O, /obj/effect/alien/resin))
 			has_obstacle = TRUE
@@ -404,7 +404,7 @@
 			break
 
 	if(current_turf.density || has_obstacle)
-		src << "<span class='warning'>There's something built here already.</span>"
+		to_chat(src, "<span class='warning'>There's something built here already.</span>")
 		return
 
 	return 1
@@ -413,7 +413,7 @@
 	var/obj/item/clothing/mask/facehugger/F = get_active_hand()
 	if(istype(F))
 		if(locate(/turf/closed/wall/resin) in loc)
-			src << "<span class='warning'>You decide not to drop [F] after all.</span>"
+			to_chat(src, "<span class='warning'>You decide not to drop [F] after all.</span>")
 			return
 
 	. = ..()
@@ -421,7 +421,7 @@
 
 //This is depricated. Use handle_collision() for all future speed changes. ~Bmc777
 /mob/living/carbon/Xenomorph/proc/stop_momentum(direction, stunned)
-	if(!lastturf) r_FAL //Not charging.
+	if(!lastturf) return FALSE //Not charging.
 	if(charge_speed > charge_speed_buildup * charge_turfs_to_charge) //Message now happens without a stun condition
 		visible_message("<span class='danger'>[src] skids to a halt!</span>",
 		"<span class='xenowarning'>You skid to a halt.</span>", null, 5)
@@ -434,40 +434,40 @@
 
 //Why the elerloving fuck was this a Crusher only proc ? AND WHY IS IT NOT CAST ON THE RECEIVING ATOM ? AAAAAAA
 /mob/living/carbon/Xenomorph/proc/diagonal_step(atom/movable/A, direction)
-	if(!A) r_FAL
+	if(!A) return FALSE
 	switch(direction)
 		if(EAST, WEST) step(A, pick(NORTH,SOUTH))
 		if(NORTH,SOUTH) step(A, pick(EAST,WEST))
 
 /mob/living/carbon/Xenomorph/proc/handle_momentum()
 	if(throwing)
-		r_FAL
+		return FALSE
 
 	if(last_charge_move && last_charge_move < world.time - 5) //If we haven't moved in the last 500 ms, break charge on next move
 		stop_momentum(charge_dir)
 
 	if(stat || pulledby || !loc || !isturf(loc))
 		stop_momentum(charge_dir)
-		r_FAL
+		return FALSE
 
 	if(!is_charging)
 		stop_momentum(charge_dir)
-		r_FAL
+		return FALSE
 
 	if(lastturf && (loc == lastturf || loc.z != lastturf.z)) //Check if the Crusher didn't move from his last turf, aka stopped
 		stop_momentum(charge_dir)
-		r_FAL
+		return FALSE
 
 	if(dir != charge_dir || m_intent == MOVE_INTENT_WALK || istype(loc, /turf/open/gm/river))
 		stop_momentum(charge_dir)
-		r_FAL
+		return FALSE
 
 	if(pulling && charge_speed > charge_speed_buildup) stop_pulling()
 
 	if(plasma_stored > 5) plasma_stored -= round(charge_speed) //Eats up plasma the faster you go, up to 0.5 per tile at max speed
 	else
 		stop_momentum(charge_dir)
-		r_FAL
+		return FALSE
 
 	last_charge_move = world.time //Index the world time to the last charge move
 
@@ -523,8 +523,8 @@
 	if(!Q || !Q.anchored || !queen_chosen_lead || !Q.current_aura || Q.loc.z != loc.z) //We are no longer a leader, or the Queen attached to us has dropped from her ovi, disabled her pheromones or even died
 		leader_aura_strength = 0
 		leader_current_aura = ""
-		src << "<span class='xenowarning'>Your pheromones wane. The Queen is no longer granting you her pheromones.</span>"
+		to_chat(src, "<span class='xenowarning'>Your pheromones wane. The Queen is no longer granting you her pheromones.</span>")
 	else
 		leader_aura_strength = Q.aura_strength
 		leader_current_aura = Q.current_aura
-		src << "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>"
+		to_chat(src, "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>")

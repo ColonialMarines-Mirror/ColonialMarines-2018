@@ -531,7 +531,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			continue
 		if (M.stat == 2)
 			continue
-		if(!M.ckey || !client) 
+		if(!M.ckey || !M.client) 
 			continue
 		var/name = M.name
 		if (name in names)

@@ -21,7 +21,7 @@ var/list/admin_datums = list()
 	admincaster_signature = "Weyland-Yutani Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	rank = initial_rank
 	rights = initial_rights
-	if (R.rights & R_DEBUG) //grant profile access
+	if ((rank.rights & R_DEBUG) || (rights & R_DEBUG)) //grant profile access
 		world.SetConfig("APP/admin", ckey, "role=admin")
 	admin_datums[ckey] = src
 

@@ -21,7 +21,7 @@
 	attachable_allowed = list( //give it some flexibility.
 						/obj/item/attachable/flashlight,
 						/obj/item/attachable/magnetic_harness,
-						/obj/item/attachable/attached_gun/flamer) //welcome to marines, runner
+						/obj/item/attachable/attached_gun/shotgun) //welcome to marines, runner
 	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_HEAVY_WEAPONS
 

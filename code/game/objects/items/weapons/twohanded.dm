@@ -286,4 +286,4 @@
 	if(WIELDED)
 		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)	
 	else
-		FALSE
+		return FALSE

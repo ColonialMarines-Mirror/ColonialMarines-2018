@@ -339,7 +339,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 	desc = "Get inside to operate the vehicle."
 	luminosity = 7
 	throwpass = 1 //You can lob nades over tanks, and there's some dumb check somewhere that requires this
-	var/lastsound = world.time
+	var/lastsound = 0
 
 //If something want to delete this, it's probably either an admin or the shuttle
 //If it's an admin, they want to disable this

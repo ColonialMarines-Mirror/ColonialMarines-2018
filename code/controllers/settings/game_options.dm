@@ -30,7 +30,7 @@
 	var/remove_gun_restrictions = 0
 	var/allow_synthetic_gun_use = 0
 
-	var/emojis = 0
+	var/emojis = FALSE
 
 /datum/configuration/proc/initialize_game_options(name,value)
 	value = text2num(value)
@@ -79,6 +79,6 @@
 			config.remove_gun_restrictions = 1
 
 		if("emojis")
-			config.emojis = 1
+			config.emojis = TRUE
 		else
 			log_misc("Unknown setting in game options: '[name]'")

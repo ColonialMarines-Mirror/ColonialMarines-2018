@@ -48,8 +48,7 @@
 						/obj/item/attachable/heavy_barrel,
 						/obj/item/attachable/scope/mini,
 						/obj/item/attachable/burstfire_assembly,
-						/obj/item/attachable/magnetic_harness,
-						/obj/item/attachable/quickfire)
+						/obj/item/attachable/magnetic_harness)
 
 	flags_gun_features = GUN_AUTO_EJECTOR|GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER
 
@@ -217,16 +216,8 @@
 	origin_tech = "combat=3;materials=2;syndicate=4"
 	fire_sound = 'sound/weapons/smg_heavy.ogg'
 	current_mag = /obj/item/ammo_magazine/smg/ppsh
-	attachable_allowed = list(
-						/obj/item/attachable/quickfire,
-						/obj/item/attachable/reddot,
-						/obj/item/attachable/verticalgrip,
-						/obj/item/attachable/compensator,
-						/obj/item/attachable/lasersight,
-						/obj/item/attachable/flashlight,
-						/obj/item/attachable/extended_barrel,
-						/obj/item/attachable/heavy_barrel,
-						/obj/item/attachable/burstfire_assembly)
+	attachable_allowed = list(,
+						/obj/item/attachable/flashlight)
 
 	flags_gun_features = GUN_CAN_POINTBLANK
 

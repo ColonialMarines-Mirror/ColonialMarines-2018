@@ -71,7 +71,7 @@ datum/mind
 
 
 
-	proc/transfer_to(mob/living/new_character, var/force_key_move = TRUE)
+	proc/transfer_to(mob/living/new_character, var/force_key_move = FALSE)
 		if(!istype(new_character))
 			to_chat(world.log, "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
 		if(current)	current.mind = null	//remove ourself from our old body's mind variable

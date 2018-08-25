@@ -571,7 +571,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.min_hit_accuracy_mult
 	recoil_mod = -config.min_recoil_value
 	scatter_mod = -config.min_scatter_value
-	delay_mod = config.high_fire_delay
 	movement_acc_penalty_mod = -1
 	accuracy_unwielded_mod = config.min_hit_accuracy_mult
 	recoil_unwielded_mod = -config.min_recoil_value

@@ -197,12 +197,12 @@
 /obj/item/weapon/twohanded/dualsaber/wield(mob/user)
 	. = ..()
 	if(!.) return
-	icon_state += "_w"
+	icon_state = "[initial(icon_state)]_w"
 
 /obj/item/weapon/twohanded/dualsaber/unwield(mob/user)
 	. = ..()
 	if(!.) return
-	icon_state 	= copytext(icon_state,1,-2)
+	icon_state = initial(icon_state)
 
 /obj/item/weapon/twohanded/spear
 	name = "spear"
@@ -263,12 +263,13 @@
 	force = 0
 	sharp = 0
 	edge = FALSE
+	hitsound = null
 	w_class = 4.0
 	flags_equip_slot = SLOT_OCLOTHING
 	flags_atom = FPRINT|CONDUCT //it's moist
 	flags_item = TWOHANDED|NOBLUDGEON
 	force_wielded = 2
-	attack_verb = list("whomped", "smacked", "slapped", "schaffed")
+	attack_verb = list("smacked", "slapped", "schaffed")
 	
 /obj/item/weapon/twohanded/towel/wield(mob/user)
 	. = ..()
@@ -281,6 +282,7 @@
 	icon_state = initial(icon_state)
 	
 /obj/item/weapon/twohanded/towel/attack()
+	..()
 	if(WIELDED)
 		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)	
 	else

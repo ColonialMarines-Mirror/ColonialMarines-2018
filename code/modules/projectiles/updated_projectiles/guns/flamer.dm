@@ -20,15 +20,14 @@
 
 	attachable_allowed = list( //give it some flexibility.
 						/obj/item/attachable/flashlight,
-						/obj/item/attachable/magnetic_harness,
-						/obj/item/attachable/attached_gun/shotgun) //welcome to marines, runner
+						/obj/item/attachable/magnetic_harness)
 	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_HEAVY_WEAPONS
 
 	New()
 		..()
 		fire_delay = config.max_fire_delay * 5
-		attachable_offset = list("rail_x" = 12, "rail_y" = 23, "under_x" = 16, "under_y" = 16)
+		attachable_offset = list("rail_x" = 12, "rail_y")
 
 	unique_action(mob/user)
 		toggle_flame(user)

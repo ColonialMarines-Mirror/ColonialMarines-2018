@@ -198,7 +198,8 @@
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/IsShield()
-	if(flags_item & WIELDED) return 1
+	if(flags_item & WIELDED) 
+		return TRUE
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/user)
 	. = ..()
@@ -273,7 +274,7 @@
 	edge = FALSE
 	hitsound = null
 	w_class = 4.0
-	flags_equip_slot = SLOT_OCLOTHING
+	flags_equip_slot = SLOT_WAIST
 	flags_atom = FPRINT|CONDUCT //it's moist
 	flags_item = TWOHANDED|NOBLUDGEON
 	force_wielded = 2

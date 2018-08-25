@@ -49,7 +49,7 @@
 	if( (flags_item|TWOHANDED|WIELDED) != flags_item) return //Have to be actually a twohander and wielded.
 	flags_item ^= WIELDED
 	name 	    = copytext(name,1,-10)
-	item_state  = copytext(item_state,1,-2)
+	item_state = initial(item_state) 
 	remove_offhand(user)
 	return 1
 
@@ -90,8 +90,10 @@
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully!</span>")
 		return
 
-	if(flags_item & WIELDED) unwield(user)
-	else 				wield(user)
+	if(flags_item & WIELDED)
+		unwield(user)
+	else 				
+		wield(user)
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -134,7 +136,7 @@
 	item_state = "fireaxe"
 	force = 20
 	sharp = IS_SHARP_ITEM_BIG
-	edge = 1
+	edge = TRUE
 	w_class = 4.0
 	flags_equip_slot = SLOT_BACK
 	flags_atom = FPRINT|CONDUCT
@@ -181,7 +183,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = IS_SHARP_ITEM_BIG
-	edge = 1
+	edge = TRUE
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
@@ -221,7 +223,7 @@
 	force_wielded = 24
 	throwforce = 30
 	throw_speed = 3
-	edge = 1
+	edge = TRUE
 	sharp = IS_SHARP_ITEM_SIMPLE
 	flags_item = NOSHIELD|TWOHANDED
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -241,13 +243,13 @@
 	force_wielded = 60
 	throwforce = 50
 	throw_speed = 3
-	edge = 1
+	edge = TRUE
 	sharp = IS_SHARP_ITEM_BIG
 	flags_atom = FPRINT|CONDUCT
 	flags_item = NOSHIELD|TWOHANDED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("sliced", "slashed", "jabbed", "torn", "gored")
-	unacidable = 1
+	unacidable = TRUE
 	attack_speed = 12 //Default is 7.
 
 /obj/item/weapon/twohanded/glaive/damaged

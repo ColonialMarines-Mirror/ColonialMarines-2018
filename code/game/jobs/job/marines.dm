@@ -38,7 +38,7 @@
 	generate_wearable_equipment()
 		. = list(
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapons/twohanded/towel
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
 				)
 
 	generate_entry_message()
@@ -63,7 +63,7 @@ You are also in charge of communicating with command and letting them know about
 	generate_wearable_equipment()
 		. = list(
 				WEAR_BACK = /obj/item/storage/backpack/marine/tech,
-				WEAR_WAIST = /obj/item/weapons/twohanded/towel
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
 				)
 
 	generate_entry_message()
@@ -96,7 +96,7 @@ Your squaddies will look to you when it comes to construction in the field of ba
 	generate_wearable_equipment()
 		. = list(
 				WEAR_BACK = /obj/item/storage/backpack/marine/medic,
-				WEAR_WAIST = /obj/item/weapons/twohanded/towel
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
 				)
 
 	generate_entry_message()
@@ -131,7 +131,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 		. = list(
 				WEAR_HEAD = /obj/item/clothing/head/helmet/specrag,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapons/twohanded/towel
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
 				)
 
 	generate_entry_message()
@@ -160,7 +160,7 @@ You can serve a variety of roles, so choose carefully."}
 	generate_wearable_equipment()
 		. = list(
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapons/twohanded/towel
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
 				)
 
 	generate_entry_message()
@@ -188,7 +188,7 @@ You can serve a variety of roles, so choose carefully."}
 	generate_wearable_equipment()
 		. = list(
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapons/twohanded/towel
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
 				)
 
 	generate_entry_message()

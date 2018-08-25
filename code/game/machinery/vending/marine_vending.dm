@@ -80,9 +80,6 @@
 /obj/machinery/vending/marine/cargo_guns
 	name = "\improper ColMarTech automated armaments vendor"
 	desc = "A automated rack hooked up to a small supply of various firearms and explosives."
-	icon_state = "cargo-armory"
-	icon_vend = "cargo-armory-vend"
-	icon_deny = "cargo-armory"
 	hacking_safety = 1
 	wrenchable = FALSE
 	products = list(

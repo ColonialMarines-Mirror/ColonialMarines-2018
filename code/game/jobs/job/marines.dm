@@ -45,7 +45,7 @@
 	skills_type = /datum/skills/SL
 
 /datum/job/marine/leader/generate_wearable_equipment()
-	. = list(
+	. += list(
 			WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 			)
 
@@ -69,7 +69,7 @@ You are also in charge of communicating with command and letting them know about
 	skills_type = /datum/skills/combat_engineer
 
 /datum/job/marine/engineer/generate_wearable_equipment()
-	. = list(
+	. += list(
 			WEAR_BACK = /obj/item/storage/backpack/marine/tech
 			)
 
@@ -101,7 +101,7 @@ Your squaddies will look to you when it comes to construction in the field of ba
 	skills_type = /datum/skills/combat_medic
 
 /datum/job/marine/medic/generate_wearable_equipment()
-	. = list(
+	. += list(
 			WEAR_BACK = /obj/item/storage/backpack/marine/medic
 			)
 
@@ -134,7 +134,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 	skills_type = /datum/skills/specialist
 
 /datum/job/marine/specialist/generate_wearable_equipment()
-	. = list(
+	. += list(
 			WEAR_HEAD = /obj/item/clothing/head/helmet/specrag,
 			WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 			)
@@ -163,7 +163,7 @@ You can serve a variety of roles, so choose carefully."}
 	skills_type = /datum/skills/smartgunner
 
 /datum/job/marine/smartgunner/generate_wearable_equipment()
-	. = list(
+	. += list(
 			WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 			)
 
@@ -190,7 +190,7 @@ You can serve a variety of roles, so choose carefully."}
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 
 /datum/job/marine/standard/generate_wearable_equipment()
-	. = list(
+	. += list(
 			WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 			)
 

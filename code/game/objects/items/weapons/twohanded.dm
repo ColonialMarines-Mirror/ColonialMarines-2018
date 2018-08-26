@@ -264,7 +264,7 @@
 	w_class = 4.0
 	flags_equip_slot = SLOT_WAIST|SLOT_OCLOTHING|SLOT_HEAD
 	flags_atom = FPRINT|CONDUCT //it's moist
-	flags_item = TWOHANDED|NOBLUDGEON
+	flags_item = TWOHANDED
 	force_wielded = 2
 	attack_verb = list("smacked", "slapped", "schaffed", "whipped")
 

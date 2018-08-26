@@ -371,7 +371,7 @@ cases. Override_icon_state should be a list.*/
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(!(flags_equip_slot & SLOT_WAIST))
-					return
+					return 0
 				return 1
 			if(WEAR_EYES)
 				if(H.glasses)

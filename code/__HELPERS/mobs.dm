@@ -58,7 +58,7 @@ proc/random_skin_tone()
 		else				. = rand(-185,34)
 	return min(max( .+rand(-25, 25), -185),34)
 
-/proc/get_playable_species(mob/M)
+/proc/get_playable_species()
 	var/list/playable_species = list()
 	for(var/species in all_species)
 		if(is_alien_whitelisted(species))

@@ -1150,7 +1150,7 @@ datum/preferences
 						body_type = new_body_type
 				
 				if("species")
-					var/new_species = input(user, "Choose your species:", "Character Preferences") as null|anything in get_playable_species(user)
+					var/new_species = input(user, "Choose your species:", "Character Preferences") as null|anything in get_playable_species()
 					if(new_species && is_alien_whitelisted(new_species))
 						species = new_species
 

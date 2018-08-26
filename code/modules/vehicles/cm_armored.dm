@@ -338,9 +338,9 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/hitbox/cm_armored
 	name = "Armored Vehicle"
 	desc = "Get inside to operate the vehicle."
-
 	luminosity = 7
 	throwpass = 1 //You can lob nades over tanks, and there's some dumb check somewhere that requires this
+	var/lastsound = 0
 
 //If something want to delete this, it's probably either an admin or the shuttle
 //If it's an admin, they want to disable this
@@ -380,7 +380,9 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		W.take_damage(30)
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", W)
-		playsound(W, 'sound/effects/metal_crash.ogg', 35)
+		if(world.time > lastsound + 10)
+			playsound(W, 'sound/effects/metal_crash.ogg', 35)
+			lastsound = world.time
 	else if(istype(A, /obj/structure/mineral_door/resin))
 		var/obj/structure/mineral_door/resin/R = A
 		R.health = 0
@@ -402,7 +404,9 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		G.dismantle()
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", G)
-		playsound(G, 'sound/effects/metal_crash.ogg', 35)
+		if(world.time > lastsound + 10)
+			playsound(G, 'sound/effects/metal_crash.ogg', 35)
+			lastsound = world.time
 
 /obj/vehicle/multitile/hitbox/cm_armored/Move(var/atom/A, var/direction)
 

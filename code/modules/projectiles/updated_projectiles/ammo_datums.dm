@@ -80,7 +80,8 @@
 		return
 
 	proc/knockback(mob/M, obj/item/projectile/P, var/max_range = 2)
-		if(!M || M == P.firer) return
+		if(!M || M == P.firer)
+			return
 		if(P.distance_travelled > max_range || M.lying) shake_camera(M, 2, 1) //Three tiles away or more, basically.
 
 		else //Two tiles away or less.
@@ -88,7 +89,8 @@
 			if(isliving(M)) //This is pretty ugly, but what can you do.
 				if(isXeno(M))
 					var/mob/living/carbon/Xenomorph/target = M
-					if(target.mob_size == MOB_SIZE_BIG) return //Big xenos are not affected.
+					if(target.mob_size == MOB_SIZE_BIG)
+						return //Big xenos are not affected.
 					target.apply_effects(0,1) //Smaller ones just get shaken.
 					to_chat(target, "<span class='xenodanger'>You are shaken by the sudden impact!</span>")
 				else
@@ -99,7 +101,8 @@
 			step_away(M,P)
 
 	proc/staggerstun(mob/M, obj/item/projectile/P, var/max_range = 2, var/stun = 0, var/weaken = 1, var/stagger = 2, var/slowdown = 1, var/knockback = 1, var/size_threshold = 2, var/shake = 1)
-		if(!M || M == P.firer) return
+		if(!M || M == P.firer)
+			return
 		if(shake && (P.distance_travelled > max_range || M.lying))
 			shake_camera(M, shake+1, shake)
 			return
@@ -133,7 +136,8 @@
 			step_away(M,P)
 
 	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE)
-		if(!target || !P) return
+		if(!target || !P)
+			return
 		for(var/mob/living/carbon/M in orange(1,target))
 			if(P.firer == M)
 				continue
@@ -151,7 +155,8 @@
 				var/scatter_x = rand(-1,1)
 				var/scatter_y = rand(-1,1)
 				new_target = locate(original_P.target_turf.x + round(scatter_x),original_P.target_turf.y + round(scatter_y),original_P.target_turf.z)
-				if(!istype(new_target) || isnull(new_target)) continue	//If we didn't find anything, make another pass.
+				if(!istype(new_target) || isnull(new_target))
+					continue	//If we didn't find anything, make another pass.
 				P.original = new_target
 			P.accuracy = round(P.accuracy * original_P.accuracy/initial(original_P.accuracy)) //if the gun changes the accuracy of the main projectile, it also affects the bonus ones.
 			if(!new_target)
@@ -161,7 +166,8 @@
 	//This is sort of a workaround for now. There are better ways of doing this ~N.
 	proc/stun_living(mob/living/target, obj/item/projectile/P) //Taser proc to stun folks.
 		if(istype(target))
-			if( isYautja(target) || isXeno(target) ) return //Not on aliens.
+			if( isYautja(target) || isXeno(target) )
+				return //Not on aliens.
 			if(target.mind && target.mind.special_role)
 				switch(target.mind.special_role) //Switches are still better than evaluating this twice.
 					if("IRON BEARS") //These antags can shrug off tasers so they are not shut down.
@@ -176,8 +182,10 @@
 			target.apply_effects(12,20)
 
 	proc/drop_flame(turf/T) // ~Art updated fire 20JAN17
-		if(!istype(T)) return
-		if(locate(/obj/flamer_fire) in T) return
+		if(!istype(T))
+			return
+		if(locate(/obj/flamer_fire) in T)
+			return
 		new /obj/flamer_fire(T, 20, 20)
 
 
@@ -516,7 +524,8 @@
 	shell_speed = config.fast_shell_speed
 
 /datum/ammo/bullet/shotgun/beanbag/on_hit_mob(mob/M, obj/item/projectile/P)
-	if(!M || M == P.firer) return
+	if(!M || M == P.firer)
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == "Human") //no effect on synths or preds.
@@ -921,15 +930,20 @@
 	max_range = config.norm_shell_range
 
 /datum/ammo/rocket/wp/drop_flame(turf/T)
-	if(!istype(T)) return
+	if(!istype(T))
+		return
 	smoke.set_up(1, T)
 	smoke.start()
-	if(locate(/obj/flamer_fire) in T) return
+	if(locate(/obj/flamer_fire) in T)
+		return
 	new /obj/flamer_fire(T, pick(15, 20, 25, 30))
 	for(var/mob/living/carbon/M in range(3, T))
-		if(istype(M,/mob/living/carbon/Xenomorph))
-			if(M:fire_immune) continue
-		if(M.stat == DEAD) continue
+		if(isXeno(M))
+			var/mob/living/carbon/Xenomorph/X = M
+			if(X.fire_immune)
+				continue
+		if(M.stat == DEAD)
+			continue
 		M.adjust_fire_stacks(rand(5, 25))
 		M.IgniteMob()
 		M.visible_message("<span class='danger'>[M] bursts into flames!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You burst into flames!</span>")
@@ -1363,8 +1377,10 @@
 	drop_flame(get_turf(P))
 
 /datum/ammo/flamethrower/tank_flamer/drop_flame(var/turf/T)
-	if(!istype(T)) return
-	if(locate(/obj/flamer_fire) in T) return
+	if(!istype(T))
+		return
+	if(locate(/obj/flamer_fire) in T)
+		return
 	new /obj/flamer_fire(T, 20, 20, fire_spread_amount = 2)
 
 /datum/ammo/flare

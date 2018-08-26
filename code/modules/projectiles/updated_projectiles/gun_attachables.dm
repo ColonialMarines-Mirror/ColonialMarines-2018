@@ -86,7 +86,7 @@ Defined in conflicts.dm of the #defines folder.
 			reload_attachment(I, user)
 		return TRUE
 	else
-		. = ..()
+		return ..()
 
 obj/item/attachable/attack_hand(var/mob/user as mob)
 	if(src.attach_applied == TRUE)
@@ -97,7 +97,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 
 /obj/item/attachable/proc/Attach(obj/item/weapon/gun/G)
-	if(!istype(G)) return //Guns only
+	if(!istype(G))
+		return //Guns only
 	attach_applied = TRUE
 
 	/*
@@ -164,7 +165,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 
 /obj/item/attachable/proc/Detach(obj/item/weapon/gun/G)
-	if(!istype(G)) return //Guns only
+	if(!istype(G))
+		return //Guns only
 	attach_applied = FALSE
 
 
@@ -284,7 +286,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 			F.loc = src.loc
 		cdel(src) //Delete da old bayonet
 	else
-		. = ..()
+		return ..()
 
 /obj/item/attachable/bayonet/New()
 	..()
@@ -426,7 +428,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	for(var/X in G.actions)
 		var/datum/action/A = X
 		A.update_button_icon()
-	return 1
+	return TRUE
 
 
 
@@ -443,7 +445,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 		user.put_in_hands(F) //This proc tries right, left, then drops it all-in-one.
 		cdel(src) //Delete da old flashlight
 	else
-		. = ..()
+		return ..()
 
 
 
@@ -498,15 +500,15 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	if(turn_off)
 		if(G.zoom)
 			G.zoom(user, zoom_offset, zoom_viewsize)
-		return 1
+		return TRUE
 
 	if(!G.zoom && !(G.flags_item & WIELDED))
 		if(user)
 			to_chat(user, "<span class='warning'>You must hold [G] with two hands to use [src].</span>")
-		return 0
+		return FALSE
 	else
 		G.zoom(user, zoom_offset, zoom_viewsize)
-	return 1
+	return TRUE
 
 
 /obj/item/attachable/scope/mini
@@ -696,7 +698,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/attached_gun/Dispose()
 	ammo = null
-	. = ..()
+	return ..()
 
 
 
@@ -715,7 +717,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	for(var/X in G.actions)
 		var/datum/action/A = X
 		A.update_button_icon()
-	return 1
+	return TRUE
 
 
 
@@ -741,8 +743,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/attached_gun/grenade/examine(mob/user)
 	..()
-	if(current_rounds) 	to_chat(user, "It has [current_rounds] grenade\s left.")
-	else 				to_chat(user, "It's empty.")
+	if(current_rounds)
+		to_chat(user, "It has [current_rounds] grenade\s left.")
+	else
+		to_chat(user, "It's empty.")
 
 
 
@@ -770,7 +774,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	if(get_dist(user,target) > max_range)
 		to_chat(user, "<span class='warning'>Too far to fire the attachment!</span>")
 		return
-	if(current_rounds > 0) prime_grenade(target,gun,user)
+	if(current_rounds > 0)
+		prime_grenade(target,gun,user)
 
 
 /obj/item/attachable/attached_gun/grenade/proc/prime_grenade(atom/target,obj/item/weapon/gun/gun,mob/living/user)
@@ -832,7 +837,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	if(get_dist(user,target) > max_range+3)
 		to_chat(user, "<span class='warning'>Too far to fire the attachment!</span>")
 		return
-	if(current_rounds) unleash_flame(target, user)
+	if(current_rounds)
+		unleash_flame(target, user)
 
 
 /obj/item/attachable/attached_gun/flamer/proc/unleash_flame(atom/target, mob/living/user)
@@ -845,8 +851,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 		if(T == user.loc)
 			prev_T = T
 			continue
-		if(!current_rounds) 		break
-		if(distance >= max_range) 	break
+		if(!current_rounds)
+			break
+		if(distance >= max_range)
+			break
 		if(prev_T && LinkBlocked(prev_T, T))
 			break
 		current_rounds--
@@ -857,18 +865,22 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 
 /obj/item/attachable/attached_gun/flamer/proc/flame_turf(turf/T, mob/living/user)
-	if(!istype(T)) return
+	if(!istype(T))
+		return
 
 	if(!locate(/obj/flamer_fire) in T) // No stacking flames!
 		new/obj/flamer_fire(T)
-	else return
+	else
+		return
 
 	for(var/mob/living/carbon/M in T) //Deal bonus damage if someone's caught directly in initial stream
-		if(M.stat == DEAD)		continue
+		if(M.stat == DEAD)
+			continue
 
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
-			if(X.fire_immune) 	continue
+			if(X.fire_immune)
+				continue
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 
@@ -882,7 +894,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 					user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[H]/[H.ckey]</b> with \a <b>[name]</b> in [get_area(user)]."
 					msg_admin_attack("[user] ([user.ckey]) shot [H] ([H.ckey]) with \a [name] in [get_area(user)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || istype(H.wear_suit,/obj/item/clothing/suit/space/rig/atmos)) continue
+			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || istype(H.wear_suit,/obj/item/clothing/suit/space/rig/atmos))
+				continue
 
 		M.adjust_fire_stacks(rand(3,5))
 		M.adjustFireLoss(rand(20,40))  //fwoom!
@@ -908,8 +921,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/attached_gun/shotgun/examine(mob/user)
 	..()
-	if(current_rounds > 0) 	to_chat(user, "It has [current_rounds] shell\s left.")
-	else 					to_chat(user, "It's empty.")
+	if(current_rounds > 0)
+		to_chat(user, "It has [current_rounds] shell\s left.")
+	else
+		to_chat(user, "It's empty.")
 
 /obj/item/attachable/attached_gun/shotgun/reload_attachment(obj/item/ammo_magazine/handful/mag, mob/user)
 	if(istype(mag) && mag.flags_magazine & AMMUNITION_HANDFUL)
@@ -1045,7 +1060,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 					G.wield_delay += WIELD_DELAY_FAST
 			else
 				to_chat(user, "<span class='notice'>There is nothing to support [src].</span>")
-				return 0
+				return FALSE
 	//var/image/targeting_icon = image('icons/mob/mob.dmi', null, "busy_targeting", "pixel_y" = 22) //on hold until the bipod is fixed
 	if(bipod_deployed)
 		icon_state = "bipod-on"
@@ -1061,20 +1076,20 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	for(var/X in G.actions)
 		var/datum/action/A = X
 		A.update_button_icon()
-	return 1
+	return TRUE
 
 
 
 //when user fires the gun, we check if they have something to support the gun's bipod.
 /obj/item/attachable/proc/check_bipod_support(obj/item/weapon/gun/G, mob/living/user)
-	return 0
+	return FALSE
 
 /obj/item/attachable/bipod/check_bipod_support(obj/item/weapon/gun/G, mob/living/user)
 	var/turf/T = get_turf(user)
 	for(var/obj/O in T)
 		if(O.throwpass && O.density && O.dir == user.dir && O.flags_atom & ON_BORDER)
 			return O
-	return 0
+	return FALSE
 
 
 

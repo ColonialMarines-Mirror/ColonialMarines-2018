@@ -104,9 +104,10 @@
 				current_mag = null
 				update_icon()
 			else
-				current_mag = new current_mag(src, spawn_empty? 1:0)
+				current_mag = new current_mag(src, spawn_empty ? 1 : 0)
 				ammo = current_mag.default_ammo ? ammo_list[current_mag.default_ammo] : ammo_list[/datum/ammo/bullet] //Latter should never happen, adding as a precaution.
-		else ammo = ammo_list[ammo] //If they don't have a mag, they fire off their own thing.
+		else
+			ammo = ammo_list[ammo] //If they don't have a mag, they fire off their own thing.
 		set_gun_config_values()
 		update_force_list() //This gives the gun some unique verbs for attacking.
 
@@ -159,7 +160,7 @@
 	under 			= null
 	stock 			= null
 	attachable_overlays = null
-	. = ..()
+	return ..()
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -202,9 +203,12 @@
 
 	if(!(flags_gun_features & (GUN_INTERNAL_MAG|GUN_UNUSUAL_DESIGN))) //Internal mags and unusual guns have their own stuff set.
 		if(current_mag && current_mag.current_rounds > 0)
-			if(flags_gun_features & GUN_AMMO_COUNTER) dat += "Ammo counter shows [current_mag.current_rounds] round\s remaining.<br>"
-			else 								dat += "It's loaded[in_chamber?" and has a round chambered":""].<br>"
-		else 									dat += "It's unloaded[in_chamber?" but has a round chambered":""].<br>"
+			if(flags_gun_features & GUN_AMMO_COUNTER)
+				dat += "Ammo counter shows [current_mag.current_rounds] round\s remaining.<br>"
+			else
+				dat += "It's loaded[in_chamber?" and has a round chambered":""].<br>"
+		else
+			dat += "It's unloaded[in_chamber?" but has a round chambered":""].<br>"
 	if(dat)
 		to_chat(user, dat)
 
@@ -253,7 +257,7 @@
 			if(skill_value)
 				wield_time -= 2*skill_value
 	do_wield(user, wield_time)
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/unwield(var/mob/user)
 
@@ -266,7 +270,7 @@
 	item_state  = copytext(item_state, 1, -2)
 	slowdown = initial(slowdown)
 	remove_offhand(user)
-	return 1
+	return TRUE
 
 //----------------------------------------------------------
 			//							        \\
@@ -288,7 +292,8 @@
 	set waitfor = 0
 	if(cocked_sound)
 		sleep(3)
-		if(user && loc) playsound(user, cocked_sound, 25, 1)
+		if(user && loc)
+			playsound(user, cocked_sound, 25, 1)
 
 /*
 Reload a gun using a magazine.
@@ -339,7 +344,7 @@ User can be passed as null, (a gun reloading itself for instance), so we need to
 			load_into_chamber()
 
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/proc/replace_magazine(mob/user, obj/item/ammo_magazine/magazine)
 	user.drop_inv_item_to_loc(magazine, src) //Click!
@@ -518,7 +523,7 @@ and you're good to go.
 		cdel(projectile_to_fire) //Getting rid of it. Attachables only use ammo after the cycle is over.
 		if(refund)
 			active_attachable.current_rounds++ //Refund the bullet.
-		return 1
+		return TRUE
 
 /obj/item/weapon/gun/proc/clear_jam(var/obj/item/projectile/projectile_to_fire, mob/user as mob) //Guns jamming, great.
 	flags_gun_features &= ~GUN_BURST_FIRING // Also want to turn off bursting, in case that was on. It probably was.
@@ -752,7 +757,7 @@ and you're good to go.
 							var/obj/item/projectile/BP
 							for(var/i = 1 to projectile_to_fire.ammo.bonus_projectiles_amount)
 								BP = rnew(/obj/item/projectile, M.loc)
-								BP.generate_bullet(ammo_list	[projectile_to_fire.ammo.bonus_projectiles_type])
+								BP.generate_bullet(ammo_list[projectile_to_fire.ammo.bonus_projectiles_type])
 								BP.dir = get_dir(user, M)
 								BP.distance_travelled = get_dist(user, M)
 								BP.ammo.on_hit_mob(M, BP)
@@ -839,7 +844,7 @@ and you're good to go.
 			if (world.time % 3)
 				to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 			return
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/proc/click_empty(mob/user)
 	if(user)
@@ -929,7 +934,7 @@ and you're good to go.
 				playsound(user, actual_sound, 25)
 				if(bullets_fired == 1)
 					to_chat(user, "<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[current_mag.current_rounds-1]</b>/[current_mag.max_rounds]" : ""]</span>")
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/proc/simulate_scatter(obj/item/projectile/projectile_to_fire, atom/target, turf/targloc, total_scatter_chance = 0, mob/user, burst_scatter_bonus = 0)
 	total_scatter_chance += projectile_to_fire.scatter
@@ -1013,7 +1018,7 @@ and you're good to go.
 				total_recoil -= recoil_tweak*config.min_recoil_value
 	if(total_recoil > 0 && ishuman(user))
 		shake_camera(user, total_recoil + 1, total_recoil)
-		return 1
+		return TRUE
 
 /obj/item/weapon/gun/proc/muzzle_flash(angle,mob/user, var/x_offset = 0, var/y_offset = 5)
 	if(!muzzle_flash || flags_gun_features & GUN_SILENCED || isnull(angle))

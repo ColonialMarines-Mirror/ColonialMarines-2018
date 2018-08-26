@@ -249,3 +249,41 @@
 	desc = "A huge, powerful blade on a metallic pole. Mysterious writing is carved into the weapon. This one is ancient and has suffered serious acid damage, making it near-useless."
 	force = 18
 	force_wielded = 28
+	
+
+/obj/item/weapon/twohanded/towel
+	name = "towel"
+	desc = "A cheap piece of cloth, dank with cryo juices. Can be wrung to free some moisture."
+	icon_state = "towel"
+	item_state = "towel"
+	damtype = HALLOSS
+	force = 0
+	sharp = 0
+	edge = FALSE
+	hitsound = null
+	w_class = 4.0
+	flags_equip_slot = SLOT_WAIST|SLOT_OCLOTHING|SLOT_HEAD
+	flags_atom = FPRINT|CONDUCT //it's moist
+	flags_item = TWOHANDED|NOBLUDGEON
+	force_wielded = 2
+	attack_verb = list("smacked", "slapped", "schaffed", "whipped")
+
+/obj/item/weapon/twohanded/towel/wield(mob/user)
+	. = ..()
+	if(!.)
+		return
+	icon_state = "[initial(icon_state)]_w"
+
+/obj/item/weapon/twohanded/towel/unwield(mob/user)
+	. = ..()
+	if(.)
+		return
+	icon_state = initial(icon_state)
+
+/obj/item/weapon/twohanded/towel/attack()
+	. = ..()
+	if(WIELDED)
+		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)
+		unwield()
+	else
+		return FALSE

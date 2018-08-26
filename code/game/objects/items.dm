@@ -306,13 +306,13 @@ cases. Override_icon_state should be a list.*/
 /obj/item/proc/item_action_slot_check(mob/user, slot)
 	return TRUE
 
-// The mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+// The mob M is attempting to equip this item into the slot passed through as 'slot'. Return TRUE if it can do this and FALSE if it can't.
 // If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-// Set disable_warning to 1 if you wish it to not give you outputs.
+// Set disable_warning to TRUE if you wish it to not give you outputs.
 // warning_text is used in the case that you want to provide a specific warning for why the item cannot be equipped.
-/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0)
-	if(!slot) return 0
-	if(!M) return 0
+/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = FALSE)
+	if(!slot) return FALSE
+	if(!M) return FALSE
 
 	if(ishuman(M))
 		//START HUMAN
@@ -322,143 +322,139 @@ cases. Override_icon_state should be a list.*/
 			mob_equip = H.species.hud.equip_slots
 
 		if(H.species && !(slot in mob_equip))
-			return 0
+			return FALSE
 
 		switch(slot)
 			if(WEAR_L_HAND)
 				if(H.l_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_R_HAND)
 				if(H.r_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_FACE)
 				if(H.wear_mask)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_FACE))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_BACK)
 				if(H.back)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_BACK))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_JACKET)
 				if(H.wear_suit)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_OCLOTHING))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_HANDS)
 				if(H.gloves)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_HANDS))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_FEET)
 				if(H.shoes)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_FEET))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_WAIST)
 				if(H.belt)
-					return 0
-				if(!H.w_uniform && (WEAR_BODY in mob_equip))
-					if(!disable_warning)
-						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_WAIST))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_EYES)
 				if(H.glasses)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_EYES))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_HEAD)
 				if(H.head)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_HEAD))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_EAR)
 				if(H.wear_ear)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_EAR))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_BODY)
 				if(H.w_uniform)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_ICLOTHING))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_ID)
 				if(H.wear_id)
-					return 0
+					return FALSE
 				if(!(flags_equip_slot & SLOT_ID))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_L_STORE)
 				if(H.l_store)
-					return 0
+					return FALSE
 				if(!H.w_uniform && (WEAR_BODY in mob_equip))
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(flags_equip_slot & SLOT_NO_STORE)
-					return 0
+					return FALSE
 				if(w_class <= 2 || (flags_equip_slot & SLOT_STORE))
-					return 1
+					return TRUE
 			if(WEAR_R_STORE)
 				if(H.r_store)
-					return 0
+					return FALSE
 				if(!H.w_uniform && (WEAR_BODY in mob_equip))
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(flags_equip_slot & SLOT_NO_STORE)
-					return 0
+					return FALSE
 				if(w_class <= 2 || (flags_equip_slot & SLOT_STORE))
-					return 1
+					return TRUE
 				return 0
 			if(WEAR_J_STORE)
 				if(H.s_store)
-					return 0
+					return FALSE
 				if(!H.wear_suit && (WEAR_JACKET in mob_equip))
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a suit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
 						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
-					return 0
+					return FALSE
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/tool/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					return 1
-				return 0
+					return TRUE
+				return FALSE
 			if(WEAR_HANDCUFFS)
 				if(H.handcuffed)
-					return 0
+					return FALSE
 				if(!istype(src, /obj/item/handcuffs))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_LEGCUFFS)
 				if(H.legcuffed)
-					return 0
+					return FALSE
 				if(!istype(src, /obj/item/legcuffs))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_IN_BACK)
 				if (H.back && istype(H.back, /obj/item/storage/backpack))
 					var/obj/item/storage/backpack/B = H.back
 					if(B.can_be_inserted(src))
-						return 1
-				return 0
-		return 0 //Unsupported slot
+						return TRUE
+				return FALSE
+		return FALSE //Unsupported slot
 		//END HUMAN
 
 	else if(ismonkey(M))
@@ -467,25 +463,25 @@ cases. Override_icon_state should be a list.*/
 		switch(slot)
 			if(WEAR_L_HAND)
 				if(MO.l_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_R_HAND)
 				if(MO.r_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_FACE)
 				if(MO.wear_mask)
-					return 0
+					return FALSE
 				if( !(flags_equip_slot & SLOT_FACE) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(WEAR_BACK)
 				if(MO.back)
-					return 0
+					return FALSE
 				if( !(flags_equip_slot & SLOT_BACK) )
-					return 0
-				return 1
-		return 0 //Unsupported slot
+					return FALSE
+				return TRUE
+		return FALSE //Unsupported slot
 
 		//END MONKEY
 
@@ -531,7 +527,7 @@ cases. Override_icon_state should be a list.*/
 
 
 /obj/item/proc/IsShield()
-	return 0
+	return FALSE
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc

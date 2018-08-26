@@ -49,7 +49,7 @@
 	if( (flags_item|TWOHANDED|WIELDED) != flags_item) return //Have to be actually a twohander and wielded.
 	flags_item ^= WIELDED
 	name 	    = copytext(name,1,-10)
-	item_state  = copytext(item_state,1,-2)
+	item_state = initial(item_state) 
 	remove_offhand(user)
 	return 1
 
@@ -72,13 +72,15 @@
 
 /obj/item/weapon/twohanded/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	if(wieldsound) playsound(user, wieldsound, 15, 1)
 	force 		= force_wielded
 
 /obj/item/weapon/twohanded/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	if(unwieldsound) playsound(user, unwieldsound, 15, 1)
 	force 	 	= initial(force)
 
@@ -88,8 +90,10 @@
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully!</span>")
 		return
 
-	if(flags_item & WIELDED) unwield(user)
-	else 				wield(user)
+	if(flags_item & WIELDED)
+		unwield(user)
+	else 				
+		wield(user)
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -132,7 +136,7 @@
 	item_state = "fireaxe"
 	force = 20
 	sharp = IS_SHARP_ITEM_BIG
-	edge = 1
+	edge = TRUE
 	w_class = 4.0
 	flags_equip_slot = SLOT_BACK
 	flags_atom = FPRINT|CONDUCT
@@ -142,12 +146,14 @@
 
 /obj/item/weapon/twohanded/fireaxe/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	pry_capable = IS_PRY_CAPABLE_SIMPLE
 
 /obj/item/weapon/twohanded/fireaxe/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	pry_capable = 0
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
@@ -177,7 +183,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = IS_SHARP_ITEM_BIG
-	edge = 1
+	edge = TRUE
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
@@ -192,17 +198,20 @@
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/IsShield()
-	if(flags_item & WIELDED) return 1
+	if(flags_item & WIELDED) 
+		return TRUE
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/user)
 	. = ..()
-	if(!.) return
-	icon_state += "_w"
+	if(!.) 
+		return
+	icon_state = "[initial(icon_state)]_w"
 
 /obj/item/weapon/twohanded/dualsaber/unwield(mob/user)
 	. = ..()
-	if(!.) return
-	icon_state 	= copytext(icon_state,1,-2)
+	if(!.) 
+		return
+	icon_state = initial(icon_state)
 
 /obj/item/weapon/twohanded/spear
 	name = "spear"
@@ -215,7 +224,7 @@
 	force_wielded = 24
 	throwforce = 30
 	throw_speed = 3
-	edge = 1
+	edge = TRUE
 	sharp = IS_SHARP_ITEM_SIMPLE
 	flags_item = NOSHIELD|TWOHANDED
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -235,13 +244,13 @@
 	force_wielded = 60
 	throwforce = 50
 	throw_speed = 3
-	edge = 1
+	edge = TRUE
 	sharp = IS_SHARP_ITEM_BIG
 	flags_atom = FPRINT|CONDUCT
 	flags_item = NOSHIELD|TWOHANDED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("sliced", "slashed", "jabbed", "torn", "gored")
-	unacidable = 1
+	unacidable = TRUE
 	attack_speed = 12 //Default is 7.
 
 /obj/item/weapon/twohanded/glaive/damaged
@@ -249,3 +258,43 @@
 	desc = "A huge, powerful blade on a metallic pole. Mysterious writing is carved into the weapon. This one is ancient and has suffered serious acid damage, making it near-useless."
 	force = 18
 	force_wielded = 28
+
+/*
+ * Towel
+ */
+ 
+/obj/item/weapon/twohanded/towel
+	name = "towel"
+	desc = "A cheap piece of cloth, dank with cryo juices. Can be wrung to free some moisture."
+	icon_state = "towel"
+	item_state = "towel"
+	damtype = HALLOSS
+	force = 0
+	sharp = 0
+	edge = FALSE
+	hitsound = null
+	w_class = 4.0
+	flags_equip_slot = SLOT_WAIST
+	flags_atom = FPRINT|CONDUCT //it's moist
+	flags_item = TWOHANDED|NOBLUDGEON
+	force_wielded = 2
+	attack_verb = list("smacked", "slapped", "schaffed")
+	
+/obj/item/weapon/twohanded/towel/wield(mob/user)
+	. = ..()
+	if(!.) 
+		return
+	icon_state = "[initial(icon_state)]_w"
+
+/obj/item/weapon/twohanded/towel/unwield(mob/user)
+	. = ..()
+	if(.)
+		return
+	icon_state = initial(icon_state)
+	
+/obj/item/weapon/twohanded/towel/attack()
+	. = ..()
+	if(WIELDED)
+		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)	
+	else
+		return FALSE

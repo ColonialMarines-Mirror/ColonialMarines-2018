@@ -51,8 +51,6 @@
 	hud_possible = list(HEALTH_HUD_XENO, PLASMA_HUD, PHEROMONE_HUD,QUEEN_OVERWATCH_HUD)
 	unacidable = TRUE
 	var/hivenumber = XENO_HIVE_NORMAL
-	var/slowdown = 0
-	var/stagger = 0
 
 
 /mob/living/carbon/Xenomorph/New()

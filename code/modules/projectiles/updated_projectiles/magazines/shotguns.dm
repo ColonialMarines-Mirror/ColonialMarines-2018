@@ -42,11 +42,6 @@ one type of shotgun ammo, but I think it helps in referencing it. ~N
 	icon_state = "beanbag"
 	default_ammo = /datum/ammo/bullet/shotgun/beanbag
 
-/obj/item/ammo_magazine/shotgun/stagger
-	name = "box of stagger slugs"
-	desc = "A box filled with modified heavy shotgun shells. 12 Gauge."
-	icon_state = "stagger"
-	default_ammo = /datum/ammo/bullet/shotgun/stagger
 
 //-------------------------------------------------------
 

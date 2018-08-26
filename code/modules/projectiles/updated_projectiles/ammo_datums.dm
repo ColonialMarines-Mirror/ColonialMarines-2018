@@ -641,19 +641,6 @@
 	..()
 	damage = config.low_hit_damage
 
-/datum/ammo/bullet/shotgun/stagger //test ammo for staggerstun
-	name = "stagger slug"
-	icon_state = "stagger"
-
-/datum/ammo/bullet/shotgun/stagger/New()
-	..()
-	max_range = config.short_shell_range
-	damage = config.min_hit_damage
-	penetration= config.low_armor_penetration
-
-/datum/ammo/bullet/shotgun/stagger/on_hit_mob(mob/M,obj/item/projectile/P)
-	staggerstun(M, P, config.close_shell_range, 0, 1, 2, 2)
-
 
 /*
 //================================================

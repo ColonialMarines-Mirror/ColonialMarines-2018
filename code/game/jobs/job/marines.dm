@@ -21,6 +21,17 @@
 		. = ..()
 		if(flags_startup_parameters & ROLE_ADD_TO_MODE) H.nutrition = rand(60,250) //Start hungry for the default marine.
 
+	generate_wearable_equipment()
+		if(gender == MALE)
+			. = list(
+				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				)
+		else
+			. = list(
+				WEAR_JACKET = /obj/item/weapon/twohanded/towel
+				)
+		
+		
 /datum/job/marine/leader
 	title = "Squad Leader"
 	comm_title = "SL"
@@ -37,8 +48,7 @@
 
 	generate_wearable_equipment()
 		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 				)
 
 	generate_entry_message()
@@ -62,8 +72,7 @@ You are also in charge of communicating with command and letting them know about
 
 	generate_wearable_equipment()
 		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/tech,
-				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				WEAR_BACK = /obj/item/storage/backpack/marine/tech
 				)
 
 	generate_entry_message()
@@ -95,8 +104,7 @@ Your squaddies will look to you when it comes to construction in the field of ba
 
 	generate_wearable_equipment()
 		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/medic,
-				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				WEAR_BACK = /obj/item/storage/backpack/marine/medic
 				)
 
 	generate_entry_message()
@@ -130,8 +138,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 	generate_wearable_equipment()
 		. = list(
 				WEAR_HEAD = /obj/item/clothing/head/helmet/specrag,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 				)
 
 	generate_entry_message()
@@ -159,8 +166,7 @@ You can serve a variety of roles, so choose carefully."}
 
 	generate_wearable_equipment()
 		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 				)
 
 	generate_entry_message()
@@ -187,8 +193,7 @@ You can serve a variety of roles, so choose carefully."}
 
 	generate_wearable_equipment()
 		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_WAIST = /obj/item/weapon/twohanded/towel
+				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
 				)
 
 	generate_entry_message()

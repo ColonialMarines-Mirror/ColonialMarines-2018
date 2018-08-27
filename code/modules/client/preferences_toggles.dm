@@ -95,16 +95,16 @@
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidis()
-	set name = "Hear/Silence Admin Midi"
+	set name = "Hear/Silence Midi"
 	set category = "Preferences"
-	set desc = "Toggles hearing sounds uploaded by admins"
+	set desc = "Hear Admin Triggered Sounds (Midis)"
 	src.prefs.toggles_sound ^= SOUND_MIDI // Toggle on/off
 	src.prefs.save_preferences()
 	if(prefs.toggles_sound & SOUND_MIDI)
 		to_chat(src, "You will now hear any music played by an admin.")
 	else
 		to_chat(src, "You will no longer hear any music played by an admin.")
-		src << sound(null)	//HELP NEEDED! how do i make this disable the admin channel only?
+		src << sound(null)
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_ooc()

@@ -7,7 +7,7 @@
 
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol || vol < 0 || vol > 100)
-		usr << "\red Invalid volume!"
+		to_chat(src, "<span class='notice'>Invalid volume!</span>")
 		return
 
 	var/sound/admin_sound = new()
@@ -46,7 +46,8 @@
 	set category = "Fun"
 	set name = "Play Sound From List"
 	set desc = "Play a sound already in the project from a pre-made list."
-	if(!check_rights(R_SOUNDS))	return
+	if(!check_rights(R_SOUNDS))
+		return
 
 	var/list/sounds = file2list("sound/soundlist.txt");
 	sounds += "--CANCEL--"

@@ -359,7 +359,7 @@ should be alright.
 	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
 		attach_delay *= 2
 		user.visible_message("<span class='notice'>[user] begins fumbling about, trying to attach [attachment] to [src].</span>",
-		"<span class='notice'>You begin funmbling about, trying to attach [attachment] to [src].</span>", null, 4)
+		"<span class='notice'>You begin fumbling about, trying to attach [attachment] to [src].</span>", null, 4)
 	//user.visible_message("","<span class='notice'>Attach Delay = [attach_delay]. Attachment = [attachment]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
 	if(do_after(user,attach_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		if(attachment && attachment.loc)
@@ -522,7 +522,7 @@ should be alright.
 	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
 		detach_delay *= 2
 		usr.visible_message("<span class='notice'>[usr] begins fumbling about, trying to strip [A] from [src].</span>",
-		"<span class='notice'>You begin funmbling about, trying to strip [A] from [src].</span>", null, 4)
+		"<span class='notice'>You begin fumbling about, trying to strip [A] from [src].</span>", null, 4)
 	//usr.visible_message("","<span class='notice'>Detach Delay = [detach_delay]. Attachment = [A]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
 	if(!do_after(usr,detach_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		return

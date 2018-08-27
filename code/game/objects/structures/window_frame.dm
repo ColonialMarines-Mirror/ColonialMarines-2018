@@ -13,6 +13,7 @@
 	var/basestate = "window"
 	var/junction = 0
 	var/reinforced = FALSE
+	var/welded = 1
 
 	tiles_with = list(
 		/turf/closed/wall)
@@ -48,6 +49,29 @@
 		if(weed_found)
 			new /obj/effect/alien/weeds/weedwall/frame(loc) //after smoothing to get the correct junction value
 
+/obj/structure/window_frame/attackby(obj/item/W, mob/living/user)
+	if(istype(W, /obj/item/tool/weldingtool))
+		var/obj/item/tool/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
+			playsound(src.loc, 'sound/items/weldingtool_weld.ogg', 25, 1)
+			user << "\blue Now unwelding the metal from the window frame"
+			if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
+				user << "\blue You unwelded metal from the window frame"
+				playsound(src.loc,'sound/items/welder2.ogg')
+				welded = 0
+		else
+			user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+			return
+	if(istype(W, /obj/item/tool/wrench) && welded == 0)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 25, 1)
+		user << "\blue Now disassembling window frame"
+		if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
+			user << "\blue You disassembled window frame!"
+			new/obj/item/stack/sheet/metal(src.loc)
+			new/obj/item/stack/sheet/metal(src.loc)
+			cdel(src)
+	else 
+		return
 
 /obj/structure/window_frame/proc/update_nearby_icons()
 	relativewall_neighbours()

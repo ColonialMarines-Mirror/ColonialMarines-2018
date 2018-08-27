@@ -1462,6 +1462,10 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
+		if(artmod_use == 1)
+			see_in_dark = 20
+			see_invisible = SEE_INVISIBLE_MINIMUM
+
 		if(glasses)
 			process_glasses(glasses)
 		else

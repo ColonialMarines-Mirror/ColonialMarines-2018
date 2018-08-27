@@ -1,4 +1,3 @@
-
 //actual built floors, not natural ground
 /turf/open/floor
 	//Note to coders, the 'intact_tile' var can no longer be used to determine if the floor is a plating or not.
@@ -16,13 +15,7 @@
 	var/burnable_tile = TRUE
 	var/hull_floor = FALSE //invincible floor, can't interact with it
 	var/image/wet_overlay
-
-
-
-
 ////////////////////////////////////////////
-
-
 
 //This is so damaged or burnt tiles or platings don't get remembered as the default tile
 var/list/icons_to_ignore_at_floor_init = list("damaged1", "damaged2", "damaged3", "damaged4",
@@ -43,7 +36,6 @@ var/list/plating_icons = list("plating", "platingdmg1", "platingdmg2", "platingd
 							  "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 							  "ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood", "wood-broken")
-
 
 /turf/open/floor/New()
 	..()
@@ -76,10 +68,8 @@ var/list/wood_icons = list("wood", "wood-broken")
 		make_plating()
 		burn_tile()
 
-
 /turf/open/floor/ceiling_debris_check(var/size = 1)
 	ceiling_debris(size)
-
 
 /turf/open/floor/update_icon()
 	if(is_plasteel_floor())

@@ -1,15 +1,8 @@
-
-
-
-
-
-
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "0"
 	can_bloody = FALSE
-
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
@@ -43,8 +36,7 @@
 	return
 
 /turf/open/space/attackby(obj/item/C, mob/user)
-
-	if (istype(C, /obj/item/stack/rods))
+	if(istype(C, /obj/item/stack/rods))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			return
@@ -55,7 +47,7 @@
 			ReplaceWithLattice()
 		return
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
@@ -72,21 +64,19 @@
 
 
 // Ported from unstable r355
-
 /turf/open/space/Entered(atom/movable/A)
 	..()
-	if ((!(A) || src != A.loc))	return
+	if ((!(A) || src != A.loc))
+		return
 
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
-
-
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
-		if(A.z > 6) return
+		if(A.z > 6)
+			return
 		if(A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
-
 			if(istype(A, /obj/item/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
 				cdel(A) //The disk's Dispose() proc ensures a new one is created
 				return
@@ -145,21 +135,12 @@
 			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
 				A.y = TRANSITIONEDGE + 1
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
-
-
-
-
 			spawn (0)
 				if ((A && A.loc))
 					A.loc.Entered(A)
 
 
-
-
 //////////////// Transit Space ////////////////////////////
-
-
-
 /turf/open/space/transit
 	var/pushdirection // push things that get caught in the transit tile this direction
 
@@ -168,9 +149,7 @@
 	return
 
 /turf/open/space/transit/north // moving to the north
-
 	pushdirection = SOUTH  // south because the space tile is scrolling south
-
 	//IF ANYONE KNOWS A MORE EFFICIENT WAY OF MANAGING THESE SPRITES, BE MY GUEST.
 	shuttlespace_ns1
 		icon_state = "speedspace_ns_1"
@@ -204,9 +183,7 @@
 		icon_state = "speedspace_ns_15"
 
 /turf/open/space/transit/east // moving to the east
-
 	pushdirection = WEST
-
 	shuttlespace_ew1
 		icon_state = "speedspace_ew_1"
 	shuttlespace_ew2

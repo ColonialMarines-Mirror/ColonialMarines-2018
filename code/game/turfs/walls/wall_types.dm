@@ -1,9 +1,4 @@
-
-
-
-
 //-----USS Almayer Walls ---//
-
 /turf/closed/wall/almayer
 	name = "hull"
 	desc = "A huge chunk of metal used to seperate rooms and make up the ship."
@@ -156,63 +151,7 @@
 /turf/closed/wall/sulaco/unmeltable/can_be_dissolved()
 	return 0
 
-
-
-
-
-
-
-
-/turf/closed/wall/indestructible
-	name = "wall"
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "riveted"
-	opacity = 1
-	hull = 1
-
-/turf/closed/wall/indestructible/ex_act(severity) //Should make it indestructable
-	return
-
-/turf/closed/wall/indestructible/fire_act(exposed_temperature, exposed_volume)
-	return
-
-/turf/closed/wall/indestructible/attackby() //This should fix everything else. No cables, etc
-	return
-
-/turf/closed/wall/indestructible/can_be_dissolved()
-	return 0
-
-
-
-/turf/closed/wall/indestructible/bulkhead
-	name = "bulkhead"
-	desc = "It is a large metal bulkhead."
-	icon_state = "hull"
-
-/turf/closed/wall/indestructible/fakeglass
-	name = "window"
-	icon_state = "fakewindows"
-	opacity = 0
-
-/turf/closed/wall/indestructible/splashscreen
-	name = "Space Station 13"
-	icon = 'icons/misc/title.dmi'
-	icon_state = "title_painting1"
-//	icon_state = "title_holiday"
-	layer = FLY_LAYER
-
-
-
-/turf/closed/wall/indestructible/other
-	icon_state = "r_wall"
-
-
-
-
-
-
 // Mineral Walls
-
 /turf/closed/wall/mineral
 	name = "mineral wall"
 	desc = "This shouldn't exist"

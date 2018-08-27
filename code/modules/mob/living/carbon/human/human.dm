@@ -805,9 +805,6 @@
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 
 	if (href_list["medholocard"])
-		if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-			to_chat(usr, "<span class='warning'>You're not trained to use this.</span>")
-			return
 		if(!has_species(src, "Human"))
 			to_chat(usr, "<span class='warning'>Triage holocards only works on humans.</span>")
 			return
@@ -827,9 +824,6 @@
 
 	if (href_list["scanreport"])
 		if(hasHUD(usr,"medical"))
-			if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.medical < SKILL_MEDICAL_MEDIC)
-				to_chat(usr, "<span class='warning'>You're not trained to use this.</span>")
-				return
 			if(!has_species(src, "Human"))
 				to_chat(usr, "<span class='warning'>This only works on humans.</span>")
 				return
@@ -994,11 +988,10 @@
 
 
 	// hair
-	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 	var/list/hairs = list()
 
 	// loop through potential hairs
-	for(var/x in all_hairs)
+	for(var/x in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
 		cdel(H) // delete the hair after it's all done
@@ -1010,10 +1003,9 @@
 		h_style = new_style
 
 	// facial hair
-	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 	var/list/fhairs = list()
 
-	for(var/x in all_fhairs)
+	for(var/x in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new x
 		fhairs.Add(H.name)
 		cdel(H)

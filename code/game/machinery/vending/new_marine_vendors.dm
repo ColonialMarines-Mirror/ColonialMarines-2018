@@ -55,7 +55,7 @@
 		icon_state = initial(icon_state)
 	else
 		spawn(rand(0, 15))
-			src.icon_state = "[initial(icon_state)]-off"
+			icon_state = "[initial(icon_state)]-off"
 
 
 

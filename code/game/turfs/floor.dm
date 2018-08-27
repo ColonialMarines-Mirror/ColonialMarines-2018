@@ -174,89 +174,90 @@ var/list/wood_icons = list("wood", "wood-broken")
 
 /turf/open/floor/is_plasteel_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/plasteel))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /turf/open/floor/is_light_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/light))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /turf/open/floor/is_grass_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/grass))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /turf/open/floor/is_wood_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/wood))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /turf/open/floor/is_carpet_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/carpet))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /turf/open/floor/is_plating()
 	if(!floor_tile)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /turf/open/floor/proc/break_tile()
-	if(!breakable_tile || hull_floor) return
-	if(broken) return
+	if(!breakable_tile || hull_floor)
+		return
+	if(broken)
+		return
 	broken = TRUE
 	if(is_plasteel_floor())
 		icon_state = "damaged[pick(1, 2, 3, 4, 5)]"
-		broken = 1
-	else if(is_light_floor())
+
+	if(is_light_floor())
 		icon_state = "light_broken"
-		broken = 1
-	else if(is_plating())
+
+	if(is_plating())
 		icon_state = "platingdmg[pick(1, 2, 3)]"
-		broken = 1
-	else if(is_wood_floor())
+
+	if(is_wood_floor())
 		icon_state = "wood-broken"
-		broken = 1
-	else if(is_carpet_floor())
+
+	if(is_carpet_floor())
 		icon_state = "carpet-broken"
-		broken = 1
-	else if(is_grass_floor())
+
+	if(is_grass_floor())
 		icon_state = "sand[pick("1", "2", "3")]"
-		broken = 1
 
 /turf/open/floor/proc/burn_tile()
-	if(!burnable_tile|| hull_floor) return
-	if(broken || burnt) return
+	if(!burnable_tile|| hull_floor)
+		return
+	if(broken || burnt)
+		return
 	burnt = TRUE
 	if(is_plasteel_floor())
 		icon_state = "damaged[pick(1, 2, 3, 4, 5)]"
-		burnt = 1
-	else if(is_plasteel_floor())
+
+	if(is_plasteel_floor())
 		icon_state = "floorscorched[pick(1, 2)]"
-		burnt = 1
-	else if(is_plating())
+
+	if(is_plating())
 		icon_state = "panelscorched"
-		burnt = 1
-	else if(is_wood_floor())
+
+	if(is_wood_floor())
 		icon_state = "wood-broken"
-		burnt = 1
-	else if(is_carpet_floor())
+
+	if(is_carpet_floor())
 		icon_state = "carpet-broken"
-		burnt = 1
-	else if(is_grass_floor())
+
+	if(is_grass_floor())
 		icon_state = "sand[pick("1", "2", "3")]"
-		burnt = 1
 
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
 /turf/open/floor/proc/make_plating()
-
 	if(is_grass_floor())
 		for(var/direction in cardinal)
 			if(istype(get_step(src,direction),/turf/open/floor))
@@ -374,7 +375,6 @@ var/list/wood_icons = list("wood", "wood-broken")
 	levelupdate()
 
 /turf/open/floor/attackby(obj/item/C, mob/user)
-
 	if(hull_floor) //no interaction for hulls
 		return
 
@@ -495,10 +495,9 @@ var/list/wood_icons = list("wood", "wood-broken")
 					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 
 
-
-
 /turf/open/floor/wet_floor(wet_level = FLOOR_WET_WATER)
-	if(wet >= wet_level) return
+	if(wet >= wet_level)
+		return
 	wet = wet_level
 	if(wet_overlay)
 		overlays -= wet_overlay
@@ -515,9 +514,3 @@ var/list/wood_icons = list("wood", "wood-broken")
 			if(wet_overlay)
 				overlays -= wet_overlay
 				wet_overlay = null
-
-
-
-
-
-

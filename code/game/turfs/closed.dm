@@ -37,7 +37,12 @@
 //	icon_state = "title_holiday"
 	layer = FLY_LAYER
 
+/turf/closed/wall/indestructible/splashscreen/New()
+	icon_state = "title_painting[rand(1,4)]" //still makes it random
+	..()
+
 /turf/closed/wall/indestructible/other
+	name = "reinforced wall"
 	icon_state = "r_wall"
 
 /turf/closed/mineral //rock walls

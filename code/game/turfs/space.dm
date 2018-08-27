@@ -19,13 +19,13 @@
 	return src.attack_hand(user)
 
 /turf/open/space/attack_hand(mob/user)
-	if ((user.is_mob_restrained() || !( user.pulling )))
+	if(user.is_mob_restrained() || !user.pulling)
 		return
-	if (user.pulling.anchored || !isturf(user.pulling.loc))
+	if(user.pulling.anchored || !isturf(user.pulling.loc))
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if(user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)
 		return
-	if (ismob(user.pulling))
+	if(ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/atom/movable/t = M.pulling
 		M.stop_pulling()
@@ -41,7 +41,7 @@
 		if(L)
 			return
 		var/obj/item/stack/rods/R = C
-		if (R.use(1))
+		if(R.use(1))
 			to_chat(user, "\blue Constructing support lattice ...")
 			playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 			ReplaceWithLattice()
@@ -51,7 +51,7 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
-			if (S.get_amount() < 1)
+			if(S.get_amount() < 1)
 				return
 			cdel(L)
 			playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
@@ -62,18 +62,17 @@
 			to_chat(user, "\red The plating is going to need some support.")
 	return
 
-
 // Ported from unstable r355
 /turf/open/space/Entered(atom/movable/A)
 	..()
-	if ((!(A) || src != A.loc))
+	if(!(A) || src != A.loc)
 		return
 
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
-		// if(ticker.mode.name == "nuclear emergency")	return
+		// if(ticker.mode.name == "nuclear emergency")	return <-- imagine if this was on tg, then people would powergame this
 		if(A.z > 6)
 			return
 		if(A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))

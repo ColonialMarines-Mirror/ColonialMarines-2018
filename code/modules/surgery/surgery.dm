@@ -100,9 +100,11 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 		return 0
 	if(user.action_busy) //already doing an action
 		return 1
-	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED)
-		to_chat(user, "<span class='warning'>You have no idea how to do surgery...</span>")
-		return 1
+	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_PROFESSIONAL)
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to operate [M].</span>",
+		"<span class='notice'>You fumble around figuring out how to operate [M].</span>")
+		var/fumbling_time = SKILL_TASK_FORMIDABLE - ( SKILL_TASK_AVERAGE * user.mind.cm_skills.surgery ) // 20 secs non-trained, 15 amateur, 10 semi-prof
+		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 	var/datum/limb/affected = M.get_limb(user.zone_selected)
 	if(!affected)
 		return 0
@@ -140,7 +142,6 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 						multipler += 0.25
 				if(istype(M.loc, /turf/open/shuttle/dropship))
 					multipler -= 0.65
-				Clamp(multipler, 0, 1)
 
 				if(isSynth(M) || isYautja(M)) multipler = 1
 
@@ -151,7 +152,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 					step_duration = max(5, step_duration - 10*user.mind.cm_skills.surgery)
 
 				//Multiply tool success rate with multipler
-				if(prob(S.tool_quality(tool) * multipler) &&  do_mob(user, M, step_duration, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL, TRUE))
+				if(prob(S.tool_quality(tool) * CLAMP01(multipler)) &&  do_mob(user, M, step_duration, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL, TRUE))
 					if(S.can_use(user, M, user.zone_selected, tool, affected, TRUE)) //to check nothing changed during the do_mob
 						S.end_step(user, M, user.zone_selected, tool, affected) //Finish successfully
 

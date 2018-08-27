@@ -120,11 +120,11 @@
 	..()
 
 	//TODO: Ore and alloy global storage datum.
-	for(var/alloytype in typesof(/datum/alloy)-/datum/alloy)
+	for(var/alloytype in subtypesof(/datum/alloy))
 		alloy_data += new alloytype()
 	start_processing()
 
-	for(var/oretype in typesof(/datum/ore)-/datum/ore)
+	for(var/oretype in subtypesof(/datum/ore))
 		var/datum/ore/OD = new oretype()
 		ore_data[OD.oretag] = OD
 		ores_processing[OD.oretag] = 0
@@ -204,7 +204,7 @@
 
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
 
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 
 				if(!can_make || ores_stored[metal] < 1)
@@ -217,7 +217,7 @@
 
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
 
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
 

@@ -89,9 +89,9 @@ Additional game mode variables.
 
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
-	xeno_starting_num = Clamp((ready_players/7), xeno_required_num, INFINITY) //(n, minimum, maximum)
-	surv_starting_num = Clamp((ready_players/25), 0, 8)
-	merc_starting_num = Clamp((ready_players/3), 1, INFINITY)
+	xeno_starting_num = CLAMP((ready_players/7), xeno_required_num, INFINITY) //(n, minimum, maximum)
+	surv_starting_num = CLAMP((ready_players/25), 0, 8)
+	merc_starting_num = CLAMP((ready_players/3), 1, INFINITY)
 	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
 	for(var/datum/squad/sq in RoleAuthority.squads)
 		if(sq)
@@ -649,7 +649,6 @@ datum/game_mode/proc/initialize_special_clamps()
 			else
 				to_chat(H, "\blue You are a survivor of the attack on the colony. You worked or lived in the archaeology colony, and managed to avoid the alien attacks...until now.")
 		to_chat(H, "\blue You are fully aware of the xenomorph threat and are able to use this knowledge as you see fit.")
-		to_chat(H, "\blue You are NOT aware of the marines or their intentions, and lingering around arrival zones will get you survivor-banned.")
 	return 1
 
 /datum/game_mode/proc/tell_survivor_story()

@@ -89,7 +89,7 @@ proc/spread_germs_to_organ(datum/limb/E, mob/living/carbon/human/user)
 		E.germ_level += user.germ_level / 2
 
 	if(locate(/obj/structure/bed/roller, E.owner.loc))
-		E.germ_level += 100
+		E.germ_level += 50
 	else if(locate(/obj/structure/table/, E.owner.loc))
 		E.germ_level += 200
 
@@ -126,7 +126,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 				//Success multiplers!
 				var/multipler = 1 //1 = 100%
 				if(locate(/obj/structure/bed/roller, M.loc))
-					multipler -= 0.10
+					multipler -= 0.05
 				else if(locate(/obj/structure/table/, M.loc))
 					multipler -= 0.20
 				if(M.stat == CONSCIOUS)//If not on anesthetics or not unconsious
@@ -137,7 +137,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 						if(PAIN_REDUCTION_HEAVY to PAIN_REDUCTION_VERY_HEAVY)
 							multipler += 0.25
 						if(PAIN_REDUCTION_VERY_HEAVY to PAIN_REDUCTION_FULL)
-							multipler += 0.40
+							multipler += 0.50
 					if(M.shock_stage > 100) //Being near to unconsious is good in this case
 						multipler += 0.25
 				if(istype(M.loc, /turf/open/shuttle/dropship))

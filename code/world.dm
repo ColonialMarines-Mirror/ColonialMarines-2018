@@ -33,6 +33,8 @@ var/global/datum/global_init/init = new ()
 	to_chat(round_stats, "[log_end]\nStarting up - [time2text(world.realtime,"YYYY-MM-DD (hh:mm:ss)")][log_end]\n---------------------[log_end]")
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
+	TgsNew()
+
 	if(byond_version < RECOMMENDED_VERSION)
 		to_chat(world.log, "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
 
@@ -53,6 +55,7 @@ var/global/datum/global_init/init = new ()
 
 	. = ..()
 
+	TgsInitializationsComplete()
 	sleep_offline = 1
 
 	// Set up roundstart seed list. This is here because vendors were
@@ -112,6 +115,8 @@ var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
+	TGS_TOPIC
+
 	if(findtext(T, "mapdaemon") == 0) diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
 
 	if (T == "ping")
@@ -298,6 +303,7 @@ var/world_topic_spam_protect_time = world.timeofday
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 		*/
+	TgsReboot()
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")

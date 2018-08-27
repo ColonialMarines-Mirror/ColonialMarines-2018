@@ -7,5 +7,5 @@
 #define TGS_WORLD_ANNOUNCE(message) to_chat(world, "\red \b [##message]")
 #define TGS_NOTIFY_ADMINS(event) message_admins("TGS: [##event]")
 #define TGS_INFO_LOG(message) to_chat(world.log, "TGS Info: [##message]")
-#define TGS_INFO_LOG(message) to_chat(world.log, "TGS Error: [##message]")
+#define TGS_ERROR_LOG(message) to_chat(world.log, "TGS Error: [##message]")
 #define TGS_CLIENT_COUNT global.clients.len

@@ -402,18 +402,8 @@
 /turf/open/mars_dirt/New()
 	..()
 	spawn(10)
-		if(rand(0,32))
-			switch(rand(1,2))
-				if(1)
-					icon_state = "mars_dirt_1"
-					return
-				if(2)
-					icon_state = "mars_dirt_2"
-					return
-		if(rand(0,4))
-			icon_state = "mars_dirt_7"
-			return
-
+		var/turf = ("mars_dirt_1" = 30, "mars_dirt_2" = 30, "mars_dirt_7" = 5)
+		icon_state = pickweight(loot)
 
 // Beach
 /turf/open/beach

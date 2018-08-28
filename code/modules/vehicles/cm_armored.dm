@@ -278,7 +278,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		if(!HP)
 			to_chat(user, "There is nothing installed on the [i] hardpoint slot.")
 		else
-			if((user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer >= SKILL_ENGINEER_ENGI) || isobserver(user))
+			if((user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer >= SKILL_ENGINEER_METAL) || isobserver(user))
 				if(HP.health <= 0)
 					to_chat(user, "There is a broken [HP] installed on [i] hardpoint slot.")
 				if(HP.health > 0 && (HP.health < (HP.maxhealth / 3)))

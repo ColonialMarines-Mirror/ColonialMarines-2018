@@ -6,7 +6,9 @@
 		return
 
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
-	if(!vol || vol < 0 || vol > 100)
+	if(!vol)
+		return
+	if(vol < 0 || vol > 100) //clamp when?
 		to_chat(src, "<span class='notice'>Invalid volume!</span>")
 		return
 

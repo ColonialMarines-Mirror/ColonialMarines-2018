@@ -108,7 +108,7 @@
 		return
 
 	if (busy)
-		to_chat(user, "<span class='warning'>The [src] is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, "<span class='warning'>\The [src] is busy. Please wait for completion of previous operation.</span>")
 		return
 
 	if(istype(O, /obj/item/tool/screwdriver))

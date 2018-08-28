@@ -198,7 +198,7 @@
 				src.r_hand = W
 				equipped = 1
 		if(WEAR_WAIST)
-			if(!src.belt && src.w_uniform)
+			if(!src.belt  /* && src.w_uniform */)
 				src.belt = W
 				equipped = 1
 		if(WEAR_ID)

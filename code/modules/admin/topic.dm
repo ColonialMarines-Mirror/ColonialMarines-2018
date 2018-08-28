@@ -1259,7 +1259,7 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/yautja/full(H), WEAR_JACKET)
 				H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/glaive(H), WEAR_L_HAND)
 
-			cdel(H) //May have to clear up round-end vars and such....
+			if(H) cdel(H) //May have to clear up round-end vars and such....
 
 		return
 

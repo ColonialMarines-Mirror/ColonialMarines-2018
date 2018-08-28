@@ -37,6 +37,7 @@
 	current_mag = /obj/item/ammo_magazine/smg/m39
 	type_of_casings = null
 	attachable_allowed = list(
+						/obj/item/attachable/quickfire,
 						/obj/item/attachable/suppressor,
 						/obj/item/attachable/reddot,
 						/obj/item/attachable/verticalgrip,

@@ -583,11 +583,9 @@ Currently only has the tank hardpoints
 			M.client.change_view(7)
 			M.client.pixel_x = 0
 			M.client.pixel_y = 0
-			M.artmod_use = 0
 			is_active = 0
 			return
 		M.client.change_view(view_buff)
-		M.artmod_use = 1
 		is_active = 1
 		switch(C.dir)
 			if(NORTH)
@@ -612,7 +610,6 @@ Currently only has the tank hardpoints
 		M.client.change_view(7)
 		M.client.pixel_x = 0
 		M.client.pixel_y = 0
-		M.artmod_use = 0
 
 	remove_buff()
 		deactivate()

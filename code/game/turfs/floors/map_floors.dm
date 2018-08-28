@@ -402,7 +402,7 @@
 /turf/open/mars_dirt/New()
 	..()
 	spawn(10)
-		prob(32)
+		if(rand(0,32))
 			switch(rand(1,2))
 				if(1)
 					icon_state = "mars_dirt_1"
@@ -410,7 +410,7 @@
 				if(2)
 					icon_state = "mars_dirt_2"
 					return
-		prob(4)
+		if(rand(0,4))
 			icon_state = "mars_dirt_7"
 			return
 

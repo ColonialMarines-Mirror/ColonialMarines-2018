@@ -50,7 +50,7 @@
 	var/list/listed_products
 
 /obj/machinery/marine_selector/power_change()
-	..()
+	. = ..()
 	if( !(stat & NOPOWER) )
 		icon_state = initial(icon_state)
 	else

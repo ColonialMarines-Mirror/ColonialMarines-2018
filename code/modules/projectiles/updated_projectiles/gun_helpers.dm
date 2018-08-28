@@ -342,26 +342,18 @@ should be alright.
 		to_chat(user, "<span class='warning'>The attachment on [src]'s [attachment.slot] cannot be removed!</span>")
 		return
 
-
-	var/attach_delay = 30
-	var/firearm_skill = user.mind.cm_skills.firearms
-	if(attachment.name == "bayonet" && (!src.muzzle || src.muzzle.name == "bayonet")) //Attach  bayonet fast if no attachment to remove on the barrel, or you're replacing a bayo with another bayo
-		attach_delay = 10
-	if (user.mind && user.mind.cm_skills && firearm_skill)
-		if(attachment.name == "bayonet")
-			user.visible_message("<span class='notice'>[user] fixes [attachment]!.</span>",
-			"<span class='notice'>You fix [attachment]!</span>", null, 4)
-		else
-			user.visible_message("<span class='notice'>[user] begins attaching [attachment] to [src].</span>",
-			"<span class='notice'>You begin attaching [attachment] to [src].</span>", null, 4)
-		if(firearm_skill >= 2) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
-			attach_delay *= 0.5		
+	var/final_delay = attachment.attach_delay
+	if (usr.mind.cm_skills.firearms)
+		user.visible_message("<span class='notice'>[user] begins attaching [attachment] to [src].</span>",
+		"<span class='notice'>You begin attaching [attachment] to [src].</span>", null, 4)
+		if(usr.mind.cm_skills.firearms >= SKILL_FIREARMS_DEFAULT) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
+			final_delay *= 0.5
 	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
-		attach_delay *= 2
+		final_delay *= 2
 		user.visible_message("<span class='notice'>[user] begins fumbling about, trying to attach [attachment] to [src].</span>",
 		"<span class='notice'>You begin fumbling about, trying to attach [attachment] to [src].</span>", null, 4)
-	//user.visible_message("","<span class='notice'>Attach Delay = [attach_delay]. Attachment = [attachment]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
-	if(do_after(user,attach_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
+	//user.visible_message("","<span class='notice'>Attach Delay = [final_delay]. Attachment = [attachment]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
+	if(do_after(user,final_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		if(attachment && attachment.loc)
 			user.visible_message("<span class='notice'>[user] attaches [attachment] to [src].</span>",
 			"<span class='notice'>You attach [attachment] to [src].</span>", null, 4)
@@ -510,21 +502,18 @@ should be alright.
 	if(!(A.flags_attach_features & ATTACH_REMOVABLE))
 		return
 
-	var/detach_delay = 30
-	var/firearm_skill = usr.mind.cm_skills.firearms
-	if(A.name == "bayonet") //Detach the bayonet fast
-		detach_delay = 10
-	if (usr.mind && usr.mind.cm_skills && firearm_skill)
+	var/final_delay = A.detach_delay
+	if (usr.mind.cm_skills.firearms)
 		usr.visible_message("<span class='notice'>[usr] begins stripping [A] from [src].</span>",
 		"<span class='notice'>You begin stripping [A] from [src].</span>", null, 4)
-		if(firearm_skill >= 2) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
-			detach_delay *= 0.5		
+		if(usr.mind.cm_skills.firearms > SKILL_FIREARMS_DEFAULT) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
+			final_delay *= 0.5 //Half normal time
 	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
-		detach_delay *= 2
+		final_delay *= 2
 		usr.visible_message("<span class='notice'>[usr] begins fumbling about, trying to strip [A] from [src].</span>",
 		"<span class='notice'>You begin fumbling about, trying to strip [A] from [src].</span>", null, 4)
 	//usr.visible_message("","<span class='notice'>Detach Delay = [detach_delay]. Attachment = [A]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
-	if(!do_after(usr,detach_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
+	if(!do_after(usr,final_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		return
 
 	if(A != rail && A != muzzle && A != under && A != stock)

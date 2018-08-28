@@ -19,7 +19,7 @@
 
 
 	New()
-//		src.modules += new /obj/item/device/flashlight(src) // Replaced by verb and integrated light which uses power.
+//		src.modules += new /obj/item/device/flashlight(src) // Replaced by verb and integrated light which uses power
 		src.modules += new /obj/item/device/flash(src)
 		src.emag = new /obj/item/toy/sword(src)
 		src.emag.name = "Placeholder Emag Item"
@@ -381,7 +381,7 @@
 //checks whether this item is a module of the robot it is located in.
 /obj/item/proc/is_robot_module()
 	if (!istype(src.loc, /mob/living/silicon/robot))
-		return 0
+		return FALSE
 
 	var/mob/living/silicon/robot/R = src.loc
 

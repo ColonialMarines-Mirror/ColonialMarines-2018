@@ -10,17 +10,17 @@
 	icon_state = "plating"
 	name = "airless plating"
 
-	New()
-		..()
-		name = "plating"
+/turf/open/floor/plating/airless/New()
+	..()
+	name = "plating"
 
 /turf/open/floor/plating/icefloor
 	icon_state = "plating"
 	name = "ice colony plating"
 
-	New()
-		..()
-		name = "plating"
+/turf/open/floor/plating/icefloor/New()
+	..()
+	name = "plating"
 
 /turf/open/floor/plating/plating_catwalk
 	icon = 'icons/turf/almayer.dmi'
@@ -30,10 +30,10 @@
 	desc = "Cats really don't like these things."
 	var/covered = 1 //1 for theres the cover, 0 if there isn't.
 
-	New()
-		..()
-		icon_state = base_state
-		update_turf_overlay()
+/turf/open/floor/plating/plating_catwalk/New()
+	..()
+	icon_state = base_state
+	update_turf_overlay()
 
 /turf/open/floor/plating/plating_catwalk/proc/update_turf_overlay()
 	var/image/reusable/I = rnew(/image/reusable, list(icon, src, "catwalk", CATWALK_LAYER))
@@ -41,7 +41,8 @@
 		if(0)
 			overlays -= I
 			cdel(I)
-		if(1) overlays += I
+		if(1)
+			overlays += I
 
 /turf/open/floor/plating/plating_catwalk/attackby(obj/item/W as obj, mob/user as mob)
 	..()
@@ -61,32 +62,19 @@
 			return
 	..()
 
-
 /turf/open/floor/plating/plating_catwalk/prison
 	icon = 'icons/turf/prison.dmi'
-
-
 
 /turf/open/floor/plating/ironsand/New()
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
 
-
-
 /turf/open/floor/plating/catwalk
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
 	desc = "Cats really don't like these things."
-
-
-
-
-
-
-
-
 
 //Cargo elevator
 /turf/open/floor/almayer/empty
@@ -155,7 +143,6 @@
 			for(var/obj/effect/decal/cleanable/C in contents) //for the off chance of someone bleeding mid=flight
 				cdel(C)
 
-
 //Others
 /turf/open/floor/almayer/uscm
 	icon_state = "logo_c"
@@ -163,7 +150,6 @@
 
 /turf/open/floor/almayer/uscm/directional
 	icon_state = "logo_directional"
-
 
 
 // RESEARCH STUFF

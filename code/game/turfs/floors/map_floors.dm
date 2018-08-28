@@ -402,16 +402,17 @@
 /turf/open/mars_dirt/New()
 	..()
 	spawn(10)
-		if (rand(0, 32) && icon_state == "mars_dirt_4")
-			icon_state = "mars_dirt_1"
-			return
-
-		if(rand(0, 32) && icon_state == "mars_dirt_4")
-			icon_state = "mars_dirt_2"
-			return
-
-		if(rand(0, 6) && icon_state == "mars_dirt_4")
+		prob(32)
+			switch(rand(1,2))
+				if(1)
+					icon_state = "mars_dirt_1"
+					return
+				if(2)
+					icon_state = "mars_dirt_2"
+					return
+		prob(4)
 			icon_state = "mars_dirt_7"
+			return
 
 
 // Beach

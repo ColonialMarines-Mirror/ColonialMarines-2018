@@ -21,7 +21,7 @@ var/global/normal_ooc_colour = "#002eb8"
 
 	msg = emoji_parse(msg)
 
- 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say"))) // stops ick-ocky by 25%
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say"))) // stops ick-ocky by 25%
 		if(alert("Your message \"[msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
 

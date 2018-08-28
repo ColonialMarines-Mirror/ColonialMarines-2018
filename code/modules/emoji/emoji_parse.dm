@@ -1,4 +1,4 @@
-var/list/emojis
+var/list/emojis //delete this thing
 /proc/emoji_parse(text)
 	. = text
 	if(!config.emojis)

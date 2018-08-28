@@ -197,7 +197,8 @@
 					)
 
 	contraband = list(
-					/obj/item/ammo_magazine/smg/ppsh/extended = 20,
+					/obj/item/ammo_magazine/smg/ppsh/ = 20,
+					/obj/item/ammo_magazine/smg/ppsh/extended = 4,
 					/obj/item/ammo_magazine/pistol/incendiary = 0,
 					/obj/item/ammo_magazine/pistol/heavy = 0,
 					/obj/item/ammo_magazine/pistol/holdout = 0,
@@ -553,7 +554,7 @@
 						/obj/item/attachable/stock/rifle = 3 ,
 						/obj/item/attachable/stock/revolver = 3,
 						/obj/item/attachable/stock/smg = 3,
-						/obj/item/attachable/stock/tactical = 4,
+						/obj/item/attachable/stock/tactical = 3,
 
 						/obj/item/attachable/attached_gun/grenade = 5,
 						/obj/item/attachable/attached_gun/shotgun = 3,

@@ -343,16 +343,16 @@ should be alright.
 		return
 
 	var/final_delay = attachment.attach_delay
-	if (usr.mind.cm_skills.firearms)
+	if (user.mind.cm_skills.firearms)
 		user.visible_message("<span class='notice'>[user] begins attaching [attachment] to [src].</span>",
 		"<span class='notice'>You begin attaching [attachment] to [src].</span>", null, 4)
-		if(usr.mind.cm_skills.firearms >= SKILL_FIREARMS_DEFAULT) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
+		if(user.mind.cm_skills.firearms >= SKILL_FIREARMS_DEFAULT) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
 			final_delay *= 0.5
 	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
 		final_delay *= 2
 		user.visible_message("<span class='notice'>[user] begins fumbling about, trying to attach [attachment] to [src].</span>",
 		"<span class='notice'>You begin fumbling about, trying to attach [attachment] to [src].</span>", null, 4)
-	//user.visible_message("","<span class='notice'>Attach Delay = [final_delay]. Attachment = [attachment]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
+	//user.visible_message("","<span class='notice'>Attach Delay = [final_delay]. Attachment = [attachment]. Firearm Skill = [user.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
 	if(do_after(user,final_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		if(attachment && attachment.loc)
 			user.visible_message("<span class='notice'>[user] attaches [attachment] to [src].</span>",

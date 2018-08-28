@@ -48,24 +48,24 @@
 		holder.clear_reagents()
 
 
-/datum/chemical_reaction/hptoxin
-	name = "Toxin"
-	id = "hptoxin"
-	result = "hptoxin"
+/datum/chemical_reaction/hypozine
+	name = "Hypozine"
+	id = "hypozine"
+	result = "hypozine"
 	required_reagents = list("hyperzine" = 1, "peridaxon" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/pttoxin
-	name = "Toxin"
-	id = "pttoxin"
-	result = "pttoxin"
+/datum/chemical_reaction/percocet
+	name = "Percocet"
+	id = "percocet"
+	result = "percocet"
 	required_reagents = list("paracetamol" = 1, "tramadol" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/sdtoxin
-	name = "Toxin"
-	id = "sdtoxin"
-	result = "sdtoxin"
+/datum/chemical_reaction/levoamphetamine
+	name = "Levoamphetamine"
+	id = "levoamphetamine"
+	result = "levoamphetamine"
 	required_reagents = list("synaptizine" = 1, "anti_toxin" = 1)
 	result_amount = 2
 

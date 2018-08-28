@@ -402,8 +402,8 @@
 /turf/open/mars_dirt/New()
 	..()
 	spawn(10)
-		var/turf = ("mars_dirt_1" = 30, "mars_dirt_2" = 30, "mars_dirt_7" = 5)
-		icon_state = pickweight(loot)
+		var/static/list/turf = ("mars_dirt_1" = 30, "mars_dirt_2" = 30, "mars_dirt_7" = 5)
+		icon_state = pickweight(turf)
 
 // Beach
 /turf/open/beach

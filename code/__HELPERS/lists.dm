@@ -178,7 +178,7 @@ proc/listclearnulls(list/list)
 			L_o -= i
 
 //Return a list with no duplicate entries
-/proc/uniqueList(var/list/L)
+/proc/uniquelist(var/list/L)
 	. = list()
 	for(var/i in L)
 		. |= i

@@ -215,22 +215,23 @@ var/list/wood_icons = list("wood", "wood-broken")
 	broken = TRUE
 	if(is_plasteel_floor())
 		icon_state = "damaged[pick(1, 2, 3, 4, 5)]"
-
+		return
 	if(is_light_floor())
 		icon_state = "light_broken"
-
+		return
 	if(is_plating())
 		icon_state = "platingdmg[pick(1, 2, 3)]"
-
+		return
 	if(is_wood_floor())
 		icon_state = "wood-broken"
-
+		return
 	if(is_carpet_floor())
 		icon_state = "carpet-broken"
-
+		return
 	if(is_grass_floor())
 		icon_state = "sand[pick("1", "2", "3")]"
-
+		return
+		
 /turf/open/floor/proc/burn_tile()
 	if(!burnable_tile|| hull_floor)
 		return
@@ -239,22 +240,23 @@ var/list/wood_icons = list("wood", "wood-broken")
 	burnt = TRUE
 	if(is_plasteel_floor())
 		icon_state = "damaged[pick(1, 2, 3, 4, 5)]"
-
+		return
 	if(is_plasteel_floor())
 		icon_state = "floorscorched[pick(1, 2)]"
-
+		return
 	if(is_plating())
 		icon_state = "panelscorched"
-
+		return
 	if(is_wood_floor())
 		icon_state = "wood-broken"
-
+		return
 	if(is_carpet_floor())
 		icon_state = "carpet-broken"
-
+		return
 	if(is_grass_floor())
 		icon_state = "sand[pick("1", "2", "3")]"
-
+		return
+		
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
 /turf/open/floor/proc/make_plating()

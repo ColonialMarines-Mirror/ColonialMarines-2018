@@ -1,5 +1,3 @@
-
-
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
@@ -276,7 +274,8 @@
 		dismantle_wall()
 
 	spawn(50)
-		if(O) cdel(O)
+		if(O)
+			cdel(O)
 	return
 
 
@@ -331,10 +330,7 @@
 
 	add_fingerprint(user)
 
-
-
 /turf/closed/wall/attackby(obj/item/W, mob/user)
-
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -350,7 +346,7 @@
 					WT.remove_fuel(0,user)
 				thermitemelt(user)
 			return
-
+	//wallmounts
 	if(istype(W,/obj/item/frame/apc))
 		var/obj/item/frame/apc/AH = W
 		AH.try_build(src)
@@ -404,7 +400,6 @@
 	switch(d_state)
 		if(0)
 			if(istype(W, /obj/item/tool/weldingtool))
-
 				var/obj/item/tool/weldingtool/WT = W
 				playsound(src, 'sound/items/Welder.ogg', 25, 1)
 				user.visible_message("<span class='notice'>[user] begins slicing through the outer plating.</span>",
@@ -421,7 +416,6 @@
 
 		if(1)
 			if(istype(W, /obj/item/tool/screwdriver))
-
 				user.visible_message("<span class='notice'>[user] begins removing the support lines.</span>",
 				"<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 25, 1)
@@ -437,7 +431,6 @@
 
 		if(2)
 			if(istype(W, /obj/item/tool/weldingtool))
-
 				var/obj/item/tool/weldingtool/WT = W
 				user.visible_message("<span class='notice'>[user] begins slicing through the metal cover.</span>",
 				"<span class='notice'>You begin slicing through the metal cover.</span>")
@@ -454,7 +447,6 @@
 
 		if(3)
 			if(istype(W, /obj/item/tool/crowbar))
-
 				user.visible_message("<span class='notice'>[user] struggles to pry off the cover.</span>",
 				"<span class='notice'>You struggle to pry off the cover.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 25, 1)
@@ -470,7 +462,6 @@
 
 		if(4)
 			if(istype(W, /obj/item/tool/wrench))
-
 				user.visible_message("<span class='notice'>[user] starts loosening the anchoring bolts securing the support rods.</span>",
 				"<span class='notice'>You start loosening the anchoring bolts securing the support rods.</span>")
 				playsound(src, 'sound/items/Ratchet.ogg', 25, 1)
@@ -486,7 +477,6 @@
 
 		if(5)
 			if(istype(W, /obj/item/tool/wirecutters))
-
 				user.visible_message("<span class='notice'>[user] begins uncrimping the hydraulic lines.</span>",
 				"<span class='notice'>You begin uncrimping the hydraulic lines.</span>")
 				playsound(src, 'sound/items/Wirecutter.ogg', 25, 1)
@@ -502,7 +492,6 @@
 
 		if(6)
 			if(istype(W, /obj/item/tool/crowbar))
-
 				user.visible_message("<span class='notice'>[user] struggles to pry off the inner sheath.</span>",
 				"<span class='notice'>You struggle to pry off the inner sheath.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 25, 1)
@@ -518,7 +507,6 @@
 
 		if(7)
 			if(istype(W, /obj/item/tool/weldingtool))
-
 				var/obj/item/tool/weldingtool/WT = W
 				user.visible_message("<span class='notice'>[user] begins slicing through the final layer.</span>",
 				"<span class='notice'>You begin slicing through the final layer.</span>")

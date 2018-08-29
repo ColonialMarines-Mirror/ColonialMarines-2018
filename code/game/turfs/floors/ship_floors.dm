@@ -28,7 +28,7 @@
 	var/base_state = "plating" //Post mapping
 	name = "catwalk"
 	desc = "Cats really don't like these things."
-	var/covered = 1 //1 for theres the cover, 0 if there isn't.
+	var/covered = TRUE //1 for theres the cover, 0 if there isn't.
 
 /turf/open/floor/plating/plating_catwalk/New()
 	..()
@@ -50,14 +50,14 @@
 		if(covered)
 			var/obj/item/stack/catwalk/R = new(usr.loc)
 			R.add_to_stacks(usr)
-			covered = 0
+			covered = FALSE
 			update_turf_overlay()
 			return
 	if(istype(W, /obj/item/stack/catwalk))
 		if(!covered)
 			var/obj/item/stack/catwalk/E = W
 			E.use(1)
-			covered = 1
+			covered = TRUE
 			update_turf_overlay()
 			return
 	..()

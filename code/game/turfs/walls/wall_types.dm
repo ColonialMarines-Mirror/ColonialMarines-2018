@@ -12,7 +12,6 @@
 	max_temperature = 18000 //K, walls will take damage if they're next to a fire hotter than this
 
 	opacity = 1
-	density = 1
 
 /turf/closed/wall/almayer/handle_icon_junction(junction)
 	if (!walltype)
@@ -45,15 +44,13 @@
 	icon_state = "[walltype][junction]"
 	junctiontype = junction
 
-
-
-/turf/closed/wall/almayer/research/can_be_dissolved()
-	return 0
-
 /turf/closed/wall/almayer/research/containment/wall
 	name = "cell wall"
 	tiles_with = null
 	walltype = null
+
+/turf/closed/wall/almayer/research/can_be_dissolved()
+	return 0
 
 /turf/closed/wall/almayer/research/containment/wall/corner
 	icon_state = "containment_wall_corner"
@@ -99,8 +96,6 @@
 	name = "cell window"
 	icon_state = "containment_window"
 	opacity = 0
-
-
 
 
 //Sulaco walls.
@@ -237,11 +232,7 @@
 	mineral = "phoron"
 
 
-
-
-
 //Misc walls
-
 /turf/closed/wall/cult
 	name = "wall"
 	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick"
@@ -257,10 +248,7 @@
 	icon_state = "[type]vault"
 
 
-
-
 //Prison wall
-
 /turf/closed/wall/prison
 	name = "metal wall"
 	icon = 'icons/turf/walls/prison.dmi'
@@ -268,9 +256,7 @@
 	walltype = "metal"
 
 
-
 //Wood wall
-
 /turf/closed/wall/wood
 	name = "wood wall"
 	icon = 'icons/turf/wood.dmi'
@@ -293,9 +279,7 @@
 
 
 
-
 //Xenomorph's Resin Walls
-
 /turf/closed/wall/resin
 	name = "resin wall"
 	desc = "Weird slime solidified into a wall."
@@ -420,7 +404,6 @@
 	cdel(src) //ChangeTurf is called by Dispose()
 
 
-
 /turf/closed/wall/resin/ChangeTurf(newtype)
 	. = ..()
 	if(.)
@@ -430,9 +413,6 @@
 			if(!istype(T)) continue
 			for(var/obj/structure/mineral_door/resin/R in T)
 				R.check_resin_support()
-
-
-
 
 /turf/closed/wall/resin/can_be_dissolved()
 	return FALSE

@@ -3,7 +3,6 @@
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon_state = "r_wall"
 	opacity = 1
-	density = 1
 
 	damage_cap = 3000
 	max_temperature = 6000
@@ -27,12 +26,13 @@
 	if(hull)
 		return
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+	if(!istype(user.loc, /turf))
+		return	//can't do this stuff whilst inside objects and such
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting walls and the relevant effects
 	if(thermite)
@@ -59,11 +59,10 @@
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 
-
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)
-			if (istype(W, /obj/item/tool/wirecutters))
+			if(istype(W, /obj/item/tool/wirecutters))
 				playsound(src, 'sound/items/Wirecutter.ogg', 25, 1)
 				src.d_state = 1
 				new /obj/item/stack/rods( src )
@@ -71,7 +70,7 @@
 				return
 
 		if(1)
-			if (istype(W, /obj/item/tool/screwdriver))
+			if(istype(W, /obj/item/tool/screwdriver))
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 25, 1)
 
@@ -96,7 +95,7 @@
 				return
 
 		if(2)
-			if( istype(W, /obj/item/tool/weldingtool) )
+			if(istype(W, /obj/item/tool/weldingtool))
 				var/obj/item/tool/weldingtool/WT = W
 				if( WT.remove_fuel(0,user) )
 
@@ -107,16 +106,14 @@
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn())
 							return
 
-
-						if( d_state == 2)
+						if(d_state == 2)
 							d_state = 3
 							to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				else
 					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 
-			if( istype(W, /obj/item/tool/pickaxe/plasmacutter) )
-
+			if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
 				playsound(src, 'sound/items/Welder.ogg', 25, 1)
 
@@ -130,8 +127,7 @@
 				return
 
 		if(3)
-			if (istype(W, /obj/item/tool/crowbar))
-
+			if(istype(W, /obj/item/tool/crowbar))
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 25, 1)
 
@@ -144,8 +140,7 @@
 				return
 
 		if(4)
-			if (istype(W, /obj/item/tool/wrench))
-
+			if(istype(W, /obj/item/tool/wrench))
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
 				playsound(src, 'sound/items/Ratchet.ogg', 25, 1)
 
@@ -175,7 +170,7 @@
 				return
 
 		if(6)
-			if( istype(W, /obj/item/tool/crowbar) )
+			if(istype(W, /obj/item/tool/crowbar) )
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 25, 1)
@@ -192,8 +187,7 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/tool/pickaxe/diamonddrill))
-
+	if(istype(W, /obj/item/tool/pickaxe/diamonddrill))
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
 		if(do_after(user, 200, TRUE, 5, BUSY_ICON_BUILD))
@@ -216,14 +210,12 @@
 
 		return
 
-
-
-	//APC
-	else if( istype(W,/obj/item/frame/apc) )
+	//Wall mounts
+	else if(istype(W,/obj/item/frame/apc))
 		var/obj/item/frame/apc/AH = W
 		AH.try_build(src)
 
-	else if( istype(W,/obj/item/frame/air_alarm) )
+	else if(istype(W,/obj/item/frame/air_alarm))
 		var/obj/item/frame/air_alarm/AH = W
 		AH.try_build(src)
 
@@ -248,8 +240,6 @@
 		return
 
 	return
-
-
 
 /turf/closed/wall/r_wall/can_be_dissolved()
 	if(hull)
@@ -280,10 +270,7 @@
 
 
 
-
-
 //Chigusa
-
 /turf/closed/wall/r_wall/chigusa
 	name = "facility wall"
 	icon = 'icons/turf/chigusa.dmi'
@@ -304,7 +291,6 @@
 				icon_state = "deco_wall[r2]"
 	else
 		icon_state = "[walltype][junction]"
-
 
 
 //Prison

@@ -143,8 +143,8 @@
 // Jungle turfs (Whiksey Outpost)
 /turf/open/jungle
 	allow_construction = FALSE
-	var/bushes_spawn = 1
-	var/plants_spawn = 1
+	var/bushes_spawn = TRUE
+	var/plants_spawn = TRUE
 	name = "wet grass"
 	desc = "Thick, long wet grass"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
@@ -196,13 +196,13 @@
 			P.Spread(probability - prob_loss)
 
 /turf/open/jungle/clear
-	bushes_spawn = 0
-	plants_spawn = 0
+	bushes_spawn = FALSE
+	plants_spawn = FALSE
 	icon_state = "grass_clear"
 	icon_spawn_state = "grass3"
 
 /turf/open/jungle/path
-	bushes_spawn = 0
+	bushes_spawn = FALSE
 	name = "dirt"
 	desc = "it is very dirty."
 	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
@@ -215,7 +215,7 @@
 		cdel(B)
 
 /turf/open/jungle/impenetrable
-	bushes_spawn = 0
+	bushes_spawn = FALSE
 	icon_state = "grass_impenetrable"
 	icon_spawn_state = "grass1"
 	New()
@@ -224,7 +224,7 @@
 		B.indestructable = 1
 
 /turf/open/jungle/water
-	bushes_spawn = 0
+	bushes_spawn = FALSE
 	name = "murky water"
 	desc = "thick, murky water"
 	icon = 'icons/misc/beach.dmi'
@@ -257,7 +257,7 @@
 						M.apply_damage(rand(0,1), BRUTE, sharp=1)
 
 /turf/open/jungle/water/deep
-	plants_spawn = 0
+	plants_spawn = FALSE
 	density = 1
 	icon_state = "water2"
 	icon_spawn_state = "water2"
@@ -385,13 +385,10 @@
 	icon = 'icons/turf/bigred.dmi'
 	icon_state = "mars_cave_1"
 
-
 /turf/open/mars_cave/New()
 	..()
 	spawn(10)
-		var/r = rand(0, 2)
-
-		if (r == 0 && icon_state == "mars_cave_2")
+		if(rand(0,2) == 0 && icon_state == "mars_cave_2")
 			icon_state = "mars_cave_3"
 
 /turf/open/mars_dirt
@@ -402,8 +399,8 @@
 /turf/open/mars_dirt/New()
 	..()
 	spawn(10)
-		var/static/list/turf = ("mars_dirt_1" = 30, "mars_dirt_2" = 30, "mars_dirt_7" = 5)
-		icon_state = pickweight(turf)
+		var/static/list/thing = list("mars_dirt_1" = 30, "mars_dirt_2" = 30, "mars_dirt_7" = 5)
+		icon_state = pickweight(thing)
 
 // Beach
 /turf/open/beach
@@ -517,7 +514,8 @@
 		C.next_move_slowdown += river_slowdown
 
 /turf/open/gm/river/proc/cleanup(var/mob/living/carbon/human/M)
-	if(!M || !istype(M)) return
+	if(!M || !istype(M))
+		return
 
 	if(M.back)
 		if(M.back.clean_blood())

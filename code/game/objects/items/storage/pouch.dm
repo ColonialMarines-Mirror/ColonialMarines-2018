@@ -104,7 +104,8 @@
 					"/obj/item/stack/medical/ointment",
 					"/obj/item/reagent_container/hypospray/autoinjector/Tramadol",
 					"/obj/item/reagent_container/hypospray/autoinjector/tricord",
-					"/obj/item/stack/medical/bruise_pack"
+					"/obj/item/stack/medical/bruise_pack",
+					"/obj/item/stack/medical/splint"
 					)
 
 /obj/item/storage/pouch/firstaid/full
@@ -404,6 +405,12 @@
 					"/obj/item/tool/shovel/etool",
 					"/obj/item/stack/sandbags_empty"
 					)
+
+/obj/item/storage/pouch/construction/full/New()
+	..()
+	new /obj/item/stack/sandbags_empty/full (src)
+	new /obj/item/stack/barbed_wire/small_stack (src)
+	new /obj/item/tool/shovel/etool (src)
 
 /obj/item/storage/pouch/tools
 	name = "tools pouch"

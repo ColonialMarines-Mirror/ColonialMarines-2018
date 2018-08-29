@@ -47,7 +47,7 @@
 	name = "Hyperzine"
 	id = "hyperzine"
 	result = "hyperzine"
-	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
+	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/ryetalyn
@@ -216,4 +216,11 @@
 	id = "paroxetine"
 	result = "paroxetine"
 	required_reagents = list("mindbreaker" = 1, "oxygen" = 1, "inaprovaline" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/hypervene //New purge chem.
+	name = "Hypervene"
+	id = "hypervene"
+	result = "hypervene"
+	required_reagents = list("arithrazine" = 1, "dylovene" = 1, "ethylredoxrazine" = 1)
 	result_amount = 3

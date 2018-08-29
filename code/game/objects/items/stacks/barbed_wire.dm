@@ -13,3 +13,11 @@
 	attack_verb = list("hit", "whacked", "sliced")
 	max_amount = 20
 	stack_id = "barbed wire"
+
+//small stack
+/obj/item/stack/barbed_wire/small_stack
+	amount = 10
+
+//full stack
+/obj/item/stack/barbed_wire/full
+	amount = 20

@@ -188,6 +188,7 @@
 					/obj/item/reagent_container/glass/bottle/stoxin = 2,
 					/obj/item/reagent_container/glass/bottle/spaceacillin = 4,
 					/obj/item/reagent_container/glass/bottle/peridaxon = 2,
+					/obj/item/reagent_container/glass/bottle/hypervene = 2,
 					/obj/item/reagent_container/glass/bottle/kelotane = 4,
 					/obj/item/reagent_container/glass/bottle/dexalin = 4,
 					/obj/item/reagent_container/glass/bottle/tramadol = 4,

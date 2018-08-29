@@ -752,7 +752,7 @@ proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as te
 	var/turf/target_turf = get_turf(target)
 	var/steps = 1
 	if(current == target_turf)
-  		return TRUE
+		return TRUE
 	if(steps > length)
 		return FALSE
 	current = get_step_towards(current, target_turf)

@@ -751,20 +751,21 @@ proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as te
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
 	var/steps = 1
-	if(current != target_turf)
+	if(current == target_turf)
+  		return TRUE
+	if(steps > length)
+		return FALSE
+	current = get_step_towards(current, target_turf)
+	while(current != target_turf)
+		if(current.opacity)
+			return FALSE
+		for(var/thing in current)
+			var/atom/A = thing
+			if(A.opacity)
+				return FALSE
 		current = get_step_towards(current, target_turf)
-		while(current != target_turf)
-			if(steps > length)
-				return 0
-			if(current.opacity)
-				return 0
-			for(var/thing in current)
-				var/atom/A = thing
-				if(A.opacity)
-					return 0
-			current = get_step_towards(current, target_turf)
-			steps++
-	return 1
+		steps++
+	return TRUE
 /proc/is_blocked_turf(var/turf/T)
 	var/cant_pass = 0
 	if(T.density) cant_pass = 1

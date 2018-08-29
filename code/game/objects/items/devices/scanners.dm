@@ -311,7 +311,7 @@ REAGENT SCANNER
 			is_dead = TRUE
 			//check to see if the target is revivable
 			if(!H.is_revivable())
-				unrevivable = 1
+				unrevivable = TRUE
 		if(!unrevivable)
 			//Chems that conflict with others:
 			var/synaptizine_amount = reagents_in_body["synaptizine"]

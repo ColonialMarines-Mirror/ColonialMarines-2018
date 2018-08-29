@@ -227,8 +227,6 @@ var/list/AAlarmWireColorToFlag = RandomAAlarmWires()
 var/list/AAlarmIndexToFlag
 var/list/AAlarmIndexToWireColor
 var/list/AAlarmWireColorToIndex
-// APC optimization
-var/static/list/apcs_list = list()
 
 #define SPEED_OF_LIGHT 3e8 //not exact but hey!
 #define SPEED_OF_LIGHT_SQ 9e+16

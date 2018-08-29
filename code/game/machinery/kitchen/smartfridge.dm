@@ -14,7 +14,7 @@
 	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't look things over 1000.
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
-	var/icon_panel = "smartfridge-panel"
+	var/icon_panel = "soda-panel"
 	var/item_quants = list()
 	var/ispowered = 1 //starts powered
 	var/isbroken = 0
@@ -363,7 +363,8 @@
 	name = "\improper Refrigerated Medicine Storage"
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
 	icon_state = "smartfridge" //To fix the icon in the map editor.
-	icon_on = "smartfridge_chem"
+	icon_on = "smartfridge"
+	icon_off = "smartfridge-off"
 	is_secure_fridge = TRUE
 	req_one_access_txt = "5;33"
 
@@ -382,9 +383,9 @@
 	desc = "A refrigerated storage unit for storing viral material."
 	is_secure_fridge = TRUE
 	req_access_txt = "39"
-	icon_state = "smartfridge_virology"
-	icon_on = "smartfridge_virology"
-	icon_off = "smartfridge_virology-off"
+	icon_state = "smartfridge"
+	icon_on = "smartfridge"
+	icon_off = "smartfridge-off"
 
 /obj/machinery/smartfridge/secure/virology/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/reagent_container/glass/beaker/vial/))

@@ -331,7 +331,7 @@ REAGENT SCANNER
 					var/revive_timer = round((H.timeofdeath + H.revive_grace_period - world.time) * 0.1)
 					if(revive_timer < 60) //Almost out of time; urgency required.
 						death_message = "<b>CRITICAL: Brain death imminent.</b> Reduce total injury value to sub-200 and administer defibrillator to unarmoured chest <b>immediately</b>."
-					else if(revive_timer < 180) //Running out of time; increase urgency of message.
+					else if(revive_timer < 120) //Running out of time; increase urgency of message.
 						death_message = "<b>URGENT: Brain death occurring soon.</b> Reduce total injury value to sub-200 and administer defibrillator to unarmoured chest to revive."
 					else //Freshly dead.
 						death_message = "Brain death will occur if patient is left untreated. Reduce total injury value to sub-200 and administer defibrillator to unarmoured chest to revive."

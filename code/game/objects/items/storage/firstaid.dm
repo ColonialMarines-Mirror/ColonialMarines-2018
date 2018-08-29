@@ -296,6 +296,18 @@
 	icon_state = "pill_canister8"
 	pill_type_to_fill = /obj/item/reagent_container/pill/quickclot
 
+//Hypervene
+/obj/item/storage/pill_bottle/hypervene
+	name = "\improper Hypervene pill bottle"
+	icon_state = "pill_canister7"
+	pill_type_to_fill = /obj/item/reagent_container/pill/hypervene
+
+//Tricordrazine
+/obj/item/storage/pill_bottle/tricordrazine
+	name = "\improper Tricordrazine pill bottle"
+	icon_state = "pill_canister9"
+	pill_type_to_fill = /obj/item/reagent_container/pill/tricordrazine
+
 
 //Ultrazine
 /obj/item/storage/pill_bottle/ultrazine

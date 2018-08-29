@@ -411,7 +411,7 @@
 
 /obj/item/reagent_container/glass/bottle/oxycodone
 	name = "\improper Oxycodone bottle"
-	desc = "A very small bottle. Contains Oxycodone - Used as an Extreme Painkilled.  ILLEGAL TO DISTRIBUTE."
+	desc = "A very small bottle. Contains Oxycodone - Used as an Extreme Painkiller."
 	icon = 'icons/obj/items/chemistry.dmi'
 	icon_state = "bottle2"
 	volume = 10
@@ -419,3 +419,14 @@
 	New()
 		..()
 		reagents.add_reagent("oxycodone", 10)
+
+/obj/item/reagent_container/glass/bottle/hypervene
+	name = "\improper Hypervene bottle"
+	desc = "A small bottle of hypervene. For purging chems, toxins and radiation. Use in event of overdose."
+	icon = 'icons/obj/items/chemistry.dmi'
+	icon_state = "bottle3"
+	volume = 20
+
+	New()
+		..()
+		reagents.add_reagent("hypervene", 30)

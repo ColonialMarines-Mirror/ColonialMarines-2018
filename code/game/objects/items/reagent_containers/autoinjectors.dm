@@ -143,3 +143,13 @@
 		..()
 		reagents.add_reagent("inaprovaline", 15)
 		update_icon()
+
+/obj/item/reagent_container/hypospray/autoinjector/Hypervene
+	name = "\improper Inaprovaline autoinjector"
+	desc = "An auto-injector loaded with 3 units of Hypervene, an emergency medicine for rapidly purging chems, toxins and radiation. Causes pain and vomitting."
+	icon_state = "clonefix" //TEMP
+
+	New()
+		..()
+		reagents.add_reagent("hypervene", 3)
+		update_icon()

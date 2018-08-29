@@ -279,9 +279,9 @@
 	return null
 
 /area/proc/get_apc()
-	for(var/obj/machinery/power/apc/APC in apcs_list)
-		if(APC.area == src)
-			return APC
+	for(var/obj/machinery/power/apc/A in apcs_list)
+		if(A.area == src)
+			return A
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever

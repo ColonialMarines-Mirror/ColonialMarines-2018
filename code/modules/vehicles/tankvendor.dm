@@ -115,7 +115,7 @@
 	add_fingerprint(usr)
 
 	if(busy)
-		to_chat(usr, "<span class='warning'>The \[src] is busy. Please wait for completion of previous operation.</span>")
+		to_chat(usr, "<span class='warning'>[src] is busy. Please wait for completion of previous operation.</span>")
 		return
 
 	if(href_list["produce"])

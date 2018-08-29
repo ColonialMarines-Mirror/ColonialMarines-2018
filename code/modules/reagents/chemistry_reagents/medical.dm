@@ -153,21 +153,21 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 /datum/reagent/sterilizine/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-		if(method == TOUCH)
-			M.germ_level -= min(volume*20, M.germ_level)
-			if(M.getFireLoss() > 30 || M.getBruteLoss() > 30) // >Spraying space bleach on open wounds
-				to_chat(M, "<span class='warning'>Your open wounds feel like they're on fire!</span>")
-				M.emote(pick("scream","pain","moan"))
-				M.reagent_shock_modifier -= PAIN_REDUCTION_MEDIUM
+	if(method == TOUCH)
+		M.germ_level -= min(volume*20, M.germ_level)
+		if(M.getFireLoss() > 30 || M.getBruteLoss() > 30) // >Spraying space bleach on open wounds
+			to_chat(M, "<span class='warning'>Your open wounds feel like they're on fire!</span>")
+			M.emote(pick("scream","pain","moan"))
+			M.reagent_shock_modifier -= PAIN_REDUCTION_MEDIUM
 
 /datum/reagent/sterilizine/reaction_obj(var/obj/O, var/volume)
-		O.germ_level -= min(volume*20, O.germ_level)
+	O.germ_level -= min(volume*20, O.germ_level)
 		
 /datum/reagent/sterilizine/reaction_turf(var/turf/T, var/volume)
-		T.germ_level -= min(volume*20, T.germ_level)
+	T.germ_level -= min(volume*20, T.germ_level)
 		
 /datum/reagent/sterilizine/on_mob_life(mob/living/M)
-		M.adjustToxLoss(2*REM) // >Drinking bleach
+	M.adjustToxLoss(2*REM) // >Drinking bleach
 
 /datum/reagent/leporazine
 	name = "Leporazine"

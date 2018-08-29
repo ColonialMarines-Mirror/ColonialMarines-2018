@@ -94,7 +94,7 @@
 	set waitfor = 0
 	if(stat & NOPOWER) return
 	if(tank_points < cost)
-		user << "<span class='warning'>You don't have enough points to build that.</span>"
+		to_chat(user, "<span class='warning'>You don't have enough points to build that.</span>")
 		return
 	visible_message("<span class='notice'>[src] starts printing something.</span>")
 	tank_points -= cost
@@ -115,7 +115,7 @@
 	add_fingerprint(usr)
 
 	if(busy)
-		usr << "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>"
+		to_chat(usr, "<span class='warning'>The \[src] is busy. Please wait for completion of previous operation.</span>")
 		return
 
 	if(href_list["produce"])

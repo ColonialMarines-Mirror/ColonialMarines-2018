@@ -279,18 +279,19 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 			to_chat(user, "There is nothing installed on the [i] hardpoint slot.")
 		else
 			if((user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer >= SKILL_ENGINEER_METAL) || isobserver(user))
-				if(HP.health <= 0)
-					to_chat(user, "There is a broken [HP] installed on [i] hardpoint slot.")
-				if(HP.health > 0 && (HP.health < (HP.maxhealth / 3)))
-					to_chat(user, "There is a heavily damaged [HP] installed on [i] hardpoint slot.")
-				if((HP.health > (HP.maxhealth / 3)) && (HP.health < (HP.maxhealth * (2/3))))
-					to_chat(user, "There is a damaged [HP] installed on [i] hardpoint slot.")
-				if((HP.health > (HP.maxhealth * (2/3))) && (HP.health < HP.maxhealth))
-					to_chat(user, "There is a lightly damaged [HP] installed on [i] hardpoint slot.")
-				if(HP.health == HP.maxhealth)
-					to_chat(user, "There is a non-damaged [HP] installed on [i] hardpoint slot.")
-			else
-				to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
+				switch(HP.health / HP.maxhealth)
+					if(0)
+						to_chat(user, "There is a broken [HP] installed on [i] hardpoint slot.")
+					if(0.0001 to 0.3333)
+						to_chat(user, "There is a heavily damaged [HP] installed on [i] hardpoint slot.")
+					if(0.3334 to 0.6666)
+						to_chat(user, "There is a damaged [HP] installed on [i] hardpoint slot.")
+					if(0.6667 to 0.99)
+						to_chat(user, "There is a lightly damaged [HP] installed on [i] hardpoint slot.")
+					if(0.991 to 1)
+						to_chat(user, "There is a non-damaged [HP] installed on [i] hardpoint slot.")
+					else
+						to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
 
 //Special armored vic healthcheck that mainly updates the hardpoint states
 /obj/vehicle/multitile/root/cm_armored/healthcheck()

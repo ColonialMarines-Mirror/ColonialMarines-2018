@@ -108,7 +108,6 @@
 	var/crash_break_probability = 85 //Probability of APC being broken by a shuttle crash on the same z-level
 	var/global/list/status_overlays_lock
 	var/global/list/status_overlays_charging
-	var/global/list/apcs_list = list()
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ

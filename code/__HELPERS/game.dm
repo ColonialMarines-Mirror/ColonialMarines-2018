@@ -37,13 +37,6 @@
 
 	return heard
 
-
-
-
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By)
-	return sqrt(abs(Ax - Bx)**2 + abs(Ay - By)**2) //A squared + B squared = C squared
-
-
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)

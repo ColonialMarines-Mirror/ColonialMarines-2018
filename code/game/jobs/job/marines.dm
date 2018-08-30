@@ -21,11 +21,11 @@
 		H.nutrition = rand(60,250) //Start hungry for the default marine.
 
 /datum/job/marine/generate_wearable_equipment()
-	if (character.gender == MALE)
+	if (H.gender == MALE)
 		. = list(
 			WEAR_WAIST = /obj/item/weapon/twohanded/towel
 			)
-	if (character.gender == FEMALE)
+	if (H.gender == FEMALE)
 		. = list(
 			WEAR_JACKET = /obj/item/weapon/twohanded/towel
 			)

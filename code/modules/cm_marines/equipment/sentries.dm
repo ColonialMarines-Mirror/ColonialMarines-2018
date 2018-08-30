@@ -21,17 +21,17 @@
 	storage_slots = 6
 	can_hold = list() //Nada. Once you take the stuff out it doesn't fit back in.
 
-	New()
-		..()
-		spawn(1)
-			var/obj/item/stack/sheet/plasteel/plasteel_stack = new(src)
-			plasteel_stack.amount = 20
-			var/obj/item/stack/sheet/metal/metal_stack = new(src)
-			metal_stack.amount = 10
-			new /obj/item/device/turret_top(src)
-			new /obj/item/device/turret_sensor(src)
-			new /obj/item/cell(src)
-			new /obj/item/ammo_magazine/sentry(src)
+/obj/item/storage/box/sentry/New()
+	..()
+	spawn(1)
+		var/obj/item/stack/sheet/plasteel/plasteel_stack = new(src)
+		plasteel_stack.amount = 20
+		var/obj/item/stack/sheet/metal/metal_stack = new(src)
+		metal_stack.amount = 10
+		new /obj/item/device/turret_top(src)
+		new /obj/item/device/turret_sensor(src)
+		new /obj/item/cell(src)
+		new /obj/item/ammo_magazine/sentry(src)
 
 /obj/machinery/marine_turret_frame
 	name = "\improper UA 571-C turret frame"
@@ -295,35 +295,35 @@
 	var/datum/ammo/bullet/turret/ammo = /datum/ammo/bullet/turret
 	var/obj/item/projectile/in_chamber = null
 
-	New()
-		spark_system = new /datum/effect_system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		cell = new (src)
-		camera = new (src)
-		camera.network = list("military")
-		camera.c_tag = "[name] ([rand(0, 1000)])"
-		spawn(2)
-			stat = 0
-			//processing_objects.Add(src)
-		ammo = ammo_list[ammo]
-		start_processing()
+/obj/machinery/marine_turret/New()
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	cell = new (src)
+	camera = new (src)
+	camera.network = list("military")
+	camera.c_tag = "[name] ([rand(0, 1000)])"
+	spawn(2)
+		stat = 0
+		//processing_objects.Add(src)
+	ammo = ammo_list[ammo]
+	start_processing()
 
-	Dispose() //Clear these for safety's sake.
-		if(operator)
-			operator.unset_interaction()
-			operator = null
-		if(camera)
-			cdel(camera)
-			camera = null
-		if(cell)
-			cdel(cell)
-			cell = null
-		if(target)
-			target = null
-		SetLuminosity(0)
-		//processing_objects.Remove(src)
-		. = ..()
+/obj/machinery/marine_turret/Dispose() //Clear these for safety's sake.
+	if(operator)
+		operator.unset_interaction()
+		operator = null
+	if(camera)
+		cdel(camera)
+		camera = null
+	if(cell)
+		cdel(cell)
+		cell = null
+	if(target)
+		target = null
+	SetLuminosity(0)
+	//processing_objects.Remove(src)
+	. = ..()
 
 /obj/machinery/marine_turret/attack_hand(mob/user as mob)
 	if(isYautja(user))
@@ -1026,20 +1026,20 @@
 	rounds_max = 500
 	icon_state = "sentry_on"
 
-	New()
-		spark_system = new /datum/effect_system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		var/obj/item/cell/super/H = new(src) //Better cells in these ones.
-		cell = H
-		camera = new (src)
-		camera.network = list("military")
-		camera.c_tag = "[src.name] ([rand(0,1000)])"
-		spawn(2)
-			stat = 0
-			//processing_objects.Add(src)
-			start_processing()
-		ammo = ammo_list[ammo]
+/obj/machinery/marine_turret/premade/New()
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	var/obj/item/cell/super/H = new(src) //Better cells in these ones.
+	cell = H
+	camera = new (src)
+	camera.network = list("military")
+	camera.c_tag = "[src.name] ([rand(0,1000)])"
+	spawn(2)
+		stat = 0
+		//processing_objects.Add(src)
+		start_processing()
+	ammo = ammo_list[ammo]
 
 /obj/machinery/marine_turret/premade/dumb
 	name = "Modified UA-577 Gauss Turret"
@@ -1048,47 +1048,47 @@
 	rounds = 1000000
 	ammo = /datum/ammo/bullet/turret/dumb
 
-	attack_hand(mob/user as mob)
+/obj/machinery/marine_turret/premade/dumb/attack_hand(mob/user as mob)
 
-		if(isYautja(user))
-			to_chat(user, "<span class='warning'>You punch [src] but nothing happens.</span>")
-			return
-		src.add_fingerprint(user)
+	if(isYautja(user))
+		to_chat(user, "<span class='warning'>You punch [src] but nothing happens.</span>")
+		return
+	src.add_fingerprint(user)
 
-		if(!cell || cell.charge <= 0)
-			to_chat(user, "<span class='warning'>You try to activate [src] but nothing happens. The cell must be empty.</span>")
-			return
+	if(!cell || cell.charge <= 0)
+		to_chat(user, "<span class='warning'>You try to activate [src] but nothing happens. The cell must be empty.</span>")
+		return
 
-		if(!anchored)
-			to_chat(user, "<span class='warning'>It must be anchored to the ground before you can activate it.</span>")
-			return
+	if(!anchored)
+		to_chat(user, "<span class='warning'>It must be anchored to the ground before you can activate it.</span>")
+		return
 
-		if(!on)
-			to_chat(user, "You turn on the [src].")
-			visible_message("\blue [src] hums to life and emits several beeps.")
-			visible_message("\icon[src] [src] buzzes in a monotone: 'Default systems initiated.'")
-			target = null
-			on = 1
-			SetLuminosity(7)
-			if(!camera)
-				camera = new /obj/machinery/camera(src)
-				camera.network = list("military")
-				camera.c_tag = src.name
-			update_icon()
-		else
-			on = 0
-			user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
-			"<span class='notice'>You deactivate [src].</span>")
-			visible_message("\icon[src] <span class='notice'>The [name] powers down and goes silent.</span>")
-			update_icon()
+	if(!on)
+		to_chat(user, "You turn on the [src].")
+		visible_message("\blue [src] hums to life and emits several beeps.")
+		visible_message("\icon[src] [src] buzzes in a monotone: 'Default systems initiated.'")
+		target = null
+		on = 1
+		SetLuminosity(7)
+		if(!camera)
+			camera = new /obj/machinery/camera(src)
+			camera.network = list("military")
+			camera.c_tag = src.name
+		update_icon()
+	else
+		on = 0
+		user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
+		"<span class='notice'>You deactivate [src].</span>")
+		visible_message("\icon[src] <span class='notice'>The [name] powers down and goes silent.</span>")
+		update_icon()
 
 //the turret inside the sentry deployment system
 /obj/machinery/marine_turret/premade/dropship
 	density = 0
 	var/obj/structure/dropship_equipment/sentry_holder/deployment_system
 
-	Dispose()
-		if(deployment_system)
-			deployment_system.deployed_turret = null
-			deployment_system = null
-		. = ..()
+/obj/machinery/marine_turret/premade/dropship/Dispose()
+	if(deployment_system)
+		deployment_system.deployed_turret = null
+		deployment_system = null
+	. = ..()

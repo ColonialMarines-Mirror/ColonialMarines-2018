@@ -60,13 +60,13 @@
 		for(var/datum/reagent/R in M.reagents.reagent_list)
 			if(R != src)
 				M.reagents.remove_reagent(R.id,4 * REM)
-		M.reagent_shock_modifier += PAIN_REDUCTION_HEAVY * 1.25//Significant pain while metabolized.
+		M.reagent_shock_modifier += PAIN_REDUCTION_HEAVY //Significant pain while metabolized.
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(prob(5)) //causes vomiting
 				H.vomit()
-		M.adjustToxLoss(-4 * REM)
-		M.radiation = max(M.radiation-8*REM,0)
+		//M.adjustToxLoss(-4 * REM)
+		//M.radiation = max(M.radiation-8*REM,0)
 
 	/datum/reagent/hypervene/on_overdose(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return
@@ -76,7 +76,7 @@
 			if(prob(10)) //heavy vomiting
 				H.vomit()
 		if(ishuman(M))
-			M.reagent_shock_modifier += PAIN_REDUCTION_VERY_HEAVY //Massive pain.
+			M.reagent_shock_modifier += PAIN_REDUCTION_VERY_HEAVY * 1.25//Massive pain.
 
 	/datum/reagent/hypervene/on_overdose_critical(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return

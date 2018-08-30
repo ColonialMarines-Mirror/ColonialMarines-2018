@@ -941,7 +941,7 @@
 
 		if(path.len)
 			for(T in path)
-				if(T.density) continue
+				if(T.opacity) continue
 			targets += M
 
 	if(targets.len) . = pick(targets)

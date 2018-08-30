@@ -49,8 +49,8 @@
 	description = "Quickly purges the body of toxin damage, radiation and all other chemicals. Causes significant pain."
 	reagent_state = LIQUID
 	color = "#19C832"
-	overdose = REAGENTS_OVERDOSE / 2
-	overdose_critical = REAGENTS_OVERDOSE_CRITICAL / 2
+	overdose = REAGENTS_OVERDOSE * 0.5
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL * 0.5
 	scannable = TRUE
 
 	/datum/reagent/hypervene/on_mob_life(mob/living/M, alien)
@@ -68,7 +68,7 @@
 		M.adjustToxLoss(-4 * REM)
 		M.radiation = max(M.radiation-8*REM,0)
 
-	on_overdose(mob/living/M, alien)
+	/datum/reagent/hypervene/on_overdose(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return
 		M.apply_damages(1, 1) //Starts detoxing, hard
 		if(ishuman(M))
@@ -78,7 +78,7 @@
 		if(ishuman(M))
 			M.reagent_shock_modifier += PAIN_REDUCTION_VERY_HEAVY //Massive pain.
 
-	on_overdose_critical(mob/living/M, alien)
+	/datum/reagent/hypervene/on_overdose_critical(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return
 		M.apply_damages(3, 3) //Starts detoxing, hard
 		if(ishuman(M))
@@ -175,7 +175,6 @@
 	description = "An effective and very addictive painkiller."
 	reagent_state = LIQUID
 	color = "#C805DC"
-	scannable = TRUE
 	custom_metabolism = 0.25 // Lasts 1 minute for 15 units
 	overdose = REAGENTS_OVERDOSE * 0.66
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL * 0.66
@@ -691,12 +690,12 @@
 					if(I)
 						if(I.robotic != ORGAN_ROBOT)
 							if(I.damage > 0)
-								I.damage = max(I.damage - 2*REM, 0)
+								I.damage = max(I.damage - 1*REM, 0)
 
-	on_overdose(mob/living/M)
+	/datum/reagent/peridaxon/on_overdose(mob/living/M)
 		M.apply_damage(2, BRUTE)
 
-	on_overdose_critical(mob/living/M)
+	/datum/reagent/peridaxon/on_overdose_critical(mob/living/M)
 		M.apply_damages(3, 3, 3)
 
 /datum/reagent/bicaridine
@@ -744,12 +743,12 @@
 					if(L)
 						for(var/datum/wound/W in L.wounds)
 							if(W.internal)
-								W.damage = max(0, W.damage - 2*REM)
+								W.damage = max(0, W.damage - 1*REM)
 
-	on_overdose(mob/living/M)
+	/datum/reagent/quickclot/on_overdose(mob/living/M)
 		M.apply_damage(3, BRUTE)
 
-	on_overdose_critical(mob/living/M)
+	/datum/reagent/quickclot/on_overdose_critical(mob/living/M)
 		M.apply_damages(2, 3, 3)
 
 /datum/reagent/hyperzine
@@ -763,9 +762,10 @@
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/5
 	scannable = TRUE
 
-	on_mob_life(mob/living/M)
+	/datum/reagent/hyperzine/on_mob_life(mob/living/M)
 		. = ..()
-		if(!.) return
+		if(!.) 
+			return
 
 		M.reagent_move_delay_modifier -= 9
 
@@ -777,7 +777,7 @@
 				F.damage += 1
 				M.emote(pick("twitch","blink_r","shiver"))
 
-	on_overdose(mob/living/M)
+	/datum/reagent/hyperzine/on_overdose(mob/living/M)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/datum/internal_organ/heart/E = H.internal_organs_by_name["heart"]
@@ -786,7 +786,7 @@
 			if(prob(10))
 				M.emote(pick("twitch", "blink_r", "shiver"))
 
-	on_overdose_critical(mob/living/M)
+	/datum/reagent/hyperzine/on_overdose_critical(mob/living/M)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/datum/internal_organ/heart/E = H.internal_organs_by_name["heart"]

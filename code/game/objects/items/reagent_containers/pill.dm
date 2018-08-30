@@ -281,7 +281,7 @@ var/global/list/randomized_pill_icons
 		reagents.add_reagent("tricordrazine", 15)
 
 /obj/item/reagent_container/pill/hypervene
-	pill_desc = "A Hypervene pill. Rapidly purges chemicals, radiation and toxins but causes pain and vomitting. Apply in event of overdose."
+	pill_desc = "A Hypervene pill. Rapidly purges chemicals, but causes pain and vomitting. Apply in event of overdose."
 	/obj/item/reagent_container/pill/hypervene/New()
 		..()
 		icon_state = randomized_pill_icons[14]

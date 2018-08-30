@@ -350,22 +350,22 @@ REAGENT SCANNER
 			if(rad > 5)
 				var/arithrazine = ""
 				var/hyronalin = ""
-				var/hypervene = ""
-				if(reagents_in_body["hypervene"] < 3)
-					hypervene = "hypervene"
+				//var/hypervene = ""
+				//if(reagents_in_body["hypervene"] < 3)
+				//	hypervene = "hypervene"
 				if(reagents_in_body["arithrazine"] < 3)
 					arithrazine = "arithrazine"
 				if(reagents_in_body["hyronalin"] < 3)
 					hyronalin = "hyronalin"
-				advice += "<span class='scanner'><b>Radiation:</b> Administer one dose of: [hypervene] | [arithrazine] | [hyronalin]</span>\n"
+				advice += "<span class='scanner'><b>Radiation:</b> Administer one dose of: [arithrazine] | [hyronalin]</span>\n"
 			if(internal_bleed_detected && reagents_in_body["quickclot"] < 5)
 				advice += "<span class='scanner'><b>Internal Bleeding:</b> Administer one dose of quickclot.</span>\n"
-			if(H.getToxLoss() > 5)
+			if(H.getToxLoss() > 10)
 				var/dylovene = ""
-				var/hypervene = ""
+				//var/hypervene = ""
 				var/dylo_recommend = ""
-				if(reagents_in_body["hypervene"] < 3)
-					hypervene = "hypervene"
+				//if(reagents_in_body["hypervene"] < 3)
+				//	hypervene = "hypervene"
 				if(reagents_in_body["anti_toxin"] < 5)
 					if(synaptizine_amount)
 						dylo_recommend = "Addendum: Dylovene recommended, but conflicting synaptizine present."
@@ -376,10 +376,10 @@ REAGENT SCANNER
 				if(H.getToxLoss() > 50) //Serious toxin damage that is likely to threaten liver damage or be caused by it
 					peridaxon = "Administer one dose of peridaxon and: "
 					if(hyperzine_amount) //Need to make sure no conflicting chems are present; if so, warn the operator
-						peridaxon = "Purge hyperzine in patient or wait for it to metabolize, then administer one dose of peridaxon and: "
-					advice += "<span class='scanner'><b>Extreme Toxin Damage/Probable or Imminent Liver Damage:</b> [peridaxon] [dylovene] | [hypervene]. [dylo_recommend]</span>\n"
+						peridaxon = "Purge hyperzine in patient or wait for it to metabolize, then administer one dose of peridaxon and:"
+					advice += "<span class='scanner'><b>Extreme Toxin Damage/Probable or Imminent Liver Damage:</b> [peridaxon] [dylovene] | [tricordrazine]. [dylo_recommend]</span>\n"
 				else
-					advice += "<span class='scanner'><b>Toxin Damage:</b> Administer one dose of: [tricordrazine] | [dylovene] | [hypervene].</span>\n"
+					advice += "<span class='scanner'><b>Toxin Damage:</b> Administer one dose of: [tricordrazine] | [dylovene].</span>\n"
 			if(((H.getOxyLoss() > 50 && blood_volume > 400) || H.getBrainLoss() >= 10) && reagents_in_body["peridaxon"] < 5)
 				peridaxon = "Administer one dose of peridaxon."
 				if(hyperzine_amount) //Need to make sure no conflicting chems are present; if so, warn the operator

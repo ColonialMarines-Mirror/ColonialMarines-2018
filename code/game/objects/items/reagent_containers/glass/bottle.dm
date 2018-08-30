@@ -422,7 +422,7 @@
 
 /obj/item/reagent_container/glass/bottle/hypervene
 	name = "\improper Hypervene bottle"
-	desc = "A small bottle. Contains Hypervene - A purge chem for flushing toxins, chems and radiation. Causes pain and vomiting."
+	desc = "A small bottle. Contains Hypervene - A purge chem for flushing toxins. Causes pain and vomiting."
 	icon = 'icons/obj/items/chemistry.dmi'
 	icon_state = "bottle3"
 	volume = 20

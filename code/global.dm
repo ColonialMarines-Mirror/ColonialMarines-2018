@@ -180,17 +180,17 @@ var/datum/configuration/config = null
 var/datum/sun/sun = null
 
 //Logging
-var/global/log_directory
-var/global/world_game_log
-var/global/world_attack_log
-var/global/world_runtime_log
-var/global/world_ra_log
-var/global/world_pda_log
-var/global/world_href_log
-var/global/sql_error_log
-var/global/config_error_log
+var/log_directory
+var/world_game_log
+var/world_attack_log
+var/world_runtime_log
+var/world_ra_log
+var/world_pda_log
+var/world_href_log
+var/sql_error_log
+var/config_error_log
 
-var/global/list/all_player_details = list()  // [ckey] = /datum/player_details
+var/list/all_player_details = list()  // [ckey] = /datum/player_details
 
 
 var/list/powernets = list()

@@ -278,12 +278,12 @@
 	. = ..()
 	if(.)
 		return
-	icon_state = initial(icon_state)
+	icon_state = "initial(icon_state)"
 
 /obj/item/weapon/twohanded/towel/attack()
 	. = ..()
 	if(WIELDED)
 		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)
-		unwield()
+		unwield(user)
 	else
 		return FALSE

@@ -304,22 +304,26 @@
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
 
-	on_mob_life(mob/living/M, alien)
-		. = ..()
-		if(!.) return
-		if(M.stat == DEAD)
-			return
-		if(!alien)
-			if(M.getOxyLoss()) M.adjustOxyLoss(-REM)
-			if(M.getBruteLoss() && prob(80)) M.heal_limb_damage(REM, 0)
-			if(M.getFireLoss() && prob(80)) M.heal_limb_damage(0, REM)
-			if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-REM)
+/datum/reagent/tricordrazine/on_mob_life(mob/living/M, alien)
+	. = ..()
+	if(!.) 
+		return
+	if(M.stat == DEAD)
+		return
+	if(!alien)
+		M.adjustOxyLoss(-REM)
+		M.heal_limb_damage(REM, 0)
+ 		M.heal_limb_damage(0, REM) 
+		M.adjustToxLoss(-REM)
+		if(!M.confused) 
+			M.confused = 1
+		M.confused = max(M.confused, 20)
 
-	on_overdose(mob/living/M)
+
+/datum/reagent/tricordrazine/on_overdose(mob/living/M)
 		M.make_jittery(5)
 		M.adjustBrainLoss(1)
-
-	on_overdose_critical(mob/living/M)
+/datum/reagent/tricordrazine/on_overdose_critical(mob/living/M)
 		M.apply_damages(5, 5, 5) //Massive damage bounceback if abused
 		M.adjustBrainLoss(1)
 

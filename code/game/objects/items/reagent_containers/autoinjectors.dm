@@ -7,6 +7,7 @@
 	desc = "An autoinjector containing Inaprovaline.  Useful for saving lives."
 	icon_state = "autoinjector"
 	item_state = "hypo"
+	w_class = 1
 	amount_per_transfer_from_this = 15
 	volume = 15
 	skilllock = 0

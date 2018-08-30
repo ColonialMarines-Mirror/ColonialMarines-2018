@@ -290,6 +290,6 @@
 	. = ..()
 	if(WIELDED)
 		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)
-		unwield(mob/user)
 	else
-		return FALSE
+		return 
+			FALSE

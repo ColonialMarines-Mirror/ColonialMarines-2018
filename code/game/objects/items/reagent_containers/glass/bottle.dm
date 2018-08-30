@@ -427,6 +427,6 @@
 	icon_state = "bottle3"
 	volume = 20
 
-	New()
+	/obj/item/reagent_container/glass/bottle/hypervene/New()
 		..()
-		reagents.add_reagent("hypervene", 20)
+		reagents.add_reagent("hypervene", 10)

@@ -16,6 +16,10 @@
 
 //small stack
 /obj/item/stack/barbed_wire/small_stack
+	amount = 5
+	
+//half stack
+/obj/item/stack/barbed_wire/half_stack
 	amount = 10
 
 //full stack

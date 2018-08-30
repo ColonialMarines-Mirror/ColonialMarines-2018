@@ -194,6 +194,7 @@
 					/obj/item/reagent_container/glass/bottle/tramadol = 4,
 					/obj/item/reagent_container/glass/bottle/oxycodone = 4,
 					/obj/item/storage/pill_bottle/peridaxon = 2,
+					/obj/item/storage/pill_bottle/hypervene = 2,
 					/obj/item/stack/medical/advanced/bruise_pack = 5,
 					/obj/item/stack/medical/advanced/ointment = 5,
 					/obj/item/stack/medical/ointment = 10,

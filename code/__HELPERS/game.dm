@@ -9,9 +9,10 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(atom/A)
-	var/turf/T = get_turf(A)
-	if(T) . = T.loc
+/proc/get_area(atom/target)
+  while(target && !isarea(target))
+    target = target.loc
+  return target
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)

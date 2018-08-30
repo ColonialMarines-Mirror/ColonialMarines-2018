@@ -20,7 +20,7 @@
 	if(flags_startup_parameters & ROLE_ADD_TO_MODE) 
 		H.nutrition = rand(60,250) //Start hungry for the default marine.
 
-/datum/job/marine/generate_wearable_equipment()
+/datum/job/marine/generate_wearable_equipment(mob/living/carbon/human/H)
 	if (H.gender == MALE)
 		. = list(
 			WEAR_WAIST = /obj/item/weapon/twohanded/towel

@@ -149,7 +149,7 @@
 	desc = "An auto-injector loaded with 3 units of Hypervene, an emergency medicine that rapidly purges chems, radiation and toxins. Causes pain and vomitting."
 	icon_state = "clonefix" //TEMP
 
-	New()
+	/obj/item/reagent_container/hypospray/autoinjector/hypervene/New()
 		..()
 		reagents.add_reagent("hypervene", 3)
 		update_icon()

@@ -408,7 +408,7 @@
 
 /obj/item/storage/pouch/construction/full/New()
 	..()
-	new /obj/item/stack/sandbags_empty/full (src)
+	new /obj/item/stack/sandbags_empty/half (src)
 	new /obj/item/stack/barbed_wire/small_stack (src)
 	new /obj/item/tool/shovel/etool (src)
 

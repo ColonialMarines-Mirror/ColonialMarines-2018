@@ -142,16 +142,19 @@
 
 /obj/item/weapon/twohanded/fireaxe/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	pry_capable = IS_PRY_CAPABLE_SIMPLE
 
 /obj/item/weapon/twohanded/fireaxe/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	pry_capable = 0
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity) 
+		return
 	..()
 	if(A && (flags_item & WIELDED) && istype(A,/obj/structure/grille)) //destroys grilles in one hit
 		cdel(A)
@@ -192,16 +195,19 @@
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/IsShield()
-	if(flags_item & WIELDED) return 1
+	if(flags_item & WIELDED) 
+		return TRUE
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	icon_state += "_w"
 
 /obj/item/weapon/twohanded/dualsaber/unwield(mob/user)
 	. = ..()
-	if(!.) return
+	if(!.) 
+		return
 	icon_state 	= copytext(icon_state,1,-2)
 
 /obj/item/weapon/twohanded/spear
@@ -276,9 +282,9 @@
 
 /obj/item/weapon/twohanded/towel/unwield(mob/user)
 	. = ..()
-	if(.)
+	if(.)	
 		return
-	icon_state = "initial(icon_state)"
+	icon_state = initial(icon_state)
 
 /obj/item/weapon/twohanded/towel/attack()
 	. = ..()

@@ -320,6 +320,7 @@
 /datum/reagent/tricordrazine/on_overdose(mob/living/M)
 	M.make_jittery(5)
 	M.adjustBrainLoss(1)
+	
 /datum/reagent/tricordrazine/on_overdose_critical(mob/living/M)
 	M.apply_damages(5, 5, 5) //Massive damage bounceback if abused
 	M.adjustBrainLoss(1)

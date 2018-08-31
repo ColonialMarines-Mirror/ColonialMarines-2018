@@ -25,7 +25,8 @@
 		unwield(user)
 
 /obj/item/proc/wield(var/mob/user)
-	if( !(flags_item & TWOHANDED) || flags_item & WIELDED ) return
+	if( !(flags_item & TWOHANDED) || flags_item & WIELDED ) 
+		return
 
 	if(user.get_inactive_hand())
 		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
@@ -282,7 +283,7 @@
 
 /obj/item/weapon/twohanded/towel/unwield(mob/user)
 	. = ..()
-	if(.)	
+	if(!.)	
 		return
 	icon_state = initial(icon_state)
 

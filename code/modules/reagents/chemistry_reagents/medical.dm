@@ -689,7 +689,7 @@
 				if(I)
 					if(I.robotic != ORGAN_ROBOT)
 						if(I.damage > 0)
-							if(M.bodytemperature < 170 || I.damage <= I.min_bruised_damage) // Peridaxon slowly heals organ damage if patient at cryo temp, or if damage minor.
+							if(M.bodytemperature < 170 || I.damage <= I.min_bruised_damage * 0.5) // Peridaxon slowly heals organ damage if patient at cryo temp, or if damage minor.
 								I.damage = max(I.damage - 1*REM, 0)
 
 	/datum/reagent/peridaxon/on_overdose(mob/living/M)

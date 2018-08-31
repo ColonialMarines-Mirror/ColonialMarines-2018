@@ -398,7 +398,7 @@
 			chosen_species = all_species[client.prefs.species]
 		if(chosen_species)
 			// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
-			if(is_alien_whitelisted(chosen_species) || has_admin_rights())
+			if(is_alien_whitelisted(client.prefs.species))
 				new_character = new(loc, client.prefs.species)
 
 		if(!new_character)
@@ -459,18 +459,14 @@
 		src << browse(null, "window=playersetup") //closes the player setup window
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // Stops lobby music.
 
-	proc/has_admin_rights()
-		return client.holder.rights & R_ADMIN
-
 /mob/new_player/get_species()
 	var/datum/species/chosen_species
 	if(client.prefs.species)
 		chosen_species = all_species[client.prefs.species]
-
 	if(!chosen_species)
 		return "Human"
 
-	if(is_alien_whitelisted(chosen_species) || has_admin_rights())
+	if(is_alien_whitelisted(chosen_species))
 		return chosen_species.name
 
 	return "Human"

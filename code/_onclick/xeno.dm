@@ -30,19 +30,14 @@
 	return ..()
 
 /mob/living/carbon/Xenomorph/Boiler/click(var/atom/A, var/list/mods)
-	if(!istype(A,/obj/screen))
-		if(is_zoomed && !is_bombarding)
-			zoom_out()
-			return 1
-
-		if(is_bombarding)
-			if(isturf(A))
-				bomb_turf(A)
-			else if(isturf(get_turf(A)))
-				bomb_turf(get_turf(A))
-			if(client)
-				client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-			return 1
+	if(!istype(A,/obj/screen) && is_bombarding)
+		if(isturf(A))
+			bomb_turf(A)
+		else if(isturf(get_turf(A)))
+			bomb_turf(get_turf(A))
+		if(client)
+			client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+		return 1
 
 	if(mods["middle"] && !mods["shift"])
 		if (selected_ability && middle_mouse_toggle)

@@ -88,10 +88,6 @@
 		hive = hive_datum[hivenumber]
 	else return
 
-	if(!hive.living_xeno_queen)
-		to_chat(src, "<span class='warning'>There is no Queen. You are alone.</span>")
-		return
-
 	var/rendered
 	if(isXenoQueen(src))
 		rendered = "<font size='3' font color='purple'><i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'> hisses, '[message]'</span></span></i></font>"

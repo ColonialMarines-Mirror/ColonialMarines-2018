@@ -521,14 +521,17 @@
 
 	round_statistics.warrior_agility_toggles++
 	if (agility)
-		to_chat(src, "<span class='xenowarning'>You lower yourself to all fours.</span>")
-		speed -= 0.7
+		to_chat(src, "<span class='xenowarning'>You lower yourself to all fours and loosen your armored scales to ease your movement.</span>")
+		speed -= 1
+		armor_deflection -= 30
+
 		update_icons()
 		do_agility_cooldown()
 		return
 
-	to_chat(src, "<span class='xenowarning'>You raise yourself to stand on two feet.</span>")
-	speed += 0.7
+	to_chat(src, "<span class='xenowarning'>You raise yourself to stand on two feet, hard scales setting back into place.</span>")
+	speed += 1
+	armor_deflection += 30
 	update_icons()
 	do_agility_cooldown()
 
@@ -1265,14 +1268,6 @@
 	set desc = "Check the status of your current hive."
 	set category = "Alien"
 
-	var/datum/hive_status/hive
-	if(hivenumber && hivenumber <= hive_datum.len)
-		hive = hive_datum[hivenumber]
-	else return
-	if(!hive.living_xeno_queen)
-		to_chat(src, "<span class='warning'>There is no Queen. You are alone.</span>")
-		return
-
 	if(caste == "Queen" && anchored)
 		check_hive_status(src, anchored)
 	else
@@ -1318,7 +1313,8 @@
 	var/leader_list = ""
 
 	for(var/mob/living/carbon/Xenomorph/X in living_mob_list)
-		if(X.z == ADMIN_Z_LEVEL) continue //don't show xenos in the thunderdome when admins test stuff.
+		if(X.z == ADMIN_Z_LEVEL)
+			continue //don't show xenos in the thunderdome when admins test stuff.
 		if(istype(user)) // cover calling it without parameters
 			if(X.hivenumber != user.hivenumber)
 				continue // not our hive

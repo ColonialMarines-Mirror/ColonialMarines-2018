@@ -181,7 +181,8 @@
 				to_chat(usr, "<span class='alert'>Hrm, that didn't work. Maybe try the one on the ship?</span>")
 				return
 			else
-				if(z == 1) shuttle.transit_gun_mission = FALSE //remote launch always do transport flight.
+				if(z == 1)
+					shuttle.transit_gun_mission = FALSE //remote launch always do transport flight.
 				shuttle.launch(src)
 			log_admin("[usr] ([usr.key]) launched a [shuttle.iselevator? "elevator" : "shuttle"] from [src]")
 			message_admins("[usr] ([usr.key]) launched a [shuttle.iselevator? "elevator" : "shuttle"] using [src].")

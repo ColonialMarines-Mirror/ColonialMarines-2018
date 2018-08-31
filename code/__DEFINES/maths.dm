@@ -52,12 +52,6 @@
 
 #define ATAN2(x, y) ( !(x) && !(y) ? 0 : (y) >= 0 ? arccos((x) / sqrt((x)*(x) + (y)*(y))) : -arccos((x) / sqrt((x)*(x) + (y)*(y))) )
 
-//Finds nearest integer to x, above or below
-/proc/RoundNearest(x)
-	var/f = FLOOR((x), 1)
-	var/c = CEILING((x), 1)
-	return ((c - x) <= (x - f)) ? c : f //something.5 or higher, round up, else round down
-
 // Greatest Common Divisor - Euclid's algorithm
 /proc/Gcd(a, b)
 	return b ? Gcd(b, (a) % (b)) : a

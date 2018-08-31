@@ -312,8 +312,7 @@
 		return
 	if(!alien)
 		M.adjustOxyLoss(-REM)
-		M.heal_limb_damage(REM, 0)
- 		M.heal_limb_damage(0, REM) 
+		M.heal_limb_damage(REM, REM)
 		M.adjustToxLoss(-REM)
 		M.confused = min(30, M.confused + rand(1, 4))
 

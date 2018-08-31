@@ -25,7 +25,7 @@
 		. = list(
 			WEAR_WAIST = /obj/item/weapon/twohanded/towel
 			)
-	if (H.gender == FEMALE)
+	else if (H.gender == FEMALE)
 		. = list(
 			WEAR_JACKET = /obj/item/weapon/twohanded/towel
 			)

@@ -315,10 +315,8 @@
 		M.heal_limb_damage(REM, 0)
  		M.heal_limb_damage(0, REM) 
 		M.adjustToxLoss(-REM)
-		if(!M.confused) 
-			M.confused = 1
-		M.confused = max(M.confused, 20)
-
+		if(M.confused < 30) // Slow down there satan
+			M.confused += rand(1,4)
 
 /datum/reagent/tricordrazine/on_overdose(mob/living/M)
 		M.make_jittery(5)

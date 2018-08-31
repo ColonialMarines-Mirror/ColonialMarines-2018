@@ -671,11 +671,11 @@
 /datum/reagent/peridaxon
 	name = "Peridaxon"
 	id = "peridaxon"
-	description = "Used to stabilize internal organs while waiting for surgery. Medicate cautiously. Repairs organ damage at cryogenic temperatures."
+	description = "Used to stabilize internal organs while waiting for surgery and repair minor organ damage. Medicate cautiously. Can fully repair organ damage at cryogenic temperatures."
 	reagent_state = LIQUID
 	color = "#C845DC"
-	overdose = REAGENTS_OVERDOSE/2
-	overdose_critical = REAGENTS_OVERDOSE_CRITICAL/2
+	overdose = REAGENTS_OVERDOSE * 0.5
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL * 0.5
 	custom_metabolism = 0.05
 	scannable = TRUE
 
@@ -683,13 +683,13 @@
 		. = ..()
 		if(!.)
 			return
-		if(M.bodytemperature < 170)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				for(var/datum/internal_organ/I in H.internal_organs)
-					if(I)
-						if(I.robotic != ORGAN_ROBOT)
-							if(I.damage > 0)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/datum/internal_organ/I in H.internal_organs)
+				if(I)
+					if(I.robotic != ORGAN_ROBOT)
+						if(I.damage > 0)
+							if(M.bodytemperature < 170 || I.damage <= I.min_bruised_damage) // Peridaxon slowly heals organ damage if patient at cryo temp, or if damage minor.
 								I.damage = max(I.damage - 1*REM, 0)
 
 	/datum/reagent/peridaxon/on_overdose(mob/living/M)

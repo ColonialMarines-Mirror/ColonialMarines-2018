@@ -425,7 +425,7 @@
 	desc = "A small bottle. Contains Hypervene - A purge chem for flushing toxins. Causes pain and vomiting."
 	icon = 'icons/obj/items/chemistry.dmi'
 	icon_state = "bottle3"
-	volume = 20
+	volume = 10
 
 	/obj/item/reagent_container/glass/bottle/hypervene/New()
 		..()

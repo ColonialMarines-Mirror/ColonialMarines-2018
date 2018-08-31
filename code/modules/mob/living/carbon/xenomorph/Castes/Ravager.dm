@@ -6,8 +6,8 @@
 	desc = "A huge, nasty red alien with enormous scythed claws."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Ravager Walking"
-	melee_damage_lower = 25
-	melee_damage_upper = 35
+	melee_damage_lower = 40
+	melee_damage_upper = 60
 	tacklemin = 3
 	tacklemax = 6
 	tackle_chance = 80

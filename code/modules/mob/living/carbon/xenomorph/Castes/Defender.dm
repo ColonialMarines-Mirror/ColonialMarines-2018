@@ -6,8 +6,8 @@
 	icon_state = "Defender Walking"
 	melee_damage_lower = 15
 	melee_damage_upper = 25
-	health = 250
-	maxHealth = 250
+	health = 300
+	maxHealth = 300
 	plasma_stored = 50
 	plasma_gain = 8
 	plasma_max = 100
@@ -19,7 +19,7 @@
 	old_x = -16
 	evolves_to = list("Warrior")
 	charge_type = 2 //Pounce - Hunter
-	armor_deflection = 40
+	armor_deflection = 20
 	tier = 1
 	upgrade = 0
 	actions = list(

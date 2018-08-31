@@ -11,8 +11,8 @@
 	tacklemin = 2
 	tacklemax = 3
 	tackle_chance = 60
-	health = 175
-	maxHealth = 175
+	health = 200
+	maxHealth = 200
 	plasma_stored = 50
 	plasma_max = 250
 	upgrade_threshold = 800
@@ -22,6 +22,7 @@
 	drag_delay = 6 //pulling a big dead xeno is hard
 	aura_strength = 1 //Carrier's pheromones are equivalent to Hivelord. Climbs 0.5 up to 2.5
 	speed = 0
+	armor_deflection = 5
 	mob_size = MOB_SIZE_BIG
 	var/huggers_max = 8
 	var/huggers_cur = 0

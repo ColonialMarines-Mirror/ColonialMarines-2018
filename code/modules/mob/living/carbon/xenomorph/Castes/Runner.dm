@@ -19,8 +19,10 @@
 	speed = -1.8
 	evolves_to = list("Lurker")
 	charge_type = 1 //Pounce - Runner
+	armor_deflection = 5
 	flags_pass = PASSTABLE
 	attack_delay = -4
+	pounce_delay = 35
 	tier = 1
 	upgrade = 0
 	pixel_x = -16  //Needed for 2x2

@@ -28,7 +28,7 @@
 
 
 
-/obj/item/storage/pouch/general
+/obj/item/storage/pouch/general //Essentially pointless. Replacing this at vendors with the shotgun shell pouch. Kept for now.
 	name = "light general pouch"
 	desc = "A general purpose pouch used to carry small items and ammo magazines."
 	icon_state = "small_drop"
@@ -41,7 +41,7 @@
 					)
 
 /obj/item/storage/pouch/general/medium
-	name = "medium general pouch"
+	name = "general pouch" //Renamed to general pouch as this is the baseline/standard.
 	storage_slots = 2
 	icon_state = "medium_drop"
 	draw_mode = 0
@@ -415,7 +415,7 @@
 /obj/item/storage/pouch/tools
 	name = "tools pouch"
 	desc = "It's designed to hold maintenance tools - screwdriver, wrench, cable coil, etc. It also has a hook for an entrenching tool."
-	storage_slots = 4
+	storage_slots = 5
 	max_w_class = 3
 	icon_state = "tools"
 	can_hold = list(
@@ -427,7 +427,8 @@
 					"/obj/item/device/multitool",
 					"/obj/item/tool/wrench",
 					"/obj/item/stack/cable_coil",
-					"/obj/item/tool/extinguisher/mini"
+					"/obj/item/tool/extinguisher/mini",
+					"/obj/item/tool/shovel/etool"
 					)
 
 /obj/item/storage/pouch/tools/full/New()
@@ -436,3 +437,14 @@
 	new /obj/item/tool/wirecutters (src)
 	new /obj/item/device/multitool (src)
 	new /obj/item/tool/wrench (src)
+	new /obj/item/tool/crowbar (src)
+	
+	
+/obj/item/storage/pouch/shotgun //New shotgun shell pouch that is actually worth a shit and will be replacing light general in vendors
+	name = "shotgun shell pouch"
+	desc = "A pouch specialized for holding shotgun ammo."
+	icon_state = "small_drop"
+	storage_slots = 4
+	draw_mode = 0
+	can_hold = list("/obj/item/ammo_magazine/handful",
+					)

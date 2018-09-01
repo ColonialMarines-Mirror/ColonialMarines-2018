@@ -129,7 +129,7 @@
 	icon_state = "case_small"
 
 /obj/structure/largecrate/random/barrel/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/tool/weldingtool) && (welding && welding == 1))
+	if(istype(W, /obj/item/tool/weldingtool) && (W.welding && W.welding == 1))
 		new /obj/item/stack/sheet/metal/small_stack(src)
 		W.remove_fuel(1,user)
 		var/turf/T = get_turf(src)

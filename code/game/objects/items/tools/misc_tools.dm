@@ -12,7 +12,6 @@
 	icon_state = "labeler0"
 	item_state = "flight"
 	var/label = null
-	var/labels_left = 50
 	var/mode = 0	//off or on.
 
 /obj/item/tool/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
@@ -21,12 +20,8 @@
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
 		return		// don't set a label
-
 	if(!labels_left)
 		to_chat(user, "<span class='notice'>No labels left.</span>")
-		return
-	if(!label || !length(label))
-		to_chat(user, "<span class='notice'>No text set.</span>")
 		return
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Label too big.</span>")

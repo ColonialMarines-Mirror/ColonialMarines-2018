@@ -19,7 +19,6 @@
 //flags_atom
 
 #define NOINTERACT				1		// You can't interact with it, at all. Useful when doing certain animations.
-#define FPRINT					2		// takes a fingerprint
 #define CONDUCT					4		// conducts electricity (metal etc.)
 #define ON_BORDER				8		// 'border object'. item has priority to check when entering or leaving
 #define NOBLOODY				16		// Don't want a blood overlay on this one.

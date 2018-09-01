@@ -12,7 +12,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,60)
 	volume = 60
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 
 	var/label_text = ""
 
@@ -207,7 +207,7 @@
 	matter = list("glass" = 500)
 	volume = 60
 	amount_per_transfer_from_this = 10
-	flags_atom = FPRINT|OPENCONTAINER|NOREACT
+	flags_atom = OPENCONTAINER|NOREACT
 
 /obj/item/reagent_container/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -227,7 +227,7 @@
 	volume = 30
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 
 /obj/item/reagent_container/glass/beaker/cryoxadone
 	New()
@@ -259,7 +259,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,60,120)
 	volume = 120
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 
 /obj/item/reagent_container/glass/bucket/attackby(obj/item/I, mob/user)
 	if(isprox(I))

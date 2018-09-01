@@ -16,16 +16,16 @@ var/global/list/randomized_pill_icons
 	volume = 60
 
 /obj/item/reagent_container/pill/New()
-		..()
-		if(!randomized_pill_icons)
-			var/allowed_numbers = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)
-			randomized_pill_icons = list()
-			for(var/i = 1 to 21)
-				randomized_pill_icons += "pill[pick_n_take(allowed_numbers)]"
-		if(!icon_state)
-			icon_state = "pill[rand(1,21)]"
+	..()
+	if(!randomized_pill_icons)
+		var/allowed_numbers = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)
+		randomized_pill_icons = list()
+		for(var/i = 1 to 21)
+			randomized_pill_icons += "pill[pick_n_take(allowed_numbers)]"
+	if(!icon_state)
+		icon_state = "pill[rand(1,21)]"
 /obj/item/reagent_container/pill/attack_self(mob/user as mob)
-		return
+	return
 
 /obj/item/reagent_container/pill/attack(mob/M, mob/user, def_zone)
 

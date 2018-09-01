@@ -13,6 +13,7 @@
 	item_state = "flight"
 	var/label = null
 	var/mode = 0	//off or on.
+	var/wait
 
 /obj/item/tool/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
@@ -23,15 +24,8 @@
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Label too big.</span>")
 		return
-	if(isliving(A))
-		to_chat(user, "<span class='notice'>You can't label living beings.</span>")
-		return
-	if(istype(A, /obj/item/reagent_container/glass))
-		to_chat(user, "<span class='notice'>The label will not stick to [A]. Use a pen instead.</span>")
-		return
-	if(istype(A, /obj/item/tool/surgery))
-		to_chat(user, "<span class='notice'>That wouldn't be sanitary.</span>")
-		return
+	if(world.time < wait + 10)
+		to_chat(user, "<span class='notice'>The print heads are still cleaning, if you print the label right now it'll smear, you wouldn't want that? Would you? .</span>
 	if(isturf(A))
 		to_chat(user, "<span class='notice'>The label won't stick to that.</span>")
 		return
@@ -39,7 +33,7 @@
 	user.visible_message("<span class='notice'>[user] labels [A] as \"[label]\".</span>", \
 						 "<span class='notice'>You label [A] as \"[label]\".</span>")
 	A.name = "[A.name] ([label])"
-
+	wait = world.time
 /obj/item/tool/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode
 	icon_state = "labeler[mode]"

@@ -35,6 +35,7 @@
 	var/has_fine_manipulation = 1 // Can use small items.
 	var/insulated                 // Immune to electrocution and glass shards to the feet.
 	var/show_paygrade = FALSE
+	var/count_human = FALSE // Does this count as a human?
 
 	// Some species-specific gibbing data.
 	var/gibbed_anim = "gibbed-h"
@@ -240,6 +241,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	flags = HAS_SKIN_TONE|HAS_LIPS|HAS_UNDERWEAR
 	show_paygrade = TRUE
+	count_human = TRUE
 
 	screams = list("male" = "male_scream", "female" = "female_scream")
 
@@ -377,6 +379,7 @@
 	eyes = "blank_eyes"
 	speech_verb_override = "flutters"
 	show_paygrade = TRUE
+	count_human = TRUE
 
 	flags = HAS_LIPS|HAS_NO_HAIR
 	preferences = list("moth_wings" = "Wings")

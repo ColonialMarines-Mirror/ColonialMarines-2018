@@ -297,7 +297,7 @@
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
-	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
+	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries. However it does cause a buildup of lactic acid within muscles."
 	reagent_state = LIQUID
 	color = "#B865CC"
 	scannable = 1
@@ -314,7 +314,7 @@
 		M.adjustOxyLoss(-REM)
 		M.heal_limb_damage(REM, REM)
 		M.adjustToxLoss(-REM)
-		M.confused = min(30, M.confused + rand(1, 4))
+		M.reagent_move_delay_modifier += 0.33
 
 /datum/reagent/tricordrazine/on_overdose(mob/living/M)
 	M.make_jittery(5)

@@ -77,7 +77,7 @@ var/global/list/randomized_pill_icons
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] has nothing to dissolve the pill with. Are you attempting to dissolve it with air?</span>")
 			return
-		to_chat(user, "<span class='warning'>You dissolve the pill in [target]"</span>)
+		to_chat(user, "<span class='warning'>You dissolve the pill in [target]</span>")
 
 		var/rgt_list_text = get_reagent_list_text()
 

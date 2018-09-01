@@ -128,6 +128,20 @@
 	desc = "Two small black storage cases."
 	icon_state = "case_small"
 
+/obj/structure/largecrate/random/barrel/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/tool/weldingtool) && (welding && welding == 1))
+		new /obj/item/stack/sheet/metal/small_stack(src)
+		W.remove_fuel(1,user)
+		var/turf/T = get_turf(src)
+		for(var/obj/O in contents)
+			O.loc = T
+		user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>", \
+							 "<span class='notice'>You weld open \the [src].</span>", \
+							 "<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
+		cdel(src)
+	else
+		return attack_hand(user)
+
 /obj/structure/largecrate/random/barrel
 	name = "blue barrel"
 	desc = "A blue storage barrel"

@@ -35,7 +35,7 @@ var/global/list/randomized_pill_icons
 			if(H.species.flags & IS_SYNTHETIC)
 				to_chat(H, "<span class='warning'>You can't eat pills.</span>")
 				return
-		M << "\blue You swallow [src]."
+		to_chat(M, "<span class='warning'> You swallow [src].</span>")
 		M.drop_inv_item_on_ground(src) //icon update
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)

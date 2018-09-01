@@ -21,6 +21,9 @@
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
 		return		// don't set a label
+	if(!label || !length(label))
+		to_chat(user, "<span class='notice'>No text set.</span>")
+		return
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Label too big.</span>")
 		return

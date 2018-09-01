@@ -154,7 +154,7 @@
 /obj/item/weapon/gun/pistol/c99
 	name = "\improper Korovin PK-9 pistol"
 	desc = "An updated variant of an old eastern design, dating back to from the 20th century. Commonly found among mercenary companies due to its reliability, but also issued to UPP armed forces. Features an integrated silencer, and chambered in the razor small .22 rounds. This one is usually loaded with the more common .22 hollowpoint rounds and appears to be a mercenary version.."
-	fire_delay = config.high_fire_delay
+	fire_delay = 5
 	accuracy_mult = 1.4
 	accuracy_mult_unwielded = 1.5
 	scatter = 20

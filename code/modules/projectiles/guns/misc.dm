@@ -1,8 +1,3 @@
-
-
-
-//-------------------------------------------------------
-
 /obj/item/weapon/gun/flare
 	name = "flare gun"
 	desc = "A gun that fires flares. Replace with flares. Simple!"

@@ -848,7 +848,7 @@ and you're good to go.
 
 	else if(user && world.time - user.l_move_time < 5) //moved during the last half second
 		//accuracy and scatter penalty if the user fires unwielded right after moving
-		gun_accuracy_mult = max(0.1, gun_accuracy_mult - max(0,movement_acc_penalty_mult * .1))
+		gun_accuracy_mult = max(0.1, gun_accuracy_mult - max(0,movement_acc_penalty_mult * 0.1))
 		gun_scatter += max(0, movement_acc_penalty_mult * 5)
 
 
@@ -880,7 +880,7 @@ and you're good to go.
 				if(GUN_SKILL_SMARTGUN)
 					skill_accuracy = user.mind.cm_skills.smartgun
 		if(skill_accuracy)
-			gun_accuracy_mult += skill_accuracy * .1 // Accuracy mult increase/decrease per level is equal to attaching/removing a red dot sight
+			gun_accuracy_mult += skill_accuracy * 0.1 // Accuracy mult increase/decrease per level is equal to attaching/removing a red dot sight
 
 	projectile_to_fire.accuracy = round(projectile_to_fire.accuracy * gun_accuracy_mult) // Apply gun accuracy multiplier to projectile accuracy
 	projectile_to_fire.damage = round(projectile_to_fire.damage * damage_mult) 		// Apply gun damage multiplier to projectile damage

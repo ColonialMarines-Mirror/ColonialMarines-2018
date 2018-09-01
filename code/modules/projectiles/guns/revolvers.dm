@@ -3,6 +3,14 @@
 //Generic parent object.
 /obj/item/weapon/gun/revolver
 	flags_equip_slot = SLOT_WAIST
+	fire_delay = 7
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 0.95
+	scatter = 20
+	scatter_unwielded = 25
+	damage_mult = 1
+	recoil = 1
+	recoil_unwielded = 3
 	w_class = 3
 	origin_tech = "combat=3;materials=2"
 	matter = list("metal" = 2000)
@@ -25,17 +33,6 @@
 /obj/item/weapon/gun/revolver/New()
 	..() //Do all that other stuff.
 	replace_cylinder(current_mag.current_rounds)
-
-/obj/item/weapon/gun/revolver/set_gun_config_values()
-	fire_delay = config.max_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.low_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.high_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.min_recoil_value
-	recoil_unwielded = config.med_recoil_value
-
 
 /obj/item/weapon/gun/revolver/examine(mob/user)
 	..()
@@ -296,6 +293,14 @@
 /obj/item/weapon/gun/revolver/upp
 	name = "\improper N-Y 7.62mm revolver"
 	desc = "The Nagant-Yamasaki 7.62 is an effective killing machine designed by a consortion of shady Not-Americans. It is frequently found in the hands of criminals or mercenaries."
+	fire_delay = 3
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 0.8
+	scatter = 20
+	scatter_unwielded = 25
+	damage_mult = 1.05
+	recoil = 0
+	recoil_unwielded = 0
 	icon_state = "ny762"
 	item_state = "ny762"
 	origin_tech = "combat=3;materials=1;syndicate=3"
@@ -303,23 +308,11 @@
 	current_mag = /obj/item/ammo_magazine/internal/revolver/upp
 	force = 8
 	attachable_allowed = list(/obj/item/attachable/compensator)
-
 	flags_gun_features = GUN_CAN_POINTBLANK|GUN_INTERNAL_MAG
 
 	New()
 		..()
 		attachable_offset = list("muzzle_x" = 28, "muzzle_y" = 21,"rail_x" = 14, "rail_y" = 23, "under_x" = 24, "under_y" = 19, "stock_x" = 24, "stock_y" = 19)
-
-/obj/item/weapon/gun/revolver/upp/set_gun_config_values()
-	fire_delay = config.low_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.med_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.high_scatter_value
-	damage_mult = config.base_hit_damage_mult + config.min_hit_damage_mult
-	recoil = 0
-	recoil_unwielded = 0
-
 
 //-------------------------------------------------------
 //357 REVOLVER //Based on the generic S&W 357.
@@ -327,6 +320,14 @@
 /obj/item/weapon/gun/revolver/small
 	name = "\improper S&W .357 revolver"
 	desc = "A lean .357 made by Smith & Wesson. A timeless classic, from antiquity to the future."
+	fire_delay = 3
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 0.9
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1
+	recoil = 0
+	recoil_unwielded = 0
 	icon_state = "sw357"
 	item_state = "ny762" //PLACEHOLDER
 	fire_sound = 'sound/weapons/gun_pistol_medium.ogg'
@@ -338,16 +339,6 @@
 	..()
 	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 19,"rail_x" = 12, "rail_y" = 21, "under_x" = 20, "under_y" = 15, "stock_x" = 20, "stock_y" = 15)
 
-/obj/item/weapon/gun/revolver/small/set_gun_config_values()
-	fire_delay = config.low_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.low_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = 0
-	recoil_unwielded = 0
-
 /obj/item/weapon/gun/revolver/small/unique_action(mob/user)
 	revolver_trick(user)
 
@@ -357,6 +348,16 @@
 /obj/item/weapon/gun/revolver/mateba
 	name = "\improper Mateba autorevolver"
 	desc = "The Mateba is a powerful, fast-firing revolver that uses its own recoil to rotate the cylinders. It uses heavy .454 rounds."
+	fire_delay = 7
+	burst_amount = 2
+	burst_delay = 4
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 0.6
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1.05
+	recoil = 1
+	recoil_unwielded = 3
 	icon_state = "mateba"
 	item_state = "mateba"
 	origin_tech = "combat=4;materials=3"
@@ -375,20 +376,6 @@
 /obj/item/weapon/gun/revolver/mateba/New()
 	..()
 	attachable_offset = list("muzzle_x" = 28, "muzzle_y" = 18,"rail_x" = 12, "rail_y" = 21, "under_x" = 22, "under_y" = 15, "stock_x" = 22, "stock_y" = 15)
-
-/obj/item/weapon/gun/revolver/mateba/set_gun_config_values()
-	fire_delay = config.max_fire_delay
-	burst_amount = config.low_burst_value
-	burst_delay = config.med_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.high_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult + config.min_hit_damage_mult
-	recoil = config.min_recoil_value
-	recoil_unwielded = config.med_recoil_value
-
-
 
 /obj/item/weapon/gun/revolver/mateba/admiral
 	name = "\improper Mateba autorevolver custom++"
@@ -410,6 +397,16 @@
 /obj/item/weapon/gun/revolver/cmb
 	name = "\improper CMB Spearhead autorevolver"
 	desc = "An automatic revolver chambered in .357. Commonly issued to Colonial Marshals. It has a burst mode."
+	fire_delay = 12
+	burst_amount = 3
+	burst_delay = 5
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 0.8
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1.05
+	recoil = 1
+	recoil_unwielded = 3
 	icon_state = "spearhead"
 	item_state = "spearhead"
 	fire_sound = 'sound/weapons/gun_44mag2.ogg'
@@ -426,15 +423,3 @@
 /obj/item/weapon/gun/revolver/cmb/New()
 	..()
 	attachable_offset = list("muzzle_x" = 29, "muzzle_y" = 22,"rail_x" = 11, "rail_y" = 25, "under_x" = 20, "under_y" = 18, "stock_x" = 20, "stock_y" = 18)
-
-/obj/item/weapon/gun/revolver/cmb/set_gun_config_values()
-	fire_delay = config.mhigh_fire_delay*2
-	burst_amount = config.med_burst_value
-	burst_delay = config.high_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.med_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult + config.min_hit_damage_mult
-	recoil = config.min_recoil_value
-	recoil_unwielded = config.med_recoil_value

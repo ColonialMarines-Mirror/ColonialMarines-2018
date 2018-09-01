@@ -218,19 +218,19 @@
 /datum/species/proc/can_understand(var/mob/other)
 	return
 
-/datum/species/proc/handle_fire(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_fire(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/update_body(var/mob/living/carbon/human/H)
+/datum/species/proc/update_body(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/update_inv_head(var/mob/living/carbon/human/H)
+/datum/species/proc/update_inv_head(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/update_inv_w_uniform(var/mob/living/carbon/human/H)
+/datum/species/proc/update_inv_w_uniform(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/update_inv_wear_suit(var/mob/living/carbon/human/H)
+/datum/species/proc/update_inv_wear_suit(mob/living/carbon/human/H)
 	return
 
 /datum/species/human
@@ -410,16 +410,16 @@
 		H.apply_overlay(MOTH_WINGS_LAYER)
 		H.apply_underlay(MOTH_WINGS_BEHIND_LAYER)
 
-/datum/species/moth/update_body(var/mob/living/carbon/human/H)
+/datum/species/moth/update_body(mob/living/carbon/human/H)
 	update_moth_wings(H)
 
-/datum/species/moth/update_inv_head(var/mob/living/carbon/human/H)
+/datum/species/moth/update_inv_head(mob/living/carbon/human/H)
 	update_moth_wings(H)
 
-/datum/species/moth/update_inv_w_uniform(var/mob/living/carbon/human/H)
+/datum/species/moth/update_inv_w_uniform(mob/living/carbon/human/H)
 	update_moth_wings(H)
 
-/datum/species/moth/update_inv_wear_suit(var/mob/living/carbon/human/H)
+/datum/species/moth/update_inv_wear_suit(mob/living/carbon/human/H)
 	update_moth_wings(H)
 
 /datum/species/moth/post_species_loss(mob/living/carbon/human/H)

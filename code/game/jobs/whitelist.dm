@@ -36,7 +36,7 @@ var/list/whitelist = list()
 				alien_whitelist[line] = TRUE
 
 //todo: admin aliens
-/proc/is_alien_whitelisted(var/species)
+/proc/is_alien_whitelisted(species)
 	return alien_whitelist[species]
 
 #undef WHITELISTFILE

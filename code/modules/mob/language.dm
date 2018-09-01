@@ -35,10 +35,10 @@
 /datum/language/proc/check_special_condition(var/mob/other)
 	return 1
 
-/datum/language/proc/get_speech_verb(var/mob/living/carbon/human/H)
+/datum/language/proc/get_speech_verb(mob/living/carbon/human/H)
 	return speech_verb
 
-/datum/language/proc/get_spoken_verb(var/msg_end, var/mob/living/carbon/human/H)
+/datum/language/proc/get_spoken_verb(msg_end, mob/living/carbon/human/H)
 	switch(msg_end)
 		if("!")
 			return exclaim_verb
@@ -93,12 +93,10 @@
 	key = "0"
 	flags = RESTRICTED
 
-/datum/language/common/get_speech_verb(var/mob/living/carbon/human/H)
-	if(H.species)
-		return H.species.speech_verb_override || speech_verb
-	return speech_verb
+/datum/language/common/get_speech_verb(mob/living/carbon/human/H)
+	return H.species?.speech_verb_override || speech_verb
 
-/datum/language/common/get_spoken_verb(var/msg_end, var/mob/living/carbon/human/H)
+/datum/language/common/get_spoken_verb(msg_end, mob/living/carbon/human/H)
 	switch(msg_end)
 		if("!")
 			return pick("exclaims","shouts","yells") //TODO: make the basic proc handle lists of verbs.

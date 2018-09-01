@@ -15,7 +15,6 @@ var/global/list/randomized_pill_icons
 	w_class = 1
 	volume = 60
 
-/
 /obj/item/reagent_container/pill/New()
 		..()
 		if(!randomized_pill_icons)
@@ -25,7 +24,6 @@ var/global/list/randomized_pill_icons
 				randomized_pill_icons += "pill[pick_n_take(allowed_numbers)]"
 		if(!icon_state)
 			icon_state = "pill[rand(1,21)]"
-
 /obj/item/reagent_container/pill/attack_self(mob/user as mob)
 		return
 

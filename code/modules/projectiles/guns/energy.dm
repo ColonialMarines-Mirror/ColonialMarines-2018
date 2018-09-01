@@ -9,6 +9,12 @@
 
 /obj/item/weapon/gun/energy/taser
 	name = "taser gun"
+	fire_delay = 5 * 2
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 1
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1
 	desc = "An advanced stun device capable of firing balls of ionized electricity. Used for nonlethal takedowns."
 	icon_state = "taser"
 	item_state = "taser"
@@ -27,15 +33,6 @@
 /obj/item/weapon/gun/energy/taser/New()
 	..()
 	cell = new /obj/item/cell/high(src)
-
-/obj/item/weapon/gun/energy/taser/set_gun_config_values()
-	fire_delay = config.high_fire_delay * 2
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-
 
 /obj/item/weapon/gun/energy/taser/update_icon()
 	if(!cell || cell.charge - charge_cost < 0)
@@ -79,6 +76,12 @@
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "plasmarifle"
 	item_state = "plasmarifle"
+	fire_delay = 10
+	accuracy_mult = 1.5
+	accuracy_mult_unwielded = 1.5
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1
 	origin_tech = "combat=8;materials=7;bluespace=6"
 	unacidable = 1
 	fire_sound = 'sound/weapons/pred_plasma_shot.ogg'
@@ -114,16 +117,6 @@
 		if(charge_time == 99)
 			if(ismob(loc)) to_chat(loc, "<span class='notice'>[src] hums as it achieves maximum charge.</span>")
 		update_icon()
-
-
-/obj/item/weapon/gun/energy/plasmarifle/set_gun_config_values()
-	fire_delay = config.high_fire_delay*2
-	accuracy_mult = config.base_hit_accuracy_mult + config.max_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.max_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-
 
 /obj/item/weapon/gun/energy/plasmarifle/examine(mob/user)
 	if(isYautja(user))
@@ -192,6 +185,12 @@
 /obj/item/weapon/gun/energy/plasmapistol
 	name = "plasma pistol"
 	desc = "A plasma pistol capable of rapid fire. It has an integrated battery."
+	fire_delay = 4
+	accuracy_mult = 1.2
+	accuracy_mult_unwielded = 1.4
+	scatter = 15
+	scatter_unwielded = 20
+	damage_mult = 1
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "plasmapistol"
 	item_state = "plasmapistol"
@@ -226,18 +225,6 @@
 		if(charge_time == 39)
 			if(ismob(loc)) to_chat(loc, "<span class='notice'>[src] hums as it achieves maximum charge.</span>")
 
-
-
-/obj/item/weapon/gun/energy/plasmapistol/set_gun_config_values()
-	fire_delay = config.med_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult + config.med_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.high_hit_accuracy_mult
-	scatter = config.low_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-
-
-
 /obj/item/weapon/gun/energy/plasmapistol/examine(mob/user)
 	if(isYautja(user))
 		..()
@@ -269,21 +256,17 @@
 	if(refund) charge_time *= 2
 	return 1
 
-
-
-
-
-
-
-
-
-
-
 /obj/item/weapon/gun/energy/plasma_caster
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "plasma"
 	item_state = "plasma_wear"
 	name = "plasma caster"
+	fire_delay = 5
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 6
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1
 	desc = "A powerful, shoulder-mounted energy weapon."
 	fire_sound = 'sound/weapons/pred_plasmacaster_fire.ogg'
 	ammo = /datum/ammo/energy/yautja/caster/bolt
@@ -310,35 +293,26 @@
 	. = ..()
 	source = null
 
-
-/obj/item/weapon/gun/energy/plasma_caster/set_gun_config_values()
-	fire_delay = config.high_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.high_fire_delay
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-
 /obj/item/weapon/gun/energy/plasma_caster/attack_self(mob/living/user)
 	switch(mode)
 		if(0)
 			mode = 1
 			charge_cost = 100
-			fire_delay = config.med_fire_delay * 4
+			fire_delay = 16
 			fire_sound = 'sound/weapons/emitter2.ogg'
 			to_chat(user, "<span class='notice'>[src] is now set to fire medium plasma blasts.</span>")
 			ammo = ammo_list[/datum/ammo/energy/yautja/caster/blast]
 		if(1)
 			mode = 2
 			charge_cost = 300
-			fire_delay = config.high_fire_delay * 20
+			fire_delay = 80
 			fire_sound = 'sound/weapons/pulse.ogg'
 			to_chat(user, "<span class='notice'>[src] is now set to fire heavy plasma spheres.</span>")
 			ammo = ammo_list[/datum/ammo/energy/yautja/caster/sphere]
 		if(2)
 			mode = 0
 			charge_cost = 30
-			fire_delay = config.high_fire_delay
+			fire_delay = 5
 			fire_sound = 'sound/weapons/pred_lasercannon.ogg'
 			to_chat(user, "<span class='notice'>[src] is now set to fire light plasma bolts.</span>")
 			ammo = ammo_list[/datum/ammo/energy/yautja/caster/bolt]

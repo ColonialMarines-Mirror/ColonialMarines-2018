@@ -13,7 +13,7 @@
 	item_state = "flight"
 	var/label = null
 	var/mode = 0	//off or on.
-	var/wait
+	var/wait = 0
 
 /obj/item/tool/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
@@ -25,7 +25,7 @@
 		to_chat(user, "<span class='notice'>Label too big.</span>")
 		return
 	if(world.time < wait + 10)
-		to_chat(user, "<span class='notice'>The print heads are still cleaning, if you print the label right now it'll smear, you wouldn't want that? Would you? .</span>
+		to_chat(user, "<span class='notice'>The print heads are still cleaning, if you print the label right now it'll smear, you wouldn't want that? Would you?</span>")
 	if(isturf(A))
 		to_chat(user, "<span class='notice'>The label won't stick to that.</span>")
 		return

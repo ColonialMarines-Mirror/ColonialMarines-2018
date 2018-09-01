@@ -39,7 +39,7 @@
 						 "<span class='notice'>You label [A] as \"[label]\".</span>")
 	A.name = "[A.name] ([label])"
 	wait = world.time
-	labels -- 
+	labels-- 
 /obj/item/tool/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode
 	icon_state = "labeler[mode]"

@@ -20,9 +20,6 @@
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
 		return		// don't set a label
-	if(!labels_left)
-		to_chat(user, "<span class='notice'>No labels left.</span>")
-		return
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Label too big.</span>")
 		return
@@ -42,7 +39,6 @@
 	user.visible_message("<span class='notice'>[user] labels [A] as \"[label]\".</span>", \
 						 "<span class='notice'>You label [A] as \"[label]\".</span>")
 	A.name = "[A.name] ([label])"
-	labels_left--
 
 /obj/item/tool/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode

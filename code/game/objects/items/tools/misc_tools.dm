@@ -14,7 +14,7 @@
 	var/label = null
 	var/mode = 0	//off or on.
 	var/wait = 0
-
+	var/labels = 50
 /obj/item/tool/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
 	if(!mode)	//if it's off, give up.
@@ -29,6 +29,8 @@
 		return
 	if(world.time < wait + 10)
 		to_chat(user, "<span class='notice'>The print heads are still cleaning, if you print the label right now it'll smear, you wouldn't want that? Would you?</span>")
+	if(!labels || labels == 0)
+		to_chat(user, "<span class='notice'>You've run out of labelling paper, feed some paper into it.</span>")
 	if(isturf(A))
 		to_chat(user, "<span class='notice'>The label won't stick to that.</span>")
 		return
@@ -37,6 +39,7 @@
 						 "<span class='notice'>You label [A] as \"[label]\".</span>")
 	A.name = "[A.name] ([label])"
 	wait = world.time
+	labels -- 
 /obj/item/tool/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode
 	icon_state = "labeler[mode]"
@@ -53,6 +56,12 @@
 		to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
 
 
+/obj/item/tool/hand_labeler/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/paper))
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		qdel(I)
+		labels_left = min((labels_left+5),30)	//Yes, it's capped at its initial value
 
 
 

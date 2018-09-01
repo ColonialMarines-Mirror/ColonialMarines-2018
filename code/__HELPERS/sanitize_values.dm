@@ -42,11 +42,6 @@
 
 	return default
 
-/proc/sanitize_species(species, default = "Human")
-	if (species in all_species)
-		return species
-	return default
-
 /proc/sanitize_hexcolor(color, default="#000000")
 	if(!istext(color)) return default
 	var/len = length(color)

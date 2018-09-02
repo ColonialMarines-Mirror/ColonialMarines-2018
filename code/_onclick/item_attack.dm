@@ -47,11 +47,17 @@
 	add_fingerprint(user)
 
 	var/power = force
+	var/bonus
 	if(HULK in user.mutations)
 		power *= 2
 
 	if(user.mind && user.mind.cm_skills)
-		power = round(power * (1 + 0.3*user.mind.cm_skills.melee_weapons)) //30% bonus per melee level
+		bonus += round(power * 0.3 * user.mind.cm_skills.melee_weapons) //30% bonus per melee level
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/A = user
+		if(A.command_aura == "move") //Check for move aura; improves melee damage significantly.
+			bonus += round(5 + force * (1 + (A.command_aura_strength * 0.20))) // No cumulative multiplication with melee bonus. Move aura adds damage = 5 + 20% of base * Command level - 1, or +5 and +60% for a CO/XO.
 
 	if(!ishuman(M))
 		var/showname = "."
@@ -81,7 +87,7 @@
 		M.updatehealth()
 	else
 		var/mob/living/carbon/human/H = M
-		var/hit = H.attacked_by(src, user, def_zone)
+		var/hit = H.attacked_by(src, user, def_zone, bonus)
 		if (hit && hitsound)
 			playsound(loc, hitsound, 25, 1)
 		return hit

@@ -121,7 +121,7 @@ Contains most of the procs that are called when a mob is attacked by something
 
 
 //Returns 1 if the attack hit, 0 if it missed.
-/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/bonus_damage = 0)
 	if(!I || !user)	return 0
 
 	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_selected, src)
@@ -149,6 +149,7 @@ Contains most of the procs that are called when a mob is attacked by something
 	else
 		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>", null, null, 5)
 
+
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	var/weapon_sharp = is_sharp(I)
 	var/weapon_edge = has_edge(I)
@@ -163,7 +164,7 @@ Contains most of the procs that are called when a mob is attacked by something
 	else
 		user.flick_attack_overlay(src, "punch")
 
-	apply_damage(I.force, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
+	apply_damage(I.force + bonus_damage, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
 
 	var/bloody = 0
 	if((I.damtype == BRUTE || I.damtype == HALLOSS) && prob(I.force*2 + 25))

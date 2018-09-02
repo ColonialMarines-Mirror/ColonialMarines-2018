@@ -55,7 +55,7 @@ Additional game mode variables.
 	var/marine_starting_num = 0 //number of players not in something special
 	var/pred_current_num 	= 0 //How many are there now?
 	var/pred_maximum_num 	= 4 //How many are possible per round? Does not count elders.
-	var/pred_round_chance 	= 20 //%
+	var/pred_round_chance 	= 0 //%
 
 	//Some gameplay variables.
 	var/round_checkwin 		= 0
@@ -768,6 +768,7 @@ datum/game_mode/proc/initialize_special_clamps()
 					/obj/item/attachable/stock/rifle = round(scale * 4) ,
 					/obj/item/attachable/stock/revolver = round(scale * 4),
 					/obj/item/attachable/stock/smg = round(scale * 4) ,
+					/obj/item/attachable/stock/tactical = (scale * 3),
 
 					/obj/item/attachable/attached_gun/grenade = round(scale * 10),
 					/obj/item/attachable/attached_gun/shotgun = round(scale * 4),
@@ -789,9 +790,9 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/ammo_magazine/pistol = round(scale * 20),
 						/obj/item/ammo_magazine/pistol/hp = 0,
 						/obj/item/ammo_magazine/pistol/ap = round(scale * 5),
-						/obj/item/ammo_magazine/pistol/incendiary = 0,
+						/obj/item/ammo_magazine/pistol/incendiary = round(scale * 2),
 						/obj/item/ammo_magazine/pistol/extended = round(scale * 10),
-						/obj/item/ammo_magazine/pistol/m1911 = round(scale * 5),
+						/obj/item/ammo_magazine/pistol/m1911 = round(scale * 10),
 						/obj/item/ammo_magazine/revolver = round(scale * 20),
 						/obj/item/ammo_magazine/revolver/marksman = round(scale * 5),
 						/obj/item/ammo_magazine/smg/m39 = round(scale * 20),
@@ -807,9 +808,9 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/ammo_magazine/shotgun = round(scale * 15),
 						/obj/item/ammo_magazine/shotgun/buckshot = round(scale * 10),
 						/obj/item/ammo_magazine/shotgun/flechette = round(scale * 10),
-						/obj/item/ammo_magazine/sniper = 0,
-						/obj/item/ammo_magazine/sniper/incendiary = 0,
-						/obj/item/ammo_magazine/sniper/flak = 0,
+						/obj/item/ammo_magazine/sniper = round(scale * 2),
+						/obj/item/ammo_magazine/sniper/incendiary = round(scale * 2),
+						/obj/item/ammo_magazine/sniper/flak = round(scale * 2),
 						/obj/item/smartgun_powerpack = round(scale * 2)
 						)
 
@@ -900,9 +901,9 @@ datum/game_mode/proc/initialize_special_clamps()
 
 						)
 
-		M.contraband =   list(/obj/item/ammo_magazine/revolver/marksman = 0,
-							/obj/item/ammo_magazine/pistol/ap = 0,
-							/obj/item/ammo_magazine/smg/m39/ap = 0
+		M.contraband =   list(/obj/item/ammo_magazine/revolver/marksman = round(scale * 2),
+							/obj/item/ammo_magazine/pistol/ap = round(scale * 2),
+							/obj/item/ammo_magazine/smg/m39/ap = round(scale * 2)
 							)
 
 		M.premium = list(/obj/item/weapon/gun/rifle/m41aMK1 = 0,

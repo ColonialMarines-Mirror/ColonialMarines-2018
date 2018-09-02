@@ -202,6 +202,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/eta_status = EvacuationAuthority.get_status_panel_eta()
 		if(eta_status)
 			stat(null, eta_status)
+	for(var/datum/squad/squad in RoleAuthority.squads)
+		if(squad.primary_objective)
+			stat("[squad.name] Primary Objective: ", squad.primary_objective)
+		if(squad.secondary_objective)
+			stat("[squad.name] Secondary Objective: ", squad.secondary_objective)
 	return 1
 
 /mob/dead/observer/verb/reenter_corpse()

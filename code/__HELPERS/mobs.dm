@@ -44,10 +44,6 @@ proc/random_facial_hair_style(gender, species = "Human")
 
 		return f_style
 
-proc/random_name(gender, species = "Human")
-	var/datum/species/S = all_species[species] || all_species["Human"]
-	return S.random_name(gender)
-
 proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10

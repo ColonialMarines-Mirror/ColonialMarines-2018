@@ -159,7 +159,7 @@
 	H.visible_message("<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>", \
 					"<span class='notice'>You hug [target] to make [t_him] feel better!</span>", null, 4)
 
-/datum/species/proc/random_name(var/gender)
+/datum/species/proc/random_name(gender)
 	if(gender == FEMALE)
 		return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	else

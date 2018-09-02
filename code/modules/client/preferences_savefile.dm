@@ -228,7 +228,6 @@
 	if(isnull(language)) language = "None"
 	if(isnull(spawnpoint)) spawnpoint = "Arrivals Shuttle"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
-	if(!real_name) real_name = random_name(gender,species)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -270,6 +269,7 @@
 	job_marines_med = sanitize_integer(job_marines_med, 0, 65535, initial(job_marines_med))
 	job_marines_low = sanitize_integer(job_marines_low, 0, 65535, initial(job_marines_low))
 
+	if(!real_name) real_name = all_species[species].random_name(gender)
 	if(!skills) skills = list()
 	if(!used_skillpoints) used_skillpoints= 0
 	if(isnull(disabilities)) disabilities = 0

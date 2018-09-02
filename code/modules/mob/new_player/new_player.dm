@@ -131,8 +131,10 @@
 					observer.icon = client.prefs.preview_icon
 					observer.alpha = 127
 
+					var/datum/species/species = all_species[client.prefs.species] || all_species[DEFAULT_SPECIES]
+
 					if(client.prefs.be_random_name)
-						client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
+						client.prefs.real_name = species.random_name(client.prefs.gender)
 					observer.real_name = client.prefs.real_name
 					observer.name = observer.real_name
 	//				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
@@ -415,7 +417,7 @@
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
-			client.prefs.real_name = random_name(new_character.gender,new_character.species)
+			client.prefs.real_name = chosen_species.random_name(new_character.gender)
 			client.prefs.randomize_appearance_for(new_character)
 		else
 			client.prefs.copy_to(new_character)

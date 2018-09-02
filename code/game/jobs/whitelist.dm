@@ -28,7 +28,6 @@ var/list/whitelist = list()
 	if (!text)
 		log_misc("Failed to load config/alienwhitelist.txt")
 	else
-		alien_whitelist["human"] = TRUE
 		alien_whitelist["Human"] = TRUE
 
 		for(var/line in text2list(text, "\n"))

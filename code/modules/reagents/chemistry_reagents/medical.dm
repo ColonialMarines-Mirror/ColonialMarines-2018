@@ -297,31 +297,32 @@
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
-	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
+	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries. However it does cause a buildup of lactic acid within muscles."
 	reagent_state = LIQUID
 	color = "#B865CC"
 	scannable = 1
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
 
-	on_mob_life(mob/living/M, alien)
-		. = ..()
-		if(!.) return
-		if(M.stat == DEAD)
-			return
-		if(!alien)
-			if(M.getOxyLoss()) M.adjustOxyLoss(-REM)
-			if(M.getBruteLoss() && prob(80)) M.heal_limb_damage(REM, 0)
-			if(M.getFireLoss() && prob(80)) M.heal_limb_damage(0, REM)
-			if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-REM)
+/datum/reagent/tricordrazine/on_mob_life(mob/living/M, alien)
+	. = ..()
+	if(!.) 
+		return
+	if(M.stat == DEAD)
+		return
+	if(!alien)
+		M.adjustOxyLoss(-REM)
+		M.heal_limb_damage(REM, REM)
+		M.adjustToxLoss(-REM)
+		M.reagent_move_delay_modifier += 0.33
 
-	on_overdose(mob/living/M)
-		M.make_jittery(5)
-		M.adjustBrainLoss(1)
-
-	on_overdose_critical(mob/living/M)
-		M.apply_damages(5, 5, 5) //Massive damage bounceback if abused
-		M.adjustBrainLoss(1)
+/datum/reagent/tricordrazine/on_overdose(mob/living/M)
+	M.make_jittery(5)
+	M.adjustBrainLoss(1)
+	
+/datum/reagent/tricordrazine/on_overdose_critical(mob/living/M)
+	M.apply_damages(5, 5, 5) //Massive damage bounceback if abused
+	M.adjustBrainLoss(1)
 
 /datum/reagent/anti_toxin
 	name = "Dylovene"

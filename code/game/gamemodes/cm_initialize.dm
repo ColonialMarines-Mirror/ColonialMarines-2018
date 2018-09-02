@@ -808,9 +808,9 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/ammo_magazine/shotgun = round(scale * 15),
 						/obj/item/ammo_magazine/shotgun/buckshot = round(scale * 10),
 						/obj/item/ammo_magazine/shotgun/flechette = round(scale * 10),
-						/obj/item/ammo_magazine/sniper = round(scale * 2),
-						/obj/item/ammo_magazine/sniper/incendiary = round(scale * 2),
-						/obj/item/ammo_magazine/sniper/flak = round(scale * 2),
+						/obj/item/ammo_magazine/sniper = 0,
+						/obj/item/ammo_magazine/sniper/incendiary = 0,
+						/obj/item/ammo_magazine/sniper/flak = 0,
 						/obj/item/smartgun_powerpack = round(scale * 2)
 						)
 

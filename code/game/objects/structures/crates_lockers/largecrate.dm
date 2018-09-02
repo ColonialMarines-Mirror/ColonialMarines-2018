@@ -129,16 +129,19 @@
 	icon_state = "case_small"
 
 /obj/structure/largecrate/random/barrel/attackby(obj/item/tool/weldingtool/W as obj, mob/user as mob)
-	if(W.welding && W.welding == 1)
-		new /obj/item/stack/sheet/metal/small_stack(src)
-		W.remove_fuel(1,user)
-		var/turf/T = get_turf(src)
-		for(var/obj/O in contents)
-			O.loc = T
-		user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>", \
-							 "<span class='notice'>You weld open \the [src].</span>", \
-							 "<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
-		cdel(src)
+	if(W.welding == 1)
+		if(do_after(user, 50, TRUE, 5, BUSY_ICON_BUILD))
+			new /obj/item/stack/sheet/metal/small_stack(src)
+			W.remove_fuel(1,user)
+			var/turf/T = get_turf(src)
+			for(var/obj/O in contents)
+				O.loc = T
+			user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>", \
+								 "<span class='notice'>You weld open \the [src].</span>", \
+								 "<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
+			cdel(src)
+		else
+			return FALSE
 	else
 		return attack_hand(user)
 

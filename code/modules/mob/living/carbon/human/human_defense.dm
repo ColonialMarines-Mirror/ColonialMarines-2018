@@ -148,7 +148,9 @@ Contains most of the procs that are called when a mob is attacked by something
 		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>", null, null, 5)
 	else
 		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>", null, null, 5)
-
+	
+	if(command_aura == "move") //Check for move aura; improves melee damage significantly.
+		I.force *= (1 + (command_aura_strength * 0.33)) // CO move orders temporarily double melee damage (guns are probably still better, but improves those PBs).
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	var/weapon_sharp = is_sharp(I)
 	var/weapon_edge = has_edge(I)

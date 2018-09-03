@@ -13,9 +13,11 @@
 	item_state = "flight"
 	var/label = null
 	var/mode = 0	//off or on.
+
 	var/labels_left = 50
 /obj/item/tool/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity) 
+		return
 	if(!mode)	//if it's off, give up.
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
@@ -26,15 +28,16 @@
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Label too big.</span>")
 		return
-	if(labels_left == 0)
+	if(labels_left == FALSE)
 		to_chat(user, "<span class='notice'>You've run out of labelling paper, feed some paper into it.</span>")
-	if(isturf(A) || isliving(A))
+	if(isturf(A) || ismob(A))
 		to_chat(user, "<span class='notice'>The label won't stick to that.</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] labels [A] as \"[label]\".</span>", \
 						 "<span class='notice'>You label [A] as \"[label]\".</span>")
 	A.name = "[A.name] ([label])"
+
 	labels_left-- 
 /obj/item/tool/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode
@@ -53,7 +56,7 @@
 
 
 /obj/item/tool/hand_labeler/attackby(obj/item/I, mob/user, params)
-	..()
+	. = ..()
 	if(istype(I, /obj/item/paper))
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		cdel(I)

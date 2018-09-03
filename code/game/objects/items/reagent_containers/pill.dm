@@ -273,18 +273,19 @@ var/global/list/randomized_pill_icons
 		reagents.add_reagent("quickclot", 10)
 
 /obj/item/reagent_container/pill/tricordrazine
-	pill_desc = "A Tricordrazine pill. Broad spectrum medication that slowly repairs all damage types."
-	/obj/item/reagent_container/pill/tricordrazine/New()
+	pill_desc = "A Tricordrazine pill. Broad spectrum medication that slowly heals all damage types."
+	New()
 		..()
 		icon_state = randomized_pill_icons[13]
 		reagents.add_reagent("tricordrazine", 15)
 
 /obj/item/reagent_container/pill/hypervene
-	pill_desc = "A Hypervene pill. Rapidly purges chemicals, but causes pain and vomitting. Apply in event of overdose."
-	/obj/item/reagent_container/pill/hypervene/New()
+	pill_desc = "A Hypervene pill. A purge medication used to treat overdoses. Causes pain and vomiting."
+	New()
 		..()
 		icon_state = randomized_pill_icons[14]
 		reagents.add_reagent("hypervene", 3)
+
 
 /obj/item/reagent_container/pill/ultrazine
 	//pill_desc = "An Ultrazine pill. A highly-potent, long-lasting combination CNS and muscle stimulant. Extremely addictive."

@@ -286,7 +286,6 @@ var/global/list/randomized_pill_icons
 		icon_state = randomized_pill_icons[14]
 		reagents.add_reagent("hypervene", 3)
 
-
 /obj/item/reagent_container/pill/ultrazine
 	//pill_desc = "An Ultrazine pill. A highly-potent, long-lasting combination CNS and muscle stimulant. Extremely addictive."
 
@@ -294,3 +293,4 @@ var/global/list/randomized_pill_icons
 	..()
 	icon_state = randomized_pill_icons[21]
 	reagents.add_reagent("ultrazine", 5)
+

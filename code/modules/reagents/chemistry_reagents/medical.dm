@@ -155,7 +155,7 @@
 /datum/reagent/sterilizine/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.germ_level -= min(volume*20, M.germ_level)
-		if(M.getFireLoss() > 30 || M.getBruteLoss() > 30) // >Spraying space bleach on open wounds
+		if((M.getFireLoss() > 30 || M.getBruteLoss() > 30) && prob(10)) // >Spraying space bleach on open wounds
 			to_chat(M, "<span class='warning'>Your open wounds feel like they're on fire!</span>")
 			M.emote(pick("scream","pain","moan"))
 			M.reagent_shock_modifier -= PAIN_REDUCTION_MEDIUM

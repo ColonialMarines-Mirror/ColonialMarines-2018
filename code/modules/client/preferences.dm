@@ -157,7 +157,8 @@ datum/preferences
 				if(load_character())
 					return
 	gender = pick(MALE, FEMALE)
-	real_name = all_species[species].random_name(gender)
+	var/datum/species/S = all_species[species]
+	real_name = S.random_name(gender)
 	gear = list()
 
 /datum/preferences/proc/ZeroSkills(var/forced = 0)
@@ -992,7 +993,8 @@ datum/preferences
 		if ("random")
 			switch (href_list["preference"])
 				if ("name")
-					real_name = all_species[species].random_name(gender)
+					var/datum/species/S = all_species[species]
+					real_name = S.random_name(gender)
 				if ("age")
 					age = rand(AGE_MIN, AGE_MAX)
 				if ("ethnicity")
@@ -1461,7 +1463,8 @@ datum/preferences
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
 	if(be_random_name)
-		real_name = all_species[species].random_name(gender)
+		var/datum/species/S = all_species[species]
+		real_name = S.random_name(gender)
 
 	if(config.humans_need_surnames && species == "Human")
 		var/firstspace = findtext(real_name, " ")

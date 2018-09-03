@@ -691,7 +691,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		
 		var/mob/living/carbon/human/current = survivor.current
 		var/datum/species/species = istype(current) ? current.species : all_species[DEFAULT_SPECIES]
-		random_name = pick(species.random_name(FEMALE), species.random_name(MALE))
+		random_name = species.random_name(pick(MALE, FEMALE))
 
 		if(current_survivors.len > 1) //If we have another survivor to pick from.
 			if(survivor_multi_story.len) //Unlikely.

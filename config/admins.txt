@@ -1,5 +1,6 @@
 alexch2 - Admin
 aloraydrel - Admin
+alterist - Admin
 ambassadormagikarp - Admin
 anturke - Admin
 arianya - Admin
@@ -11,6 +12,7 @@ bluenothing - Admin
 bobdobbington - Admin
 borisvanmemes - Admin
 cedarbridge - Admin
+chemicalrascal - Admin
 cheridan - Admin
 citrusgender - Admin
 cyberboss - Admin
@@ -54,6 +56,7 @@ randolfthemeh - Admin
 razharas - Admin
 rockdtben - Admin
 roguesteampunker - Admin
+rohesie - Admin
 rustledjimm - Admin
 shaps - Admin
 shizcalev - Admin

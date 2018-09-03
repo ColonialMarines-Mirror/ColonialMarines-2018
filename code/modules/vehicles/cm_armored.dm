@@ -279,7 +279,20 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		if(!HP)
 			to_chat(user, "There is nothing installed on the [i] hardpoint slot.")
 		else
-			to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
+			if((user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer >= SKILL_ENGINEER_METAL) || isobserver(user))
+				switch(round(HP.health / HP.maxhealth * 100))
+					if(0)
+						to_chat(user, "There is a broken [HP] installed on [i] hardpoint slot.")
+					if(1 to 33)
+						to_chat(user, "There is a heavily damaged [HP] installed on [i] hardpoint slot.")
+					if(34 to 66)
+						to_chat(user, "There is a damaged [HP] installed on [i] hardpoint slot.")
+					if(67 to 90)
+						to_chat(user, "There is a lightly damaged [HP] installed on [i] hardpoint slot.")
+					if(91 to 100)
+						to_chat(user, "There is a non-damaged [HP] installed on [i] hardpoint slot.")
+					else
+						to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
 
 //Special armored vic healthcheck that mainly updates the hardpoint states
 /obj/vehicle/multitile/root/cm_armored/healthcheck()
@@ -338,9 +351,9 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 /obj/vehicle/multitile/hitbox/cm_armored
 	name = "Armored Vehicle"
 	desc = "Get inside to operate the vehicle."
-
 	luminosity = 7
 	throwpass = 1 //You can lob nades over tanks, and there's some dumb check somewhere that requires this
+	var/lastsound = 0
 
 //If something want to delete this, it's probably either an admin or the shuttle
 //If it's an admin, they want to disable this
@@ -380,7 +393,9 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		W.take_damage(30)
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", W)
-		playsound(W, 'sound/effects/metal_crash.ogg', 35)
+		if(world.time > lastsound + 10)
+			playsound(W, 'sound/effects/metal_crash.ogg', 35)
+			lastsound = world.time
 	else if(istype(A, /obj/structure/mineral_door/resin))
 		var/obj/structure/mineral_door/resin/R = A
 		R.health = 0
@@ -389,12 +404,22 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		var/obj/structure/table/T = A
 		T.visible_message("<span class='danger'>[root] crushes [T]!</span>")
 		T.destroy(1)
+	else if(istype(A, /obj/structure/window/framed))
+		var/obj/structure/window/framed/W = A
+		W.visible_message("<span class='danger'>[root] crashes through the [W]!</span>")
+		W.shatter_window(1)
+	else if(istype(A, /obj/structure/window_frame))
+		var/obj/structure/window_frame/WF = A
+		WF.visible_message("<span class='danger'>[root] runs over the [WF]!</span>")
+		WF.Dispose()
 	else if(istype(A, /obj/structure/girder))
 		var/obj/structure/girder/G = A
 		G.dismantle()
 		var/obj/vehicle/multitile/root/cm_armored/CA = root
 		CA.take_damage_type(10, "blunt", G)
-		playsound(G, 'sound/effects/metal_crash.ogg', 35)
+		if(world.time > lastsound + 10)
+			playsound(G, 'sound/effects/metal_crash.ogg', 35)
+			lastsound = world.time
 
 /obj/vehicle/multitile/hitbox/cm_armored/Move(var/atom/A, var/direction)
 

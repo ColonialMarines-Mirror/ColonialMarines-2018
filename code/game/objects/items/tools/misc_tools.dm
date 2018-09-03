@@ -28,8 +28,9 @@
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Label too big.</span>")
 		return
-	if(labels_left == FALSE)
+	if(!labels_left)
 		to_chat(user, "<span class='notice'>You've run out of labelling paper, feed some paper into it.</span>")
+		return
 	if(isturf(A) || ismob(A))
 		to_chat(user, "<span class='notice'>The label won't stick to that.</span>")
 		return

@@ -9,7 +9,7 @@
 		if("Delayed")
 			for(var/M in player_list)
 				playsound(M, "sound/misc/highlander_delayed.ogg", 40)
-				send_to_playing_players("<font size = 4 color=red>Bagpipes begin to blare. You feel Scottish pride coming over you.</span></font>")
+				to_chat(world, "<font size = 4 color=red>Bagpipes begin to blare. You feel Scottish pride coming over you.</span></font>")
 				spawn(420)
 					highlander_equip()
 		if("NOW!")
@@ -21,7 +21,7 @@
 	log_admin("[key_name(usr)] used THERE CAN ONLY BE ONE.")
 
 /client/proc/highlander_equip()
-	send_to_playing_players("<b><font size=6 color=red>THERE CAN BE ONLY ONE</font></b></span>")
+	to_chat(world, "<b><font size=6 color=red>THERE CAN BE ONLY ONE</font></b></span>")
 	for(var/obj/item/disk/nuclear/N in world)
 		if(blobstart.len > 0)
 			N.loc = pick(blobstart)

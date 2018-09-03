@@ -202,7 +202,12 @@
 		if (S.slayer > 0)
 			S.slayer -= 1
 			S.update_icon(1, 0)
-
+	
+	for(var/obj/structure/jungle/vines/V in T)
+		cdel(V)
+		if(prob(25)) //Don't wanna spam this
+			V.visible_message("<span class='warning'>The vines burn away from the immense heat!</span>")
+		
 	for(var/mob/living/M in T) //Deal bonus damage if someone's caught directly in initial stream
 		if(M.stat == DEAD)		continue
 

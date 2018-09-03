@@ -269,7 +269,9 @@
 	job_marines_med = sanitize_integer(job_marines_med, 0, 65535, initial(job_marines_med))
 	job_marines_low = sanitize_integer(job_marines_low, 0, 65535, initial(job_marines_low))
 
-	if(!real_name) real_name = all_species[species].random_name(gender)
+	if(!real_name)
+		var/datum/species/Species = all_species[species]
+		real_name = Species.random_name(gender)
 	if(!skills) skills = list()
 	if(!used_skillpoints) used_skillpoints= 0
 	if(isnull(disabilities)) disabilities = 0

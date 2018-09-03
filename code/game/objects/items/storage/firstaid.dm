@@ -14,7 +14,8 @@
 	throw_speed = 2
 	throw_range = 8
 	cant_hold = list("/obj/item/ammo_magazine",
-							"/obj/item/explosive/grenade") 
+			"/obj/item/explosive/grenade"
+			) 
 	var/empty = 0 //whether the kit starts empty
 	var/icon_full //icon state to use when kit is full
 	var/possible_icons_full
@@ -294,6 +295,17 @@
 	name = "\improper Quickclot pill bottle"
 	icon_state = "pill_canister8"
 	pill_type_to_fill = /obj/item/reagent_container/pill/quickclot
+
+
+/obj/item/storage/pill_bottle/hypervene
+	name = "\improper Hypervene pill bottle"
+	icon_state = "pill_canister7"
+	pill_type_to_fill = /obj/item/reagent_container/pill/hypervene
+
+/obj/item/storage/pill_bottle/tricordrazine
+	name = "\improper Tricordrazine pill bottle"
+	icon_state = "pill_canister9"
+	pill_type_to_fill = /obj/item/reagent_container/pill/tricordrazine
 
 
 //Ultrazine

@@ -109,7 +109,7 @@
 		else
 			ammo = ammo_list[ammo] //If they don't have a mag, they fire off their own thing.
 	update_force_list() //This gives the gun some unique verbs for attacking.
-	handle_starting_attachments()
+	handle_starting_attachment()
 
 //Hotfix for attachment offsets being set AFTER the core New() proc. Causes a small graphical artifact when spawning, hopefully works even with lag
 /obj/item/weapon/gun/proc/handle_starting_attachment()

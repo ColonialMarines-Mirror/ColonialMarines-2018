@@ -1,8 +1,3 @@
-
-
-
-//-------------------------------------------------------
-
 /obj/item/weapon/gun/flare
 	name = "flare gun"
 	desc = "A gun that fires flares. Replace with flares. Simple!"
@@ -18,7 +13,7 @@
 
 	examine(mob/user)
 		..()
-		fire_delay = config.low_fire_delay*3
+		fire_delay = 9
 		if(num_flares)
 			to_chat(user, "<span class='warning'>It has a flare loaded!</span>")
 
@@ -81,6 +76,15 @@
 
 /obj/item/weapon/gun/minigun
 	name = "\improper Ol' Painless"
+	fire_delay = 3
+	burst_amount = 6
+	burst_delay = 1
+	accuracy_mult = 0.8
+	accuracy_mult_unwielded = 1
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1
+	recoil = 3
 	desc = "An enormous multi-barreled rotating gatling gun. This thing will no doubt pack a punch."
 	icon_state = "painless"
 	item_state = "painless"
@@ -96,17 +100,6 @@
 /obj/item/weapon/gun/minigun/New(loc, spawn_empty)
 	..()
 	if(current_mag && current_mag.current_rounds > 0) load_into_chamber()
-
-/obj/item/weapon/gun/minigun/set_gun_config_values()
-	fire_delay = config.low_fire_delay
-	burst_amount = config.max_burst_value
-	burst_delay = config.min_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult - config.med_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.med_recoil_value
 
 /obj/item/weapon/gun/minigun/toggle_burst()
 	to_chat(usr, "<span class='warning'>This weapon can only fire in bursts!</span>")
@@ -128,6 +121,12 @@
 	name = "spike launcher"
 	desc = "A compact Yautja device in the shape of a crescent. It can rapidly fire damaging spikes and automatically recharges."
 	icon = 'icons/obj/items/predator.dmi'
+	fire_delay = 5
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 1
+	scatter = 20
+	scatter_unwielded = 20
+	damage_mult = 1
 	icon_state = "spikelauncher"
 	muzzle_flash = null // TO DO, add a decent one.
 	origin_tech = "combat=7;materials=7"
@@ -160,15 +159,6 @@
 	verbs -= /obj/item/weapon/gun/verb/toggle_burst
 	verbs -= /obj/item/weapon/gun/verb/empty_mag
 	verbs -= /obj/item/weapon/gun/verb/use_unique_action
-
-/obj/item/weapon/gun/launcher/spike/set_gun_config_values()
-	fire_delay = config.high_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-
 
 /obj/item/weapon/gun/launcher/spike/examine(mob/user)
 	if(isYautja(user))

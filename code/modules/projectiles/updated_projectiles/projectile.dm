@@ -88,8 +88,8 @@
 	damage 		= ammo.damage + bonus_damage //Mainly for emitters.
 	scatter		= ammo.scatter
 	accuracy   += ammo.accuracy
-	accuracy   *= rand(config.proj_variance_low-ammo.accuracy_var_low, config.proj_variance_high+ammo.accuracy_var_high) * config.proj_base_accuracy_mult//Rand only works with integers.
-	damage     *= rand(config.proj_variance_low-ammo.damage_var_low, config.proj_variance_high+ammo.damage_var_high) * config.proj_base_damage_mult
+	accuracy   *= rand(95-ammo.accuracy_var_low, 105+ammo.accuracy_var_high) * 0.01//Rand only works with integers.
+	damage     *= rand(95-ammo.damage_var_low, 105+ammo.damage_var_high) * 0.01
 	damage_falloff = ammo.damage_falloff
 
 //Target, firer, shot from. Ie the gun
@@ -249,7 +249,7 @@
 				var/mob/living/L = A
 
 				var/hit_roll
-				var/critical_miss = rand(config.critical_chance_low, config.critical_chance_high)
+				var/critical_miss = rand(5, 10)
 				var/i = 0
 				while(++i <= 2 && hit_chance > 0) // This runs twice if necessary
 					hit_roll 					= rand(0, 99) //Our randomly generated roll
@@ -529,9 +529,9 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 			 /*Automatic damage soak due to armor. Greater difference between armor and damage, the more damage
 			 soaked. Small caliber firearms aren't really effective against combat armor.*/
 			var/armor_soak	 = round( ( armor / damage ) * 10 )//Setting up for next action.
-			var/critical_hit = rand(config.critical_chance_low,config.critical_chance_high)
+			var/critical_hit = rand(5,10)
 			damage 			-= prob(critical_hit) ? 0 : armor_soak //Chance that you won't soak the initial amount.
-			armor			-= round(armor_soak * config.base_armor_resist_low) //If you still have armor left over, you generally should, we subtract the soak.
+			armor			-= round(armor_soak * 1) //If you still have armor left over, you generally should, we subtract the soak.
 											  		   //This gives smaller calibers a chance to actually deal damage.
 			#if DEBUG_HUMAN_DEFENSE
 			to_chat(world, "<span class='debuginfo'>Adjusted damage is: <b>[damage]</b>. Adjusted armor is: <b>[armor]</b></span>")
@@ -541,7 +541,7 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 				while(armor > 0 && i < 2) //Going twice. Armor has to exist to continue. Post increment.
 					if(prob(armor))
 						armor_soak 	 = round(damage * 0.5)  //Cut it in half.
-						armor 		-= armor_soak * config.base_armor_resist_high
+						armor 		-= armor_soak * 2
 						damage 		-= armor_soak
 						#if DEBUG_HUMAN_DEFENSE
 						to_chat(world, "<span class='debuginfo'>Currently soaked: <b>[armor_soak]</b>. Adjusted damage is: <b>[damage]</b>. Adjusted armor is: <b>[armor]</b></span>")
@@ -608,8 +608,8 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 			#if DEBUG_CREST_DEFENSE
 			world << "<span class='debuginfo'>Projectile direction is: <b>[P.dir]</b> and crest direction is: <b>[charger.dir]</b></span>"
 			#endif
-			if(P.dir == charger.dir) armor = max(0, armor - (armor_deflection * config.xeno_armor_resist_low)) //Both facing same way -- ie. shooting from behind.
-			else if(P.dir == reverse_direction(charger.dir)) armor += round(armor_deflection * config.xeno_armor_resist_low) //We are facing the bullet.
+			if(P.dir == charger.dir) armor = max(0, armor - (armor_deflection * 0.5)) //Both facing same way -- ie. shooting from behind.
+			else if(P.dir == reverse_direction(charger.dir)) armor += round(armor_deflection * 0.5) //We are facing the bullet.
 			//Otherwise use the standard armor deflection for crushers.
 			#if DEBUG_XENO_DEFENSE
 			to_chat(world, "<span class='debuginfo'>Adjusted crest armor is: <b>[armor]</b></span>")
@@ -624,9 +624,9 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 			 /*Automatic damage soak due to armor. Greater difference between armor and damage, the more damage
 			 soaked. Small caliber firearms aren't really effective against combat armor.*/
 			var/armor_soak	 = round( ( armor / damage ) * 10 )//Setting up for next action.
-			var/critical_hit = rand(config.critical_chance_low,config.critical_chance_high)
+			var/critical_hit = rand(5,10)
 			damage 			-= prob(critical_hit) ? 0 : armor_soak //Chance that you won't soak the initial amount.
-			armor			-= round(armor_soak * config.base_armor_resist_low) //If you still have armor left over, you generally should, we subtract the soak.
+			armor			-= round(armor_soak * 1) //If you still have armor left over, you generally should, we subtract the soak.
 											  		   //This gives smaller calibers a chance to actually deal damage.
 			#if DEBUG_XENO_DEFENSE
 			to_chat(world, "<span class='debuginfo'>Adjusted damage is: <b>[damage]</b>. Adjusted armor is: <b>[armor]</b></span>")
@@ -636,7 +636,7 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 				while(armor > 0 && i < 2) //Going twice. Armor has to exist to continue. Post increment.
 					if(prob(armor))
 						armor_soak 	 = round(damage * 0.5)
-						armor 		-= armor_soak * config.base_armor_resist_high
+						armor 		-= armor_soak * 2
 						damage 		-= armor_soak
 						#if DEBUG_XENO_DEFENSE
 						to_chat(world, "<span class='debuginfo'>Currently soaked: <b>[armor_soak]</b>. Adjusted damage is: <b>[damage]</b>. Adjusted armor is: <b>[armor]</b></span>")

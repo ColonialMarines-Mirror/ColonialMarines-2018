@@ -6,26 +6,26 @@
 	item_state = "gun"
 	matter = list("metal" = 5000)
 	origin_tech = "combat=1"					//Guns generally have their own unique levels.
-	w_class 	= 3
-	throwforce 	= 5
+	w_class = 3
+	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
-	force 		= 5
+	force = 5
 	attack_verb = null
 	sprite_sheet_id = 1
 	flags_atom = FPRINT|CONDUCT
 	flags_item = TWOHANDED
 
-	var/muzzle_flash 	= "muzzle_flash"
+	var/muzzle_flash = "muzzle_flash"
 	var/muzzle_flash_lum = 3 //muzzle flash brightness
 
-	var/fire_sound 		= 'sound/weapons/Gunshot.ogg'
-	var/unload_sound 	= 'sound/weapons/flipblade.ogg'
-	var/empty_sound 	= 'sound/weapons/smg_empty_alarm.ogg'
-	var/reload_sound 	= null					//We don't want these for guns that don't have them.
-	var/cocked_sound 	= null
-	var/cock_cooldown	= 0						//world.time value, to prevent COCK COCK COCK COCK
-	var/cock_delay		= 30					//Delay before we can cock again, in tenths of seconds
+	var/fire_sound = 'sound/weapons/Gunshot.ogg'
+	var/unload_sound = 'sound/weapons/flipblade.ogg'
+	var/empty_sound = 'sound/weapons/smg_empty_alarm.ogg'
+	var/reload_sound = null					//We don't want these for guns that don't have them.
+	var/cocked_sound = null
+	var/cock_cooldown = 0						//world.time value, to prevent COCK COCK COCK COCK
+	var/cock_delay = 30					//Delay before we can cock again, in tenths of seconds
 
 	//Ammo will be replaced on New() for things that do not use mags..
 	var/datum/ammo/ammo = null					//How the bullet will behave once it leaves the gun, also used for basic bullet damage and effects, etc.
@@ -108,27 +108,8 @@
 				ammo = current_mag.default_ammo ? ammo_list[current_mag.default_ammo] : ammo_list[/datum/ammo/bullet] //Latter should never happen, adding as a precaution.
 		else
 			ammo = ammo_list[ammo] //If they don't have a mag, they fire off their own thing.
-		set_gun_config_values()
-		update_force_list() //This gives the gun some unique verbs for attacking.
-
-		handle_starting_attachment()
-
-
-//Called by the gun's New(), set the gun variables' values.
-//Each gun gets its own version of the proc instead of adding/substracting
-//amounts to get specific values in each gun subtype's New().
-//This makes reading each gun's values MUCH easier.
-/obj/item/weapon/gun/proc/set_gun_config_values()
-	fire_delay = config.mhigh_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.med_scatter_value
-	damage_mult = config.base_hit_damage_mult
-
-
-
-
+	update_force_list() //This gives the gun some unique verbs for attacking.
+	handle_starting_attachments()
 
 //Hotfix for attachment offsets being set AFTER the core New() proc. Causes a small graphical artifact when spawning, hopefully works even with lag
 /obj/item/weapon/gun/proc/handle_starting_attachment()
@@ -621,12 +602,12 @@ and you're good to go.
 		if(user && under && under.bipod_deployed) //Let's get to work on the bipod. I'm not really concerned if they are the same person as the previous user. It doesn't matter.
 			if(under.check_bipod_support(src, user))
 				//Passive accuracy and recoil buff, but only when firing in position.
-				projectile_to_fire.accuracy *= config.base_hit_accuracy_mult + config.hmed_hit_accuracy_mult //More accuracy.
+				projectile_to_fire.accuracy *= 1.3 //More accuracy.
 				recoil_comp-- //Less recoil.
-				scatter_chance_mod -= config.med_scatter_value
+				scatter_chance_mod -= 20
 				burst_scatter_chance_mod = -3
 				if(prob(30))
-					projectile_to_fire.damage *= config.base_hit_damage_mult + config.low_hit_damage_mult//Lower chance of a damage buff.
+					projectile_to_fire.damage *= 1.1 //Lower chance of a damage buff.
 				if(i == 1)
 					to_chat(user, "<span class='notice'>Your bipod keeps [src] steady!</span>")
 			else
@@ -826,7 +807,7 @@ and you're good to go.
 		else
 			if(user && user.mind && user.mind.cm_skills)
 				if(user.mind.cm_skills.firearms == 0) //no training in any firearms
-					added_delay += config.low_fire_delay //untrained humans fire more slowly.
+					added_delay += 3 //untrained humans fire more slowly.
 				else
 					switch(gun_skill_category)
 						if(GUN_SKILL_HEAVY_WEAPONS)
@@ -864,8 +845,8 @@ and you're good to go.
 
 	else if(user && world.time - user.l_move_time < 5) //moved during the last half second
 		//accuracy and scatter penalty if the user fires unwielded right after moving
-		gun_accuracy_mult = max(0.1, gun_accuracy_mult - max(0,movement_acc_penalty_mult * config.low_hit_accuracy_mult))
-		gun_scatter += max(0, movement_acc_penalty_mult * config.min_scatter_value)
+		gun_accuracy_mult = max(0.1, gun_accuracy_mult - max(0,movement_acc_penalty_mult * 0.1))
+		gun_scatter += max(0, movement_acc_penalty_mult * 5)
 
 
 	if(dual_wield) //akimbo firing gives terrible accuracy
@@ -896,7 +877,7 @@ and you're good to go.
 				if(GUN_SKILL_SMARTGUN)
 					skill_accuracy = user.mind.cm_skills.smartgun
 		if(skill_accuracy)
-			gun_accuracy_mult += skill_accuracy * config.low_hit_accuracy_mult // Accuracy mult increase/decrease per level is equal to attaching/removing a red dot sight
+			gun_accuracy_mult += skill_accuracy * 0.1 // Accuracy mult increase/decrease per level is equal to attaching/removing a red dot sight
 
 	projectile_to_fire.accuracy = round(projectile_to_fire.accuracy * gun_accuracy_mult) // Apply gun accuracy multiplier to projectile accuracy
 	projectile_to_fire.damage = round(projectile_to_fire.damage * damage_mult) 		// Apply gun damage multiplier to projectile damage
@@ -954,7 +935,7 @@ and you're good to go.
 		if(user && user.mind && user.mind.cm_skills)
 
 			if(user.mind.cm_skills.firearms == 0) //no training in any firearms
-				total_scatter_chance += config.low_scatter_value
+				total_scatter_chance += 15
 			else
 				var/scatter_tweak = 0
 				switch(gun_skill_category)
@@ -971,7 +952,7 @@ and you're good to go.
 					if(GUN_SKILL_SMARTGUN)
 						scatter_tweak = user.mind.cm_skills.smartgun
 				if(scatter_tweak)
-					total_scatter_chance -= scatter_tweak*config.low_scatter_value
+					total_scatter_chance -= scatter_tweak*15
 
 		if(prob(total_scatter_chance)) //Scattered!
 			var/scatter_x = rand(-1,1)
@@ -995,7 +976,7 @@ and you're good to go.
 	if(user && user.mind && user.mind.cm_skills)
 
 		if(user.mind.cm_skills.firearms == 0) //no training in any firearms
-			total_recoil += config.min_recoil_value
+			total_recoil += 1
 		else
 			var/recoil_tweak
 			switch(gun_skill_category)
@@ -1013,7 +994,7 @@ and you're good to go.
 					recoil_tweak = user.mind.cm_skills.smartgun
 
 			if(recoil_tweak)
-				total_recoil -= recoil_tweak*config.min_recoil_value
+				total_recoil -= recoil_tweak*1
 	if(total_recoil > 0 && ishuman(user))
 		shake_camera(user, total_recoil + 1, total_recoil)
 		return TRUE

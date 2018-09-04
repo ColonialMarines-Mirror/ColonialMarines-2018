@@ -668,8 +668,16 @@
 /obj/screen/queen_locator
 	icon = 'icons/mob/screen1_alien.dmi'
 	icon_state = "trackoff"
-	name = "queen locator"
+	name = "queen locator (click for hive status)"
 	screen_loc = ui_queen_locator
+
+/obj/screen/queen_locator/clicked(var/mob/user)
+	if (..())
+		return 1
+	if (isXeno(user))
+		var/mob/living/carbon/Xenomorph/X = user
+		X.hive_status()
+	return 1
 
 
 /obj/screen/xenonightvision

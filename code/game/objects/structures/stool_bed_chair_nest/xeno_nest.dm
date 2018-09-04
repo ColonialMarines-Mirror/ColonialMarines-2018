@@ -12,7 +12,7 @@
 	var/on_fire = 0
 	var/resisting = 0
 	var/resisting_ready = 0
-	var/nest_resist_time = 1200
+	var/nest_resist_time = 800 //1.5 mins
 	layer = RESIN_STRUCTURE_LAYER
 
 /obj/structure/bed/nest/New()

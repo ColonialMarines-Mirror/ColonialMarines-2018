@@ -2,23 +2,15 @@
 
 /mob/living/carbon/Xenomorph/proc/Pounce(atom/T)
 
-	if(!T) return
-
-	if(T.layer >= FLY_LAYER)//anything above that shouldn't be pounceable (hud stuff)
+	if(!T || !check_state() || !check_plasma(10) || T.layer >= FLY_LAYER) //anything above that shouldn't be pounceable (hud stuff)
 		return
 
 	if(!isturf(loc))
 		to_chat(src, "<span class='xenowarning'>You can't pounce from here!</span>")
 		return
 
-	if(!check_state())
-		return
-
 	if(usedPounce)
 		to_chat(src, "<span class='xenowarning'>You must wait before pouncing.</span>")
-		return
-
-	if(!check_plasma(10))
 		return
 
 	if(legcuffed)
@@ -40,7 +32,7 @@
 
 	visible_message("<span class='xenowarning'>\The [src] pounces at [T]!</span>", \
 	"<span class='xenowarning'>You pounce at [T]!</span>")
-	usedPounce = 1
+	usedPounce = TRUE
 	flags_pass = PASSTABLE
 	use_plasma(10)
 	throw_at(T, 6, 2, src) //Victim, distance, speed
@@ -57,7 +49,7 @@
 			var/datum/action/A = X
 			A.update_button_icon()
 
-	return 1
+	return TRUE
 
 
 // Praetorian acid spray
@@ -85,22 +77,13 @@
 	else
 		target = get_turf(A)
 
-	if (target == loc)
-		return
-
-	if(!target)
-		return
-
-	if(action_busy)
+	if (target == loc || !target || action_busy)
 		return
 
 	if(!do_after(src, 12, TRUE, 5, BUSY_ICON_HOSTILE))
 		return
 
-	if (used_acid_spray)
-		return
-
-	if (!check_plasma(200))
+	if (used_acid_spray || !check_plasma(200))
 		return
 
 	if(stagger)
@@ -109,7 +92,7 @@
 
 	round_statistics.praetorian_acid_sprays++
 
-	used_acid_spray = 1
+	used_acid_spray = TRUE
 	use_plasma(200)
 	playsound(loc, 'sound/effects/refill.ogg', 25, 1)
 	visible_message("<span class='xenowarning'>\The [src] spews forth a wide cone of acid!</span>", \
@@ -121,7 +104,7 @@
 		speed -= 2
 
 	spawn(acid_spray_cooldown)
-		used_acid_spray = 0
+		used_acid_spray = FALSE
 		to_chat(src, "<span class='notice'>You have produced enough acid to spray again.</span>")
 
 /mob/living/carbon/Xenomorph/proc/do_acid_spray_cone(var/turf/T)
@@ -295,13 +278,14 @@
 		return
 
 	var/mob/living/carbon/human/H = A
-	if(H.stat == DEAD) return
+	if(H.stat == DEAD)
+		return
 	round_statistics.warrior_flings++
 
 	visible_message("<span class='xenowarning'>\The [src] effortlessly flings [H] to the side!</span>", \
 	"<span class='xenowarning'>You effortlessly fling [H] to the side!</span>")
 	playsound(H,'sound/weapons/alien_claw_block.ogg', 75, 1)
-	used_fling = 1
+	used_fling = TRUE
 	use_plasma(10)
 	H.apply_effects(1,2) 	// Stun
 	shake_camera(H, 2, 1)
@@ -320,7 +304,7 @@
 	H.throw_at(T, fling_distance, 1, src, 1)
 
 	spawn(fling_cooldown)
-		used_fling = 0
+		used_fling = FALSE
 		to_chat(src, "<span class='notice'>You gather enough strength to fling something again.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
@@ -349,7 +333,8 @@
 		return
 
 	var/mob/living/carbon/human/H = A
-	if(H.stat == DEAD) return
+	if(H.stat == DEAD)
+		return
 	round_statistics.warrior_punches++
 	var/datum/limb/L = H.get_limb(check_zone(zone_selected))
 
@@ -360,7 +345,7 @@
 	"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devistatingly powerful punch!</span>")
 	var/S = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
 	playsound(H,S, 50, 1)
-	used_punch = 1
+	used_punch = TRUE
 	use_plasma(10)
 
 	if(L.status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.
@@ -388,7 +373,7 @@
 	step_away(H, src, 2)
 
 	spawn(punch_cooldown)
-		used_punch = 0
+		used_punch = FALSE
 		to_chat(src, "<span class='notice'>You gather enough strength to punch again.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
@@ -418,12 +403,13 @@
 		return
 
 	var/mob/living/carbon/human/H = A
-	if(H.stat == DEAD) return
+	if(H.stat == DEAD)
+		return
 	round_statistics.warrior_lunges++
 	visible_message("<span class='xenowarning'>\The [src] lunges towards [H]!</span>", \
 	"<span class='xenowarning'>You lunge at [H]!</span>")
 
-	used_lunge = 1 // triggered by start_pulling
+	used_lunge = TRUE // triggered by start_pulling
 	use_plasma(10)
 	throw_at(get_step_towards(A, src), 6, 2, src)
 
@@ -431,30 +417,30 @@
 		start_pulling(H,1)
 
 	spawn(lunge_cooldown)
-		used_lunge = 0
+		used_lunge = FALSE
 		to_chat(src, "<span class='notice'>You get ready to lunge again.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
 			act.update_button_icon()
 
-	return 1
+	return TRUE
 
 // Called when pulling something and attacking yourself with the pull
 /mob/living/carbon/Xenomorph/proc/pull_power(var/mob/M)
 	if (isXenoWarrior(src) && !ripping_limb && M.stat != DEAD)
-		ripping_limb = 1
+		ripping_limb = TRUE
 		if(rip_limb(M))
 			stop_pulling()
-		ripping_limb = 0
+		ripping_limb = FALSE
 
 
 // Warrior Rip Limb - called by pull_power()
 /mob/living/carbon/Xenomorph/proc/rip_limb(var/mob/M)
 	if (!istype(M, /mob/living/carbon/human))
-		return 0
+		return FALSE
 
 	if(action_busy) //can't stack the attempts
-		return 0
+		return FALSE
 
 	if(stagger)
 		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake up the shock!</span>")
@@ -465,7 +451,7 @@
 
 	if (!L || L.body_part == UPPER_TORSO || L.body_part == LOWER_TORSO || (L.status & LIMB_DESTROYED)) //Only limbs and head.
 		to_chat(src, "<span class='xenowarning'>You can't rip off that limb.</span>")
-		return 0
+		return FALSE
 	round_statistics.warrior_limb_rips++
 	var/limb_time = rand(40,60)
 
@@ -477,10 +463,10 @@
 
 	if(!do_after(src, limb_time, TRUE, 5, BUSY_ICON_HOSTILE, 1) || M.stat == DEAD)
 		to_chat(src, "<span class='notice'>You stop ripping off the limb.</span>")
-		return 0
+		return FALSE
 
 	if(L.status & LIMB_DESTROYED)
-		return 0
+		return FALSE
 
 	if(L.status & LIMB_ROBOT)
 		L.take_damage(rand(30,40), 0, 0) // just do more damage
@@ -495,10 +481,10 @@
 
 	if(!do_after(src, limb_time, TRUE, 5, BUSY_ICON_HOSTILE)  || M.stat == DEAD)
 		to_chat(src, "<span class='notice'>You stop ripping off the limb.</span>")
-		return 0
+		return FALSE
 
 	if(L.status & LIMB_DESTROYED)
-		return 0
+		return FALSE
 
 	visible_message("<span class='xenowarning'>\The [src] rips [M]'s [L.display_name] away from \his body!</span>", \
 	"<span class='xenowarning'>\The [M]'s [L.display_name] rips away from \his body!</span>")
@@ -506,7 +492,7 @@
 
 	L.droplimb()
 
-	return 1
+	return TRUE
 
 
 // Warrior Agility
@@ -523,7 +509,7 @@
 	if (agility)
 		to_chat(src, "<span class='xenowarning'>You lower yourself to all fours and loosen your armored scales to ease your movement.</span>")
 		speed -= 1
-		armor_deflection -= 30
+		armor_deflection -= WARRIOR_AGILITY_ARMOR
 
 		update_icons()
 		do_agility_cooldown()
@@ -531,13 +517,13 @@
 
 	to_chat(src, "<span class='xenowarning'>You raise yourself to stand on two feet, hard scales setting back into place.</span>")
 	speed += 1
-	armor_deflection += 30
+	armor_deflection += WARRIOR_AGILITY_ARMOR
 	update_icons()
 	do_agility_cooldown()
 
 /mob/living/carbon/Xenomorph/proc/do_agility_cooldown()
 	spawn(toggle_agility_cooldown)
-		used_toggle_agility = 0
+		used_toggle_agility = FALSE
 		to_chat(src, "<span class='notice'>You can [agility ? "raise yourself back up" : "lower yourself back down"] again.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
@@ -661,11 +647,11 @@
 
 		to_chat(H, "<span class='xenowarning'>You are struck by \the [src]'s tail sweep!</span>")
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
-	used_tail_sweep = 1
+	used_tail_sweep = TRUE
 	use_plasma(10)
 
 	spawn(tail_sweep_cooldown)
-		used_tail_sweep = 0
+		used_tail_sweep = FALSE
 		to_chat(src, "<span class='notice'>You gather enough strength to tail sweep again.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
@@ -686,27 +672,27 @@
 		return
 
 	crest_defense = !crest_defense
-	used_crest_defense = 1
+	used_crest_defense = TRUE
 
 	if (crest_defense)
 		round_statistics.defender_crest_lowerings++
 		to_chat(src, "<span class='xenowarning'>You lower your crest.</span>")
-		armor_deflection += 15
-		speed += 0.8	// This is actually a slowdown but speed is dumb
+		armor_deflection += DEFENDER_CRESTDEFENSE_ARMOR
+		speed += DEFENDER_CRESTDEFENSE_SLOWDOWN	// This is actually a slowdown but speed is dumb
 		update_icons()
 		do_crest_defense_cooldown()
 		return
 
 	round_statistics.defender_crest_raises++
 	to_chat(src, "<span class='xenowarning'>You raise your crest.</span>")
-	armor_deflection -= 15
-	speed -= 0.8
+	armor_deflection -= DEFENDER_CRESTDEFENSE_ARMOR
+	speed -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	update_icons()
 	do_crest_defense_cooldown()
 
 /mob/living/carbon/Xenomorph/proc/do_crest_defense_cooldown()
 	spawn(crest_defense_cooldown)
-		used_crest_defense = 0
+		used_crest_defense = FALSE
 		to_chat(src, "<span class='notice'>You can [crest_defense ? "raise" : "lower"] your crest.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
@@ -728,14 +714,14 @@
 	round_statistics.defender_fortifiy_toggles++
 
 	fortify = !fortify
-	used_fortify = 1
+	used_fortify = TRUE
 
 	if (fortify)
 		to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
-		armor_deflection += 30
+		armor_deflection += DEFENDER_FORTIFY_ARMOR
 		xeno_explosion_resistance++
-		frozen = 1
-		anchored = 1
+		frozen = TRUE
+		anchored = TRUE
 		update_canmove()
 		update_icons()
 		do_fortify_cooldown()
@@ -752,23 +738,23 @@
 
 	spawn while (fortify)
 		if (world.timeofday > fortify_timer)
-			fortify = 0
+			fortify = FALSE
 			fortify_off()
 		sleep(10)	// Process every second.
 
 /mob/living/carbon/Xenomorph/proc/fortify_off()
 	to_chat(src, "<span class='xenowarning'>You resume your normal stance.</span>")
-	armor_deflection -= 30
+	armor_deflection -= DEFENDER_FORTIFY_ARMOR
 	xeno_explosion_resistance--
-	frozen = 0
-	anchored = 0
+	frozen = FALSE
+	anchored = FALSE
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 30, 1)
 	update_canmove()
 	update_icons()
 
 /mob/living/carbon/Xenomorph/proc/do_fortify_cooldown()
 	spawn(fortify_cooldown)
-		used_fortify = 0
+		used_fortify = FALSE
 		to_chat(src, "<span class='notice'>You can [fortify ? "stand up" : "fortify"] again.</span>")
 		for(var/X in actions)
 			var/datum/action/act = X
@@ -891,7 +877,7 @@
 
 
 /mob/living/carbon/Xenomorph/proc/xeno_transfer_plasma(atom/A, amount = 50, transfer_delay = 20, max_range = 2)
-	if(!istype(A, /mob/living/carbon/Xenomorph))
+	if(!isXeno(A))
 		return
 	var/mob/living/carbon/Xenomorph/target = A
 
@@ -988,7 +974,8 @@
 
 
 /mob/living/carbon/Xenomorph/proc/build_resin(atom/A, resin_plasma_cost)
-	if(action_busy) return
+	if(action_busy)
+		return
 	if(!check_state())
 		return
 	if(!check_plasma(resin_plasma_cost))
@@ -1274,7 +1261,7 @@
 		check_hive_status(src)
 
 
-/proc/check_hive_status(mob/living/carbon/Xenomorph/user, var/anchored = 0)
+/proc/check_hive_status(mob/living/carbon/Xenomorph/user, var/anchored = FALSE)
 	var/dat = "<html><head><title>Hive Status</title></head><body>"
 
 	var/count = 0

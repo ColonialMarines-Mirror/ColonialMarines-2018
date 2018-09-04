@@ -100,8 +100,8 @@ Queen		 0.0	 0.1	 0.2	 0.3
 				if ("Defender")
 					melee_damage_lower = 20
 					melee_damage_upper = 30
-					health = 400
-					maxHealth = 400
+					health = 325
+					maxHealth = 325
 					plasma_gain = 8
 					plasma_max = 100
 					upgrade_threshold = 400
@@ -315,8 +315,8 @@ Queen		 0.0	 0.1	 0.2	 0.3
 				if ("Defender")
 					melee_damage_lower = 20
 					melee_damage_upper = 35
-					health = 425
-					maxHealth = 425
+					health = 340
+					maxHealth = 340
 					plasma_gain = 8
 					plasma_max = 100
 					upgrade_threshold = 800
@@ -528,8 +528,8 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_chance = 95
 				if ("Defender")
 					to_chat(src, "<span class='xenoannounce'>You are a incredibly resilient, you can control the battle through sheer force.</span>")
-					health = 450
-					maxHealth = 450
+					health = 350
+					maxHealth = 350
 					plasma_gain = 8
 					plasma_max = 100
 					upgrade_threshold = 800

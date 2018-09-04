@@ -1,3 +1,11 @@
+#define CRUSHER_STOMP_COOLDOWN 200
+#define XENO_SLOWDOWN_REGEN 0.4
+#define QUEEN_DEATH_TIMER 300 // 5 minutes
+#define DEFENDER_CRESTDEFENSE_ARMOR 30
+#define DEFENDER_CRESTDEFENSE_SLOWDOWN 0.8
+#define DEFENDER_FORTIFY_ARMOR 60
+#define WARRIOR_AGILITY_ARMOR 30
+
 /mob/living/carbon/Xenomorph
 	var/dead_icon = "Drone Dead"
 	var/language = "Xenomorph"
@@ -159,7 +167,7 @@
 	var/hivenumber = XENO_HIVE_NORMAL
 	var/mob/living/carbon/Xenomorph/Queen/living_xeno_queen
 	var/slashing_allowed = 1 //This initial var allows the queen to turn on or off slashing. Slashing off means harm intent does much less damage.
-	var/queen_time = 300 //5 minutes between queen deaths
+	var/queen_time = QUEEN_DEATH_TIMER //5 minutes between queen deaths
 	var/xeno_queen_timer
 	var/hive_orders = "" //What orders should the hive have
 	var/color = null

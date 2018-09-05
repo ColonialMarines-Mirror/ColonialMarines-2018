@@ -227,18 +227,28 @@ REAGENT SCANNER
 			dat += "<span class='warning'>\tSSD detected.</span>\n" // SSD
 
 	var/internal_bleed_detected = 0
-
+	var/fracture_detected = 0
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
+		var/core_fracture = 0
 		for(var/X in H.limbs)
 			var/datum/limb/e = X
 			var/limb = e.display_name
 			var/can_amputate = ""
-			/*if(e.status & LIMB_BROKEN)
-				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg") || (e.name == "l_hand") || (e.name == "r_hand") || (e.name == "l_foot") || (e.name == "r_foot")) && (!(e.status & LIMB_SPLINTED)))
-					dat += "\t<span class='scanner'> *Unsecured fracture in subject's <b>[limb]</b>. Splinting recommended.</span>\n"*/
+			for(var/datum/wound/W in e.wounds) if(W.internal)
+				internal_bleed_detected = TRUE
+				break
 			if((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg") || (e.name == "l_hand") || (e.name == "r_hand") || (e.name == "l_foot") || (e.name == "r_foot"))
 				can_amputate = "or amputation"
+				if((e.status & LIMB_BROKEN) && !(e.status & LIMB_SPLINTED))
+					if(!fracture_detected)
+						fracture_detected = TRUE
+					dat += "\t<span class='scanner'> *<b>Bone Fracture:</b> Unsecured fracture in subject's <b>[limb]</b>. Splinting recommended.</span>\n"
+			else
+				if((e.status & LIMB_BROKEN) && !(e.status & LIMB_SPLINTED))
+					if(!fracture_detected)
+						fracture_detected = TRUE
+					core_fracture = 1
 			if(e.germ_level >= INFECTION_LEVEL_THREE)
 				dat += "\t<span class='scanner'> *Subject's <b>[limb]</b> is in the last stage of infection. < 30u of antibiotics [can_amputate] recommended.</span>\n"
 				infection_present = 25
@@ -248,15 +258,6 @@ REAGENT SCANNER
 			if(e.has_infected_wound())
 				dat += "\t<span class='scanner'> *Infected wound detected in subject's <b>[limb]</b>. Disinfection recommended.</span>\n"
 
-		var/core_fracture = 0
-		for(var/X in H.limbs)
-			var/datum/limb/e = X
-			for(var/datum/wound/W in e.wounds) if(W.internal)
-				internal_bleed_detected = 1
-				break
-			if(e.status & LIMB_BROKEN)
-				if(!((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg") || (e.name == "l_hand") || (e.name == "r_hand") || (e.name == "l_foot") || (e.name == "r_foot")))
-					core_fracture = 1
 		if(core_fracture)
 			dat += "\t<span class='scanner'> *<b>Bone fractures</b> detected. Advanced scanner required for location.</span>\n"
 		if(internal_bleed_detected)
@@ -345,6 +346,7 @@ REAGENT SCANNER
 				if(reagents_in_body["iron"] < 5)
 					iron = " or one dose of iron."
 				advice += "<span class='scanner'><b>Low Blood:</b> Administer or recommend consumption of food[iron]</span>\n"
+			if(
 			if(overdosed && reagents_in_body["hypervene"] < 3)
 				advice += "<span class='scanner'><b>Overdose:</b> Administer one dose of hypervene or perform dialysis on patient via sleeper.</span>\n"
 			if(rad > 5)
@@ -358,6 +360,8 @@ REAGENT SCANNER
 				if(reagents_in_body["hyronalin"] < 3)
 					hyronalin = "hyronalin"
 				advice += "<span class='scanner'><b>Radiation:</b> Administer one dose of: [arithrazine] | [hyronalin]</span>\n"
+			if(fracture_detected)
+				advice += "<span class='scanner'><b>Unsecured Fracture:</b> Administer splints to specified areas.</span>\n"
 			if(internal_bleed_detected && reagents_in_body["quickclot"] < 5)
 				advice += "<span class='scanner'><b>Internal Bleeding:</b> Administer one dose of quickclot.</span>\n"
 			if(H.getToxLoss() > 10)

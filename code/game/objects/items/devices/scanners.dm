@@ -226,18 +226,19 @@ REAGENT SCANNER
 		else if(!M.client)
 			dat += "<span class='warning'>\tSSD detected.</span>\n" // SSD
 
-	var/internal_bleed_detected = 0
-	var/fracture_detected = 0
+	var/internal_bleed_detected = FALSE
+	var/fracture_detected = FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/core_fracture = 0
+		var/core_fracture = FALSE
 		for(var/X in H.limbs)
 			var/datum/limb/e = X
 			var/limb = e.display_name
 			var/can_amputate = ""
-			for(var/datum/wound/W in e.wounds) if(W.internal)
-				internal_bleed_detected = TRUE
-				break
+			for(var/datum/wound/W in e.wounds) 
+				if(W.internal)
+					internal_bleed_detected = TRUE
+					break
 			if((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg") || (e.name == "l_hand") || (e.name == "r_hand") || (e.name == "l_foot") || (e.name == "r_foot"))
 				can_amputate = "or amputation"
 				if((e.status & LIMB_BROKEN) && !(e.status & LIMB_SPLINTED))
@@ -248,7 +249,7 @@ REAGENT SCANNER
 				if((e.status & LIMB_BROKEN) && !(e.status & LIMB_SPLINTED))
 					if(!fracture_detected)
 						fracture_detected = TRUE
-					core_fracture = 1
+					core_fracture = TRUE
 			if(e.germ_level >= INFECTION_LEVEL_THREE)
 				dat += "\t<span class='scanner'> *Subject's <b>[limb]</b> is in the last stage of infection. < 30u of antibiotics [can_amputate] recommended.</span>\n"
 				infection_present = 25
@@ -346,7 +347,6 @@ REAGENT SCANNER
 				if(reagents_in_body["iron"] < 5)
 					iron = " or one dose of iron."
 				advice += "<span class='scanner'><b>Low Blood:</b> Administer or recommend consumption of food[iron]</span>\n"
-			if(
 			if(overdosed && reagents_in_body["hypervene"] < 3)
 				advice += "<span class='scanner'><b>Overdose:</b> Administer one dose of hypervene or perform dialysis on patient via sleeper.</span>\n"
 			if(rad > 5)

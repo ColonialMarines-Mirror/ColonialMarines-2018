@@ -217,10 +217,15 @@
 	if(!(flags_item & TWOHANDED) || flags_item & WIELDED)
 		return
 
-	if(user.get_inactive_hand())
-		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
-		return
-
+	if(user.get_inactive_hand())//Drop item held in the off-hand if occupied.
+		var/offhand = user.get_inactive_hand()
+		if(offhand == user.r_hand)
+			user.drop_r_hand()
+		else
+			user.drop_l_hand()
+		if(user.get_inactive_hand()) //Failsafe; if there's still something in the off-hand (undroppable), bail.
+			return
+			
 	if(ishuman(user))
 		var/check_hand = user.r_hand == src ? "l_hand" : "r_hand"
 		var/mob/living/carbon/human/wielder = user

@@ -228,6 +228,47 @@
 			explosion(impact,1,3,5)
 			cdel(src)
 
+
+/obj/structure/ship_ammo/rocket/agentorange
+	name = "\improper DMC-1207 'CreepClean'"
+	desc = "The DMC-1207 is a modification of the AGM-227 that has had it's explosive payload replaced with a canister of pressurized nitrogen sorrunded with defoliants and toxins, meant for cleaning out large areas during asymetrical warfare to deny cover to the enemy."
+	icon_state = "singlegas"
+	travelling_time = 30 //not powerful, but reaches target fast
+	ammo_id = ""
+	point_cost = 300
+
+	detonate_on(turf/impact)
+		impact.ceiling_debris_check(3)
+		spawn(5)
+			for(var/obj/structure/jungle/vines/V in range(14, impact))
+				spawn(rand(5, 20))
+					if(prob(10))
+						V.visible_message("The vines wither away!")
+					cdel(V)
+			for(var/obj/effect/alien/weeds/W in range(14, impact))
+				spawn(rand(10, 25))
+					if(prob(10))
+						W.visible_message("The weeds froth and sizzle away!")
+					cdel(W)
+			for(var/turf/closed/wall/resin/T in range(14, impact))
+				if(istype(T, /turf/closed/wall/resin/ondirt))
+					return //let's not fuck with the map
+				spawn(rand(20, 30))
+					T.visible_message("The wall starts to wither and die")
+					spawn(rand(20, 30))
+						T.visible_message("The wall froths and sizzles away under the bubbling chemicals!")
+						T.take_damage(300)
+			for(var/obj/effect/alien/resin/sticky/S in range(14, impact))
+				cdel(S)
+			for(var/obj/structure/bed/nest/B in range(14, impact))
+				cdel(B) // No message so hives don't get spammed.
+			spawn(5)
+				var/datum/effect_system/smoke_spread/agentorange/S = new/datum/effect_system/smoke_spread/agentorange()
+				S.set_up(10,0,impact,null)
+				S.start()
+			cdel(src)
+
+
 /obj/structure/ship_ammo/rocket/banshee
 	name = "\improper AGM-227 'Banshee'"
 	desc = "The AGM-227 missile is a mainstay of the overhauled dropship fleet against any mobile or armored ground targets. It's earned the nickname of 'Banshee' from the sudden wail that it emitts right before hitting a target. Useful to clear out large areas."
@@ -369,7 +410,7 @@
 			S.set_up(1,0,T,null)
 			S.start()
 		spawn(10)
-			new/obj/item/device/flashlight/flare/on/cas(T) 
+			new/obj/item/device/flashlight/flare/on/cas(T)
 		if(!ammo_count && loc)
 			cdel(src) //deleted after last minirocket is fired and impact the ground.
 

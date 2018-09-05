@@ -168,6 +168,47 @@
 	return
 
 /////////////////////////////////////////////
+// Agent Orange
+/////////////////////////////////////////////
+/obj/effect/particle_effect/smoke/agentorange
+	name = "agent orange smoke"
+	color = "#ff3b00"
+	time_to_live = 60 //hopefully this is about a minute
+/obj/effect/particle_effect/smoke/agentorange/Move()
+	..()
+	for(var/mob/living/carbon/human/R in get_turf(src))
+		affect(R)
+
+/obj/effect/particle_effect/smoke/agentorange/affect(var/mob/living/carbon/R)
+	..()
+	var/antispam
+	if(isXeno(R))
+		R.adjustFireLoss(R.maxHealth*(0.1)) // Eats through xeno health like candy because they're made of resin or it has a reaction with plasma or some peusdoscience bullshit
+	else if(ishuman(R))
+		var/mob/living/carbon/human/H = R
+		if(istype(H.wear_mask, /obj/item/clothing/mask/gas))
+			H.apply_damages(0, 1, 0) // it's still touching your skin soooooo
+		else
+			H.adjustToxLoss(3) // If you don't wear a gas mask you get uberfucked.
+			if(antispam != 1)
+				antispam = 1
+				if(ishuman(R)) //Humans only to avoid issues
+					H.setHalLoss(20) // PAIN
+					if(prob(20))
+						H.eye_blurry += rand(12,20)
+					if(prob(15))
+						to_chat(H, "<span class='danger'>OH GOD, YOUR ENTIRE BODY BURNS!</span>")
+						H.vomit() // im evil
+					if(prob(10))
+						H.apply_damages(0, 4, 0)
+				spawn(10)
+					antispam = 0
+	else
+		return //DO NOT FUCKING GAS IAN YOU SICK FUCKER
+	R.updatehealth()
+	return
+
+/////////////////////////////////////////////
 // Phosphorus Gas
 /////////////////////////////////////////////
 
@@ -363,6 +404,8 @@
 /datum/effect_system/smoke_spread/phosphorus
 	smoke_type = /obj/effect/particle_effect/smoke/phosphorus
 
+/datum/effect_system/smoke_spread/agentorange
+	smoke_type = /obj/effect/particle_effect/smoke/agentorange
 
 /datum/effect_system/smoke_spread/xeno_acid
 	smoke_type = /obj/effect/particle_effect/smoke/xeno_burn

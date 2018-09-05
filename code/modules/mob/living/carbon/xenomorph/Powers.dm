@@ -930,6 +930,64 @@
 	to_chat(src, "<span class='xenowarning'>You have transferred [amount] plasma to \the [target]. You now have [plasma_stored].</span>")
 	playsound(src, "alien_drool", 25)
 
+/mob/living/carbon/Xenomorph/proc/xeno_salvage_plasma(atom/A, amount, salvage_delay, max_range)
+	var/real_amount = 0
+
+	if(!istype(A, /mob/living/carbon/Xenomorph))
+		return
+
+	var/mob/living/carbon/Xenomorph/target = A
+
+	if(!check_state())
+		return
+
+	if(!isturf(loc))
+		to_chat(src, "<span class='warning'>You can't salvage plasma from here!</span>")
+		return
+
+	if(target.stat != DEAD)
+		to_chat(src, "<span class='warning'>You can't steal plasma from living sisters, ask them nicely instead!</span>")
+		return
+
+	if(get_dist(src, target) > max_range)
+		to_chat(src, "<span class='warning'>You need to be closer to [target].</span>")
+		return
+
+	if(target.plasma_stored < 10)
+		to_chat(src, "<span class='notice'>\The [target] doesn't have any plasma left to salvage.</span>")
+		return
+
+	to_chat(src, "<span class='notice'>You start salvaging plasma from [target].</span>")
+	if(!do_after(src, salvage_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
+		return
+
+	if(!check_state())
+		return
+
+	if(!isturf(loc))
+		to_chat(src, "<span class='warning'>You can't absorb plasma from here!</span>")
+		return
+
+	if(get_dist(src, target) > max_range)
+		to_chat(src, "<span class='warning'>You need to be closer to [target].</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>Your muscles fail to respond as you try to shake up the shock!</span>")
+		return
+
+	if(target.plasma_stored < 10)
+		to_chat(src, "<span class='notice'>\The [target] doesn't have any plasma left to salvage.</span>")
+		return
+
+	if(target.plasma_stored < amount)
+		amount = target.plasma_stored //Just take it all.
+	real_amount = round(amount/2)
+	target.use_plasma(amount)
+	gain_plasma(real_amount)
+	to_chat(src, "<span class='xenowarning'>You have salvaged [real_amount] plasma from \the [target]. You now have [plasma_stored].</span>")
+	playsound(src, "alien_drool", 25)
+
 //Note: All the neurotoxin projectile items are stored in XenoProcs.dm
 /mob/living/carbon/Xenomorph/proc/xeno_spit(atom/T)
 

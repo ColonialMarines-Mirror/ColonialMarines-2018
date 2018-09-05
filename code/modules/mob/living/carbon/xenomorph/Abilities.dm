@@ -419,6 +419,27 @@
 	transfer_delay = 5
 	max_range = 7
 
+/datum/action/xeno_action/activable/salvage_plasma
+	name = "Salvage Plasma"
+	action_icon_state = "salvage_plasma"
+	ability_name = "salvage plasma"
+	var/plasma_salvage_amount = 40
+	var/salvage_delay = 50
+	var/max_range = 1
+
+datum/action/xeno_action/activable/salvage_plasma/use_ability(atom/A)
+	var/mob/living/carbon/Xenomorph/X = owner
+
+	if(owner.action_busy)
+		return
+
+	X.xeno_salvage_plasma(A, plasma_salvage_amount, salvage_delay, max_range)
+
+datum/action/xeno_action/activable/salvage_plasma/hivelord
+	plasma_salvage_amount = 80
+	salvage_delay = 30
+	max_range = 4
+
 //Boiler abilities
 
 /datum/action/xeno_action/toggle_long_range

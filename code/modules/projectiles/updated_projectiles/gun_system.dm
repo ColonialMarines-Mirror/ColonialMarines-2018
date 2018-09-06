@@ -60,7 +60,11 @@
 	//Burst fire.
 	var/burst_amount 	= 1						//How many shots can the weapon shoot in burst? Anything less than 2 and you cannot toggle burst.
 	var/burst_delay 	= 1						//The delay in between shots. Lower = less delay = faster.
-	var/extra_delay 	= 0						//When burst-firing, this number is extra time before the weapon can fire again. Depends on number of rounds fired.
+	var/extra_delay		= 0						//When burst-firing, this number is extra time before the weapon can fire again. Depends on number of rounds fired.
+
+	//Energy Weapons
+	var/ammo_per_shot	= 1						//How much ammo consumed per shot; normally 1.
+	var/overcharge		= 0						//In overcharge mode?
 
 	//Targeting.
 	var/tmp/list/mob/living/target				//List of who yer targeting.
@@ -70,6 +74,7 @@
 	var/tmp/told_cant_shoot = 0					//So that it doesn't spam them with the fact they cannot hit them.
 	var/firerate 			= 0					//0 for keep shooting until aim is lowered
 												//1 for one bullet after target moves and aim is lowered
+
 	//Attachments.
 	var/attachable_overlays[] 		= null		//List of overlays so we can switch them in an out, instead of using Cut() on overlays.
 	var/attachable_offset[] 		= null		//Is a list, see examples of from the other files. Initiated on New() because lists don't initial() properly.
@@ -217,9 +222,21 @@
 	if(!(flags_item & TWOHANDED) || flags_item & WIELDED)
 		return
 
-	if(user.get_inactive_hand())
-		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
-		return
+	if(user.get_inactive_hand())//Drop item held in the off-hand if occupied.
+		var/offhand = user.get_inactive_hand()
+		if(offhand == user.r_hand)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H.equip_if_possible(H.r_hand)
+			user.drop_r_hand()
+		else
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H.equip_if_possible(H.r_hand) //stash it to an area
+			user.drop_l_hand()
+		if(user.get_inactive_hand()) //Failsafe; if there's still something in the off-hand (undroppable), bail.
+			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
+			return
 
 	if(ishuman(user))
 		var/check_hand = user.r_hand == src ? "l_hand" : "r_hand"
@@ -285,7 +302,8 @@
 		log_debug("ERROR CODE A1: null ammo while reloading. User: <b>[user]</b>")
 		ammo = ammo_list[/datum/ammo/bullet] //Looks like we're defaulting it.
 	else
-		ammo = ammo_list[magazine.default_ammo]
+		ammo = ammo_list[overcharge? magazine.overcharge_ammo : magazine.default_ammo]
+		to_chat(user, "DEBUG: REPLACE AMMO. Ammo: [ammo]")
 
 //Hardcoded and horrible
 /obj/item/weapon/gun/proc/cock_gun(mob/user)
@@ -352,7 +370,8 @@ User can be passed as null, (a gun reloading itself for instance), so we need to
 	replace_ammo(user,magazine)
 	if(!in_chamber)
 		ready_in_chamber()
-		cock_gun(user)
+		if(!flags_gun_features & GUN_ENERGY)
+			cock_gun(user)
 	user.visible_message("<span class='notice'>[user] loads [magazine] into [src]!</span>",
 	"<span class='notice'>You load [magazine] into [src]!</span>", null, 3)
 	if(reload_sound)
@@ -365,7 +384,7 @@ User can be passed as null, (a gun reloading itself for instance), so we need to
 	if(!reload_override && (flags_gun_features & (GUN_BURST_FIRING|GUN_UNUSUAL_DESIGN|GUN_INTERNAL_MAG)))
 		return
 
-	if(!current_mag || isnull(current_mag) || current_mag.loc != src)
+	if(!current_mag || isnull(current_mag) || current_mag.loc != src || !flags_gun_features & GUN_ENERGY)
 		cock(user)
 		return
 
@@ -383,10 +402,10 @@ User can be passed as null, (a gun reloading itself for instance), so we need to
 	update_icon()
 
 //Manually cock the gun
-//This only works on weapons NOT marked with UNUSUAL_DESIGN or INTERNAL_MAG
+//This only works on weapons NOT marked with UNUSUAL_DESIGN or INTERNAL_MAG or ENERGY
 /obj/item/weapon/gun/proc/cock(mob/user)
 
-	if(flags_gun_features & (GUN_BURST_FIRING|GUN_UNUSUAL_DESIGN|GUN_INTERNAL_MAG))
+	if(flags_gun_features & (GUN_BURST_FIRING|GUN_UNUSUAL_DESIGN|GUN_INTERNAL_MAG|GUN_ENERGY))
 		return
 	if(cock_cooldown > world.time)
 		return
@@ -460,10 +479,21 @@ load_into_chamber(), reload_into_chamber(), and clear_jam() do all of the heavy 
 If you need to change up how a gun fires, just change these procs for that subtype
 and you're good to go.
 */
-/obj/item/weapon/gun/proc/load_into_chamber(mob/user)
+/obj/item/weapon/gun/proc/load_into_chamber(mob/user, overcharge_check = FALSE)
 	//The workhorse of the bullet procs.
  	//If we have a round chambered and no active attachable, we're good to go.
 	if(in_chamber && !active_attachable)
+		if(overcharge_check) //Check to see if we have the proper ammo in chamber
+			var/reg_ammo = ammo_list[current_mag.default_ammo]
+			var/over_ammo = ammo_list[current_mag.overcharge_ammo]
+			to_chat(user, "<span class='warning'>DEBUG: Load Into Chamber. Checking for mismatched chamber ammo. Overcharge: [overcharge] Chamber: [in_chamber] Overcharge Comparison: [reg_ammo] Regular Comparison: [over_ammo] </span>")
+			if(overcharge && (in_chamber == reg_ammo))
+				to_chat(user, "<span class='warning'>DEBUG: Chamber ammo replaced with overcharge. Chamber: [in_chamber] </span>")
+				return ready_in_chamber()
+			else if (!overcharge && (in_chamber == over_ammo))
+				to_chat(user, "<span class='warning'>DEBUG: Chamber ammo replaced with overcharge. Chamber: [in_chamber] </span>")
+				return ready_in_chamber(-2)
+			else
 		return in_chamber //Already set!
 
 	//Let's check on the active attachable. It loads ammo on the go, so it never chambers anything
@@ -480,10 +510,12 @@ and you're good to go.
 		return ready_in_chamber()//We're not using the active attachable, we must use the active mag if there is one.
 
 
-/obj/item/weapon/gun/proc/ready_in_chamber()
+/obj/item/weapon/gun/proc/ready_in_chamber(modifier = 0)
 	if(current_mag && current_mag.current_rounds > 0)
 		in_chamber = create_bullet(ammo)
-		current_mag.current_rounds-- //Subtract the round from the mag.
+		current_mag.current_rounds -= ammo_per_shot + modifier //Subtract the round from the mag.
+		if(flags_gun_features & GUN_ENERGY)
+			update_icon()
 		return in_chamber
 
 /obj/item/weapon/gun/proc/create_bullet(datum/ammo/chambered)
@@ -522,7 +554,7 @@ and you're good to go.
 	if(active_attachable) //Attachables don't chamber rounds, so we want to delete it right away.
 		cdel(projectile_to_fire) //Getting rid of it. Attachables only use ammo after the cycle is over.
 		if(refund)
-			active_attachable.current_rounds++ //Refund the bullet.
+			active_attachable.current_rounds += ammo_per_shot //Refund the bullet.
 		return TRUE
 
 /obj/item/weapon/gun/proc/clear_jam(var/obj/item/projectile/projectile_to_fire, mob/user as mob) //Guns jamming, great.
@@ -925,13 +957,13 @@ and you're good to go.
 				if(bullets_fired == 1)
 					user.visible_message(
 					"<span class='danger'>[user] [src][reflex ? " by reflex":""]!</span>", \
-					"<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[current_mag.current_rounds-1]</b>/[current_mag.max_rounds]" : ""]</span>", \
+					"<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[max(0,current_mag.current_rounds - ammo_per_shot)]</b>/[current_mag.max_rounds]" : ""]</span>", \
 					"<span class='warning'>You hear a [istype(projectile_to_fire.ammo, /datum/ammo/bullet) ? "gunshot" : "blast"]!</span>", 4
 					)
 			else
 				playsound(user, actual_sound, 25)
 				if(bullets_fired == 1)
-					to_chat(user, "<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[current_mag.current_rounds-1]</b>/[current_mag.max_rounds]" : ""]</span>")
+					to_chat(user, "<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[max(0,current_mag.current_rounds - ammo_per_shot)]</b>/[current_mag.max_rounds]" : ""]</span>")
 	return TRUE
 
 /obj/item/weapon/gun/proc/simulate_scatter(obj/item/projectile/projectile_to_fire, atom/target, turf/targloc, total_scatter_chance = 0, mob/user, burst_scatter_bonus = 0)

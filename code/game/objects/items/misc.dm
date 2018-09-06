@@ -25,7 +25,7 @@
 /obj/item/bananapeel/Crossed(AM as mob|obj)
 	if (iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		C.slip(name, 4, 2)
+		C.slip(name, 4, 2,FALSE,TRUE)
 
 /obj/item/cane
 	name = "cane"

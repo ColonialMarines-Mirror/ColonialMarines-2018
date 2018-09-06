@@ -8,6 +8,7 @@
 	icon_state = "autoinjector"
 	item_state = "hypo"
 	amount_per_transfer_from_this = 15
+	w_class = 1.0
 	volume = 15
 	skilllock = 0
 

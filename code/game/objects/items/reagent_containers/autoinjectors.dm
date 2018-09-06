@@ -145,16 +145,6 @@
 		reagents.add_reagent("inaprovaline", 15)
 		update_icon()
 
-/obj/item/reagent_container/hypospray/autoinjector/Inaprovaline
-	name = "\improper Inaprovaline autoinjector"
-	desc = "An auto-injector loaded with 15 units of Inaprovaline, an emergency stabilization medicine for patients in critical condition."
-	icon_state = "clonefix" //TEMP
-
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 15)
-		update_icon()
-
 /obj/item/reagent_container/hypospray/autoinjector/hypervene
 	name = "\improper Hypervene autoinjector"
 	desc = "An auto-injector loaded with 3 units of Hypervene, an emergency medicine that rapidly purges chems. Causes pain and vomitting."

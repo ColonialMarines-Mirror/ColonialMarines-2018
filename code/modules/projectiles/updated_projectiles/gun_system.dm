@@ -224,6 +224,7 @@
 		else
 			user.drop_l_hand()
 		if(user.get_inactive_hand()) //Failsafe; if there's still something in the off-hand (undroppable), bail.
+			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 			return
 			
 	if(ishuman(user))

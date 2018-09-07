@@ -289,7 +289,8 @@
 	name = "auto-injector pouch"
 	desc = "A pouch specifically for auto-injectors."
 	icon_state = "autoinjector"
-	storage_slots = 14
+	storage_slots = 7
+	max_storage_space = 14
 	can_hold = list(
 	    "/obj/item/reagent_container/hypospray/autoinjector"
 	)
@@ -299,7 +300,8 @@
 	name = "syringe pouch"
 	desc = "It can contain syringes."
 	icon_state = "syringe"
-	storage_slots = 7
+	storage_slots = 5
+	max_storage_space = 10
 	can_hold = list("/obj/item/reagent_container/syringe")
 
 

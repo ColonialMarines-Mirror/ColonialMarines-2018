@@ -148,7 +148,7 @@
 /obj/item/reagent_container/hypospray/autoinjector/hypervene
 	name = "\improper Hypervene autoinjector"
 	desc = "An auto-injector loaded with 3 units of Hypervene, an emergency medicine that rapidly purges chems. Causes pain and vomitting."
-	icon_state = "clonefix" //TEMP
+	icon_state = "anesthetic" //TEMP
 
 	/obj/item/reagent_container/hypospray/autoinjector/hypervene/New()
 		..()

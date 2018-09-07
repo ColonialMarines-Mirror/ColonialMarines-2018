@@ -999,6 +999,7 @@
 	color = "#19C832"
 	overdose = REAGENTS_OVERDOSE * 0.5
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL * 0.5
+	custom_metabolism = REAGENTS_METABOLISM * 2
 	scannable = TRUE
 
 	/datum/reagent/hypervene/on_mob_life(mob/living/M, alien)
@@ -1007,8 +1008,8 @@
 			return
 		for(var/datum/reagent/R in M.reagents.reagent_list)
 			if(R != src)
-				M.reagents.remove_reagent(R.id,4 * REM)
-		M.reagent_shock_modifier += PAIN_REDUCTION_HEAVY //Significant pain while metabolized.
+				M.reagents.remove_reagent(R.id,8 * REM)
+		M.reagent_shock_modifier -= PAIN_REDUCTION_HEAVY //Significant pain while metabolized.
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(prob(5)) //causes vomiting
@@ -1024,7 +1025,7 @@
 			if(prob(10)) //heavy vomiting
 				H.vomit()
 		if(ishuman(M))
-			M.reagent_shock_modifier += PAIN_REDUCTION_VERY_HEAVY * 1.25//Massive pain.
+			M.reagent_shock_modifier -= PAIN_REDUCTION_VERY_HEAVY * 1.25//Massive pain.
 
 	/datum/reagent/hypervene/on_overdose_critical(mob/living/M, alien)
 		if(alien == IS_YAUTJA) return
@@ -1034,4 +1035,4 @@
 			if(prob(20)) //violent vomiting
 				H.vomit()
 		if(ishuman(M))
-			M.reagent_shock_modifier += PAIN_REDUCTION_FULL //Unlimited agony.
+			M.reagent_shock_modifier -= PAIN_REDUCTION_FULL //Unlimited agony.

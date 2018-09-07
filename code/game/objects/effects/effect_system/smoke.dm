@@ -119,6 +119,88 @@
 				M.coughedtime = 0
 
 /////////////////////////////////////////////
+// Cloak Smoke (SEE_MOBS Hur Dur)
+////////////////////////////////////////////
+/obj/effect/particle_effect/smoke/tactical
+
+/obj/effect/particle_effect/smoke/tactical/New(loc, oldamount)
+	..()
+	for(var/mob/living/M in get_turf(src))
+		affect(M)
+
+
+/obj/effect/particle_effect/smoke/tactical/Move()
+	..()
+	for(var/mob/living/M in get_turf(src))
+		affect(M)
+
+/obj/effect/particle_effect/smoke/tactical/Dispose()
+	for(var/mob/living/M in get_turf(src))
+		uncloak_smoke_act(M)
+	. =..()
+
+/obj/effect/particle_effect/smoke/tactical/affect(var/mob/living/M)
+	if (istype(M) && time_to_live >= 1)
+		cloak_smoke_act(M)
+	else
+		return
+
+/obj/effect/particle_effect/smoke/tactical/Crossed(atom/movable/M)
+	..()
+	if(isliving(M))
+		affect(M)
+
+/obj/effect/particle_effect/smoke/tactical/Cross(var/mob/living/M)
+	affect(M)
+
+/obj/effect/particle_effect/smoke/tactical/Uncrossed(var/mob/living/M)
+	..()
+	uncloak_smoke_act(M)
+
+/obj/effect/particle_effect/smoke/tactical/proc/cloak_smoke_act(var/mob/living/M)
+
+	if(!istype(M) || M.smokecloaked)
+		return
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.gloves)
+			var/obj/item/clothing/gloves/yautja/Y = H.gloves
+			if(istype(Y) && Y.cloaked)
+				return
+
+		if(H.back)
+			var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = H.back
+			if(istype(S) && S.camo_active)
+				return
+
+	M.alpha = 10
+
+	if(!isXeno(M)||!isanimal(M))
+		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+		SA.remove_from_hud(M)
+		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+		XI.remove_from_hud(M)
+
+	M.smokecloaked = TRUE
+
+
+/obj/effect/particle_effect/smoke/tactical/proc/uncloak_smoke_act(var/mob/living/M)
+
+	if(!istype(M) || !M.smokecloaked)
+		return
+
+	M.alpha = initial(M.alpha)
+
+	if(!isXeno(M)|| !isanimal(M))
+		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+		SA.add_to_hud(M)
+		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+		XI.add_to_hud(M)
+
+	M.smokecloaked = FALSE
+
+/////////////////////////////////////////////
 // Sleep smoke
 /////////////////////////////////////////////
 
@@ -353,6 +435,9 @@
 
 /datum/effect_system/smoke_spread/bad
 	smoke_type = /obj/effect/particle_effect/smoke/bad
+
+datum/effect_system/smoke_spread/tactical
+	smoke_type = /obj/effect/particle_effect/smoke/tactical
 
 /datum/effect_system/smoke_spread/sleepy
 	smoke_type = /obj/effect/particle_effect/smoke/sleepy

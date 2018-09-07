@@ -38,7 +38,7 @@
 	if(time_to_live <= 0)
 		cdel(src)
 	else if(time_to_live == 1)
-		alpha = 180
+		alpha -= 75
 		amount = 0
 		SetOpacity(0)
 
@@ -122,6 +122,8 @@
 // Cloak Smoke (SEE_MOBS Hur Dur)
 ////////////////////////////////////////////
 /obj/effect/particle_effect/smoke/tactical
+	opacity = 0
+	alpha = 145
 
 /obj/effect/particle_effect/smoke/tactical/New(loc, oldamount)
 	..()
@@ -158,47 +160,24 @@
 	uncloak_smoke_act(M)
 
 /obj/effect/particle_effect/smoke/tactical/proc/cloak_smoke_act(var/mob/living/M)
-
-	if(!istype(M) || M.smokecloaked)
-		return
-
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.gloves)
-			var/obj/item/clothing/gloves/yautja/Y = H.gloves
-			if(istype(Y) && Y.cloaked)
-				return
-
+		var/obj/item/clothing/gloves/yautja/Y = H.gloves
+		var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = H.back
 		if(H.back)
-			var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = H.back
 			if(istype(S) && S.camo_active)
 				return
-
-	M.alpha = 10
-
-	if(!isXeno(M)||!isanimal(M))
-		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
-		SA.remove_from_hud(M)
-		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
-		XI.remove_from_hud(M)
-
-	M.smokecloaked = TRUE
+		if(H.gloves)
+			if(istype(Y) && Y.cloaked)
+				return
+		else
+			M.smokecloak_on()
+	else
+		M.smokecloak_on()
 
 
 /obj/effect/particle_effect/smoke/tactical/proc/uncloak_smoke_act(var/mob/living/M)
-
-	if(!istype(M) || !M.smokecloaked)
-		return
-
-	M.alpha = initial(M.alpha)
-
-	if(!isXeno(M)|| !isanimal(M))
-		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
-		SA.add_to_hud(M)
-		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
-		XI.add_to_hud(M)
-
-	M.smokecloaked = FALSE
+	M.smokecloak_off()
 
 /////////////////////////////////////////////
 // Sleep smoke

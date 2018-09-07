@@ -64,4 +64,5 @@
 	var/reagent_shock_modifier = 0 //negative values reduce shock/pain
 	var/reagent_pain_modifier = 0 //same as above, except can potentially mask damage
 
-	var/smokecloaked = FALSE //For Cloak Nade
+	var/smokecloaked = FALSE //For the new Smoke Grenade
+	var/smokecloak_stack = 0

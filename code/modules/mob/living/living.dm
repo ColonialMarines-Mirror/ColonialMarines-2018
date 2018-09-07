@@ -1,3 +1,6 @@
+mob/living/Life()
+	. = ..()
+	update_cloak()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -395,4 +398,45 @@
 			clear_fullscreen("flash", 20)
 		return 1
 
+/mob/living/proc/smokecloak_on(var/atom/A)
 
+	smokecloak_stack = Clamp(smokecloak_stack-2, 0, 3)
+
+	if(smokecloaked)
+		return
+
+	alpha = 10
+
+	if(!isXeno(src)||!isanimal(src))
+		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+		SA.remove_from_hud(src)
+		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+		XI.remove_from_hud(src)
+
+	smokecloaked = TRUE
+
+/mob/living/proc/smokecloak_off()
+
+	if(!smokecloaked)
+		return
+
+	alpha = initial(alpha)
+
+	if(!isXeno(src)|| !isanimal(src))
+		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+		SA.add_to_hud(src)
+		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+		XI.add_to_hud(src)
+
+	smokecloaked = FALSE
+	smokecloak_stack = 0
+
+/mob/living/proc/update_cloak() //if all else fails. no permanent invisibility.
+
+	if(!smokecloaked)
+		return
+
+	smokecloak_stack = Clamp(smokecloak_stack+1, 0, 3)
+
+	if(smokecloak_stack == 3)
+		smokecloak_off()

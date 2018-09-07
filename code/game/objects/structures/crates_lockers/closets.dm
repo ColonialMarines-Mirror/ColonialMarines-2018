@@ -122,14 +122,7 @@
 		if(M.buckled)
 			continue
 		var/mob/living/L = M
-		if(L.smokecloaked)
-			L.alpha = initial(L.alpha)
-			if(!isanimal(L))
-				var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
-				SA.add_to_hud(L)
-				var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
-				XI.add_to_hud(L)
-			L.smokecloaked = FALSE
+		L.smokecloak_off()
 
 		M.forceMove(src)
 		stored_units += mob_size

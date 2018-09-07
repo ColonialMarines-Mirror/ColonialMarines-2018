@@ -750,12 +750,11 @@ proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as te
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/direction = get_dir(source, target)
 	if(current == target_turf)
 		return TRUE
 	if(get_dist(current, target_turf) > length)
 		return FALSE
-	current = get_step(source, direction)
+	current = get_step_towards(source, target_turf)
 	while((current != target_turf))
 		if(current.opacity)
 			return FALSE
@@ -763,7 +762,7 @@ proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as te
 			var/atom/A = thing
 			if(A.opacity)
 				return FALSE
-		current = get_step(current, direction)
+		current = get_step_towards(source, target_turf)
 	return TRUE
 /proc/is_blocked_turf(var/turf/T)
 	var/cant_pass = 0

@@ -405,7 +405,7 @@ mob/living/Life()
 	if(smokecloaked)
 		return
 
-	alpha = 10
+	alpha = 5 // bah, let's make it better, it's a disposable device anyway
 
 	if(!isXeno(src)||!isanimal(src))
 		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]

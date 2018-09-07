@@ -445,7 +445,7 @@
 			var/mob/living/I = i
 			if(istype(I,/mob/living/carbon/human))
 				var/mob/living/carbon/human/M = I
-				if(istype(M.wear_suit, /obj/item/clothing/suit/fire) || istype(M.wear_suit,/obj/item/clothing/suit/space/rig/atmos) || || (istype(M.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(M.head, /obj/item/clothing/head/helmet/marine/pyro)))
+				if(istype(M.wear_suit, /obj/item/clothing/suit/fire) || istype(M.wear_suit,/obj/item/clothing/suit/space/rig/atmos) || (istype(M.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(M.head, /obj/item/clothing/head/helmet/marine/pyro)))
 					M.show_message(text("Your suit protects you from the flames."),1)
 					M.adjustFireLoss(rand(0 ,burnlevel*0.25)) //Does small burn damage to a person wearing one of the suits.
 					continue

@@ -217,7 +217,7 @@
 					log_combat(user, H, "shot", src)
 					msg_admin_attack("[user] ([user.ckey]) shot [H] ([H.ckey]) with \a [name] in [get_area(user)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.wear_face, /obj/item/clothing/head/helmet/marine/pyro))) 
+			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro))) 
 				continue
 
 		M.adjust_fire_stacks(rand(5,burn*2))
@@ -394,7 +394,7 @@
 				if(!Z.fire_immune)
 					Z.adjust_fire_stacks(burnlevel)
 					Z.IgniteMob()
-			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.wear_face, /obj/item/clothing/head/helmet/marine/pyro)))
+			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro)))
 				H.show_message(text("Your suit protects you from the flames."),1)
 				H.adjustFireLoss(burnlevel*0.25) //Does small burn damage to a person wearing one of the suits.
 				return
@@ -445,7 +445,7 @@
 			var/mob/living/I = i
 			if(istype(I,/mob/living/carbon/human))
 				var/mob/living/carbon/human/M = I
-				if(istype(M.wear_suit, /obj/item/clothing/suit/fire) || istype(M.wear_suit,/obj/item/clothing/suit/space/rig/atmos))
+				if(istype(M.wear_suit, /obj/item/clothing/suit/fire) || istype(M.wear_suit,/obj/item/clothing/suit/space/rig/atmos) || || (istype(M.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(M.head, /obj/item/clothing/head/helmet/marine/pyro)))
 					M.show_message(text("Your suit protects you from the flames."),1)
 					M.adjustFireLoss(rand(0 ,burnlevel*0.25)) //Does small burn damage to a person wearing one of the suits.
 					continue

@@ -183,7 +183,7 @@
 	..()
 	var/antispam
 	if(isXeno(R))
-		R.adjustFireLoss(R.maxHealth*(rand(0.02, .1))) // Eats through xeno health like candy because they're made of resin or it has a reaction with plasma or some peusdoscience bullshit
+		R.adjustFireLoss(R.maxHealth*(rand(0.02, 0.1))) // Eats through xeno health like candy because they're made of resin or it has a reaction with plasma or some peusdoscience bullshit
 	else if(ishuman(R))
 		var/mob/living/carbon/human/H = R
 		if(istype(H.wear_mask, /obj/item/clothing/mask/gas))

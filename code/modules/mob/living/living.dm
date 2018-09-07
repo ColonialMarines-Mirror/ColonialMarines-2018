@@ -1,4 +1,4 @@
-mob/living/Life()
+/mob/living/Life()
 	. = ..()
 	update_cloak()
 

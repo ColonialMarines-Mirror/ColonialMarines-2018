@@ -14,19 +14,11 @@
 		return
 
 	if(message == "*dance")
-		set_typing_indicator(0)
+		set_typing_indicator(FALSE)
 		usr.say(message)
 		return
-
-
-
-	set_typing_indicator(0)
+	set_typing_indicator(FALSE)
 	usr.say(message)
-	usr.talked = 1
-	spawn (10)
-		if (usr.talked ==2)
-			return
-		usr.talked = 0
 
 
 /mob/verb/me_verb(message as text)

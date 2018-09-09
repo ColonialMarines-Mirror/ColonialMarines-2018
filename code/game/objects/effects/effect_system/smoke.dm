@@ -119,8 +119,8 @@
 				M.coughedtime = 0
 
 /////////////////////////////////////////////
-// Cloak Smoke (SEE_MOBS Hur Dur)
-////////////////////////////////////////////
+// Cloak Smoke
+/////////////////////////////////////////////
 /obj/effect/particle_effect/smoke/tactical
 	opacity = 0
 	alpha = 145
@@ -130,9 +130,13 @@
 	for(var/mob/living/M in get_turf(src))
 		affect(M)
 
-
 /obj/effect/particle_effect/smoke/tactical/Move()
 	..()
+	for(var/mob/living/M in get_turf(src))
+		affect(M)
+
+/obj/effect/particle_effect/smoke/tactical/process()
+	.=..()
 	for(var/mob/living/M in get_turf(src))
 		affect(M)
 
@@ -142,16 +146,13 @@
 	..()
 
 /obj/effect/particle_effect/smoke/tactical/affect(var/mob/living/M)
-	if (istype(M))
+	if(istype(M))
 		cloak_smoke_act(M)
 
 /obj/effect/particle_effect/smoke/tactical/Crossed(atom/movable/M)
 	..()
 	if(isliving(M))
 		affect(M)
-
-/obj/effect/particle_effect/smoke/tactical/Cross(var/mob/living/M)
-	affect(M)
 
 /obj/effect/particle_effect/smoke/tactical/Uncrossed(var/mob/living/M)
 	..()

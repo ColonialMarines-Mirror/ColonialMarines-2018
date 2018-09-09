@@ -142,7 +142,7 @@
 	. =..()
 
 /obj/effect/particle_effect/smoke/tactical/affect(var/mob/living/M)
-	if (istype(M) && time_to_live >= 1)
+	if (istype(M))
 		cloak_smoke_act(M)
 	else
 		return

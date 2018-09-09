@@ -1,6 +1,8 @@
 /mob/living/Life()
 	. = ..()
-	update_cloak()
+
+	if(smokecloaked)
+		update_cloak()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -398,9 +400,7 @@
 			clear_fullscreen("flash", 20)
 		return 1
 
-/mob/living/proc/smokecloak_on(var/atom/A)
-
-	smokecloak_stack = Clamp(smokecloak_stack-2, 0, 3)
+/mob/living/proc/smokecloak_on()
 
 	if(smokecloaked)
 		return
@@ -429,14 +429,10 @@
 		XI.add_to_hud(src)
 
 	smokecloaked = FALSE
-	smokecloak_stack = 0
 
-/mob/living/proc/update_cloak() //if all else fails. no permanent invisibility.
-
-	if(!smokecloaked)
+/mob/living/proc/update_cloak()
+	var/obj/effect/particle_effect/smoke/tactical/S = locate() in src.loc
+	if(S)
 		return
-
-	smokecloak_stack = Clamp(smokecloak_stack+1, 0, 3)
-
-	if(smokecloak_stack == 3)
+	else
 		smokecloak_off()

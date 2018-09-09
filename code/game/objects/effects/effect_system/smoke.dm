@@ -139,13 +139,11 @@
 /obj/effect/particle_effect/smoke/tactical/Dispose()
 	for(var/mob/living/M in get_turf(src))
 		uncloak_smoke_act(M)
-	. =..()
+	..()
 
 /obj/effect/particle_effect/smoke/tactical/affect(var/mob/living/M)
 	if (istype(M))
 		cloak_smoke_act(M)
-	else
-		return
 
 /obj/effect/particle_effect/smoke/tactical/Crossed(atom/movable/M)
 	..()
@@ -170,14 +168,12 @@
 		if(H.gloves)
 			if(istype(Y) && Y.cloaked)
 				return
-		else
-			M.smokecloak_on()
-	else
-		M.smokecloak_on()
+		return M.smokecloak_on()
+	return M.smokecloak_on()
 
 
 /obj/effect/particle_effect/smoke/tactical/proc/uncloak_smoke_act(var/mob/living/M)
-	M.smokecloak_off()
+	return M.smokecloak_off()
 
 /////////////////////////////////////////////
 // Sleep smoke

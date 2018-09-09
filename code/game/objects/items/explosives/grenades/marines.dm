@@ -170,9 +170,9 @@ proc/flame_radius(radius = 1, turf/turf) //~Art updated fire.
 /obj/item/explosive/grenade/cloakbomb
 	name = "\improper M40-2 SCDP smoke grenade"
 	desc = "A sophisticated version of the M40 HSDP with an improved smoke screen payload, currently being field-tested in the USCM. It's set to detonate in 2 seconds."
-	icon_state = "grenade_cloak" //placeholder
+	icon_state = "grenade_cloak"
 	det_time = 20
-	item_state = "grenade_cloak" //same
+	item_state = "grenade_cloak"
 	underslug_launchable = TRUE
 	var/datum/effect_system/smoke_spread/tactical/smoke
 

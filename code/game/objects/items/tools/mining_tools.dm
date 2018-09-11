@@ -62,15 +62,238 @@
 
 /obj/item/tool/pickaxe/plasmacutter
 	name = "plasma cutter"
-	icon_state = "plasmacutter"
+	icon_state = "plasmacutter1"
+	var/base_icon_state = "plasmacutter1"
 	item_state = "gun"
 	w_class = 3.0 //it is smaller than the pickaxe
+	force = 45.0
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	desc = "A cutter tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone."
 	drill_verb = "cutting"
 	heat_source = 3800
+	var/cutting_sound = 'sound/items/Welder2.ogg'
+	var/powered = FALSE
+	var/cut_delay = 30 //Takes this long in seconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
+	var/fizzle = "<span class='warning'>The plasmacutter briefly jolts to life before sizzing out. Replace its battery by using a screwdriver to remove the old one.</span>"
+	var/dirt_amt_per_dig = 5
+	var/charge_cost = 200
+	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
+	var/charge_message = "The plasmacutter's charge meter reads:"
+
+/obj/item/tool/pickaxe/plasmacutter/New()
+	..()
+	cell = new /obj/item/cell/high(src)
+	powered = TRUE
+	update_icon()
+
+/obj/item/tool/pickaxe/plasmacutter/examine(mob/user)
+	..()
+	if(cell)
+		to_chat(user, "It has a loaded power cell and its readout counter is active. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b>")
+	else
+		to_chat(user, "<span class='warning'>It does not have a power source installed!</span>")
+
+/obj/item/tool/pickaxe/plasmacutter/proc/fizzle_message(mob/user)
+	playsound(src, 'sound/machines/buzz-two.ogg', 25, 1)
+	to_chat(user, "<span class='warning'>[fizzle] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+
+/obj/item/tool/pickaxe/plasmacutter/proc/start_cut(mob/user, name = "", atom/source, sound = cutting_sound)
+	eyecheck(user)
+	playsound(source, sound, 25, 1)
+	var/datum/effect_system/spark_spread/spark_system
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, source)
+	spark_system.attach(source)
+	spark_system.start(source)
+	to_chat(user, "<span class='notice'>You start cutting apart the [name] with [src]. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+
+/obj/item/tool/pickaxe/plasmacutter/proc/cut_apart(mob/user, name = "", atom/source, sound = cutting_sound, charge_amount = charge_cost)
+	eyecheck(user)
+	playsound(source, sound, 25, 1)
+	var/datum/effect_system/spark_spread/spark_system
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, source)
+	spark_system.attach(source)
+	spark_system.start(source)
+	use_charge(user, charge_amount)
+	to_chat(user, "<span class='notice'>You cut apart the [name] with [src]. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+
+/obj/item/tool/pickaxe/plasmacutter/proc/use_charge(mob/user, amount = charge_cost)
+	cell.charge -= min(cell.charge, amount)
+	to_chat(user, "[charge_message] <b> [cell.charge]/[cell.maxcharge]</b>")
+	update_icon()
+	..()
+/*
+/obj/item/tool/pickaxe/plasmacutter/proc/plasma_cut(mob/user, obj/item/W, atom/A, modifier = 1)
+	if(W == src)
+		if(cell.charge >= charge_cost)
+			use_charge()
+			start_cut(user, src.name, src)
+			if(do_after(user, calc_delay(user) * modifier, TRUE, 5, BUSY_ICON_FRIENDLY) && src)
+				cut_apart(user, src.name, src)
+				if(istype(A, obj/structure/window_frame)
+					cdel(A)
+				else(istype(A, /turf/closed/wall)
+
+			return
+		else
+			fizzle_message(user)
+			return*/
+
+//Decides whether or not to damage a player's eyes based on what they're wearing as protection
+//Note: This should probably be moved to mob
+/obj/item/tool/pickaxe/plasmacutter/proc/eyecheck(mob/user)
+	if(!iscarbon(user))	return 1
+	var/safety = user.get_eye_protection()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/internal_organ/eyes/E = H.internal_organs_by_name["eyes"]
+		if(!E)
+			return
+		if(E.robotic == ORGAN_ROBOT)
+			return
+		switch(safety)
+			if(1)
+				to_chat(user, "<span class='danger'>Your eyes sting a little.</span>")
+				E.damage += rand(1, 2)
+				if(E.damage > 12)
+					H.eye_blurry += rand(3,6)
+			if(0)
+				to_chat(user, "<span class='warning'>Your eyes burn.</span>")
+				E.damage += rand(2, 4)
+				if(E.damage > 10)
+					E.damage += rand(4,10)
+			if(-1)
+				to_chat(user, "<span class='warning'>Your thermals intensify [src]'s glow. Your eyes itch and burn severely.</span>")
+				H.eye_blurry += rand(12,20)
+				E.damage += rand(12, 16)
+		if(safety<2)
+
+			if(E.damage > 10)
+				to_chat(H, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
+
+			if (E.damage >= E.min_broken_damage)
+				to_chat(H, "<span class='warning'>You go blind!</span>")
+				H.sdisabilities |= BLIND
+			else if (E.damage >= E.min_bruised_damage)
+				to_chat(H, "<span class='warning'>You go blind!</span>")
+				H.eye_blind = 5
+				H.eye_blurry = 5
+				H.disabilities |= NEARSIGHTED
+				spawn(100)
+					H.disabilities &= ~NEARSIGHTED
+
+
+/obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
+	var/final_delay = cut_delay
+	if (istype(user))
+		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI)
+			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
+			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
+			final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
+		else
+			final_delay -= min(cut_delay,(user.mind.cm_skills.engineer - 3))
+	return final_delay
+
+/obj/item/tool/pickaxe/plasmacutter/emp_act(severity)
+	cell.use(round(cell.maxcharge / severity))
+	update_icon()
+	..()
+
+/obj/item/tool/pickaxe/plasmacutter/update_icon()
+	if(!cell || cell.charge <= 0)
+		icon_state = "plasmacutter0"
+		powered = FALSE
+		force = 5
+		damtype = "brute"
+	else
+		icon_state = "plasmacutter1"
+		powered = TRUE
+		force = 45
+		damtype = "burn"
+
+
+/obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)
+
+	if(istype(W, /obj/item/cell))
+		if(user.drop_held_item())
+			W.forceMove(src)
+			var/replace_install = "You replace the cell in [src]"
+			if(!cell)
+				replace_install = "You install a cell in [src]"
+			else
+				cell.updateicon()
+				user.put_in_active_hand(cell)
+				//cell.loc = get_turf(src.loc)
+			cell = W
+			to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+			playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
+			update_icon()
+		else
+			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
+	else ..()
+
+/obj/item/tool/pickaxe/plasmacutter/attack_hand(mob/user)
+	if(cell)
+		if(user.get_inactive_hand() == src)
+			cell.updateicon()
+			user.put_in_active_hand(cell)
+			//cell.loc = get_turf(src.loc)
+			cell = null
+			playsound(user, 'sound/machines/click.ogg', 25, 1, 5)
+			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+			update_icon()
+			return
+	else ..()
+
+
+/obj/item/tool/pickaxe/plasmacutter/attack(mob/M, mob/user)
+
+	if(powered)
+		if(cell.charge < charge_cost * 0.25)
+			fizzle_message(user)
+		else
+			use_charge(user, charge_cost * 0.25)
+			playsound(M, cutting_sound, 25, 1)
+			var/datum/effect_system/spark_spread/spark_system
+			spark_system = new /datum/effect_system/spark_spread()
+			spark_system.set_up(5, 0, M)
+			spark_system.attach(M)
+			spark_system.start(M)
+	return ..()
+
+
+/obj/item/tool/pickaxe/plasmacutter/afterattack(atom/target, mob/user, proximity)
+	if(!proximity) return
+
+	if(user.action_busy)
+		return
+
+	if(isturf(target))//Melting snow with the plasma cutter.
+		var/turf/T = target
+		var/turfdirt = T.get_dirt_type()
+		if(turfdirt)
+			if(turfdirt == DIRT_TYPE_SNOW)
+				var/turf/open/snow/ST = T
+				if(!ST.slayer)
+					return
+			to_chat(user, "<span class='notice'>You start digging.</span>")
+			playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
+			if(!do_after(user, digspeed * 0.5, TRUE, 5, BUSY_ICON_BUILD))
+				return
+			var/transf_amt = dirt_amt_per_dig
+			if(turfdirt == DIRT_TYPE_SNOW)
+				var/turf/open/snow/ST = T
+				if(!ST.slayer)
+					return
+				transf_amt = min(ST.slayer, dirt_amt_per_dig)
+				ST.slayer -= transf_amt
+				ST.update_icon(1,0)
+				to_chat(user, "<span class='notice'>You melt the snow with your [src].</span>")
+			else
+				return
 
 /obj/item/tool/pickaxe/diamond
 	name = "diamond pickaxe"

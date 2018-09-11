@@ -274,14 +274,14 @@ var/global/list/randomized_pill_icons
 
 /obj/item/reagent_container/pill/tricordrazine
 	pill_desc = "A Tricordrazine pill. Broad spectrum medication that slowly heals all damage types."
-	New()
+	/obj/item/reagent_container/pill/tricordrazine/New()
 		..()
 		icon_state = randomized_pill_icons[13]
 		reagents.add_reagent("tricordrazine", 15)
 
 /obj/item/reagent_container/pill/hypervene
 	pill_desc = "A Hypervene pill. A purge medication used to treat overdoses. Causes pain and vomiting."
-	New()
+	/obj/item/reagent_container/pill/hypervene/New()
 		..()
 		icon_state = randomized_pill_icons[14]
 		reagents.add_reagent("hypervene", 3)

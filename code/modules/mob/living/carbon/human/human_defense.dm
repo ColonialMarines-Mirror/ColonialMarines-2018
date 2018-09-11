@@ -329,7 +329,6 @@ Contains most of the procs that are called when a mob is attacked by something
 		w_uniform.add_mob_blood(source)
 		update_inv_w_uniform()
 
-
 /mob/living/carbon/human/proc/handle_suit_punctures(var/damtype, var/damage)
 	if(!wear_suit) return
 	if(!istype(wear_suit,/obj/item/clothing/suit/space)) return

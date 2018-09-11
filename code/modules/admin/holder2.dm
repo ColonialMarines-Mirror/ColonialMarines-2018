@@ -153,6 +153,7 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 			if(dckey == ckey)
 				var/datum/admins/D = new /datum/admins(rank, rights, dckey)
 				D.associate(directory[dckey])
+				break
 		if(!admin_datums)
 			error("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
 			log_misc("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")

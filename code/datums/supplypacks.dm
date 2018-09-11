@@ -882,20 +882,18 @@ ATTACHMENTS
 	group = "Attachments"
 
 /datum/supply_packs/s_attachables
-	name = "stock attachments crate (x3 each)"
+	name = "stock attachments crate (x2 each)"
 	contains = list(
 					/obj/item/attachable/stock/revolver,
 					/obj/item/attachable/stock/revolver,
-					/obj/item/attachable/stock/revolver,
 					/obj/item/attachable/stock/rifle,
 					/obj/item/attachable/stock/rifle,
-					/obj/item/attachable/stock/rifle,
-					/obj/item/attachable/stock/shotgun,
 					/obj/item/attachable/stock/shotgun,
 					/obj/item/attachable/stock/shotgun,
 					/obj/item/attachable/stock/smg,
 					/obj/item/attachable/stock/smg,
-					/obj/item/attachable/stock/smg
+					/obj/item/attachable/stock/tactical,
+					/obj/item/attachable/stock/tactical
 					)
 	cost = RO_PRICE_PRICY
 	containertype = /obj/structure/closet/crate
@@ -955,7 +953,7 @@ ATTACHMENTS
 	group = "Attachments"
 
 /datum/supply_packs/stock_smg
-	name = "combat shotgun stock attachment crate (x4)"
+	name = "combat shotgun stock attachment crate (x3)"
 	contains = list(
 			/obj/item/attachable/stock/tactical,
 			/obj/item/attachable/stock/tactical,
@@ -1648,7 +1646,7 @@ CLOTHING
 					/obj/item/clothing/under/marine/officer/exec,
 					/obj/item/clothing/under/marine/officer/ce
 					)
-	name = "officer outfit closet"
+	name = "officer outfit crate"
 	cost = RO_PRICE_CHEAP
 	containertype = /obj/structure/closet/crate
 	containername = "\improper officer dress crate"
@@ -1669,7 +1667,7 @@ CLOTHING
 					/obj/item/clothing/shoes/marine,
 					/obj/item/clothing/shoes/marine
 					)
-	name = "marine outfit closet"
+	name = "marine outfit crate"
 	cost = RO_PRICE_VERY_CHEAP
 	containertype = /obj/structure/closet/crate
 	containername = "\improper marine outfit crate"

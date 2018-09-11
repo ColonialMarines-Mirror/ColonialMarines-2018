@@ -81,6 +81,7 @@
 	new /obj/item/tank/oxygen/red(src)
 	new /obj/item/tool/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/tool/pickaxe/plasmacutter(src)
 
 /obj/structure/closet/firecloset/full/New()
 	..()
@@ -93,6 +94,8 @@
 	new /obj/item/tank/oxygen/red(src)
 	new /obj/item/tool/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/tool/pickaxe/plasmacutter(src)
+
 
 /obj/structure/closet/firecloset/update_icon()
 	if(!opened)

@@ -12,5 +12,3 @@ tools/Runtime Condenser/Input.txt
 tools/Runtime Condenser/Output.txt
 tools/MapDaemon/logs/*.txt
 *.json
-ColonialMarines-2019.dme
-.gitignore

@@ -1,11 +1,10 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
-//NOTE: hidden packs only show up when the computer has been hacked.
-//ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
-//BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
-//NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
-//We are now moving the price of RO orders to defines, try to respect it.
+//NOTE: Contraband is obtainable through modified supplycomp circuitboards.
+//NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
+//NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
+#define RO_PRICE_NEAR_FREE	10
 #define RO_PRICE_VERY_CHEAP	20
 #define RO_PRICE_CHEAP		30
 #define RO_PRICE_NORMAL		40
@@ -49,16 +48,14 @@ OPERATIONS
 					/obj/item/attachable/suppressor,
 					/obj/item/clothing/under/syndicate/combat,
 					/obj/item/clothing/under/syndicate/combat,
-					/obj/item/clothing/glasses/night,
-					/obj/item/clothing/glasses/night,
-					/obj/item/clothing/mask/gas/PMC,
-					/obj/item/clothing/mask/gas/PMC,
+					/obj/item/clothing/mask/gas/swat,
+					/obj/item/clothing/mask/gas/swat,
 					/obj/item/clothing/tie/storage/black_vest,
 					/obj/item/clothing/tie/storage/black_vest
 					)
-	cost = RO_PRICE_VERY_PRICY
+	cost = RO_PRICE_PRICY
 	containertype = /obj/structure/closet/crate
-	containername = "spec ops crate"
+	containername = "\improper spec ops crate"
 	group = "Operations"
 
 /datum/supply_packs/beacons_supply
@@ -81,6 +78,28 @@ OPERATIONS
 	cost = RO_PRICE_PRICY
 	containertype = /obj/structure/closet/crate
 	containername = "\improper orbital beacons crate"
+	group = "Operations"
+
+/datum/supply_packs/binoculars_regular
+	name = "binoculars crate (x2)"
+	contains = list(
+					/obj/item/device/binoculars,
+					/obj/item/device/binoculars
+					)
+	cost = RO_PRICE_VERY_CHEAP
+	containertype = /obj/structure/closet/crate
+	containername = "\improper binoculars crate"
+	group = "Operations"
+
+/datum/supply_packs/binoculars_tatical
+	name = "tactical binoculars crate (x2)"
+	contains = list(
+					/obj/item/device/binoculars/tactical,
+					/obj/item/device/binoculars/tactical
+					)
+	cost = RO_PRICE_CHEAP
+	containertype = /obj/structure/closet/crate
+	containername = "\improper tactical binoculars crate"
 	group = "Operations"
 
 /datum/supply_packs/flares
@@ -111,7 +130,6 @@ OPERATIONS
 	containername = "\improper unlabeled crate"
 	contraband = 1
 	group = "Operations"
-
 
 /*******************************************************************************
 WEAPONS
@@ -1248,7 +1266,7 @@ AMMO
 					/obj/item/ammo_magazine/rifle/m4ra/impact,
 					/obj/item/ammo_magazine/rifle/m4ra/impact
 					)
-	cost = RO_PRICE_CHEAP
+	cost = RO_PRICE_NORMAL
 	containertype = /obj/structure/closet/crate/ammo
 	containername = "\improper impact scout ammo crate"
 	group = "Ammo"

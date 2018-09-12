@@ -44,6 +44,9 @@
 			handle_environment()
 		if(client)
 			handle_regular_hud_updates()
+	else
+		if(prob((5*tier)+abs(5*upgrade))) // older, higher tier xenos decay faster to compensate their high plasma storage. (except Queen which tier is 0, but they are a pinata anyway.)
+			use_plasma(rand(1,2))
 
 /mob/living/carbon/Xenomorph/proc/handle_regular_status_updates()
 

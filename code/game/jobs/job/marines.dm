@@ -11,26 +11,18 @@
 	skills_type = /datum/skills/pfc
 	idtype = /obj/item/card/id/dogtag
 
+
 /datum/job/marine/generate_entry_message(mob/living/carbon/human/H)
 	if(H.assigned_squad)
 		. = "You have been assigned to: <b><font size=3 color=[squad_colors[H.assigned_squad.color]]>[lowertext(H.assigned_squad.name)] squad</font></b>.[flags_startup_parameters & ROLE_ADD_TO_MODE ? " Make your way to the cafeteria for some post-cryosleep chow, and then get equipped in your squad's prep room." : ""]"
 
 /datum/job/marine/generate_entry_conditions(mob/living/carbon/human/H)
 	. = ..()
-	if(flags_startup_parameters & ROLE_ADD_TO_MODE) 
+	if(flags_startup_parameters & ROLE_ADD_TO_MODE)
 		H.nutrition = rand(60,250) //Start hungry for the default marine.
 
-/datum/job/marine/generate_wearable_equipment(mob/living/carbon/human/H)
-	if (H.gender == MALE)
-		. = list(
-			WEAR_WAIST = /obj/item/weapon/twohanded/towel
-			)
-	else if (H.gender == FEMALE)
-		. = list(
-			WEAR_JACKET = /obj/item/weapon/twohanded/towel
-			)
-		
-		
+
+
 /datum/job/marine/leader
 	title = "Squad Leader"
 	comm_title = "SL"
@@ -45,6 +37,15 @@
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/SL
 
+/datum/job/marine/leader/generate_wearable_equipment()
+	if(MALE)
+		. = list(
+			WEAR_WAIST = /obj/item/weapon/twohanded/towel
+			)
+	else
+		. = list(
+			WEAR_JACKET = /obj/item/weapon/twohanded/towel
+			)
 
 /datum/job/marine/leader/generate_entry_message()
 	. = ..() + {"\nYou are responsible for the men and women of your squad. Make sure they are on task, working together, and communicating.
@@ -65,6 +66,15 @@ You are also in charge of communicating with command and letting them know about
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/combat_engineer
 
+/datum/job/marine/engineer/generate_wearable_equipment()
+	if(MALE)
+		. = list(
+			WEAR_WAIST = /obj/item/weapon/twohanded/towel
+			)
+	else
+		. = list(
+			WEAR_JACKET = /obj/item/weapon/twohanded/towel
+			)
 
 /datum/job/marine/engineer/generate_entry_message()
 	. = ..() + {"\nYou have the equipment and skill to build fortifications, reroute power lines, and bunker down.
@@ -93,6 +103,15 @@ Your squaddies will look to you when it comes to construction in the field of ba
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/combat_medic
 
+/datum/job/marine/medic/generate_wearable_equipment()
+	if(MALE)
+		. = list(
+			WEAR_WAIST = /obj/item/weapon/twohanded/towel
+			)
+	else
+		. = list(
+			WEAR_JACKET = /obj/item/weapon/twohanded/towel
+			)
 
 /datum/job/marine/medic/generate_entry_message()
 	. = ..() + {"\nYou must tend the wounds of your squad mates and make sure they are healthy and active.
@@ -123,10 +142,17 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 	skills_type = /datum/skills/specialist
 
 /datum/job/marine/specialist/generate_wearable_equipment()
-	..()
-	. += list(
-			WEAR_HEAD = /obj/item/clothing/head/helmet/specrag
+	if(MALE)
+		. = list(
+			WEAR_HEAD = /obj/item/clothing/head/helmet/specrag,
+			WEAR_WAIST = /obj/item/weapon/twohanded/towel
 			)
+	else
+		. = list(
+			WEAR_HEAD = /obj/item/clothing/head/helmet/specrag,
+			WEAR_JACKET = /obj/item/weapon/twohanded/towel
+			)
+
 
 /datum/job/marine/specialist/generate_entry_message()
 	. = ..() + {"\nYou are the very rare and valuable weapon expert, trained to use special equipment.
@@ -151,6 +177,15 @@ You can serve a variety of roles, so choose carefully."}
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/smartgunner
 
+/datum/job/marine/smartgunner/generate_wearable_equipment()
+	if(MALE)
+		. = list(
+			WEAR_WAIST = /obj/item/weapon/twohanded/towel
+			)
+	else
+		. = list(
+			WEAR_JACKET = /obj/item/weapon/twohanded/towel
+			)
 
 /datum/job/marine/smartgunner/generate_entry_message()
 	. = ..() + {"\nYou are the smartgunner. Your job is to provide heavy weapons support."}
@@ -174,7 +209,16 @@ You can serve a variety of roles, so choose carefully."}
 	minimal_player_age = 0
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 
-	
+/datum/job/marine/standard/generate_wearable_equipment()
+	if(MALE)
+		. = list(
+			WEAR_WAIST = /obj/item/weapon/twohanded/towel
+			)
+	else
+		. = list(
+			WEAR_JACKET = /obj/item/weapon/twohanded/towel
+			)
+
 /datum/job/marine/standard/generate_entry_message()
 	. = ..() + {"\nYou are a rank-and-file soldier of the USCM, and that is your strength.
 What you lack alone, you gain standing shoulder to shoulder with the men and women of the corps. Ooh-rah!"}

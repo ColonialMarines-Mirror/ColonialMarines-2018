@@ -244,7 +244,7 @@
 	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
 	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
-	if(gender = MALE)
+	if(gender == MALE)
 		underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
 	else
 		underwear		= sanitize_integer(underwear, 1, underwear_f.len, initial(underwear))

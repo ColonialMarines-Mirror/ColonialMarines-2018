@@ -22,6 +22,8 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 	switch(stat)
 		if(DEAD) //Dead, nothing else to do.
+			if(prob(4+(3*tier)+abs(3*upgrade))) // older, higher tier xenos decay faster to compensate their high plasma storage. (except Queen which tier is 0, but they are a pinata anyway.)
+				use_plasma(rand(1,2))			
 			return
 		if(UNCONSCIOUS)
 			if(is_zoomed)
@@ -104,6 +106,9 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 					continue
 				M.forceMove(loc)
 	return TRUE
+	else
+		if(prob((5*tier)+abs(5*upgrade))) // older, higher tier xenos decay faster to compensate their high plasma storage. (except Queen which tier is 0, but they are a pinata anyway.)
+			use_plasma(rand(1,2))
 
 /mob/living/carbon/Xenomorph/handle_statuses()
 	handle_stunned() // 2 each time

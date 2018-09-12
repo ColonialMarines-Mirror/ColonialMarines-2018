@@ -25,7 +25,7 @@
 		unwield(user)
 
 /obj/item/proc/wield(var/mob/user)
-	if( !(flags_item & TWOHANDED) || flags_item & WIELDED ) 
+	if( !(flags_item & TWOHANDED) || flags_item & WIELDED )
 		return
 
 	if(user.get_inactive_hand())
@@ -143,18 +143,18 @@
 
 /obj/item/weapon/twohanded/fireaxe/wield(mob/user)
 	. = ..()
-	if(!.) 
+	if(!.)
 		return
 	pry_capable = IS_PRY_CAPABLE_SIMPLE
 
 /obj/item/weapon/twohanded/fireaxe/unwield(mob/user)
 	. = ..()
-	if(!.) 
+	if(!.)
 		return
 	pry_capable = 0
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
-	if(!proximity) 
+	if(!proximity)
 		return
 	..()
 	if(A && (flags_item & WIELDED) && istype(A,/obj/structure/grille)) //destroys grilles in one hit
@@ -196,18 +196,18 @@
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/IsShield()
-	if(flags_item & WIELDED) 
+	if(flags_item & WIELDED)
 		return TRUE
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/user)
 	. = ..()
-	if(!.) 
+	if(!.)
 		return
 	icon_state += "_w"
 
 /obj/item/weapon/twohanded/dualsaber/unwield(mob/user)
 	. = ..()
-	if(!.) 
+	if(!.)
 		return
 	icon_state 	= copytext(icon_state,1,-2)
 
@@ -256,7 +256,7 @@
 	desc = "A huge, powerful blade on a metallic pole. Mysterious writing is carved into the weapon. This one is ancient and has suffered serious acid damage, making it near-useless."
 	force = 18
 	force_wielded = 28
-	
+
 
 /obj/item/weapon/twohanded/towel
 	name = "towel"
@@ -266,13 +266,15 @@
 	damtype = HALLOSS
 	force = 0
 	sharp = 0
-	edge = FALSE
+	edge = 0
+	var/agony = 0
+	var/stun = 0
 	hitsound = null
 	w_class = 4.0
 	flags_equip_slot = SLOT_WAIST|SLOT_OCLOTHING|SLOT_HEAD
 	flags_atom = FPRINT|CONDUCT //it's moist
 	flags_item = TWOHANDED
-	force_wielded = 2
+	force_wielded = 0
 	attack_verb = list("smacked", "slapped", "schaffed", "whipped")
 
 /obj/item/weapon/twohanded/towel/wield(mob/user)
@@ -280,17 +282,19 @@
 	if(!.)
 		return
 	icon_state = "[initial(icon_state)]_w"
+	var/agony = 5
 
 /obj/item/weapon/twohanded/towel/unwield(mob/user)
 	. = ..()
-	if(!.)	
+	if(!.)
 		return
 	icon_state = initial(icon_state)
+	var/agony = 0
 
-/obj/item/weapon/twohanded/towel/attack()
+/obj/item/weapon/twohanded/towel/attack(mob/M, mob/user)
 	. = ..()
-	if(WIELDED)
+	if(flags_item & WIELDED)
+		M.stun_effect_act(stun, agony, target_zone, src)
 		playsound(loc, 'sound/effects/snap.ogg', 25, 1, 6)
 	else
-		return 
-			FALSE
+		return

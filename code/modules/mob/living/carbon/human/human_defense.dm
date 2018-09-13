@@ -163,8 +163,8 @@ Contains most of the procs that are called when a mob is attacked by something
 	else
 		user.flick_attack_overlay(src, "punch")
 
-	I.force += bonus_damage //Add the bonus damage, such as from the Move Aura.
-	apply_damage(I.force, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
+	//Add the bonus damage, such as from the Move Aura.
+	apply_damage(I.force += bonus_damage, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
 
 	var/bloody = 0
 	if((I.damtype == BRUTE || I.damtype == HALLOSS) && prob(I.force*2 + 25))

@@ -936,6 +936,27 @@ About the new airlock wires panel:
 			src.locked = 1
 			return
 		return
+	if((istype(C, /obj/item/tool/pickaxe/plasmacutter) && !operating && density))
+		var/obj/item/tool/pickaxe/plasmacutter/P = C
+
+		if(not_weldable)
+			to_chat(user, "<span class='warning'>\The [src] would require something a lot stronger than [P] to cut!</span>")
+			return
+
+		if(!src.welded)
+			to_chat(user, "<span class='warning'>\The [P] can only cut open welds!</span>")
+			return
+		else if(P.cell.charge >= P.charge_cost * 0.25 && P.powered)
+			P.start_cut(user, src.name, src)
+			if(do_after(user, P.calc_delay(user) * 0.25, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+				P.cut_apart(user, src.name, src, P.charge_cost * 0.25) //Airlocks require 1/4th normal charge
+				src.welded = FALSE
+				src.update_icon()
+			return
+		else
+			P.fizzle_message(user)
+			return
+
 	if((istype(C, /obj/item/tool/weldingtool) && !operating && density))
 		var/obj/item/tool/weldingtool/W = C
 

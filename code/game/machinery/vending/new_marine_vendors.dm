@@ -911,6 +911,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/cell/high,
 						/obj/item/tool/shovel/etool,
 						/obj/item/device/lightreplacer,
+						/obj/item/tool/pickaxe/plasmacutter
 						)
 
 

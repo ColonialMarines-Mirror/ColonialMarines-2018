@@ -946,11 +946,12 @@ About the new airlock wires panel:
 		if(!src.welded)
 			to_chat(user, "<span class='warning'>\The [P] can only cut open welds!</span>")
 			return
-		else if(P.cell.charge >= P.charge_cost)
+		else if(P.cell.charge >= P.charge_cost * 0.25 && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.calc_delay(user) * 0.5, TRUE, 5, BUSY_ICON_HOSTILE) && P)
-				P.cut_apart(user, src.name, src)
-				src.welded = null
+			if(do_after(user, P.calc_delay(user) * 0.25, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+				P.cut_apart(user, src.name, src, P.charge_cost * 0.25) //Airlocks require 1/4th normal charge
+				src.welded = FALSE
+				src.update_icon()
 			return
 		else
 			P.fizzle_message(user)

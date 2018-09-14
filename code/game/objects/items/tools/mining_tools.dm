@@ -60,33 +60,60 @@
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
+/obj/item/tool/pickaxe/diamond
+	name = "diamond pickaxe"
+	icon_state = "dpickaxe"
+	item_state = "dpickaxe"
+	digspeed = 10
+	origin_tech = "materials=6;engineering=4"
+	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+
+/obj/item/tool/pickaxe/diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
+	name = "diamond mining drill"
+	icon_state = "diamonddrill"
+	item_state = "jackhammer"
+	digspeed = 5 //Digs through walls, girders, and can dig up sand
+	origin_tech = "materials=6;powerstorage=4;engineering=5"
+	desc = "Yours is the drill that will pierce the heavens!"
+	drill_verb = "drilling"
+
+/obj/item/tool/pickaxe/borgdrill
+	name = "cyborg mining drill"
+	icon_state = "diamonddrill"
+	item_state = "jackhammer"
+	digspeed = 15
+	desc = ""
+	drill_verb = "drilling"
+
+
 /obj/item/tool/pickaxe/plasmacutter
 	name = "plasma cutter"
-	icon_state = "plasmacutter1"
-	var/base_icon_state = "plasmacutter1"
+	icon_state = "plasma_cutter_on"
+	var/base_icon_state = "plasma_cutter_on"
 	item_state = "gun"
 	w_class = 3.0 //it is smaller than the pickaxe
-	force = 45.0
+	force = 70.0
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A cutter tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone."
 	drill_verb = "cutting"
 	heat_source = 3800
+	var/resin_multiplier = 2
 	var/cutting_sound = 'sound/items/Welder2.ogg'
 	var/powered = FALSE
-	var/cut_delay = 30 //Takes this long in seconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
-	var/fizzle = "<span class='warning'>The plasmacutter briefly jolts to life before sizzing out. Replace its battery by using a screwdriver to remove the old one.</span>"
+	var/cut_delay = 30 //Takes this long in deciseconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
+	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	var/dirt_amt_per_dig = 5
 	var/charge_cost = 200
 	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
-	var/charge_message = "The plasmacutter's charge meter reads:"
 
 /obj/item/tool/pickaxe/plasmacutter/New()
 	..()
 	cell = new /obj/item/cell/high(src)
 	powered = TRUE
 	update_icon()
+
 
 /obj/item/tool/pickaxe/plasmacutter/examine(mob/user)
 	..()
@@ -95,13 +122,50 @@
 	else
 		to_chat(user, "<span class='warning'>It does not have a power source installed!</span>")
 
+/obj/item/tool/pickaxe/plasmacutter/attack_self(mob/user as mob)
+	toggle()
+	return
+
+//Toggles the cutter off and on
+/obj/item/tool/pickaxe/plasmacutter/proc/toggle(var/message = 0)
+	var/mob/M
+	if(ismob(loc))
+		M = loc
+	if(!powered)
+		if(cell)
+			if(cell.charge > 0)
+				playsound(loc, 'sound/weapons/saberon.ogg', 25)
+				powered = TRUE
+				if(M)
+					to_chat(M, "<span class='notice'>You switch [src] on. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+				update_icon()
+			else
+				if(M)
+					fizzle_message(M)
+				return
+		else
+			if(M)
+				fizzle_message(M)
+				return
+	else
+		playsound(loc, 'sound/weapons/saberoff.ogg', 25)
+		powered = FALSE
+		if(M)
+			to_chat(M, "<span class='notice'>You switch [src] off. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+		update_icon()
+
 /obj/item/tool/pickaxe/plasmacutter/proc/fizzle_message(mob/user)
 	playsound(src, 'sound/machines/buzz-two.ogg', 25, 1)
-	to_chat(user, "<span class='warning'>[fizzle] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+	if(!cell)
+		to_chat(user, "<span class='warning'>[src]'s has no battery installed!</span>")
+	else if(!powered)
+		to_chat(user, "<span class='warning'>[src] is turned off!</span>")
+	else
+		to_chat(user, "<span class='warning'>[fizzle] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 
-/obj/item/tool/pickaxe/plasmacutter/proc/start_cut(mob/user, name = "", atom/source, sound = cutting_sound)
+/obj/item/tool/pickaxe/plasmacutter/proc/start_cut(mob/user, name = "", atom/source)
 	eyecheck(user)
-	playsound(source, sound, 25, 1)
+	playsound(source, cutting_sound, 25, 1)
 	var/datum/effect_system/spark_spread/spark_system
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, source)
@@ -109,20 +173,21 @@
 	spark_system.start(source)
 	to_chat(user, "<span class='notice'>You start cutting apart the [name] with [src]. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 
-/obj/item/tool/pickaxe/plasmacutter/proc/cut_apart(mob/user, name = "", atom/source, sound = cutting_sound, charge_amount = charge_cost)
+/obj/item/tool/pickaxe/plasmacutter/proc/cut_apart(mob/user, name = "", atom/source, charge_amount = charge_cost)
 	eyecheck(user)
-	playsound(source, sound, 25, 1)
+	playsound(source, cutting_sound, 25, 1)
 	var/datum/effect_system/spark_spread/spark_system
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, source)
 	spark_system.attach(source)
 	spark_system.start(source)
-	use_charge(user, charge_amount)
+	use_charge(user, charge_amount, FALSE)
 	to_chat(user, "<span class='notice'>You cut apart the [name] with [src]. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 
-/obj/item/tool/pickaxe/plasmacutter/proc/use_charge(mob/user, amount = charge_cost)
+/obj/item/tool/pickaxe/plasmacutter/proc/use_charge(mob/user, amount = charge_cost, mention_charge = TRUE)
 	cell.charge -= min(cell.charge, amount)
-	to_chat(user, "[charge_message] <b> [cell.charge]/[cell.maxcharge]</b>")
+	if(mention_charge)
+		to_chat(user, "<span class='notice'><b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 	update_icon()
 	..()
 /*
@@ -202,42 +267,46 @@
 	update_icon()
 	..()
 
-/obj/item/tool/pickaxe/plasmacutter/update_icon()
-	if(!cell || cell.charge <= 0)
-		icon_state = "plasmacutter0"
-		powered = FALSE
+/obj/item/tool/pickaxe/plasmacutter/update_icon(mob/user)
+	if(!cell || cell.charge <= 0 || powered == FALSE)
+		icon_state = "plasma_cutter_off"
+		if(powered)
+			playsound(loc, 'sound/weapons/saberoff.ogg', 25)
+			powered = FALSE
+			to_chat(user, "<span class='warning'>The plasma cutter abruptly shuts down due to a lack of power!</span>")
 		force = 5
 		damtype = "brute"
+		heat_source = 0
+		SetLuminosity(0)
 	else
-		icon_state = "plasmacutter1"
+		icon_state = "plasma_cutter_on"
 		powered = TRUE
-		force = 45
-		damtype = "burn"
+		force = 70
+		damtype = "fire"
+		heat_source = 3800
+		SetLuminosity(2)
 
 
 /obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)
-
 	if(istype(W, /obj/item/cell))
 		if(user.drop_held_item())
-			W.forceMove(src)
+			W.loc = src
 			var/replace_install = "You replace the cell in [src]"
 			if(!cell)
 				replace_install = "You install a cell in [src]"
 			else
 				cell.updateicon()
-				user.put_in_active_hand(cell)
-				//cell.loc = get_turf(src.loc)
+				user.put_in_hands(cell)
 			cell = W
 			to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 			playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
 			update_icon()
-		else
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-	else ..()
+		//else
+			//to_chat(user, "<span class='warning'>There's already a cell loaded in [src]!</span>")
 
 /obj/item/tool/pickaxe/plasmacutter/attack_hand(mob/user)
-	if(cell)
-		if(user.get_inactive_hand() == src)
+	if(user.get_inactive_hand() == src)
+		if(cell)
 			cell.updateicon()
 			user.put_in_active_hand(cell)
 			//cell.loc = get_turf(src.loc)
@@ -246,7 +315,7 @@
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			update_icon()
 			return
-	else ..()
+	return ..()
 
 
 /obj/item/tool/pickaxe/plasmacutter/attack(mob/M, mob/user)
@@ -257,12 +326,17 @@
 		else
 			use_charge(user, charge_cost * 0.25)
 			playsound(M, cutting_sound, 25, 1)
+			eyecheck(user)
+			update_icon()
 			var/datum/effect_system/spark_spread/spark_system
 			spark_system = new /datum/effect_system/spark_spread()
 			spark_system.set_up(5, 0, M)
 			spark_system.attach(M)
 			spark_system.start(M)
+			to_chat(user, "<span class='notice'>Attack Debug: Damtype: [damtype] Force: [force].</span>")
+			return ..()
 	return ..()
+
 
 
 /obj/item/tool/pickaxe/plasmacutter/afterattack(atom/target, mob/user, proximity)
@@ -279,9 +353,9 @@
 				var/turf/open/snow/ST = T
 				if(!ST.slayer)
 					return
-			to_chat(user, "<span class='notice'>You start digging.</span>")
+			to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
 			playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
-			if(!do_after(user, digspeed * 0.5, TRUE, 5, BUSY_ICON_BUILD))
+			if(!do_after(user, calc_delay(user) * 0.25, TRUE, 5, BUSY_ICON_BUILD))
 				return
 			var/transf_amt = dirt_amt_per_dig
 			if(turfdirt == DIRT_TYPE_SNOW)
@@ -291,34 +365,11 @@
 				transf_amt = min(ST.slayer, dirt_amt_per_dig)
 				ST.slayer -= transf_amt
 				ST.update_icon(1,0)
-				to_chat(user, "<span class='notice'>You melt the snow with your [src].</span>")
+				to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
+				use_charge(user, name, ST, charge_cost * 0.25) //costs 25% normal
 			else
 				return
 
-/obj/item/tool/pickaxe/diamond
-	name = "diamond pickaxe"
-	icon_state = "dpickaxe"
-	item_state = "dpickaxe"
-	digspeed = 10
-	origin_tech = "materials=6;engineering=4"
-	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
-
-/obj/item/tool/pickaxe/diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
-	name = "diamond mining drill"
-	icon_state = "diamonddrill"
-	item_state = "jackhammer"
-	digspeed = 5 //Digs through walls, girders, and can dig up sand
-	origin_tech = "materials=6;powerstorage=4;engineering=5"
-	desc = "Yours is the drill that will pierce the heavens!"
-	drill_verb = "drilling"
-
-/obj/item/tool/pickaxe/borgdrill
-	name = "cyborg mining drill"
-	icon_state = "diamonddrill"
-	item_state = "jackhammer"
-	digspeed = 15
-	desc = ""
-	drill_verb = "drilling"
 
 
 

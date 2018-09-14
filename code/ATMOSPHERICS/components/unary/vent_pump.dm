@@ -310,6 +310,23 @@
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return 1
 
+	if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
+		var/obj/item/tool/pickaxe/plasmacutter/P = W
+
+		if(!welded)
+			to_chat(user, "<span class='warning'>\The [P] can only cut open welds!</span>")
+			return
+		else if(P.cell.charge >= P.charge_cost * 0.25 && P.powered)
+			P.start_cut(user, src.name, src)
+			if(do_after(user, P.calc_delay(user) * 0.25, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+				P.cut_apart(user, src.name, src, P.charge_cost * 0.25) //Vents require 1/4th normal charge
+				welded = FALSE
+				update_icon()
+			return
+		else
+			P.fizzle_message(user)
+			return
+
 	if(!iswrench(W))
 		return ..()
 	if(!(stat & NOPOWER) && on)

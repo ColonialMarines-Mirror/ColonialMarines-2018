@@ -129,18 +129,20 @@
 
 	if(istype(W, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy)
 		var/obj/item/tool/pickaxe/plasmacutter/P = W
-		if(!istype(src, /turf/closed/ice) || !istype(src, /turf/closed/desertdamrockwall) || !istype(src, /turf/closed/gm/dense))
-			to_chat(user, "<span class='warning'>Your [P] can't cut through this!</span>")
-			return
-		if(P.cell.charge >= P.charge_cost)
-			P.use_charge()
+		if(!istype(src, /turf/closed/mineral))
+			if(!istype(src, /turf/closed/gm/dense))
+				if(!istype(src, /turf/closed/ice))
+					if(!istype(src, /turf/closed/desertdamrockwall))
+						to_chat(user, "<span class='warning'>[P] can't cut through this!</span>")
+						return
+		if(P.cell.charge >= P.charge_cost * 1.5 && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.cut_delay, TRUE, 5, BUSY_ICON_FRIENDLY) && P)
-				P.cut_apart(user, src.name)
-				if(istype(src, /turf/closed/desertdamrockwall))
+			if(do_after(user, P.cut_delay * 1.5, TRUE, 5, BUSY_ICON_FRIENDLY) && P)
+				P.cut_apart(user, src.name, src, P.charge_cost * 1.5)
+				if(istype(src, /turf/closed/mineral) || istype(src, /turf/closed/desertdamrockwall))
 					ChangeTurf(/turf/open/desertdam/cave/inner_cave_floor)
 				else if(istype(src, /turf/closed/gm/dense))
-					ChangeTurf(/turf/open/gm/grass)
+					ChangeTurf(/turf/open/jungle/clear)
 				else
 					ChangeTurf(/turf/open/ice)
 			return

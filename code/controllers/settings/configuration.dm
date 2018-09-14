@@ -597,11 +597,11 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for (var/T in subtypesof(/datum/game_mode))
+	/*for (var/T in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = new T()
 		if (M.config_tag && M.config_tag == mode_name)
 			return M
-		cdel(M)
+		cdel(M)*/
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()

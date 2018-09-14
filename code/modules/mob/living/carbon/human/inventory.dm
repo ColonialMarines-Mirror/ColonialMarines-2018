@@ -77,6 +77,12 @@
 			return 1
 		if(WEAR_IN_ACCESSORY)
 			return 1
+		if(WEAR_IN_HOLSTER)
+			return 1
+		if(WEAR_IN_J_HOLSTER)
+			return 1
+		if(WEAR_IN_B_HOLSTER)
+			return 1
 
 /mob/living/carbon/human/put_in_l_hand(obj/item/W)
 	var/datum/limb/O = get_limb("l_hand")
@@ -327,9 +333,8 @@
 			W.equipped(src, slot)
 			update_inv_s_store()
 		if(WEAR_IN_BACK)
-			if(get_active_hand() == W)
-				temp_drop_inv_item(W)
-			W.forceMove(back)
+			var/obj/item/storage/S = back
+			S.handle_item_insertion(W, 0, src)
 		if(WEAR_IN_JACKET)
 			var/obj/item/clothing/suit/storage/S = wear_suit
 			if(istype(S) && S.pockets.storage_slots) W.loc = S.pockets//Has to have some slots available.
@@ -339,6 +344,18 @@
 			if(U && U.hastie)
 				var/obj/item/clothing/tie/storage/T = U.hastie
 				if(istype(T) && T.hold.storage_slots) W.loc = T.hold
+
+		if(WEAR_IN_HOLSTER)
+			var/obj/item/storage/S = belt
+			S.handle_item_insertion(W, 0, src)
+
+		if(WEAR_IN_B_HOLSTER)
+			var/obj/item/storage/S = s_store
+			S.handle_item_insertion(W, 0, src)
+
+		if(WEAR_IN_J_HOLSTER)
+			var/obj/item/storage/S = s_store
+			S.handle_item_insertion(W, 0, src)
 
 		else
 			to_chat(src, "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...")

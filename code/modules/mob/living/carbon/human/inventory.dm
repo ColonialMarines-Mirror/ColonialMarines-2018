@@ -350,7 +350,7 @@
 			S.handle_item_insertion(W, 0, src)
 
 		if(WEAR_IN_B_HOLSTER)
-			var/obj/item/storage/S = s_store
+			var/obj/item/storage/S = back
 			S.handle_item_insertion(W, 0, src)
 
 		if(WEAR_IN_J_HOLSTER)

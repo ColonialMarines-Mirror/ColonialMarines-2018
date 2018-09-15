@@ -59,12 +59,17 @@
 
 
 		else if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
-			to_chat(user, "\blue Now slicing apart the girder")
-			if(do_after(user,30, TRUE, 5, BUSY_ICON_HOSTILE))
-				if(!src) return
-				to_chat(user, "\blue You slice apart the girder!")
-				health = 0
-				update_state()
+			var/obj/item/tool/pickaxe/plasmacutter/P = W
+			if(P.cell.charge >= P.charge_cost * 0.5 && P.powered)
+				P.start_cut(user, src.name, src)
+				if(do_after(user, P.calc_delay(user) * 0.5, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Girders take half as long
+					P.cut_apart(user, src.name, src, P.charge_cost * 0.5) //Girders require half the normal power
+					if(!src) return
+					health = 0
+					update_state()
+			else
+				P.fizzle_message(user)
+				return
 		else if(istype(W, /obj/item/tool/pickaxe/diamonddrill))
 			to_chat(user, "\blue You drill through the girder!")
 			dismantle()
@@ -230,8 +235,8 @@
 			to_chat(user, "It needs 1 bolt removed.")
 
 /obj/structure/girder/proc/dismantle()
-	new /obj/item/stack/sheet/metal(src)
-	cdel(src)
+	health = 0
+	update_state()
 
 /obj/structure/girder/proc/repair()
 	health = 200

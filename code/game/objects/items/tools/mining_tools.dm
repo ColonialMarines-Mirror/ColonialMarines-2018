@@ -277,14 +277,20 @@
 		force = 5
 		damtype = "brute"
 		heat_source = 0
-		SetLuminosity(0)
+		if(user)
+			user.SetLuminosity(-2)
+		else
+			SetLuminosity(0)
 	else
 		icon_state = "plasma_cutter_on"
 		powered = TRUE
 		force = 70
 		damtype = "fire"
 		heat_source = 3800
-		SetLuminosity(2)
+		if(user)
+			user.SetLuminosity(2)
+		else
+			SetLuminosity(2)
 
 
 /obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)

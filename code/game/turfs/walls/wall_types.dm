@@ -477,6 +477,7 @@
 			if(istype(W, /obj/item/tool/pickaxe/plasmacutter)) //Plasma cutters are particularly good at destroying resin structures.
 				var/obj/item/tool/pickaxe/plasmacutter/P = W
 				multiplier += P.resin_multiplier
+				P.cut_apart(user, src.name, src, P.charge_cost * 0.25)
 		power *= max(0,multiplier)
 		take_damage(power)
 		playsound(src, "alien_resin_break", 25)

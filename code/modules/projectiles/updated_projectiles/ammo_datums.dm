@@ -144,49 +144,52 @@
 			M.visible_message("<span class='danger'>[M] is hit by backlash from \a [P.name]!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You are hit by backlash from \a </b>[P.name]</b>!</span>")
 			M.apply_damage(rand(5,P.damage/2),damage_type)
 
-	proc/fire_bonus_projectiles(obj/item/projectile/original_P)
-		set waitfor = 0
-		var/i
-		for(i = 1 to bonus_projectiles_amount) //Want to run this for the number of bonus projectiles.
-			var/obj/item/projectile/P = rnew(/obj/item/projectile, original_P.shot_from)
-			P.generate_bullet(ammo_list[bonus_projectiles_type]) //No bonus damage or anything.
-			var/turf/new_target = null
-			if(prob(P.scatter))
-				var/scatter_x = rand(-1,1)
-				var/scatter_y = rand(-1,1)
-				new_target = locate(original_P.target_turf.x + round(scatter_x),original_P.target_turf.y + round(scatter_y),original_P.target_turf.z)
-				if(!istype(new_target) || isnull(new_target))
-					continue	//If we didn't find anything, make another pass.
-				P.original = new_target
-			P.accuracy = round(P.accuracy * original_P.accuracy/initial(original_P.accuracy)) //if the gun changes the accuracy of the main projectile, it also affects the bonus ones.
-			if(!new_target)
-				new_target = original_P.target_turf
-			P.fire_at(new_target,original_P.firer,original_P.shot_from,P.ammo.max_range,P.ammo.shell_speed) //Fire!
+/datum/ammo/proc/fire_bonus_projectiles(obj/item/projectile/original_P)
+	set waitfor = 0
+	var/i
+	for(i = 1 to bonus_projectiles_amount) //Want to run this for the number of bonus projectiles.
+		var/obj/item/projectile/P = rnew(/obj/item/projectile, original_P.shot_from)
+		P.generate_bullet(ammo_list[bonus_projectiles_type]) //No bonus damage or anything.
+		var/turf/new_target = null
+		if(prob(P.scatter))
+			var/scatter_x = rand(-1,1)
+			var/scatter_y = rand(-1,1)
+			new_target = locate(original_P.target_turf.x + round(scatter_x),original_P.target_turf.y + round(scatter_y),original_P.target_turf.z)
+			if(!istype(new_target) || isnull(new_target))
+				continue	//If we didn't find anything, make another pass.
+			P.original = new_target
+		P.accuracy = round(P.accuracy * original_P.accuracy/initial(original_P.accuracy)) //if the gun changes the accuracy of the main projectile, it also affects the bonus ones.
+		if(!new_target)
+			new_target = original_P.target_turf
+		P.fire_at(new_target,original_P.firer,original_P.shot_from,P.ammo.max_range,P.ammo.shell_speed) //Fire!
 
 	//This is sort of a workaround for now. There are better ways of doing this ~N.
-	proc/stun_living(mob/living/target, obj/item/projectile/P) //Taser proc to stun folks.
-		if(istype(target))
-			if( isYautja(target) || isXeno(target) )
-				return //Not on aliens.
-			if(target.mind && target.mind.special_role)
-				switch(target.mind.special_role) //Switches are still better than evaluating this twice.
-					if("IRON BEARS") //These antags can shrug off tasers so they are not shut down.
-						target.apply_effects(1,1) //Barely affected.
-						return
-					if("UPP") //These antags can shrug off tasers so they are not shut down.
-						target.apply_effects(1,1) //Barely affected.
-						return
-					if("DEATH SQUAD")
-						target.apply_effects(0,1) //Almost unaffacted.
-						return
-			target.apply_effects(12,20)
+/datum/ammo/proc/stun_living(mob/living/target, obj/item/projectile/P) //Taser proc to stun folks.
+	if(istype(target))
+		if(isYautja(target) || isXeno(target))
+			return
+		if(target.mind && target.mind.special_role)
+			switch(target.mind.special_role) //Switches are still better than evaluating this twice.
+				if("IRON BEARS") //These antags can shrug off tasers so they are not shut down.
+					target.apply_effects(1,1) //Barely affected.
+					return
+				if("UPP") //These antags can shrug off tasers so they are not shut down.
+					target.apply_effects(1,1) //Barely affected.
+					return
+				if("DEATH SQUAD")
+					target.apply_effects(0,1) //Almost unaffacted.
+					return
+				else
+					target.apply_effects(12,20)
+					return
+			return // hopefully this never gets reached but eh
 
-	proc/drop_flame(turf/T) // ~Art updated fire 20JAN17
-		if(!istype(T))
-			return
-		if(locate(/obj/flamer_fire) in T)
-			return
-		new /obj/flamer_fire(T, 20, 20)
+/datum/ammo/proc/drop_flame(turf/T) // ~Art updated fire 20JAN17
+	if(!istype(T))
+		return
+	if(locate(/obj/flamer_fire) in T)
+		return
+	new /obj/flamer_fire(T, 20, 20)
 
 
 /*

@@ -135,10 +135,10 @@
 					if(!istype(src, /turf/closed/desertdamrockwall))
 						to_chat(user, "<span class='warning'>[P] can't cut through this!</span>")
 						return
-		if(P.cell.charge >= P.charge_cost * 1.5 && P.powered)
+		if(P.cell.charge >= P.charge_cost && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.cut_delay * 1.5, TRUE, 5, BUSY_ICON_FRIENDLY) && P)
-				P.cut_apart(user, src.name, src, P.charge_cost * 1.5)
+			if(do_after(user, P.cut_delay, TRUE, 5, BUSY_ICON_FRIENDLY) && P)
+				P.cut_apart(user, src.name, src, P.charge_cost)
 				if(istype(src, /turf/closed/mineral) || istype(src, /turf/closed/desertdamrockwall))
 					ChangeTurf(/turf/open/desertdam/cave/inner_cave_floor)
 				else if(istype(src, /turf/closed/gm/dense))

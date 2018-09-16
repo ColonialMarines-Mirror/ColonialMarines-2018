@@ -105,7 +105,11 @@
 	var/cut_delay = 30 //Takes this long in deciseconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
 	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	var/dirt_amt_per_dig = 5
-	var/charge_cost = 200
+	var/charge_cost = 1000
+	var/low_mod = 0.5
+	var/vlow_mod = 0.1
+	var/high_mod = 2
+	var/vhigh_mod = 3
 	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
 
 /obj/item/tool/pickaxe/plasmacutter/New()

@@ -856,6 +856,7 @@
 	anchored = 1
 	density = 0
 	unacidable = 1
+	layer = 2
 	var/squad = "Alpha"
 	var/sending_package = 0
 

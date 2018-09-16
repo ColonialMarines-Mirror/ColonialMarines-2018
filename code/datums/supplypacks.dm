@@ -72,7 +72,7 @@ OPERATIONS
 	containername = "supply beacons crate"
 	group = "Operations"
 
-/datum/supply_packs/beacons_orbital // Kept so i don't fuck up oldcode
+/datum/supply_packs/rangefinder
 	name = "Tactical Rangefinders (x2)"
 	contains = list(
 					/obj/item/device/binoculars/tactical/range,
@@ -83,7 +83,7 @@ OPERATIONS
 	containername = "tactical rangefinders crate"
 	group = "Operations"
 
-/datum/supply_packs/warheads // Kept so i don't fuck up oldcode
+/datum/supply_packs/warheads
 	name = "Orbital Warheads (x3)"
 	contains = list(
 					/obj/structure/ob_ammo/warhead/incendiary,
@@ -95,7 +95,7 @@ OPERATIONS
 	containername = "orbital warheads crate"
 	group = "Operations"
 
-/datum/supply_packs/warheads_great // Kept so i don't fuck up oldcode
+/datum/supply_packs/warheads_great
 	name = "Cluster Warhead (x1)"
 	contains = list(/obj/structure/ob_ammo/warhead/cluster)
 	cost = RO_PRICE_PRICY

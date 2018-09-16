@@ -120,7 +120,14 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_debug_del_all,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
-	/datum/admins/proc/adjump
+	/datum/admins/proc/adjump,
+	/client/proc/forceNextMap,
+	/client/proc/cancelMapVote,
+	/client/proc/killMapDaemon,
+	/client/proc/editVotableMaps,
+	/client/proc/showVotableMaps,
+	/client/proc/forceMDMapVote,
+	/client/proc/reviveMapDaemon
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_list_open_jobs,
@@ -257,7 +264,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_xeno_report,  //Allows creation of IC reports by the Queen Mother
 	/proc/release,
-	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway? ï¿½\_("/)_/ï¿½
+	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway? ¯\_("/)_/¯
 	/datum/admins/proc/viewCLFaxes,
 	/datum/admins/proc/viewUSCMFaxes
 )

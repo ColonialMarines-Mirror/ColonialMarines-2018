@@ -363,23 +363,26 @@
 				var/turf/open/snow/ST = T
 				if(!ST.slayer)
 					return
-			to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
-			playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
-			if(!do_after(user, calc_delay(user) * 0.25, TRUE, 5, BUSY_ICON_BUILD))
-				return
-			var/transf_amt = dirt_amt_per_dig
-			if(turfdirt == DIRT_TYPE_SNOW)
-				var/turf/open/snow/ST = T
-				if(!ST.slayer)
+			if(P.cell.charge >= P.charge_cost * vlow_mod && P.powered)
+				to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
+				playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
+				if(!do_after(user, calc_delay(user) * vlow_mod, TRUE, 5, BUSY_ICON_BUILD))
 					return
-				transf_amt = min(ST.slayer, dirt_amt_per_dig)
-				ST.slayer -= transf_amt
-				ST.update_icon(1,0)
-				to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
-				use_charge(user, name, ST, charge_cost * 0.25) //costs 25% normal
+				var/transf_amt = dirt_amt_per_dig
+				if(turfdirt == DIRT_TYPE_SNOW)
+					var/turf/open/snow/ST = T
+					if(!ST.slayer)
+						return
+					transf_amt = min(ST.slayer, dirt_amt_per_dig)
+					ST.slayer -= transf_amt
+					ST.update_icon(1,0)
+					to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
+					use_charge(user, name, ST, charge_cost * vlow_mod) //costs 25% normal
+				else
+					return
 			else
+				P.fizzle_message(user)
 				return
-
 
 
 

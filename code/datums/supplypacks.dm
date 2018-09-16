@@ -72,15 +72,35 @@ OPERATIONS
 	containername = "supply beacons crate"
 	group = "Operations"
 
-/datum/supply_packs/beacons_orbital
-	name = "orbital beacons crate (x2)"
+/datum/supply_packs/beacons_orbital // Kept so i don't fuck up oldcode
+	name = "Tactical Rangefinders (x2)"
 	contains = list(
-					/obj/item/device/squad_beacon/bomb,
-					/obj/item/device/squad_beacon/bomb
+					/obj/item/device/binoculars/tactical/range,
+					/obj/item/device/binoculars/tactical/range
 					)
 	cost = RO_PRICE_PRICY
 	containertype = /obj/structure/closet/crate
-	containername = "orbital beacons crate"
+	containername = "tactical rangefinders crate"
+	group = "Operations"
+
+/datum/supply_packs/warheads // Kept so i don't fuck up oldcode
+	name = "Orbital Warheads (x3)"
+	contains = list(
+					/obj/structure/ob_ammo/warhead/incendiary,
+					/obj/structure/ob_ammo/warhead/explosive,
+					/obj/structure/ob_ammo/warhead/explosive
+					)
+	cost = RO_PRICE_PRICY
+	containertype = /obj/structure/closet/crate
+	containername = "orbital warheads crate"
+	group = "Operations"
+
+/datum/supply_packs/warheads_great // Kept so i don't fuck up oldcode
+	name = "Cluster Warhead (x1)"
+	contains = list(/obj/structure/ob_ammo/warhead/cluster)
+	cost = RO_PRICE_PRICY
+	containertype = /obj/structure/closet/crate
+	containername = "cluster warhead crate"
 	group = "Operations"
 
 /datum/supply_packs/flares

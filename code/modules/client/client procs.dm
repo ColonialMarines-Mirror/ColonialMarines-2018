@@ -42,6 +42,12 @@
 		cmd_admin_pm(C,null)
 		return
 
+	//Map voting
+	if(href_list["vote_for_map"])
+		mapVote()
+		return
+
+
 	//Logs all hrefs
 	if(config && config.log_hrefs)
 		log_href("[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")

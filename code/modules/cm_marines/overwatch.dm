@@ -545,10 +545,10 @@
 	var/turf/T = locate(x_bomb,y_bomb,1)
 	var/area/A = get_area(T)
 	if(istype(A) && A.ceiling >= CEILING_DEEP_UNDERGROUND)
-		to_chat(usr, "\icon[src] <span class='warning'>Unable to fire, CATGIRLS (Computer Aided Guidance, Impact, and Response Leading System) Has determined that the target is unreachable through orbital bombardment</span>")
+		to_chat(usr, "\icon[src] <span class='warning'>Unable to fire, CATGIRLS (Computer Aided Targeting, Guidance, Impact, and Response Leading System) Has determined that the target is unreachable through orbital bombardment</span>")
 		return
 	if(istype(T, /turf/open/space))
-		to_chat(usr, "\icon[src] <span class='warning'>Unable to fire, CATGIRLS (Computer Aided Guidance, Impact, and Response Leading System) is unable to launch at space due to guidance limitations.</span>")
+		to_chat(usr, "\icon[src] <span class='warning'>Unable to fire, CATGIRLS (Computer Aided Targeting, Guidance, Impact, and Response Leading System) is unable to launch at space due to guidance limitations.</span>")
 		return
 
 	//All set, let's do this.

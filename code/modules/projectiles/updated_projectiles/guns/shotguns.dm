@@ -216,12 +216,12 @@ can cause issues with ammo types getting mixed up during the burst.
 
 
 /obj/item/weapon/gun/shotgun/combat/set_gun_config_values()
-	fire_delay = config.med_fire_delay * 3 //one shot every 1.2 seconds.
+	fire_delay = config.high_fire_delay * 3 //one shot every 1.5 seconds.
 	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
 	scatter = config.med_scatter_value
 	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult - config.hmed_hit_damage_mult //normalizing gun for vendors; damage reduced by 30% to compensate for faster fire rate; still higher DPS than M37.
+	damage_mult = config.base_hit_damage_mult - config.med_hit_damage_mult //normalizing gun for vendors; damage reduced by 20% to compensate for faster fire rate; still higher DPS than M37.
 	recoil = config.low_recoil_value
 	recoil_unwielded = config.high_recoil_value
 

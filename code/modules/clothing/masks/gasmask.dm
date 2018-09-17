@@ -30,7 +30,7 @@
 
 /obj/item/clothing/mask/gas/PMC/upp
 	name = "\improper UPP armored commando balaclava"
-	icon_state = "officer_mask"
+	icon_state = "upp_mask"
 
 /obj/item/clothing/mask/gas/PMC/leader
 	name = "\improper M8 pattern armored balaclava"

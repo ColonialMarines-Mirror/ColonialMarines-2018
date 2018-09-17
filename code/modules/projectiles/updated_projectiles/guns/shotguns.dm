@@ -200,13 +200,18 @@ can cause issues with ammo types getting mixed up during the burst.
 						/obj/item/attachable/extended_barrel,
 						/obj/item/attachable/compensator,
 						/obj/item/attachable/magnetic_harness,
-						/obj/item/attachable/stock/tactical)
+						/obj/item/attachable/stock/tactical
+						/obj/item/attachable/verticalgrip,
+						/obj/item/attachable/angledgrip,
+						/obj/item/attachable/attached_gun/flamer,
+						/obj/item/attachable/attached_gun/shotgun,
+						/obj/item/attachable/attached_gun/grenade,
+						)
 
 /obj/item/weapon/gun/shotgun/combat/New()
 	..()
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 19,"rail_x" = 10, "rail_y" = 21, "under_x" = 14, "under_y" = 16, "stock_x" = 14, "stock_y" = 16)
 	var/obj/item/attachable/attached_gun/grenade/G = new(src)
-	G.flags_attach_features &= ~ATTACH_REMOVABLE
 	G.attach_icon = "" //gun already has a better one
 	G.icon_state = ""
 	G.Attach(src)
@@ -217,11 +222,11 @@ can cause issues with ammo types getting mixed up during the burst.
 
 /obj/item/weapon/gun/shotgun/combat/set_gun_config_values()
 	fire_delay = config.high_fire_delay * 3 //one shot every 1.5 seconds.
-	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
+	accuracy_mult = config.base_hit_accuracy_mult + config.med_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.max_hit_accuracy_mult //you need to wield this gun for any kind of accuracy
-	scatter = config.med_scatter_value
+	scatter = config.low_scatter_value
 	scatter_unwielded = config.max_scatter_value * 1.25 //50% scatter chance unwielded.
-	damage_mult = config.base_hit_damage_mult - config.med_hit_damage_mult //normalizing gun for vendors; damage reduced by 20% to compensate for faster fire rate; still higher DPS than M37.
+	damage_mult = config.base_hit_damage_mult - config.med_hit_damage_mult * 1.25 //normalizing gun for vendors; damage reduced by 25% to compensate for faster fire rate; still higher DPS than M37.
 	recoil = config.low_recoil_value
 	recoil_unwielded = config.high_recoil_value
 
@@ -356,7 +361,7 @@ can cause issues with ammo types getting mixed up during the burst.
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
 	scatter = config.med_scatter_value
 	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult + config.high_hit_damage_mult
+	damage_mult = config.base_hit_damage_mult + config.low_hit_damage_mult
 	recoil = config.med_recoil_value
 	recoil_unwielded = config.max_recoil_value
 

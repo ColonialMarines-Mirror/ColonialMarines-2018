@@ -118,7 +118,8 @@
 		//Check for and apply hard CC.
 		if(((isYautja(M) || M.mob_size == MOB_SIZE_BIG) && hard_size_threshold > 2) || (M.mob_size == MOB_SIZE_XENO && hard_size_threshold > 1) || (ishuman(M) && hard_size_threshold > 0))
 			var/mob/living/L = M
-			L.apply_effects(stun,weaken)
+			if(!M.stunned && !M.knocked_down) //Prevent chain stunning.
+				L.apply_effects(stun,weaken)
 			if(knockback)
 				if(isXeno(M))
 					impact_message += "<span class='xenodanger'>The blast knocks you off your feet!</span>"

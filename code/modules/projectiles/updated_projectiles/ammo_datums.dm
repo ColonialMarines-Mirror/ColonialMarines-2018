@@ -519,7 +519,7 @@
 	penetration= config.low_armor_penetration
 
 /datum/ammo/bullet/shotgun/slug/on_hit_mob(mob/M,obj/item/projectile/P)
-	staggerstun(M, P, config.close_shell_range, 0, 1, 4, 4)
+	staggerstun(M, P, config.close_shell_range, 0, 1, 8, 8)
 
 
 /datum/ammo/bullet/shotgun/beanbag

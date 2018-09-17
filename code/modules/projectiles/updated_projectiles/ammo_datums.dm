@@ -508,7 +508,7 @@
 	penetration= config.low_armor_penetration
 
 /datum/ammo/bullet/shotgun/slug/on_hit_mob(mob/M,obj/item/projectile/P)
-	staggerstun(M, P, config.close_shell_range, 0, 1, 2, 2)
+	staggerstun(M, P, config.close_shell_range, 0, 1, 4, 4)
 
 
 /datum/ammo/bullet/shotgun/beanbag
@@ -568,10 +568,10 @@
 	accuracy_var_low = config.med_proj_variance
 	accuracy_var_high = config.med_proj_variance
 	max_range = config.short_shell_range
-	damage = config.hlow_hit_damage
+	damage = config.hmed_hit_damage
 	damage_var_low = -config.low_proj_variance
 	damage_var_high = config.low_proj_variance
-	damage_falloff *= 0.75
+	damage_falloff *= 0.5
 	penetration	= config.high_armor_penetration
 	bonus_projectiles_amount = config.low_proj_extra
 
@@ -587,7 +587,7 @@
 	damage = config.hlow_hit_damage
 	damage_var_low = -config.low_proj_variance
 	damage_var_high = config.low_proj_variance
-	damage_falloff *= 0.75
+	damage_falloff *= 0.5
 	penetration	= config.high_armor_penetration
 	scatter = config.max_scatter_value //bonus projectiles run their own scatter chance
 

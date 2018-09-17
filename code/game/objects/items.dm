@@ -477,7 +477,7 @@ cases. Override_icon_state should be a list.*/
 					if(S.can_be_inserted(src))
 						return TRUE
 				return FALSE
-		return TRUE //Unsupported slot
+		return FALSE //Unsupported slot
 		//END HUMAN
 
 	else if(ismonkey(M))

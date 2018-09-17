@@ -48,7 +48,7 @@
 		if(WEAR_WAIST)
 			return has_limb("chest")
 		if(WEAR_ID)
-			return 1
+			return TRUE
 		if(WEAR_EAR)
 			return has_limb("head")
 		if(WEAR_EYES)
@@ -72,17 +72,17 @@
 		if(WEAR_ACCESSORY)
 			return has_limb("chest")
 		if(WEAR_IN_BACK)
-			return 1
+			return TRUE
 		if(WEAR_IN_JACKET)
-			return 1
+			return TRUE
 		if(WEAR_IN_ACCESSORY)
-			return 1
+			return TRUE
 		if(WEAR_IN_HOLSTER)
-			return 1
+			return TRUE
 		if(WEAR_IN_J_HOLSTER)
-			return 1
+			return TRUE
 		if(WEAR_IN_B_HOLSTER)
-			return 1
+			return TRUE
 
 /mob/living/carbon/human/put_in_l_hand(obj/item/W)
 	var/datum/limb/O = get_limb("l_hand")

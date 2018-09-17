@@ -200,7 +200,7 @@ can cause issues with ammo types getting mixed up during the burst.
 						/obj/item/attachable/extended_barrel,
 						/obj/item/attachable/compensator,
 						/obj/item/attachable/magnetic_harness,
-						/obj/item/attachable/stock/tactical
+						/obj/item/attachable/stock/tactical,
 						/obj/item/attachable/verticalgrip,
 						/obj/item/attachable/angledgrip,
 						/obj/item/attachable/attached_gun/flamer,
@@ -210,15 +210,9 @@ can cause issues with ammo types getting mixed up during the burst.
 
 /obj/item/weapon/gun/shotgun/combat/New()
 	..()
-	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 19,"rail_x" = 10, "rail_y" = 21, "under_x" = 14, "under_y" = 16, "stock_x" = 14, "stock_y" = 16)
-	var/obj/item/attachable/attached_gun/grenade/G = new(src)
-	G.attach_icon = "" //gun already has a better one
-	G.icon_state = ""
-	G.Attach(src)
-	update_attachable(G.slot)
-	G.icon_state = initial(G.icon_state)
+	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 19,"rail_x" = 10, "rail_y" = 21, "under_x" = 20, "under_y" = 14, "stock_x" = 14, "stock_y" = 16)
+	starting_attachment_types = list(/obj/item/attachable/attached_gun/grenade)
 	if(current_mag && current_mag.current_rounds > 0) load_into_chamber()
-
 
 /obj/item/weapon/gun/shotgun/combat/set_gun_config_values()
 	fire_delay = config.high_fire_delay * 3 //one shot every 1.5 seconds.

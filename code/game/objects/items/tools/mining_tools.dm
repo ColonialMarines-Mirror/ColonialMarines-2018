@@ -363,7 +363,7 @@
 				var/turf/open/snow/ST = T
 				if(!ST.slayer)
 					return
-			if(P.cell.charge >= P.charge_cost * vlow_mod && P.powered)
+			if(cell.charge >= charge_cost * vlow_mod && powered)
 				to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
 				playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
 				if(!do_after(user, calc_delay(user) * vlow_mod, TRUE, 5, BUSY_ICON_BUILD))
@@ -381,7 +381,7 @@
 				else
 					return
 			else
-				P.fizzle_message(user)
+				fizzle_message(user)
 				return
 
 

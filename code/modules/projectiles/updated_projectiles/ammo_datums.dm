@@ -571,7 +571,7 @@
 	damage = config.hlow_hit_damage
 	damage_var_low = -config.low_proj_variance
 	damage_var_high = config.low_proj_variance
-	damage_falloff = reg_damage_falloff * 0.75
+	damage_falloff *= 0.75
 	penetration	= config.high_armor_penetration
 	bonus_projectiles_amount = config.low_proj_extra
 
@@ -587,7 +587,7 @@
 	damage = config.hlow_hit_damage
 	damage_var_low = -config.low_proj_variance
 	damage_var_high = config.low_proj_variance
-	damage_falloff = reg_damage_falloff * 0.75
+	damage_falloff *= 0.75
 	penetration	= config.high_armor_penetration
 	scatter = config.max_scatter_value //bonus projectiles run their own scatter chance
 

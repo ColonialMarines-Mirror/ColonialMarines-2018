@@ -95,12 +95,22 @@ OPERATIONS
 	containername = "orbital warheads crate"
 	group = "Operations"
 
-/datum/supply_packs/warheads_great
-	name = "Cluster Warhead (x1)"
-	contains = list(/obj/structure/ob_ammo/warhead/cluster)
+/datum/supply_packs/solid_fuel
+	name = "Solid fuel (x9)"
+	contains = list(
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel,
+	/obj/structure/ob_ammo/ob_fuel
+	)
 	cost = RO_PRICE_PRICY
 	containertype = /obj/structure/closet/crate
-	containername = "cluster warhead crate"
+	containername = "solid fuel crate"
 	group = "Operations"
 
 /datum/supply_packs/flares

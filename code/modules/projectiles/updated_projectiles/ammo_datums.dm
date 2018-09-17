@@ -100,40 +100,51 @@
 						to_chat(target, "<span class='highdanger'>The blast knocks you off your feet!</span>")
 			step_away(M,P)
 
-	proc/staggerstun(mob/M, obj/item/projectile/P, var/max_range = 2, var/stun = 0, var/weaken = 1, var/stagger = 2, var/slowdown = 1, var/knockback = 1, var/size_threshold = 2, var/shake = 1)
+	proc/staggerstun(mob/M, obj/item/projectile/P, var/max_range = 2, var/stun = 0, var/weaken = 1, var/stagger = 2, var/slowdown = 1, var/knockback = 1, var/shake = 1, var/soft_size_threshold = 3, var/hard_size_threshold = 2)
 		if(!M || M == P.firer)
 			return
 		if(shake && (P.distance_travelled > max_range || M.lying))
 			shake_camera(M, shake+1, shake)
 			return
-		if(!isliving(M) || (isYautja(M) && size_threshold < 4) || (M.mob_size == MOB_SIZE_BIG && size_threshold < 3) || (isXeno(M) && size_threshold < 2) || ( ishuman(M) && size_threshold < 1))
+		if(!isliving(M))
 			return
+		var/impact_message = ""
 		if(shake)
 			shake_camera(M, shake+2, shake+3)
-		if(isXeno(M))
-			var/mob/living/carbon/Xenomorph/target = M
-			target.apply_effects(stun,weaken)
+			if(isXeno(M))
+				impact_message += "<span class='xenodanger'>You are shaken by the sudden impact!</span>"
+			else
+				impact_message += "<span class='warning'>You are shaken by the sudden impact!</span>"
+		//Check for and apply hard CC.
+		if(((isYautja(M) || M.mob_size == MOB_SIZE_BIG) && hard_size_threshold > 2) || (M.mob_size == MOB_SIZE_XENO && hard_size_threshold > 1) || (ishuman(M) && hard_size_threshold > 0))
+			var/mob/living/L = M
+			L.apply_effects(stun,weaken)
+			if(knockback)
+				if(isXeno(M))
+					impact_message += "<span class='xenodanger'>The blast knocks you off your feet!</span>"
+				else
+					impact_message += "<span class='highdanger'>The blast knocks you off your feet!</span>"
+				for(var/i=0, i<knockback, i++)
+					step_away(M,P)
+
+		//Check for and apply soft CC; Xeno only at this time
+		if(isXeno(M) && (M.mob_size == MOB_SIZE_BIG && soft_size_threshold > 2) || (M.mob_size == MOB_SIZE_XENO && soft_size_threshold > 1))
+			var/mob/living/carbon/Xenomorph/X = M
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Initial stagger is: <b>[target.stagger]</b></span>")
 			#endif
-			target.adjust_stagger(stagger)
+			X.adjust_stagger(stagger)
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Final stagger is: <b>[target.stagger]</b></span>")
 			#endif
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Initial slowdown is: <b>[target.slowdown]</b></span>")
 			#endif
-			target.add_slowdown(slowdown)
+			X.add_slowdown(slowdown)
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Final slowdown is: <b>[target.slowdown]</b></span>")
 			#endif
-			to_chat(target, "<span class='xenodanger'>You are shaken by the sudden impact!</span>")
-		else
-			var/mob/living/target = M
-			target.apply_effects(stun,weaken)
-			to_chat(target, "<span class='highdanger'>The blast knocks you off your feet!</span>")
-		for(var/i=0, i<knockback, i++)
-			step_away(M,P)
+		to_chat(M, "[impact_message]") //Summarize all the bad shit that happened
 
 	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE)
 		if(!target || !P)

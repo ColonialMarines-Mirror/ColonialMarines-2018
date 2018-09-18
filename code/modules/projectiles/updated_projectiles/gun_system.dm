@@ -219,8 +219,6 @@
 
 	var/obj/item/offhand = user.get_inactive_hand()
 	if(offhand)
-		//if(!user.equip_to_appropriate_slot(offhand)) //Is there something still in the offhand after autoequip?
-		//	offhand = user.get_inactive_hand()
 		if(offhand == user.r_hand)
 			user.drop_r_hand()
 		else if(offhand == user.l_hand)

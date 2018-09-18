@@ -70,17 +70,17 @@
 	reagents.add_reagent("dexalinp", 1)
 	update_icon()
 
-/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate
+/obj/item/reagent_container/hypospray/autoinjector/surgical
 	name = "surgical autoinjector"
 	desc = "An autoinjector loaded with antibiotics and painkillers. Good for quick surgery."
 	amount_per_transfer_from_this = 10
 	volume = 10
 	icon_state = "anesthetic"
 
-/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate/New()
+/obj/item/reagent_container/hypospray/autoinjector/surgical/New()
 	..()
 	reagents.add_reagent("oxycodone", 10)
-	reagents.add_reagent("paracetamol", 10)
+	reagents.add_reagent("paracetamol", 5)
 	reagents.add_reagent("spaceacillin", 5)
 	update_icon()
 

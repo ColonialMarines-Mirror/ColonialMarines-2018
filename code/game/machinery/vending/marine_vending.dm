@@ -293,9 +293,10 @@
 					/obj/item/stack/medical/ointment = 8,
 					/obj/item/stack/medical/splint = 2,
 					/obj/item/device/healthanalyzer = 3,
+					/obj/item/reagent_container/hypospray/autoinjector/surgical = 3
 					/obj/item/bodybag/cryobag = 2)
 
-	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate =3)
+	contraband = list(/obj/item/reagent_container/pill/happy = 4)
 
 
 

@@ -71,16 +71,17 @@
 	update_icon()
 
 /obj/item/reagent_container/hypospray/autoinjector/chloralhydrate
-	name = "anesthetic autoinjector"
-	desc = "An autoinjector loaded with 1 unit of Chloral Hydrate and 9 units of Sleeping Agent. Good to quickly pacify someone, for surgery of course."
+	name = "surgical autoinjector"
+	desc = "An autoinjector loaded with antibiotics and painkillers. Good for quick surgery."
 	amount_per_transfer_from_this = 10
 	volume = 10
 	icon_state = "anesthetic"
 
 /obj/item/reagent_container/hypospray/autoinjector/chloralhydrate/New()
 	..()
-	reagents.add_reagent("chloralhydrate", 1)
-	reagents.add_reagent("stoxin", 9)
+	reagents.add_reagent("oxycodone", 10)
+	reagents.add_reagent("paracetamol", 10)
+	reagents.add_reagent("spaceacillin", 5)
 	update_icon()
 
 /obj/item/reagent_container/hypospray/autoinjector/Dylovene

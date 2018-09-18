@@ -1,22 +1,27 @@
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	return
+	
 // No comment
 /atom/proc/attackby(obj/item/W, mob/living/user)
 	return
+	
 /atom/movable/attackby(obj/item/W, mob/living/user)
 	if(W)
 		if(!(W.flags_item & NOBLUDGEON))
 			visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>", null, 5)
 			user.animation_attack_on(src)
 			user.flick_attack_overlay(src, "punch")
+			
 /mob/living/attackby(obj/item/I, mob/user)
 	if(istype(I) && ismob(user))
 		I.attack(src, user)
+		
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	return
+	
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 	if(flags_item & NOBLUDGEON)
 		return

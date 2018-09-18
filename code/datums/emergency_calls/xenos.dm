@@ -21,8 +21,10 @@
 /datum/emergency_call/xenos/create_member(datum/mind/M)
 	var/turf/spawn_loc = get_spawn_point()
 	var/mob/original = M.current
-
-	if(!istype(spawn_loc)) return //Didn't find a useable spawn point.
+	if(jobban_isbanned(original, "Alien"))
+		return
+	if(!istype(spawn_loc))
+		return //Didn't find a useable spawn point.
 	var/chance = rand(0,3)
 	var/mob/living/carbon/Xenomorph/new_xeno
 	if(!leader)

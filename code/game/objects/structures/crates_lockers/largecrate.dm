@@ -139,6 +139,7 @@
 			user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>", \
 								 "<span class='notice'>You weld open \the [src].</span>", \
 								 "<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
+			playsound(src.loc, 'sound/items/Welder2.ogg', 25, 1)
 			cdel(src)
 		else
 			return FALSE

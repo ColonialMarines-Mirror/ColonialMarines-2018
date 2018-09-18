@@ -936,7 +936,7 @@ About the new airlock wires panel:
 			src.locked = 1
 			return
 		return
-	if((istype(C, /obj/item/tool/pickaxe/plasmacutter) && !operating && density))
+	if((istype(C, /obj/item/tool/pickaxe/plasmacutter) && !operating && density && !user.action_busy))
 		var/obj/item/tool/pickaxe/plasmacutter/P = C
 
 		if(not_weldable)

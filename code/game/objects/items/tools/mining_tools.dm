@@ -105,7 +105,11 @@
 	var/cut_delay = 30 //Takes this long in deciseconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
 	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	var/dirt_amt_per_dig = 5
-	var/charge_cost = 200
+	var/charge_cost = 1000
+	var/low_mod = 0.5
+	var/vlow_mod = 0.1
+	var/high_mod = 2
+	var/vhigh_mod = 3
 	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
 
 /obj/item/tool/pickaxe/plasmacutter/New()
@@ -233,14 +237,20 @@
 		force = 5
 		damtype = "brute"
 		heat_source = 0
-		SetLuminosity(0)
+		if(user)
+			user.SetLuminosity(-2)
+		else
+			SetLuminosity(0)
 	else
 		icon_state = "plasma_cutter_on"
 		powered = TRUE
 		force = 70
 		damtype = "fire"
 		heat_source = 3800
-		SetLuminosity(2)
+		if(user)
+			user.SetLuminosity(2)
+		else
+			SetLuminosity(2)
 
 
 /obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)
@@ -309,23 +319,26 @@
 				var/turf/open/snow/ST = T
 				if(!ST.slayer)
 					return
-			to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
-			playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
-			if(!do_after(user, calc_delay(user) * 0.25, TRUE, 5, BUSY_ICON_BUILD))
-				return
-			var/transf_amt = dirt_amt_per_dig
-			if(turfdirt == DIRT_TYPE_SNOW)
-				var/turf/open/snow/ST = T
-				if(!ST.slayer)
+			if(cell.charge >= charge_cost * vlow_mod && powered)
+				to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
+				playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
+				if(!do_after(user, calc_delay(user) * vlow_mod, TRUE, 5, BUSY_ICON_BUILD))
 					return
-				transf_amt = min(ST.slayer, dirt_amt_per_dig)
-				ST.slayer -= transf_amt
-				ST.update_icon(1,0)
-				to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
-				use_charge(user, name, ST, charge_cost * 0.25) //costs 25% normal
+				var/transf_amt = dirt_amt_per_dig
+				if(turfdirt == DIRT_TYPE_SNOW)
+					var/turf/open/snow/ST = T
+					if(!ST.slayer)
+						return
+					transf_amt = min(ST.slayer, dirt_amt_per_dig)
+					ST.slayer -= transf_amt
+					ST.update_icon(1,0)
+					to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
+					use_charge(user, name, ST, charge_cost * vlow_mod) //costs 25% normal
+				else
+					return
 			else
+				fizzle_message(user)
 				return
-
 
 
 

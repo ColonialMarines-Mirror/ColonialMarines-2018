@@ -65,10 +65,10 @@
 /obj/structure/window_frame/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy)
 		var/obj/item/tool/pickaxe/plasmacutter/P = W
-		if(P.cell.charge >= P.charge_cost * 0.5 && P.powered)
+		if(P.cell.charge >= P.charge_cost * P.low_mod && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.calc_delay(user) * 0.5, TRUE, 5, BUSY_ICON_HOSTILE) && P && src) //Window frames require half the normal time
-				P.cut_apart(user, src.name, src, P.charge_cost * 0.5) //Window frames require half the normal power
+			if(do_after(user, P.calc_delay(user) * P.low_mod, TRUE, 5, BUSY_ICON_HOSTILE) && P && src) //Window frames require half the normal time
+				P.cut_apart(user, src.name, src, P.charge_cost * P.low_mod) //Window frames require half the normal power
 				cdel(src)
 			return
 		else

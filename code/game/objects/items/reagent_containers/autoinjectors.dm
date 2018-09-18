@@ -79,9 +79,9 @@
 
 /obj/item/reagent_container/hypospray/autoinjector/surgical/New()
 	..()
-	reagents.add_reagent("oxycodone", 10)
-	reagents.add_reagent("paracetamol", 5)
-	reagents.add_reagent("spaceacillin", 5)
+	reagents.add_reagent("oxycodone", 15)
+	reagents.add_reagent("paracetamol", 2)
+	reagents.add_reagent("spaceacillin", 4)
 	update_icon()
 
 /obj/item/reagent_container/hypospray/autoinjector/Dylovene

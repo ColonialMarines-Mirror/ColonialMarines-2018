@@ -144,7 +144,7 @@
 
 	on_overdose_critical(mob/living/M)
 		M.apply_damage(4, TOX) //Massive liver damage
-
+	
 /datum/reagent/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
@@ -152,6 +152,42 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/phoromethocarbamol
+	name = "Phoromethocarbamol"
+	id = "phoromethocarbamol"
+	description = "Phoromethocarbamol is a extremely strong muscle relaxant with serious side effects, use is counterindicated in any uses other then surgery."
+	reagent_state = LIQUID
+	color = "#C805DC"
+	custom_metabolism = 0.25 // Lasts 10 minutes for 15 units
+	overdose = REAGENTS_OVERDOSE * 0.66
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL * 0.66
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) 
+			return
+		if(!data)
+			data = 1
+		data++
+		switch(data)
+			if(1 to 15)
+				M.make_dizzy(5)
+				M.make_jittery(5)
+			if(15 to 16)
+				to_chat(M, "\red <b>Your muscles go limp!</b>")
+				M.AdjustStunned(4)
+				M.AdjustKnockeddown(4)
+				M.musclesrelaxed = 1
+			else
+				M.AdjustStunned(1)
+				M.AdjustKnockeddown(1)
+				M.hallucination = max(M.hallucination, 3)
+				M.druggy = max(M.druggy, 10)
+		
+	on_overdose(mob/living/M)
+		M.apply_damage(2, TOX)
+	on_overdose_critical(mob/living/M)
+		M.apply_damage(4, TOX) //Massive liver damage
+		
 /datum/reagent/sterilizine/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.germ_level -= min(volume*20, M.germ_level)

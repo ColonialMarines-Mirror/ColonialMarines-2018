@@ -44,8 +44,9 @@ OPERATIONS
 
 /datum/supply_packs/specialops
 	name = "special operations crate (operator kit x2)"
-	contains = list(/obj/item/attachable/suppressor,
-					/obj/item/attachable/suppressor,
+	contains = list(
+					/obj/item/weapon/gun/pistol/b92fs/M9,
+					/obj/item/weapon/gun/pistol/b92fs/M9,
 					/obj/item/clothing/under/syndicate/combat,
 					/obj/item/clothing/under/syndicate/combat,
 					/obj/item/clothing/mask/gas/swat,

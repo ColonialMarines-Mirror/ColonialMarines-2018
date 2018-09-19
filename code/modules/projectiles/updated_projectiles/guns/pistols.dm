@@ -105,7 +105,6 @@
 	item_state = "b92fs"
 	current_mag = /obj/item/ammo_magazine/pistol/b92fs
 
-
 	New()
 		..()
 		attachable_offset = list("muzzle_x" = 28, "muzzle_y" = 20,"rail_x" = 10, "rail_y" = 22, "under_x" = 21, "under_y" = 17, "stock_x" = 21, "stock_y" = 17)
@@ -118,6 +117,21 @@
 	scatter_unwielded = config.med_scatter_value
 	damage_mult = config.base_hit_damage_mult
 
+/obj/item/weapon/gun/pistol/b92fs/M9
+	name = "\improper M9 Custom pistol"
+	desc = "A 20th century military firearm customized for special forces use, fires tranq darts to take down enemies nonlethally"
+	icon_state = "b92fs"
+	item_state = "b92fs"
+	current_mag =/obj/item/ammo_magazine/pistol/b92fstranq
+	starting_attachment_types = list(
+									/obj/item/attachable/lasersight,
+									/obj/item/attachable/suppressor
+									)
+
+/obj/item/weapon/gun/pistol/b92fs/set_gun_config_values()
+	fire_delay = config.mhigh_fire_delay //to simulate manually cocking the pistol
+	accuracy_mult = config.base_hit_accuracy_mult + config.med_hit_accuracy_mult
+	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult  //for CQC
 
 //-------------------------------------------------------
 //DEAGLE //This one is obvious.
@@ -181,8 +195,6 @@
 						/obj/item/attachable/quickfire,
 						/obj/item/attachable/lasersight,
 						/obj/item/attachable/burstfire_assembly)
-
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_CAN_POINTBLANK
 
 	New()//Making the gun have an invisible silencer since it's supposed to have one.
 		..()

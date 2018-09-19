@@ -134,4 +134,4 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TOKEN_MARINE			2
 #define TOKEN_ENGI				4
 #define TOKEN_SPEC				8
-#define TOKEN_ALL				16
+#define TOKEN_ALL				15

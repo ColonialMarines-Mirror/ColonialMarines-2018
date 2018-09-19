@@ -174,10 +174,10 @@
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
-		if(!premium.len && !istype(src,/obj/machinery/vending/shared_vending))
+		if(!premium.len && !isshared)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
-		if(C.flags_token & tokensupport || C.flags_token & TOKEN_ALL)
+		if(C.flags_token & tokensupport)
 			if(user.drop_inv_item_to_loc(W, src))
 				coin = W
 				to_chat(user, "\blue You insert the [W] into the [src]")

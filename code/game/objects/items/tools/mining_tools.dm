@@ -244,7 +244,7 @@
 	else
 		icon_state = "plasma_cutter_on"
 		powered = TRUE
-		force = 70
+		force = 40
 		damtype = "fire"
 		heat_source = 3800
 		if(user)

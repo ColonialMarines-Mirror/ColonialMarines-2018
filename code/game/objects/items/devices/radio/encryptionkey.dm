@@ -34,7 +34,7 @@
 /obj/item/device/encryptionkey/engi
 	name = "Engineering Radio Encryption Key"
 	icon_state = "eng_cypherkey"
-	channels = list("Engi" = 1, "Almayer" = 1)
+	channels = list("Engi" = 1)
 
 /obj/item/device/encryptionkey/sec
 	name = "Security Radio Encryption Key"
@@ -44,7 +44,7 @@
 /obj/item/device/encryptionkey/med
 	name = "Medical Radio Encryption Key"
 	icon_state = "med_cypherkey"
-	channels = list("MedSci" = 1, "Almayer" = 1)
+	channels = list("MedSci" = 1)
 
 /obj/item/device/encryptionkey/ce
 	name = "Chief Engineer's Encryption Key"

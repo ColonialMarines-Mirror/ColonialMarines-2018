@@ -28,7 +28,8 @@
 	flags_equip_slot = SLOT_BACK
 	w_class = 5.0
 	var/obj/item/cell/pcell = null
-	var/rounds_remaining = 250
+	var/rounds_remaining = 500
+	var/rounds_max = 500
 	actions_types = list(/datum/action/item_action/toggle)
 	var/reloading = 0
 
@@ -37,7 +38,7 @@
 		..()
 		pcell = new /obj/item/cell(src)
 
-	attack_self(mob/user)
+	attack_self(mob/user, automatic = FALSE)
 		if(!ishuman(user) || user.stat) return 0
 
 		var/obj/item/weapon/gun/smartgun/mygun = user.get_active_hand()
@@ -61,30 +62,23 @@
 			return
 
 		reloading = 1
-		user.visible_message("[user.name] begin feeding an ammo belt into the M56 Smartgun.","You begin feeding a fresh ammo belt into the M56 Smartgun. Don't move or you'll be interrupted.")
-		var/reload_duration = 50
-		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.smartgun>0)
-			reload_duration = max(reload_duration - 10*user.mind.cm_skills.smartgun,30)
-		if(do_after(user,reload_duration, TRUE, 5, BUSY_ICON_FRIENDLY))
-			pcell.charge -= 50
-			if(!mygun.current_mag) //This shouldn't happen, since the mag can't be ejected. Good safety, I guess.
-				var/obj/item/ammo_magazine/internal/smartgun/A = new(mygun)
-				mygun.current_mag = A
-
-			var/rounds_to_reload = min(rounds_remaining, (mygun.current_mag.max_rounds - mygun.current_mag.current_rounds)) //Get the smaller value.
-
-			mygun.current_mag.current_rounds += rounds_to_reload
-			rounds_remaining -= rounds_to_reload
-
-			to_chat(user, "You finish loading [rounds_to_reload] shells into the M56 Smartgun. Ready to rumble!")
-			playsound(user, 'sound/weapons/unload.ogg', 25, 1)
-
-			reloading = 0
-			return 1
+		if(!automatic)
+			user.visible_message("[user.name] begin feeding an ammo belt into the M56 Smartgun.","You begin feeding a fresh ammo belt into the M56 Smartgun. Don't move or you'll be interrupted.")
 		else
-			to_chat(user, "Your reloading was interrupted!")
-			reloading = 0
-			return
+			user.visible_message("[user.name]'s powerpack servos begin automatically feeding an ammo belt into the M56 Smartgun.","The powerpack servos begin automatically feeding a fresh ammo belt into the M56 Smartgun.")
+		var/reload_duration = 50
+		if(!automatic)
+			if(user.mind && user.mind.cm_skills && user.mind.cm_skills.smartgun>0)
+				reload_duration = max(reload_duration - 10*user.mind.cm_skills.smartgun,30)
+			if(do_after(user,reload_duration, TRUE, 5, BUSY_ICON_FRIENDLY))
+				reload(user, mygun)
+			else
+				to_chat(user, "Your reloading was interrupted!")
+				reloading = 0
+				return
+		else
+			sleep(reload_duration)
+			reload(user, mygun)
 		return 1
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
@@ -103,7 +97,25 @@
 		..()
 		if (get_dist(user, src) <= 1)
 			if(pcell)
-				to_chat(user, "A small gauge in the corner reads: Ammo: [rounds_remaining] / 250.")
+				to_chat(user, "A small gauge in the corner reads: Ammo: [rounds_remaining] / [rounds_max].")
+
+/obj/item/smartgun_powerpack/proc/reload(mob/user, obj/item/weapon/gun/smartgun/mygun)
+
+		pcell.charge -= 50
+		if(!mygun.current_mag)
+				var/obj/item/ammo_magazine/internal/smartgun/A = new(mygun)
+				mygun.current_mag = A
+
+		var/rounds_to_reload = min(rounds_remaining, (mygun.current_mag.max_rounds - mygun.current_mag.current_rounds)) //Get the smaller value.
+
+		mygun.current_mag.current_rounds += rounds_to_reload
+		rounds_remaining -= rounds_to_reload
+
+		to_chat(user, "You finish loading [rounds_to_reload] shells into the M56 Smartgun. Ready to rumble!")
+		playsound(user, 'sound/weapons/unload.ogg', 25, 1)
+
+		reloading = 0
+		return 1
 
 /obj/item/smartgun_powerpack/snow
 	icon_state = "s_powerpack"

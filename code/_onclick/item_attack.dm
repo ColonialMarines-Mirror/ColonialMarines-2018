@@ -43,10 +43,11 @@
 		power *= 2
 	if(user.mind && user.mind.cm_skills)
 		bonus += round(power * 0.3 * max(0,user.mind.cm_skills.melee_weapons)) //30% bonus per melee level
-	if(ishuman(user))
-		var/mob/living/carbon/human/A = user
-		if(A.command_aura == "move") //Check for move aura; improves melee damage significantly.
-			bonus += 5 + round(power * max(0, A.command_aura_strength) * 0.20) // No cumulative multiplication with melee bonus. Move aura adds damage = 5 + 20% of base * Command level - 1, or +5 and +60% for a CO/XO.
+	if(!isSynth(user)) //Synths shouldn't really be benefitting from commands period.
+		if(ishuman(user))
+			var/mob/living/carbon/human/A = user
+			if(A.command_aura == "move") //Check for move aura; improves melee damage significantly.
+				bonus += 5 + round(power * max(0, A.command_aura_strength) * 0.20) // No cumulative multiplication with melee bonus. Move aura adds damage = 5 + 20% of base * Command level - 1, or +5 and +60% for a CO/XO.
 	if(!ishuman(M))
 		var/showname = "."
 		if(user)

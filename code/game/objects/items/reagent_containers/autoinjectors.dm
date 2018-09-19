@@ -79,7 +79,7 @@
 
 /obj/item/reagent_container/hypospray/autoinjector/surgical/New()
 	..()
-	reagents.add_reagent("demerol", 15)
+	reagents.add_reagent("phoromethocarbonol", 15)
 	reagents.add_reagent("spaceacillin", 5)
 	update_icon()
 

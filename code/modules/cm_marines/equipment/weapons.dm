@@ -74,11 +74,17 @@
 				reload(user, mygun)
 			else
 				to_chat(user, "Your reloading was interrupted!")
+				playsound(src,'sound/machines/buzz-two.ogg', 25, 1)
 				reloading = 0
 				return
 		else
-			sleep(reload_duration)
-			reload(user, mygun)
+			if(autoload_check(user, reload_duration, mygun, src))
+				reload(user, mygun, TRUE)
+			else
+				to_chat(user, "The automated reload process was interrupted!")
+				playsound(src,'sound/machines/buzz-two.ogg', 25, 1)
+				reloading = 0
+				return
 		return 1
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
@@ -99,7 +105,7 @@
 			if(pcell)
 				to_chat(user, "A small gauge in the corner reads: Ammo: [rounds_remaining] / [rounds_max].")
 
-/obj/item/smartgun_powerpack/proc/reload(mob/user, obj/item/weapon/gun/smartgun/mygun)
+/obj/item/smartgun_powerpack/proc/reload(mob/user, obj/item/weapon/gun/smartgun/mygun, automatic = FALSE)
 
 		pcell.charge -= 50
 		if(!mygun.current_mag)
@@ -111,11 +117,29 @@
 		mygun.current_mag.current_rounds += rounds_to_reload
 		rounds_remaining -= rounds_to_reload
 
-		to_chat(user, "You finish loading [rounds_to_reload] shells into the M56 Smartgun. Ready to rumble!")
+		if(!automatic)	to_chat(user, "You finish loading [rounds_to_reload] shells into the M56 Smartgun. Ready to rumble!")
+		else	to_chat(user, "The powerpack servos finish loading [rounds_to_reload] shells into the M56 Smartgun. Ready to rumble!")
 		playsound(user, 'sound/weapons/unload.ogg', 25, 1)
 
 		reloading = 0
 		return 1
+
+/obj/item/smartgun_powerpack/proc/autoload_check(mob/user, delay, obj/item/weapon/gun/smartgun/mygun, obj/item/smartgun_powerpack/powerpack, numticks = 5)
+	if(!istype(user) || delay <= 0) return FALSE
+
+	var/mob/living/carbon/human/L
+	if(istype(user, /mob/living/carbon/human)) L = user
+
+	var/delayfraction = round(delay/numticks)
+	. = TRUE
+	for(var/i = 0 to numticks)
+		sleep(delayfraction)
+		if(!user)
+			. = FALSE
+			break
+		if(!(L.back == powerpack) || !(L.s_store == mygun) && !(user.get_active_hand() == mygun)) //power pack and gun aren't where they should be.
+			. = FALSE
+			break
 
 /obj/item/smartgun_powerpack/snow
 	icon_state = "s_powerpack"

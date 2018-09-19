@@ -216,7 +216,7 @@
 						/obj/item/attachable/burstfire_assembly,
 						/obj/item/attachable/bipod)
 
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER
 
 
 /obj/item/weapon/gun/smartgun/New()

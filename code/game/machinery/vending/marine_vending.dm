@@ -367,7 +367,7 @@
 	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine = 1,
+						/obj/item/coin/marine/specialist = 1,
 						/obj/item/clothing/tie/storage/webbing = 1,
 						/obj/item/explosive/plastique = 2,
 						/obj/item/explosive/grenade/frag = 2,

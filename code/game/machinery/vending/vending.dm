@@ -67,6 +67,7 @@
 	var/tipped_level = 0
 	var/hacking_safety = 0 //1 = Will never shoot inventory or allow all access
 	var/wrenchable = TRUE
+	var/isshared = FALSE
 
 /obj/machinery/vending/New()
 	..()
@@ -173,7 +174,7 @@
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
-		if(!premium.len)
+		if(!premium.len && !istype(src,/obj/machinery/vending/shared_vending))
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
 		if(C.flags_token & tokensupport || C.flags_token & TOKEN_ALL)
@@ -389,6 +390,7 @@
 		"ewallet_worth" = ewallet ? ewallet.worth : null,
 		"coin" = coin ? coin.name : null,
 		"displayed_records" = display_list,
+		"isshared" = isshared
 	)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)

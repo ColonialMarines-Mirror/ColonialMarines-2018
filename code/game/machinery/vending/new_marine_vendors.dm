@@ -380,7 +380,8 @@
 							list("GUN ATTACHMENTS (Choose 1)", 0, null, null, null),
 							list("Vertical Grip", 0, /obj/item/attachable/verticalgrip, MARINE_CAN_BUY_ATTACHMENT, "black"),
 							list("Red-dot sight", 0, /obj/item/attachable/reddot, MARINE_CAN_BUY_ATTACHMENT, "black"),
-							list("Magnetic Harness", 0, /obj/item/attachable/magnetic_harness, MARINE_CAN_BUY_ATTACHMENT, "black")
+							list("Extended Barrel", 0, /obj/item/attachable/extended_barrel, MARINE_CAN_BUY_ATTACHMENT, "black")
+							list("Masterkey Shotgun", 0, /obj/item/attachable/attached_gun/shotgun,  MARINE_CAN_BUY_ATTACHMENT, "black")
 							)
 
 

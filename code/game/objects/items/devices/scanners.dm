@@ -229,7 +229,7 @@ REAGENT SCANNER
 	var/internal_bleed_detected = FALSE
 	var/fracture_detected = FALSE
 	var/unknown_body = 0
-	var/infected = FALSE
+	//var/infected = FALSE
 	var/known_implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -269,7 +269,7 @@ REAGENT SCANNER
 				unknown_body++
 			if(e.body_part == UPPER_TORSO) //embryo in chest?
 				if(locate(/obj/item/alien_embryo) in H)
-					infected++
+					unknown_body++
 
 		if(unknown_body)
 			if(unknown_body > 1)
@@ -379,8 +379,8 @@ REAGENT SCANNER
 				advice += "<span class='scanner'><b>Radiation:</b> Administer one dose of: [arithrazine] | [hyronalin]</span>\n"
 			if(unknown_body)
 				advice += "<span class='scanner'><b>Shrapnel/Embedded Object(s):</b> Seek surgical remedy to remove embedded object(s).</span>\n"
-			if(infected)
-				advice += "<span class='scanner'><b>Larval Infection:</b> !!URGENT: Place patient in cryobag and seek surgical remedy immediately!!</span>\n"
+			//if(infected)
+			//	advice += "<span class='scanner'><b>Larval Infection:</b> !!URGENT: Place patient in cryobag and seek surgical remedy immediately!!</span>\n"
 			if(fracture_detected)
 				advice += "<span class='scanner'><b>Unsecured Fracture:</b> Administer splints to specified areas.</span>\n"
 			if(internal_bleed_detected)

@@ -11,7 +11,7 @@
 #define PROCESS_DEFAULT_HANG_ALERT_TIME 	6000 // 600 seconds
 #define PROCESS_DEFAULT_HANG_RESTART_TIME 	9000 // 900 seconds
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		66	// 66% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		41	// 41% of one tick
 #define LAGCHECK(x) while (world.tick_usage > x) sleep(world.tick_lag)
 
 //#define UPDATE_QUEUE_DEBUG

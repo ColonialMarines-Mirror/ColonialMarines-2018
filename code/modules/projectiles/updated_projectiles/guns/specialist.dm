@@ -210,7 +210,6 @@
 	attachable_allowed = list(
 						/obj/item/attachable/extended_barrel,
 						/obj/item/attachable/heavy_barrel,
-						/obj/item/attachable/reddot,
 						/obj/item/attachable/flashlight,
 						/obj/item/attachable/lasersight,
 						/obj/item/attachable/burstfire_assembly,

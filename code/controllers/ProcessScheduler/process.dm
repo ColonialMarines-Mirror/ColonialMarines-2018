@@ -250,9 +250,6 @@ datum/controller/process/proc/getElapsedTime()
 		return TimeOfHour - (run_start - 36000)
 	return TimeOfHour - run_start
 
-datum/controller/process/proc/getAverageUsage()
-
-
 datum/controller/process/proc/tickDetail()
 	return
 

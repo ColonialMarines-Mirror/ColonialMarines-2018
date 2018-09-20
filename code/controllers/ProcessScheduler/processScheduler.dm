@@ -67,7 +67,7 @@ var/global/datum/controller/processScheduler/processScheduler
 
 	var/process
 	// Add all the processes we can find, except for the ticker
-	for (process in subtypesof(/datum/controller/process))
+	for (process in typesof(/datum/controller/process) - /datum/controller/process)
 		if (!(process in deferredSetupList))
 			addProcess(new process(src))
 
@@ -125,6 +125,7 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/runQueuedProcesses()
 	for(var/datum/controller/process/p in queued)
 		runProcess(p)
+		sleep(world.tick_lag)
 
 /datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process)
 	processes.Add(process)

@@ -868,6 +868,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 
 							list("LEADER SUPPLIES", 0, null, null, null),
 							list("Supply beacon", 15, /obj/item/device/squad_beacon, null, "black"),
+							list("Orbital beacon", 25, /obj/item/device/squad_beacon/bomb, null, "black"),
 							list("Plastique explosive", 5, /obj/item/explosive/plastique, null, "black"),
 							list("Sandbags x25", 15, /obj/item/stack/sandbags_empty/half, null, "black"),
 							list("Motion detector", 5, /obj/item/device/motiondetector, null, "black"),
@@ -956,7 +957,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/device/squad_beacon,
 						/obj/item/device/squad_beacon,
 						/obj/item/device/squad_beacon,
-						/obj/item/device/squad_beacon,
+						/obj/item/device/squad_beacon/bomb,
 						/obj/item/weapon/gun/flamer,
 						/obj/item/storage/box/zipcuffs,
 						)

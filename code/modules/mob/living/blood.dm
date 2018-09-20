@@ -43,7 +43,7 @@
 			var/datum/internal_organ/heart/heart = internal_organs_by_name["heart"]
 
 			if(!heart)
-				heart_multi += 1 //you'd die in seconds but you can't remove internal organs even with varediting.
+				heart_multi *= 0.5 //you'd die in seconds but you can't remove internal organs even with varediting.
 
 			if((!reagents.get_reagent_amount("peridaxon") >= 0.05) && heart.damage > 1)
 				if(heart.damage < heart.min_bruised_damage)

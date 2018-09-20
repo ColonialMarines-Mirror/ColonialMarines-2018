@@ -5,14 +5,7 @@ proc/random_body_type()
 	return pick(body_types_list)
 
 proc/random_hair_style(gender, species = "Human")
-	var/h_style = pick("Crewcut",
-			prob(200)
-				"Bald",
-			prob(50)
-				"Flat Top",
-			prob(50)
-				"Shaved Head"
-			)
+	var/h_style = "Crewcut"
 
 	var/list/valid_hairstyles = list()
 	for(var/hairstyle in hair_styles_list)

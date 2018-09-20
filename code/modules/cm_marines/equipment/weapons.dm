@@ -122,7 +122,7 @@
 		playsound(user, 'sound/weapons/unload.ogg', 25, 1)
 
 		reloading = FALSE
-		return 1
+		return TRUE
 
 /obj/item/smartgun_powerpack/proc/autoload_check(mob/user, delay, obj/item/weapon/gun/smartgun/mygun, obj/item/smartgun_powerpack/powerpack, numticks = 5)
 	if(!istype(user) || delay <= 0) return FALSE

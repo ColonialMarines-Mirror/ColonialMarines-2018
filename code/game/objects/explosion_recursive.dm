@@ -36,7 +36,7 @@ proc/explosion_rec(turf/epicenter, power)
 	for(var/direction in cardinal)
 		var/turf/T = get_step(epicenter, direction)
 		T.explosion_spread(power - epicenter.explosion_resistance, direction)
-		LAGCHECK(25)
+		LAGCHECK(75)
 
 	//This step applies the ex_act effects for the explosion, as planned in the previous step.
 	for(var/turf/T in explosion_turfs)
@@ -55,7 +55,7 @@ proc/explosion_rec(turf/epicenter, power)
 			T = locate(x,y,z)
 		for(var/atom/A in T)
 			A.ex_act(severity)
-		LAGCHECK(25)
+		LAGCHECK(75)
 	explosion_in_progress = 0
 
 /turf

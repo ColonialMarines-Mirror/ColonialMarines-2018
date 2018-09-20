@@ -47,13 +47,13 @@
 
 			if((!reagents.get_reagent_amount("peridaxon") >= 0.05) && heart.damage > 1)
 				if(heart.damage < heart.min_bruised_damage)
-					heart_multi = 1.2
+					heart_multi = 0.9
 					blood_volume -= 0.1 //nulls regeneration
 				else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
-					heart_multi = 1.5
+					heart_multi = 0.7
 					blood_volume -= 0.5
 				else if(heart.damage >= heart.min_broken_damage && heart.damage < INFINITY)
-					heart_multi = 1.8
+					heart_multi = 0.5
 					blood_volume -= 1.3
 			else
 				heart_multi = 1
@@ -63,7 +63,7 @@
 
 
 	//Effects of bloodloss
-		switch(blood_volume / heart_multi)
+		switch(blood_volume * heart_multi)
 
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(1))

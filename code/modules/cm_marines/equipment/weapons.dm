@@ -137,7 +137,7 @@
 		if(!user)
 			. = FALSE
 			break
-		if(!(L.back == powerpack) || !(L.s_store == mygun) && !(user.get_active_hand() == mygun)) //power pack and gun aren't where they should be.
+		if(!(L.s_store == mygun) && !(user.get_active_hand() == mygun) && !(user.get_inactive_hand() == mygun) || !(L.back == powerpack)) //power pack and gun aren't where they should be.
 			. = FALSE
 			break
 

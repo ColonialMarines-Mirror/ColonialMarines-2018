@@ -31,7 +31,7 @@
 	var/rounds_remaining = 500
 	var/rounds_max = 500
 	actions_types = list(/datum/action/item_action/toggle)
-	var/reloading = 0
+	var/reloading = FALSE
 
 	New()
 		select_gamemode_skin(/obj/item/smartgun_powerpack)
@@ -61,7 +61,7 @@
 			to_chat(user, "Your powerpack's battery is too drained! Get a new battery and install it!")
 			return
 
-		reloading = 1
+		reloading = TRUE
 		if(!automatic)
 			user.visible_message("[user.name] begins feeding an ammo belt into the M56 Smartgun.","You begin feeding a fresh ammo belt into the M56 Smartgun. Don't move or you'll be interrupted.")
 		else
@@ -75,7 +75,7 @@
 			else
 				to_chat(user, "Your reloading was interrupted!")
 				playsound(src,'sound/machines/buzz-two.ogg', 25, 1)
-				reloading = 0
+				reloading = FALSE
 				return
 		else
 			if(autoload_check(user, reload_duration, mygun, src))
@@ -83,7 +83,7 @@
 			else
 				to_chat(user, "The automated reload process was interrupted!")
 				playsound(src,'sound/machines/buzz-two.ogg', 25, 1)
-				reloading = 0
+				reloading = FALSE
 				return
 		return 1
 
@@ -121,7 +121,7 @@
 		else	to_chat(user, "The powerpack servos finish loading [rounds_to_reload] shells into the M56 Smartgun. Ready to rumble!")
 		playsound(user, 'sound/weapons/unload.ogg', 25, 1)
 
-		reloading = 0
+		reloading = FALSE
 		return 1
 
 /obj/item/smartgun_powerpack/proc/autoload_check(mob/user, delay, obj/item/weapon/gun/smartgun/mygun, obj/item/smartgun_powerpack/powerpack, numticks = 5)

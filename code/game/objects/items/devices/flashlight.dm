@@ -7,9 +7,7 @@
 	w_class = 2
 	flags_atom = FPRINT|CONDUCT
 	flags_equip_slot = SLOT_WAIST
-
 	matter = list("metal" = 50,"glass" = 20)
-
 	actions_types = list(/datum/action/item_action)
 	var/on = 0
 	var/brightness_on = 5 //luminosity when on
@@ -297,3 +295,4 @@
 	icon_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
+	raillight_compatible = 0

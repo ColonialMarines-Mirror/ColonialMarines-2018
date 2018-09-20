@@ -243,6 +243,13 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/suppressor
 	name = "suppressor"
 	desc = "A small tube with exhaust ports to expel noise and gas.\nDoes not completely silence a weapon, but does make it much quieter and a little more accurate and stable at the cost of slightly reduced damage."
+	accuracy_mod = 0.05
+	damage_mod = -0.05
+	recoil_mod = -1
+	scatter_mod = -5
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -5
+	damage_falloff_mod = 0.1
 	icon_state = "suppressor"
 	slot = "muzzle"
 	silence_mod = 1
@@ -251,21 +258,16 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/suppressor/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	damage_mod = -config.min_hit_damage_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
 	attach_icon = pick("suppressor_a","suppressor2_a")
-
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-	damage_falloff_mod = config.min_damage_falloff_mult
 
 /obj/item/attachable/bayonet
 	name = "bayonet"
 	desc = "A sharp blade for mounting on a weapon. It can be used to stab manually on anything but harm intent."
 	icon_state = "bayonet"
 	attach_icon = "bayonet_a"
+	accuracy_mod = -0.05
+	accuracy_unwielded_mod = -0.05
+	size_mod = 1
 	force = 20
 	throwforce = 10
 	attach_delay = 10 //Bayonets attach/detach quickly.
@@ -294,85 +296,61 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/bayonet/New()
 	..()
-	accuracy_mod = -config.min_hit_accuracy_mult
-	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
-	size_mod = 1
 
 /obj/item/attachable/extended_barrel
 	name = "extended barrel"
 	desc = "A lengthened barrel allows for greater accuracy, particularly at long range.\nHowever, natural resistance also slows the bullet, leading to slightly reduced damage."
 	slot = "muzzle"
+	accuracy_mod = 0.20
+	damage_mod = -0.05
+	scatter_mod = -5
+	size_mod = 1
 	icon_state = "ebarrel"
 	attach_icon = "ebarrel_a"
-
-/obj/item/attachable/extended_barrel/New()
-	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	damage_mod = -config.min_hit_damage_mult
-	scatter_mod = -config.min_scatter_value
-	size_mod = 1
-
-
-
 
 /obj/item/attachable/heavy_barrel
 	name = "barrel charger"
 	desc = "A fitted barrel extender that goes on the muzzle, with a small shaped charge that propels a bullet much faster.\nGreatly increases projectile damage at the cost of accuracy and firing speed."
+	accuracy_mod = -0.3
+	damage_mod = 0.3
+	delay_mod = 3
+	accuracy_unwielded_mod = -0.4
 	slot = "muzzle"
 	icon_state = "hbarrel"
 	attach_icon = "hbarrel_a"
 
-/obj/item/attachable/heavy_barrel/New()
-	..()
-	accuracy_mod = -config.hmed_hit_accuracy_mult
-	damage_mod = config.hmed_hit_damage_mult
-	delay_mod = config.low_fire_delay
-	accuracy_unwielded_mod = -config.high_hit_accuracy_mult
-
-
 /obj/item/attachable/compensator
 	name = "recoil compensator"
 	desc = "A muzzle attachment that reduces recoil by diverting expelled gasses upwards. \nIncreases accuracy and reduces recoil, at the cost of a small amount of weapon damage."
+	accuracy_mod = 0.20
+	damage_mod = -0.05
+	recoil_mod = -3
+	accuracy_unwielded_mod = 0.20
+	recoil_unwielded_mod = -2
 	slot = "muzzle"
 	icon_state = "comp"
 	attach_icon = "comp_a"
 	pixel_shift_x = 17
-
-/obj/item/attachable/compensator/New()
-	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	damage_mod = -config.min_hit_damage_mult
-	recoil_mod = -config.med_recoil_value
-	accuracy_unwielded_mod = config.med_hit_accuracy_mult
-	recoil_unwielded_mod = -config.low_recoil_value
-
 
 /obj/item/attachable/slavicbarrel
 	name = "sniper barrel"
 	icon_state = "slavicbarrel"
 	desc = "A heavy barrel. CANNOT BE REMOVED."
 	slot = "muzzle"
-
+	accuracy_mod = 0.05
+	scatter_mod = -15
 	pixel_shift_x = 20
 	pixel_shift_y = 16
 	flags_attach_features = NOFLAGS
-
-/obj/item/attachable/slavicbarrel/New()
-	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	scatter_mod = -config.low_scatter_value
 
 /obj/item/attachable/sniperbarrel
 	name = "sniper barrel"
 	icon_state = "sniperbarrel"
 	desc = "A heavy barrel. CANNOT BE REMOVED."
+	accuracy_mod = 0.10
+	scatter_mod = -15
 	slot = "muzzle"
 	flags_attach_features = NOFLAGS
-
-/obj/item/attachable/sniperbarrel/New()
-	..()
-	accuracy_mod = config.low_hit_accuracy_mult
-	scatter_mod = -config.low_scatter_value
 
 /obj/item/attachable/smartbarrel
 	name = "smartgun barrel"
@@ -381,26 +359,17 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	slot = "muzzle"
 	flags_attach_features = NOFLAGS
 
-
-
-
-
-
 ///////////// Rail attachments ////////////////////////
 
 /obj/item/attachable/reddot
 	name = "red-dot sight"
 	desc = "A red-dot sight for short to medium range. Does not have a zoom feature, but does increase weapon accuracy by a good amount. \nNo drawbacks."
+	accuracy_mod = 0.20
+	accuracy_unwielded_mod = 0.05
+	movement_acc_penalty_mod = 1
 	icon_state = "reddot"
 	attach_icon = "reddot_a"
 	slot = "rail"
-
-/obj/item/attachable/reddot/New()
-	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	movement_acc_penalty_mod = 1
-
 
 /obj/item/attachable/flashlight
 	name = "rail flashlight"
@@ -456,19 +425,15 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/quickfire
 	name = "quickfire adapter"
 	desc = "An enhanced and upgraded autoloading mechanism to fire rounds more quickly. \nHowever, it also reduces accuracy and the number of bullets fired on burst."
+	accuracy_mod = -0.1
+	scatter_mod = 5
+	delay_mod = -1
+	burst_mod = -1
+	accuracy_unwielded_mod = -0.20
+	scatter_unwielded_mod = 20
 	slot = "rail"
 	icon_state = "autoloader"
 	attach_icon = "autoloader_a"
-
-/obj/item/attachable/quickfire/New()
-	..()
-	accuracy_mod = -config.low_hit_accuracy_mult
-	scatter_mod = config.min_scatter_value
-	delay_mod = -config.min_fire_delay
-	burst_mod = -config.min_burst_value
-	accuracy_unwielded_mod = -config.med_hit_accuracy_mult
-	scatter_unwielded_mod = config.med_scatter_value
-
 
 /obj/item/attachable/magnetic_harness
 	name = "magnetic harness"
@@ -484,6 +449,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "sniperscope"
 	attach_icon = "sniperscope_a"
 	desc = "A rail mounted zoom sight scope. Allows zoom by activating the attachment. Use F12 if your HUD doesn't come back."
+	burst_delay_mod = 6
+	accuracy_mod = 0.4
+	movement_acc_penalty_mod = 2
+	accuracy_unwielded_mod = -0.05
 	slot = "rail"
 	aim_speed_mod = SLOWDOWN_ADS_SCOPE //Extra slowdown when aiming
 	wield_delay_mod = WIELD_DELAY_NORMAL
@@ -491,14 +460,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	attachment_action_type = /datum/action/item_action/toggle
 	var/zoom_offset = 11
 	var/zoom_viewsize = 12
-
-/obj/item/attachable/scope/New()
-	..()
-	burst_delay_mod = config.mhigh_fire_delay
-	accuracy_mod = config.high_hit_accuracy_mult
-	movement_acc_penalty_mod = 2
-	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
-
 
 /obj/item/attachable/scope/activate_attachment(obj/item/weapon/gun/G, mob/living/carbon/user, turn_off)
 	if(turn_off)
@@ -520,15 +481,11 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "miniscope"
 	attach_icon = "miniscope_a"
 	desc = "A small rail mounted zoom sight scope. Allows zoom by activating the attachment. Use F12 if your HUD doesn't come back."
+	burst_delay_mod = 3
 	slot = "rail"
 	wield_delay_mod = WIELD_DELAY_FAST
 	zoom_offset = 5
 	zoom_viewsize = 7
-
-/obj/item/attachable/scope/mini/New()
-	..()
-	burst_delay_mod = config.low_fire_delay
-
 
 /obj/item/attachable/scope/slavic
 	icon_state = "slavicscope"
@@ -552,78 +509,66 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/stock/shotgun
 	name = "\improper M37 wooden stock"
 	desc = "A non-standard heavy wooden stock for the M37 Shotgun. Less quick and more cumbersome than the standard issue stakeout, but reduces recoil and improves accuracy. Allegedly makes a pretty good club in a fight too.."
+	accuracy_mod = 0.05
+	recoil_mod = -1
+	scatter_mod = -5
+	movement_acc_penalty_mod = -1
+	accuracy_unwielded_mod = 0.05
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -5
 	slot = "stock"
 	wield_delay_mod = WIELD_DELAY_NORMAL
 	icon_state = "stock"
 
 /obj/item/attachable/stock/shotgun/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
 	select_gamemode_skin(type)
 
 /obj/item/attachable/stock/tactical
 	name = "\improper MK221 tactical stock"
 	icon_state = "tactical_stock"
-
-/obj/item/attachable/stock/tactical/New()
-	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
+	accuracy_mod = 0.05
+	recoil_mod = -1
+	scatter_mod = -5
 	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
+	accuracy_unwielded_mod = 0.05
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -5
 
 /obj/item/attachable/stock/slavic
 	name = "wooden stock"
 	desc = "A non-standard heavy wooden stock for Slavic firearms."
 	icon_state = "slavicstock"
+	accuracy_mod = 0.05
+	recoil_mod = -1
+	scatter_mod = -5
+	delay_mod = 4
+	movement_acc_penalty_mod = -1
+	accuracy_unwielded_mod = 0.05
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -5
 	pixel_shift_x = 32
 	pixel_shift_y = 13
 	flags_attach_features = NOFLAGS
-
-/obj/item/attachable/stock/slavic/New()
-	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	delay_mod = config.med_fire_delay
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
 
 /obj/item/attachable/stock/rifle
 	name = "\improper M41A skeleton stock"
 	desc = "A rare stock distributed in small numbers to USCM forces. Compatible with the M41A, this stock reduces recoil and improves accuracy, but at a reduction to handling and agility. Seemingly a bit more effective in a brawl"
 	slot = "stock"
 	wield_delay_mod = WIELD_DELAY_NORMAL
+	accuracy_mod = 0.1
+	recoil_mod = -1
+	scatter_mod = -5
+	movement_acc_penalty_mod = -1
+	accuracy_unwielded_mod = 0.05
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -5
 	melee_mod = 5
 	size_mod = 1
 	icon_state = "riflestock"
 	attach_icon = "riflestock_a"
 	pixel_shift_x = 41
 	pixel_shift_y = 10
-
-/obj/item/attachable/stock/rifle/New()
-	..()
-	accuracy_mod = config.low_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
 
 /obj/item/attachable/stock/rifle/marksman
 	name = "\improper M41A marksman stock"
@@ -636,6 +581,13 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	name = "submachinegun stock"
 	desc = "A rare stock distributed in small numbers to USCM forces. Compatible with the M39, this stock reduces recoil and improves accuracy, but at a reduction to handling and agility. Seemingly a bit more effective in a brawl"
 	slot = "stock"
+	accuracy_mod = 0.05
+	recoil_mod = -1
+	scatter_mod = -5
+	movement_acc_penalty_mod = -1
+	accuracy_unwielded_mod = 0.05
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -15
 	wield_delay_mod = WIELD_DELAY_FAST
 	melee_mod = 5
 	size_mod = 1
@@ -644,42 +596,22 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	pixel_shift_x = 39
 	pixel_shift_y = 11
 
-/obj/item/attachable/stock/smg/New()
-	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.low_scatter_value
-
-
-
 /obj/item/attachable/stock/revolver
 	name = "\improper M44 magnum sharpshooter stock"
 	desc = "A wooden stock modified for use on a 44-magnum. Increases accuracy and reduces recoil at the expense of handling and agility. Less effective in melee as well"
 	slot = "stock"
 	wield_delay_mod = WIELD_DELAY_FAST
+	accuracy_mod = 0.20
+	recoil_mod = -1
+	scatter_mod = -5
+	accuracy_unwielded_mod = 0.05
+	recoil_unwielded_mod = -1
+	scatter_unwielded_mod = -5
 	melee_mod = -5
 	size_mod = 2
 	icon_state = "44stock"
 	pixel_shift_x = 35
 	pixel_shift_y = 19
-
-/obj/item/attachable/stock/revolver/New()
-	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
-
-
-
 
 ////////////// Underbarrel Attachments ////////////////////////////////////
 
@@ -731,6 +663,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	desc = "A weapon-mounted, reloadable, one-shot grenade launcher."
 	icon_state = "grenade"
 	attach_icon = "grenade_a"
+	attachment_firing_delay = 21
 	w_class = 4
 	current_rounds = 0
 	max_rounds = 2
@@ -742,7 +675,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/attached_gun/grenade/New()
 	..()
-	attachment_firing_delay = config.max_fire_delay * 3
 	loaded_grenades = list()
 
 /obj/item/attachable/attached_gun/grenade/examine(mob/user)
@@ -804,16 +736,13 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	attach_icon = "flamethrower_a"
 	desc = "A weapon-mounted refillable flamethrower attachment.\nIt is designed for short bursts."
 	w_class = 4
+	attachment_firing_delay = 35
 	current_rounds = 20
 	max_rounds = 20
 	max_range = 4
 	slot = "under"
 	fire_sound = 'sound/weapons/gun_flamethrower3.ogg'
 	flags_attach_features = ATTACH_REMOVABLE|ATTACH_ACTIVATION|ATTACH_RELOADABLE|ATTACH_WEAPON
-
-/obj/item/attachable/attached_gun/flamer/New()
-	..()
-	attachment_firing_delay = config.max_fire_delay * 5
 
 /obj/item/attachable/attached_gun/flamer/examine(mob/user)
 	..()
@@ -908,6 +837,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "masterkey"
 	attach_icon = "masterkey_a"
 	desc = "A weapon-mounted, three-shot shotgun. Reloadable with buckshot. The short barrel reduces the ammo's effectiveness."
+	attachment_firing_delay = 18
 	w_class = 4
 	max_rounds = 3
 	current_rounds = 3
@@ -916,10 +846,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	fire_sound = 'sound/weapons/gun_shotgun.ogg'
 	type_of_casings = "shell"
 	flags_attach_features = ATTACH_REMOVABLE|ATTACH_ACTIVATION|ATTACH_PROJECTILE|ATTACH_RELOADABLE|ATTACH_WEAPON
-
-/obj/item/attachable/attached_gun/shotgun/New()
-	..()
-	attachment_firing_delay = config.mhigh_fire_delay*3
 
 /obj/item/attachable/attached_gun/shotgun/examine(mob/user)
 	..()
@@ -951,26 +877,27 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	name = "vertical grip"
 	desc = "A custom-built improved foregrip for better accuracy, less recoil, and less scatter, especially during burst fire. \nHowever, it also increases weapon size."
 	icon_state = "verticalgrip"
+	accuracy_mod = 0.05
+	recoil_mod = -1
+	scatter_mod = -5
+	burst_scatter_mod = -2
+	movement_acc_penalty_mod = 1
+	accuracy_unwielded_mod = -0.05
+	scatter_unwielded_mod = 5
 	attach_icon = "verticalgrip_a"
 	wield_delay_mod = WIELD_DELAY_FAST
 	size_mod = 1
 	slot = "under"
 	pixel_shift_x = 20
 
-/obj/item/attachable/verticalgrip/New()
-	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	burst_scatter_mod = -2
-	movement_acc_penalty_mod = 1
-	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
-	scatter_unwielded_mod = config.min_scatter_value
-
-
 /obj/item/attachable/angledgrip
 	name = "angled grip"
 	desc = "A custom-built improved foregrip for less recoil, and faster wielding time. \nHowever, it also increases weapon size."
+	recoil_mod = -1
+	accuracy_mod = 0.05
+	accuracy_unwielded_mod = -0.05
+	scatter_mod = -5
+	scatter_unwielded_mod = 5
 	icon_state = "angledgrip"
 	attach_icon = "angledgrip_a"
 	wield_delay_mod = -WIELD_DELAY_FAST
@@ -978,68 +905,44 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	slot = "under"
 	pixel_shift_x = 20
 
-/obj/item/attachable/angledgrip/New()
-	..()
-	recoil_mod = -config.min_recoil_value
-	accuracy_mod = config.min_hit_accuracy_mult
-	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
-	scatter_mod = -config.min_scatter_value
-	scatter_unwielded_mod = config.min_scatter_value
-
-
-
 /obj/item/attachable/gyro
 	name = "gyroscopic stabilizer"
 	desc = "A set of weights and balances to stabilize the weapon when fired with one hand. Slightly decrease firing speed."
+	delay_mod = 2
+	scatter_mod = -5
+	burst_scatter_mod = -2
+	movement_acc_penalty_mod = -3
+	scatter_unwielded_mod = -20
+	accuracy_unwielded_mod = 0.1
 	icon_state = "gyro"
 	attach_icon = "gyro_a"
 	slot = "under"
 
-/obj/item/attachable/gyro/New()
-	..()
-	delay_mod = config.mlow_fire_delay
-	scatter_mod = -config.min_scatter_value
-	burst_scatter_mod = -2
-	movement_acc_penalty_mod = -3
-	scatter_unwielded_mod = -config.med_scatter_value
-	accuracy_unwielded_mod = config.low_hit_accuracy_mult
-
-
 /obj/item/attachable/lasersight
 	name = "laser sight"
 	desc = "A laser sight placed under the barrel. Increases accuracy, and decrease scatter when firing one-handed."
+	accuracy_mod = 0.05
+	movement_acc_penalty_mod = -1
+	scatter_unwielded_mod = -15
+	accuracy_unwielded_mod = 0.20
 	icon_state = "lasersight"
 	attach_icon = "lasersight_a"
 	slot = "under"
 	pixel_shift_x = 17
 	pixel_shift_y = 17
 
-/obj/item/attachable/lasersight/New()
-	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	movement_acc_penalty_mod = -1
-	scatter_unwielded_mod = -config.low_scatter_value
-	accuracy_unwielded_mod = config.med_hit_accuracy_mult
-
-
-
-
 /obj/item/attachable/bipod
 	name = "bipod"
 	desc = "A simple set of telescopic poles to keep a weapon stabilized during firing. \nGreatly increases accuracy and reduces recoil when properly placed, but also increases weapon size and slows firing speed."
 	icon_state = "bipod"
 	attach_icon = "bipod_a"
+	size_mod = 1
 	slot = "under"
 	wield_delay_mod = WIELD_DELAY_NORMAL
 	size_mod = 2
 	melee_mod = -10
 	flags_attach_features = ATTACH_REMOVABLE|ATTACH_ACTIVATION
 	attachment_action_type = /datum/action/item_action/toggle
-
-
-/obj/item/attachable/bipod/New()
-	..()
-	size_mod = 1
 
 /obj/item/attachable/bipod/activate_attachment(obj/item/weapon/gun/G,mob/living/user, turn_off)
 	if(turn_off)
@@ -1100,16 +1003,11 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/burstfire_assembly
 	name = "burst fire assembly"
 	desc = "A mechanism re-assembly kit that allows for automatic fire, or more shots per burst if the weapon already has the ability. \nJust don't mind the increased scatter."
+	accuracy_mod = -0.1
+	burst_mod = 2
+	scatter_mod = 15
+	accuracy_unwielded_mod = -0.20
+	scatter_unwielded_mod = 20
 	icon_state = "rapidfire"
 	attach_icon = "rapidfire_a"
 	slot = "under"
-
-/obj/item/attachable/burstfire_assembly/New()
-	..()
-	accuracy_mod = -config.low_hit_accuracy_mult
-	burst_mod = config.low_burst_value
-	scatter_mod = config.low_scatter_value
-
-	accuracy_unwielded_mod = -config.med_hit_accuracy_mult
-	scatter_unwielded_mod = config.med_scatter_value
-

@@ -9,6 +9,14 @@ can cause issues with ammo types getting mixed up during the burst.
 
 /obj/item/weapon/gun/shotgun
 	origin_tech = "combat=4;materials=3"
+	fire_delay = 6
+	accuracy_mult = 1.1
+	accuracy_mult_unwielded = 0.8
+	scatter = 20
+	scatter_unwielded = 40
+	damage_mult = 1
+	recoil = 2
+	recoil_unwielded = 4
 	w_class = 4
 	force = 14.0
 	fire_sound = 'sound/weapons/gun_shotgun.ogg'
@@ -25,16 +33,6 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/New()
 	..()
 	replace_tube(current_mag.current_rounds) //Populate the chamber.
-
-/obj/item/weapon/gun/shotgun/set_gun_config_values()
-	fire_delay = config.mhigh_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.low_recoil_value
-	recoil_unwielded = config.high_recoil_value
 
 /obj/item/weapon/gun/shotgun/update_icon() //Shotguns do not currently have empty states, as they look exactly the same. Other than double barrel.
 		return
@@ -150,6 +148,16 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/merc
 	name = "custom built shotgun"
 	desc = "A cobbled-together pile of scrap and alien wood. Point end towards things you want to die. Has a burst fire feature, as if it needed it."
+	fire_delay = 8
+	burst_amount = 2
+	burst_delay = 2
+	accuracy_mult = 0.6
+	accuracy_mult_unwielded = 0.3
+	scatter = 20
+	scatter_unwielded = 40
+	damage_mult = 1
+	recoil = 2
+	recoil_unwielded = 4
 	icon_state = "cshotgun"
 	item_state = "cshotgun"
 	origin_tech = "combat=4;materials=2"
@@ -165,19 +173,6 @@ can cause issues with ammo types getting mixed up during the burst.
 	attachable_offset = list("muzzle_x" = 31, "muzzle_y" = 19,"rail_x" = 10, "rail_y" = 21, "under_x" = 17, "under_y" = 14, "stock_x" = 17, "stock_y" = 14)
 	if(current_mag && current_mag.current_rounds > 0) load_into_chamber()
 
-/obj/item/weapon/gun/shotgun/merc/set_gun_config_values()
-	fire_delay = config.high_fire_delay*2
-	burst_amount = config.low_burst_value
-	burst_delay = config.mlow_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult - config.med_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.med_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.low_recoil_value
-	recoil_unwielded = config.high_recoil_value
-
-
 /obj/item/weapon/gun/shotgun/merc/examine(mob/user)
 	..()
 	if(in_chamber) to_chat(user, "It has a chambered round.")
@@ -188,6 +183,14 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/combat
 	name = "\improper MK221 tactical shotgun"
 	desc = "The Weyland-Yutani MK221 Shotgun, a semi-automatic shotgun with a quick fire rate."
+	fire_delay = 12
+	accuracy_mult = 1
+	accuracy_mult_unwielded = 0.8
+	scatter = 20
+	scatter_unwielded = 40
+	damage_mult = 0.9
+	recoil = 2
+	recoil_unwielded = 4
 	icon_state = "mk221"
 	item_state = "mk221"
 	origin_tech = "combat=5;materials=4"
@@ -214,18 +217,6 @@ can cause issues with ammo types getting mixed up during the burst.
 	G.icon_state = initial(G.icon_state)
 	if(current_mag && current_mag.current_rounds > 0) load_into_chamber()
 
-
-/obj/item/weapon/gun/shotgun/combat/set_gun_config_values()
-	fire_delay = config.mhigh_fire_delay*2
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult - config.low_hit_damage_mult
-	recoil = config.low_recoil_value
-	recoil_unwielded = config.high_recoil_value
-
-
 /obj/item/weapon/gun/shotgun/combat/examine(mob/user)
 	..()
 	if(in_chamber) to_chat(user, "It has a chambered round.")
@@ -236,6 +227,14 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/double
 	name = "double barrel shotgun"
 	desc = "A double barreled shotgun of archaic, but sturdy design. Uses 12 Gauge Special slugs, but can only hold 2 at a time."
+	fire_delay = 2
+	accuracy_mult = 1.1
+	accuracy_mult_unwielded = 0.8
+	scatter = 20
+	scatter_unwielded = 40
+	damage_mult = 1
+	recoil = 2
+	recoil_unwielded = 4
 	icon_state = "dshotgun"
 	item_state = "dshotgun"
 	origin_tech = "combat=4;materials=2"
@@ -254,16 +253,6 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/double/New()
 	..()
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 21,"rail_x" = 15, "rail_y" = 22, "under_x" = 21, "under_y" = 16, "stock_x" = 21, "stock_y" = 16)
-
-/obj/item/weapon/gun/shotgun/double/set_gun_config_values()
-	fire_delay = config.mlow_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.low_recoil_value
-	recoil_unwielded = config.high_recoil_value
 
 /obj/item/weapon/gun/shotgun/double/examine(mob/user)
 	..()
@@ -340,6 +329,13 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/double/sawn
 	name = "sawn-off shotgun"
 	desc = "A double barreled shotgun whose barrel has been artificially shortened to reduce range but increase damage and spread."
+	fire_delay = 2
+	accuracy_mult = 0.8
+	scatter = 20
+	scatter_unwielded = 40
+	damage_mult = 1.4
+	recoil = 3
+	recoil_unwielded = 5
 	icon_state = "sshotgun"
 	item_state = "sshotgun"
 	flags_equip_slot = SLOT_WAIST
@@ -350,17 +346,6 @@ can cause issues with ammo types getting mixed up during the burst.
 	..()
 	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 20,"rail_x" = 11, "rail_y" = 22, "under_x" = 18, "under_y" = 16, "stock_x" = 18, "stock_y" = 16)
 
-/obj/item/weapon/gun/shotgun/double/sawn/set_gun_config_values()
-	fire_delay = config.mlow_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult + config.high_hit_damage_mult
-	recoil = config.med_recoil_value
-	recoil_unwielded = config.max_recoil_value
-
-
 //-------------------------------------------------------
 //PUMP SHOTGUN
 //Shotguns in this category will need to be pumped each shot.
@@ -368,6 +353,14 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/pump
 	name = "\improper M37A2 pump shotgun"
 	desc = "An Armat Battlefield Systems classic design, the M37A2 combines close-range firepower with long term reliability. Requires a pump, which is a Unique Action."
+	fire_delay = 20
+	accuracy_mult = 1.1
+	accuracy_mult_unwielded = 0.8
+	scatter = 20
+	scatter_unwielded = 40
+	damage_mult = 1
+	recoil = 2
+	recoil_unwielded = 4
 	icon_state = "m37"
 	item_state = "m37"
 	current_mag = /obj/item/ammo_magazine/internal/shotgun/pump
@@ -395,16 +388,6 @@ can cause issues with ammo types getting mixed up during the burst.
 	..()
 	pump_delay = config.max_fire_delay*2
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 18,"rail_x" = 10, "rail_y" = 21, "under_x" = 20, "under_y" = 14, "stock_x" = 20, "stock_y" = 14)
-
-/obj/item/weapon/gun/shotgun/pump/set_gun_config_values()
-	fire_delay = config.med_fire_delay*5
-	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.low_recoil_value
-	recoil_unwielded = config.high_recoil_value
 
 /obj/item/weapon/gun/shotgun/pump/unique_action(mob/user)
 	pump_shotgun(user)
@@ -462,6 +445,14 @@ can cause issues with ammo types getting mixed up during the burst.
 /obj/item/weapon/gun/shotgun/pump/cmb
 	name = "\improper HG 37-12 pump shotgun"
 	desc = "A nine-round pump action shotgun with internal tube magazine allowing for quick reloading and highly accurate fire. Used exclusively by Colonial Marshals."
+	fire_delay = 24
+	accuracy_mult = 1.3
+	accuracy_mult_unwielded = 0.7
+	scatter = 15
+	scatter_unwielded = 40
+	damage_mult = 1
+	recoil = 2
+	recoil_unwielded = 4
 	icon_state = "hg3712"
 	item_state = "hg3712"
 	fire_sound = 'sound/weapons/gun_shotgun_small.ogg'
@@ -481,16 +472,5 @@ can cause issues with ammo types getting mixed up during the burst.
 	..()
 	pump_delay = config.mhigh_fire_delay*2
 	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 20,"rail_x" = 10, "rail_y" = 23, "under_x" = 19, "under_y" = 17, "stock_x" = 19, "stock_y" = 17)
-
-/obj/item/weapon/gun/shotgun/pump/cmb/set_gun_config_values()
-	fire_delay = config.med_fire_delay*6
-	accuracy_mult = config.base_hit_accuracy_mult + config.hmed_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.hmed_hit_accuracy_mult
-	scatter = config.low_scatter_value
-	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult
-	recoil = config.low_recoil_value
-	recoil_unwielded = config.high_recoil_value
-
 
 //-------------------------------------------------------

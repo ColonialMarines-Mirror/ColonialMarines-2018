@@ -26,7 +26,7 @@
 
 	New()
 		..()
-		fire_delay = config.max_fire_delay * 5
+		fire_delay = 35
 		attachable_offset = list("rail_x" = 12, "rail_y" = 23)
 
 	unique_action(mob/user)

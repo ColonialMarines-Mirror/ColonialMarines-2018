@@ -103,7 +103,7 @@ Make sure that the doctors and nurses are doing their jobs and keeping the marin
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You are tasked with keeping the marines healthy and strong, usually in the form of surgery.
-You are also an expert when it comes to medication and treatment. If you do not know what you are doing, mentorhelp so a mentor can assist you."}
+You are also an expert when it comes to medication and treatment. If you do not know what you are doing, adminhelp so a mentor can assist you."}
 
 //Researcher
 /datum/job/civilian/researcher
@@ -150,7 +150,7 @@ You are also an expert when it comes to medication and treatment. If you do not 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You are tasked with researching and developing new medical treatments, helping your fellow doctors, and generally learning new things.
-Your role involves some roleplaying and gimmickry, but you can perform the function of a regular doctor. You shouldn't hand out things to marines without getting permission from your supervisor."}
+Your role involves some roleplaying and gimmickry, but you can perform the function of a regular doctor."}
 
 //Liaison
 /datum/job/civilian/liaison

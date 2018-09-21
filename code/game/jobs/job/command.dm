@@ -45,7 +45,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 While you may support Weyland-Yutani, you report to the USCM High Command, not the corporate office.
 Your primary task is the safety of the ship and her crew, and ensuring the survival and success of the marines.
 Your first order of business should be briefing the marines on the mission they are about to undertake.
-If you require any help, use mentorhelp to talk about what you're supposed to do.
+If you require any help, use adminhelp to ask mentors about what you're supposed to do.
 Godspeed, commander! And remember, you are not above the law."}
 
 	announce_entry_message(mob/living/carbon/human/H)

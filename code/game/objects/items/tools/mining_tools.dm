@@ -100,7 +100,7 @@
 	desc = "A tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone. Eye protection strongly recommended."
 	drill_verb = "cutting"
 	heat_source = 3800
-	var/resin_multiplier = 2
+	var/resin_multiplier = 4 //How much its damage vs resin is multiplied by
 	var/cutting_sound = 'sound/items/Welder2.ogg'
 	var/powered = FALSE
 	var/cut_delay = 30 //Takes this long in deciseconds to cut through a standard wall; three times as long for reinforced walls; half for girders.

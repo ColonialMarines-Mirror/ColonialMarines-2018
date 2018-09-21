@@ -770,15 +770,8 @@
 	
 	//Changes headset frequency to match new squad
 	var/obj/item/device/radio/headset/almayer/marine/H = transfer_marine.wear_ear
-	if(H && istype(H, /obj/item/device/radio/headset/almayer/marine))
-		if (istype(new_squad,/datum/squad/alpha))
-			H.set_frequency(ALPHA_FREQ)	
-		else if (istype(new_squad,/datum/squad/bravo))
-			H.set_frequency(BRAVO_FREQ)		
-		else if (istype(new_squad,/datum/squad/charlie))
-			H.set_frequency(CHARLIE_FREQ)
-		else if (istype(new_squad,/datum/squad/delta))
-			H.set_frequency(DELTA_FREQ)
+	if(istype(H, /obj/item/device/radio/headset/almayer/marine))
+		H.set_frequency(new_squad.radio_freq)
 
 	transfer_marine.hud_set_squad()
 	visible_message("\icon[src] <span class='boldnotice'>[transfer_marine] has been transfered from squad '[old_squad]' to squad '[new_squad]'. Logging to enlistment file.</span>")

@@ -1296,7 +1296,7 @@ AMMO
 	group = "Ammo"
 
 /datum/supply_packs/ammo_scout_impact
-	name = "M4RA scout impact magazines crate (x4)"
+	name = "M4RA scout impact magazines crate (x3)"
 	contains = list(
 					/obj/item/ammo_magazine/rifle/m4ra/impact,
 					/obj/item/ammo_magazine/rifle/m4ra/impact,
@@ -1308,7 +1308,7 @@ AMMO
 	group = "Ammo"
 
 /datum/supply_packs/ammo_scout_incendiary
-	name = "M4RA scout incendiary magazines crate (x4)"
+	name = "M4RA scout incendiary magazines crate (x3)"
 	contains = list(
 					/obj/item/ammo_magazine/rifle/m4ra/incendiary,
 					/obj/item/ammo_magazine/rifle/m4ra/incendiary,

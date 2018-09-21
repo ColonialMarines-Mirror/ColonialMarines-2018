@@ -264,7 +264,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_xeno_report,  //Allows creation of IC reports by the Queen Mother
 	/proc/release,
-	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway? ¯\_("/)_/¯
+	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway? ï¿½\_("/)_/ï¿½
 	/datum/admins/proc/viewCLFaxes,
 	/datum/admins/proc/viewUSCMFaxes
 )
@@ -665,7 +665,7 @@ var/list/admin_verbs_mentor = list(
 	set name = "Re-admin Self"
 	set category = "Admin"
 
-	load_admins() //A bit ugly, but hey
+	readmin() //A bit ugly, but hey
 	verbs -= /client/proc/readmin_self
 	to_chat(src, "<br><br><span class='centerbold'><big>You have ascended back to adminhood. All your verbs should be back where you left them.</big></span><br>")
 	log_admin("[src] readmined themselves.")

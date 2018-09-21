@@ -88,3 +88,75 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 		cdel(holder)
 		holder = null
 	return 1
+
+/client/proc/readmin()
+	if(config.admin_legacy_system)
+		load_admin_ranks()
+
+		//load text from file
+		var/list/Lines = file2list("config/admins.txt")
+
+		var/found = FALSE
+		//process each line seperately
+		for(var/line in Lines)
+			if(!length(line))
+				continue
+			if(copytext(line,1,2) == "#")
+				continue
+
+			//Split the line at every "-"
+			var/list/List = text2list(line, "-")
+			if(!List.len)
+				continue
+
+			//ckey is before the first "-"
+			var/dckey = ckey(List[1])
+			if(!dckey )
+				continue
+			if(dckey != ckey)
+				continue
+			//rank follows the first "-"
+			var/rank = ""
+			if(List.len >= 2)
+				rank = ckeyEx(List[2])
+				found = TRUE
+
+
+
+			//load permissions associated with this rank
+			if(found)
+				var/rights = admin_ranks[rank]
+				var/datum/admins/D = new /datum/admins(rank, rights, dckey)
+				D.associate(directory[dckey])
+
+	else
+		//The current admin system uses SQL
+
+		establish_db_connection()
+		if(!dbcon.IsConnected())
+			error("Failed to connect to database in load_admins(). Reverting to legacy system.")
+			log_misc("Failed to connect to database in load_admins(). Reverting to legacy system.")
+			config.admin_legacy_system = 1
+			load_admins()
+			return
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin")
+		query.Execute()
+		while(query.NextRow())
+			var/dckey = query.item[1]
+			var/rank = query.item[2]
+			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
+
+			var/rights = query.item[4]
+			if(istext(rights))
+				rights = text2num(rights)
+			if(dckey == ckey)
+				var/datum/admins/D = new /datum/admins(rank, rights, dckey)
+				D.associate(directory[dckey])
+				break
+		if(!admin_datums)
+			error("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
+			log_misc("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
+			config.admin_legacy_system = 1
+			load_admins()
+			return

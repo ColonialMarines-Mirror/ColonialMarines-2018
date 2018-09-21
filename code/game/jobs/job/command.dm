@@ -41,7 +41,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 
 
 	generate_entry_message()
-		. = {"As the commander of the USS Almayer you are expected to hold an higher standard of competence.
+		. = {"As the commander of the USS Almayer you are held by higher standard and are expected to act competently.
 While you may support Weyland-Yutani, you report to the USCM High Command, not the corporate office.
 Your primary task is the safety of the ship and her crew, and ensuring the survival and success of the marines.
 Your first order of business should be briefing the marines on the mission they are about to undertake.
@@ -295,6 +295,6 @@ In addition, you are tasked with the security of high-ranking personnel, includi
 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are held by a higher standard and are required to not abuse your position to severely hinder the progress of the round.
-Failure to do so may result in a job ban or server ban.
-You lead the Military Police, ensure your officers uphold <a href='https://tgstation13.org/wiki/Space_Law'>Space Law</a>, and maintain peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
+Failure to do so may result in a job ban.
+You lead the Military Police, ensure your officers uphold the <a href='https://tgstation13.org/wiki/Space_Law'>Space Law</a>, and maintain peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
 In addition, you are tasked with the security of high-ranking personnel, including the command staff. Keep them safe!"}

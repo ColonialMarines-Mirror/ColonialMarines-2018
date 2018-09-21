@@ -96,29 +96,32 @@
 /obj/item/device/encryptionkey/squadlead
 	name = "\improper Squad Leader encryption key"
 	icon_state = "hop_cypherkey"
-	channels = list("Command" = 1, "Almayer" = 1)
+	channels = list("Command" = 1)
 
 /obj/item/device/encryptionkey/alpha
 	name = "\improper Alpha Squad radio encryption key"
 	icon_state = "eng_cypherkey"
-	channels = list("Alpha" = 1, "Almayer" = 1)
+	channels = list("Alpha" = 1)
 
 /obj/item/device/encryptionkey/bravo
 	name = "\improper Bravo Squad radio encryption key"
 	icon_state = "cypherkey"
-	channels = list("Bravo" = 1, "Almayer" = 1)
+	channels = list("Bravo" = 1)
 
 /obj/item/device/encryptionkey/charlie
 	name = "\improper Charlie Squad radio encryption key"
 	icon_state = "sci_cypherkey"
-	channels = list("Charlie" = 1, "Almayer" = 1)
+	channels = list("Charlie" = 1)
 
 /obj/item/device/encryptionkey/delta
 	name = "\improper Delta Squad radio encryption key"
 	icon_state = "hos_cypherkey"
-	channels = list("Delta" = 1, "Almayer" = 1)
+	channels = list("Delta" = 1)
 
-
+/obj/item/device/encryptionkey/general
+    	name = "\improper General radio encryption key"
+    	icon_state = "cypherkey"
+    	channels = list("Almayer" = 1)
 
 
 //PMCs

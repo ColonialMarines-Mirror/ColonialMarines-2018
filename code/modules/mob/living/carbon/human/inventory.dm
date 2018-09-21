@@ -332,9 +332,9 @@
 			s_store = W
 			W.equipped(src, slot)
 			update_inv_s_store()
-		if(WEAR_IN_BACK)
+		if(WEAR_IN_BACK) // only used in few istances like ERT spawning rn.
 			var/obj/item/storage/S = back
-			S.handle_item_insertion(W, 0, src)
+			S.handle_item_insertion(W, TRUE, src)
 		if(WEAR_IN_JACKET)
 			var/obj/item/clothing/suit/storage/S = wear_suit
 			if(istype(S) && S.pockets.storage_slots) W.loc = S.pockets//Has to have some slots available.
@@ -347,15 +347,15 @@
 
 		if(WEAR_IN_HOLSTER)
 			var/obj/item/storage/S = belt
-			S.handle_item_insertion(W, 0, src)
+			S.handle_item_insertion(W, FALSE, src)
 
 		if(WEAR_IN_B_HOLSTER)
 			var/obj/item/storage/S = back
-			S.handle_item_insertion(W, 0, src)
+			S.handle_item_insertion(W, FALSE, src)
 
 		if(WEAR_IN_J_HOLSTER)
 			var/obj/item/storage/S = s_store
-			S.handle_item_insertion(W, 0, src)
+			S.handle_item_insertion(W, FALSE, src)
 
 		else
 			to_chat(src, "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...")

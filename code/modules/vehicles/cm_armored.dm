@@ -279,7 +279,20 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		if(!HP)
 			to_chat(user, "There is nothing installed on the [i] hardpoint slot.")
 		else
-			to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
+			if((user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer >= SKILL_ENGINEER_METAL) || isobserver(user))
+				switch(round(HP.health / HP.maxhealth * 100))
+					if(0)
+						to_chat(user, "There is a broken [HP] installed on [i] hardpoint slot.")
+					if(1 to 33)
+						to_chat(user, "There is a heavily damaged [HP] installed on [i] hardpoint slot.")
+					if(34 to 66)
+						to_chat(user, "There is a damaged [HP] installed on [i] hardpoint slot.")
+					if(67 to 90)
+						to_chat(user, "There is a lightly damaged [HP] installed on [i] hardpoint slot.")
+					if(91 to 100)
+						to_chat(user, "There is a non-damaged [HP] installed on [i] hardpoint slot.")
+			else
+				to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
 
 //Special armored vic healthcheck that mainly updates the hardpoint states
 /obj/vehicle/multitile/root/cm_armored/healthcheck()
@@ -390,7 +403,15 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 	else if(istype(A, /obj/structure/table))
 		var/obj/structure/table/T = A
 		T.visible_message("<span class='danger'>[root] crushes [T]!</span>")
-		T.destroy(1)
+		T.destroy(TRUE)
+	else if(istype(A, /obj/structure/showcase))
+		var/obj/structure/showcase/S = A
+		S.visible_message("<span class='danger'>[root] bulldozes over [S]!</span>")
+		S.destroy(TRUE)
+	else if(istype(A, /obj/structure/rack))
+		var/obj/structure/rack/R = A
+		R.visible_message("<span class='danger'>[root] smashes through the [R]!</span>")
+		R.destroy(TRUE)
 	else if(istype(A, /obj/structure/window/framed))
 		var/obj/structure/window/framed/W = A
 		W.visible_message("<span class='danger'>[root] crashes through the [W]!</span>")

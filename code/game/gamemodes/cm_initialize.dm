@@ -55,7 +55,7 @@ Additional game mode variables.
 	var/marine_starting_num = 0 //number of players not in something special
 	var/pred_current_num 	= 0 //How many are there now?
 	var/pred_maximum_num 	= 4 //How many are possible per round? Does not count elders.
-	var/pred_round_chance 	= 20 //%
+	var/pred_round_chance 	= 0 //%
 
 	//Some gameplay variables.
 	var/round_checkwin 		= 0
@@ -412,6 +412,7 @@ datum/game_mode/proc/initialize_special_clamps()
 
 	if(original) cdel(original) //Just to be sure.
 
+
 //===================================================\\
 
 			//SURVIVOR INITIATLIZE\\
@@ -451,13 +452,13 @@ datum/game_mode/proc/initialize_special_clamps()
 	var/list/survivor_types
 	switch(map_tag)
 		if(MAP_PRISON_STATION)
-			survivor_types = list("Scientist","Doctor","Corporate","Security","Prisoner","Prisoner","Prisoner")
+			survivor_types = list("Scientist","Doctor","Corporate","Security","Prisoner","Prisoner","Prisoner","Clown")
 		if(MAP_LV_624,MAP_BIG_RED)
-			survivor_types = list("Assistant","Civilian","Scientist","Doctor","Chef","Botanist","Atmos Tech","Chaplain","Miner","Salesman","Colonial Marshall")
+			survivor_types = list("Assistant","Civilian","Scientist","Doctor","Chef","Botanist","Atmos Tech","Chaplain","Miner","Salesman","Colonial Marshall","Clown")
 		if(MAP_ICE_COLONY)
-			survivor_types = list("Scientist","Doctor","Salesman","Security")
+			survivor_types = list("Scientist","Doctor","Salesman","Security","Clown")
 		else
-			survivor_types = list("Assistant","Civilian","Scientist","Doctor","Chef","Botanist","Atmos Tech","Chaplain","Miner","Salesman","Colonial Marshall")
+			survivor_types = list("Assistant","Civilian","Scientist","Doctor","Chef","Botanist","Atmos Tech","Chaplain","Miner","Salesman","Colonial Marshall","Clown")
 
 	var/mob/living/carbon/human/H = ghost.current
 
@@ -577,6 +578,27 @@ datum/game_mode/proc/initialize_special_clamps()
 			H.equip_to_slot_or_del(new /obj/item/weapon/gun/revolver/cmb(H), WEAR_L_HAND)
 			H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/sec(H), WEAR_BACK)
 			ghost.set_cm_skills(/datum/skills/civilian/survivor/marshall)
+		if("Clown")//HONK
+			id_assignment = "Clown"
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), WEAR_BODY)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), WEAR_FEET)
+			H.equip_to_slot_or_del(new /obj/item/storage/backpack/clown(H), WEAR_BACK)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), WEAR_FACE)
+			H.equip_to_slot_or_del(new /obj/item/tool/stamp/clown(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/spray/waterflower(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK) //The clown needs a number of bananas to be prepared for the xenomorphs
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/reagent_container/food/snacks/grown/banana(H), WEAR_IN_BACK)
+			H.equip_to_slot_or_del(new /obj/item/toy/bikehorn(H), WEAR_IN_BACK)
+			H.fully_replace_character_name(H.real_name, pick(clown_names))
+			var/datum/dna/gene/disability/clumsy/G = new /datum/dna/gene/disability/clumsy
+			G.activate(H)
+			ghost.set_cm_skills(/datum/skills/civilian/survivor/clown)
+
 
 	if(map_tag == MAP_ICE_COLONY)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka(H), WEAR_HEAD)
@@ -768,6 +790,7 @@ datum/game_mode/proc/initialize_special_clamps()
 					/obj/item/attachable/stock/rifle = round(scale * 4) ,
 					/obj/item/attachable/stock/revolver = round(scale * 4),
 					/obj/item/attachable/stock/smg = round(scale * 4) ,
+					/obj/item/attachable/stock/tactical = (scale * 3),
 
 					/obj/item/attachable/attached_gun/grenade = round(scale * 10),
 					/obj/item/attachable/attached_gun/shotgun = round(scale * 4),
@@ -789,9 +812,9 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/ammo_magazine/pistol = round(scale * 20),
 						/obj/item/ammo_magazine/pistol/hp = 0,
 						/obj/item/ammo_magazine/pistol/ap = round(scale * 5),
-						/obj/item/ammo_magazine/pistol/incendiary = 0,
+						/obj/item/ammo_magazine/pistol/incendiary = round(scale * 2),
 						/obj/item/ammo_magazine/pistol/extended = round(scale * 10),
-						/obj/item/ammo_magazine/pistol/m1911 = round(scale * 5),
+						/obj/item/ammo_magazine/pistol/m1911 = round(scale * 10),
 						/obj/item/ammo_magazine/revolver = round(scale * 20),
 						/obj/item/ammo_magazine/revolver/marksman = round(scale * 5),
 						/obj/item/ammo_magazine/smg/m39 = round(scale * 20),
@@ -890,6 +913,7 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/ammo_magazine/rifle/ap = 0,
 						/obj/item/ammo_magazine/shotgun = round(scale * 10),
 						/obj/item/ammo_magazine/shotgun/buckshot = round(scale * 10),
+						/obj/item/ammo_magazine/shotgun/flechette = round(scale * 10),
 
 						/obj/item/weapon/combat_knife = round(scale * 30),
 						/obj/item/weapon/throwing_knife = round(scale * 10),
@@ -900,9 +924,9 @@ datum/game_mode/proc/initialize_special_clamps()
 
 						)
 
-		M.contraband =   list(/obj/item/ammo_magazine/revolver/marksman = 0,
-							/obj/item/ammo_magazine/pistol/ap = 0,
-							/obj/item/ammo_magazine/smg/m39/ap = 0
+		M.contraband =   list(/obj/item/ammo_magazine/revolver/marksman = round(scale * 2),
+							/obj/item/ammo_magazine/pistol/ap = round(scale * 2),
+							/obj/item/ammo_magazine/smg/m39/ap = round(scale * 2)
 							)
 
 		M.premium = list(/obj/item/weapon/gun/rifle/m41aMK1 = 0,

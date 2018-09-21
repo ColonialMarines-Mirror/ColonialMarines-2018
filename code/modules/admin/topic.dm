@@ -1247,7 +1247,7 @@
 			log_admin("[key_name(usr)] changed [H] into a new Yautja, [M.real_name].")
 			message_admins("[key_name(usr)] made [H] into a Yautja, [M.real_name].")
 			if(H.mind)
-				H.mind.transfer_to(M)
+				H.mind.transfer_to(M, TRUE)
 				if(M.mind.cm_skills)
 					cdel(M.mind.cm_skills)
 				M.mind.cm_skills = null //no skill restriction
@@ -1259,7 +1259,7 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/yautja/full(H), WEAR_JACKET)
 				H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/glaive(H), WEAR_L_HAND)
 
-			if(H) cdel(H) //May have to clear up round-end vars and such....
+			cdel(H) //May have to clear up round-end vars and such....
 
 		return
 
@@ -1707,6 +1707,17 @@
 
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
+
+	else if(href_list["individuallog"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["individuallog"]) in mob_list
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.")
+			return
+
+		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"])
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN|R_MOD))	return

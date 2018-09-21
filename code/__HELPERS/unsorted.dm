@@ -519,6 +519,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return creatures
 
+/proc/getlivinghumans()
+	var/list/mobs = sorthumans()
+	var/list/names = list()
+	var/list/creatures = list()
+	var/list/namecounts = list()
+	for(var/mob/M in mobs)
+		if(isYautja(M))
+			continue
+		if(iszombie(M))
+			continue
+		if (M.stat == 2)
+			continue
+		if(!M.ckey || !M.client) 
+			continue
+		var/name = M.name
+		if (name in names)
+			namecounts[name]++
+			name = "[name] ([namecounts[name]])"
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		if (M.real_name && M.real_name != M.name)
+			name += " \[[M.real_name]\]"
+		creatures[name] = M
+
+	return creatures
+
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
@@ -604,11 +631,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		M = whom
 		C = M.client
 		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
-	else
-		return "*invalid*"
+	else // Catch-all cases if none of the types above match
+		var/swhom = null
+
+		if(istype(whom, /atom))
+			var/atom/A = whom
+			swhom = "[A.name]"
+		else if(istype(whom, /datum))
+			swhom = "[whom]"
+
+		if(!swhom)
+			swhom = "*invalid*"
+
+		return "\[[swhom]\]"
 
 	. = ""
 
@@ -747,21 +782,23 @@ proc/anim(turf/location,atom/target,a_icon,a_icon_state as text,flick_anim as te
 	return toReturn
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
-/proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
+/proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
-		for(var/atom/A in current)
-			if(A.opacity) return 0
+	if(current == target_turf)
+		return TRUE
+	if(get_dist(current, target_turf) > length)
+		return FALSE
+	current = get_step_towards(source, target_turf)
+	while((current != target_turf))
+		if(current.opacity)
+			return FALSE
+		for(var/thing in current)
+			var/atom/A = thing
+			if(A.opacity)
+				return FALSE
 		current = get_step_towards(current, target_turf)
-		steps++
-
-	return 1
-
+	return TRUE
 /proc/is_blocked_turf(var/turf/T)
 	var/cant_pass = 0
 	if(T.density) cant_pass = 1
@@ -1640,3 +1677,10 @@ var/list/WALLITEMS = list(
 
 /proc/to_chat(target, message)
 	target << message
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
+
+/datum/proc/stack_trace(msg)
+	CRASH(msg)

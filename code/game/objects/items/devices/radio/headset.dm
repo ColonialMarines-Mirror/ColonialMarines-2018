@@ -322,13 +322,13 @@
 
 
 /obj/item/device/radio/headset/almayer/marine
+	keyslot3 = new /obj/item/device/encryptionkey/general
 
 /obj/item/device/radio/headset/almayer/marine/alpha
 	name = "marine alpha radio headset"
 	desc = "This is used by alpha squad members. Channels are as follows: :z - general chat."
 	icon_state = "sec_headset"
 	frequency = ALPHA_FREQ //default frequency is alpha squad channel, not PUB_FREQ
-	keyslot3 = new /obj/item/device/encryptionkey/alpha
 
 /obj/item/device/radio/headset/almayer/marine/alpha/lead
 	name = "marine alpha leader radio headset"
@@ -352,7 +352,6 @@
 	desc = "This is used by bravo squad members. Channels are as follows: :z - general chat."
 	icon_state = "eng_headset"
 	frequency = BRAVO_FREQ
-	keyslot3 = new /obj/item/device/encryptionkey/bravo
 
 /obj/item/device/radio/headset/almayer/marine/bravo/lead
 	name = "marine bravo leader radio headset"
@@ -376,7 +375,6 @@
 	desc = "This is used by charlie squad members. Channels are as follows: :z - general chat."
 	icon_state = "charlie_headset"
 	frequency = CHARLIE_FREQ
-	keyslot3 = new /obj/item/device/encryptionkey/charlie
 
 /obj/item/device/radio/headset/almayer/marine/charlie/lead
 	name = "marine charlie leader radio headset"
@@ -400,7 +398,6 @@
 	desc = "This is used by delta squad members. Channels are as follows: :z - general chat."
 	icon_state = "com_headset"
 	frequency = DELTA_FREQ
-	keyslot3 = new /obj/item/device/encryptionkey/delta
 
 /obj/item/device/radio/headset/almayer/marine/delta/lead
 	name = "marine delta leader radio headset"

@@ -93,11 +93,11 @@
 	item_state = "gun"
 	w_class = 4.0
 	flags_equip_slot = SLOT_BACK
-	force = 70.0
+	force = 40.0
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "A cutter tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone."
+	desc = "A tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone. Eye protection strongly recommended."
 	drill_verb = "cutting"
 	heat_source = 3800
 	var/resin_multiplier = 2

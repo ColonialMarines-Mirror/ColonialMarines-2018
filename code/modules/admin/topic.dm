@@ -2493,7 +2493,7 @@
 			if("Thanks")
 				msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> is autoresponding with <font color='#009900'>'[choice]'</font>! Have a DM;CA day!</b>"
 			if("Guilty")
-				msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> is autoresponding with <font color='#009900'>'[choice]'</font>. Stop right there, criminal scum! You broke the Space Law on my watch, now pay the fine or it's off to jail.</b>" //shameless meme
+				msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> is autoresponding with <font color='#009900'>'[choice]'</font>. Stop right there, criminal scum! Nobody breaks the Space Law on my watch, now pay the fine or it's off to jail.</b>" //shameless meme
 			if("L: Xeno Quickstart Guide")
 				msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> is autoresponding with <font color='#009900'>'[choice]'</font>. Your answer can be found on the Xeno Quickstart Guide on CM-SS13 wiki. <a href='http://cm-ss13.com/wiki/Xeno_Quickstart_Guide'>Check it out here.</a></b>"
 			if("L: Marine quickstart guide")

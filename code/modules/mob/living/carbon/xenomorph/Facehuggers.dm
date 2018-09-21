@@ -4,7 +4,8 @@
 
 #define MIN_IMPREGNATION_TIME 100 //Time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150
-
+#define MIN_FACE_WAIT_TIME 400 // How long the hugger stays on for after you get lewded.
+#define MAX_FACE_WAIT_TIME 600
 #define MIN_ACTIVE_TIME 50 //Time between being dropped and going idle
 #define MAX_ACTIVE_TIME 150
 
@@ -16,6 +17,8 @@
 	item_state = "facehugger"
 	w_class = 1 //Note: can be picked up by aliens unlike most other items of w_class below 4
 	flags_inventory = COVEREYES|ALLOWINTERNALS|COVERMOUTH|ALLOWREBREATH|CANTSTRIP
+	flags_cold_protection = HEAD
+	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 	flags_armor_protection = FACE|EYES
 	flags_atom = NOFLAGS
 	flags_item = NOBLUDGEON
@@ -331,8 +334,8 @@
 			embryo.hivenumber = hivenumber
 			icon_state = "[initial(icon_state)]_impregnated"
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>")
-		Die()
-
+		spawn(rand(MIN_FACE_WAIT_TIME, MAX_FACE_WAIT_TIME))
+			Die()
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>")
 

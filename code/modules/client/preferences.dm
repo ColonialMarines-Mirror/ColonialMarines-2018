@@ -153,30 +153,11 @@ datum/preferences
 			if(load_preferences())
 				if(load_character())
 					return
-	gender = pick(MALE, FEMALE)
-	real_name = random_name(gender)
+	real_name = random_name(MALE)
 	gear = list()
-	age = rand(19,23)
-	switch(gender)
-		if(MALE)
-			h_style = pick("Crewcut",
-					prob(200)
-						"Bald",
-					prob(50)
-						"Flat Top",
-					prob(25)
-						"Short Hair"
-					)
-		else
-			h_style = pick("Crewcut",
-					"Bald",
-					prob(25)
-						"Pixie Cut Left",
-					prob(25)
-						"Pixie Cut Right",
-					prob(50)
-						"Shoulder-lenght Hair Alt",
-					)
+	age = rand(18,23)
+	h_style = pick("Crewcut","Bald","Short Hair")
+
 
 /datum/preferences/proc/ZeroSkills(var/forced = 0)
 	for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])

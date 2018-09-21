@@ -179,7 +179,7 @@ Your role involves some roleplaying and gimmickry, but you can perform the funct
 
 
 	generate_entry_message(mob/living/carbon/human/H)
-		. = {"As a representative of Weyland-Yutani Corporation, your job suggests you to stay professional all times.
+		. = {"As a representative of Weyland-Yutani Corporation you are expected to stay professional and loyal to the corporation at all times.
 You are not required to follow military orders; however, you cannot give military orders.
 Your primary job is to observe and report back your findings to Weyland-Yutani. Follow regular game rules unless told otherwise by your superiors.
 Use your office fax machine to communicate with corporate headquarters or to acquire new directives. You may not receive anything back (especially if the game staff is absent or otherwise busy), and this is normal."}

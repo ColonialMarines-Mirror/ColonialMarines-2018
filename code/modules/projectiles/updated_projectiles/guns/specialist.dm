@@ -211,12 +211,11 @@
 						/obj/item/attachable/extended_barrel,
 						/obj/item/attachable/heavy_barrel,
 						/obj/item/attachable/flashlight,
-						/obj/item/attachable/lasersight,
 						/obj/item/attachable/burstfire_assembly,
 						/obj/item/attachable/bipod)
 
 	flags_gun_features = GUN_INTERNAL_MAG|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER
-
+	starting_attachment_types = list(/obj/item/attachable/flashlight)
 
 /obj/item/weapon/gun/smartgun/New()
 	..()

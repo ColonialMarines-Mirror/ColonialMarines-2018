@@ -556,7 +556,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	desc = "A non-standard heavy wooden stock for the M37 Shotgun. Less quick and more cumbersome than the standard issue stakeout, but reduces recoil and improves accuracy. Allegedly makes a pretty good club in a fight too.."
 	slot = "stock"
 	icon_state = "stock"
-  wield_delay_mod = WIELD_DELAY_VERY_FAST //Shotguns don't benefit from the stock nearly as much as rifles, thus the wield delay penalty is reduced.
+	wield_delay_mod = WIELD_DELAY_VERY_FAST //Shotguns don't benefit from the stock nearly as much as rifles, thus the wield delay penalty is reduced.
 
 /obj/item/attachable/stock/shotgun/New()
 	..()

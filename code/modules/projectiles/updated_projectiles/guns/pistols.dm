@@ -129,6 +129,7 @@
 	fire_delay = config.mhigh_fire_delay //to simulate manually cocking the pistol
 	accuracy_mult = config.base_hit_accuracy_mult + config.med_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult  //for CQC
+	damage_mult = config.base_hit_damage_mult - config.max_hit_damage_mult //We don't use guns to take people down, Raiden
 
 //-------------------------------------------------------
 //DEAGLE //This one is obvious.

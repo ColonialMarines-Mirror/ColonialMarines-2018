@@ -43,18 +43,15 @@ OPERATIONS
 
 
 /datum/supply_packs/specialops
-	name = "special operations crate (operator kit x2)"
+	name = "special operations crate (operator kit x1)"
 	contains = list(
 					/obj/item/weapon/gun/pistol/b92fs/M9,
-					/obj/item/weapon/gun/pistol/b92fs/M9,
-					/obj/item/clothing/under/syndicate/combat,
+					/obj/item/ammo_magazine/pistol/b92fstranq,
 					/obj/item/clothing/under/syndicate/combat,
 					/obj/item/clothing/mask/gas/swat,
-					/obj/item/clothing/mask/gas/swat,
-					/obj/item/clothing/tie/storage/black_vest,
 					/obj/item/clothing/tie/storage/black_vest
 					)
-	cost = RO_PRICE_PRICY
+	cost = RO_PRICE_NORMAL
 	containertype = /obj/structure/closet/crate
 	containername = "\improper spec ops crate"
 	group = "Operations"
@@ -82,12 +79,11 @@ OPERATIONS
 	group = "Operations"
 
 /datum/supply_packs/binoculars_regular
-	name = "binoculars crate (x2)"
+	name = "binoculars crate"
 	contains = list(
-					/obj/item/device/binoculars,
 					/obj/item/device/binoculars
 					)
-	cost = RO_PRICE_NORMAL
+	cost = RO_PRICE_VERY_CHEAP
 	containertype = /obj/structure/closet/crate
 	containername = "\improper binoculars crate"
 	group = "Operations"
@@ -95,10 +91,9 @@ OPERATIONS
 /datum/supply_packs/binoculars_tatical
 	name = "tactical binoculars crate (x2)"
 	contains = list(
-					/obj/item/device/binoculars/tactical,
 					/obj/item/device/binoculars/tactical
 					)
-	cost = RO_PRICE_PRICY
+	cost = RO_PRICE_NORMAL
 	containertype = /obj/structure/closet/crate
 	containername = "\improper tactical binoculars crate"
 	group = "Operations"
@@ -1893,12 +1888,11 @@ MEDICAL
 	group = "Medical"
 
 /datum/supply_packs/surgery
-	name = "surgery crate (x2 surgical trays)"
+	name = "surgery crate (x1 surgical tray)"
 	contains = list(
-					/obj/item/storage/surgical_tray,
 					/obj/item/storage/surgical_tray
 					)
-	cost = RO_PRICE_CHEAP
+	cost = RO_PRICE_VERY_CHEAP
 	containertype = /obj/structure/closet/crate/secure/surgery
 	containername = "\improper surgery crate"
 	access = ACCESS_MARINE_MEDBAY

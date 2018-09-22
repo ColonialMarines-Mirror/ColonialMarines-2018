@@ -42,22 +42,22 @@
 				hallucinations -= a
 				cdel(a)
 
-			if(halloss > 100)
-				visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
+			if(halloss > 200) 			//Not needed now due to how shock stages work; if you have way too much pain, you will collapse by entering the final shock stage; we just need to have a cap.
+				/*visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
 				"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
-				KnockOut(10)
-				setHalLoss(99)
+				KnockOut(10)*/
+				setHalLoss(200)
 
 		if(knocked_out)
 			AdjustKnockedout(-species.knock_out_reduction)
 			blinded = 1
 			stat = UNCONSCIOUS
 			if(halloss > 0)
-				adjustHalLoss(-3)
+				adjustHalLoss(rest_halloss_recovery_rate)
 		else if(sleeping)
 			speech_problem_flag = 1
 			handle_dreams()
-			adjustHalLoss(-3)
+			adjustHalLoss(rest_halloss_recovery_rate)
 			if(mind)
 				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 					sleeping = max(sleeping - 1, 0)
@@ -114,11 +114,11 @@
 		if(resting)
 			dizziness = max(0, dizziness - 15)
 			jitteriness = max(0, jitteriness - 15)
-			adjustHalLoss(-3)
+			adjustHalLoss(rest_halloss_recovery_rate)
 		else
 			dizziness = max(0, dizziness - 3)
 			jitteriness = max(0, jitteriness - 3)
-			adjustHalLoss(-1)
+			adjustHalLoss(base_halloss_recovery_rate * (1 + (0.5 * protection_aura))) //Protection aura adds +50% recovery rate per point of leadership beyond the first; +150% for a CO/XO
 
 		//Other
 		handle_statuses()
@@ -138,7 +138,7 @@
 
 		if(command_aura_cooldown > 0 && (--command_aura_cooldown == 0))
 			update_action_buttons() // Update "Issue Order" action button
-		
+
 		if(command_aura)
 			command_aura_tick--
 			if(command_aura_tick < 1)

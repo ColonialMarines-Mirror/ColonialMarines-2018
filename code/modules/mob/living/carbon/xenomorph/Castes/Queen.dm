@@ -23,9 +23,7 @@
 	icon_state = "Queen Walking"
 	melee_damage_lower = 30
 	melee_damage_upper = 46
-	tacklemin = 4
-	tacklemax = 6
-	tackle_chance = 80
+	tackle_damage = 55
 	attacktext = "bites"
 	attack_sound = null
 	friendly = "nuzzles"

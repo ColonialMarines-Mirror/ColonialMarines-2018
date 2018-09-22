@@ -6,9 +6,8 @@
 	icon_state = "Crusher Walking"
 	melee_damage_lower = 15
 	melee_damage_upper = 30
-	tacklemin = 4
-	tacklemax = 7
-	tackle_chance = 60
+	tackle_damage = 55
+	attack_delay = 0.5
 	health = 300
 	maxHealth = 300
 	plasma_stored = 200

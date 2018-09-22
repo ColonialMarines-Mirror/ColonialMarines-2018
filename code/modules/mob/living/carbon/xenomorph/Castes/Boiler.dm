@@ -8,9 +8,7 @@
 	icon_state = "Boiler Walking"
 	melee_damage_lower = 12
 	melee_damage_upper = 15
-	tacklemin = 2
-	tacklemax = 4
-	tackle_chance = 60
+	tackle_damage = 25
 	health = 180
 	maxHealth = 180
 	plasma_stored = 450

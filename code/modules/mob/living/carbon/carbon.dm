@@ -211,7 +211,12 @@
 			AdjustKnockedout(-3)
 			AdjustStunned(-3)
 			AdjustKnockeddown(-3)
-
+			if(halloss > 0)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H2 = M
+					adjustHalLoss(rest_halloss_recovery_rate * (1 + (0.5 * H2.protection_aura))) //UP AND AT THEM SOLDIER!!
+				else
+					adjustHalLoss(rest_halloss_recovery_rate) //Marines can help each other with shake n wake.
 			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 5)
 
 

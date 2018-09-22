@@ -3,6 +3,8 @@
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/list/stomach_contents = list()
 
+	var/base_halloss_recovery_rate = -2 //Points of Halloss recovered per life cycle while awake.
+	var/rest_halloss_recovery_rate = -10 //Points of Halloss recovered per life cycle while sleeping/resting/unconscious.
 	var/life_tick = 0      // The amount of life ticks that have processed on this mob.
 	var/analgesic = 0 // when this is set, the mob isn't affected by shock or pain
 					  // life should decrease this by 1 every tick

@@ -80,13 +80,15 @@
 
 			//Check for a special bite attack
 			if(prob(M.bite_chance))
-				M.bite_attack(src, damage)
-				return 1
+				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+					M.bite_attack(src, damage)
+					return 1
 
 			//Check for a special bite attack
 			if(prob(M.tail_chance))
-				M.tail_attack(src, damage)
-				return 1
+				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+					M.tail_attack(src, damage)
+					return 1
 
 			//Somehow we will deal no damage on this attack
 			if(!damage)
@@ -155,49 +157,25 @@
 				"<span class='danger'>Your tackle is blocked by [src]'s shield!</span>", null, 5)
 				return 0
 			M.flick_attack_overlay(src, "disarm")
+
 			if(knocked_down)
-				if(isYautja(src))
-					if(prob(95))
-						M.visible_message("<span class='danger'>[src] avoids \the [M]'s tackle!</span>", \
-						"<span class='danger'>[src] avoids your attempt to tackle them!</span>", null, 5)
-						playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-						return 1
-				else if(prob(80))
-					playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-					M.visible_message("<span class='danger'>\The [M] tries to tackle [src], but they are already down!</span>", \
-					"<span class='danger'>You try to tackle [src], but they are already down!</span>", null, 5)
-					return 1
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1)
-				KnockDown(rand(M.tacklemin, M.tacklemax)) //Min and max tackle strenght. They are located in individual caste files.
-				M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
-				"<span class='danger'>You tackle down [src]!</span>", null, 5)
-
-			else
-				var/tackle_bonus = 0
-				if(M.frenzy_aura > 0)
-					tackle_bonus = M.frenzy_aura * 3
-				if(isYautja(src))
-					if(prob((M.tackle_chance + tackle_bonus)*0.2))
-						playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
-						KnockDown(rand(M.tacklemin, M.tacklemax))
-						M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
-						"<span class='danger'>You tackle down [src]!</span>", null, 5)
-						return 1
-					else
-						playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-						M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
-						"<span class='danger'>You try to tackle [src]</span>", null, 5)
-						return 1
-				else if(prob(M.tackle_chance + tackle_bonus)) //Tackle_chance is now a special var for each caste.
-					playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
-					KnockDown(rand(M.tacklemin, M.tacklemax))
-					M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
-					"<span class='danger'>You tackle down [src]!</span>", null, 5)
-					return 1
-
 				playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-				M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
-				"<span class='danger'>You try to tackle [src]</span>", null, 5)
+				M.visible_message("<span class='danger'>\The [M] tries to tackle [src], but they are already down!</span>", \
+				"<span class='danger'>You try to tackle [src], but they are already down!</span>", null, 5)
+			else
+				playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
+				KnockDown(0.3)
+
+			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
+			M.tackle_damage = (M.tackle_damage * rand(0.5,1.5) + M.tackle_damage * rand(0.5,1.5)) * 0.5 //Gaussian distribution
+			if(M.frenzy_aura > 0)
+				M.tackle_damage += M.tackle_damage * max(0.5,0.05 * M.frenzy_aura) //Halloss damage increased by 5% per rank of frenzy aura, max 50%
+			src.apply_damage(M.tackle_damage,HALLOSS)
+			M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
+			"<span class='danger'>You tackle down [src]!</span>", null, 5)
+			return 1
+				//M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
+				//"<span class='danger'>You try to tackle [src]</span>", null, 5)
 	return 1
 
 

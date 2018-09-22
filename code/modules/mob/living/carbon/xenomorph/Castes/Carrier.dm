@@ -8,9 +8,7 @@
 	icon_state = "Carrier Walking"
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	tacklemin = 2
-	tacklemax = 3
-	tackle_chance = 60
+	tackle_damage = 30
 	health = 175
 	maxHealth = 175
 	plasma_stored = 50

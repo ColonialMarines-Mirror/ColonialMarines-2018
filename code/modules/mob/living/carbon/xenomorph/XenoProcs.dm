@@ -309,6 +309,9 @@
 
 	M.apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1) //This should slicey dicey
 	M.updatehealth()
+	critical_proc = TRUE
+	spawn(critical_delay) //Delay before we have a chance of another crit
+		critical_proc = FALSE
 
 //Tail stab. Checked during a slash, after the above.
 //Deals a monstrous amount of damage based on how long it's been charging, but charging it drains plasma.
@@ -336,6 +339,9 @@
 
 	M.apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1, edge = 1) //This should slicey dicey
 	M.updatehealth()
+	critical_proc = TRUE
+	spawn(critical_delay) //Delay before we have a chance of another crit
+		critical_proc = FALSE
 
 /mob/living/carbon/Xenomorph/proc/zoom_in(var/tileoffset = 5, var/viewsize = 12)
 	if(stat || resting)

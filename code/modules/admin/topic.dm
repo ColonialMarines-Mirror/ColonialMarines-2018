@@ -779,6 +779,7 @@
 			var/mob/M = locate(href_list["mob"])
 			if(ismob(M))
 				ckey = M.ckey
+
 		switch(href_list["notes"])
 			if("show")
 				notes_show(ckey)
@@ -1296,6 +1297,7 @@
 		//H.regenerate_icons()
 
 /***************** BEFORE**************
+
 	if (href_list["l_players"])
 		var/dat = "<B>Name/Real Name/Key/IP:</B><HR>"
 		for(var/mob/M in mob_list)
@@ -1322,9 +1324,12 @@
 				else
 					foo += text("<B>Hasn't Entered Game</B>|")
 				foo += text("<A HREF='?src=\ref[];revive=\ref[]'>Heal/Revive</A>|", src, M)
+
 				foo += text("<A HREF='?src=\ref[];forcespeech=\ref[]'>Say</A> \]", src, M)
 			dat += text("N: [] R: [] (K: []) (IP: []) []<BR>", M.name, M.real_name, (M.client ? M.client : "No client"), M.lastKnownIP, foo)
+
 		usr << browse(dat, "window=players;size=900x480")
+
 *****************AFTER******************/
 
 // Now isn't that much better? IT IS NOW A PROC, i.e. kinda like a big panel like unstable
@@ -2580,4 +2585,4 @@
 			ticker.mode.activate_distress()
 			log_game("[key_name_admin(usr)] has sent a randomized distress beacon, requested by [key_name_admin(ref_person)]")
 			message_admins("[key_name_admin(usr)] has sent a randomized distress beacon, requested by [key_name_admin(ref_person)]", 1)
-//unanswered_distress -= ref_person
+		//unanswered_distress -= ref_person

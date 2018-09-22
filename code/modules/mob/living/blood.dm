@@ -48,7 +48,7 @@
 			if((!reagents.get_reagent_amount("peridaxon") >= 0.05) && heart.damage > 1)
 				if(heart.damage < heart.min_bruised_damage)
 					heart_multi = 0.9
-					blood_volume -= max(0, blood_volume - 0.1) //nulls regeneration
+					blood_volume = max(0, blood_volume - 0.1) //nulls regeneration
 				else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
 					heart_multi = 0.7
 					blood_volume = max(0, blood_volume - 0.5)

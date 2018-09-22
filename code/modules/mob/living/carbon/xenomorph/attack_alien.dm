@@ -168,9 +168,10 @@
 
 			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
 			M.tackle_damage = (M.tackle_damage * rand(0.5,1.5) + M.tackle_damage * rand(0.5,1.5)) * 0.5 //Gaussian distribution
+			var/tackle_bonus = null
 			if(M.frenzy_aura > 0)
-				M.tackle_damage += M.tackle_damage * max(0.5,0.05 * M.frenzy_aura) //Halloss damage increased by 5% per rank of frenzy aura, max 50%
-			src.apply_damage(M.tackle_damage,HALLOSS)
+				tackle_bonus = M.tackle_damage * max(0.5,0.05 * M.frenzy_aura) //Halloss damage increased by 5% per rank of frenzy aura, max 50%
+			src.apply_damage(M.tackle_damage+tackle_bonus,HALLOSS)
 			M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
 			"<span class='danger'>You tackle down [src]!</span>", null, 5)
 			return 1

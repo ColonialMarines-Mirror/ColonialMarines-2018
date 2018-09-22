@@ -355,7 +355,7 @@ can cause issues with ammo types getting mixed up during the burst.
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
 	scatter = config.med_scatter_value
 	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult + config.low_hit_damage_mult
+	damage_mult = config.base_hit_damage_mult
 	recoil = config.med_recoil_value
 	recoil_unwielded = config.max_recoil_value
 

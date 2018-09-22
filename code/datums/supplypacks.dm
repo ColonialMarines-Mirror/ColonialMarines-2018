@@ -79,7 +79,7 @@ OPERATIONS
 	group = "Operations"
 
 /datum/supply_packs/binoculars_regular
-	name = "binoculars crate"
+	name = "binoculars crate (x1)"
 	contains = list(
 					/obj/item/device/binoculars
 					)
@@ -89,7 +89,7 @@ OPERATIONS
 	group = "Operations"
 
 /datum/supply_packs/binoculars_tatical
-	name = "tactical binoculars crate (x2)"
+	name = "tactical binoculars crate (x1)"
 	contains = list(
 					/obj/item/device/binoculars/tactical
 					)

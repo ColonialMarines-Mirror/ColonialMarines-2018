@@ -74,7 +74,7 @@
 		/datum/action/xeno_action/emit_pheromones,
 		/datum/action/xeno_action/activable/gut,
 		/datum/action/xeno_action/psychic_whisper,
-		/datum/action/xeno_action/shift_spits,
+		// /datum/action/xeno_action/shift_spits,
 		/datum/action/xeno_action/activable/xeno_spit,
 		)
 	inherent_verbs = list(
@@ -506,7 +506,7 @@
 			/datum/action/xeno_action/emit_pheromones,
 			/datum/action/xeno_action/activable/gut,
 			/datum/action/xeno_action/psychic_whisper,
-			/datum/action/xeno_action/shift_spits,
+			// /datum/action/xeno_action/shift_spits,
 			/datum/action/xeno_action/activable/xeno_spit,
 			)
 

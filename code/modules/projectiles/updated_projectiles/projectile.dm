@@ -321,7 +321,7 @@
 	if(!throwpass)
 		return TRUE
 
-	if(P.ammo.flags_ammo_behavior & AMMO_SNIPER) //sniper rounds bypass cover
+	if(P.ammo.flags_ammo_behavior & AMMO_SNIPER || P.ammo.flags_ammo_behavior & AMMO_SKIPS_HUMANS) //sniper and IFF rounds bypass cover
 		return FALSE
 
 	if(!(flags_atom & ON_BORDER))
@@ -332,7 +332,7 @@
 
 	var/distance = P.distance_travelled - 1
 
-	if(distance < 1)
+	if(P.ammo.barricade_clear_distance > distance)
 		return FALSE
 
 	var/coverage = 90 //maximum probability of blocking projectile

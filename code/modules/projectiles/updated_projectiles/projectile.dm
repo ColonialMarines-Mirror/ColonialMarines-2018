@@ -321,7 +321,7 @@
 	if(!throwpass)
 		return TRUE
 
-	if(P.ammo.flags_ammo_behavior & AMMO_SNIPER || P.ammo.flags_ammo_behavior & AMMO_SKIPS_HUMANS) //sniper and IFF rounds bypass cover
+	if(P.ammo.flags_ammo_behavior & AMMO_SNIPER || P.ammo.flags_ammo_behavior & AMMO_SKIPS_HUMANS || P.ammo.flags_ammo_behavior & AMMO_ROCKET) //sniper, rockets and IFF rounds bypass cover
 		return FALSE
 
 	if(!(flags_atom & ON_BORDER))

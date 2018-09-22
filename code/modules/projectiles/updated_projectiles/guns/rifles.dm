@@ -275,12 +275,13 @@
 	fire_sound = 'sound/weapons/gun_rifle.ogg' //Change
 	current_mag = /obj/item/ammo_magazine/rifle/lmg
 	attachable_allowed = list(
-						/obj/item/attachable/suppressor,
+						/obj/item/attachable/extended_barrel,
 						/obj/item/attachable/reddot,
 						/obj/item/attachable/verticalgrip,
 						/obj/item/attachable/angledgrip,
 						/obj/item/attachable/flashlight,
 						/obj/item/attachable/bipod,
+						/obj/item/attachable/stock/rifle,
 						/obj/item/attachable/heavy_barrel,
 						/obj/item/attachable/quickfire,
 						/obj/item/attachable/compensator,
@@ -298,11 +299,11 @@
 /obj/item/weapon/gun/rifle/lmg/set_gun_config_values()
 	fire_delay = config.high_fire_delay
 	burst_amount = config.high_burst_value
-	burst_delay = config.mlow_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult - config.low_hit_accuracy_mult
+	burst_delay = config.min_fire_delay
+	accuracy_mult = config.base_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.max_hit_accuracy_mult
 	scatter = config.med_scatter_value
-	scatter_unwielded = config.max_scatter_value
+	scatter_unwielded = config.max_scatter_value * 2
 	damage_mult = config.base_hit_damage_mult
 	recoil_unwielded = config.max_recoil_value
 

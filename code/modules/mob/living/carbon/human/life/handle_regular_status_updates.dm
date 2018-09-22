@@ -42,11 +42,11 @@
 				hallucinations -= a
 				cdel(a)
 
-			if(halloss > 200) 			//Not needed now due to how shock stages work; if you have way too much pain, you will collapse by entering the final shock stage; we just need to have a cap.
+			if(halloss > 150) 			//Not needed now due to how shock stages work; if you have way too much pain, you will collapse by entering the final shock stage; we just need to have a cap.
 				/*visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
 				"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
 				KnockOut(10)*/
-				setHalLoss(200)
+				setHalLoss(150)
 
 		if(knocked_out)
 			AdjustKnockedout(-species.knock_out_reduction)

@@ -369,6 +369,10 @@ var/list/slot_equipment_priority = list( \
 	var/mob/M
 	if(ismob(AM))
 		M = AM
+		if(isXeno(src) && M.stat == DEAD)
+			to_chat(src, "<span class='warning'>The creature is dead, why would you want to touch it?</span>")
+			return
+
 	else if(istype(AM, /obj))
 		AM.add_fingerprint(src)
 

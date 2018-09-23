@@ -172,6 +172,7 @@
 			if(M.frenzy_aura > 0)
 				tackle_pain += M.tackle_damage * min(0.5,0.05 * M.frenzy_aura) //Halloss damage increased by 5% per rank of frenzy aura, max 50%
 			apply_damage(tackle_pain, HALLOSS)
+			updatehealth()
 			M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
 			"<span class='danger'>You tackle down [src]!</span>", null, 5)
 			return 1

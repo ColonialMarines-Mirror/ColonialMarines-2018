@@ -303,7 +303,11 @@
 							list("Pistol pouch", 0, /obj/item/storage/pouch/pistol, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("MASKS", 0, null, null, null),
 							list("Gas mask", 0, /obj/item/clothing/mask/gas, MARINE_CAN_BUY_MASK, "black"),
-
+							list("GUN ATTACHMENTS (Choose 1)", 0, null, null, null),
+							list("Vertical Grip", 0, /obj/item/attachable/verticalgrip, MARINE_CAN_BUY_ATTACHMENT, "black"),
+							list("Red-dot sight", 0, /obj/item/attachable/reddot, MARINE_CAN_BUY_ATTACHMENT, "black"),
+							list("Recoil Compensator", 0, /obj/item/attachable/compensator, MARINE_CAN_BUY_ATTACHMENT, "black"),
+							list("Laser Sight", 0, /obj/item/attachable/lasersight,  MARINE_CAN_BUY_ATTACHMENT, "black")
 							)
 
 
@@ -376,13 +380,7 @@
 							list("Large pistol magazine pouch", 0, /obj/item/storage/pouch/magazine/pistol/large, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("Pistol pouch", 0, /obj/item/storage/pouch/pistol, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("MASKS", 0, null, null, null),
-							list("Gas mask", 0, /obj/item/clothing/mask/gas, MARINE_CAN_BUY_MASK, "black"),
-							list("GUN ATTACHMENTS (Choose 1)", 0, null, null, null),
-							list("Vertical Grip", 0, /obj/item/attachable/verticalgrip, MARINE_CAN_BUY_ATTACHMENT, "black"),
-							list("Red-dot sight", 0, /obj/item/attachable/reddot, MARINE_CAN_BUY_ATTACHMENT, "black"),
-							list("Recoil Compensator", 0, /obj/item/attachable/compensator, MARINE_CAN_BUY_ATTACHMENT, "black"),
-							list("Laser Sight", 0, /obj/item/attachable/lasersight,  MARINE_CAN_BUY_ATTACHMENT, "black")
-							)
+							list("Gas mask", 0, /obj/item/clothing/mask/gas, MARINE_CAN_BUY_MASK, "black")
 
 
 /obj/machinery/marine_selector/clothes/engi/alpha

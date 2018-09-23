@@ -11,7 +11,7 @@
 		shock_stage = max(150,min(200,shock_stage++)) //Indescribable pain. At this point, you will immediately be knocked down, with shock stage set to 150.
 	
 	else if(traumatic_shock > 100)
-		min(200,shock_stage++) //If their shock exceeds 100, add more to their shock stage, regardless of health.
+		shock_stage = min(200,shock_stage++) //If their shock exceeds 100, add more to their shock stage, regardless of health.
 	
 	else if(traumatic_shock > 75)
 		shock_stage = max(0, min(shock_stage, 120)) //No greater than 120 and no smaller than 0

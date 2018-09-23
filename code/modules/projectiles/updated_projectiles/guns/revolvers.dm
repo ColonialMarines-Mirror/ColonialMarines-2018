@@ -47,13 +47,6 @@
 /obj/item/weapon/gun/revolver/proc/rotate_cylinder(mob/user) //Cylinder moves backward.
 	current_mag.chamber_position = current_mag.chamber_position == 1 ? current_mag.max_rounds : current_mag.chamber_position - 1
 
-/obj/item/weapon/gun/revolver/proc/spin_cylinder(mob/user)
-	if(current_mag.chamber_closed) //We're not spinning while it's open. Could screw up reloading.
-		current_mag.chamber_position = rand(1,current_mag.max_rounds)
-		to_chat(user, "<span class='notice'>You spin the cylinder.</span>")
-		playsound(user, cocked_sound, 25, 1)
-		russian_roulette = !russian_roulette //Sets to play RR. Resets when the gun is emptied.
-
 /obj/item/weapon/gun/revolver/proc/replace_cylinder(number_to_replace)
 	current_mag.chamber_contents = list()
 	current_mag.chamber_contents.len = current_mag.max_rounds
@@ -180,7 +173,7 @@
 		return 1
 
 	unique_action(mob/user)
-		spin_cylinder(user)
+		unload(user)
 
 /obj/item/weapon/gun/revolver/proc/revolver_basic_spin(mob/living/carbon/human/user, direction = 1, obj/item/weapon/gun/revolver/double)
 	set waitfor = 0

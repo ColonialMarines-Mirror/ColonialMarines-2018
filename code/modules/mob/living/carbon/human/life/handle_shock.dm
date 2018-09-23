@@ -4,18 +4,25 @@
 	..()
 	if(status_flags & GODMODE || analgesic || (species && species.flags & NO_PAIN)) return //Godmode or some other pain reducers. //Analgesic avoids all traumatic shock temporarily
 
-	if(health < config.health_threshold_softcrit) 		shock_stage = max(shock_stage, 60)//If they took too much damage, they immediately enter shock.
+	if(health < config.health_threshold_softcrit)
+		shock_stage = max(shock_stage, 60)//If they took too much damage, they immediately enter shock.
 
-	if(traumatic_shock > 200) shock_stage = max(150,++shock_stage) //Indescribable pain. At this point, you will immediately be knocked down, with shock stage set to 150.
-	else if(traumatic_shock >= 80) 							shock_stage++ //If their shock exceeds 80, add more to their shock stage, regardless of health.
-	else if(health < config.health_threshold_softcrit) 	shock_stage = max(shock_stage, 60)
-	/*If their health is lower than threshold, but they don't have enough shock, they will never go below 60.
-	Otherwise they slowly lose shock stage.*/
-	else if(traumatic_shock >= 40)
-		shock_stage = max(0, min(--shock_stage, 160)) //No greater than 160 and no smaller than 0, reduced by 1 each time.
+	if(traumatic_shock > 200)
+		shock_stage = max(150,min(200,shock_stage++)) //Indescribable pain. At this point, you will immediately be knocked down, with shock stage set to 150.
+	
+	else if(traumatic_shock > 100)
+		min(200,shock_stage++) //If their shock exceeds 100, add more to their shock stage, regardless of health.
+	
+	else if(traumatic_shock > 75)
+		shock_stage = max(0, min(shock_stage, 120)) //No greater than 120 and no smaller than 0
 		return
+	
+	else if(traumatic_shock > 50)
+		shock_stage = max(0, min(shock_stage - 2, 80)) 
+		return
+	
 	else
-		shock_stage = max(0, min(shock_stage - 10, 80)) //When we have almost no pain remaining. No greater than 80 and no smaller than 0, reduced by 10 each time.
+		shock_stage = max(0, min(shock_stage - 10, 60)) //When we have almost no pain remaining. No greater than 60 and no smaller than 0, reduced by 10 each time.
 		return
 
 	//This just adds up effects together at each step, with a few small exceptions. Preferable to copy and paste rather than have a billion if statements.

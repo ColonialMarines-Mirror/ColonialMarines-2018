@@ -416,10 +416,14 @@
 		playsound(M.loc,'sound/effects/pred_cloakon.ogg', 15, 1)
 		M.alpha = 10
 
-		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
-		SA.remove_from_hud(M)
-		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
-		XI.remove_from_hud(M)
+		if(M.smokecloaked)
+			M.smokecloaked = FALSE
+		else
+			var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+			SA.remove_from_hud(M)
+			var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+			XI.remove_from_hud(M)
+
 		spawn(1)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
 
@@ -743,7 +747,7 @@
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "teleporter"
 	origin_tech = "materials=7;bluespace=7;engineering=7"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	w_class = 1
 	force = 1
 	throwforce = 1
@@ -913,7 +917,7 @@
 	name = "chainwhip"
 	desc = "A segmented, lightweight whip made of durable, acid-resistant metal. Not very common among Yautja Hunters, but still a dangerous weapon capable of shredding prey."
 	icon_state = "whip"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_WAIST
 	force = 35
 	throwforce = 12
@@ -940,7 +944,7 @@
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "predknife"
 	item_state = "knife"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_STORE
 	sharp = IS_SHARP_ITEM_ACCURATE
 	force = 24
@@ -990,7 +994,7 @@
 	desc = "An expertly crafted Yautja blade carried by hunters who wish to fight up close. Razor sharp, and capable of cutting flesh into ribbons. Commonly carried by aggresive and lethal hunters."
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "clansword"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_BACK
 	sharp = IS_SHARP_ITEM_BIG
 	edge = 1
@@ -1028,7 +1032,7 @@
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "predscythe"
 	item_state = "scythe"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_WAIST
 	sharp = IS_SHARP_ITEM_BIG
 	force = 32
@@ -1070,7 +1074,7 @@
 	desc = "A compact yet deadly personal weapon. Can be concealed when folded. Functions well as a throwing weapon or defensive tool. A common sight in Yautja packs due to its versatility."
 	icon = 'icons/obj/items/predator.dmi'
 	icon_state = "combistick"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_BACK
 	w_class = 4
 	force = 32

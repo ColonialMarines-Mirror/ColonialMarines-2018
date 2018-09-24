@@ -652,6 +652,9 @@
 							list("Large magazine pouch", 0, /obj/item/storage/pouch/magazine/large, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("Flare pouch", 0, /obj/item/storage/pouch/flare/full, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("Firstaid pouch", 0, /obj/item/storage/pouch/firstaid/full, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
+							list("Medkit pouch", 0, /obj/item/storage/pouch/medkit, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
+							list("Tool pouch (tools included)", 0, /obj/item/storage/pouch/tools/full, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
+							list("Construction pouch (materials included)", 0, /obj/item/storage/pouch/construction/full, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("Large pistol magazine pouch", 0, /obj/item/storage/pouch/magazine/pistol/large, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("Pistol pouch", 0, /obj/item/storage/pouch/pistol, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("MASKS", 0, null, null, null),
@@ -876,16 +879,20 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 
 							list("LEADER SUPPLIES", 0, null, null, null),
 							list("Supply beacon", 15, /obj/item/device/squad_beacon, null, "black"),
-							list("Orbital beacon", 25, /obj/item/device/squad_beacon/bomb, null, "black"),
+							list("Orbital beacon", 20, /obj/item/device/squad_beacon/bomb, null, "black"),
 							list("Plastique explosive", 5, /obj/item/explosive/plastique, null, "black"),
-							list("Sandbags x25", 15, /obj/item/stack/sandbags_empty/half, null, "black"),
+							list("Entrenching tool", 1, /obj/item/tool/shovel/etool, null, "black"),
+							list("Sandbags x25", 10, /obj/item/stack/sandbags_empty/half, null, "black"),
 							list("Motion detector", 5, /obj/item/device/motiondetector, null, "black"),
 							list("Smoke grenade", 2, /obj/item/explosive/grenade/smokebomb, null, "black"),
 							list("Incendiary grenade", 8, /obj/item/explosive/grenade/incendiary, null, "black"),
+							list("M41AE2 heavy pulse rifle", 12, /obj/item/weapon/gun/rifle/lmg, null, "black"),
+							list("M41AE2 ammo box (10x24mm)", 4, /obj/item/ammo_magazine/rifle/lmg, null, "black"),
 							list("Flamethrower", 12, /obj/item/weapon/gun/flamer, null, "black"),
-							list("Flamethrower tank", 6, /obj/item/ammo_magazine/flamer_tank, null, "black"),
+							list("Flamethrower tank", 4, /obj/item/ammo_magazine/flamer_tank, null, "black"),
 							list("Whistle", 5, /obj/item/device/whistle, null, "black"),
 							list("Advanced firstaid kit", 10, /obj/item/storage/firstaid/adv, null, "orange"),
+							list("Ziptie box", 5, /obj/item/storage/box/zipcuffs, null, "black"),
 
 							list("SPECIAL AMMUNITION", 0, null, null, null),
 							list("HP M4A3 magazine", 5, /obj/item/ammo_magazine/pistol/hp, null, "black"),
@@ -960,14 +967,13 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 /obj/effect/essentials_set/leader
 	spawned_gear_list = list(
 						/obj/item/explosive/plastique,
-						/obj/item/device/binoculars/tactical,
-						/obj/item/map/current_map,
+						/obj/item/device/squad_beacon,
 						/obj/item/device/squad_beacon,
 						/obj/item/device/squad_beacon,
 						/obj/item/device/squad_beacon,
 						/obj/item/device/squad_beacon/bomb,
-						/obj/item/weapon/gun/flamer,
-						/obj/item/storage/box/zipcuffs,
+						/obj/item/clothing/glasses/hud/health,
+						/obj/item/storage/pouch/field_pouch/full,
 						)
 
 

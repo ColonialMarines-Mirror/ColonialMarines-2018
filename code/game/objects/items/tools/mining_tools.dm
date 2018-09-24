@@ -92,7 +92,7 @@
 	var/base_icon_state = "plasma_cutter_on"
 	item_state = "gun"
 	w_class = 4.0
-	flags_equip_slot = SLOT_BACK
+	flags_equip_slot = SLOT_WAIST|SLOT_BACK
 	force = 40.0
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire

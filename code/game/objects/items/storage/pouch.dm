@@ -372,7 +372,7 @@
 	storage_slots = 2
 	icon_state = "radio"
 	draw_mode = 1
-	desc = "It can contain two handheld radios"
+	desc = "It can contain two handheld radios."
 	can_hold = list("/obj/item/device/radio")
 
 

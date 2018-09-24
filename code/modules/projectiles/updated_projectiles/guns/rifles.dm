@@ -271,7 +271,7 @@
 	desc = "A large weapon capable of laying down supressing fire. Currently undergoing field testing among USCM scout platoons and in mercenary companies. Like it's smaller brother, the M41A MK2, the M41AE2 is chambered in 10mm."
 	icon_state = "m41ae2"
 	item_state = "m41ae2"
-	wield_delay = wield_delay + WIELD_DELAY_VERY_FAST
+	wield_delay = WIELD_DELAY_NORMAL + WIELD_DELAY_VERY_FAST
 	origin_tech = "combat=5;materials=4"
 	fire_sound = 'sound/weapons/gun_rifle.ogg' //Change
 	current_mag = /obj/item/ammo_magazine/rifle/lmg

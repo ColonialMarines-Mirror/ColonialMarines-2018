@@ -178,8 +178,8 @@
 			if(tackle_pain > 40)
 				throttle_message = "<span class='danger'>\The [M] throttles [src]!</span>"
 				throttle_message2 = "<span class='danger'>You badly throttle [src]!</span>"
-			M.visible_message([throttle_message], \
-			[throttle_message], null, 5)
+			M.visible_message("[throttle_message]", \
+			"[throttle_message]", null, 5)
 			return 1
 				//M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
 				//"<span class='danger'>You try to tackle [src]</span>", null, 5)

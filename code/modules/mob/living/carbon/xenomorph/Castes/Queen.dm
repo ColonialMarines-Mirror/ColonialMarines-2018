@@ -364,7 +364,7 @@
 		var/stun_duration = max(0,1.1 - dist * 0.1) * reduction //Max 1 beside Queen, 0.4 at the edge.
 		if(dist < 8)
 			to_chat(M, "<span class='danger'>An ear-splitting guttural roar shakes the ground beneath your feet and makes your world convulse!</span>")
-			M.stunned += stun_duration //Seems the effect lasts between 3-8 seconds.
+			M.stunned += stun_duration
 			M.KnockDown(stun_duration)
 			apply_damage(halloss_damage, HALLOSS)
 			if(!M.ear_deaf)

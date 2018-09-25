@@ -356,18 +356,22 @@
 				shake_camera(M, 30, 1) //50 deciseconds, SORRY 5 seconds was way too long. 3 seconds now
 
 	for(var/mob/living/carbon/human/M in oview(7, src))
-		if(istype(M.wear_ear, /obj/item/clothing/ears/earmuffs))
-			continue
+		//if(istype(M.wear_ear, /obj/item/clothing/ears/earmuffs))
+		//	continue
 		var/dist = get_dist(src,M)
-		if(dist <= 4)
-			to_chat(M, "<span class='danger'>An ear-splitting guttural roar shakes the ground beneath your feet!</span>")
-			M.stunned += 4 //Seems the effect lasts between 3-8 seconds.
-			M.KnockDown(4)
+		var/reduction = max(1 - 0.1 * M.protection_aura, 0) //Hold orders will reduce the Halloss; 10% per rank.
+		var/halloss_damage = (max(0,140 - dist * 10)) * reduction //Max 130 beside Queen, 70 at the edge
+		var/stun_duration = max(0,1.1 - dist * 0.1) * reduction //Max 1 beside Queen, 0.4 at the edge.
+		if(dist < 8)
+			to_chat(M, "<span class='danger'>An ear-splitting guttural roar shakes the ground beneath your feet and makes your world convulse!</span>")
+			M.stunned += stun_duration //Seems the effect lasts between 3-8 seconds.
+			M.KnockDown(stun_duration)
+			apply_damage(halloss_damage, HALLOSS)
 			if(!M.ear_deaf)
-				M.ear_deaf += 8 //Deafens them temporarily
-		else if(dist >= 5 && dist < 7)
-			M.stunned += 3
-			to_chat(M, "<span class='danger'>The roar shakes your body to the core, freezing you in place!</span>")
+				M.ear_deaf += stun_duration * 20  //Deafens them temporarily
+		//else if(dist >= 5 && dist < 7)
+		//M.stunned += 3
+		//to_chat(M, "<span class='danger'>The roar shakes your body to the core, freezing you in place!</span>")
 
 /mob/living/carbon/Xenomorph/Queen/proc/queen_gut(atom/A)
 

@@ -87,7 +87,7 @@
 			current_mag.chamber_position++
 
 	playsound(user, hand_reload_sound, 25, 1)
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/revolver/reload(mob/user, obj/item/ammo_magazine/magazine)
 	if(flags_gun_features & GUN_BURST_FIRING)
@@ -160,7 +160,7 @@
 	if(. && istype(user))
 		if(!current_mag.chamber_closed)
 			to_chat(user, "<span class='warning'>Close the cylinder!</span>")
-			return 0
+			return FALSE
 
 /obj/item/weapon/gun/revolver/ready_in_chamber()
 	if(current_mag.current_rounds > 0)
@@ -179,12 +179,12 @@
 	current_mag.chamber_contents[current_mag.chamber_position] = "blank" //We shot the bullet.
 	current_mag.used_casings++ //We add this only if we actually fired the bullet.
 	rotate_cylinder()
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/revolver/delete_bullet(obj/item/projectile/projectile_to_fire, refund = 0)
 	cdel(projectile_to_fire)
 	if(refund) current_mag.current_rounds++
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/revolver/unique_action(mob/user)
 	if(catchworking)

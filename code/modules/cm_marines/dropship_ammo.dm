@@ -258,7 +258,7 @@
 					spawn(rand(20, 30))
 						T.visible_message("The wall froths and sizzles away under the bubbling chemicals!")
 						T.take_damage(300)
-			for(var/obj/effect/alien/resin/sticky/S in range(14, impact))
+			for(var/obj/effect/alien/resin/S in range(14, impact))
 				cdel(S)
 			for(var/obj/structure/bed/nest/B in range(14, impact))
 				cdel(B) // No message so hives don't get spammed.

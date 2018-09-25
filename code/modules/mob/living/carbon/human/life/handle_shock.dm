@@ -8,10 +8,10 @@
 		shock_stage = max(shock_stage, 60)//If they took too much damage, they immediately enter shock.
 
 	switch(traumatic_shock)
-	if(> 200) 
+	if(200 to INFINITY) 
 		shock_stage = max(150,min(200,shock_stage++)) //Indescribable pain. At this point, you will immediately be knocked down, with shock stage set to 150.
 	
-	if(200 to 100)
+	if(199 to 100)
 		shock_stage = min(200,shock_stage++) //If their shock exceeds 100, add more to their shock stage, regardless of health.
 	
 	if(99 to 75)

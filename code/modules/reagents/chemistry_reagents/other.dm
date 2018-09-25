@@ -808,6 +808,7 @@
 		. = ..()
 		if(!.) return
 		var/halloss_damage = volume * 2 * REM
+		var/toxin_damage = FALSE
 		M.apply_damage(halloss_damage, HALLOSS) //1st level neurotoxin effects: confusion, dizziness/jitteriness; note that damage effects scale/accumulate with dosage
 		//to_chat(world, "<font color='red'><b>DEBUG: Halloss Damage: [halloss_damage]</b></font>")
 		if(volume > 5) //2nd level neurotoxin effects: screen shake, drug overlay, stuttering, minor toxin damage
@@ -819,12 +820,13 @@
 			M.eye_blurry += 1.5
 			M.eye_blind += 1.5
 		if(volume > 20) //4th level neurotoxin effects: paralysis and toxin damage
-			M.adjustToxLoss(volume * 0.1 * REM)
+			toxin_damage = volume * 0.1 * REM
+			M.adjustToxLoss(toxin_damage)
 			M.stunned += 1
 			M.KnockDown(1)
 
 	on_overdose(mob/living/M)
-		M.adjustBrainLoss(1) //Overdose starts applying brain damage
+		M.adjustToxLoss(1 * REM) //Overdose starts applying more toxin damage
 
 	on_overdose_critical(mob/living/M)
-		M.adjustBrainLoss(2) //Massive brain damage
+		M.adjustToxLoss(2 * REM) //Even more toxin damage

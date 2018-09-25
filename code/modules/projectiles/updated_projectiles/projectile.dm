@@ -456,6 +456,9 @@
 	if(P.ammo.debilitate && stat != DEAD && ( damage || (P.ammo.flags_ammo_behavior & AMMO_IGNORE_RESIST) ) )
 		apply_effects(arglist(P.ammo.debilitate))
 
+	if(P.ammo.reagent_list && stat != DEAD && !isXeno(src) && P.ammo.reagent_amount)
+		src:reagents.add_reagent(P.ammo.reagent_list, max(0,P.ammo.reagent_amount))
+
 	if(damage)
 		bullet_message(P)
 		apply_damage(damage, P.ammo.damage_type, P.def_zone, 0, 0, 0, P)

@@ -47,6 +47,8 @@
 	var/bonus_projectiles_type 					// Type path of the extra projectiles
 	var/bonus_projectiles_amount 	= 0 		// How many extra projectiles it shoots out. Works kind of like firing on burst, but all of the projectiles travel together
 	var/debilitate[]				= null 		// Stun,knockdown,knockout,irradiate,stutter,eyeblur,drowsy,agony
+	var/reagent_list				= null		// List of reagents transmitted by the projectile on hit.
+	var/reagent_amount				= 0			// Amount of reagents transmitted by the projectile on hit.
 
 	New()
 		accuracy 			= config.min_hit_accuracy 	// This is added to the bullet's base accuracy.
@@ -1120,34 +1122,36 @@
 
 /datum/ammo/xeno/toxin
 	name = "neurotoxic spit"
-	damage_falloff = 0
-	debilitate = list(1,2,0,0,0,0,0,0)
+	reagent_list = list(/datum/reagent/xeno_neurotoxin)
+	reagent_amount = 5
+	debilitate = list(0.5,0.5,0,0,0,0,0,0)
+	added_spit_delay = 30
 	flags_ammo_behavior = AMMO_XENO_TOX|AMMO_IGNORE_RESIST
 	spit_cost = 50
 
 /datum/ammo/xeno/toxin/New()
 	..()
-	shell_speed = config.reg_shell_speed
-	max_range = config.close_shell_range
+	accuracy = config.max_hit_accuracy
+	shell_speed = config.fast_shell_speed
+	max_range = config.short_shell_range
+	accuracy_var_low = config.low_proj_variance
+	accuracy_var_high = config.low_proj_variance
+
 
 /datum/ammo/xeno/toxin/medium //Spitter
 	name = "neurotoxic spatter"
-	debilitate = list(2,3,0,0,1,2,0,0)
+	reagent_amount = 7
 
 /datum/ammo/xeno/toxin/medium/New()
 	..()
-	shell_speed = config.fast_shell_speed
-	accuracy_var_low = config.high_proj_variance
-	accuracy_var_high = config.high_proj_variance
 
 /datum/ammo/xeno/toxin/heavy //Praetorian
 	name = "neurotoxic splash"
-	debilitate = list(3,4,0,0,3,5,0,0)
+	reagent_amount = 10
 
 /datum/ammo/xeno/toxin/heavy/New()
 	..()
-	max_range = config.min_shell_range
-	shell_speed = config.reg_shell_speed
+
 
 /datum/ammo/xeno/sticky
 	name = "sticky resin spit"

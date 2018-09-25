@@ -792,3 +792,39 @@
 		if(volume < 3) return
 		if(!(locate(/obj/effect/decal/cleanable/blackgoo) in T))
 			new /obj/effect/decal/cleanable/blackgoo(T)
+
+
+/datum/reagent/xeno_neurotoxin
+	name = "Neurotoxin"
+	id = "xeno_toxin"
+	description = "A debilitating nerve toxin. Impedes motor control. Causes temporary blindness, hallucinations and deafness at higher doses."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	custom_metabolism = 0.5 // Fast meta rate.
+	overdose = REAGENTS_OVERDOSE
+	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+
+	on_mob_life(mob/living/M)
+		. = ..()
+		if(!.) return
+		var/halloss_damage = volume * 2 * REM
+		M.apply_damage(halloss_damage, HALLOSS) //1st level neurotoxin effects: confusion, dizziness/jitteriness; note that damage effects scale/accumulate with dosage
+		to_chat(world, "<font color='red'><b>Halloss Damage: [halloss_damage]</b></font>")
+		if(volume > 5) //2nd level neurotoxin effects: screen shake, drug overlay, stuttering, minor toxin damage
+			M.druggy += 2
+			M.stuttering += 2
+			shake_camera(M, 3, 0.75)
+		if(volume > 15) //3rd level neurotoxin effects: blindness, deafness
+			M.ear_deaf += 1.5
+			M.eye_blurry += 1.5
+			M.eye_blind += 1.5
+		if(volume > 20) //4th level neurotoxin effects: paralysis and toxin damage
+			M.adjustToxLoss(volume * 0.1 * REM)
+			M.stunned += 1
+			M.KnockDown(1)
+
+	on_overdose(mob/living/M)
+		M.adjustBrainLoss(1) //Overdose starts applying brain damage
+
+	on_overdose_critical(mob/living/M)
+		M.adjustBrainLoss(2) //Massive brain damage

@@ -362,8 +362,13 @@
 		var/reduction = max(1 - 0.1 * M.protection_aura, 0) //Hold orders will reduce the Halloss; 10% per rank.
 		var/halloss_damage = (max(0,140 - dist * 10)) * reduction //Max 130 beside Queen, 70 at the edge
 		var/stun_duration = max(0,1.1 - dist * 0.1) * reduction //Max 1 beside Queen, 0.4 at the edge.
+		
 		if(dist < 8)
 			to_chat(M, "<span class='danger'>An ear-splitting guttural roar shakes the ground beneath your feet and makes your world convulse!</span>")
+			M.druggy += 3 //Perception distorting effects of the psychic scream
+			spawn(31)
+				M.druggy += stun_duration * 10 //Perception distorting effects of the psychic scream
+				shake_camera(M, stun_duration * 10, 0.25) //Perception distorting effects of the psychic scream
 			M.stunned += stun_duration
 			M.KnockDown(stun_duration)
 			apply_damage(halloss_damage, HALLOSS)

@@ -7,21 +7,22 @@
 	if(health < config.health_threshold_softcrit)
 		shock_stage = max(shock_stage, 60)//If they took too much damage, they immediately enter shock.
 
-	if(traumatic_shock > 200)
+	switch(traumatic_shock)
+	if(> 200) 
 		shock_stage = max(150,min(200,shock_stage++)) //Indescribable pain. At this point, you will immediately be knocked down, with shock stage set to 150.
 	
-	else if(traumatic_shock > 100)
+	if(200 to 100)
 		shock_stage = min(200,shock_stage++) //If their shock exceeds 100, add more to their shock stage, regardless of health.
 	
-	else if(traumatic_shock > 75)
+	if(99 to 75)
 		shock_stage = max(0, min(shock_stage, 120)) //No greater than 120 and no smaller than 0
 		return
 	
-	else if(traumatic_shock > 50)
+	if(74 to 50)
 		shock_stage = max(0, min(shock_stage - 2, 80)) 
 		return
 	
-	else
+	if(< 49)
 		shock_stage = max(0, min(shock_stage - 10, 60)) //When we have almost no pain remaining. No greater than 60 and no smaller than 0, reduced by 10 each time.
 		return
 

@@ -22,7 +22,7 @@
 		shock_stage = max(0, min(shock_stage - 2, 80)) 
 		return
 	
-	if(< 49)
+	if(49 to 0)
 		shock_stage = max(0, min(shock_stage - 10, 60)) //When we have almost no pain remaining. No greater than 60 and no smaller than 0, reduced by 10 each time.
 		return
 

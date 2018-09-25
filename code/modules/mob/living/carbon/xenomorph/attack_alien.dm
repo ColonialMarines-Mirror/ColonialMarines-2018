@@ -82,13 +82,13 @@
 			if(prob(M.bite_chance))
 				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
 					M.bite_attack(src, damage)
-					return 1
+					return TRUE
 
 			//Check for a special bite attack
 			if(prob(M.tail_chance))
 				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
 					M.tail_attack(src, damage)
-					return 1
+					return TRUE
 
 			//Somehow we will deal no damage on this attack
 			if(!damage)

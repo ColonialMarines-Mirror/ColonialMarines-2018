@@ -330,9 +330,7 @@
 	if(!( P.dir & reverse_direction(dir) || P.dir & dir))
 		return FALSE //no effect if bullet direction is perpendicular to barricade
 
-	var/distance = P.distance_travelled - 1
-
-	if(P.ammo.barricade_clear_distance > distance)
+	if(P.distance_travelled <= P.ammo.barricade_clear_distance)
 		return FALSE
 
 	var/coverage = 90 //maximum probability of blocking projectile

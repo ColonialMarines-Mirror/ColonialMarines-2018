@@ -410,7 +410,7 @@
 			S.set_up(1,0,T,null)
 			S.start()
 		spawn(10)
-			new/obj/item/device/flashlight/flare/on/cas(T)
+			new/obj/item/device/flashlight/flare/on/cas(T) 
 		if(!ammo_count && loc)
 			cdel(src) //deleted after last minirocket is fired and impact the ground.
 

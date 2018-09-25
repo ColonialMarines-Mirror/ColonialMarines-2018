@@ -356,8 +356,6 @@
 				shake_camera(M, 30, 1) //50 deciseconds, SORRY 5 seconds was way too long. 3 seconds now
 
 	for(var/mob/living/carbon/human/M in oview(7, src))
-		//if(istype(M.wear_ear, /obj/item/clothing/ears/earmuffs))
-		//	continue
 		var/dist = get_dist(src,M)
 		var/reduction = max(1 - 0.1 * M.protection_aura, 0) //Hold orders will reduce the Halloss; 10% per rank.
 		var/halloss_damage = (max(0,140 - dist * 10)) * reduction //Max 130 beside Queen, 70 at the edge
@@ -374,9 +372,6 @@
 			apply_damage(halloss_damage, HALLOSS)
 			if(!M.ear_deaf)
 				M.ear_deaf += stun_duration * 20  //Deafens them temporarily
-		//else if(dist >= 5 && dist < 7)
-		//M.stunned += 3
-		//to_chat(M, "<span class='danger'>The roar shakes your body to the core, freezing you in place!</span>")
 
 /mob/living/carbon/Xenomorph/Queen/proc/queen_gut(atom/A)
 

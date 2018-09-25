@@ -1125,7 +1125,6 @@
 	reagent_list = list(/datum/reagent/xeno_neurotoxin)
 	reagent_amount = 5
 	debilitate = list(0.5,0.5,0,0,0,0,0,0)
-	added_spit_delay = 30
 	flags_ammo_behavior = AMMO_XENO_TOX|AMMO_IGNORE_RESIST
 	spit_cost = 50
 
@@ -1204,8 +1203,13 @@
 
 /datum/ammo/xeno/acid/New()
 	..()
+	accuracy = config.max_hit_accuracy
+	accuracy_var_low = config.low_proj_variance
+	accuracy_var_high = config.low_proj_variance
+	shell_speed = config.fast_shell_speed
 	damage = config.llow_hit_damage
-	shell_speed = config.reg_shell_speed
+	damage_var_low = config.low_proj_variance
+	damage_var_high = config.med_proj_variance
 
 /datum/ammo/xeno/acid/on_shield_block(mob/M, obj/item/projectile/P)
 	burst(M,P,damage_type)
@@ -1222,10 +1226,7 @@
 
 /datum/ammo/xeno/acid/medium/New()
 	..()
-	damage = config.low_hit_damage
-	damage_var_low = config.low_proj_variance
-	damage_var_high = config.med_proj_variance
-	shell_speed = config.fast_shell_speed
+	damage = config.mlow_hit_damage
 
 /datum/ammo/xeno/acid/heavy
 	name = "acid splash"
@@ -1233,10 +1234,7 @@
 
 /datum/ammo/xeno/acid/heavy/New()
 	..()
-	max_range = config.min_shell_range
-	damage = config.med_hit_damage
-	damage_var_low = config.med_proj_variance
-	damage_var_high = config.high_proj_variance
+	damage = config.lmed_hit_damage
 	shell_speed = config.reg_shell_speed
 
 /datum/ammo/xeno/boiler_gas

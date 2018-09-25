@@ -966,6 +966,10 @@
 	A.permutated += src
 	A.def_zone = get_limbzone_target()
 	A.fire_at(T, src, null, ammo.max_range, ammo.shell_speed)
+	if(A.damage)
+		A.damage += A.damage * (min(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
+	if(A.reagent_amount)
+		A.reagent_amount += A.reagent_amount * (min(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
 	has_spat = world.time + spit_delay + ammo.added_spit_delay
 	use_plasma(ammo.spit_cost)
 	cooldown_notification(spit_delay + ammo.added_spit_delay, "spit")

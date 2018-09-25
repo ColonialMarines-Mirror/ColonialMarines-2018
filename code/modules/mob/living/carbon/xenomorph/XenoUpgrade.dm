@@ -141,7 +141,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_gain = 12
 					plasma_max = 400
 					upgrade_threshold = 400
-					spit_delay = 25
+					spit_delay = 10
 					caste_desc = "A ranged combat alien. It looks a little more dangerous."
 					armor_deflection = 15
 					tacklemin = 3
@@ -156,7 +156,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_gain = 25
 					plasma_max = 700
 					upgrade_threshold = 800
-					spit_delay = 20
+					spit_delay = 10
 					caste_desc = "A ranged damage dealer. It looks a little more dangerous."
 					armor_deflection = 20
 					tacklemin = 3
@@ -187,7 +187,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_gain = 30
 					plasma_max = 900
 					upgrade_threshold = 1600
-					spit_delay = 15
+					spit_delay = 10
 					caste_desc = "A giant ranged monster. It looks a little more dangerous."
 					armor_deflection = 40
 					tacklemin = 5
@@ -252,7 +252,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_max = 800
 					plasma_gain = 40
 					upgrade_threshold = 1600
-					spit_delay = 20
+					spit_delay = 10
 					caste_desc = "The biggest and baddest xeno. The Queen controls the hive and plants eggs."
 					armor_deflection = 50
 					tacklemin = 5
@@ -356,7 +356,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_gain = 15
 					plasma_max = 500
 					upgrade_threshold = 800
-					spit_delay = 20
+					spit_delay = 10
 					caste_desc = "A ranged combat alien. It looks pretty strong."
 					armor_deflection = 20
 					tacklemin = 4
@@ -371,7 +371,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_gain = 30
 					plasma_max = 800
 					upgrade_threshold = 1600
-					spit_delay = 15
+					spit_delay = 10
 					caste_desc = "A ranged damage dealer. It looks pretty strong."
 					armor_deflection = 25
 					tacklemin = 4
@@ -467,7 +467,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_max = 900
 					plasma_gain = 50
 					upgrade_threshold = 3200
-					spit_delay = 15
+					spit_delay = 10
 					caste_desc = "The biggest and baddest xeno. The Empress controls multiple hives and planets."
 					armor_deflection = 55
 					tacklemin = 6
@@ -585,7 +585,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					maxHealth = 250
 					plasma_gain = 50
 					plasma_max = 900
-					spit_delay = 5
+					spit_delay = 10
 					caste_desc = "A ranged destruction machine."
 					armor_deflection = 30
 					tacklemin = 5
@@ -616,7 +616,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					maxHealth = 270
 					plasma_gain = 50
 					plasma_max = 1000
-					spit_delay = 0
+					spit_delay = 10
 					caste_desc = "Its mouth looks like a minigun."
 					armor_deflection = 45
 					tacklemin = 7

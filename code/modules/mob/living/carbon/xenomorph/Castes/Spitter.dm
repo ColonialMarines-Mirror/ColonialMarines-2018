@@ -15,7 +15,7 @@
 	plasma_max = 600
 	evolution_threshold = 250
 	upgrade_threshold = 250
-	spit_delay = 25
+	spit_delay = 10
 	spit_types = list(/datum/ammo/xeno/toxin/medium, /datum/ammo/xeno/acid/medium)
 	speed = -0.5
 	caste_desc = "Ptui!"

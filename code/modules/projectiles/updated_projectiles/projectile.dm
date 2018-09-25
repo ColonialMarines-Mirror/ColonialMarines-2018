@@ -41,6 +41,7 @@
 
 	var/damage = 0
 	var/accuracy = 85 //Base projectile accuracy. Can maybe be later taken from the mob if desired.
+	var/reagent_amount = 0 //reagents to transfer
 
 	var/damage_falloff = 0 //how many damage point the projectile loses per tiles travelled
 
@@ -86,6 +87,7 @@
 	name 		= ammo.name
 	icon_state 	= ammo.icon_state
 	damage 		= ammo.damage + bonus_damage //Mainly for emitters.
+	reagent_amount = ammo.reagent_amount
 	scatter		= ammo.scatter
 	accuracy   += ammo.accuracy
 	accuracy   *= rand(config.proj_variance_low-ammo.accuracy_var_low, config.proj_variance_high+ammo.accuracy_var_high) * config.proj_base_accuracy_mult//Rand only works with integers.
@@ -456,8 +458,8 @@
 	if(P.ammo.debilitate && stat != DEAD && ( damage || (P.ammo.flags_ammo_behavior & AMMO_IGNORE_RESIST) ) )
 		apply_effects(arglist(P.ammo.debilitate))
 
-	if(P.ammo.reagent_list && stat != DEAD && !isXeno(src) && P.ammo.reagent_amount)
-		src:reagents.add_reagent(P.ammo.reagent_list, max(0,P.ammo.reagent_amount))
+	if(P.ammo.reagent_list && stat != DEAD && !isXeno(src) && P.reagent_amount)
+		src:reagents.add_reagent(P.ammo.reagent_list, max(0,P.reagent_amount))
 
 	if(damage)
 		bullet_message(P)

@@ -809,7 +809,7 @@
 		if(!.) return
 		var/halloss_damage = volume * 2 * REM
 		M.apply_damage(halloss_damage, HALLOSS) //1st level neurotoxin effects: confusion, dizziness/jitteriness; note that damage effects scale/accumulate with dosage
-		to_chat(world, "<font color='red'><b>Halloss Damage: [halloss_damage]</b></font>")
+		//to_chat(world, "<font color='red'><b>DEBUG: Halloss Damage: [halloss_damage]</b></font>")
 		if(volume > 5) //2nd level neurotoxin effects: screen shake, drug overlay, stuttering, minor toxin damage
 			M.druggy += 2
 			M.stuttering += 2

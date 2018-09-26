@@ -588,8 +588,7 @@
 						return
 					else
 						to_chat(user, "<span class='warning'>You insert [A] into [src] to be recharged.</span>")
-						if (icon_vend) 
-							flick(icon_vend,src)
+						if (icon_vend) flick(icon_vend,src)
 						playsound(src.loc, 'sound/machines/hydraulics_1.ogg', 25, 1)
 						machine_current_charge -= min(machine_current_charge, recharge_cost)
 						to_chat(user, "<span class='notice'>This dispenser has [machine_current_charge] of [machine_max_charge] remaining.</span>")

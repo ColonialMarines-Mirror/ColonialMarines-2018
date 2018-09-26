@@ -48,26 +48,10 @@
 /mob/living/carbon/Xenomorph/proc/handle_regular_status_updates()
 
 	if(status_flags & GODMODE)
-		return 0
+		return FALSE
 
-	if(on_fire)
-		SetLuminosity(min(fire_stacks,5)) // light up xenos
-		var/obj/item/clothing/mask/facehugger/F = get_active_hand()
-		var/obj/item/clothing/mask/facehugger/G = get_inactive_hand()
-		if(istype(F))
-			F.Die()
-			drop_inv_item_on_ground(F)
-		if(istype(G))
-			G.Die()
-			drop_inv_item_on_ground(G)
-		if(!fire_immune)
-			adjustFireLoss(fire_stacks + 3)
-
-	else
-		if(isXenoBoiler(src))
-			SetLuminosity(3) // needs a less hacky way of doing this, like a default luminosity var
-		else
-			SetLuminosity(0)
+	if(on_fire && !fire_immune)
+		adjustFireLoss(fire_stacks + 3)
 
 	if(health <= 0) //Sleeping Xenos are also unconscious, but all crit Xenos are under 0 HP. Go figure
 		var/turf/T = loc
@@ -145,7 +129,7 @@
 
 	else if(health <= 0) //in crit
 		stat = UNCONSCIOUS
-		blinded = 1
+		blinded = TRUE
 		see_in_dark = 5
 		if(isXenoRunner(src) && layer != initial(layer)) //Unhide
 			layer = MOB_LAYER
@@ -163,7 +147,7 @@
 
 		if(knocked_out) //If they're down, make sure they are actually down.
 			AdjustKnockedout(-3)
-			blinded = 1
+			blinded = TRUE
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
@@ -176,10 +160,10 @@
 				#if DEBUG_XENO_LIFE
 					sleeping = max(sleeping - 1, 0)
 				#endif
-			blinded = 1
+			blinded = TRUE
 			stat = UNCONSCIOUS
 		else
-			blinded = 0
+			blinded = FALSE
 			stat = CONSCIOUS
 			if(halloss > 0)
 				if(resting)
@@ -190,28 +174,15 @@
 		handle_slowdown()
 		handle_statuses()//natural decrease of stunned, knocked_down, etc...
 
-		//Deal with dissolving/damaging stuff in stomach.
+		//Deal with devoured things and people
 		if(stomach_contents.len)
 			for(var/atom/movable/M in stomach_contents)
-				if(world.time > devour_timer && ishuman(M))
-					devour_timer = world.time + 500 + rand(0,200) // 50-70 seconds
-					var/mob/living/carbon/human/H = M
-					var/limb_name = H.remove_random_limb(1)
-					if(limb_name)
-						to_chat(H, "<span class='danger'>Your [limb_name] dissolved in the acid!</span>")
-					if(prob(50))
-						stomach_contents.Remove(M)
-						M.acid_damage = 0
-						if(M.loc != src)
-							continue
-						M.forceMove(loc)
-
-				M.acid_damage++
-				if(M.acid_damage > 300)
-					to_chat(src, "<span class='xenodanger'>\The [M] is dissolved in your gut with a gurgle.</span>")
+				if(world.time > devour_timer && ishuman(M) && !is_ventcrawling)
 					stomach_contents.Remove(M)
-					cdel(M)
-	return 1
+					if(M.loc != src)
+						continue
+					M.forceMove(loc)
+	return TRUE
 
 /mob/living/carbon/Xenomorph/proc/handle_regular_hud_updates()
 
@@ -312,18 +283,17 @@
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind")
-
-	if(!stat && prob(25)) //Only a 25% chance of proccing the queen locator, since it is expensive and we don't want it firing every tick
-		queen_locator()
-
-	if(stat != DEAD) //Ladders have cameras now.
+		
 		if(interactee)
 			interactee.check_eye(src)
 		else
 			if(client && !client.adminobs)
 				reset_view(null)
 
-	return 1
+	if(!stat && prob(25)) //Only a 25% chance of proccing the queen locator, since it is expensive and we don't want it firing every tick
+		queen_locator()
+
+	return TRUE
 
 /*Heal 1/70th of your max health in brute per tick. 1 as a bonus, to help smaller pools.
 Additionally, recovery pheromones mutiply this base healing, up to 2.5 times faster at level 5
@@ -363,13 +333,13 @@ updatehealth()
 	var/is_runner_hiding
 
 	if(isXenoRunner(src) && layer != initial(layer))
-		is_runner_hiding = 1
+		is_runner_hiding = TRUE
 
 	if(!is_robotic && !hardcore) //Robot no heal
 		if(innate_healing || (locate(/obj/effect/alien/weeds) in T))
 			plasma_stored += plasma_gain
 			if(recovery_aura)
-				plasma_stored += round(plasma_gain * recovery_aura/4) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
+				plasma_stored += round(plasma_gain * recovery_aura * 0.25) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
 			if(health < maxHealth)
 				var/datum/hive_status/hive = hive_datum[hivenumber]
 				if(innate_healing || !hive.living_xeno_queen || hive.living_xeno_queen.loc.z == loc.z)

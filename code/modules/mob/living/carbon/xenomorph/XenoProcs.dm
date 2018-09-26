@@ -265,7 +265,6 @@
 	if(stomach_contents.len)
 		for(var/atom/movable/S in stomach_contents)
 			stomach_contents.Remove(S)
-			S.acid_damage = 0 //Reset the acid damage
 			S.forceMove(get_turf(src))
 
 	if(contents.len) //Get rid of anything that may be stuck inside us as well

@@ -185,8 +185,8 @@
 	proc/drop_flame(turf/T) // ~Art updated fire 20JAN17
 		if(!istype(T))
 			return
-		for(var/obj/flamer_fire/F in T) // No stacking flames!
-			cdel(F)
+		if(locate(/obj/flamer_fire) in T)
+			return
 		new /obj/flamer_fire(T, 20, 20)
 
 
@@ -232,11 +232,10 @@
 
 /datum/ammo/bullet/pistol/tranq
 	name = "tranq bullet"
-	debilitate = list(0,0,0,0,5,3,30,0)
+	debilitate = list(0,2,0,0,5,3,20,0)
 
 /datum/ammo/bullet/pistol/hollow
 	name = "hollowpoint pistol bullet"
-
 
 /datum/ammo/bullet/pistol/hollow/New()
 	..()

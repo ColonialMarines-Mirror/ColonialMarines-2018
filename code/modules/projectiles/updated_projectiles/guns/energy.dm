@@ -393,13 +393,12 @@
 	gun_skill_category = GUN_SKILL_RIFLES
 
 
-/obj/item/weapon/gun/rifle/set_gun_config_values()
-	fire_delay = config.mhigh_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
+/obj/item/weapon/gun/energy/lasgun/set_gun_config_values()
+	fire_delay = config.low_fire_delay
+	accuracy_mult = config.base_hit_accuracy_mult + config.max_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.high_hit_accuracy_mult
 	damage_mult = config.base_hit_damage_mult
-	scatter_unwielded = config.high_scatter_value //Heavy and unwieldy
-	recoil_unwielded = config.high_recoil_value
+	scatter_unwielded = config.max_scatter_value * 2 //Heavy and unwieldy
 	damage_falloff_mult = config.med_damage_falloff_mult
 
 
@@ -409,10 +408,9 @@
 /obj/item/weapon/gun/energy/lasgun/M43
 	name = "\improper M43 Sunfury Lasgun MK1"
 	desc = "An accurate, recoilless laser based battle rifle with an integrated charge selector. Ideal for longer range engagements. Uses power cells."
-	icon = 'icons/obj/old_guns/old_guns.dmi'
-	icon_state = "laser"
-	item_state = "laser0"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	force = 15 //Large and hefty!
+	icon_state = "m43"
+	item_state = "m43"
 	attachable_allowed = list(
 						/obj/item/attachable/bayonet,
 						/obj/item/attachable/reddot,
@@ -423,7 +421,6 @@
 						/obj/item/attachable/flashlight,
 						/obj/item/attachable/bipod,
 						/obj/item/attachable/magnetic_harness,
-						/obj/item/attachable/stock/rifle,
 						/obj/item/attachable/attached_gun/grenade,
 						/obj/item/attachable/attached_gun/flamer,
 						/obj/item/attachable/attached_gun/shotgun,
@@ -431,18 +428,26 @@
 						/obj/item/attachable/scope/mini)
 
 	flags_gun_features = GUN_AUTO_EJECTOR|GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_ENERGY
-	starting_attachment_types = list(/obj/item/attachable/attached_gun/grenade)
+	starting_attachment_types = list(/obj/item/attachable/scope/mini)
 
 /obj/item/weapon/gun/energy/lasgun/M43/New()
 	..()
+	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 18,"rail_x" = 12, "rail_y" = 24, "under_x" = 23, "under_y" = 15, "stock_x" = 22, "stock_y" = 12)
+	var/obj/item/attachable/stock/lasgun/S = new(src)
+	S.flags_attach_features &= ~ATTACH_REMOVABLE
+	S.Attach(src)
+	update_attachables()
 	update_icon()
-	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 18,"rail_x" = 12, "rail_y" = 23, "under_x" = 24, "under_y" = 13, "stock_x" = 24, "stock_y" = 13)
+	S.icon_state = initial(S.icon_state)
+
 
 /obj/item/weapon/gun/energy/lasgun/M43/set_gun_config_values()
 	fire_delay = config.low_fire_delay
 	accuracy_mult = config.base_hit_accuracy_mult + config.max_hit_accuracy_mult
-	scatter_unwielded = config.high_scatter_value //Heavy and unwieldy
+	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.max_hit_accuracy_mult //Heavy and unwieldy; you don't one hand this.
 	damage_mult = config.base_hit_damage_mult
+	scatter_unwielded = config.max_scatter_value * 2.5 //Heavy and unwieldy; you don't one hand this.
+	damage_falloff_mult = config.med_damage_falloff_mult
 
 //variant without ugl attachment
 /obj/item/weapon/gun/energy/lasgun/M43/stripped
@@ -453,213 +458,86 @@
 
 
 //Toggles Overcharge mode. Overcharge mode significantly increases damage and AP in exchange for doubled ammo usage and increased fire delay.
-/obj/item/weapon/gun/energy/lasgun/M43/proc/toggle_chargemode(mob/user)
-	to_chat(user, "\icon[src] You [overcharge? "<B>disable</b>" : "<B>enable</b>" ] [src]'s overcharge mode.")
+/obj/item/weapon/gun/energy/lasgun/proc/toggle_chargemode(mob/user)
 	if(overcharge == 0)
+		if(current_mag.current_rounds < 1)
+			playsound(user, 'sound/machines/buzz-two.ogg', 15, 1)
+			to_chat(user, "<span class='warning'>You attempt to toggle on [src]'s overcharge mode but your battery pack lacks adequate charge to do so.</span>")
+			return
 		//While overcharge is active, double ammo consumption, and
 		playsound(user, 'sound/weapons/emitter.ogg', 15, 1)
 		ammo_per_shot = 2
-		fire_delay = config.med_fire_delay
+		fire_delay = config.med_fire_delay * 2 // 1 shot per second fire rate
+		damage_falloff_mult = config.low_damage_falloff_mult
 		fire_sound = 'sound/weapons/Laser3.ogg'
+		to_chat(user, "\icon[src] You [overcharge? "<B>disable</b>" : "<B>enable</b>" ] [src]'s overcharge mode.")
 		overcharge = 1
 	else
 		playsound(user, 'sound/weapons/emitter2.ogg', 15, 1)
 		ammo_per_shot = 1
 		fire_delay = config.low_fire_delay
+		damage_falloff_mult = config.med_damage_falloff_mult
 		fire_sound = 'sound/weapons/Laser.ogg'
+		to_chat(user, "\icon[src] You [overcharge? "<B>disable</b>" : "<B>enable</b>" ] [src]'s overcharge mode.")
 		overcharge = 0
 	replace_ammo(user,current_mag)
 	load_into_chamber(user, TRUE)
-	to_chat(user, "DEBUG: Toggle End: Magazine: [current_mag] Regular: [current_mag.default_ammo] Overcharge: [current_mag.overcharge_ammo] Ammo per Shot: [ammo_per_shot] Ammo: [ammo] Chamber: [in_chamber] Rounds Left: [current_mag.current_rounds]")
+	//to_chat(user, "DEBUG: Toggle End: Magazine: [current_mag] Regular: [current_mag.default_ammo] Overcharge: [current_mag.overcharge_ammo] Ammo per Shot: [ammo_per_shot] Ammo: [ammo] Chamber: [in_chamber] Rounds Left: [current_mag.current_rounds]")
 	/*	if(in_chamber) //Update chamber if we have something loaded.
 			update_chamber(user,refund)*/
 
 //Ammo/Charge functions
-/obj/item/weapon/gun/energy/lasgun/update_icon()
+/obj/item/weapon/gun/energy/lasgun/update_icon(mob/user)
 	if(!current_mag || current_mag.current_rounds <= 0)
-		icon_state = base_gun_icon + "0"
+		icon_state = base_gun_icon + "_0"
+		if(flags_item & WIELDED)
+			item_state = "m43_0_w"
+		else
+			item_state = "m43_0"
 	else if(current_mag.current_rounds > round(current_mag.max_rounds*0.75))
-		icon_state = base_gun_icon + "100"
+		icon_state = base_gun_icon + "_100"
+		if(flags_item & WIELDED)
+			item_state = "m43_100_w"
+		else
+			item_state = "m43_100"
 	else if(current_mag.current_rounds > round(current_mag.max_rounds*0.5))
-		icon_state = base_gun_icon + "75"
+		icon_state = base_gun_icon + "_75"
+		if(flags_item & WIELDED)
+			item_state = "m43_75_w"
+		else
+			item_state = "m43_75"
 	else if(current_mag.current_rounds > round(current_mag.max_rounds*0.25))
-		icon_state = base_gun_icon + "50"
+		icon_state = base_gun_icon + "_50"
+		if(flags_item & WIELDED)
+			item_state = "m43_50_w"
+		else
+			item_state = "m43_50"
 	else
-		icon_state = base_gun_icon + "25"
+		icon_state = base_gun_icon + "_25"
+		if(flags_item & WIELDED)
+			item_state = "m43_25_w"
+		else
+			item_state = "m43_25"
+	if(current_mag)
+		update_mag_overlay()
+	if(ishuman(user))
+		var/mob/living/carbon/human/M = user
+		if(src == M.l_hand)
+			M.update_inv_l_hand()
+		else if (src == user.r_hand)
+			M.update_inv_r_hand()
+
 
 //EMPs will fuck with remaining charge
 /obj/item/weapon/gun/energy/lasgun/emp_act(severity)
-	var/amount = round(current_mag.max_rounds / severity)
+	var/amount = round(current_mag.max_rounds * rand(2,severity) * 0.1)
 	if(current_mag.current_rounds < amount)	return 0
 	current_mag.current_rounds = max(0,current_mag.current_rounds - amount)
 	update_icon()
+	current_mag.update_icon()
 	..()
 
 // use power from a cell
 /obj/item/ammo_magazine/lasgun/proc/use(var/amount)
 
 	return 1
-
-/*
-/obj/item/weapon/gun/energy/lasgun/M43/proc/update_chamber(mob/user = null, refund = 0)
-	cdel(in_chamber)
-	active_attachable.current_rounds += refund
-	ammo = ammo_list[overcharge? current_mag.overcharge_ammo : current_mag.default_ammo]
-	to_chat(user, "DEBUG: Toggle: Update Chamber. Magazine: [current_mag] Regular: [current_mag.default_ammo] Overcharge: [current_mag.overcharge_ammo] Ammo per Shot: [ammo_per_shot] Ammo: [ammo] Chamber: [in_chamber] Refund: [refund]")
-	ready_in_chamber(user)
-
-
-/obj/item/weapon/gun/energy/lasgun/proc/clear_chamber(mob/user = null, refund = 0)
-	if(in_chamber)
-		cdel(in_chamber)
-		if(refund)
-			current_mag.current_rounds += ammo_per_shot
-	to_chat(user, "DEBUG: Clear Chamber. Magazine: [current_mag] Regular: [current_mag.default_ammo] Overcharge: [current_mag.overcharge_ammo] Ammo per Shot: [ammo_per_shot] Ammo: [ammo] Chamber: [in_chamber] Refund: [refund]")
-	return TRUE
-
-
-/obj/item/weapon/gun/lasgun/load_into_chamber(mob/user)
-	//The workhorse of the bullet procs.
- 	//If we have a round chambered and no active attachable, we're good to go.
-	if(in_chamber && !active_attachable)
-		return in_chamber //Already set!
-
-	//Let's check on the active attachable. It loads ammo on the go, so it never chambers anything
-	if(active_attachable)
-		if(active_attachable.current_rounds > 0) //If it's still got ammo and stuff.
-			active_attachable.current_rounds--
-			return create_bullet(active_attachable.ammo)
-		else
-			to_chat(user, "<span class='warning'>[active_attachable] is empty!</span>")
-			to_chat(user, "<span class='notice'>You disable [active_attachable].</span>")
-			playsound(user, active_attachable.activation_sound, 15, 1)
-			active_attachable.activate_attachment(src, null, TRUE)
-	else
-		return ready_in_chamber(user)//We're not using the active attachable, we must use the active mag if there is one.
-
-
-/obj/item/weapon/gun/energy/lasgun/ready_in_chamber(mob/user)
-	if(current_mag && current_mag.current_rounds > 0)
-		if(current_mag.current_rounds - ammo_per_shot < 0) //Check if we have adequate power for overcharge
-			in_chamber = create_bullet(ammo[current_mag.default_ammo])//Not enough power for overcharge, so fire regular ammo.
-			to_chat(user, "DEBUG: Inadequate power. In_Chamber: [in_chamber]")
-		else
-			in_chamber = create_bullet(ammo)
-		to_chat(user, "DEBUG: Regular shot: Magazine: [current_mag] Regular: [current_mag.default_ammo] Overcharge: [current_mag.overcharge_ammo] Ammo per Shot: [ammo_per_shot] Ammo: [ammo] Chamber: [in_chamber]")
-		current_mag.current_rounds -= min(current_mag.current_rounds, ammo_per_shot) //Subtract the round from the mag.
-		to_chat(user, "DEBUG: Rounds spent to chamber: [min(current_mag.current_rounds, ammo_per_shot)] Remaining Rounds [current_mag.current_rounds]")
-		update_icon()
-		return in_chamber
-
-
-/obj/item/weapon/gun/energy/lasgun/reload_into_chamber(mob/user)
-	/*
-	ATTACHMENT POST PROCESSING
-	This should only apply to the masterkey, since it's the only attachment that shoots through Fire()
-	instead of its own thing through fire_attachment(). If any other bullet attachments are added, they would fire here.
-	*/
-
-	if(active_attachable)
-		make_casing(active_attachable.type_of_casings) // Attachables can drop their own casings.
-	else
-		in_chamber = null //If we didn't fire from attachable, let's set this so the next pass doesn't think it still exists.
-
-	if(!active_attachable) //We don't need to check for the mag if an attachment was used to shoot.
-		if(current_mag.current_rounds <= 0 && flags_gun_features & GUN_AUTO_EJECTOR) // This is where the magazine is auto-ejected.
-			unload(user,1,1) // We want to quickly autoeject the magazine. This proc does the rest based on magazine type. User can be passed as null.
-			playsound(src, empty_sound, 25, 1)
-	return 1
-
-//Drop out the magazine. Keep the ammo type for next time so we don't need to replace it every time.
-//This can be passed with a null user, so we need to check for that as well.
-/obj/item/weapon/gun/energy/lasgun/unload(mob/user, reload_override = 0, drop_override = 0) //Override for reloading mags after shooting, so it doesn't interrupt burst. Drop is for dropping the magazine on the ground.
-	if(!reload_override && (flags_gun_features & (GUN_BURST_FIRING|GUN_UNUSUAL_DESIGN|GUN_INTERNAL_MAG)))
-		return
-
-	if(!current_mag || isnull(current_mag) || current_mag.loc != src) //you can't cock a lasgun
-		return
-	if(in_chamber)
-		clear_chamber(user,in_chamber,ammo_per_shot) //Capacitors discharge back into the battery.
-	if(drop_override || !user) //If we want to drop it on the ground or there's no user.
-		current_mag.loc = get_turf(src) //Drop it on the ground.
-	else
-		user.put_in_hands(current_mag)
-
-	playsound(user, unload_sound, 25, 1, 5)
-	user.visible_message("<span class='notice'>[user] unloads [current_mag] from [src].</span>",
-	"<span class='notice'>You unload [current_mag] from [src].</span>", null, 4)
-	current_mag.update_icon()
-	current_mag = null
-
-	update_icon()
-
-
-/obj/item/weapon/gun/energy/lasgun/reload(mob/user, obj/item/ammo_magazine/magazine)
-	if(flags_gun_features & (GUN_BURST_FIRING|GUN_UNUSUAL_DESIGN|GUN_INTERNAL_MAG))
-		return
-
-	if(!magazine || !istype(magazine))
-		to_chat(user, "<span class='warning'>That's not an appropriate power cell!</span>")
-		return
-
-	if(magazine.flags_magazine & AMMUNITION_HANDFUL)
-		to_chat(user, "<span class='warning'>[src] needs a power cell; bullets won't work.</span>")
-		return
-
-	if(magazine.current_rounds <= 0)
-		to_chat(user, "<span class='warning'>[magazine] is empty!</span>")
-		return
-
-	if(!istype(src, magazine.gun_type))
-		to_chat(user, "<span class='warning'>That magazine doesn't fit in there!</span>")
-		return
-
-	if(current_mag)
-		to_chat(user, "<span class='warning'>It's still got something loaded.</span>")
-		return
-
-
-
-	if(user)
-		if(magazine.reload_delay > 1)
-			to_chat(user, "<span class='notice'>You begin reloading [src]. Hold still...</span>")
-			if(do_after(user,magazine.reload_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
-				replace_magazine(user, magazine)
-			else
-				to_chat(user, "<span class='warning'>Your reload was interrupted!</span>")
-				return
-		else
-			replace_magazine(user, magazine)
-	else
-		current_mag = magazine
-		magazine.loc = src
-		replace_ammo(user,magazine)
-		if(!in_chamber)
-			load_into_chamber(user)
-
-	update_icon()
-	return TRUE
-
-/obj/item/weapon/gun/energy/lasgun/replace_magazine(mob/user, obj/item/ammo_magazine/magazine)
-	user.drop_inv_item_to_loc(magazine, src) //Click!
-	current_mag = magazine
-	replace_ammo(user,magazine)
-	if(!in_chamber) //We don't cock
-		ready_in_chamber()
-	user.visible_message("<span class='notice'>[user] loads [magazine] into [src]!</span>",
-	"<span class='notice'>You load [magazine] into [src]!</span>", null, 3)
-	if(reload_sound)
-		playsound(user, reload_sound, 25, 1, 5)
-
-
-/obj/item/weapon/gun/energy/lasgun/M43/replace_ammo(mob/user = null, var/obj/item/ammo_magazine/magazine)
-	if(!magazine.default_ammo)
-		to_chat(user, "Something went horribly wrong. Ahelp the following: ERROR CODE A1: null ammo while reloading.")
-		log_debug("ERROR CODE A1: null ammo while reloading. User: <b>[user]</b>")
-		ammo = ammo_list[/datum/ammo/bullet] //Looks like we're defaulting it.
-	else
-		ammo = ammo_list[overcharge? magazine.overcharge_ammo : magazine.default_ammo]
-	to_chat(user, "DEBUG: Replace Ammo. Magazine: [magazine] Regular: [magazine.default_ammo] Overcharge: [magazine.overcharge_ammo]  Ammo per Shot: [ammo_per_shot]  Ammo: [ammo] Chamber: [in_chamber] Rounds Left:[magazine.current_rounds]")
-		/*else
-			ammo = ammo_list[magazine.overcharge_ammo]
-		*/*/

@@ -245,7 +245,9 @@
 					else
 						dat += "<font color='green'>Ready!</font><br>"
 					dat += "<B>Launch Pad Status:</b> "
-					var/obj/structure/closet/crate/C = locate() in current_squad.drop_pad.loc
+					var/obj/C = locate() in current_squad.drop_pad.loc //This thing should ALWAYS exist.
+					if(!istype(C,/obj/machinery/vending) && !istype(C,/obj/structure/closet/crate)) //Can only send vendors and crates
+						C = null
 					if(C)
 						dat += "<font color='green'>Supply crate loaded</font><BR>"
 					else
@@ -790,7 +792,10 @@
 		to_chat(usr, "\icon[src] <span class='warning'>No supply beacon detected!</span>")
 		return
 
-	var/obj/structure/closet/crate/C = locate() in current_squad.drop_pad.loc //This thing should ALWAYS exist.
+	var/obj/C = locate() in current_squad.drop_pad.loc //This thing should ALWAYS exist.
+	if(!istype(C,/obj/machinery/vending) && !istype(C,/obj/structure/closet/crate)) //Can only send vendors and crates
+		C = null
+
 	if(!istype(C))
 		to_chat(usr, "\icon[src] <span class='warning'>No crate was detected on the drop pad. Get Requisitions on the line!</span>")
 		return

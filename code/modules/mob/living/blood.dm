@@ -49,7 +49,7 @@
 				if(heart.damage < heart.min_bruised_damage)
 					heart_multi = 0.9
 					blood_volume = max(blood_volume - 0.1, 0) //nulls regeneration
-				else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
+				else if(heart.damage < heart.min_broken_damage)
 					heart_multi = 0.7
 					blood_volume = max(blood_volume - 0.5, 0)
 				else

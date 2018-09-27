@@ -137,7 +137,7 @@
 						return
 		if(P.cell.charge >= P.charge_cost && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.cut_delay, TRUE, 5, BUSY_ICON_FRIENDLY) && P)
+			if(do_after(user, PLASMACUTTER_CUT_DELAY, TRUE, 5, BUSY_ICON_FRIENDLY) && P)
 				P.cut_apart(user, src.name, src, P.charge_cost)
 				if(istype(src, /turf/closed/mineral) || istype(src, /turf/closed/desertdamrockwall))
 					ChangeTurf(/turf/open/desertdam/cave/inner_cave_floor)

@@ -206,14 +206,14 @@
 			return*/
 
 /obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
-	var/final_delay = cut_delay
+	var/final_delay = PLASMACUTTER_CUT_DELAY
 	if (istype(user))
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI)
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 			final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
 		else
-			final_delay -= min(cut_delay,(user.mind.cm_skills.engineer - 3))
+			final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3))
 	return final_delay
 
 /obj/item/tool/pickaxe/plasmacutter/emp_act(severity)

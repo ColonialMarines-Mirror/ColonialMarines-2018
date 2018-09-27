@@ -30,7 +30,12 @@
 				return 0
 
 			if(Adjacent(M)) //Logic!
-				M.start_pulling(src)
+				if(stat == DEAD)
+					if(is_revivable())
+						to_chat(src, "<span class='warning'>The creature is dead, why would you want to touch it?</span>")
+						return
+				else
+					M.start_pulling(src)
 
 		if("hurt")
 			var/datum/hive_status/hive

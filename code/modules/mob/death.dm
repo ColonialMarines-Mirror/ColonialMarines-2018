@@ -43,10 +43,6 @@
 	if(!gibbed)
 		src.visible_message("<b>\The [src.name]</b> [deathmessage]")
 
-	if(pulledby)
-		if(isXeno(pulledby)) //Xenos drop dead guys
-			pulledby.stop_pulling()
-
 	stat = DEAD
 
 	update_canmove()

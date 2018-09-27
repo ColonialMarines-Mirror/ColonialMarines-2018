@@ -101,8 +101,6 @@
 	heat_source = 3800
 	var/cutting_sound = 'sound/items/Welder2.ogg'
 	var/powered = FALSE
-	var/cut_delay = 30 //Takes this long in deciseconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
-	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	var/dirt_amt_per_dig = 5
 	var/charge_cost = 1000
 	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
@@ -154,6 +152,7 @@
 		update_icon()
 
 /obj/item/tool/pickaxe/plasmacutter/proc/fizzle_message(mob/user)
+	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	playsound(src, 'sound/machines/buzz-two.ogg', 25, 1)
 	if(!cell)
 		to_chat(user, "<span class='warning'>[src]'s has no battery installed!</span>")

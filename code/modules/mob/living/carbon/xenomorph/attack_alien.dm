@@ -170,8 +170,10 @@
 			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
 			var/tackle_pain = null
 			tackle_pain = (M.tackle_damage * rand(0.5,1.5) + M.tackle_damage * rand(0.5,1.5)) * 0.5 //Gaussian distribution
-			if(M.frenzy_aura > 0)
-				tackle_pain += M.tackle_damage * min(0.5,0.05 * M.frenzy_aura) //Halloss damage increased by 5% per rank of frenzy aura, max 50%
+			if(M.frenzy_aura)
+				tackle_pain *= 1 + (0.05 * M.frenzy_aura)  //Halloss damage increased by 5% per rank of frenzy aura
+			if(protection_aura)
+				tackle_pain *= 1 - (0.10 + 0.05 * protection_aura)  //Halloss damage decreased by 10% + 5% per rank of protection aura
 			apply_damage(tackle_pain, HALLOSS)
 			updatehealth()
 			var/throttle_message = "The [M] throttles [src]!"

@@ -9,6 +9,7 @@ can cause issues with ammo types getting mixed up during the burst.
 
 /obj/item/weapon/gun/shotgun
 	origin_tech = "combat=4;materials=3"
+	flags_equip_slot = SLOT_BACK
 	w_class = 4
 	force = 14.0
 	fire_sound = 'sound/weapons/gun_shotgun.ogg'
@@ -190,6 +191,7 @@ can cause issues with ammo types getting mixed up during the burst.
 	desc = "The Weyland-Yutani MK221 Shotgun, a semi-automatic shotgun with a quick fire rate."
 	icon_state = "mk221"
 	item_state = "mk221"
+	flags_equip_slot = SLOT_BACK
 	origin_tech = "combat=5;materials=4"
 	fire_sound = 'sound/weapons/gun_shotgun_automatic.ogg'
 	current_mag = /obj/item/ammo_magazine/internal/shotgun/combat

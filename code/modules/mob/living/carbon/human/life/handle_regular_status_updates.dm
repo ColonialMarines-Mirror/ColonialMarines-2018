@@ -138,7 +138,7 @@
 
 		if(command_aura_cooldown > 0 && (--command_aura_cooldown == 0))
 			update_action_buttons() // Update "Issue Order" action button
-		
+
 		if(command_aura)
 			command_aura_tick--
 			if(command_aura_tick < 1)
@@ -154,10 +154,14 @@
 				if(command_aura == "focus" && command_aura_strength > H.marskman_new)
 					H.marskman_new = command_aura_strength
 
-		mobility_aura = mobility_new
-		protection_aura = protection_new
-		marskman_aura = marskman_new
-
+		if(!isSynth(src)) //Synths can't be inspired and don't benefit from orders.
+			mobility_aura = mobility_new
+			protection_aura = protection_new
+			marskman_aura = marskman_new
+		else
+			mobility_aura = null
+			protection_aura = null
+			marskman_aura = null
 		//hud_set_pheromone() //TODO: HOOK THIS UP, ASK PHIL
 
 		mobility_new = 0

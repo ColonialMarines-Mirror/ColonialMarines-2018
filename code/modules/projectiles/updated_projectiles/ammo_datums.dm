@@ -49,6 +49,7 @@
 	var/debilitate[]				= null 		// Stun,knockdown,knockout,irradiate,stutter,eyeblur,drowsy,agony
 	var/reagent_list				= null		// List of reagents transmitted by the projectile on hit.
 	var/reagent_amount				= 0			// Amount of reagents transmitted by the projectile on hit.
+	var/barricade_clear_distance	= 1			// How far the bullet can travel before incurring a chance of hitting barricades; normally 1.
 
 	New()
 		accuracy 			= config.min_hit_accuracy 	// This is added to the bullet's base accuracy.
@@ -787,6 +788,7 @@
 	damage = config.med_hit_damage
 	penetration= config.mhigh_armor_penetration //Bumped the penetration to serve a different role from sentries, MGs are a bit more offensive
 	accuracy = config.med_hit_accuracy
+	barricade_clear_distance = 2
 
 /datum/ammo/bullet/minigun
 	name = "minigun bullet"

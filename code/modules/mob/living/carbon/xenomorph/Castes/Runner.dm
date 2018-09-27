@@ -4,7 +4,7 @@
 	caste = "Runner"
 	name = "Runner"
 	desc = "A small red alien that looks like it could run fairly quickly..."
-	icon = 'icons/xeno/xenomorph_64x64.dmi' //They are now like, 2x1 or something
+	icon = 'icons/Xeno/2x2_Xenos.dmi' //They are now like, 2x1 or something
 	icon_state = "Runner Walking"
 	melee_damage_lower = 10
 	melee_damage_upper = 20
@@ -25,7 +25,7 @@
 	upgrade = 0
 	pixel_x = -16  //Needed for 2x2
 	old_x = -16
-	pull_speed = -1
+	pull_speed = -0.6
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/regurgitate,

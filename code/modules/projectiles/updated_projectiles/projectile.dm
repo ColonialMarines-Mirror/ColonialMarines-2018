@@ -321,7 +321,7 @@
 	if(!throwpass)
 		return TRUE
 
-	if(P.ammo.flags_ammo_behavior & AMMO_SNIPER) //sniper rounds bypass cover
+	if(P.ammo.flags_ammo_behavior & AMMO_SNIPER || P.ammo.flags_ammo_behavior & AMMO_SKIPS_HUMANS || P.ammo.flags_ammo_behavior & AMMO_ROCKET) //sniper, rockets and IFF rounds bypass cover
 		return FALSE
 
 	if(!(flags_atom & ON_BORDER))
@@ -329,10 +329,9 @@
 
 	if(!( P.dir & reverse_direction(dir) || P.dir & dir))
 		return FALSE //no effect if bullet direction is perpendicular to barricade
-
+		
 	var/distance = P.distance_travelled - 1
-
-	if(distance < 1)
+	if(distance < P.ammo.barricade_clear_distance)
 		return FALSE
 
 	var/coverage = 90 //maximum probability of blocking projectile
@@ -766,20 +765,18 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 	if(ismob(P.firer))
 		var/mob/firingMob = P.firer
 		if(ishuman(firingMob) && ishuman(src) && firingMob.mind && !firingMob.mind.special_role && mind && !mind.special_role) //One human shot another, be worried about it but do everything basically the same //special_role should be null or an empty string if done correctly
-			attack_log += "\[[time_stamp()]\] <b>[firingMob]/[firingMob.ckey]</b> shot <b>[src]/[ckey]</b> with \a <b>[P]</b> in [get_area(firingMob)]."
-			P.firer:attack_log += "\[[time_stamp()]\] <b>[firingMob]/[firingMob.ckey]</b> shot <b>[src]/[ckey]</b> with \a <b>[P]</b> in [get_area(firingMob)]."
+			log_combat(firingMob, src, "shot", P)
 			msg_admin_ff("[firingMob] ([firingMob.ckey]) shot [src] ([ckey]) with \a [P.name] in [get_area(firingMob)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.firer.x];Y=[P.firer.y];Z=[P.firer.z]'>JMP</a>) (<a href='?priv_msg=\ref[firingMob.client]'>PM</a>)")
 		else
-			attack_log += "\[[time_stamp()]\] <b>[firingMob]/[firingMob.ckey]</b> shot <b>[src]/[src.ckey]</b> with \a <b>[P]</b> in [get_area(firingMob)]."
-			P.firer:attack_log += "\[[time_stamp()]\] <b>[firingMob]/[firingMob.ckey]</b> shot <b>[src]/[ckey]</b> with \a <b>[P]</b> in [get_area(firingMob)]."
+			log_combat(firingMob, src, "shot", P)
 			msg_admin_attack("[firingMob] ([firingMob.ckey]) shot [src] ([ckey]) with \a [P.name] in [get_area(firingMob)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.firer.x];Y=[P.firer.y];Z=[P.firer.z]'>JMP</a>)")
 		return
 
 	if(P.firer)
-		attack_log += "\[[time_stamp()]\] <b>[P.firer]</b> shot <b>[src]/[ckey]</b> with a <b>[P]</b>"
+		log_combat(P.firer, src, "shot", P)
 		msg_admin_attack("[P.firer] shot [src] ([ckey]) with a [P] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.firer.x];Y=[P.firer.y];Z=[P.firer.z]'>JMP</a>)")
 	else
-		attack_log += "\[[time_stamp()]\] <b>SOMETHING??</b> shot <b>[src]/[ckey]</b> with a <b>[P]</b>"
+		log_message("<b>SOMETHING??</b> shot <b>[key_name(src)]</b> with a <b>[P]</b>", LOG_ATTACK)
 		msg_admin_attack("SOMETHING?? shot [src] ([ckey]) with a [P])")
 
 //Abby -- Just check if they're 1 tile horizontal or vertical, no diagonals

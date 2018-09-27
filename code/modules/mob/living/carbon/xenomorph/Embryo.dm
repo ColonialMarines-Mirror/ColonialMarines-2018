@@ -77,7 +77,7 @@
 		else if(stage == 4)
 			counter += 0.11
 	else if(istype(affected_mob.buckled, /obj/structure/bed/nest)) //Hosts who are nested in resin nests provide an ideal setting, larva grows faster
-		counter += 1.5 //Currently twice as much, can be changed
+		counter += 2.5 //Currently twice as much and a bit, can be changed
 	else
 		if(stage <= 4)
 			counter++
@@ -209,7 +209,7 @@
 
 	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 	if((!key || !client) && loc.z == 1 && (locate(/obj/structure/bed/nest) in loc) && hivenumber == XENO_HIVE_NORMAL && hive.living_xeno_queen && hive.living_xeno_queen.z == src.loc.z)
-		visible_message("<span class='xenodanger'>[src] quickly buries into the ground.</span>")
+		visible_message("<span class='xenodanger'>[src] quickly burrows into the ground.</span>")
 		round_statistics.total_xenos_created-- // keep stats sane
 		ticker.mode.stored_larva++
 		cdel(src)

@@ -22,7 +22,7 @@
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_WAIST
 	throw_speed = 2
 	throw_range = 9
@@ -59,7 +59,7 @@
 			frequency = sanitize_frequency(frequency, maxf)
 	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
 	else if (frequency < 1441 || frequency > maxf)
-		//to_chat(world.log, "[src] ([type]) has a frequency of [frequency], sanitizing.")
+		//log_world("[src] ([type]) has a frequency of [frequency], sanitizing.")
 		frequency = sanitize_frequency(frequency, maxf)
 
 	set_frequency(frequency)

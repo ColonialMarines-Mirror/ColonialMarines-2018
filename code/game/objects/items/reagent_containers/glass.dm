@@ -12,7 +12,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,60)
 	volume = 60
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 
 	var/label_text = ""
 
@@ -82,8 +82,7 @@
 		for(var/datum/reagent/R in src.reagents.reagent_list)
 			injected += R.name
 		var/contained = english_list(injected)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
+		log_combat(user, M, "splashed", src, "Reagents: [contained]")
 		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		visible_message("<span class='warning'>[target] has been splashed with something by [user]!</span>")
@@ -207,7 +206,7 @@
 	matter = list("glass" = 500)
 	volume = 60
 	amount_per_transfer_from_this = 10
-	flags_atom = FPRINT|OPENCONTAINER|NOREACT
+	flags_atom = OPENCONTAINER|NOREACT
 
 /obj/item/reagent_container/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -227,7 +226,7 @@
 	volume = 30
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 
 /obj/item/reagent_container/glass/beaker/cryoxadone
 	New()
@@ -259,7 +258,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,60,120)
 	volume = 120
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 
 /obj/item/reagent_container/glass/bucket/attackby(obj/item/I, mob/user)
 	if(isprox(I))

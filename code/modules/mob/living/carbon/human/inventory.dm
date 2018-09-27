@@ -48,7 +48,7 @@
 		if(WEAR_WAIST)
 			return has_limb("chest")
 		if(WEAR_ID)
-			return 1
+			return TRUE
 		if(WEAR_EAR)
 			return has_limb("head")
 		if(WEAR_EYES)
@@ -72,11 +72,17 @@
 		if(WEAR_ACCESSORY)
 			return has_limb("chest")
 		if(WEAR_IN_BACK)
-			return 1
+			return TRUE
 		if(WEAR_IN_JACKET)
-			return 1
+			return TRUE
 		if(WEAR_IN_ACCESSORY)
-			return 1
+			return TRUE
+		if(WEAR_IN_HOLSTER)
+			return TRUE
+		if(WEAR_IN_J_HOLSTER)
+			return TRUE
+		if(WEAR_IN_B_HOLSTER)
+			return TRUE
 
 /mob/living/carbon/human/put_in_l_hand(obj/item/W)
 	var/datum/limb/O = get_limb("l_hand")
@@ -326,10 +332,9 @@
 			s_store = W
 			W.equipped(src, slot)
 			update_inv_s_store()
-		if(WEAR_IN_BACK)
-			if(get_active_hand() == W)
-				temp_drop_inv_item(W)
-			W.forceMove(back)
+		if(WEAR_IN_BACK) // only used in few istances like ERT spawning rn.
+			var/obj/item/storage/S = back
+			S.handle_item_insertion(W, TRUE, src)
 		if(WEAR_IN_JACKET)
 			var/obj/item/clothing/suit/storage/S = wear_suit
 			if(istype(S) && S.pockets.storage_slots) W.loc = S.pockets//Has to have some slots available.
@@ -339,6 +344,18 @@
 			if(U && U.hastie)
 				var/obj/item/clothing/tie/storage/T = U.hastie
 				if(istype(T) && T.hold.storage_slots) W.loc = T.hold
+
+		if(WEAR_IN_HOLSTER)
+			var/obj/item/storage/S = belt
+			S.handle_item_insertion(W, FALSE, src)
+
+		if(WEAR_IN_B_HOLSTER)
+			var/obj/item/storage/S = back
+			S.handle_item_insertion(W, FALSE, src)
+
+		if(WEAR_IN_J_HOLSTER)
+			var/obj/item/storage/S = s_store
+			S.handle_item_insertion(W, FALSE, src)
 
 		else
 			to_chat(src, "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...")
@@ -401,8 +418,7 @@
 	if(I.flags_inventory & CANTSTRIP)
 		to_chat(src, "<span class='warning'>You're having difficulty removing \the [I.name].</span>")
 		return
-	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their [I.name] ([slot_to_process]) attempted to be removed by [name] ([ckey])</font>"
-	attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [M.name]'s ([M.ckey]) [I.name] ([slot_to_process])</font>"
+	log_combat(src, M, "attempted to remove [key_name(I)] ([slot_to_process])")
 
 	M.visible_message("<span class='danger'>[src] tries to remove [M]'s [I.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [M]'s [I.name].</span>", null, 5)

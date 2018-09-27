@@ -174,7 +174,7 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 
 	if(user.mind)
 		switch(user.mind.assigned_role)
-			if("PMC Leader","PMC", "WY Agent", "Corporate Laison", "Event")
+			if("PMC Leader","PMC", "WY Agent", "Corporate Liaison", "Event")
 				return TRUE
 		switch(user.mind.special_role)
 			if("DEATH SQUAD","PMC")
@@ -208,7 +208,7 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 		return TRUE
 	else
 		return FALSE
-		
+
 /obj/item/weapon/gun/proc/do_wield(mob/user, wield_time) //a poor way to make timed actions show an icon without affecting them until /tg/'s do_mob is ported.
 	var/delay = wield_time - world.time
 	if(!istype(user) || delay <= 0)
@@ -411,9 +411,18 @@ should be alright.
 		to_chat(user, "<span class='warning'>The attachment on [src]'s [attachment.slot] cannot be removed!</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] begins attaching [attachment] to [src].</span>",
-	"<span class='notice'>You begin attaching [attachment] to [src].</span>", null, 4)
-	if(do_after(user,60, TRUE, 5, BUSY_ICON_FRIENDLY))
+	var/final_delay = attachment.attach_delay
+	if (user.mind.cm_skills.firearms)
+		user.visible_message("<span class='notice'>[user] begins attaching [attachment] to [src].</span>",
+		"<span class='notice'>You begin attaching [attachment] to [src].</span>", null, 4)
+		if(user.mind.cm_skills.firearms >= SKILL_FIREARMS_DEFAULT) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
+			final_delay *= 0.5
+	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
+		final_delay *= 2
+		user.visible_message("<span class='notice'>[user] begins fumbling about, trying to attach [attachment] to [src].</span>",
+		"<span class='notice'>You begin fumbling about, trying to attach [attachment] to [src].</span>", null, 4)
+	//user.visible_message("","<span class='notice'>Attach Delay = [final_delay]. Attachment = [attachment]. Firearm Skill = [user.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
+	if(do_after(user,final_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		if(attachment && attachment.loc)
 			user.visible_message("<span class='notice'>[user] attaches [attachment] to [src].</span>",
 			"<span class='notice'>You attach [attachment] to [src].</span>", null, 4)
@@ -569,10 +578,18 @@ should be alright.
 	if(!(A.flags_attach_features & ATTACH_REMOVABLE))
 		return
 
-	usr.visible_message("<span class='notice'>[usr] begins stripping [A] from [src].</span>",
-	"<span class='notice'>You begin stripping [A] from [src].</span>", null, 4)
-
-	if(!do_after(usr,35, TRUE, 5, BUSY_ICON_FRIENDLY))
+	var/final_delay = A.detach_delay
+	if (usr.mind.cm_skills.firearms)
+		usr.visible_message("<span class='notice'>[usr] begins stripping [A] from [src].</span>",
+		"<span class='notice'>You begin stripping [A] from [src].</span>", null, 4)
+		if(usr.mind.cm_skills.firearms > SKILL_FIREARMS_DEFAULT) //See if the attacher is super skilled/panzerelite born to defeat never retreat etc
+			final_delay *= 0.5 //Half normal time
+	else //If the user has no training, attaching takes twice as long and they fumble about, looking like a retard.
+		final_delay *= 2
+		usr.visible_message("<span class='notice'>[usr] begins fumbling about, trying to strip [A] from [src].</span>",
+		"<span class='notice'>You begin fumbling about, trying to strip [A] from [src].</span>", null, 4)
+	//usr.visible_message("","<span class='notice'>Detach Delay = [detach_delay]. Attachment = [A]. Firearm Skill = [usr.mind.cm_skills.firearms].</span>", null, 4) //DEBUG
+	if(!do_after(usr,final_delay, TRUE, 5, BUSY_ICON_FRIENDLY))
 		return
 
 	if(A != rail && A != muzzle && A != under && A != stock)

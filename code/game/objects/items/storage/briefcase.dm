@@ -3,7 +3,7 @@
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
 	item_state = "briefcase"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
@@ -24,8 +24,7 @@
 		return
 
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	log_combat(user, M, "attack", src)
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>)")
 
 	if (M.stat < 2 && M.health < 50 && prob(90))

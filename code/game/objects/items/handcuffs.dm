@@ -4,7 +4,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_WAIST
 	throwforce = 5
 	w_class = 2
@@ -44,8 +44,7 @@
 			to_chat(user, "\red \The [H] needs at least two wrists before you can cuff them together!")
 			return
 
-		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
+		log_combat(user, H, "handcuffed", src, addition="(attempt)")
 		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)]")
 
 		feedback_add_details("handcuffs","H")
@@ -156,7 +155,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_equip_slot = SLOT_WAIST
 	throwforce = 5
 	w_class = 2.0

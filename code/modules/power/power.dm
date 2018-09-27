@@ -108,10 +108,10 @@
 		if(!PC.powernet)
 			PC.powernet = new()
 			powernets += PC.powernet
-//			if(Debug)	to_chat(world.log, "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2])")
+//			if(Debug)	log_world("Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2])")
 			powernet_nextlink(PC,PC.powernet)
 
-//	if(Debug) to_chat(world.log, "[powernets.len] powernets found")
+//	if(Debug) log_world("[powernets.len] powernets found")
 
 	for(var/obj/structure/cable/C in cable_list)
 		if(!C.powernet)	continue
@@ -139,7 +139,7 @@
 	else
 		Zdir = 999
 ///// Z-Level Stuff
-//	to_chat(world.log, "d=[d] fdir=[fdir]")
+//	log_world("d=[d] fdir=[fdir]")
 	for(var/AM in T)
 		if(AM == source)	continue			//we don't want to return source
 
@@ -279,11 +279,9 @@
 	return null
 
 /area/proc/get_apc()
-	for(var/area/RA in src.related)
-		var/obj/machinery/power/apc/FINDME = locate() in RA
-		if (FINDME)
-			return FINDME
-
+	for(var/obj/machinery/power/apc/A in apcs_list)
+		if(A.area == src)
+			return A
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever

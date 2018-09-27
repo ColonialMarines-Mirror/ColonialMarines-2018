@@ -70,8 +70,8 @@
 			dizziness = max(0, dizziness - 15)
 			jitteriness = max(0, jitteriness - 15)
 			if(halloss > 0)
-				adjustHalLoss(rest_halloss_recovery_rate)
-		
+				adjustHalLoss(REST_HALLOSS_RECOVERY_RATE)
+
 		if(in_stasis == STASIS_IN_CRYO_CELL) blinded = TRUE //Always blinded while in stasisTUBES
 
 		//Periodically double-check embedded_flag
@@ -154,12 +154,12 @@
 		mobility_new = 0
 		protection_new = 0
 		marskman_new = 0
-		
+
 		//Natural recovery; enhanced by hold/protection aura.
 		var/aura_recovery_multiplier = 1 + max(0,0.5 * protection_aura) //Protection aura adds +50% recovery rate per point of leadership beyond the first; +150% for a CO/XO
 		dizziness = max(0, dizziness - 3 * aura_recovery_multiplier)
 		jitteriness = max(0, jitteriness - 3 * aura_recovery_multiplier)
-		adjustHalLoss(base_halloss_recovery_rate * aura_recovery_multiplier)
+		adjustHalLoss(BASE_HALLOSS_RECOVERY_RATE * aura_recovery_multiplier)
 		//hud_set_pheromone() //TODO: HOOK THIS UP, ASK PHIL
 
 	return 1

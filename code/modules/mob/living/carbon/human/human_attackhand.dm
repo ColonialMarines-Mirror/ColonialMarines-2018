@@ -268,7 +268,7 @@
 				var/protection_mod = 1
 				if(protection_aura)
 					protection_mod += 0.5 + 0.5 * protection_aura //SL Hold Aura bonus: +100% of the normal recovery bonus, SO: +150%, XO/CO: +200%
-				adjustHalLoss(rest_halloss_recovery_rate * protection_mod) //UP AND AT THEM SOLDIER!!
+				adjustHalLoss(REST_HALLOSS_RECOVERY_RATE * protection_mod) //UP AND AT THEM SOLDIER!!
 
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)

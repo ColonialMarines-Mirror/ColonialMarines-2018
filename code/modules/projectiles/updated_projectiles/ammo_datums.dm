@@ -725,7 +725,7 @@
 	..()
 	accurate_range = config.short_shell_range
 	damage = config.low_hit_damage
-	penetration= config.med_armor_penetration
+	penetration= config.low_armor_penetration
 
 /datum/ammo/bullet/smartgun/lethal
 	flags_ammo_behavior = AMMO_BALLISTIC

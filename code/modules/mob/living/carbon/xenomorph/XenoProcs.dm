@@ -502,21 +502,6 @@
 
 	update_icons()
 
-//Welp
-/mob/living/carbon/Xenomorph/proc/xeno_jitter(var/jitter_time = 25)
-
-	set waitfor = 0
-
-	while(jitter_time) //In ticks, so 10 ticks = 1 sec of jitter!
-		set waitfor = 0
-		pixel_x = old_x + rand(-3, 3)
-		pixel_y = old_y + rand(-1, 1)
-		sleep(1)
-		jitter_time--
-	//endwhile - reset the pixel offsets to zero
-	pixel_x = old_x
-	pixel_y = old_y
-
 //When the Queen's pheromones are updated, or we add/remove a leader, update leader pheromones
 /mob/living/carbon/Xenomorph/proc/handle_xeno_leader_pheromones(var/mob/living/carbon/Xenomorph/Queen/Q)
 

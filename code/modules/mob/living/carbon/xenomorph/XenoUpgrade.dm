@@ -4,8 +4,7 @@
 	upgrade_stored = 0
 	visible_message("<span class='xenonotice'>\The [src] begins to twist and contort.</span>", \
 	"<span class='xenonotice'>You begin to twist and contort.</span>")
-	spawn(0)
-		xeno_jitter(25)
+	do_jitter_animation(1000)
 
 /*
 *1 is indicative of the base speed/armor

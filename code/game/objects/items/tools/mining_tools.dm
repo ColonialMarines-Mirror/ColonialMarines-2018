@@ -89,8 +89,7 @@
 /obj/item/tool/pickaxe/plasmacutter
 	name = "plasma cutter"
 	icon_state = "plasma_cutter_on"
-	var/base_icon_state = "plasma_cutter_on"
-	item_state = "gun"
+	item_state = "plasmacutter"
 	w_class = 4.0
 	flags_equip_slot = SLOT_WAIST|SLOT_BACK
 	force = 40.0
@@ -100,17 +99,12 @@
 	desc = "A tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone. Eye protection strongly recommended."
 	drill_verb = "cutting"
 	heat_source = 3800
-	var/resin_multiplier = 4 //How much its damage vs resin is multiplied by
 	var/cutting_sound = 'sound/items/Welder2.ogg'
 	var/powered = FALSE
 	var/cut_delay = 30 //Takes this long in deciseconds to cut through a standard wall; three times as long for reinforced walls; half for girders.
 	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	var/dirt_amt_per_dig = 5
 	var/charge_cost = 1000
-	var/low_mod = 0.5
-	var/vlow_mod = 0.1
-	var/high_mod = 2
-	var/vhigh_mod = 3
 	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
 
 /obj/item/tool/pickaxe/plasmacutter/New()
@@ -320,10 +314,10 @@
 				var/turf/open/snow/ST = T
 				if(!ST.slayer)
 					return
-			if(cell.charge >= charge_cost * vlow_mod && powered)
+			if(cell.charge >= charge_cost * PLASMACUTTER_VLOW_MOD && powered)
 				to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
 				playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
-				if(!do_after(user, calc_delay(user) * vlow_mod, TRUE, 5, BUSY_ICON_BUILD))
+				if(!do_after(user, calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_BUILD))
 					return
 				var/transf_amt = dirt_amt_per_dig
 				if(turfdirt == DIRT_TYPE_SNOW)
@@ -334,7 +328,7 @@
 					ST.slayer -= transf_amt
 					ST.update_icon(1,0)
 					to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
-					use_charge(user, name, ST, charge_cost * vlow_mod) //costs 25% normal
+					use_charge(user, name, ST, charge_cost * PLASMACUTTER_VLOW_MOD) //costs 25% normal
 				else
 					return
 			else

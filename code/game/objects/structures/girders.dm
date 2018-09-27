@@ -60,10 +60,10 @@
 
 		else if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
 			var/obj/item/tool/pickaxe/plasmacutter/P = W
-			if(P.cell.charge >= P.charge_cost * P.low_mod && P.powered)
+			if(P.cell.charge >= P.charge_cost * PLASMACUTTER_LOW_MOD && P.powered)
 				P.start_cut(user, src.name, src)
-				if(do_after(user, P.calc_delay(user) * P.low_mod, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Girders take half as long
-					P.cut_apart(user, src.name, src, P.charge_cost * P.low_mod) //Girders require half the normal power
+				if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Girders take half as long
+					P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_LOW_MOD) //Girders require half the normal power
 					if(!src) return
 					health = 0
 					update_state()

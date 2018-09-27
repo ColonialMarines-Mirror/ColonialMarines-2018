@@ -104,8 +104,12 @@
 			multiplier += 1
 			if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
 				var/obj/item/tool/pickaxe/plasmacutter/P = W
-				multiplier += P.resin_multiplier //Plasma cutters are particularly good at destroying resin structures.
-				P.cut_apart(user, src.name, src, P.charge_cost * P.vlow_mod) //Minimal energy cost.
+				if(P.cell.charge >= P.charge_cost * PLASMACUTTER_VLOW_MOD)
+					multiplier += PLASMACUTTER_RESIN_MULTIPLIER //Plasma cutters are particularly good at destroying resin structures.
+					P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_VLOW_MOD) //Minimal energy cost.
+				else
+					P.fizzle_message(user)
+					return
 		else if((W.w_class < 4 || !W.sharp || W.force < 20) && !W.damtype == "burn" ) //only big strong sharp weapon are adequate
 			multiplier -= 0.75
 		damage *= max(0,multiplier)

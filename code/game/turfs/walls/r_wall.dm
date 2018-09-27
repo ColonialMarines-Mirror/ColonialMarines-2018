@@ -48,10 +48,10 @@
 
 	if(istype(W, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy)
 		var/obj/item/tool/pickaxe/plasmacutter/P = W
-		if(P.cell.charge >= P.charge_cost * P.high_mod && P.powered)
+		if(P.cell.charge >= P.charge_cost * PLASMACUTTER_HIGH_MOD && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.calc_delay(user) * P.high_mod, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Reinforced walls take three times as long as regulars.
-				P.cut_apart(user, src.name, src, P.charge_cost * P.high_mod)
+			if(do_after(user, P.calc_delay(user) * PLASMACUTTER_HIGH_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Reinforced walls take several times as long as regulars.
+				P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_HIGH_MOD)
 				dismantle_wall()
 			return
 		else

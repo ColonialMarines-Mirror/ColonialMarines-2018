@@ -953,10 +953,10 @@ About the new airlock wires panel:
 			else
 				P.fizzle_message(user)
 				return
-		else if(P.cell.charge >= P.charge_cost * P.vlow_mod && P.powered)
+		else if(P.cell.charge >= P.charge_cost * PLASMACUTTER_VLOW_MOD && P.powered)
 			P.start_cut(user, src.name, src)
-			if(do_after(user, P.calc_delay(user) * P.vlow_mod, TRUE, 5, BUSY_ICON_HOSTILE) && P)
-				P.cut_apart(user, src.name, src, P.charge_cost * P.vlow_mod) //Airlocks require much less power to unweld.
+			if(do_after(user, P.calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+				P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_VLOW_MOD) //Airlocks require much less power to unweld.
 				src.welded = FALSE
 				src.update_icon()
 			return

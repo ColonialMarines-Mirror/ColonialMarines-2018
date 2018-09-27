@@ -195,8 +195,8 @@
 			return
 		if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
 			var/obj/item/tool/pickaxe/plasmacutter/P = W
-			if(P.cell.charge >= P.charge_cost * P.vlow_mod && P.powered)
-				P.cut_apart(user, src.name, src, P.charge_cost * P.vlow_mod) //Closets require much less power to cut apart.
+			if(P.cell.charge >= P.charge_cost * PLASMACUTTER_VLOW_MOD && P.powered)
+				P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_VLOW_MOD) //Closets require much less power to cut apart.
 				new /obj/item/stack/sheet/metal(src.loc)
 				for(var/mob/M in viewers(src))
 					M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with [P].</span>", 3, "You hear welding.", 2)

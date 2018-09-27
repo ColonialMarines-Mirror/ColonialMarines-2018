@@ -118,3 +118,6 @@
 	var/temporary_slowdown = 0 //Stacking slowdown caused from effects, currently used by neurotoxin gas
 
 	var/datum/squad/assigned_squad //the squad this human is assigned to
+
+	var/base_halloss_recovery_rate = -2 //Points of Halloss recovered per life cycle while awake.
+	var/rest_halloss_recovery_rate = -10 //Points of Halloss recovered per life cycle while sleeping/resting/unconscious.

@@ -198,18 +198,13 @@
 	if(!isliving(AM))
 		return FALSE
 	var/mob/living/L = AM
-	if(isSynth(L) && L.stat == DEAD) //no meta hiding synthetic bodies
-		return FALSE
 	if(L.buckled)
 		return FALSE //to stop xeno from pulling marines on roller beds.
-	/*if(ishuman(L) && L.stat == DEAD)
+	if(ishuman(L) && L.stat == DEAD)
 		var/mob/living/carbon/human/H = L
-		if(H.status_flags & XENO_HOST)
-			if(world.time > H.timeofdeath + H.revive_grace_period)
-				return FALSE // they ain't gonna burst now
-		else
-			return FALSE // leave the dead alone*
-	*/ // this is disabled pending the results of the lighting change -spookydonut
+		if(H.undefibbable)
+			to_chat(src, "<span class='xenowarning'>Not alive, not interesting. Maybe when it has gone colder.</span>")
+			return FALSE // leave the defibbable dead alone
 	return ..()
 
 /mob/living/carbon/Xenomorph/pull_response(mob/puller)

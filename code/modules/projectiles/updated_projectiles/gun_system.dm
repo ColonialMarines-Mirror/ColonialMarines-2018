@@ -13,7 +13,7 @@
 	force 		= 5
 	attack_verb = null
 	sprite_sheet_id = 1
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_item = TWOHANDED
 
 	var/muzzle_flash 	= "muzzle_flash"
@@ -217,10 +217,16 @@
 	if(!(flags_item & TWOHANDED) || flags_item & WIELDED)
 		return
 
-	if(user.get_inactive_hand())
-		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
-		return
-
+	var/obj/item/offhand = user.get_inactive_hand()
+	if(offhand)
+		if(offhand == user.r_hand)
+			user.drop_r_hand()
+		else if(offhand == user.l_hand)
+			user.drop_l_hand()
+		if(user.get_inactive_hand()) //Failsafe; if there's somehow still something in the off-hand (undroppable), bail.
+			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
+			return
+			
 	if(ishuman(user))
 		var/check_hand = user.r_hand == src ? "l_hand" : "r_hand"
 		var/mob/living/carbon/human/wielder = user
@@ -772,7 +778,8 @@ and you're good to go.
 							cdel(projectile_to_fire)
 						reload_into_chamber(user) //Reload into the chamber if the gun supports it.
 						return TRUE
-
+					else
+						return FALSE
 	return ..() //Pistolwhippin'
 
 //----------------------------------------------------------
@@ -795,11 +802,9 @@ and you're good to go.
 			return
 
 		if(!config.allow_synthetic_gun_use)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(istype(H.species , /datum/species/synthetic))
-					to_chat(user, "<span class='warning'>Your program does not allow you to use firearms.</span>")
-					return
+			if(isSynth(user))
+				to_chat(user, "<span class='warning'>Your program does not allow you to use firearms.</span>")
+				return
 
 		if(flags_gun_features & GUN_TRIGGER_SAFETY)
 			to_chat(user, "<span class='warning'>The safety is on!</span>")

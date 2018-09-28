@@ -41,6 +41,7 @@
 			var/mob/living/carbon/human/H = body
 			icon = H.stand_icon
 			overlays = H.overlays_standing
+			underlays = H.underlays_standing
 		else
 			icon = body.icon
 			icon_state = body.icon_state
@@ -323,7 +324,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Follow Human" // "Haunt"
 	set desc = "Follow a living Human."
 
-	var/list/mobs = gethumans()
+	var/list/mobs = getlivinghumans()
 	var/input = input("Please select a living Human:", "Haunt", null, null) as null|anything in mobs
 
 	if(mobs.len == 0)

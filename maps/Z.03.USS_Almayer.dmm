@@ -5344,7 +5344,7 @@
 "bYN" = (/turf/open/floor/almayer{tag = "icon-orange (SOUTHWEST)"; icon_state = "orange"; dir = 10},/area/almayer/engineering/lower_engine_monitoring)
 "bYO" = (/turf/open/floor/almayer{dir = 2; icon_state = "orange"; tag = "icon-orange (NORTH)"},/area/almayer/engineering/lower_engine_monitoring)
 "bYP" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/closed/wall/almayer,/area/almayer/hallways/vehiclehangar)
-"bYQ" = (/obj/effect/multitile_spawner/cm_armored/tank/decrepit,/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/almayer/hallways/vehiclehangar)
+"bYQ" = (/obj/effect/multitile_spawner/cm_armored/tank,/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/almayer/hallways/vehiclehangar)
 "bYR" = (/obj/structure/bed/chair/office/light,/obj/effect/landmark/start{name = "Maintenance Tech"},/turf/open/floor/almayer{dir = 2; icon_state = "orange"; tag = "icon-orange (NORTH)"},/area/almayer/engineering/lower_engine_monitoring)
 "bYS" = (/obj/structure/table/almayer,/obj/item/tool/pen,/obj/item/paper,/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/almayer/engineering/lower_engine_monitoring)
 "bYT" = (/obj/structure/closet/radiation,/obj/machinery/light,/turf/open/floor/almayer{tag = "icon-bluecorner (NORTH)"; icon_state = "cargo"; dir = 2},/area/almayer/engineering/lower_engine_monitoring)

@@ -246,8 +246,8 @@
 	req_one_access = null
 	req_one_access_txt = "9;2;21"
 	wrenchable = TRUE
-	drag_delay = 0
-	anchored = 0
+	drag_delay = FALSE
+	anchored = FALSE
 	idle_power_usage = 1
 	vend_power_usage = 50
 	machine_current_charge = 20000 //integrated battery for recharging energy weapons. Normally 10000.
@@ -283,70 +283,14 @@
 
 /obj/machinery/vending/lasgun/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/ammo_magazine/lasgun))
-		stock(W, user, TRUE) //
+		stock(W, user, TRUE)
 		//to_chat(user, "<span class='warning'>DEBUG: Lasgun vendor restocked with [W].</span>")
 		return TRUE
 	. = ..()
 
-/obj/machinery/vending/lasgun/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 0)
-
-	var/list/display_list = list()
-	var/list/display_records = list()
-	display_records += product_records
-	if(extended_inventory)
-		display_records += hidden_records
-	if(coin)
-		display_records += coin_records
-	for (var/datum/data/vending_product/R in display_records)
-		var/prodname = adminscrub(R.product_name)
-		if(R.amount) prodname += ": [R.amount]"
-		else prodname += ": SOLD OUT"
-		if(R.price) prodname += " (Price: [R.price])"
-		prodname = "<color = [R.display_color]>[prodname]</color>"
-		display_list += list(list("product_name" = prodname, "product_color" = R.display_color, "amount" = R.amount, "prod_index" = GetProductIndex(R), "prod_cat" = R.category))
-
-	var/list/data = list(
-		"vendor_name" = name,
-		"currently_vending_name" = currently_vending ? sanitize(currently_vending.product_name) : null,
-		"premium_length" = premium.len,
-		"ewallet" = ewallet ? ewallet.name : null,
-		"ewallet_worth" = ewallet ? ewallet.worth : null,
-		"coin" = coin ? coin.name : null,
-		"displayed_records" = display_list,
-	)
-
-	data["energy"] = machine_current_charge
-	data["maxEnergy"] = machine_max_charge
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-
-	if (!ui)
-		ui = new(user, src, ui_key, "vending_machine.tmpl", name , 450, 600)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-
 /obj/machinery/vending/lasgun/examine(mob/user)
 	..()
 	to_chat(user, "<b>It has [machine_current_charge] of [machine_max_charge] charge remaining.</b>")
-
-/obj/machinery/vending/lasgun/MouseDrop_T(var/atom/movable/A, mob/user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	if(user.stat || user.is_mob_restrained() || user.lying)
-		return
-
-	if(get_dist(user, src) > 1 || get_dist(src, A) > 1)
-		return
-
-	if(istype(A, /obj/item))
-		var/obj/item/I = A
-		if(istype(I, /obj/item/ammo_magazine/lasgun))
-			stock(I, user, TRUE)
-		else
-			stock(I, user)
 
 //MARINE FOOD VENDOR APOPHIS775 23DEC2017
 /obj/machinery/vending/marineFood

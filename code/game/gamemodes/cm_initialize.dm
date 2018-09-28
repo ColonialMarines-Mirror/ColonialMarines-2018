@@ -402,11 +402,11 @@ datum/game_mode/proc/initialize_special_clamps()
 	if(is_queen)
 		to_chat(new_xeno, "<B>You are now the alien queen!</B>")
 		to_chat(new_xeno, "<B>Your job is to spread the hive.</B>")
-		to_chat(new_xeno, "Talk in Hivemind using <strong>:a</strong> (e.g. ':aMy life for the queen!')")
+		to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the hive!')")
 	else
 		to_chat(new_xeno, "<B>You are now an alien!</B>")
 		to_chat(new_xeno, "<B>Your job is to spread the hive and protect the Queen. If there's no Queen, you can become the Queen yourself by evolving into a drone.</B>")
-		to_chat(new_xeno, "Talk in Hivemind using <strong>:a</strong> (e.g. ':aMy life for the queen!')")
+		to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the queen!')")
 
 	new_xeno.update_icons()
 
@@ -491,7 +491,7 @@ datum/game_mode/proc/initialize_special_clamps()
 			H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H.back), WEAR_IN_BACK)
 			ghost.set_cm_skills(/datum/skills/civilian/survivor/doctor)
 		if("Corporate") //Corporate guy
-			id_assignment = "Corporate Liason"
+			id_assignment = "Corporate Liaison"
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/liaison_suit(H), WEAR_BODY)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), WEAR_FEET)
 			H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/norm(H), WEAR_BACK)
@@ -710,8 +710,10 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(!istype(survivor))
 			current_survivors -= survivor
 			continue //Not a mind? How did this happen?
-
-		random_name = pick(random_name(FEMALE),random_name(MALE))
+		
+		var/mob/living/carbon/human/current = survivor.current
+		var/datum/species/species = istype(current) ? current.species : all_species[DEFAULT_SPECIES]
+		random_name = species.random_name(pick(MALE, FEMALE))
 
 		if(current_survivors.len > 1) //If we have another survivor to pick from.
 			if(survivor_multi_story.len) //Unlikely.

@@ -47,6 +47,7 @@
 	var/bonus_projectiles_type 					// Type path of the extra projectiles
 	var/bonus_projectiles_amount 	= 0 		// How many extra projectiles it shoots out. Works kind of like firing on burst, but all of the projectiles travel together
 	var/debilitate[]				= null 		// Stun,knockdown,knockout,irradiate,stutter,eyeblur,drowsy,agony
+	var/barricade_clear_distance	= 1			// How far the bullet can travel before incurring a chance of hitting barricades; normally 1.
 
 	New()
 		accuracy 			= config.min_hit_accuracy 	// This is added to the bullet's base accuracy.
@@ -184,8 +185,8 @@
 	proc/drop_flame(turf/T) // ~Art updated fire 20JAN17
 		if(!istype(T))
 			return
-		if(locate(/obj/flamer_fire) in T)
-			return
+		for(var/obj/flamer_fire/F in T) // No stacking flames!
+			cdel(F)
 		new /obj/flamer_fire(T, 20, 20)
 
 
@@ -231,10 +232,11 @@
 
 /datum/ammo/bullet/pistol/tranq
 	name = "tranq bullet"
-	debilitate = list(0,2,0,0,5,3,20,0)
+	debilitate = list(0,0,0,0,5,3,30,0)
 
 /datum/ammo/bullet/pistol/hollow
 	name = "hollowpoint pistol bullet"
+
 
 /datum/ammo/bullet/pistol/hollow/New()
 	..()
@@ -528,7 +530,7 @@
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.name == "Human") //no effect on synths or preds.
+		if(H.species && H.species.count_human) //no effect on synths or preds.
 			if(H.mind && H.mind.special_role)
 				H.apply_effects(0,1) //ineffective against antags.
 			else
@@ -784,6 +786,7 @@
 	damage = config.med_hit_damage
 	penetration= config.mhigh_armor_penetration //Bumped the penetration to serve a different role from sentries, MGs are a bit more offensive
 	accuracy = config.med_hit_accuracy
+	barricade_clear_distance = 2
 
 /datum/ammo/bullet/minigun
 	name = "minigun bullet"

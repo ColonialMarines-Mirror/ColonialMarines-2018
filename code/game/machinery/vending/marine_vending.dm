@@ -14,6 +14,7 @@
 	req_one_access = null
 	req_one_access_txt = "9;2;21"
 	wrenchable = FALSE
+	tokensupport = TOKEN_MARINE
 
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
@@ -166,6 +167,9 @@
 /obj/machinery/vending/marine/cargo_ammo
 	name = "\improper ColMarTech automated munition vendor"
 	desc = "A automated rack hooked up to a small supply of ammo magazines."
+	icon_state = "cargo-armory"
+	icon_vend = "cargo-armory-vend"
+	icon_deny = "cargo-armory"
 	hacking_safety = 1
 	wrenchable = FALSE
 	products = list(
@@ -235,8 +239,7 @@
 /obj/machinery/vending/marineFood
 	name = "\improper Marine Food and Drinks Vendor"
 	desc = "Standard Issue Food and Drinks Vendor, containing standard military food and drinks."
-	icon_state = "generic"
-	icon_deny = "generic-deny"
+	icon_state = "sustenance"
 	wrenchable = FALSE
 	products = list(/obj/item/reagent_container/food/snacks/protein_pack = 50,
 					/obj/item/reagent_container/food/snacks/mre_pack/meal1 = 15,
@@ -332,8 +335,8 @@
 	desc = "A marine medic equipment vendor"
 	product_ads = "They were gonna die anyway.;Let's get space drugged!"
 	req_access = list(ACCESS_MARINE_MEDPREP)
-	icon_state = "medicprepvendor"
-	icon_deny = "medicprepvendor-deny"
+	icon_state = "marinemed"
+	icon_deny = "marinemed-deny"
 	wrenchable = FALSE
 
 	products = list(
@@ -366,9 +369,10 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	wrenchable = FALSE
+	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine = 1,
+						/obj/item/coin/marine/specialist = 1,
 						/obj/item/clothing/tie/storage/webbing = 1,
 						/obj/item/explosive/plastique = 2,
 						/obj/item/explosive/grenade/frag = 2,
@@ -400,9 +404,10 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	wrenchable = FALSE
+	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine = 1,
+						/obj/item/coin/marine/specialist = 1,
 			)
 	contraband = list()
 	//premium = list(/obj/item/weapon/shield/riot = 1)	//NOTE: This needs to be re-worked so we don't have to have a riot shield in here at all. ~Bmc777
@@ -432,6 +437,8 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	wrenchable = FALSE
+	tokensupport = TOKEN_ENGI
+
 	products = list(
 					/obj/item/coin/marine/engineer = 1,
 					)
@@ -485,6 +492,7 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	wrenchable = FALSE
+	tokensupport = "marine"
 
 	products = list(
 						/obj/item/clothing/suit/storage/marine/leader = 1,
@@ -533,6 +541,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	wrenchable = FALSE
+	tokensupport = "marine"
 
 	products = list(
 						/obj/item/attachable/suppressor = 8,

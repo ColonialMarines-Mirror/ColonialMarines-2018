@@ -5,7 +5,7 @@
 	icon_state = "helmet"
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_inventory = COVEREYES|BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS|HIDEEYES
 	flags_cold_protection = HEAD
@@ -324,7 +324,7 @@
 /obj/item/clothing/head/helmet/marine/pyro
 	name = "\improper M35 helmet"
 	icon_state = "pyro_helmet"
-	desc = "A helmet designed for USCM Pyrotechnicians."
+	desc = "A helmet designed for USCM Pyrotechnicians. Contains heavy insulation, covered in nomex weave."
 	armor = list(melee = 85, bullet = 75, laser = 60, energy = 50, bomb = 50, bio = 10, rad = 10)
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 	max_heat_protection_temperature = FIRESUIT_max_heat_protection_temperature

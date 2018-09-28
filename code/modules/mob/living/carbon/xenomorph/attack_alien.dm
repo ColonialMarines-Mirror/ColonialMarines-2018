@@ -165,7 +165,7 @@
 			else
 				playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
 				var/knockdown_duration = traumatic_shock * 0.005 
-				KnockDown(max(0.3 + knockdown_duration)) //Highest of 0.3 seconds or 0.5% of total pain.
+				KnockDown(max(0.3,knockdown_duration)) //Highest of 0.3 seconds or 0.5% of total pain.
 
 			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
 			var/tackle_pain = null
@@ -183,10 +183,8 @@
 				throttle_message2 = "<span class='danger'>You badly throttle [src]!</span>"
 			M.visible_message("[throttle_message]", \
 			"[throttle_message2]", null, 5)
-			return 1
-				//M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
-				//"<span class='danger'>You try to tackle [src]</span>", null, 5)
-	return 1
+			return TRUE
+	return TRUE
 
 
 //Every other type of nonhuman mob

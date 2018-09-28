@@ -188,22 +188,6 @@
 		to_chat(user, "<span class='notice'><b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 	update_icon()
 	..()
-/*
-/obj/item/tool/pickaxe/plasmacutter/proc/plasma_cut(mob/user, obj/item/W, atom/A, modifier = 1)
-	if(W == src)
-		if(cell.charge >= charge_cost)
-			use_charge()
-			start_cut(user, src.name, src)
-			if(do_after(user, calc_delay(user) * modifier, TRUE, 5, BUSY_ICON_FRIENDLY) && src)
-				cut_apart(user, src.name, src)
-				if(istype(A, obj/structure/window_frame)
-					cdel(A)
-				else(istype(A, /turf/closed/wall)
-
-			return
-		else
-			fizzle_message(user)
-			return*/
 
 /obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
 	var/final_delay = PLASMACUTTER_CUT_DELAY
@@ -213,7 +197,7 @@
 			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 			final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
 		else
-			final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3))
+			final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3)*5)
 	return final_delay
 
 /obj/item/tool/pickaxe/plasmacutter/emp_act(severity)
@@ -261,15 +245,13 @@
 			to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 			playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
 			update_icon()
-		//else
-			//to_chat(user, "<span class='warning'>There's already a cell loaded in [src]!</span>")
+
 
 /obj/item/tool/pickaxe/plasmacutter/attack_hand(mob/user)
 	if(user.get_inactive_hand() == src)
 		if(cell)
 			cell.updateicon()
 			user.put_in_active_hand(cell)
-			//cell.loc = get_turf(src.loc)
 			cell = null
 			playsound(user, 'sound/machines/click.ogg', 25, 1, 5)
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
@@ -300,7 +282,8 @@
 
 
 /obj/item/tool/pickaxe/plasmacutter/afterattack(atom/target, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	if(user.action_busy)
 		return

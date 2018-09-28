@@ -104,6 +104,8 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
+	var/machine_current_charge = 0 //Does it have an integrated battery? Normally 10k if so.
+	var/machine_max_charge = 0
 	var/power_channel = EQUIP
 	var/mob/living/carbon/human/operator = null //Had no idea where to put this so I put this here. Used for operating machines with RELAY_CLICK
 		//EQUIP,ENVIRON or LIGHT
@@ -180,11 +182,38 @@ Class Procs:
 	if(A && A.master)
 		A.master.powerupdate = 1
 
+/obj/machinery/power_change()
+	if( !powered(power_channel) && (machine_current_charge <= 0) )
+		stat |= NOPOWER
+	else
+		stat &= ~NOPOWER
+
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
-		return 0
+		if(src.use_power == 1 && (machine_current_charge > idle_power_usage)) //Does it have an integrated battery/reserve power to tap into?
+			machine_current_charge -= min(machine_current_charge, idle_power_usage) //Sterilize with min; no negatives allowed.
+			//to_chat(world, "<span class='warning'>DEBUG: Machine Auto_Use_Power: Idle Power Usage: [idle_power_usage] Machine Current Charge: [machine_current_charge].</span>")
+			update_icon()
+			return 1
+		else if (machine_current_charge > active_power_usage)
+			machine_current_charge -= min(machine_current_charge, active_power_usage)
+			//to_chat(world, "<span class='warning'>DEBUG: Machine Auto_Use_Power: Active Power Usage: [active_power_usage] Machine Current Charge: [machine_current_charge].</span>")
+			update_icon()
+			return 1
+		else
+			return 0
+
 	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel, 1)
+		if(machine_current_charge < machine_max_charge) //here we handle recharging the internal battery of machines
+			//to_chat(world, "<span class='warning'>DEBUG: Machine Auto_Use_Power: Machine Current Charge: [machine_current_charge] .</span>")
+			var/power_usage = (min(500,max(0,machine_max_charge - machine_current_charge)))
+			machine_current_charge += power_usage //recharge internal cell at max rate of 500
+			use_power(power_usage,power_channel, 1)
+			//to_chat(world, "<span class='warning'>DEBUG: Machine Auto_Use_Power: Power Usage: [power_usage] Machine Current Charge: [machine_current_charge].</span>")
+			update_icon()
+		else
+			use_power(idle_power_usage,power_channel, 1)
+
 	else if(src.use_power >= 2)
 		use_power(active_power_usage,power_channel, 1)
 	return 1

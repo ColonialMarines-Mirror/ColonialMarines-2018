@@ -31,7 +31,7 @@ Defined in conflicts.dm of the #defines folder.
 	var/pixel_shift_x = 16 //Determines the amount of pixels to move the icon state for the overlay.
 	var/pixel_shift_y = 16 //Uses the bottom left corner of the item.
 
-	flags_atom = CONDUCT
+	flags_atom =  CONDUCT
 	matter = list("metal" = 2000)
 	w_class = 2.0
 	force = 1.0
@@ -275,7 +275,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	slot = "muzzle"
 	pixel_shift_x = 14 //Below the muzzle.
 	pixel_shift_y = 18
-	matter = list("metal" = 1000)
 
 /obj/item/attachable/bayonet/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/tool/screwdriver))
@@ -410,7 +409,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	attach_icon = "flashlight_a"
 	light_mod = 7
 	slot = "rail"
-	matter = list("metal" = 50,"glass" = 20)
 	flags_attach_features = ATTACH_REMOVABLE|ATTACH_ACTIVATION
 	attachment_action_type = /datum/action/item_action/toggle
 
@@ -556,7 +554,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	desc = "A non-standard heavy wooden stock for the M37 Shotgun. Less quick and more cumbersome than the standard issue stakeout, but reduces recoil and improves accuracy. Allegedly makes a pretty good club in a fight too.."
 	slot = "stock"
 	wield_delay_mod = WIELD_DELAY_NORMAL
-	matter = null
 	icon_state = "stock"
 
 /obj/item/attachable/stock/shotgun/New()
@@ -573,7 +570,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/tactical
 	name = "\improper MK221 tactical stock"
-	desc = "A sturdy polymer stock for the MK221 shotgun. Supplied in limited numbers and moderately encumbering, it provides an ergonomic surface to ease perceived recoil and usability."
 	icon_state = "tactical_stock"
 
 /obj/item/attachable/stock/tactical/New()
@@ -592,7 +588,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "slavicstock"
 	pixel_shift_x = 32
 	pixel_shift_y = 13
-	matter = null
 	flags_attach_features = NOFLAGS
 
 /obj/item/attachable/stock/slavic/New()
@@ -671,7 +666,6 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	icon_state = "44stock"
 	pixel_shift_x = 35
 	pixel_shift_y = 19
-	matter = null
 
 /obj/item/attachable/stock/revolver/New()
 	..()
@@ -684,7 +678,19 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	scatter_unwielded_mod = -config.min_scatter_value
 
 
+/obj/item/attachable/stock/lasgun
+	name = "\improper M43 Sunfury lasgun stock"
+	desc = "The standard stock for the M43 Sunfury lasgun."
+	slot = "stock"
+	wield_delay_mod = null
+	melee_mod = 5
+	icon_state = "laserstock"
+	attach_icon = "laserstock"
+	pixel_shift_x = 41
+	pixel_shift_y = 10
 
+/obj/item/attachable/stock/lasgun/New()
+	..() //Cosmetic mainly.
 
 
 ////////////// Underbarrel Attachments ////////////////////////////////////
@@ -878,10 +884,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	if(!istype(T))
 		return
 
-	for(var/obj/flamer_fire/F in T) // No stacking flames!
-		cdel(F)
-
-	new/obj/flamer_fire(T)
+	if(!locate(/obj/flamer_fire) in T) // No stacking flames!
+		new/obj/flamer_fire(T)
+	else
+		return
 
 	for(var/mob/living/carbon/M in T) //Deal bonus damage if someone's caught directly in initial stream
 		if(M.stat == DEAD)
@@ -1049,10 +1055,9 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/bipod/activate_attachment(obj/item/weapon/gun/G,mob/living/user, turn_off)
 	if(turn_off)
-		if(bipod_deployed)
-			bipod_deployed = FALSE
-			G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
-			G.wield_delay -= WIELD_DELAY_FAST
+		bipod_deployed = FALSE
+		G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
+		G.wield_delay -= WIELD_DELAY_FAST
 	else
 		if(bipod_deployed)
 			to_chat(user, "<span class='notice'>You retract [src].</span>")

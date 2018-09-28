@@ -14,7 +14,6 @@
 	req_one_access = null
 	req_one_access_txt = "9;2;21"
 	wrenchable = FALSE
-	tokensupport = TOKEN_MARINE
 
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
@@ -22,11 +21,13 @@
 					/obj/item/weapon/gun/revolver/m44 = 5,
 					/obj/item/weapon/gun/smg/m39 = 20,
 					/obj/item/weapon/gun/rifle/m41a = 25,
+					/obj/item/weapon/gun/energy/lasgun/M43 = 10,
 					/obj/item/weapon/gun/shotgun/pump = 10,
 					/obj/item/ammo_magazine/pistol = 30,
 					/obj/item/ammo_magazine/revolver = 25,
 					/obj/item/ammo_magazine/smg/m39 = 30,
 					/obj/item/ammo_magazine/rifle = 22,
+					/obj/item/ammo_magazine/lasgun/M43 = 22,
 					/obj/item/ammo_magazine/shotgun = 8,
 					/obj/item/ammo_magazine/shotgun/buckshot = 8,
 					/obj/item/ammo_magazine/shotgun/flechette = 8,
@@ -117,6 +118,7 @@
 					/obj/item/weapon/gun/rifle/lmg = 0,
 					/obj/item/weapon/gun/shotgun/pump = 5,
 					/obj/item/weapon/gun/shotgun/combat = 0,
+					/obj/item/weapon/gun/energy/lasgun/M43 = 5,
 					/obj/item/explosive/mine = 1,
 					/obj/item/storage/box/nade_box = 4,
 					/obj/item/explosive/grenade/frag = 2,
@@ -167,9 +169,6 @@
 /obj/machinery/vending/marine/cargo_ammo
 	name = "\improper ColMarTech automated munition vendor"
 	desc = "A automated rack hooked up to a small supply of ammo magazines."
-	icon_state = "cargo-armory"
-	icon_vend = "cargo-armory-vend"
-	icon_deny = "cargo-armory"
 	hacking_safety = 1
 	wrenchable = FALSE
 	products = list(
@@ -196,6 +195,9 @@
 					/obj/item/ammo_magazine/shotgun = 5,
 					/obj/item/ammo_magazine/shotgun/buckshot = 5,
 					/obj/item/ammo_magazine/shotgun/flechette = 5,
+					/obj/item/ammo_magazine/lasgun/M43 = 15,
+					/obj/item/ammo_magazine/lasgun/M43/highcap = 1,
+					/obj/item/ammo_magazine/rifle/extended = 1,
 					/obj/item/ammo_magazine/sniper = 1,
 					/obj/item/ammo_magazine/sniper/incendiary = 1,
 					/obj/item/ammo_magazine/sniper/flak = 1,
@@ -233,13 +235,69 @@
 	cargo_ammo_vendors.Remove(src)
 
 
+/obj/machinery/vending/lasgun
+	name = "ColMarTech Lasgun Field Charger"
+	desc = "An automated power cell dispenser and charger. Used to recharge energy weapon power cells, including in the field. Has an internal battery that charges off the power grid."
+	icon_state = "lascharger"
+	icon_vend = "lascharger_dispensing"
+	icon_deny = "lascharger_denied"
+	req_access = null
+	req_access_txt = "0"
+	req_one_access = null
+	req_one_access_txt = "9;2;21"
+	wrenchable = TRUE
+	drag_delay = FALSE
+	anchored = FALSE
+	idle_power_usage = 1
+	vend_power_usage = 50
+	machine_current_charge = 20000 //integrated battery for recharging energy weapons. Normally 10000.
+	machine_max_charge = 20000
 
+	product_ads = "Lasgun running low? Recharge here!;Need a charge?;Power up!;Electrifying!;Empower yourself!"
+	products = list(
+					/obj/item/ammo_magazine/lasgun/M43 = 10,
+					/obj/item/ammo_magazine/lasgun/M43/highcap = 2,
+					)
+
+	contraband =   list()
+
+	premium = list()
+
+	prices = list()
+
+/obj/machinery/vending/lasgun/New()
+	..()
+	update_icon()
+
+/obj/machinery/vending/lasgun/update_icon()
+	if(machine_current_charge <= 0)
+		icon_state = "lascharger-off"
+	else if(machine_current_charge > round(machine_max_charge*0.75))
+		icon_state = "lascharger"
+	else if(machine_current_charge > round(machine_max_charge*0.5))
+		icon_state = "lascharger_75"
+	else if(machine_current_charge > round(machine_max_charge*0.25))
+		icon_state = "lascharger_50"
+	else
+		icon_state = "lascharger_25"
+
+/obj/machinery/vending/lasgun/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/ammo_magazine/lasgun))
+		stock(W, user, TRUE)
+		//to_chat(user, "<span class='warning'>DEBUG: Lasgun vendor restocked with [W].</span>")
+		return TRUE
+	. = ..()
+
+/obj/machinery/vending/lasgun/examine(mob/user)
+	..()
+	to_chat(user, "<b>It has [machine_current_charge] of [machine_max_charge] charge remaining.</b>")
 
 //MARINE FOOD VENDOR APOPHIS775 23DEC2017
 /obj/machinery/vending/marineFood
 	name = "\improper Marine Food and Drinks Vendor"
 	desc = "Standard Issue Food and Drinks Vendor, containing standard military food and drinks."
-	icon_state = "sustenance"
+	icon_state = "generic"
+	icon_deny = "generic-deny"
 	wrenchable = FALSE
 	products = list(/obj/item/reagent_container/food/snacks/protein_pack = 50,
 					/obj/item/reagent_container/food/snacks/mre_pack/meal1 = 15,
@@ -335,8 +393,8 @@
 	desc = "A marine medic equipment vendor"
 	product_ads = "They were gonna die anyway.;Let's get space drugged!"
 	req_access = list(ACCESS_MARINE_MEDPREP)
-	icon_state = "marinemed"
-	icon_deny = "marinemed-deny"
+	icon_state = "medicprepvendor"
+	icon_deny = "medicprepvendor-deny"
 	wrenchable = FALSE
 
 	products = list(
@@ -369,10 +427,9 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	wrenchable = FALSE
-	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine/specialist = 1,
+						/obj/item/coin/marine = 1,
 						/obj/item/clothing/tie/storage/webbing = 1,
 						/obj/item/explosive/plastique = 2,
 						/obj/item/explosive/grenade/frag = 2,
@@ -404,10 +461,9 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	wrenchable = FALSE
-	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine/specialist = 1,
+						/obj/item/coin/marine = 1,
 			)
 	contraband = list()
 	//premium = list(/obj/item/weapon/shield/riot = 1)	//NOTE: This needs to be re-worked so we don't have to have a riot shield in here at all. ~Bmc777
@@ -437,8 +493,6 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	wrenchable = FALSE
-	tokensupport = TOKEN_ENGI
-
 	products = list(
 					/obj/item/coin/marine/engineer = 1,
 					)
@@ -492,7 +546,6 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	wrenchable = FALSE
-	tokensupport = "marine"
 
 	products = list(
 						/obj/item/clothing/suit/storage/marine/leader = 1,
@@ -541,7 +594,6 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	wrenchable = FALSE
-	tokensupport = "marine"
 
 	products = list(
 						/obj/item/attachable/suppressor = 8,

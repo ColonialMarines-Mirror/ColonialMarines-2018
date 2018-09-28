@@ -558,7 +558,10 @@
 
 	if(istype(A, /obj/item))
 		var/obj/item/I = A
-		stock(I, user)
+		if(istype(I, /obj/item/ammo_magazine/lasgun) && istype(src, /obj/machinery/vending/lasgun))
+			stock(I, user, TRUE)
+		else
+			stock(I, user)
 
 /obj/machinery/vending/proc/stock(obj/item/item_to_stock, mob/user, recharge = FALSE)
 	var/datum/data/vending_product/R //Let's try with a new datum.

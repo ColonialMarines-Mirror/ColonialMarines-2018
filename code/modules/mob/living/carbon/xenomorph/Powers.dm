@@ -257,20 +257,11 @@
 // Warrior Fling
 /mob/living/carbon/Xenomorph/proc/fling(atom/A)
 
-	if (!A || !istype(A, /mob/living/carbon/human))
-		return
-
-	if (!check_state() || agility)
+	if (!A || !istype(A, /mob/living/carbon/human) || !check_state() || agility || !check_plasma(10) || !Adjacent(A))
 		return
 
 	if (used_fling)
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before flinging something.</span>")
-		return
-
-	if (!check_plasma(10))
-		return
-
-	if (!Adjacent(A))
 		return
 
 	if(stagger)
@@ -381,21 +372,15 @@
 
 /mob/living/carbon/Xenomorph/proc/lunge(atom/A)
 
-	if (!A || !istype(A, /mob/living/carbon/human))
+	if (!A || !istype(A, /mob/living/carbon/human) || !check_state() || agility || !check_plasma(10))
 		return
 
 	if (!isturf(loc))
 		to_chat(src, "<span class='xenowarning'>You can't lunge from here!</span>")
 		return
 
-	if (!check_state() || agility)
-		return
-
 	if (used_lunge)
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before lunging.</span>")
-		return
-
-	if (!check_plasma(10))
 		return
 
 	if(stagger)

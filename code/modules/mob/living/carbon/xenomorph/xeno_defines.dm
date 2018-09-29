@@ -1,11 +1,3 @@
-#define CRUSHER_STOMP_COOLDOWN 200
-#define XENO_SLOWDOWN_REGEN 0.4
-#define QUEEN_DEATH_TIMER 300 // 5 minutes
-#define DEFENDER_CRESTDEFENSE_ARMOR 30
-#define DEFENDER_CRESTDEFENSE_SLOWDOWN 0.8
-#define DEFENDER_FORTIFY_ARMOR 60
-#define WARRIOR_AGILITY_ARMOR 30
-
 /mob/living/carbon/Xenomorph
 	var/dead_icon = "Drone Dead"
 	var/language = "Xenomorph"

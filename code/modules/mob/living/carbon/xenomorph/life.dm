@@ -56,10 +56,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		if(!knocked_out && !sleeping) //wake if not napping
 			blinded = FALSE
 			stat = CONSCIOUS
-			if(isXenoBoiler(src))
-				see_in_dark = 20
-			else
-				see_in_dark = 8
+			see_in_dark = 8
 			ear_deaf = 0 //All this stuff is prob unnecessary
 			ear_damage = 0
 			eye_blind = 0
@@ -72,6 +69,11 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			death()
 		return
 
+/mob/living/carbon/Xenomorph/Boiler/handle_critical_status_updates()
+	..()
+	if(see_in_dark == 8)
+		see_in_dark = 20
+
 /mob/living/carbon/Xenomorph/proc/handle_conscious_status_updates()
 	if(status_flags & GODMODE)
 		return FALSE
@@ -79,8 +81,11 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		blinded = TRUE
 		stat = UNCONSCIOUS
 		see_in_dark = 5
-		if(isXenoRunner(src) && layer != initial(layer)) //Unhide
-			layer = MOB_LAYER
+
+/mob/living/carbon/Xenomorph/Runner/handle_conscious_status_updates()
+	..()
+	if(stat = UNCONSCIOUS && layer != initial(layer))
+		layer = MOB_LAYER
 
 /mob/living/carbon/Xenomorph/proc/handle_living_status_updates()
 	if(status_flags & GODMODE)
@@ -129,12 +134,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		var/datum/hive_status/hive = hive_datum[hivenumber]
 		if(hive.living_xeno_queen.loc.z == loc.z || !hive.living_xeno_queen || innate_healing)
 			if(lying || resting)
-				if(health <= 0) //Unconscious
-					XENO_HEAL_WOUNDS(0.33) //Healing is much slower. Warding pheromones make up for the rest if you're curious
-				else
-					XENO_HEAL_WOUNDS(1)
-			else if(isXenoCrusher() || isXenoRavager())
-				XENO_HEAL_WOUNDS(0.66)
+				XENO_HEAL_WOUNDS(1)
 			else
 				XENO_HEAL_WOUNDS(0.33) //Major healing nerf if standing
 	updatehealth()

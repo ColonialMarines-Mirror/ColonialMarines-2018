@@ -84,7 +84,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 /mob/living/carbon/Xenomorph/Runner/handle_conscious_status_updates()
 	..()
-	if(stat = UNCONSCIOUS && layer != initial(layer))
+	if(stat == UNCONSCIOUS && layer != initial(layer))
 		layer = MOB_LAYER
 
 /mob/living/carbon/Xenomorph/proc/handle_living_status_updates()

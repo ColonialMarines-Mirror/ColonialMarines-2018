@@ -164,8 +164,8 @@
 				"<span class='danger'>You try to tackle [src], but they are already down!</span>", null, 5)
 			else
 				playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
-				var/knockdown_duration = traumatic_shock * 0.005 
-				KnockDown(max(0.3,knockdown_duration)) //Highest of 0.3 seconds or 0.5% of total pain.
+				var/knockdown_multiplier = max(1,traumatic_shock * 0.02) //hopefully this fixes suspected rounding issues.
+				KnockDown(0.3 * knockdown_multiplier) //Min 0.3, probable max 1.2
 
 			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
 			var/tackle_pain = null

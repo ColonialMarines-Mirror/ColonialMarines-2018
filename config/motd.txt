@@ -1,5 +1,16 @@
-<h1>Welcome to DMCAstation 13!</h1>
-
-<i>This server is running <a href="http://ss13.eu/">/tg/station13's</a> modification of <a href="https://cm-ss13.com/">CM-SS13's</a> modification of <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://ss13.eu/">/tg/station13</a> SS13 code.</i>
-<br><br>
-<strong>Bugtracker:</strong> <a href="https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues">GitHub Repo</a>
+<center>***</center>
+<h1>Welcome to DM;CA!</h1>
+<span style="font-family:Helvetica"><i>This server is running <a href="http://ss13.eu/">/tg/station13's</a> modification of <a href="https://cm-ss13.com/">CM-SS13's</a> modification of <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://ss13.eu/">/tg/station13</a> SS13 code.</i><br>
+<b><a style="font-size:12pt" href="https://tgstation13.org/wiki/DMCA_Rules">Make sure you read the rules!</a> <span style="color:red">Ignorance is not an excuse!</span></b>
+<h3 style="text-decoration:none;">New to the game? Just curious about how something works? There are mentors ready to help you! Just go to the admin panel on the top right, click on the adminhelp button and write your question!</h3>
+<strong>Source:</strong> <a href="https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/">GitHub Repo</a>
+<strong>FAQ:</strong>
+Q: Difference between this and CM?
+A: It's hosted by /tg/, it's open source, and it's staffed by some very nice people.
+Q: What are the main changes so far?
+A: No annoying skill sytem, less attachements restrictions, general channel, reworked marine vendors making req less mandatory, heavily modified prison map, SGs are now better, xeno rebalance, weapons rebalance.
+Q: What are the upcoming changes?
+A: New weapons, Almayer modifications, map modifications, more balance changes and much more, just check our GitHub!
+Q: How often is the server up?
+A: For now, the server will only be up during weekend evenings. More staff and some code changes are necessary for a 24/7 uptime.
+<center>***</center></span>

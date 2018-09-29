@@ -465,4 +465,3 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define MOTH_WINGS_BEHIND_LAYER	1
 
 #define TOTAL_UNDERLAYS			1
-#define EXTREMELY_PAINFUL 3

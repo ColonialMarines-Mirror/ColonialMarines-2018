@@ -247,6 +247,7 @@
 #include "code\game\smoothwall.dm"
 #include "code\game\sound.dm"
 #include "code\game\supplyshuttle.dm"
+#include "code\game\world.dm"
 #include "code\game\area\ai_monitored.dm"
 #include "code\game\area\almayer.dm"
 #include "code\game\area\areas.dm"

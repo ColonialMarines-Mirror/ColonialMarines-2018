@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/items/drinks.dmi'
 	icon_state = null
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
@@ -55,8 +55,7 @@
 
 			var/rgt_list_text = get_reagent_list_text()
 
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [rgt_list_text]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [rgt_list_text]</font>")
+			log_combat(user, M, "fed", src, "Reagents: [rgt_list_text]")
 			msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [rgt_list_text] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			if(reagents.total_volume)
@@ -154,7 +153,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	flags_atom = FPRINT|CONDUCT|OPENCONTAINER
+	flags_atom = CONDUCT|OPENCONTAINER
 
 /obj/item/reagent_container/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."

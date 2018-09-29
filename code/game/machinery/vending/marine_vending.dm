@@ -14,6 +14,7 @@
 	req_one_access = null
 	req_one_access_txt = "9;2;21"
 	wrenchable = FALSE
+	tokensupport = TOKEN_MARINE
 
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
@@ -28,6 +29,7 @@
 					/obj/item/ammo_magazine/rifle = 22,
 					/obj/item/ammo_magazine/shotgun = 8,
 					/obj/item/ammo_magazine/shotgun/buckshot = 8,
+					/obj/item/ammo_magazine/shotgun/flechette = 8,
 					/obj/item/weapon/combat_knife = 20,
 					/obj/item/weapon/throwing_knife = 5,
 					/obj/item/storage/box/m94 = 5,
@@ -117,18 +119,19 @@
 					/obj/item/weapon/gun/shotgun/combat = 0,
 					/obj/item/explosive/mine = 1,
 					/obj/item/storage/box/nade_box = 4,
-					/obj/item/explosive/grenade/frag = 1,
-					/obj/item/explosive/grenade/frag/m15 = 1,
-					/obj/item/explosive/grenade/incendiary = 1,
-					/obj/item/explosive/grenade/smokebomb = 1,
+					/obj/item/explosive/grenade/frag = 2,
+					/obj/item/explosive/grenade/frag/m15 = 2,
+					/obj/item/explosive/grenade/incendiary = 4,
+					/obj/item/explosive/grenade/smokebomb = 2,
 					/obj/item/explosive/grenade/phosphorus = 0,
-					/obj/item/storage/box/m94 = 8,
+					/obj/item/storage/box/m94 = 30,
 					/obj/item/storage/box/zipcuffs = 4,
 					/obj/item/device/flashlight/combat = 5,
 					/obj/item/clothing/mask/gas = 10
 					)
 
 	contraband = list(
+					/obj/item/weapon/gun/smg/ppsh = 4,
 					/obj/item/weapon/gun/pistol/holdout = 0,
 					/obj/item/weapon/gun/pistol/heavy = 0,
 					/obj/item/weapon/gun/pistol/highpower = 0,
@@ -137,7 +140,7 @@
 					/obj/item/weapon/gun/revolver/cmb = 0,
 					/obj/item/weapon/gun/shotgun/merc = 0,
 					/obj/item/weapon/gun/shotgun/pump/cmb = 0,
-					/obj/item/weapon/gun/shotgun/double = 0,
+					/obj/item/weapon/gun/shotgun/double = 2,
 					/obj/item/weapon/gun/smg/mp7 = 0,
 					/obj/item/weapon/gun/smg/skorpion = 0,
 					/obj/item/weapon/gun/smg/uzi = 0,
@@ -164,6 +167,9 @@
 /obj/machinery/vending/marine/cargo_ammo
 	name = "\improper ColMarTech automated munition vendor"
 	desc = "A automated rack hooked up to a small supply of ammo magazines."
+	icon_state = "cargo-armory"
+	icon_vend = "cargo-armory-vend"
+	icon_deny = "cargo-armory"
 	hacking_safety = 1
 	wrenchable = FALSE
 	products = list(
@@ -197,6 +203,8 @@
 					)
 
 	contraband = list(
+					/obj/item/ammo_magazine/smg/ppsh/ = 20,
+					/obj/item/ammo_magazine/smg/ppsh/extended = 4,
 					/obj/item/ammo_magazine/pistol/incendiary = 0,
 					/obj/item/ammo_magazine/pistol/heavy = 0,
 					/obj/item/ammo_magazine/pistol/holdout = 0,
@@ -231,8 +239,7 @@
 /obj/machinery/vending/marineFood
 	name = "\improper Marine Food and Drinks Vendor"
 	desc = "Standard Issue Food and Drinks Vendor, containing standard military food and drinks."
-	icon_state = "generic"
-	icon_deny = "generic-deny"
+	icon_state = "sustenance"
 	wrenchable = FALSE
 	products = list(/obj/item/reagent_container/food/snacks/protein_pack = 50,
 					/obj/item/reagent_container/food/snacks/mre_pack/meal1 = 15,
@@ -271,6 +278,7 @@
 					/obj/item/reagent_container/hypospray/autoinjector/Kelo = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/Oxycodone = 4,
 					/obj/item/reagent_container/hypospray/autoinjector/tricord = 8,
+					/obj/item/reagent_container/hypospray/autoinjector/hypervene = 4,
 					/obj/item/storage/pill_bottle/bicaridine = 3,
 					/obj/item/storage/pill_bottle/dexalin = 3,
 					/obj/item/storage/pill_bottle/antitox = 3,
@@ -281,6 +289,7 @@
 					/obj/item/storage/pill_bottle/russianRed = 5,
 					/obj/item/storage/pill_bottle/peridaxon = 2,
 					/obj/item/storage/pill_bottle/quickclot = 2,
+					/obj/item/storage/pill_bottle/hypervene = 2,
 					/obj/item/stack/medical/advanced/bruise_pack = 6,
 					/obj/item/stack/medical/bruise_pack = 8,
 					/obj/item/stack/medical/advanced/ointment = 6,
@@ -326,8 +335,8 @@
 	desc = "A marine medic equipment vendor"
 	product_ads = "They were gonna die anyway.;Let's get space drugged!"
 	req_access = list(ACCESS_MARINE_MEDPREP)
-	icon_state = "medicprepvendor"
-	icon_deny = "medicprepvendor-deny"
+	icon_state = "marinemed"
+	icon_deny = "marinemed-deny"
 	wrenchable = FALSE
 
 	products = list(
@@ -360,9 +369,10 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	wrenchable = FALSE
+	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine = 1,
+						/obj/item/coin/marine/specialist = 1,
 						/obj/item/clothing/tie/storage/webbing = 1,
 						/obj/item/explosive/plastique = 2,
 						/obj/item/explosive/grenade/frag = 2,
@@ -394,9 +404,10 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	wrenchable = FALSE
+	tokensupport = TOKEN_SPEC
 
 	products = list(
-						/obj/item/coin/marine = 1,
+						/obj/item/coin/marine/specialist = 1,
 			)
 	contraband = list()
 	//premium = list(/obj/item/weapon/shield/riot = 1)	//NOTE: This needs to be re-worked so we don't have to have a riot shield in here at all. ~Bmc777
@@ -426,6 +437,8 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	wrenchable = FALSE
+	tokensupport = TOKEN_ENGI
+
 	products = list(
 					/obj/item/coin/marine/engineer = 1,
 					)
@@ -479,6 +492,7 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	wrenchable = FALSE
+	tokensupport = "marine"
 
 	products = list(
 						/obj/item/clothing/suit/storage/marine/leader = 1,
@@ -527,6 +541,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	wrenchable = FALSE
+	tokensupport = "marine"
 
 	products = list(
 						/obj/item/attachable/suppressor = 8,
@@ -552,6 +567,7 @@
 						/obj/item/attachable/stock/rifle = 3 ,
 						/obj/item/attachable/stock/revolver = 3,
 						/obj/item/attachable/stock/smg = 3,
+						/obj/item/attachable/stock/tactical = 3,
 
 						/obj/item/attachable/attached_gun/grenade = 5,
 						/obj/item/attachable/attached_gun/shotgun = 3,
@@ -585,6 +601,7 @@
 					/obj/item/storage/backpack/marine = 10,
 					/obj/item/storage/backpack/marine/satchel = 10,
 					/obj/item/storage/belt/marine = 10,
+					/obj/item/storage/belt/shotgun = 10,
 					/obj/item/clothing/shoes/marine = 20,
 					/obj/item/clothing/under/marine = 20,
 					/obj/item/clothing/suit/storage/marine = 20,

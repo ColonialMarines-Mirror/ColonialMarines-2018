@@ -4,12 +4,13 @@
 	icon = 'icons/obj/items/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	force = 0.0
 	throwforce = 0.0
 	w_class = 1.0
 	var/string_attached
 	var/sides = 2
+	var/flags_token = TOKEN_GENERAL
 
 /obj/item/coin/New()
 	pixel_x = rand(0,16)-8
@@ -42,6 +43,12 @@
 /obj/item/coin/platinum
 	name = "platinum coin"
 	icon_state = "coin_adamantine"
+
+/obj/item/coin/debugtoken
+	name = "prototype universal token"
+	desc = "A special nano-fiber chip, emblazed with several minuscule tags. Rarely ever seen outside emergency maintenance situations."
+	icon_state = "coin_clown"
+	flags_token = TOKEN_ALL
 
 /obj/item/coin/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/stack/cable_coil))

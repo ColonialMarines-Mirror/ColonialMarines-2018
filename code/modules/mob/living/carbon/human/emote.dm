@@ -252,11 +252,11 @@
 		if ("pain")
 			message = "<B>[comm_paygrade][src]</B> cries out in pain!"
 			m_type = 2
-			if(has_species(src,"Human") && src.client)
-				if(gender == "male")
-					playsound(loc, "male_pain", 50)
-				else
-					playsound(loc, "female_pain", 50)
+			if(client && species)
+				if(species.screams[gender])
+					playsound(loc, species.screams[gender], 50)
+				else if(species.screams[NEUTER])
+					playsound(loc, species.screams[NEUTER], 50)
 
 		if ("salute")
 			if (!src.buckled)
@@ -279,11 +279,11 @@
 		if("scream")
 			message = "<B>[comm_paygrade][src]</B> screams!"
 			m_type = 2
-			if(has_species(src,"Human") && src.client)
-				if(gender == "male")
-					playsound(loc, "male_scream", 50)
-				else
-					playsound(loc, "female_scream", 50)
+			if(client && species)
+				if(species.screams[gender])
+					playsound(loc, species.screams[gender], 50)
+				else if(species.screams[NEUTER])
+					playsound(loc, species.screams[NEUTER], 50)
 
 		if("shakehead")
 			message = "<B>[comm_paygrade][src]</B> shakes \his head."
@@ -487,7 +487,7 @@
 			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list of emotes.")
 
 	if (message)
-		log_emote("[name]/[key] : [message]")
+		log_message(message, LOG_EMOTE)
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.

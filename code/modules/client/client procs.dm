@@ -26,7 +26,7 @@
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
-		to_chat(world.log, "Attempted use of scripts within a topic call, by [src]")
+		log_world("Attempted use of scripts within a topic call, by [src]")
 		message_admins("Attempted use of scripts within a topic call, by [src]")
 		//del(usr)
 		return
@@ -42,15 +42,9 @@
 		cmd_admin_pm(C,null)
 		return
 
-	//Map voting
-	if(href_list["vote_for_map"])
-		mapVote()
-		return
-
-
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		to_chat(href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+	if(config && config.log_hrefs)
+		log_href("[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -167,6 +161,12 @@
 			src.donator = 1
 			verbs += /client/proc/set_ooc_color_self
 
+	if(all_player_details[ckey])
+		player_details = all_player_details[ckey]
+	else
+		player_details = new
+		all_player_details[ckey] = player_details
+
 	//////////////
 	//DISCONNECT//
 	//////////////
@@ -245,7 +245,6 @@
 	query_accesslog.Execute()
 
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 #undef MIN_CLIENT_VERSION
 

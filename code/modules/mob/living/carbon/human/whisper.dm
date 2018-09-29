@@ -6,7 +6,7 @@
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
-	log_whisper("[src.name]/[src.key] : [message]")
+	log_talk(message, LOG_WHISPER)
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
@@ -43,7 +43,7 @@
 	var/italics = 1
 
 	if (speaking)
-		verb = speaking.speech_verb + pick(" quietly", " softly")
+		verb = speaking.get_speech_verb(src) + pick(" quietly", " softly")
 
 	message = capitalize(trim(message))
 

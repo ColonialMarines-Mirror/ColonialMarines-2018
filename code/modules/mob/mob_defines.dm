@@ -6,9 +6,6 @@
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
-	var/chatWarn = 0 //Tracks how many times someone has spammed and gives them a no-no timer
-	var/talked = 0 //Won't let someone say something again in under a second.
-
 	var/obj/screen/hands = null //robot
 
 	var/adminhelp_marked = 0 // Prevents marking an Adminhelp more than once. Making this a client define will cause runtimes and break some Adminhelps
@@ -26,7 +23,7 @@
 	var/computer_id = null //to track the players
 	var/lastattacker = null
 	var/lastattacked = null
-	var/attack_log = list( )
+	var/list/logging = list()
 	var/atom/movable/interactee //the thing that the mob is currently interacting with (e.g. a computer, another mob (stripping a mob), manning a hmg)
 	var/poll_answer = 0.0
 	var/sdisabilities = 0	//Carbon

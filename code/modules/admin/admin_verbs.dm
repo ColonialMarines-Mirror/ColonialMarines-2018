@@ -16,14 +16,13 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
-	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
+	/client/proc/getserverlogs,		/*for accessing server logs*/
+	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
-	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
-	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -47,9 +46,7 @@ var/list/admin_verbs_admin = list(
 	// /client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
-	/datum/admins/proc/togglelooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
-	/datum/admins/proc/toggleloocdead,	/*toggles looc on/off for everyone who is dead*/
 	/datum/admins/proc/toggledsay,		/*toggles dsay on/off for everyone*/
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
@@ -123,17 +120,9 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_debug_del_all,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
-	/datum/admins/proc/adjump,
-	/client/proc/forceNextMap,
-	/client/proc/cancelMapVote,
-	/client/proc/killMapDaemon,
-	/client/proc/editVotableMaps,
-	/client/proc/showVotableMaps,
-	/client/proc/forceMDMapVote,
-	/client/proc/reviveMapDaemon
+	/datum/admins/proc/adjump
 	)
 var/list/admin_verbs_debug = list(
-    /client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/cmd_debug_make_powernets,
@@ -261,15 +250,14 @@ var/list/admin_verbs_mod = list(
 	// /client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/toggleattacklogs,
 	/client/proc/toggleffattacklogs,
-	/datum/admins/proc/view_txt_log,
+	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
-	/datum/admins/proc/toggleloocdead,	/*toggles looc on/off for everyone who is dead*/
 	/client/proc/cmd_admin_changekey,
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_xeno_report,  //Allows creation of IC reports by the Queen Mother
 	/proc/release,
-	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway?  �\_("/)_/�
+	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway?
 	/datum/admins/proc/viewCLFaxes,
 	/datum/admins/proc/viewUSCMFaxes
 )
@@ -391,7 +379,7 @@ var/list/admin_verbs_mentor = list(
 		var/mob/body = mob
 		body.ghostize(1)
 		if(body && !body.key)
-			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame coderbus
 			if(body.client) body.client.change_view(world.view) //reset view range to default.
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

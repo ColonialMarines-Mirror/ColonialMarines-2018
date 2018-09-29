@@ -21,9 +21,16 @@
 /obj/vehicle/powerloader/relaymove(mob/user, direction)
 	if(user.is_mob_incapacitated()) return
 	if(world.time > l_move_time + move_delay)
-		. = step(src, direction)
-		if(.)
-			pick(playsound(loc, 'sound/mecha/powerloader_step.ogg', 25), playsound(loc, 'sound/mecha/powerloader_step2.ogg', 25))
+		if(dir != direction)
+			l_move_time = world.time
+			dir = direction
+			handle_rotation()
+			pick(playsound(src.loc, 'sound/mecha/powerloader_turn.ogg', 25, 1), playsound(src.loc, 'sound/mecha/powerloader_turn2.ogg', 25, 1))
+			. = TRUE
+		else
+			. = step(src, direction)
+			if(.)
+				pick(playsound(loc, 'sound/mecha/powerloader_step.ogg', 25), playsound(loc, 'sound/mecha/powerloader_step2.ogg', 25))
 
 /obj/vehicle/powerloader/attack_hand(mob/user)
 	if(buckled_mob && user != buckled_mob)
@@ -79,6 +86,10 @@
 	set src in oview(1)
 
 	buckle_mob(M, usr)
+
+/obj/vehicle/powerloader/handle_rotation()
+	if(buckled_mob)
+		buckled_mob.dir = dir
 
 /obj/vehicle/powerloader/explode()
 	new /obj/structure/powerloader_wreckage(loc)

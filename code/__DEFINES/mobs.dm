@@ -418,7 +418,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define SUDDEN 0
 #define GRADUAL 1
 #define PAINFUL 2
-<<<<<<< HEAD
 #define EXTREMELY_PAINFUL 3
 
 // xeno abilities cooldown
@@ -466,6 +465,4 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define MOTH_WINGS_BEHIND_LAYER	1
 
 #define TOTAL_UNDERLAYS			1
-=======
 #define EXTREMELY_PAINFUL 3
->>>>>>> Defender and facehugger/nest rework

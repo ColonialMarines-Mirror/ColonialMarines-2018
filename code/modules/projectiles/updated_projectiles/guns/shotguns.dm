@@ -9,7 +9,6 @@ can cause issues with ammo types getting mixed up during the burst.
 
 /obj/item/weapon/gun/shotgun
 	origin_tech = "combat=4;materials=3"
-	flags_equip_slot = SLOT_BACK
 	w_class = 4
 	force = 14.0
 	fire_sound = 'sound/weapons/gun_shotgun.ogg'
@@ -191,7 +190,6 @@ can cause issues with ammo types getting mixed up during the burst.
 	desc = "The Weyland-Yutani MK221 Shotgun, a semi-automatic shotgun with a quick fire rate."
 	icon_state = "mk221"
 	item_state = "mk221"
-	flags_equip_slot = SLOT_BACK
 	origin_tech = "combat=5;materials=4"
 	fire_sound = 'sound/weapons/gun_shotgun_automatic.ogg'
 	current_mag = /obj/item/ammo_magazine/internal/shotgun/combat
@@ -240,7 +238,6 @@ can cause issues with ammo types getting mixed up during the burst.
 	desc = "A double barreled shotgun of archaic, but sturdy design. Uses 12 Gauge Special slugs, but can only hold 2 at a time."
 	icon_state = "dshotgun"
 	item_state = "dshotgun"
-	flags_equip_slot = SLOT_BACK
 	origin_tech = "combat=4;materials=2"
 	current_mag = /obj/item/ammo_magazine/internal/shotgun/double
 	fire_sound = 'sound/weapons/gun_shotgun_heavy.ogg'
@@ -345,7 +342,7 @@ can cause issues with ammo types getting mixed up during the burst.
 	desc = "A double barreled shotgun whose barrel has been artificially shortened to reduce range but increase damage and spread."
 	icon_state = "sshotgun"
 	item_state = "sshotgun"
-	flags_equip_slot = SLOT_WAIST|SLOT_BACK
+	flags_equip_slot = SLOT_WAIST
 	attachable_allowed = list()
 	flags_gun_features = GUN_CAN_POINTBLANK|GUN_INTERNAL_MAG
 

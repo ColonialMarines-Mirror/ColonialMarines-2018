@@ -1,18 +1,15 @@
 /obj/vehicle/powerloader
-	name = "\improper Caterpillar P-5000 Work Loader"
+	name = "\improper RPL-Y Cargo Loader"
 	icon = 'icons/obj/powerloader.dmi'
-	desc = "The Caterpillar P-5000 Work Loader is a commercial mechanized exoskeleton used for lifting heavy materials and objects, first designed in January 29, 2025 by Weyland Corporation. An old but trusted design used in warehouses, constructions and military ships everywhere."
+	desc = "The RPL-Y Cargo Loader is a commercial mechanized exoskeleton used for lifting heavy materials and objects. An old but trusted design used in warehouses, constructions and military ships everywhere."
 	icon_state = "powerloader_open"
 	layer = POWERLOADER_LAYER //so the top appears above windows and wall mounts
 	anchored = 1
 	density = 1
 	luminosity = 5
 	move_delay = 8
-	buckling_y = 9
-	health = 200
-	maxhealth = 200
-	pixel_x = -16
-	pixel_y = -2
+	health = 250
+	maxhealth = 250
 
 	New()
 		..()
@@ -24,16 +21,9 @@
 /obj/vehicle/powerloader/relaymove(mob/user, direction)
 	if(user.is_mob_incapacitated()) return
 	if(world.time > l_move_time + move_delay)
-		if(dir != direction)
-			l_move_time = world.time
-			dir = direction
-			handle_rotation()
-			pick(playsound(src.loc, 'sound/mecha/powerloader_turn.ogg', 25, 1), playsound(src.loc, 'sound/mecha/powerloader_turn2.ogg', 25, 1))
-			. = TRUE
-		else
-			. = step(src, direction)
-			if(.)
-				pick(playsound(loc, 'sound/mecha/powerloader_step.ogg', 25), playsound(loc, 'sound/mecha/powerloader_step2.ogg', 25))
+		. = step(src, direction)
+		if(.)
+			pick(playsound(loc, 'sound/mecha/powerloader_step.ogg', 25), playsound(loc, 'sound/mecha/powerloader_step2.ogg', 25))
 
 /obj/vehicle/powerloader/attack_hand(mob/user)
 	if(buckled_mob && user != buckled_mob)
@@ -90,25 +80,15 @@
 
 	buckle_mob(M, usr)
 
-/obj/vehicle/powerloader/handle_rotation()
-
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		switch(dir)
-			if(EAST) buckled_mob.pixel_x = 7
-			if(WEST) buckled_mob.pixel_x = -7
-			else buckled_mob.pixel_x = 0
-
 /obj/vehicle/powerloader/explode()
 	new /obj/structure/powerloader_wreckage(loc)
 	playsound(loc, 'sound/effects/metal_crash.ogg', 75)
 	..()
 
 /obj/item/powerloader_clamp
-	name = "\improper Caterpillar P-5000 Work Loader Hydraulic Claw"
-	icon = 'icons/obj/vehicles.dmi'
+	name = "\improper RPL-Y Cargo Loader Hydraulic Claw"
 	icon_state = "loader_clamp"
-	force = 20
+	force = 45
 	flags_item = ITEM_ABSTRACT //to prevent placing the item on a table/closet.
 								//We're controlling the clamp but the item isn't really in our hand.
 	var/obj/vehicle/powerloader/linked_powerloader
@@ -216,12 +196,10 @@
 		linked_powerloader.unbuckle()
 
 /obj/structure/powerloader_wreckage
-	name = "\improper Caterpillar P-5000 Work Loader wreckage"
-	desc = "Remains of some unfortunate Power Loader. Completely unrepairable."
+	name = "\improper RPL-Y Cargo Loader wreckage"
+	desc = "Remains of some unfortunate Cargo Loader. Completely unrepairable."
 	icon = 'icons/obj/powerloader.dmi'
 	icon_state = "wreck"
 	density = 1
 	anchored = 0
 	opacity = 0
-	pixel_x = -18
-	pixel_y = -5

@@ -33,7 +33,8 @@ var/global/datum/global_init/init = new ()
 	to_chat(round_stats, "[log_end]\nStarting up - [time2text(world.realtime,"YYYY-MM-DD (hh:mm:ss)")][log_end]\n---------------------[log_end]")
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
-	TgsNew()
+	TgsNew(null, TGS_SECURITY_TRUSTED)
+	TgsInitializationComplete()
 
 	if(byond_version < RECOMMENDED_VERSION)
 		to_chat(world.log, "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")

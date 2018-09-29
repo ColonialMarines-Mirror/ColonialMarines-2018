@@ -7,6 +7,10 @@
 //create this define if you want to do configuration outside of this file
 #ifndef TGS_EXTERNAL_CONFIGURATION
 
+//Uncomment this if you wish to allow the game to interact with TGS 3
+//This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
+//#define TGS_V3_API
+
 //Comment this out once you've filled in the below
 #error TGS API unconfigured
 
@@ -47,7 +51,21 @@
 #define TGS_EVENT_PORT_SWAP -2	//before a port change is about to happen, extra parameter is new port
 #define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
 
-//TODO
+//See the descriptions for these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
+#define TGS_EVENT_REPO_RESET_ORIGIN 0
+#define TGS_EVENT_REPO_CHECKOUT 1
+#define TGS_EVENT_REPO_FETCH 2
+#define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
+#define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
+#define TGS_EVENT_BYOND_INSTALL_START 5
+#define TGS_EVENT_BYOND_INSTALL_FAIL 6
+#define TGS_EVENT_BYOND_ACTIVE_VERSION_CHANGE 7
+#define TGS_EVENT_COMPILE_START 8
+#define TGS_EVENT_COMPILE_CANCELLED 9
+#define TGS_EVENT_COMPILE_FAILURE 10
+#define TGS_EVENT_COMPILE_COMPLETE 11
+#define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
+#define TGS_EVENT_REPO_MERGE_CONFLICT 13
 
 //OTHER ENUMS
 
@@ -55,15 +73,22 @@
 #define TGS_REBOOT_MODE_SHUTDOWN 1
 #define TGS_REBOOT_MODE_RESTART 2
 
+#define TGS_SECURITY_TRUSTED 0
+#define TGS_SECURITY_SAFE 1
+#define TGS_SECURITY_ULTRASAFE 2
+
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
-/world/proc/TgsNew(datum/tgs_event_handler/event_handler)
+//minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
+/world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	return
 
 //Call this when your initializations are complete and your game is ready to play before any player interactions happen
 //This may use world.sleep_offline to make this happen so ensure no changes are made to it while this call is running
+//Most importantly, before this point, note that any static files or directories may be in use by another server. Your code should account for this
+//This function should not be called before ..() in /world/New()
 /world/proc/TgsInitializationComplete()
 	return
 
@@ -151,6 +176,10 @@
 
 //Get the current `/datum/tgs_revision_information`
 /world/proc/TgsRevision()
+	return
+
+//Get the current BYOND security level
+/world/proc/TgsSecurityLevel()
 	return
 
 //Gets a list of active `/datum/tgs_revision_information/test_merge`s

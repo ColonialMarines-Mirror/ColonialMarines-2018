@@ -511,23 +511,23 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/laid_down = (stat || knocked_down || knocked_out || !has_legs() || resting || (status_flags & FAKEDEATH) || (pulledby && pulledby.grab_level >= GRAB_NECK))
 
 	if(laid_down)
-		lying = 1
+		lying = TRUE
 	else
-		lying = 0
+		lying = FALSE
 	if(buckled)
 		if(buckled.buckle_lying)
-			lying = 1
+			lying = TRUE
 		else
-			lying = 0
+			lying = FALSE
 
 	canmove =  !(stunned || frozen || laid_down)
 
 	if(lying)
-		density = 0
+		density = FALSE
 		drop_l_hand()
 		drop_r_hand()
 	else
-		density = 1
+		density = TRUE
 
 	if(lying_prev != lying)
 		update_transform()

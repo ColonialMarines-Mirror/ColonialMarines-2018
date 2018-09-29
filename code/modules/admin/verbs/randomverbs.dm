@@ -574,7 +574,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			command_announcement.Announce("\red New update available at all communication consoles.", customname, new_sound = 'sound/AI/commandreport.ogg')
 
 	log_admin("[key_name(src)] has created a command report: [input]")
-	message_admins("[key_name_admin(src)] has created a command report", 1)
+	message_admins("[key_name_admin(src)] has created a command report: [input]", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_create_AI_report()
@@ -597,7 +597,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				C.messagetext.Add(P.info)
 
 		log_admin("[key_name(src)] has created an AI report: [input]")
-		message_admins("[key_name_admin(src)] has created an AI report", 1)
+		message_admins("[key_name_admin(src)] has created an AI report: [input]", 1)
 		feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		to_chat(usr, "<span class='warning'>[MAIN_AI_SYSTEM] is not responding. It may be offline or destroyed.</span>")
@@ -632,7 +632,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			to_chat(M, data)
 
 	log_admin("[key_name(src)] has created a Queen Mother report: [input]")
-	message_admins("[key_name_admin(src)] has created a Queen Mother report", 1)
+	message_admins("[key_name_admin(src)] has created a Queen Mother report: [input]", 1)
 	feedback_add_details("admin_verb","QMR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)

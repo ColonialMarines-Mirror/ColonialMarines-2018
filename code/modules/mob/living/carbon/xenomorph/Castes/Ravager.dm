@@ -107,10 +107,10 @@
 		/datum/action/xeno_action/activable/breathe_fire,
 		)
 
-	New()
-		..()
-		verbs -= /mob/living/carbon/Xenomorph/verb/hive_status
-		spawn(15) name = "Ravenger"
+/mob/living/carbon/Xenomorph/Ravager/ravenger/New()
+	..()
+	verbs -= /mob/living/carbon/Xenomorph/verb/hive_status
+	spawn(15) name = "Ravenger"
 
 
 /mob/living/carbon/Xenomorph/Ravager/ravenger/proc/breathe_fire(atom/A)

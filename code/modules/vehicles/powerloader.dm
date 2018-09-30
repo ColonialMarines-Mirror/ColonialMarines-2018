@@ -8,8 +8,8 @@
 	density = 1
 	luminosity = 5
 	move_delay = 8
-	health = 250
-	maxhealth = 250
+	health = 200
+	maxhealth = 200
 
 	New()
 		..()
@@ -99,7 +99,7 @@
 /obj/item/powerloader_clamp
 	name = "\improper RPL-Y Cargo Loader Hydraulic Claw"
 	icon_state = "loader_clamp"
-	force = 45
+	force = 20
 	flags_item = ITEM_ABSTRACT //to prevent placing the item on a table/closet.
 								//We're controlling the clamp but the item isn't really in our hand.
 	var/obj/vehicle/powerloader/linked_powerloader

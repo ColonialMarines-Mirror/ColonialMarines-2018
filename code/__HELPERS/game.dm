@@ -9,11 +9,10 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
+/proc/get_area(atom/target)
+  while(target && !isarea(target))
+    target = target.loc
+  return target
 
 /proc/get_area_name(atom/X, format_text = FALSE)
 	var/area/A = isarea(X) ? X : get_area(X)

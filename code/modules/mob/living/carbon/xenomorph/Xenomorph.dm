@@ -200,11 +200,13 @@
 	var/mob/living/L = AM
 	if(L.buckled)
 		return FALSE //to stop xeno from pulling marines on roller beds.
-	if(ishuman(L) && L.stat == DEAD)
-		var/mob/living/carbon/human/H = L
-		if(!H.undefibbable)
-			to_chat(src, "<span class='xenowarning'>Not alive, not interesting. Maybe when it has gone colder.</span>")
-			return FALSE // leave the defibbable dead alone
+	if(ishuman(L))
+		pull_speed += XENO_DEADHUMAN_DRAG_SLOWDOWN
+	return ..()
+
+/mob/living/carbon/Xenomorph/stop_pulling()
+	if(pulling && ishuman(pulling))
+		pull_speed -= XENO_DEADHUMAN_DRAG_SLOWDOWN
 	return ..()
 
 /mob/living/carbon/Xenomorph/pull_response(mob/puller)

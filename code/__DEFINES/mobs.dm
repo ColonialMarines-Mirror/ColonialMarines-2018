@@ -430,6 +430,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define DEFENDER_CRESTDEFENSE_SLOWDOWN 0.8
 #define DEFENDER_FORTIFY_ARMOR 60
 #define WARRIOR_AGILITY_ARMOR 30
+#define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
 
 
 // halloss defines

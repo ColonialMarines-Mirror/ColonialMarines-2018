@@ -22,6 +22,7 @@
 	armor_deflection = 20
 	tier = 1
 	upgrade = 0
+	pull_speed = -2
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/regurgitate,

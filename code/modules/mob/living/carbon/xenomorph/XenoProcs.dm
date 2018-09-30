@@ -181,14 +181,18 @@
 					upgrade_stored = min(upgrade_stored + 1, upgrade_threshold)
 
 /mob/living/carbon/Xenomorph/proc/update_evolving()
-	if(client && ckey) // stop evolve progress for ssd/ghosted xenos
-		if(hivenumber && hivenumber <= hive_datum.len)
-			var/datum/hive_status/hive = hive_datum[hivenumber]
-			if(evolution_allowed && evolution_stored < evolution_threshold && hive.living_xeno_queen && hive.living_xeno_queen.ovipositor)
-				evolution_stored = min(evolution_stored + 1, evolution_threshold)
-				if(evolution_stored == evolution_threshold - 1)
-					to_chat(src, "<span class='xenodanger'>Your carapace crackles and your tendons strengthen. You are ready to evolve!</span>")
-					src << sound('sound/effects/xeno_evolveready.ogg')
+	if(!client || !ckey) // stop evolve progress for ssd/ghosted xenos
+		return
+	if(evolution_stored >= evolution_threshold || !evolution_allowed)
+		return
+	if(!hivenumber || hivenumber > hive_datum.len) //something broke
+		return
+	var/datum/hive_status/hive = hive_datum[hivenumber]
+	if(hive.living_xeno_queen)
+		evolution_stored++
+		if(evolution_stored == evolution_threshold - 1)
+			to_chat(src, "<span class='xenodanger'>Your carapace crackles and your tendons strengthen. You are ready to evolve!</span>")
+			src << sound('sound/effects/xeno_evolveready.ogg')
 
 /mob/living/carbon/Xenomorph/show_inv(mob/user)
 	return

@@ -7,22 +7,22 @@
 
 
 
-/client/fastNorth()
+/client/verb/fastNorth()
 	set instant = TRUE
 	Move(get_step(mob, NORTH), NORTH)
 
 
-/client/fastSouth()
+/client/verb/fastSouth()
 	set instant = TRUE
 	Move(get_step(mob, SOUTH), SOUTH)
 
 
-/client/fastWest()
+/client/verb/fastWest()
 	set instant = TRUE
 	Move(get_step(mob, WEST), WEST)
 
 
-/client/fastEast()
+/client/verb/fastEast()
 	set instant = TRUE
 	Move(get_step(mob, EAST), EAST)
 

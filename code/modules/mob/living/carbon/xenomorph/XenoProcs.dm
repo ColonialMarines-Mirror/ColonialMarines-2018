@@ -144,7 +144,7 @@
 /mob/living/carbon/Xenomorph/movement_delay()
 	. = ..()
 
-	. += speed + slowdown
+	. += speed + slowdown + speed_modifier
 
 	if(frenzy_aura)
 		. -= (frenzy_aura * 0.05)

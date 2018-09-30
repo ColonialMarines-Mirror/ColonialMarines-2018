@@ -493,16 +493,16 @@
 	round_statistics.warrior_agility_toggles++
 	if (agility)
 		to_chat(src, "<span class='xenowarning'>You lower yourself to all fours and loosen your armored scales to ease your movement.</span>")
-		speed -= 1
-		armor_deflection -= WARRIOR_AGILITY_ARMOR
+		speed_modifier--
+		armor_bonus -= WARRIOR_AGILITY_ARMOR
 
 		update_icons()
 		do_agility_cooldown()
 		return
 
 	to_chat(src, "<span class='xenowarning'>You raise yourself to stand on two feet, hard scales setting back into place.</span>")
-	speed += 1
-	armor_deflection += WARRIOR_AGILITY_ARMOR
+	speed_modifier++
+	armor_bonus += WARRIOR_AGILITY_ARMOR
 	update_icons()
 	do_agility_cooldown()
 
@@ -662,16 +662,16 @@
 	if (crest_defense)
 		round_statistics.defender_crest_lowerings++
 		to_chat(src, "<span class='xenowarning'>You lower your crest.</span>")
-		armor_deflection += DEFENDER_CRESTDEFENSE_ARMOR
-		speed += DEFENDER_CRESTDEFENSE_SLOWDOWN	// This is actually a slowdown but speed is dumb
+		armor_bonus += DEFENDER_CRESTDEFENSE_ARMOR
+		speed_modifier += DEFENDER_CRESTDEFENSE_SLOWDOWN	// This is actually a slowdown but speed is dumb
 		update_icons()
 		do_crest_defense_cooldown()
 		return
 
 	round_statistics.defender_crest_raises++
 	to_chat(src, "<span class='xenowarning'>You raise your crest.</span>")
-	armor_deflection -= DEFENDER_CRESTDEFENSE_ARMOR
-	speed -= DEFENDER_CRESTDEFENSE_SLOWDOWN
+	armor_bonus -= DEFENDER_CRESTDEFENSE_ARMOR
+	speed_modifier -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	update_icons()
 	do_crest_defense_cooldown()
 
@@ -703,7 +703,7 @@
 
 	if (fortify)
 		to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
-		armor_deflection += DEFENDER_FORTIFY_ARMOR
+		armor_bonus += DEFENDER_FORTIFY_ARMOR
 		xeno_explosion_resistance++
 		frozen = TRUE
 		anchored = TRUE
@@ -729,7 +729,7 @@
 
 /mob/living/carbon/Xenomorph/proc/fortify_off()
 	to_chat(src, "<span class='xenowarning'>You resume your normal stance.</span>")
-	armor_deflection -= DEFENDER_FORTIFY_ARMOR
+	armor_bonus -= DEFENDER_FORTIFY_ARMOR
 	xeno_explosion_resistance--
 	frozen = FALSE
 	anchored = FALSE

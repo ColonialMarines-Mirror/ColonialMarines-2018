@@ -1117,10 +1117,12 @@
 
 /datum/ammo/xeno/New()
 	..()
-	accuracy = config.med_hit_accuracy
+	accuracy = config.max_hit_accuracy
+	accurate_range = config.short_shell_range
+	shell_speed = config.fast_shell_speed
+	max_range = config.short_shell_range
 	accuracy_var_low = config.low_proj_variance
 	accuracy_var_high = config.low_proj_variance
-	max_range = config.short_shell_range
 
 /datum/ammo/xeno/toxin
 	name = "neurotoxic spit"
@@ -1132,13 +1134,7 @@
 
 /datum/ammo/xeno/toxin/New()
 	..()
-	accuracy = config.max_hit_accuracy
-	shell_speed = config.fast_shell_speed
-	max_range = config.short_shell_range
-	accuracy_var_low = config.low_proj_variance
-	accuracy_var_high = config.low_proj_variance
-
-
+	
 /datum/ammo/xeno/toxin/medium //Spitter
 	name = "neurotoxic spatter"
 	reagent_amount = 7
@@ -1207,10 +1203,6 @@
 
 /datum/ammo/xeno/acid/New()
 	..()
-	accuracy = config.max_hit_accuracy
-	accuracy_var_low = config.low_proj_variance
-	accuracy_var_high = config.low_proj_variance
-	shell_speed = config.fast_shell_speed
 	damage = config.llow_hit_damage
 	damage_var_low = config.low_proj_variance
 	damage_var_high = config.med_proj_variance

@@ -1019,6 +1019,85 @@ ATTACHMENTS
 AMMO
 *******************************************************************************/
 
+/datum/supply_packs/ammobox
+	name = "M41A Ammo Box Crate"
+	contains = list(
+					/obj/item/ammobox
+					)
+	cost = RO_PRICE_VERY_CHEAP
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper M41A ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxap
+	name = "M41A Ammo AP Box Crate"
+	contains = list(
+					/obj/item/ammobox/ap
+					)
+	cost = RO_PRICE_NORMAL
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper M41A AP ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxext
+	name = "M41A Ext Ammo Box Crate"
+	contains = list(
+					/obj/item/ammobox/ext
+					)
+	cost = RO_PRICE_CHEAP
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper M41A Ext ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxm39
+	name = "M39 Ammo Box Crate"
+	contains = list(
+					/obj/item/ammobox/m39
+					)
+	cost = RO_PRICE_VERY_CHEAP
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper M39 ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxm39ap
+	name = "M39 AP Ammo Box Crate"
+	contains = list(
+					/obj/item/ammobox/m39ap
+					)
+	cost = RO_PRICE_NORMAL
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper M39 AP ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxm39ext
+	name = "M39 Ext Ammo Box Crate"
+	contains = list(
+					/obj/item/ammobox/m39ext
+					)
+	cost = RO_PRICE_CHEAP
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper M39 Ext ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxslug
+	name = "Slug Ammo Box Crate"
+	contains = list(
+					/obj/item/ammo_magazine/shotgunbox
+					)
+	cost = RO_PRICE_CHEAP
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper Slug ammo box crate"
+	group = "Ammo"
+
+/datum/supply_packs/ammoboxbuckshot
+	name = "Buckshot Ammo Box Crate"
+	contains = list(
+					/obj/item/ammo_magazine/shotgunbox/buckshot
+					)
+	cost = RO_PRICE_CHEAP
+	containertype = /obj/structure/closet/crate/ammo
+	containername = "\improper Buckshot ammo box crate"
+	group = "Ammo"
 
 /datum/supply_packs/ammo_regular
 	name = "regular magazines crate (M41A x5, M4A3 x2, M44 x2, M39 x2, M37A2 x1)"

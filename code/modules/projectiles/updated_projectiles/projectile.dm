@@ -331,7 +331,7 @@
 
 	if(!( P.dir & reverse_direction(dir) || P.dir & dir))
 		return FALSE //no effect if bullet direction is perpendicular to barricade
-		
+
 	var/distance = P.distance_travelled - 1
 	if(distance < P.ammo.barricade_clear_distance)
 		return FALSE
@@ -457,8 +457,10 @@
 	if(P.ammo.debilitate && stat != DEAD && ( damage || (P.ammo.flags_ammo_behavior & AMMO_IGNORE_RESIST) ) )
 		apply_effects(arglist(P.ammo.debilitate))
 
-	if(P.ammo.reagent_list && stat != DEAD && !isXeno(src) && P.reagent_amount)
-		src:reagents.add_reagent(P.ammo.reagent_list, max(0,P.reagent_amount))
+	if(P.ammo.reagent_type && stat != DEAD && P.reagent_amount)
+		if(istype(src, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = src
+			H.reagents.add_reagent(P.ammo.reagent_type, max(0,P.reagent_amount))
 
 	if(damage)
 		bullet_message(P)

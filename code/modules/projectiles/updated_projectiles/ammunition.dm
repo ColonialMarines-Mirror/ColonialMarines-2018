@@ -384,7 +384,7 @@ Turn() or Shift() as there is virtually no overhead. ~N
 
 /obj/item/ammobox/attackby(obj/item/I, mob/user)
 	var/obj/item/ammo_magazine/MG = I
-	if !(MG.flags_magazine & AMMUNITION_REFILLABLE)
+	if(!(MG.flags_magazine & AMMUNITION_REFILLABLE))
 		return
 	if(MG.default_ammo != ammo_type || MG.max_rounds != max_magazine_rounds || MG.current_rounds != max_magazine_rounds)
 		to_chat(user, "<span class='warning'>That's not the right kind of ammo.</span>")

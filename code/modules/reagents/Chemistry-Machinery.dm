@@ -16,9 +16,10 @@
 	var/obj/item/reagent_container/beaker = null
 	var/recharged = 0
 	var/hackedcheck = 0
-	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
+	var/list/dispensable_reagents = list(
+	"aluminum","carbon","chlorine","copper","ethanol","fluorine","hydrogen",
+	"iron","lithium","mercury","nitrogen","oxygen","phosphorus","potassium",
+	"radium","sacid","silicon","sodium","sugar","sulfur","tungsten","water")
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -384,7 +385,7 @@
 				return
 
 			if (href_list["createpill_multiple"])
-				count = Clamp(isgoodnumber(input("Select the number of pills to make. (max: [max_pill_count])", 10, pillamount) as num|null),0,max_pill_count)
+				count = CLAMP(isgoodnumber(input("Select the number of pills to make. (max: [max_pill_count])", 10, pillamount) as num|null),0,max_pill_count)
 				if(!count)
 					return
 

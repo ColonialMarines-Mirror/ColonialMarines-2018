@@ -89,9 +89,9 @@ Additional game mode variables.
 
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
-	xeno_starting_num = Clamp((ready_players/7), xeno_required_num, INFINITY) //(n, minimum, maximum)
-	surv_starting_num = Clamp((ready_players/25), 0, 8)
-	merc_starting_num = Clamp((ready_players/3), 1, INFINITY)
+	xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
+	surv_starting_num = CLAMP((ready_players/25), 0, 8)
+	merc_starting_num = max((ready_players/3), 1)
 	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
 	for(var/datum/squad/sq in RoleAuthority.squads)
 		if(sq)
@@ -710,8 +710,10 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(!istype(survivor))
 			current_survivors -= survivor
 			continue //Not a mind? How did this happen?
-
-		random_name = pick(random_name(FEMALE),random_name(MALE))
+		
+		var/mob/living/carbon/human/current = survivor.current
+		var/datum/species/species = istype(current) ? current.species : all_species[DEFAULT_SPECIES]
+		random_name = species.random_name(pick(MALE, FEMALE))
 
 		if(current_survivors.len > 1) //If we have another survivor to pick from.
 			if(survivor_multi_story.len) //Unlikely.
@@ -885,7 +887,7 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/explosive/grenade/incendiary = round(scale * 2),
 						/obj/item/explosive/grenade/smokebomb = round(scale * 5),
 						/obj/item/explosive/grenade/phosphorus = 0,
-						/obj/item/storage/box/m94 = round(scale * 10),
+						/obj/item/storage/box/m94 = round(scale * 30),
 						/obj/item/device/flashlight/combat = round(scale * 5),
 						/obj/item/clothing/mask/gas = round(scale * 10)
 						)

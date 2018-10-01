@@ -361,7 +361,7 @@
 		var/stun_duration = max(0,1.1 - dist * 0.1) * reduction //Max 1 beside Queen, 0.4 at the edge.
 
 		if(dist < 8)
-		  to_chat(M, "<span class='danger'>An ear-splitting guttural roar tears through your mind and makes your world convulse!</span>")
+			to_chat(M, "<span class='danger'>An ear-splitting guttural roar tears through your mind and makes your world convulse!</span>")
 			M.druggy += 3 //Perception distorting effects of the psychic scream
 			M.stunned += stun_duration
 			M.KnockDown(stun_duration)

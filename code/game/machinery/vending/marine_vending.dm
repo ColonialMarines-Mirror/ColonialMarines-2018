@@ -125,6 +125,24 @@
 	contraband = list(
 					/obj/item/weapon/gun/smg/ppsh = 4,
 					/obj/item/weapon/gun/shotgun/double = 2,
+					/obj/item/weapon/gun/smg/m39/elite = 0,
+					/obj/item/weapon/gun/rifle/m41aMK1 = 0,
+					/obj/item/weapon/gun/rifle/m41a/elite = 0,
+					/obj/item/weapon/gun/rifle/lmg = 0,
+					/obj/item/explosive/grenade/frag = 0,
+					/obj/item/explosive/grenade/phosphorus = 0,
+					/obj/item/weapon/gun/pistol/holdout = 0,
+					/obj/item/weapon/gun/pistol/heavy = 0,
+					/obj/item/weapon/gun/pistol/highpower = 0,
+					/obj/item/weapon/gun/pistol/vp70 = 0,
+					/obj/item/weapon/gun/revolver/small = 0,
+					/obj/item/weapon/gun/revolver/cmb = 0,
+					/obj/item/weapon/gun/shotgun/merc = 0,
+					/obj/item/weapon/gun/shotgun/pump/cmb = 0,
+					/obj/item/weapon/gun/smg/mp7 = 0,
+					/obj/item/weapon/gun/smg/skorpion = 0,
+					/obj/item/weapon/gun/smg/uzi = 0,
+					/obj/item/weapon/gun/smg/p90 = 0
 					)
 	premium = list()
 
@@ -188,7 +206,21 @@
 					/obj/item/ammo_magazine/sniper = 1,
 					/obj/item/ammo_magazine/sniper/incendiary = 1,
 					/obj/item/ammo_magazine/sniper/flak = 1,
-					/obj/item/ammo_magazine/rifle/m4ra = 1
+					/obj/item/ammo_magazine/rifle/m4ra = 1,
+					/obj/item/ammo_magazine/rifle/incendiary = 0,
+					/obj/item/ammo_magazine/rifle/m41aMK1 = 0,
+					/obj/item/ammo_magazine/rifle/lmg = 0,
+					/obj/item/ammo_magazine/pistol/hp = 0,
+					/obj/item/ammo_magazine/pistol/heavy = 0,
+					/obj/item/ammo_magazine/pistol/holdout = 0,
+					/obj/item/ammo_magazine/pistol/highpower = 0,
+					/obj/item/ammo_magazine/pistol/vp70 = 0,
+					/obj/item/ammo_magazine/revolver/small = 0,
+					/obj/item/ammo_magazine/revolver/cmb = 0,
+					/obj/item/ammo_magazine/smg/mp7 = 0,
+					/obj/item/ammo_magazine/smg/skorpion = 0,
+					/obj/item/ammo_magazine/smg/uzi = 0,
+					/obj/item/ammo_magazine/smg/p90 = 0
 					)
 	premium = list()
 

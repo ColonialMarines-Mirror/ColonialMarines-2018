@@ -383,15 +383,17 @@ Turn() or Shift() as there is virtually no overhead. ~N
 	to_chat(user, "It contains [magazine_amount] out of [max_magazine_amount] magazines\s.")
 
 /obj/item/ammobox/attackby(obj/item/I, mob/user)
+	var/obj/item/ammo_magazine/MG = I
+	if !(MG.flags_magazine & AMMUNITION_REFILLABLE)
+		return
+	if(MG.default_ammo != ammo_type || MG.max_rounds != max_magazine_rounds || MG.current_rounds != max_magazine_rounds)
+		to_chat(user, "<span class='warning'>That's not the right kind of ammo.</span>")
+		return
 	if(deployed == FALSE)
 		to_chat(user, "<span class='warning'>[src] must be on the ground to be refilled.</span>")
 		return
 	if(magazine_amount == max_magazine_amount)
 		to_chat(user, "<span class='warning'>The [src] is already full.")
-		return
-	var/obj/item/ammo_magazine/MG = I
-	if(MG.default_ammo != ammo_type || MG.max_rounds != max_magazine_rounds || MG.current_rounds != max_magazine_rounds)
-		to_chat(user, "<span class='warning'>That's not the right kind of ammo.</span>")
 		return
 	del user.get_held_item()
 	magazine_amount++

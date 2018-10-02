@@ -129,21 +129,18 @@
 	if(ismob(loc))
 		M = loc
 	if(!powered)
-		if(cell)
-			if(cell.charge > 0)
-				playsound(loc, 'sound/weapons/saberon.ogg', 25)
-				powered = TRUE
-				if(M)
-					to_chat(M, "<span class='notice'>You switch [src] on. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
-				update_icon()
-			else
-				if(M)
-					fizzle_message(M)
-				return
-		else
-			if(M)
-				fizzle_message(M)
-				return
+		if(!cell)
+			fizzle_message(M)
+			return
+		if(cell.charge <= 0)
+			fizzle_message(M)
+			return
+		playsound(loc, 'sound/weapons/saberon.ogg', 25)
+		powered = TRUE
+		if(M)
+			to_chat(M, "<span class='notice'>You switch [src] on. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+		update_icon()
+
 	else
 		playsound(loc, 'sound/weapons/saberoff.ogg', 25)
 		powered = FALSE
@@ -152,14 +149,13 @@
 		update_icon()
 
 /obj/item/tool/pickaxe/plasmacutter/proc/fizzle_message(mob/user)
-	var/fizzle = "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>"
 	playsound(src, 'sound/machines/buzz-two.ogg', 25, 1)
 	if(!cell)
 		to_chat(user, "<span class='warning'>[src]'s has no battery installed!</span>")
 	else if(!powered)
 		to_chat(user, "<span class='warning'>[src] is turned off!</span>")
 	else
-		to_chat(user, "<span class='warning'>[fizzle] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+		to_chat(user, "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>" <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 
 /obj/item/tool/pickaxe/plasmacutter/proc/start_cut(mob/user, name = "", atom/source)
 	eyecheck(user)
@@ -191,14 +187,16 @@
 
 /obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
 	var/final_delay = PLASMACUTTER_CUT_DELAY
-	if (istype(user))
-		if(user.mind && user.mind.cm_skills)
-			if(user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI) //We don't have proper skills; time to fumble and bumble.
-				user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
-				"<span class='notice'>You fumble around figuring out how to use [src].</span>")
-				final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
-			else
-				final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3)*5) //We have proper skills; delay lowered by 0.5 per skill point in excess of a field engineer's. 
+	if (!istype(user))
+		return
+	if(user.mind && user.mind.cm_skills)
+		return
+	if(user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI) //We don't have proper skills; time to fumble and bumble.
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
+		"<span class='notice'>You fumble around figuring out how to use [src].</span>")
+		final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
+	else
+		final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3)*5) //We have proper skills; delay lowered by 0.5 per skill point in excess of a field engineer's. 
 	return final_delay
 
 /obj/item/tool/pickaxe/plasmacutter/emp_act(severity)
@@ -206,7 +204,7 @@
 	update_icon()
 	..()
 
-/obj/item/tool/pickaxe/plasmacutter/update_icon(mob/user)
+/obj/item/tool/pickaxe/plasmacutter/update_icon(mob/user) //Updates the icon and power on/off status of the plasma cutter
 	if(!cell || cell.charge <= 0 || powered == FALSE)
 		icon_state = "plasma_cutter_off"
 		if(powered)
@@ -231,55 +229,64 @@
 		else
 			SetLuminosity(2)
 
+/obj/item/tool/pickaxe/plasmacutter/Dispose()
+	if(powered)
+		if(ismob(loc))
+			loc.SetLuminosity(-2)
+		else
+			SetLuminosity(0)
+	. = ..()
+
 
 /obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/cell))
-		if(user.drop_held_item())
-			W.loc = src
-			var/replace_install = "You replace the cell in [src]"
-			if(!cell)
-				replace_install = "You install a cell in [src]"
-			else
-				cell.updateicon()
-				user.put_in_hands(cell)
-			cell = W
-			to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
-			playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
-			update_icon()
+	if(!istype(W, /obj/item/cell))
+		return
+	if(user.drop_held_item())
+		W.loc = src
+		var/replace_install = "You replace the cell in [src]"
+		if(!cell)
+			replace_install = "You install a cell in [src]"
+		else
+			cell.updateicon()
+			user.put_in_hands(cell)
+		cell = W
+		to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+		playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
+		update_icon()
 
 
 /obj/item/tool/pickaxe/plasmacutter/attack_hand(mob/user)
 	if(user.get_inactive_hand() == src)
-		if(cell)
-			cell.updateicon()
-			user.put_in_active_hand(cell)
-			cell = null
-			playsound(user, 'sound/machines/click.ogg', 25, 1, 5)
-			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			update_icon()
-			return
-	return ..()
+		return ..()
+	if(!cell)
+		return ..()
+	cell.updateicon()
+	user.put_in_active_hand(cell)
+	cell = null
+	playsound(user, 'sound/machines/click.ogg', 25, 1, 5)
+	to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+	update_icon()
+	return
 
 
 /obj/item/tool/pickaxe/plasmacutter/attack(mob/M, mob/user)
 
-	if(powered)
-		if(cell.charge < charge_cost * 0.25)
-			fizzle_message(user)
-		else
-			use_charge(user, charge_cost * 0.25)
-			playsound(M, cutting_sound, 25, 1)
-			eyecheck(user)
-			update_icon()
-			var/datum/effect_system/spark_spread/spark_system
-			spark_system = new /datum/effect_system/spark_spread()
-			spark_system.set_up(5, 0, M)
-			spark_system.attach(M)
-			spark_system.start(M)
-			to_chat(user, "<span class='notice'>Attack Debug: Damtype: [damtype] Force: [force].</span>")
-			return ..()
-	return ..()
-
+	if(!powered)
+		return ..()
+	if(cell.charge < charge_cost * 0.25)
+		fizzle_message(user)
+	else
+		use_charge(user, charge_cost * 0.25)
+		playsound(M, cutting_sound, 25, 1)
+		eyecheck(user)
+		update_icon()
+		var/datum/effect_system/spark_spread/spark_system
+		spark_system = new /datum/effect_system/spark_spread()
+		spark_system.set_up(5, 0, M)
+		spark_system.attach(M)
+		spark_system.start(M)
+		//to_chat(user, "<span class='notice'>Attack Debug: Damtype: [damtype] Force: [force].</span>")
+		return ..()
 
 
 /obj/item/tool/pickaxe/plasmacutter/afterattack(atom/target, mob/user, proximity)

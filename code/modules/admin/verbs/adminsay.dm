@@ -26,7 +26,7 @@
 	set name = "Msay"
 	set hidden = 1
 
-	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR, D))	
+	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR, 0))	
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)

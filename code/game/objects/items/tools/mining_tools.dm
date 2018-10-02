@@ -155,7 +155,7 @@
 	else if(!powered)
 		to_chat(user, "<span class='warning'>[src] is turned off!</span>")
 	else
-		to_chat(user, "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery.</span>" <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+		to_chat(user, "<span class='warning'>The plasma cutter has inadequate charge remaining! Replace or recharge the battery. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 
 /obj/item/tool/pickaxe/plasmacutter/proc/start_cut(mob/user, name = "", atom/source)
 	eyecheck(user)

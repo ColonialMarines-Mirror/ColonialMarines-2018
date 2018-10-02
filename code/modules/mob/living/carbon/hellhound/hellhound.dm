@@ -62,7 +62,7 @@
 				H.KnockOut(3)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1)
 				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
+					if ((O.client && !is_blind(O)))
 						O.show_message(text("\red <B>[] knocks down [H]!</B>", src), 1)
 		return
 	else if(a_intent == "grab")
@@ -201,11 +201,11 @@
 						KnockOut(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1)
 						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
+							if ((O.client && !is_blind(O)))
 								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
 					else
 						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
+							if ((O.client && !is_blind(O)))
 								O.show_message(text("\red <B>[] shoves at [name]!</B>", M), 1)
 	return
 
@@ -245,6 +245,14 @@
 /mob/living/carbon/hellhound/IsAdvancedToolUser()
 	return 0
 
+/mob/living/carbon/hellhound/vomit()
+	return
+
+/mob/living/carbon/hellhound/get_permeability_protection()
+	return 0.5
+
+/mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
+	return FALSE
 
 /mob/living/carbon/hellhound/say(var/message)
 	if(client)

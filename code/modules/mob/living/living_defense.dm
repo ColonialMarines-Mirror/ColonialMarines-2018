@@ -138,6 +138,16 @@
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = TRUE
 		to_chat(src, "<span class='danger'>You are on fire! Use Resist to put yourself out!</span>")
+		if(isXeno(src))
+			SetLuminosity(min(fire_stacks,5)) // light up xenos
+			var/obj/item/clothing/mask/facehugger/F = get_active_hand()
+			var/obj/item/clothing/mask/facehugger/G = get_inactive_hand()
+			if(istype(F))
+				F.Die()
+				drop_inv_item_on_ground(F)
+			if(istype(G))
+				G.Die()
+				drop_inv_item_on_ground(G)
 		update_fire()
 		return TRUE
 
@@ -147,36 +157,16 @@
 		if(!stat && !(species.flags & NO_PAIN))
 			emote("scream")
 
-/mob/living/carbon/Xenomorph/IgniteMob()
-	. = ..()
-	if(.)
-		SetLuminosity(min(fire_stacks,5)) // light up xenos
-		var/obj/item/clothing/mask/facehugger/F = get_active_hand()
-		var/obj/item/clothing/mask/facehugger/G = get_inactive_hand()
-		if(istype(F))
-			F.Die()
-			drop_inv_item_on_ground(F)
-		if(istype(G))
-			G.Die()
-			drop_inv_item_on_ground(G)
-
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
 		on_fire = FALSE
 		fire_stacks = 0
+		if(isXeno(src))
+			if(isXenoBoiler(src))
+				SetLuminosity(3)
+			else
+				SetLuminosity(0)
 		update_fire()
-		return TRUE
-
-/mob/living/carbon/Xenomorph/ExtinguishMob()
-	. = ..()
-	if(.)
-		SetLuminosity(0)
-
-/mob/living/carbon/Xenomorph/Boiler/ExtinguishMob()
-	. = ..()
-	if(.)
-		SetLuminosity(3)
-
 
 /mob/living/proc/update_fire()
 	return

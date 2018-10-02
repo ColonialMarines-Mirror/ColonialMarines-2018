@@ -47,6 +47,15 @@
 	greaterform = "Unathi"
 	uni_append = list(0x044,0xC5D) // 044C5D
 
+
+//-----Monkey Yeti Thing
+/mob/living/carbon/monkey/yiren
+	name = "Yiren"
+	desc = "Weird, but cute."
+	icon_state = "yirenkey1"
+	env_low_temp_resistance = ICE_PLANET_min_cold_protection_temperature
+
+
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -115,6 +124,17 @@
 
 	. += config.monkey_delay
 
+/mob/living/carbon/monkey/get_permeability_protection()
+	var/protection = 0
+	//if(head)
+	//	protection = 1 - head.permeability_coefficient ((no head slot in inventory for time being))
+	if(wear_mask)
+		protection = max(1 - wear_mask.permeability_coefficient, protection)
+	protection = protection/7 //the rest of the body isn't covered.
+	return protection
+
+/mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
+	return FALSE
 
 /mob/living/carbon/monkey/Topic(href, href_list)
 	if (href_list["mach_close"])
@@ -248,13 +268,13 @@
 						KnockOut(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1)
 						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
+							if ((O.client && !is_blind(O)))
 								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
 					else
 						drop_held_item()
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1)
 						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
+							if ((O.client && !is_blind(O)))
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 	return
 
@@ -297,16 +317,16 @@
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(200)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(2.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(3.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))

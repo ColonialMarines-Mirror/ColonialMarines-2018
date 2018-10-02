@@ -12,7 +12,7 @@
 	maxHealth = 250
 	plasma_stored = 200
 	plasma_max = 800
-	upgrade_threshold = 800
+	upgrade_threshold = 200
 	evolution_allowed = FALSE
 	plasma_gain = 45
 	caste_desc = "A builder of REALLY BIG hives."

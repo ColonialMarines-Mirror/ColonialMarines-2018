@@ -1021,14 +1021,14 @@
 			if("Crusher")
 				newcaste = "Warrior"
 			if("Ravager")
-				newcaste = "Lurker"
+				newcaste = "Hunter"
 			if("Praetorian")
 				newcaste = "Warrior"
 			if("Boiler")
 				newcaste = "Spitter"
 			if("Spitter")
 				newcaste = "Sentinel"
-			if("Lurker")
+			if("Hunter")
 				newcaste = "Runner"
 			if("Warrior")
 				newcaste = "Defender"
@@ -1071,8 +1071,8 @@
 				xeno_type = /mob/living/carbon/Xenomorph/Sentinel
 			if("Spitter")
 				xeno_type = /mob/living/carbon/Xenomorph/Spitter
-			if("Lurker")
-				xeno_type = /mob/living/carbon/Xenomorph/Lurker
+			if("Hunter")
+				xeno_type = /mob/living/carbon/Xenomorph/Hunter
 			if("Warrior")
 				xeno_type = /mob/living/carbon/Xenomorph/Warrior
 			if("Defender")

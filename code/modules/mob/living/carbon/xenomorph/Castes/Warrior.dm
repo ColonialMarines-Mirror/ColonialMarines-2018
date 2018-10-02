@@ -11,8 +11,8 @@
 	plasma_stored = 50
 	plasma_gain = 8
 	plasma_max = 100
-	evolution_threshold = 400
-	upgrade_threshold = 400
+	evolution_threshold = 200
+	upgrade_threshold = 200
 	caste_desc = "A powerful front line combatant."
 	speed = -0.3
 	pixel_x = -16

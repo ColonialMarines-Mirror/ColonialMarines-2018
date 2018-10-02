@@ -14,7 +14,7 @@
 	plasma_stored = 200
 	plasma_gain = 10
 	plasma_max = 200
-	upgrade_threshold = 800
+	upgrade_threshold = 400
 	evolution_allowed = FALSE
 	caste_desc = "A huge tanky xenomorph."
 	speed = 0.1

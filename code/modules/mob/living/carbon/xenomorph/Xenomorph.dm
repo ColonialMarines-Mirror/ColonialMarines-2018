@@ -134,8 +134,8 @@
 	if(caste == "Queen")
 		switch(upgrade)
 			if(0) name = "\improper [name_prefix]Queen"			 //Young
-			if(1) name = "\improper [name_prefix]Elite Queen"	 //Mature
-			if(2) name = "\improper [name_prefix]Elite Empress"	 //Elite
+			if(1) name = "\improper [name_prefix]Elder Queen"	 //Mature
+			if(2) name = "\improper [name_prefix]Elder Empress"	 //Elder
 			if(3) name = "\improper [name_prefix]Ancient Empress" //Ancient
 	else if(caste == "Predalien") name = "\improper [name_prefix][name] ([nicknumber])"
 	else name = "\improper [name_prefix][upgrade_name] [caste] ([nicknumber])"

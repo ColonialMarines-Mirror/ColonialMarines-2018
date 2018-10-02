@@ -1,11 +1,11 @@
 //Hunter Code - Colonial Marines - Last Edit: Apophis775 - 11JUN16
 
-/mob/living/carbon/Xenomorph/Lurker
-	caste = "Lurker"
-	name = "Lurker"
+/mob/living/carbon/Xenomorph/Hunter
+	caste = "Hunter"
+	name = "Hunter"
 	desc = "A beefy, fast alien with sharp claws."
 	icon = 'icons/Xeno/1x1_Xenos.dmi'
-	icon_state = "Lurker Walking"
+	icon_state = "Hunter Walking"
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 	health = 175
@@ -13,8 +13,8 @@
 	plasma_stored = 50
 	plasma_gain = 8
 	plasma_max = 100
-	evolution_threshold = 400
-	upgrade_threshold = 400
+	evolution_threshold = 200
+	upgrade_threshold = 200
 	caste_desc = "A fast, powerful front line combatant."
 	speed = -1.5 //Not as fast as runners, but faster than other xenos
 	pixel_x = 0

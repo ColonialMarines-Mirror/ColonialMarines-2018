@@ -12,8 +12,8 @@
 	maxHealth = 120
 	plasma_stored = 350
 	plasma_max = 750
-	evolution_threshold = 400
-	upgrade_threshold = 400
+	evolution_threshold = 100
+	upgrade_threshold = 100
 	plasma_gain = 25
 	tier = 1
 	upgrade = 0

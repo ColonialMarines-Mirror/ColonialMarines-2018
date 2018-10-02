@@ -15,7 +15,7 @@
 	maxHealth = 200
 	plasma_stored = 50
 	plasma_max = 250
-	upgrade_threshold = 800
+	upgrade_threshold = 200
 	evolution_allowed = FALSE
 	plasma_gain = 8
 	caste_desc = "A carrier of huggies."

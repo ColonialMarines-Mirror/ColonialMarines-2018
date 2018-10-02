@@ -42,11 +42,11 @@
 				hallucinations -= a
 				cdel(a)
 
-			if(halloss > 100)
+			if(halloss > 199)
 				visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
 				"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
-				KnockOut(10)
-				setHalLoss(99)
+				KnockOut(5)
+				setHalLoss(199)
 
 		if(knocked_out)
 			AdjustKnockedout(-species.knock_out_reduction)
@@ -138,7 +138,7 @@
 
 		if(command_aura_cooldown > 0 && (--command_aura_cooldown == 0))
 			update_action_buttons() // Update "Issue Order" action button
-		
+
 		if(command_aura)
 			command_aura_tick--
 			if(command_aura_tick < 1)

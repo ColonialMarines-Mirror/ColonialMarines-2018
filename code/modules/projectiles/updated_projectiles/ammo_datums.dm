@@ -1132,25 +1132,15 @@
 	flags_ammo_behavior = AMMO_XENO_TOX|AMMO_IGNORE_RESIST
 	spit_cost = 50
 
-/datum/ammo/xeno/toxin/New()
-	..()
-
 /datum/ammo/xeno/toxin/medium //Spitter
 	name = "neurotoxic spatter"
 	reagent_amount = 7
 	added_spit_delay = 2
 
-/datum/ammo/xeno/toxin/medium/New()
-	..()
-
 /datum/ammo/xeno/toxin/heavy //Praetorian
 	name = "neurotoxic splash"
 	reagent_amount = 10
 	added_spit_delay = 5
-
-/datum/ammo/xeno/toxin/heavy/New()
-	..()
-
 
 /datum/ammo/xeno/sticky
 	name = "sticky resin spit"

@@ -12,7 +12,7 @@
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
-	var/accept_glass = 0 //At 0 ONLY accepts glass containers. Kinda misleading varname.
+	var/accept_glass = FALSE //just used for the title name on the NanoUI now. Kinda misleading varname.
 	var/obj/item/reagent_container/beaker = null
 	var/recharged = 0
 	var/hackedcheck = 0
@@ -74,8 +74,10 @@
   * @return nothing
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",var/datum/nanoui/ui = null, var/force_open = 0)
-	if(stat & (BROKEN|NOPOWER)) return
-	if(user.stat || user.is_mob_restrained()) return
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(user.stat || user.is_mob_restrained())
+		return
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -153,14 +155,13 @@
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
-	if(istype(B, /obj/item/reagent_container/glass) || istype(B, /obj/item/reagent_container/food))
-		if(!accept_glass && istype(B,/obj/item/reagent_container/food))
-			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
+	if(istype(B, /obj/item/reagent_container) && B.is_open_container())
 		if(user.drop_inv_item_to_loc(B, src))
 			beaker =  B
 			to_chat(user, "You set [B] on the machine.")
 			nanomanager.update_uis(src) // update all UIs attached to src
-		return
+	else if (istype(B, /obj/item/reagent_container/glass))
+		to_chat(user, "Take the lid off [B] first.")
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -183,7 +184,7 @@
 	desc = "A drink fabricating machine, capable of producing many sugary drinks with just one touch."
 	ui_title = "Soda Dispens-o-matic"
 	energy = 100
-	accept_glass = 1
+	accept_glass = TRUE
 	req_one_access = list()
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
@@ -270,7 +271,7 @@
 
 /obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob)
 
-	if(istype(B, /obj/item/reagent_container/glass))
+	if(istype(B, /obj/item/reagent_container) & B.is_open_container())
 
 		if(src.beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
@@ -294,9 +295,12 @@
 	return
 
 /obj/machinery/chem_master/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER)) return
-	if(usr.stat || usr.is_mob_restrained()) return
-	if(!in_range(src, usr)) return
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(usr.stat || usr.is_mob_restrained())
+		return
+	if(!in_range(src, usr))
+		return
 
 	src.add_fingerprint(usr)
 	usr.set_interaction(src)
@@ -789,8 +793,9 @@
 
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/reagent_container/glass))
-		if(stat & (NOPOWER|BROKEN)) return
+	if(istype(I, /obj/item/reagent_container) && I.is_open_container())
+		if(stat & (NOPOWER|BROKEN))
+			return
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
@@ -877,9 +882,7 @@
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 
-	if (istype(O,/obj/item/reagent_container/glass) || \
-		istype(O,/obj/item/reagent_container/food/drinks/drinkingglass) || \
-		istype(O,/obj/item/reagent_container/food/drinks/shaker))
+	if (istype(O,/obj/item/reagent_container) && O.is_open_container())
 
 		if (beaker)
 			return 1

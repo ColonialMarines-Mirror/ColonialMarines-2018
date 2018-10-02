@@ -179,18 +179,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	flags_armor_protection = 0
 	attack_verb = list("burnt", "singed")
+	container_type = INJECTABLE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/trash/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
-	var/chem_volume = 15
+	var/chem_volume = 30
+	var/list/list_reagents = list("nicotine" = 15)
 	flags_armor_protection = 0
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
-	flags_atom |= NOREACT // so it doesn't react until you light it
+	reagents.set_reacting(FALSE)
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+	if(list_reagents)
+		reagents.add_reagent_list(list_reagents) // Latest news, cigs previously didn't have nicotine.
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user)
 	..()
@@ -305,7 +309,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			cdel(src)
 			return
-		flags_atom &= ~NOREACT // allowing reagents to react after being lit
+		reagents.set_reacting(TRUE)
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
@@ -381,79 +385,19 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	item_state = "cigar2off"
 	smoketime = 1500
-	chem_volume = 20
+	chem_volume = 45
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
 	desc = "There's little more you could want from a cigar."
+	smoketime = 2000
+	chem_volume = 80
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
 	desc = "A cigar fit for only the best of the best."
 	smoketime = 7200
-	chem_volume = 30
-
-
-/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/tool/weldingtool))
-		var/obj/item/tool/weldingtool/WT = W
-		if(WT.isOn())
-			light("<span class='notice'>[user] insults [name] by lighting it with [W].</span>")
-
-	else if(istype(W, /obj/item/tool/lighter/zippo))
-		var/obj/item/tool/lighter/zippo/Z = W
-		if(Z.heat_source)
-			light("<span class='rose'>With a flick of their wrist, [user] lights their [name] with their [W].</span>")
-
-	else if(istype(W, /obj/item/device/flashlight/flare))
-		var/obj/item/device/flashlight/flare/FL = W
-		if(FL.heat_source)
-			light("<span class='notice'>[user] lights their [name] with [W].</span>")
-
-	else if(istype(W, /obj/item/tool/lighter))
-		var/obj/item/tool/lighter/L = W
-		if(L.heat_source)
-			light("<span class='notice'>[user] manages to offend their [name] by lighting it with [W].</span>")
-
-	else if(istype(W, /obj/item/tool/match))
-		var/obj/item/tool/match/M = W
-		if(M.heat_source)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
-
-	else if(istype(W, /obj/item/weapon/energy/sword))
-		var/obj/item/weapon/energy/sword/S = W
-		if(S.active)
-			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
-
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
-
-	else if(istype(W, /obj/item/attachable/attached_gun/flamer))
-		light("<span class='notice'>[user] lights their [src] with the [W], bet that would have looked cooler if it was attached to something first!</span>")
-
-	else if(istype(W, /obj/item/weapon/gun/flamer))
-		var/obj/item/weapon/gun/flamer/F = W
-		if(F.lit)
-			light("<span class='notice'>[user] lights their [src] with the pilot light of the [F], the glint of pyromania in their eye.</span>")
-		else
-			to_chat(user, "<span class='warning'>Turn on the pilot light first!</span>")
-
-	else if(istype(W, /obj/item/weapon/gun))
-		var/obj/item/weapon/gun/G = W
-		if(istype(G.under, /obj/item/attachable/attached_gun/flamer))
-			light("<span class='notice'>[user] lights their [src] with the underbarrel [G.under] like a complete badass.</span>")
-
-	else if(istype(W, /obj/item/tool/surgery/cautery))
-		light("<span class='notice'>[user] lights their [src] with the [W], that can't be sterile!.</span>")
-
-	else if(istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/C = W
-		if(C.item_state == icon_on)
-			light("<span class='notice'>[user] lights their [src] with the [C] after a few attempts.</span>")
-
-	else if(istype(W, /obj/item/tool/candle))
-		if(W.heat_source > 200)
-			light("<span class='notice'>[user] lights their [src] with the [W] after a few attempts.</span>")
+	chem_volume = 60
 
 /////////////////
 //SMOKING PIPES//
@@ -494,35 +438,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, "<span class='notice'>You refill the pipe with tobacco.</span>")
 		smoketime = initial(smoketime)
 	return
-
-/obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/tool/weldingtool))
-		var/obj/item/tool/weldingtool/WT = W
-		if(WT.isOn())//
-			light("<span class='notice'>[user] recklessly lights [name] with [W].</span>")
-
-	else if(istype(W, /obj/item/tool/lighter/zippo))
-		var/obj/item/tool/lighter/zippo/Z = W
-		if(Z.heat_source)
-			light("<span class='rose'>With much care, [user] lights their [name] with their [W].</span>")
-
-	else if(istype(W, /obj/item/device/flashlight/flare))
-		var/obj/item/device/flashlight/flare/FL = W
-		if(FL.heat_source)
-			light("<span class='notice'>[user] lights their [name] with [W].</span>")
-
-	else if(istype(W, /obj/item/tool/lighter))
-		var/obj/item/tool/lighter/L = W
-		if(L.heat_source)
-			light("<span class='notice'>[user] manages to light their [name] with [W].</span>")
-
-	else if(istype(W, /obj/item/tool/match))
-		var/obj/item/tool/match/M = W
-		if(M.heat_source)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
-
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
 	name = "corn cob pipe"

@@ -1,27 +1,22 @@
 /mob/living/silicon/ai/Life()
-	if (src.stat == 2)
+	if (stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
 		var/turf/T = get_turf(src)
 
-		if (src.stat!=0)
-			src.cameraFollow = null
-			src.reset_view(null)
-			src.unset_interaction()
+		if (stat!= CONSCIOUS)
+			cameraFollow = null
+			reset_view(null)
+			unset_interaction()
 
-		src.updatehealth()
+		updatehealth()
 
-		if (src.malfhack)
-			if (src.malfhack.aidisabled)
+		if (malfhack)
+			if (malfhack.aidisabled)
 				to_chat(src, "\red ERROR: APC access disabled, hack attempt canceled.")
-				src.malfhacking = 0
-				src.malfhack = null
-
-
-		if (src.health <= config.health_threshold_dead)
-			death()
-			return
+				malfhacking = 0
+				malfhack = null
 
 		if (interactee)
 			interactee.check_eye(src)
@@ -54,11 +49,11 @@
 		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
 					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
 			//stage = 4.5
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			sight |= SEE_TURFS
+			sight |= SEE_MOBS
+			sight |= SEE_OBJS
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 
 			//Congratulations!  You've found a way for AI's to run without using power!
@@ -89,11 +84,11 @@
 
 			//stage = 6
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			src.sight = src.sight&~SEE_TURFS
-			src.sight = src.sight&~SEE_MOBS
-			src.sight = src.sight&~SEE_OBJS
-			src.see_in_dark = 0
-			src.see_invisible = SEE_INVISIBLE_LIVING
+			sight = src.sight&~SEE_TURFS
+			sight = src.sight&~SEE_MOBS
+			sight = src.sight&~SEE_OBJS
+			see_in_dark = 0
+			see_invisible = SEE_INVISIBLE_LIVING
 
 			if (((!loc.master.power_equip) || istype(T, /turf/open/space)) && !istype(src.loc,/obj/item))
 				if (src:aiRestorePowerRoutine==0)
@@ -172,16 +167,28 @@
 							sleep(50)
 							theAPC = null
 
+/mob/living/silicon/ai/update_stat()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
+		if(health <= config.health_threshold_dead)
+			death()
+			return
+		else if(stat == UNCONSCIOUS)
+			stat = CONSCIOUS
+			set_blindness(0)
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
-		stat = CONSCIOUS
+		return
+
 	else
 		if(fire_res_on_core)
 			health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
 		else
 			health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+
+	update_stat()
 
 /mob/living/silicon/ai/rejuvenate()
 	..()

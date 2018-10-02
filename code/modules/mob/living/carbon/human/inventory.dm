@@ -148,8 +148,8 @@
 		update_inv_gloves()
 	else if (I == glasses)
 		glasses = null
+		update_sight()
 		update_tint()
-		update_glass_vision(I)
 		update_inv_glasses()
 	else if (I == wear_ear)
 		wear_ear = null
@@ -273,7 +273,6 @@
 			glasses = W
 			W.equipped(src, slot)
 			update_tint()
-			update_glass_vision(W)
 			update_inv_glasses()
 		if(WEAR_HANDS)
 			gloves = W

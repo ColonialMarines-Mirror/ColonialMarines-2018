@@ -479,6 +479,24 @@ cases. Override_icon_state should be a list.*/
 					if(S.can_be_inserted(src))
 						return TRUE
 				return FALSE
+			if(EQUIP_IN_STORAGE)
+				if(H.s_active)
+					var/obj/item/storage/S = H.s_active
+					if(S.can_be_inserted(src))
+						return TRUE
+				return FALSE
+			if(EQUIP_IN_L_POUCH)
+				if(H.l_store && istype(H.l_store, /obj/item/storage/pouch))
+					var/obj/item/storage/S = H.l_store
+					if(S.can_be_inserted(src))
+						return TRUE
+				return FALSE
+			if(EQUIP_IN_R_POUCH)
+				if(H.r_store && istype(H.r_store, /obj/item/storage/pouch))
+					var/obj/item/storage/S = H.r_store
+					if(S.can_be_inserted(src))
+						return TRUE
+				return FALSE
 		return FALSE //Unsupported slot
 		//END HUMAN
 

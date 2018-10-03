@@ -151,6 +151,9 @@
 #define WEAR_IN_HOLSTER		"in_holster"
 #define WEAR_IN_B_HOLSTER	"in_b_holster"
 #define WEAR_IN_J_HOLSTER	"in_j_holster"
+#define EQUIP_IN_STORAGE	"in_storage"
+#define EQUIP_IN_L_POUCH	"in_l_pouch"
+#define EQUIP_IN_R_POUCH	"in_r_pouch"
 //=================================================
 
 // bitflags for clothing parts

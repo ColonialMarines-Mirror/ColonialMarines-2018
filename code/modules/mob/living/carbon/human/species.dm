@@ -901,10 +901,13 @@
 
 	if(WEAR_BACK in equip_slots)
 		equip_slots |= WEAR_IN_BACK
+		equip_slots |= WEAR_IN_B_HOLSTER	
 	if(WEAR_WAIST in equip_slots)
 		equip_slots |= WEAR_IN_HOLSTER
 	if(WEAR_JACKET in equip_slots)
 		equip_slots |= WEAR_IN_J_HOLSTER
 
 	equip_slots |= WEAR_LEGCUFFS
-	equip_slots |= WEAR_IN_B_HOLSTER
+	equip_slots |= EQUIP_IN_STORAGE
+	equip_slots |= EQUIP_IN_L_POUCH
+	equip_slots |= EQUIP_IN_R_POUCH

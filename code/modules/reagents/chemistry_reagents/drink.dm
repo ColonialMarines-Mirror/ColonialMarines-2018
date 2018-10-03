@@ -360,6 +360,26 @@
 		M.druggy = max(M.druggy, 30)
 		M.dizziness +=5
 		M.drowsyness = 0
+		
+/datum/reagent/drink/cold/Syndie_cola
+	name = "Syndie cola"
+	id = "syndie_cola"
+	description = "Donksoft's first foray in to soft drinks,combining a top secrect blend of ingredients and xenobiology."
+	color = "#df182b" // rgb: 223, 24, 43
+	adj_sleepy = -4
+	custom_metabolism = 0.025 // Lasts 10 minutes for 15 units
+	
+	on_mob_life(mob/living/M, alien)
+		. = ..()
+		if(!.) return
+		if(M.stat == DEAD)
+			return
+		if(!alien)
+			if(M.getOxyLoss()) M.adjustOxyLoss(-REM)
+			if(M.getBruteLoss() && prob(80)) M.heal_limb_damage(REM, 0)
+			if(M.getFireLoss() && prob(80)) M.heal_limb_damage(0, REM)
+			if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-REM)
+
 
 /datum/reagent/drink/cold/spacemountainwind
 	name = "Mountain Wind"

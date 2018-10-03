@@ -19,7 +19,7 @@
 	caste = "Queen"
 	name = "Queen"
 	desc = "A huge, looming alien creature. The biggest and the baddest."
-	icon = 'icons/Xeno/xenomorph_64x64.dmi'
+	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Queen Walking"
 	melee_damage_lower = 30
 	melee_damage_upper = 46
@@ -53,7 +53,7 @@
 	caste_desc = "The biggest and baddest xeno. The Queen controls the hive and plants eggs"
 	xeno_explosion_resistance = 3 //some resistance against explosion stuns.
 	spit_delay = 25
-	spit_types = list(/datum/ammo/xeno/toxin/medium, /datum/ammo/xeno/acid/medium)
+	spit_types = list(/datum/ammo/xeno/acid/medium)
 
 	var/breathing_counter = 0
 	var/ovipositor = FALSE //whether the Queen is attached to an ovipositor
@@ -74,7 +74,6 @@
 		/datum/action/xeno_action/emit_pheromones,
 		/datum/action/xeno_action/activable/gut,
 		/datum/action/xeno_action/psychic_whisper,
-		/datum/action/xeno_action/shift_spits,
 		/datum/action/xeno_action/activable/xeno_spit,
 		)
 	inherent_verbs = list(
@@ -356,18 +355,22 @@
 				shake_camera(M, 30, 1) //50 deciseconds, SORRY 5 seconds was way too long. 3 seconds now
 
 	for(var/mob/living/carbon/human/M in oview(7, src))
-		if(istype(M.wear_ear, /obj/item/clothing/ears/earmuffs))
-			continue
 		var/dist = get_dist(src,M)
-		if(dist <= 4)
-			to_chat(M, "<span class='danger'>An ear-splitting guttural roar shakes the ground beneath your feet!</span>")
-			M.stunned += 4 //Seems the effect lasts between 3-8 seconds.
-			M.KnockDown(4)
+		var/reduction = max(1 - 0.1 * M.protection_aura, 0) //Hold orders will reduce the Halloss; 10% per rank.
+		var/halloss_damage = (max(0,140 - dist * 10)) * reduction //Max 130 beside Queen, 70 at the edge
+		var/stun_duration = max(0,1.1 - dist * 0.1) * reduction //Max 1 beside Queen, 0.4 at the edge.
+
+		if(dist < 8)
+			to_chat(M, "<span class='danger'>An ear-splitting guttural roar tears through your mind and makes your world convulse!</span>")
+			M.druggy += 3 //Perception distorting effects of the psychic scream
+			M.stunned += stun_duration
+			M.KnockDown(stun_duration)
+			M.apply_damage(halloss_damage, HALLOSS)
 			if(!M.ear_deaf)
-				M.ear_deaf += 8 //Deafens them temporarily
-		else if(dist >= 5 && dist < 7)
-			M.stunned += 3
-			to_chat(M, "<span class='danger'>The roar shakes your body to the core, freezing you in place!</span>")
+				M.ear_deaf += stun_duration * 20  //Deafens them temporarily
+			spawn(31)
+				M.druggy += stun_duration * 10 //Perception distorting effects of the psychic scream
+				shake_camera(M, stun_duration * 10, 0.75) //Perception distorting effects of the psychic scream
 
 /mob/living/carbon/Xenomorph/Queen/proc/queen_gut(atom/A)
 
@@ -506,7 +509,6 @@
 			/datum/action/xeno_action/emit_pheromones,
 			/datum/action/xeno_action/activable/gut,
 			/datum/action/xeno_action/psychic_whisper,
-			/datum/action/xeno_action/shift_spits,
 			/datum/action/xeno_action/activable/xeno_spit,
 			)
 

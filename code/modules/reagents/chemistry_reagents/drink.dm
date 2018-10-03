@@ -379,6 +379,7 @@
 			if(M.getBruteLoss() && prob(80)) M.heal_limb_damage(REM, 0)
 			if(M.getFireLoss() && prob(80)) M.heal_limb_damage(0, REM)
 			if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-REM)
+			M.reagent_pain_modifier += PAIN_REDUCTION_HEAVY
 
 
 /datum/reagent/drink/cold/spacemountainwind

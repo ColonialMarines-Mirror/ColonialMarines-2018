@@ -175,13 +175,13 @@
 		density = 0
 		cdel(src)
 
-/obj/structure/bed/nest/fire_act()
-	on_fire = 1
-	if(on_fire)
-		update_icon()
-		spawn(rand(225, 400))
-			cdel(src)
+/obj/structure/bed/nest/flamer_fire_act()
+	health -= 50
+	healthcheck()
 
+/obj/structure/bed/nest/fire_act()
+	health -= 50
+	healthcheck()
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/Xenomorph/M)
 	if(isXenoLarva(M)) //Larvae can't do shit
@@ -201,6 +201,3 @@
 	playsound(loc, "alien_resin_break", 25)
 	health -= 40
 	healthcheck()
-
-/obj/structure/bed/nest/flamer_fire_act()
-	cdel(src)

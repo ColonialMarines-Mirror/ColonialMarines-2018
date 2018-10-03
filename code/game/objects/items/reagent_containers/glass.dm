@@ -23,9 +23,8 @@
 /obj/item/reagent_container/glass/examine(mob/user)
 	..()
 	if(get_dist(user, src) > 2 && user != loc)
-		return
-	if(!is_open_container())
-		to_chat(user, "<span class='info'>An airtight lid seals it completely.</span>")
+		if(!is_open_container())
+			to_chat(user, "<span class='info'>An airtight lid seals it completely.</span>")
 
 /obj/item/reagent_container/glass/attack_self()
 	..()
@@ -44,6 +43,9 @@
 		return
 
 	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
+		if(!is_drainable())
+			to_chat(user, "<span class='warning'>take [src]'s lid off first!</span>")
+			return
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
@@ -55,10 +57,12 @@
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
+		if(!is_refillable())
+			to_chat(user, "<span class='warning'>take [src]'s lid off first!</span>")
+			return
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty and can't be refilled!</span>")
 			return
-
 		if(reagents.holder_full())
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return

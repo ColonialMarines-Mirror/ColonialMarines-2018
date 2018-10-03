@@ -120,7 +120,7 @@ mob/living/carbon/human/proc/handle_pain()
 		if(prob(2))
 			switch(I.damage)
 				if(5 to 10)
-					custom_pain("You feel a dull ache in your [parent.display_name]!", 0)
+					custom_pain("You feel a dull pain in your [parent.display_name]!", 0)
 				if(10 to INFINITY)
 					custom_pain("You feel a sharp pain in your [parent.display_name]!", 1)
 

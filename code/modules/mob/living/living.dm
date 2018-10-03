@@ -543,3 +543,34 @@
 
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/*
+adds a dizziness amount to a mob
+use this rather than directly changing var/dizziness
+since this ensures that the dizzy_process proc is started
+currently only humans get dizzy
+value of dizziness ranges from 0 to 1000
+below 100 is not dizzy
+*/
+
+/mob/living/carbon/Dizzy(var/amount)
+	dizziness = CLAMP(dizziness + amount, 0, 1000)
+
+	if(dizziness > 100 && !is_dizzy)
+		spawn(0)
+			dizzy_process()
+
+/mob/living/proc/dizzy_process()
+	is_dizzy = TRUE
+	while(dizziness > 100)
+		if(client)
+			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70
+			client.pixel_x = amplitude * sin(0.008 * dizziness * world.time)
+			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
+
+		sleep(1)
+	//endwhile - reset the pixel offsets to zero
+	is_dizzy = FALSE
+	if(client)
+		client.pixel_x = 0
+		client.pixel_y = 0

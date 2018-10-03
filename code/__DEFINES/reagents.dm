@@ -13,9 +13,12 @@
 #define AMOUNT_VISIBLE	(1<<5)	// For non-transparent containers that still have the general amount of reagents in them visible.
 
 #define AMOUNT_SKILLCHECK	(1<<6) //For containers which apply a skill check for wheter showing their reagents to the user or not.
+#define AMOUNT_ESTIMEE	(1<<7)	//For containers without volume meters on (e.g. drinking glasses, cans, sprays)
 
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
+#define OPENCONTAINER_NOUNIT	(REFILLABLE | DRAINABLE | AMOUNT_ESTIMEE)
+
 
 #define TOUCH			1	// splashing
 #define INGEST			2	// ingestion

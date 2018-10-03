@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/items/drinks.dmi'
 	icon_state = null
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_NOUNIT
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
@@ -82,10 +82,12 @@
 		return
 
 	if(target.is_refillable())
+		if(!is_drainable())
+			to_chat(user, "<span class='notice'>[src]'s tab isn't open!</span>")
+			return
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
-
 		if(target.reagents.holder_full())
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
@@ -112,13 +114,11 @@
 
 	else if(target.is_drainable()) //A dispenser Transfer FROM it TO us.
 		if(!is_refillable())
-			to_chat(user, "<span class='warning'>[src]'s tab isn't open!</span>")
+			to_chat(user, "<span class='notice'>[src]'s tab isn't open!</span>")
 			return
-
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty.</span>")
 			return
-
 		if(reagents.holder_full())
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
@@ -127,22 +127,6 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	return ..()
-
-/obj/item/reagent_container/food/drinks/examine(mob/user)
-	..()
-	if (get_dist(user, src) > 1 && user != loc)
-		return
-	if(!reagents || reagents.total_volume==0)
-		to_chat(user, "\blue \The [src] is empty!")
-	else if (reagents.total_volume<=src.volume/4)
-		to_chat(user, "\blue \The [src] is almost empty!")
-	else if (reagents.total_volume<=src.volume*0.66)
-		to_chat(user, "\blue \The [src] is half full!")
-	else if (reagents.total_volume<=src.volume*0.90)
-		to_chat(user, "\blue \The [src] is almost full!")
-	else
-		to_chat(user, "\blue \The [src] is full!")
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END

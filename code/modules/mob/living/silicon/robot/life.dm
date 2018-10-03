@@ -27,8 +27,10 @@
 			return
 		if(knocked_out || stunned || knocked_down || !has_power) //Stunned etc.
 			stat = UNCONSCIOUS
+			blind_eyes(1)
 		else
 			stat = CONSCIOUS
+			adjust_blindness(-1)
 
 		update_canmove()
 
@@ -87,7 +89,7 @@
 	density = !lying
 
 	if ((sdisabilities & BLIND))
-		set_blindness(2)
+		blind_eyes(1)
 	if ((sdisabilities & DEAF))
 		ear_deaf = 1
 

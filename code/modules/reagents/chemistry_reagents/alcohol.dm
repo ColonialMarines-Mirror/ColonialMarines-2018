@@ -38,11 +38,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C, alien)
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
-		C.drunkenness = max((C.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
+		C.drunkenness = max((C.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk.
 	var/mob/living/carbon/human/H = C
 	var/datum/internal_organ/liver/L = H.internal_organs_by_name["liver"]
 	if (istype(L))
-		L.take_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/500), 0) // Decrement or Increment the divisor should the effects on liver be unbalanced
+		L.take_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/500), 1) // Decrement or Increment the divisor to adjust damage. Last digit 1 so it's silent.
 
 	if(druggy != 0)
 		C.set_drugginess(druggy)
@@ -330,7 +330,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "salty sea water"
 
 /datum/reagent/consumable/ethanol/deadrum/on_mob_life(mob/living/carbon/C)
-	C.dizziness +=5
+	C.Dizzy(5)
 	..()
 
 /datum/reagent/consumable/ethanol/davenport
@@ -813,15 +813,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 	switch(current_cycle)
 		if(1 to 50)
-			C.dizziness += 5
+			C.Dizzy(5)
 			C.stuttering += 2
 		if(51 to 100)
-			C.dizziness +=5
+			C.Dizzy(5)
 			C.stuttering += 5
 			if(prob(20))
 				C.confused += 3
 		if(101 to INFINITY)
-			C.dizziness += 6
+			C.Dizzy(6)
 			C.stuttering += 5
 			if(prob(20))
 				C.confused += 5

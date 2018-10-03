@@ -469,6 +469,7 @@ var/list/slot_equipment_priority = list( \
 		lying = TRUE
 	else
 		lying = FALSE
+
 	if(buckled)
 		if(buckled.buckle_lying)
 			lying = TRUE

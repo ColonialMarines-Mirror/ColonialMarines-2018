@@ -87,11 +87,6 @@
 	if(reagents)
 		reagents.metabolize(src, 0, can_overdose = TRUE)
 
-	if(resting)
-		dizziness = max(0, dizziness - 5)
-	else
-		dizziness = max(0, dizziness - 1)
-
 	updatehealth()
 
 	return //TODO: DEFERRED

@@ -291,7 +291,7 @@ REAGENT SCANNER
 				var/datum/reagent/R = A
 				reagents_in_body["[R.id]"] = R.volume
 				if(R.scannable)
-					if(R.overdose_threshold != 0 && R.volume >= R.overdose_threshold)
+					if(R.overdosed)
 						reagentdata["[R.id]"] = "<span class='warning'><b>OD: </b></span> <font color='#9773C4'><b>[round(R.volume, 1)]u [R.name]</b></font>"
 						overdosed++
 					else

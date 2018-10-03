@@ -1,10 +1,11 @@
 /mob/living/carbon/Life()
-	..()
-
-	handle_fire() //Check if we're on fire
 
 	if(stat != DEAD) //Chemicals in body and some other stuff.
 		handle_organs()
+
+	..()
+
+	handle_fire() //Check if we're on fire
 
 /mob/living/carbon/handle_regular_hud_updates()
 	..()
@@ -57,36 +58,6 @@
 
 	//Dizziness
 	if(dizziness)
-		var/client/C = client
-		var/pixel_x_diff = 0
-		var/pixel_y_diff = 0
-		var/temp
-		var/saved_dizz = dizziness
-		if(C)
-			var/oldsrc = src
-			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
-			src = null
-			spawn(0)
-				if(C)
-					temp = amplitude * sin(saved_dizz * world.time)
-					pixel_x_diff += temp
-					C.pixel_x += temp
-					temp = amplitude * cos(saved_dizz * world.time)
-					pixel_y_diff += temp
-					C.pixel_y += temp
-					sleep(3)
-					if(C)
-						temp = amplitude * sin(saved_dizz * world.time)
-						pixel_x_diff += temp
-						C.pixel_x += temp
-						temp = amplitude * cos(saved_dizz * world.time)
-						pixel_y_diff += temp
-						C.pixel_y += temp
-					sleep(3)
-					if(C)
-						C.pixel_x -= pixel_x_diff
-						C.pixel_y -= pixel_y_diff
-			src = oldsrc
 		Dizzy(-restingpwr)
 
 	if(drowsyness)
@@ -131,7 +102,7 @@
 		adjustHalLoss(-3)
 		if(mind)
 			if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
-				sleeping = max(sleeping - 1, 0)
+				AdjustSleeping(-1)
 		if(!isXeno(src))
 			if(prob(2) && health && !hal_crit)
 				spawn()
@@ -158,28 +129,30 @@
 				reagent_shock_modifier += PAIN_REDUCTION_VERY_LIGHT
 			if(prob(25))
 				confused += 2
-			Dizzy(10)
+			if(dizziness < 450) // To avoid giving the player overly dizzy too
+				Dizzy(5)
 
 		if(drunkenness >= 51)
 			if(prob(5))
-				confused += 10
+				confused += 5
 				vomit()
-			Dizzy(25)
+			if(dizziness < 600)
+				Dizzy(10)
 
 		if(drunkenness >= 61)
 			if(drunkenness < 81)
 				reagent_shock_modifier += PAIN_REDUCTION_LIGHT
-			if(prob(50))
-				blur_eyes(5)
+			if(prob(25))
+				blur_eyes(3)
 
 		if(drunkenness >= 71)
-			blur_eyes(5)
+			blur_eyes(4)
 
 		if(drunkenness >= 81)
 			if(drunkenness < 91)
 				reagent_shock_modifier += PAIN_REDUCTION_MEDIUM
 			adjustToxLoss(0.2)
-			if(prob(5) && !stat)
+			if(prob(10) && !stat)
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 				drowsyness += 5
 

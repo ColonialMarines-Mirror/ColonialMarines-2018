@@ -236,7 +236,7 @@ its easier to just keep the beam vertical.
 
 
 //mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
-/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+/mob/verb/examinate(atom/A as mob|obj|turf in view())
 	set name = "Examine"
 	set category = "IC"
 
@@ -272,17 +272,17 @@ its easier to just keep the beam vertical.
 	if(desc)
 		to_chat(user, desc)
 
-	if(get_dist(user,src) <= 3)
+	if(get_dist(user,src) <= 2)
 		if(reagents)
 			if(container_type & TRANSPARENT)
 				to_chat(user, "It contains:")
-				if(reagents.reagent_list.len) // TODO: Implement scan_reagent and can_see_reagents() to show each individual reagents
+				if(reagents.reagent_list.len) // TODO: Implement scan_reagent and can_see_reagents() to show each individual reagent
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents.")
+					to_chat(user, "<span class='notice'>[total_volume] units of various reagents.</span>")
 				else
-					to_chat(user, "Nothing.")
+					to_chat(user, "<span class='notice'>Nothing.")
 			else if(container_type & AMOUNT_VISIBLE)
 				if(reagents.total_volume)
 					to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
@@ -293,16 +293,25 @@ its easier to just keep the beam vertical.
 					return
 				if(!user.mind || !user.mind.cm_skills || user.mind.cm_skills.medical >= SKILL_MEDICAL_CHEM) // If they have no skillset(admin-spawn, etc), or are properly skilled.
 					to_chat(user, "It contains:")
-					get_reagent_list_text(user)
+					if(reagents.reagent_list.len)
+						for(var/datum/reagent/R in reagents.reagent_list)
+							to_chat(user, "[R.volume] units of [R.name]")
+					else
+						to_chat(user, "Nothing.")
 				else
 					to_chat(user, "You don't know what's in it.")
-
-//returns a text listing the reagents (and their volume) in the atom. Used by Attack logs for reagents in pills
-/atom/proc/get_reagent_list_text(mob/user)
-	for(var/datum/reagent/R in reagents.reagent_list)
-		to_chat(user, "[R.name] [R.volume]u")
-	if(!reagents.reagent_list.len)
-		to_chat(user, "Nothing.")
+			else if(container_type & AMOUNT_ESTIMEE)
+				var/obj/item/reagent_container/C = src
+				if(!reagents.total_volume)
+					to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
+				else if (reagents.total_volume<= C.volume*0.3)
+					to_chat(user, "<span class='notice'>\The [src] is almost empty!</span>")
+				else if (reagents.total_volume<= C.volume*0.6)
+					to_chat(user, "<span class='notice'>\The [src] is half full!</span>")
+				else if (reagents.total_volume<= C.volume*0.9)
+					to_chat(user, "<span class='notice'>\The [src] is almost full!</span>")
+				else
+					to_chat(user, "<span class='notice'>\The [src] is full!</span>")
 
 
 // called by mobs when e.g. having the atom as their machine, pulledby, loc (AKA mob being inside the atom) or buckled var set.

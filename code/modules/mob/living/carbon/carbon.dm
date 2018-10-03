@@ -220,7 +220,7 @@
 				t_him = "her"
 			if(lying || sleeping)
 				if(client)
-					sleeping = max(0,sleeping-5)
+					AdjustSleeping(-5)
 				if(sleeping == 0)
 					resting = 0
 					update_canmove()

@@ -84,10 +84,10 @@
 	return
 
 /mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness + amount,0)
+	jitteriness = CLAMP(jitteriness + amount,0, 1000)
 
 /mob/proc/Dizzy(amount)
-	dizziness = max(dizziness + amount,0)
+	return // For the time being, only carbons get dizzy.
 
 /mob/proc/update_tint()
 	return
@@ -118,7 +118,7 @@
 		if(!eye_blind)
 			clear_fullscreen("blind")
 
-/mob/living/proc/set_blindness(amount)
+/mob/proc/set_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
 		eye_blind = amount

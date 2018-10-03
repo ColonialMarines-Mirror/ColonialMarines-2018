@@ -74,7 +74,7 @@
 			to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 		//Something like a glass or a food item. Player probably wants to transfer TO it.
-		else if(target.is_injectable() || istype(target, /obj/item/reagent_container/food/snacks))
+		else if(target.is_injectable())
 			if(!reagents.total_volume)
 				to_chat(user, "<span class='warning'>[src] is empty.</span>")
 				return
@@ -152,14 +152,10 @@
 	name = "Universal Enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
-	New()
-		..()
-		reagents.add_reagent("enzyme", 50)
+	list_reagents = list("enzyme" = 50)
 
 /obj/item/reagent_container/food/condiment/sugar
-	New()
-		..()
-		reagents.add_reagent("sugar", 50)
+	list_reagents = list("sugar" = 50)
 
 /obj/item/reagent_container/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "Salt Shaker"											//	a large one.
@@ -168,9 +164,7 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-	New()
-		..()
-		reagents.add_reagent("sodiumchloride", 20)
+	list_reagents = list("sodiumchloride" = 20)
 
 /obj/item/reagent_container/food/condiment/peppermill
 	name = "Pepper Mill"
@@ -179,6 +173,4 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-	New()
-		..()
-		reagents.add_reagent("blackpepper", 20)
+	list_reagents = list("blackpepper" = 20)

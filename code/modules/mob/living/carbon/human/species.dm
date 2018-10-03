@@ -240,8 +240,8 @@
 		return TRUE
 	if(flags & NO_OVERDOSE) //no stacking
 		for(var/datum/reagent/R in H.reagents)
-			if(R.overdosed)
-				H.reagents.remove_reagent(R, R.volume - R.overdose_threshold + 1)
+			if(R.volume > R.overdose_threshold)
+				H.reagents.remove_reagent(R, R.volume - R.overdose_threshold)
 				return FALSE
 	return FALSE
 
@@ -446,6 +446,7 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	default_language = "Vox-pidgin"
 	language = "English"
+	taste_sensitivity = TASTE_DULL
 	unarmed_type = /datum/unarmed_attack/claws/strong
 	secondary_unarmed_type = /datum/unarmed_attack/bite/strong
 	rarity_value = 2

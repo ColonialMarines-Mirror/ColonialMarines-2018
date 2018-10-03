@@ -50,8 +50,9 @@
 
 //-----Monkey Yeti Thing
 /mob/living/carbon/monkey/yiren
-	name = "Yiren"
-	desc = "Weird, but cute."
+	name = "yiren"
+	voice_name = "yiren"
+	speak_emote = list("grumbles")
 	icon_state = "yirenkey1"
 	env_low_temp_resistance = ICE_PLANET_min_cold_protection_temperature
 

@@ -49,9 +49,7 @@
 		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
 					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
 			//stage = 4.5
-			sight |= SEE_TURFS
-			sight |= SEE_MOBS
-			sight |= SEE_OBJS
+			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
@@ -73,20 +71,18 @@
 			if (src:aiRestorePowerRoutine==2)
 				to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 				src:aiRestorePowerRoutine = 0
-				clear_fullscreen("blind")
+				set_blindness(0)
 				return
 			else if (src:aiRestorePowerRoutine==3)
 				to_chat(src, "Alert cancelled. Power has been restored.")
 				src:aiRestorePowerRoutine = 0
-				clear_fullscreen("blind")
+				set_blindness(0)
 				return
 		else
 
 			//stage = 6
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			sight = src.sight&~SEE_TURFS
-			sight = src.sight&~SEE_MOBS
-			sight = src.sight&~SEE_OBJS
+			set_blindness(1)
+			sight ^= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			see_in_dark = 0
 			see_invisible = SEE_INVISIBLE_LIVING
 
@@ -108,7 +104,7 @@
 							if (!istype(T, /turf/open/space))
 								to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 								src:aiRestorePowerRoutine = 0
-								clear_fullscreen("blind")
+								set_blindness(0)
 								return
 						to_chat(src, "Fault confirmed: missing external power. Shutting down main control system to save power.")
 						sleep(20)
@@ -148,7 +144,7 @@
 								if (!istype(T, /turf/open/space))
 									to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 									src:aiRestorePowerRoutine = 0
-									clear_fullscreen("blind")
+									set_blindness(0)
 									return
 							switch(PRP)
 								if (1) to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
@@ -176,7 +172,6 @@
 			return
 		else if(stat == UNCONSCIOUS)
 			stat = CONSCIOUS
-			set_blindness(0)
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

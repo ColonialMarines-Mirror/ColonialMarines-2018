@@ -15,7 +15,7 @@
 	var/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
 
 	var/confused = 0	//Makes the mob move in random directions.
-
+	var/is_dizzy = FALSE
 	var/druggy = 0
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for

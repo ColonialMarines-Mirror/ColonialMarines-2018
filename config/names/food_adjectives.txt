@@ -1,64 +1,119 @@
-scrumptious
-flavored
-tasteless
-the usual
-mediocre
-hellish
-heavenly
-absolutely tentalizing
-absolutely disgusting
-dog
-cat
-fish
-recycled
+something scrumptious
+nothing
+the usual grub
+something mediocre
+hell
+heaven
+tentalization
+disgust
+dog food
+cat food
+fish food
+recycled pizza
 junk
-nutraloafed
-gourmand
-gourmet
-moist
-squalid
-old
-actually good
-sterilized
-synthetic
-bland
-prison
+trash
+rubbish
+sawdust
+nutraloafs
+gourmand food
+gourmet food
+moistness
+squalidness
+old grub
+actually good food
+bleach
+soap
+sand
+synthetic grub
+blandness
+prison food
 Discount Dan's
-UPP's
-uncooked
-not-so-bad
-pinapple flavored
-mystery
-hot
-cold
-warm
-lukewarm
-rancid
-processed
-crunchy
-faux
-fake
-low-calorie
-high-carb
-transfat-free
-gluten-free
-delictable
+Discount Dan's Special
+Discount Dan's leftovers
+yesterday leftovers
+microwaved leftovers
+leftovers
+UPP rations
+uncooked grub
+overcooked grub
+not-so-bad grub
+pinapple pizza flavored grub
+mystery food
+burnt food
+frozen food
+lukewarm food
+rancidness
+processed grub
+crunchiness
+faux meat
+something false
+low-calorie food
+high-carb food
+transfat-free food
+gluten-free food
+delictableness
 acid
-basic
-minty
-saucy
-salty
-spicy
-crispy
-fizzy
-questionable
-unusual
-untastable
-bitter
-savory
-sour
-sweet
-omniflavored
-rubbery
-dry
-tarty
+mintiness
+sauciness
+saltiness
+extreme saltiness
+spiced grub
+crispness
+questionable grub
+something untastable
+bitterness
+savoriness
+sourness
+sweetness
+umami
+chewing gum
+shoe polish
+the jungle
+indigestion
+oldberries
+butter
+lard
+oil
+grass
+cough syrup
+water
+iron
+rubber
+lead
+bronze
+wood
+paper
+plastic
+kevlar
+cloth
+buckshot
+gunpowder
+black powder
+petroleum
+gasoline
+diesel
+biofuel
+paint
+jelly
+slime
+sludge
+tofu
+dietetic food
+counterfeit food
+grossness
+dryness
+tartiness
+cryogenic juice
+the secret ingredient
+the ninth element
+compressed matter
+deep-fried food
+double-fried food
+a culinary apocalypse
+experimental post-modern cuisine
+a disaster
+muckiness
+mustard
+mordant
+citruses
+crayon dust

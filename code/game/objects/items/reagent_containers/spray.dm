@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/spray.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_NOUNIT
 	flags_item = NOBLUDGEON
 	flags_equip_slot = SLOT_WAIST
 	throwforce = 3

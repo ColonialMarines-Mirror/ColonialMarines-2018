@@ -1422,7 +1422,6 @@
 	if(glasses)
 		var/obj/item/clothing/glasses/G = glasses
 		//prescription applies regardless of it the glasses are active
-		prescriptioned = G.prescription
 		if(G.active)
 			see_in_dark = max(G.darkness_view, see_in_dark)
 			sight |= G.vision_flags

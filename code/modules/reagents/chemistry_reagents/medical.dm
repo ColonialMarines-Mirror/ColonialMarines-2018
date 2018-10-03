@@ -696,39 +696,40 @@ datum/reagent/medicine/synaptizine/overdose_crit_process(mob/living/M, alien)
 
 /datum/reagent/medicine/ultrazine/addiction_act_stage1(mob/living/M, alien)
 	if(prob(10))
-		to_chat(M, "<span class='danger'>[pick("You could use another hit.", "More of that would be nice.", "Another dose would help.", "One more dose wouldn't hurt", "Why not take one more?")]</span>")
+		to_chat(M, "<span class='notice'>[pick("You could use another hit.", "More of that would be nice.", "Another dose would help.", "One more dose wouldn't hurt", "Why not take one more?")]</span>")
 	if(prob(5))
 		M.emote(pick("twitch","blink_r","shiver"))
 		M.adjustHalLoss(20)
 	if(prob(20))
-		M.hallucination += 15
+		M.hallucination += 10
 	return
 
 /datum/reagent/medicine/ultrazine/addiction_act_stage2(mob/living/M, alien)
 	if(prob(10))
-		to_chat(M, "<span class='danger'>[pick("It's just not the same without it.", "You could use another hit.", "You should take another.", "Just one more.", "Looks like you need another one.")]</span>")
+		to_chat(M, "<span class='warning'>[pick("It's just not the same without it.", "You could use another hit.", "You should take another.", "Just one more.", "Looks like you need another one.")]</span>")
 	if(prob(5))
 		M.emote("me",1, pick("winces slightly.", "grimaces."))
 		M.adjustHalLoss(35)
 		M.Stun(2)
 	if(prob(20))
-		M.hallucination += 20
+		M.hallucination += 15
 		M.confused += 3
 	return
 
 
 /datum/reagent/medicine/ultrazine/addiction_act_stage3(mob/living/M, alien)
 	if(prob(10))
-		to_chat(M, "<span class='danger'>[pick("You need more.", "It's hard to go on like this.", "You want more. You need more.", "Just take another hit. Now.", "One more.")]</span>")
+		to_chat(M, "<span class='warning'>[pick("You need more.", "It's hard to go on like this.", "You want more. You need more.", "Just take another hit. Now.", "One more.")]</span>")
 	if(prob(5))
 		M.emote("me",1, pick("winces.", "grimaces.", "groans!"))
 		M.adjustHalLoss(50)
 		M.Stun(3)
 	if(prob(20))
-		M.hallucination += 25
+		M.hallucination += 20
 		M.confused += 5
 		M.Dizzy(60)
 	M.adjustToxLoss(0.1)
+	M.adjustBrainLoss(0.1)
 	return
 
 /datum/reagent/medicine/ultrazine/addiction_act_stage4(mob/living/M, alien)
@@ -740,10 +741,11 @@ datum/reagent/medicine/synaptizine/overdose_crit_process(mob/living/M, alien)
 		M.Stun(4)
 		M.do_jitter_animation(200)
 	if(prob(20))
-		M.hallucination += 35
+		M.hallucination += 30
 		M.confused += 7
 		M.Dizzy(80)
 	M.adjustToxLoss(0.3)
+	M.adjustBrainLoss(0.1)
 	if(prob(15) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/affected_organ = pick("heart","lungs","liver","kidneys")
@@ -862,7 +864,7 @@ datum/reagent/medicine/synaptizine/overdose_crit_process(mob/living/M, alien)
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 
 /datum/reagent/medicine/ethylredoxrazine/on_mob_life(mob/living/M)
-	M.dizziness = max(M.dizziness-1, 0)
+	M.Dizzy(-1)
 	M.drowsyness = max(M.drowsyness-1, 0)
 	M.stuttering = max(M.stuttering-1, 0)
 	M.confused = max(M.confused-1, 0)

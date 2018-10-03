@@ -1051,8 +1051,8 @@
 	var/wait_time = 5
 	if(caste == "Drone")
 		wait_time += 5
-	if (selected_resin == "resin door" || selected_resin == "resin wall")
-		wait_time += 25
+	else if (selected_resin == "resin door" || selected_resin == "resin wall")
+		wait_time += 15
 
 	if(!do_after(src, wait_time, TRUE, 5, BUSY_ICON_BUILD))
 		return

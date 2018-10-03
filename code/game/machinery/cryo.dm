@@ -12,12 +12,51 @@
 	gas_type = GAS_TYPE_OXYGEN
 
 	var/on = 0
+	var/auto_release = FALSE
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 200
 
+	var/obj/item/device/radio/radio
 	var/mob/living/carbon/occupant = null
 	var/obj/item/reagent_container/glass/beaker = null
+
+/obj/machinery/atmospherics/unary/cryo_cell/New()
+	. = ..()
+	radio = new (src)
+
+/obj/machinery/atmospherics/unary/cryo_cell/Dispose()
+	cdel(radio)
+	radio = null
+	. = ..()
+
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/living/user)
+	..()
+	if(occupant) //Allows us to reference medical files/scan reports for cryo via examination.
+		if(ishuman(occupant))
+			if(hasHUD(user,"medical"))
+				var/mob/living/carbon/human/H = occupant
+				for(var/datum/data/record/R in data_core.medical)
+					if (R.fields["name"] == H.real_name)
+						if(!(R.fields["last_scan_time"]))
+							to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
+						else
+							to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>Scan from [R.fields["last_scan_time"]]</a></span>\n")
+						break
+
+/obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
+	if (href_list["scanreport"])
+		if(hasHUD(usr,"medical"))
+			if(get_dist(usr, src) > 7)
+				to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
+				return
+			if(ishuman(occupant))
+				var/mob/living/carbon/human/H = occupant
+				for(var/datum/data/record/R in data_core.medical)
+					if (R.fields["name"] == H.real_name)
+						if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
+							usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
+						break
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
@@ -158,6 +197,14 @@
 			return // don't update UIs attached to this object
 		go_out()
 
+	if(href_list["autoRelease"])
+		if(!occupant)
+			return // don't update UIs attached to this object
+		if(!auto_release) //Toggle autorelease function
+			auto_release = TRUE
+		else
+			auto_release = FALSE
+
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
@@ -182,6 +229,9 @@
 
 		if(user.drop_inv_item_to_loc(W, src))
 			user.visible_message("[user] adds \a [W] to \the [src]!", "You add \a [W] to \the [src]!")
+	else if(istype(W, /obj/item/device/healthanalyzer) && occupant) //Allows us to use the analyzer on the occupant without taking him out.
+		var/obj/item/device/healthanalyzer/J = W
+		J.attack(occupant, user)
 	else if(istype(W, /obj/item/grab))
 		if(isXeno(user)) return
 		var/obj/item/grab/G = W
@@ -208,12 +258,15 @@
 	if(occupant)
 		if(occupant.stat == DEAD)
 			return
-		occupant.bodytemperature += 2*(temperature - occupant.bodytemperature)
-		occupant.bodytemperature = max(occupant.bodytemperature, temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		if(occupant.health > (occupant.maxHealth - 2) && auto_release) //release the patient automatically when at, or near full health
+			go_out(TRUE)
+			var/area/A = get_area(src)
+			radio.autosay("[occupant.name] has been automatically released from [src] [A? " at [sanitize(A.name)]":""].", "Cryotube Alert", "MedSci")
+		occupant.bodytemperature = 100 //Temp fix for broken atmos
+		//occupant.bodytemperature += 2*(temperature - occupant.bodytemperature)
+		//occupant.bodytemperature = max(occupant.bodytemperature, temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		occupant.stat = 1
 		if(occupant.bodytemperature < T0C)
-			occupant.Sleeping(10)
-			occupant.KnockOut(10)
 
 			if(occupant.getOxyLoss())
 				occupant.adjustOxyLoss(-1)
@@ -234,7 +287,7 @@
 
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/go_out()
+/obj/machinery/atmospherics/unary/cryo_cell/proc/go_out(auto_eject = null)
 	if(!( occupant ))
 		return
 	//for(var/obj/O in src)
@@ -247,6 +300,9 @@
 		occupant.bodytemperature = 261									  // Changed to 70 from 140 by Zuhayr due to reoccurance of bug.
 //	occupant.metabslow = 0
 	occupant = null
+	if(auto_release && auto_eject) //Reset the auto-release, if the patient was ejected by it.
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 14)
+		auto_release = FALSE
 	update_use_power(1)
 	update_icon()
 	return
@@ -283,8 +339,8 @@
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2)//and he's not dead....
 			return
-		to_chat(usr, "\blue Release sequence activated. This will take two minutes.")
-		sleep(1200)
+		to_chat(usr, "\blue Release sequence activated. This will take one minute.") //Halving this.
+		sleep(600)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return
 		go_out()//and release him from the eternal prison.

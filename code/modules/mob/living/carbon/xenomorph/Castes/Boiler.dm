@@ -61,12 +61,7 @@
 	if(smoke)
 		cdel(smoke)
 		smoke = null
-	return = ..()
-
-
-
-
-
+	return ..()
 
 
 /mob/living/carbon/Xenomorph/Boiler/proc/bomb_turf(var/turf/T)

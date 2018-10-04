@@ -33,7 +33,6 @@
 
 			if(hallucination <= 2)
 				hallucination = 0
-				halloss = 0
 			else
 				hallucination -= 2
 
@@ -42,22 +41,21 @@
 				hallucinations -= a
 				cdel(a)
 
-			if(halloss > 199)
-				visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
-				"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
-				KnockOut(5)
-				setHalLoss(199)
+			if(halloss > maxHealth*2) 			//Re-adding, but doubling the allowance to 200, and making it a knockdown so the victim can still interact somewhat
+				prob(20)
+					visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
+					"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
+					emote("scream")
+				KnockDown(5)
+				setHalLoss(maxHealth*2)
 
 		if(knocked_out)
 			AdjustKnockedout(-species.knock_out_reduction)
 			blinded = 1
 			stat = UNCONSCIOUS
-			if(halloss > 0)
-				adjustHalLoss(-3)
 		else if(sleeping)
 			speech_problem_flag = 1
 			handle_dreams()
-			adjustHalLoss(-3)
 			if(mind)
 				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 					sleeping = max(sleeping - 1, 0)
@@ -68,6 +66,12 @@
 					emote("snore")
 		else
 			stat = CONSCIOUS
+		//Resting/unconsciousness; improved recovery for certain afflictions and halloss.
+		if(!stat == CONSCIOUS || resting)
+			dizziness = max(0, dizziness - 15)
+			jitteriness = max(0, jitteriness - 15)
+			if(halloss > 0)
+				adjustHalLoss(REST_HALLOSS_RECOVERY_RATE)
 
 		if(in_stasis == STASIS_IN_CRYO_CELL) blinded = TRUE //Always blinded while in stasisTUBES
 
@@ -110,16 +114,6 @@
 		else if(ear_damage < 25) //Ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 			ear_damage = max(ear_damage - 0.05, 0)
 
-		//Resting
-		if(resting)
-			dizziness = max(0, dizziness - 15)
-			jitteriness = max(0, jitteriness - 15)
-			adjustHalLoss(-3)
-		else
-			dizziness = max(0, dizziness - 3)
-			jitteriness = max(0, jitteriness - 3)
-			adjustHalLoss(-1)
-
 		//Other
 		handle_statuses()
 
@@ -158,11 +152,16 @@
 		protection_aura = protection_new
 		marskman_aura = marskman_new
 
-		//hud_set_pheromone() //TODO: HOOK THIS UP, ASK PHIL
-
 		mobility_new = 0
 		protection_new = 0
 		marskman_new = 0
+
+		//Natural recovery; enhanced by hold/protection aura.
+		var/aura_recovery_multiplier = 1 + max(0,0.5 * protection_aura) //Protection aura adds +50% recovery rate per point of leadership beyond the first; +150% for a CO/XO
+		dizziness = max(0, dizziness - 3 * aura_recovery_multiplier)
+		jitteriness = max(0, jitteriness - 3 * aura_recovery_multiplier)
+		adjustHalLoss(BASE_HALLOSS_RECOVERY_RATE * aura_recovery_multiplier)
+		//hud_set_pheromone() //TODO: HOOK THIS UP, ASK PHIL
 
 	return 1
 

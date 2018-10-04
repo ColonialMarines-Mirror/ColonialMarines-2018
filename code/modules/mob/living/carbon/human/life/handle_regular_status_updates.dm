@@ -41,8 +41,8 @@
 				hallucinations -= a
 				cdel(a)
 
-			if(halloss > maxHealth*2) 			//Re-adding, but doubling the allowance to 200, and making it a knockdown so the victim can still interact somewhat
-				if(prob(20))
+			if(halloss > maxHealth*2) //Re-adding, but doubling the allowance to 200, and making it a knockdown so the victim can still interact somewhat
+				if(prob(25))
 					visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
 					"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
 					emote("scream")

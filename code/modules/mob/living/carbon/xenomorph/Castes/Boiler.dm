@@ -61,7 +61,7 @@
 	if(smoke)
 		cdel(smoke)
 		smoke = null
-	. = ..()
+	return = ..()
 
 
 

@@ -110,7 +110,7 @@
 /mob/living/carbon/Xenomorph/Ravager/ravenger/New()
 	..()
 	verbs -= /mob/living/carbon/Xenomorph/verb/hive_status
-	spawn(15) name = "Ravenger"
+	name = "Ravenger"
 
 
 /mob/living/carbon/Xenomorph/Ravager/ravenger/proc/breathe_fire(atom/A)

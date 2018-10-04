@@ -310,7 +310,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
 		return
 
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
@@ -320,7 +320,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	if(jobban_isbanned(xeno_candidate, "Alien")) // User is jobbanned
 		to_chat(xeno_candidate, "<span class='warning'>You are banned from playing aliens and cannot spawn as a xenomorph.</span>")
 		return
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/attempt_to_join_as_larva(mob/xeno_candidate)
 	if(!ticker.mode.stored_larva)
@@ -353,16 +353,6 @@ datum/game_mode/proc/initialize_special_clamps()
 			to_chat(xeno_candidate, "<span class='warning'>You have been dead for [deathtimeminutes >= 1 ? "[deathtimeminutes] minute\s and " : ""][deathtimeseconds] second\s.</span>")
 			to_chat(xeno_candidate, "<span class='warning'>You must wait 5 minutes before rejoining the game!</span>")
 			return FALSE
-	if(!alert(xeno_candidate, "Everything checks out. Are you sure you want to be born as a larva?", "Confirm", "Yes", "No") == "Yes")
-		return FALSE
-	if(!xeno_candidate || !xeno_candidate.client)
-		return FALSE
-	if(!ticker.mode.stored_larva)
-		to_chat(xeno_candidate, "<span class='warning'>There are no longer burrowed larvas available.</span>")
-		return FALSE
-	if(!mother.ovipositor || mother.is_mob_incapacitated(TRUE))
-		to_chat(xeno_candidate, "<span class='warning'>This mother is no longer in a state to receive us.</span>")
-		return FALSE
 	else
 		return mother
 
@@ -406,7 +396,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		return pick(available_xenos_non_ssd) //Just picks something at random.
 
 	new_xeno = input("Available Xenomorphs") as null|anything in available_xenos
-	if (!istype(new_xeno) || !xeno_candidate)
+	if (!istype(new_xeno) || !xeno_candidate || !xeno_candidate.client)
 		return FALSE
 
 	if(!(new_xeno in living_mob_list) || new_xeno.stat == DEAD)
@@ -415,9 +405,6 @@ datum/game_mode/proc/initialize_special_clamps()
 
 	if(new_xeno.client)
 		to_chat(xeno_candidate, "<span class='warning'>That xenomorph has been occupied.</span>")
-		return FALSE
-
-	if(!xeno_candidate.client) //the runtime logs say this can happen.
 		return FALSE
 
 	if(!xeno_bypass_timer)

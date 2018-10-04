@@ -37,7 +37,7 @@
 			bomb_turf(get_turf(A))
 		if(client)
 			client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-		return 1
+		return TRUE
 
 	if(mods["middle"] && !mods["shift"])
 		if (selected_ability && middle_mouse_toggle)

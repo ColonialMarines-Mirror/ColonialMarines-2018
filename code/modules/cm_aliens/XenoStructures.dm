@@ -321,7 +321,7 @@
 
 /obj/structure/mineral_door/resin/flamer_fire_act()
 	health -= 50
-	if(health < 0)
+	if(health <= 0)
 		cdel(src)
 
 /turf/closed/wall/resin/fire_act()

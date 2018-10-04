@@ -168,6 +168,56 @@ WEAPONS
 *******************************************************************************/
 
 
+/datum/supply_packs/specgrenadier
+	name = "Grenadier Specialist crate (M92 x1)"
+	contains = list(
+					/obj/item/weapon/gun/launcher/m92
+					)
+	cost = RO_PRICE_VERY_PRICY
+	containertype = /obj/structure/closet/crate/weapon
+	containername = "\improper Grenadier Specialist crate"
+	group = "Weapons"
+
+/datum/supply_packs/specscout
+	name = "Scout Specialist crate (M4RA x1)"
+	contains = list(
+					/obj/item/weapon/gun/rifle/m4ra
+					)
+	cost = RO_PRICE_VERY_PRICY
+	containertype = /obj/structure/closet/crate/weapon
+	containername = "\improper Scout Specialist crate"
+	group = "Weapons"
+
+/datum/supply_packs/specdemo
+	name = "Demolitionist Specialist crate (M5 RPG x1)"
+	contains = list(
+					/obj/item/weapon/gun/launcher/rocket
+					)
+	cost = RO_PRICE_VERY_PRICY
+	containertype = /obj/structure/closet/crate/weapon
+	containername = "\improper Demolitionist Specialist crate"
+	group = "Weapons"
+
+/datum/supply_packs/specpyro
+	name = "Pyro Specialist crate (M240T x1)"
+	contains = list(
+					/obj/item/weapon/gun/flamer/M240T
+					)
+	cost = RO_PRICE_VERY_PRICY
+	containertype = /obj/structure/closet/crate/weapon
+	containername = "\improper Pyro Specialist crate"
+	group = "Weapons"
+
+/datum/supply_packs/specsniper
+	name = "Sniper Specialist crate (M42A x1)"
+	contains = list(
+					/obj/item/weapon/gun/rifle/sniper/M42A
+					)
+	cost = RO_PRICE_VERY_PRICY
+	containertype = /obj/structure/closet/crate/weapon
+	containername = "\improper Sniper Specialist crate"
+	group = "Weapons"
+
 /datum/supply_packs/flamethrower
 	name = "M240 Flamethrower crate (M240 x3)"
 	contains = list(

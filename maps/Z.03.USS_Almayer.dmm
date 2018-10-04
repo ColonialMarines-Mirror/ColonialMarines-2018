@@ -3662,7 +3662,7 @@
 "bsv" = (/obj/machinery/camera/autoname/almayer{dir = 8; icon_state = "camera"; name = "ship-grade camera"; network = list("almayer"); tag = "icon-camera (EAST)"},/turf/open/floor/almayer,/area/almayer/hallways/hangar)
 "bsw" = (/obj/machinery/atmospherics/unary/freezer,/turf/open/floor/almayer{tag = "icon-sterile_green_corner (NORTH)"; icon_state = "sterile_green_corner"; dir = 1},/area/almayer/medical/cryo_tubes)
 "bsx" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/unary/freezer,/turf/open/floor/almayer{tag = "icon-sterile_green_side (NORTH)"; icon_state = "sterile_green_side"; dir = 1},/area/almayer/medical/cryo_tubes)
-"bsy" = (/obj/machinery/atmospherics/unary/cryo_cell,/obj/effect/decal/medical_decals{tag = "icon-cryotop"; icon_state = "cryotop"},/turf/open/floor/almayer{icon_state = "dark_sterile"; tag = "icon-sterile"},/area/almayer/medical/cryo_tubes)
+"bsy" = (/obj/machinery/cryo_cell,/obj/effect/decal/medical_decals{tag = "icon-cryotop"; icon_state = "cryotop"},/turf/open/floor/almayer{icon_state = "dark_sterile"; tag = "icon-sterile"},/area/almayer/medical/cryo_tubes)
 "bsz" = (/turf/open/floor/almayer{tag = "icon-sterile_green_side (NORTHWEST)"; icon_state = "sterile_green_side"; dir = 9},/area/almayer/medical/lower_medical)
 "bsA" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/open/floor/almayer{icon_state = "dark_sterile"; tag = "icon-sterile"},/area/almayer/medical/lower_medical)
 "bsB" = (/obj/machinery/computer/crew,/turf/open/floor/almayer{tag = "icon-sterile_green_side (EAST)"; icon_state = "sterile_green_side"; dir = 4},/area/almayer/medical/lower_medical)

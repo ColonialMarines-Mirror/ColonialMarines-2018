@@ -1048,11 +1048,7 @@
 			to_chat(src, "<span class='warning'>Resin doors need a wall or resin door next to them to stand up.</span>")
 			return
 
-	var/wait_time = 5
-	if(caste == "Drone")
-		wait_time += 5
-	else if (selected_resin == "resin door" || selected_resin == "resin wall")
-		wait_time += 15
+	var/wait_time = 10 + 30 - max(0,(30*health/maxHealth)) //Between 1 and 4 seconds, depending on health.
 
 	if(!do_after(src, wait_time, TRUE, 5, BUSY_ICON_BUILD))
 		return

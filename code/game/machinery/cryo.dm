@@ -292,7 +292,6 @@
 	if(auto_release && auto_eject) //Turn off and announce if auto-ejected.
 		turn_off()
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 14)
-		var/area/A = get_area(src)
 		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Radio: [cryo_announce].</span>")
 	update_use_power(1)
 	update_icon()

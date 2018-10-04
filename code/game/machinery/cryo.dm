@@ -1,6 +1,6 @@
 #define HEAT_CAPACITY_HUMAN 100 //249840 J/K, for a 72 kg person.
 
-/obj/machinery/atmospherics/unary/cryo_cell
+/obj/machinery/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/machines/cryogenics2.dmi'
 	icon_state = "cell-off"
@@ -8,29 +8,31 @@
 	anchored = 1.0
 	layer = BELOW_OBJ_LAYER
 
-	temperature = 100
-	gas_type = GAS_TYPE_OXYGEN
+	var/temperature = 100
 
-	var/on = 0
+	var/on = FALSE
 	var/auto_release = FALSE
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 200
 
-	var/obj/item/device/radio/radio
+	var/obj/item/device/radio/cryo/cryo_announce
 	var/mob/living/carbon/occupant = null
 	var/obj/item/reagent_container/glass/beaker = null
 
-/obj/machinery/atmospherics/unary/cryo_cell/New()
-	. = ..()
-	radio = new (src)
+/obj/machinery/cryo_cell/New()
 
-/obj/machinery/atmospherics/unary/cryo_cell/Dispose()
-	cdel(radio)
-	radio = null
+	cryo_announce = new /obj/item/device/radio/cryo(src) //Configure announcer.
+
 	. = ..()
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/living/user)
+/obj/machinery/cryo_cell/Dispose()
+	stop_processing()
+	cdel(cryo_announce)
+	cryo_announce = null
+	. = ..()
+
+/obj/machinery/cryo_cell/examine(mob/living/user)
 	..()
 	if(occupant) //Allows us to reference medical files/scan reports for cryo via examination.
 		if(ishuman(occupant))
@@ -41,10 +43,10 @@
 						if(!(R.fields["last_scan_time"]))
 							to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
 						else
-							to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>Scan from [R.fields["last_scan_time"]]</a></span>\n")
+							to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>[occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
 						break
 
-/obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
+/obj/machinery/cryo_cell/Topic(href, href_list)
 	if (href_list["scanreport"])
 		if(hasHUD(usr,"medical"))
 			if(get_dist(usr, src) > 7)
@@ -58,25 +60,17 @@
 							usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
 						break
 
-/obj/machinery/atmospherics/unary/cryo_cell/New()
+/obj/machinery/cryo_cell/process()
 	..()
-	initialize_directions = dir
-	start_processing()
-
-/obj/machinery/atmospherics/unary/cryo_cell/initialize()
-	if(node) return
-	var/node_connect = dir
-	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node = target
-			break
-
-/obj/machinery/atmospherics/unary/cryo_cell/process()
-	..()
-	if(!node)
+	//to_chat(world, "<span class='notice'>DEBUG: Cryo Process. Occupant: [occupant]. On? [on]</span>")
+	if(stat & (NOPOWER|BROKEN))
+		turn_off()
+		updateUsrDialog()
 		return
+
 	if(!on)
 		updateUsrDialog()
+		stop_processing()
 		return
 
 	if(occupant)
@@ -89,16 +83,16 @@
 	return 1
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
+/obj/machinery/cryo_cell/allow_drop()
 	return 0
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(mob/user)
+/obj/machinery/cryo_cell/relaymove(mob/user)
 	if(user.is_mob_incapacitated(TRUE)) return
 	go_out()
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
+/obj/machinery/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
 
  /**
@@ -112,7 +106,7 @@
   *
   * @return nothing
   */
-/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 
 	if(user == occupant || user.stat)
 		return
@@ -121,6 +115,7 @@
 	var/data[0]
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
+	data["autoRelease"] = auto_release
 
 	var/occupantData[0]
 	if (occupant)
@@ -172,7 +167,7 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
-/obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
+/obj/machinery/cryo_cell/Topic(href, href_list)
 	if(usr == occupant)
 		return 0 // don't update UIs attached to this object
 
@@ -180,12 +175,10 @@
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["switchOn"])
-		on = 1
-		update_icon()
+		turn_on()
 
 	if(href_list["switchOff"])
-		on = 0
-		update_icon()
+		turn_off()
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
@@ -197,18 +190,16 @@
 			return // don't update UIs attached to this object
 		go_out()
 
-	if(href_list["autoRelease"])
-		if(!occupant)
-			return // don't update UIs attached to this object
-		if(!auto_release) //Toggle autorelease function
-			auto_release = TRUE
-		else
-			auto_release = FALSE
+	if(href_list["releaseOn"])
+		auto_release = TRUE
+
+	if(href_list["releaseOff"])
+		auto_release = FALSE
 
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/W, mob/living/user)
+/obj/machinery/cryo_cell/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/reagent_container/glass))
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine.</span>")
@@ -243,7 +234,7 @@
 	updateUsrDialog()
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/update_icon()
+/obj/machinery/cryo_cell/update_icon()
 	if(on)
 		if(occupant)
 			icon_state = "cell-occupied"
@@ -252,22 +243,18 @@
 		return
 	icon_state = "cell-off"
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
-	if(pressure < 10)
-		return
+/obj/machinery/cryo_cell/proc/process_occupant()
 	if(occupant)
 		if(occupant.stat == DEAD)
 			return
 		if(occupant.health > (occupant.maxHealth - 2) && auto_release) //release the patient automatically when at, or near full health
 			go_out(TRUE)
-			var/area/A = get_area(src)
-			radio.autosay("[occupant.name] has been automatically released from [src] [A? " at [sanitize(A.name)]":""].", "Cryotube Alert", "MedSci")
+			return
 		occupant.bodytemperature = 100 //Temp fix for broken atmos
-		//occupant.bodytemperature += 2*(temperature - occupant.bodytemperature)
-		//occupant.bodytemperature = max(occupant.bodytemperature, temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Occupant: [occupant]. Occupant Temperature: [occupant.bodytemperature]</span>")
 		occupant.stat = 1
 		if(occupant.bodytemperature < T0C)
-
+			occupant.KnockDown(10)
 			if(occupant.getOxyLoss())
 				occupant.adjustOxyLoss(-1)
 
@@ -278,16 +265,18 @@
 				var/heal_brute = occupant.getBruteLoss() ? min(1, 20/occupant.getBruteLoss()) : 0
 				var/heal_fire = occupant.getFireLoss() ? min(1, 20/occupant.getFireLoss()) : 0
 				occupant.heal_limb_damage(heal_brute,heal_fire)
+				//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Occupant: [occupant]. Brute Heal: [heal_brute] Burn Heal: [heal_fire]</span>")
 		var/has_cryo = occupant.reagents.get_reagent_amount("cryoxadone") >= 1
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
+		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Occupant: [occupant]. Cryo Medicine?: [has_cryo_medicine]</span>")
 		if(beaker && !has_cryo_medicine)
 			beaker.reagents.trans_to(occupant, 1, 10)
 			beaker.reagents.reaction(occupant)
 
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/go_out(auto_eject = null)
+/obj/machinery/cryo_cell/proc/go_out(auto_eject = null)
 	if(!( occupant ))
 		return
 	//for(var/obj/O in src)
@@ -300,13 +289,29 @@
 		occupant.bodytemperature = 261									  // Changed to 70 from 140 by Zuhayr due to reoccurance of bug.
 //	occupant.metabslow = 0
 	occupant = null
-	if(auto_release && auto_eject) //Reset the auto-release, if the patient was ejected by it.
+	if(auto_release && auto_eject) //Turn off and announce if auto-ejected.
+		turn_off()
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 14)
-		auto_release = FALSE
+		var/area/A = get_area(src)
+		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Radio: [cryo_announce].</span>")
 	update_use_power(1)
 	update_icon()
 	return
-/obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
+
+/obj/machinery/cryo_cell/proc/turn_off()
+	on = FALSE
+	stop_processing()
+	update_icon()
+
+/obj/machinery/cryo_cell/proc/turn_on()
+	if (stat & (NOPOWER|BROKEN))
+		to_chat(usr, "\red The cryo cell is not functioning.")
+		return
+	on = TRUE
+	start_processing()
+	update_icon()
+
+/obj/machinery/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (stat & (NOPOWER|BROKEN))
 		to_chat(usr, "\red The cryo cell is not functioning.")
 		return
@@ -319,9 +324,9 @@
 	if (M.abiotic())
 		to_chat(usr, "\red Subject may not have abiotic items on.")
 		return
-	if(!node)
-		to_chat(usr, "\red The cell is not correctly connected to its pipe network!")
-		return
+	//if(!node) //Commented out until atmo is fixed.
+	//	to_chat(usr, "\red The cell is not correctly connected to its pipe network!")
+	//	return
 	M.forceMove(src)
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
 		to_chat(M, "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>")
@@ -332,18 +337,15 @@
 	update_icon()
 	return 1
 
-/obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
+/obj/machinery/cryo_cell/verb/move_eject()
 	set name = "Eject occupant"
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2)//and he's not dead....
 			return
-		to_chat(usr, "\blue Release sequence activated. This will take one minute.") //Halving this.
-		sleep(600)
-		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
-			return
-		go_out()//and release him from the eternal prison.
+		to_chat(usr, "\blue Auto release sequence activated. You will be released when you have recovered.")
+		auto_release = TRUE
 	else
 		if (usr.stat != 0)
 			return
@@ -351,7 +353,7 @@
 	add_fingerprint(usr)
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/verb/move_inside()
+/obj/machinery/cryo_cell/verb/move_inside()
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)

@@ -23,6 +23,7 @@
 					/obj/item/weapon/gun/smg/m39 = 20,
 					/obj/item/weapon/gun/rifle/m41a = 25,
 					/obj/item/weapon/gun/shotgun/pump = 10,
+					// /obj/item/weapon/gun/shotgun/combat = 10,
 					/obj/item/ammo_magazine/pistol = 30,
 					/obj/item/ammo_magazine/revolver = 25,
 					/obj/item/ammo_magazine/smg/m39 = 30,

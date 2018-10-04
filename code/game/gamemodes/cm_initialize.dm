@@ -907,6 +907,7 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/weapon/gun/smg/m39 = round(scale * 30),
 						/obj/item/weapon/gun/rifle/m41a = round(scale * 30),
 						/obj/item/weapon/gun/shotgun/pump = round(scale * 15),
+						// /obj/item/weapon/gun/shotgun/combat = round(scale * 15),
 
 						/obj/item/ammo_magazine/pistol = round(scale * 30),
 						/obj/item/ammo_magazine/revolver = round(scale * 20),

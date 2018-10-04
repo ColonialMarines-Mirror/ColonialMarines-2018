@@ -16,13 +16,13 @@
 	idle_power_usage = 20
 	active_power_usage = 200
 
-	var/obj/item/device/radio/cryo/cryo_announce
+	var/obj/item/device/radio/cryo_announce
 	var/mob/living/carbon/occupant = null
 	var/obj/item/reagent_container/glass/beaker = null
 
 /obj/machinery/cryo_cell/New()
 
-	cryo_announce = new /obj/item/device/radio/cryo(src) //Configure announcer.
+	cryo_announce = new /obj/item/device/radio(src) //Configure announcer.
 
 	. = ..()
 

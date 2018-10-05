@@ -45,11 +45,7 @@
 
 /datum/action/xeno_action/xeno_resting/action_activate()
 	var/mob/living/carbon/Xenomorph/X = owner
-	if(X.is_mob_incapacitated(TRUE))
-		return
-
-	X.resting = !X.resting
-	to_chat(X, "\blue You are now [X.resting ? "resting" : "getting up"]")
+	X.lay_down()
 
 
 // Shift Spits

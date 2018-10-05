@@ -35,7 +35,7 @@
 		if(!ishuman(occupant))
 			return
 		if(!hasHUD(user,"medical"))
-			return
+			"<span class='notice'>It contains: [occupant].</span>")
 		var/mob/living/carbon/human/H = occupant
 		for(var/datum/data/record/R in data_core.medical)
 			if (!R.fields["name"] == H.real_name)
@@ -43,7 +43,7 @@
 			if(!(R.fields["last_scan_time"]))
 				to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
 			else
-				to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>[occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
+				to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
 			break
 
 /obj/machinery/cryo_cell/Topic(href, href_list)

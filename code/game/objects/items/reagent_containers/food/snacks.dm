@@ -628,6 +628,7 @@
 	icon_state = "tomatomeat"
 	filling_color = "#DB0000"
 	list_reagents = list("nutriment" = 3)
+	tastes = list("tomato" = 1)
 	bitesize = 6
 
 /obj/item/reagent_container/food/snacks/bearmeat
@@ -636,6 +637,7 @@
 	icon_state = "bearmeat"
 	filling_color = "#DB0000"
 	list_reagents = list("nutriment" = 12, "stoxin" = 3)
+	tastes = list("meat" = 1, "salmon" = 1)
 	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/xenomeat
@@ -644,6 +646,7 @@
 	icon_state = "xenomeat"
 	filling_color = "#43DE18"
 	list_reagents = list("nutriment" = 3)
+	tastes = list("meat" = 1, "acid" = 1)
 	bitesize = 6
 
 /obj/item/reagent_container/food/snacks/meatball
@@ -652,6 +655,7 @@
 	icon_state = "meatball"
 	filling_color = "#DB0000"
 	list_reagents = list("nutriment" = 3)
+	tastes = list("meat" = 1)
 	bitesize = 1
 
 /obj/item/reagent_container/food/snacks/sausage
@@ -660,6 +664,7 @@
 	icon_state = "sausage"
 	filling_color = "#DB0000"
 	list_reagents = list("nutriment" = 6)
+	tastes = list("meat" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/donkpocket
@@ -708,6 +713,7 @@
 	desc = "A bloody burger."
 	icon_state = "hamburger"
 	list_reagents = list("nutriment" = 6)
+	tastes = list("bun" = 4, "tender meat" = 2)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/cheeseburger
@@ -724,6 +730,7 @@
 	icon_state = "hburger"
 	filling_color = "#D63C3C"
 	list_reagents = list("nutriment" = 6)
+	tastes = list("bun" = 4, "meat" = 2)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/fishburger
@@ -808,6 +815,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#FFF9A8"
 	list_reagents = list("nutriment" = 8)
+	tastes = list("egg" = 1, "cheese" = 1)
 
 
 /obj/item/reagent_container/food/snacks/muffin
@@ -826,6 +834,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#FBFFB8"
 	list_reagents = list("nutriment" = 4, "banana" = 5)
+	tastes = list("pie" = 1)
 	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/pie/throw_impact(atom/hit_atom)
@@ -840,6 +849,7 @@
 	icon_state = "berryclafoutis"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 4, "berryjuice" = 5)
+	tastes = list("pie" = 1, "blackberries" = 1)
 	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/waffles
@@ -1555,6 +1565,7 @@
 	icon_state = "stewedsoymeat"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 8)
+	tastes = list("soy" = 1, "vegetables" = 1)
 
 /obj/item/reagent_container/food/snacks/boiledspagetti
 	name = "Boiled Spaghetti"
@@ -1743,6 +1754,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#FAC9FF"
 	list_reagents = list("nutriment" = 8)
+	tastes = list("tasteless soup" = 1)
 
 /obj/item/reagent_container/food/snacks/beetsoup/New()
 	. = ..()
@@ -1757,7 +1769,7 @@
 	filling_color = "#76B87F"
 	list_reagents = list("nutriment" = 8)
 	bitesize = 3
-	tastes = list("leaves" = 1, "apple" = 1)
+	tastes = list("leaves" = 1, "vegetables" = 1, "apple" = 1)
 
 /obj/item/reagent_container/food/snacks/validsalad
 	name = "valid salad"

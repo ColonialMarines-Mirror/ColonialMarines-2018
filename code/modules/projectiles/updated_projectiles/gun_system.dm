@@ -226,7 +226,7 @@
 		if(user.get_inactive_hand()) //Failsafe; if there's somehow still something in the off-hand (undroppable), bail.
 			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 			return
-			
+
 	if(ishuman(user))
 		var/check_hand = user.r_hand == src ? "l_hand" : "r_hand"
 		var/mob/living/carbon/human/wielder = user
@@ -913,6 +913,7 @@ and you're good to go.
 	projectile_to_fire.scatter += gun_scatter					//Add gun scatter value to projectile's scatter value
 
 	if(user) //The gun only messages when fired by a user.
+		gun_scatter += user.scatter_modifier //Any modifiers to scatter such as from neuro
 		projectile_to_fire.firer = user
 		if(isliving(user))
 			projectile_to_fire.def_zone = user.zone_selected

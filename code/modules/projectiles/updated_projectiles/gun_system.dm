@@ -913,7 +913,8 @@ and you're good to go.
 	projectile_to_fire.scatter += gun_scatter					//Add gun scatter value to projectile's scatter value
 
 	if(user) //The gun only messages when fired by a user.
-		gun_scatter += user.scatter_modifier //Any modifiers to scatter such as from neuro
+		gun_scatter += user.scatter_modifier //Any modifiers to scatter
+		gun_scatter += user.traumatic_shock * 0.25//Pain increases scatter
 		projectile_to_fire.firer = user
 		if(isliving(user))
 			projectile_to_fire.def_zone = user.zone_selected

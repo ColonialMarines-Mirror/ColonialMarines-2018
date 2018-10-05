@@ -399,8 +399,8 @@
 	if(isliving(P.firer))
 		var/mob/living/shooter_living = P.firer
 		if( !can_see(shooter_living,src) ) . -= 15 //Can't see the target (Opaque thing between shooter and target)
-		. -= round((shooter_living.maxHealth - shooter_living.health) / 4) //Less chance to hit when injured.
-		. += round(shooter_living.accuracy_modifier) //Add or subtract accuracy penalties such as from neuro
+		. -= round(shooter_living.traumatic_shock * 0.25) //Less chance to hit when in pain.
+		. += round(shooter_living.accuracy_modifier) //Add or subtract accuracy penalties
 
 	if(ishuman(P.firer))
 		var/mob/living/carbon/human/shooter_human = P.firer

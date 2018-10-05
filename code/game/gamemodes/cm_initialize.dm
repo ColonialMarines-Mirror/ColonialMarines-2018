@@ -395,7 +395,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		return pick(available_xenos_non_ssd) //Just picks something at random.
 
 	new_xeno = input("Available Xenomorphs") as null|anything in available_xenos
-	if (!istype(new_xeno) || !xeno_candidate || !xeno_candidate.client)
+	if(!istype(new_xeno) || !xeno_candidate?.client)
 		return FALSE
 
 	if(!(new_xeno in living_mob_list) || new_xeno.stat == DEAD)

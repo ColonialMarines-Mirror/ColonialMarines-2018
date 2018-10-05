@@ -809,27 +809,23 @@
 	if(!.)
 		return
 	var/halloss_damage = volume * 2 * REM
-	var/toxin_damage = FALSE
 	M.apply_damage(halloss_damage, HALLOSS) //1st level neurotoxin effects: halloss/pain
-	M.scatter_modifier = volume * 2 //Scatter increased by twice the neurotoxin level
-	M.accuracy_modifier = volume * -2 //Accuracy reduced by twice the neurotoxin level
-	//to_chat(world, "<font color='red'><b>DEBUG: Halloss Damage: [halloss_damage]</b></font>")
 	switch(volume)
 		if(5 to INFINITY) //2nd level neurotoxin effects: screen shake, drug overlay, stuttering, minor toxin damage
 			M.druggy += 1.5
 			M.stuttering += 1.5
-		if(10 to INFINITY) //3rd level neurotoxin effects: blindness, deafness
+		if(15 to INFINITY) //3rd level neurotoxin effects: blindness, deafness
 			M.ear_deaf += 1.5
 			M.eye_blurry += 1.5
 			M.eye_blind += 1.5
 		if(20 to INFINITY) //4th level neurotoxin effects: paralysis and toxin damage
-			toxin_damage = volume * 0.1 * REM
-			M.adjustToxLoss(toxin_damage)
 			M.stunned += 1
 			M.KnockDown(1)
 
 /datum/reagent/xeno_neurotoxin/on_overdose(mob/living/M)
-		M.adjustToxLoss(1 * REM) //Overdose starts applying more toxin damage
+		var/toxin_damage = volume * 0.1 * REM
+		M.adjustToxLoss(1 + toxin_damage * REM) //Overdose starts applying more toxin damage
 
 /datum/reagent/xeno_neurotoxin/on_overdose_critical(mob/living/M)
-		M.adjustToxLoss(2 * REM) //Even more toxin damage
+		var/toxin_damage = volume * 0.1 * REM
+		M.adjustToxLoss(2 + toxin_damage * REM) //Even more toxin damage

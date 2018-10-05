@@ -101,7 +101,7 @@
 	var/ghostrend
 	for (var/mob/S in player_list)
 		if(isnull(S) || (!isXeno(S) && S.stat != DEAD) || istype(S,/mob/new_player))
-			break
+			continue
 		if(istype(S,/mob/dead/observer))
 			if(S.client.prefs && S.client.prefs.toggles_chat & CHAT_GHOSTHIVEMIND)
 				track = "(<a href='byond://?src=\ref[S];track=\ref[src]'>follow</a>)"

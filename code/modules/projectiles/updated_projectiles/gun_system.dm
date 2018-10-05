@@ -914,10 +914,11 @@ and you're good to go.
 
 	if(user) //The gun only messages when fired by a user.
 		gun_scatter += user.scatter_modifier //Any modifiers to scatter
-		gun_scatter += user.traumatic_shock * 0.25//Pain increases scatter
 		projectile_to_fire.firer = user
 		if(isliving(user))
 			projectile_to_fire.def_zone = user.zone_selected
+			var/mob/living/max_paine = user
+			gun_scatter += max_paine.traumatic_shock * 0.25//Pain increases scatter
 
 		//firing from an attachment
 		if(active_attachable && active_attachable.flags_attach_features & ATTACH_PROJECTILE)

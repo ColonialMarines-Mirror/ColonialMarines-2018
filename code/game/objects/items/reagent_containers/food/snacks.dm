@@ -392,7 +392,6 @@
 
 /obj/item/reagent_container/food/snacks/donut/normal/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
 	if(prob(40))
 		icon_state = "donut2"
 		overlay_state = "fdonut"
@@ -831,7 +830,7 @@
 
 /obj/item/reagent_container/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/pie_smudge(loc)
+	new /obj/effect/decal/cleanable/pie_smudge(loc)
 	visible_message("\red [src.name] splats.","\red You hear a splat.")
 	cdel(src)
 

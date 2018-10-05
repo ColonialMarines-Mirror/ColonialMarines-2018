@@ -12,53 +12,57 @@
 
 	var/on = FALSE
 	var/auto_release = FALSE
+	var/release_notice = FALSE
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 200
+	var/idle_ticks_until_shutdown = 60 //Number of ticks permitted to elapse without a patient before the cryotube shuts itself off to save processing
 
-	var/obj/item/device/radio/cryo_announce
 	var/mob/living/carbon/occupant = null
 	var/obj/item/reagent_container/glass/beaker = null
 
 /obj/machinery/cryo_cell/New()
 
-	cryo_announce = new /obj/item/device/radio(src) //Configure announcer.
-
-	. = ..()
+	return ..()
 
 /obj/machinery/cryo_cell/Dispose()
 	stop_processing()
-	cdel(cryo_announce)
-	cryo_announce = null
-	. = ..()
+	return ..()
 
 /obj/machinery/cryo_cell/examine(mob/living/user)
 	..()
 	if(occupant) //Allows us to reference medical files/scan reports for cryo via examination.
-		if(ishuman(occupant))
-			if(hasHUD(user,"medical"))
-				var/mob/living/carbon/human/H = occupant
-				for(var/datum/data/record/R in data_core.medical)
-					if (R.fields["name"] == H.real_name)
-						if(!(R.fields["last_scan_time"]))
-							to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
-						else
-							to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>[occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
-						break
+		if(!ishuman(occupant))
+			return
+		if(!hasHUD(user,"medical"))
+			return
+		var/mob/living/carbon/human/H = occupant
+		for(var/datum/data/record/R in data_core.medical)
+			if (!R.fields["name"] == H.real_name)
+				return
+			if(!(R.fields["last_scan_time"]))
+				to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
+			else
+				to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>[occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
+			break
 
 /obj/machinery/cryo_cell/Topic(href, href_list)
-	if (href_list["scanreport"])
-		if(hasHUD(usr,"medical"))
-			if(get_dist(usr, src) > 7)
-				to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
-				return
-			if(ishuman(occupant))
-				var/mob/living/carbon/human/H = occupant
-				for(var/datum/data/record/R in data_core.medical)
-					if (R.fields["name"] == H.real_name)
-						if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
-							usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
-						break
+	if (!href_list["scanreport"])
+		return
+	if(!hasHUD(usr,"medical"))
+		return
+	if(get_dist(usr, src) > 7)
+		to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
+		return
+	if(!ishuman(occupant))
+		return
+	var/mob/living/carbon/human/H = occupant
+	for(var/datum/data/record/R in data_core.medical)
+		if (!R.fields["name"] == H.real_name)
+			return
+		if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
+			usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
+		break
 
 /obj/machinery/cryo_cell/process()
 	..()
@@ -75,9 +79,15 @@
 
 	if(occupant)
 		if(occupant.stat != DEAD)
+			idle_ticks_until_shutdown = 60 //reset idle ticks on usage
 			process_occupant()
 		else
 			go_out()
+	else
+		idle_ticks_until_shutdown = max(idle_ticks_until_shutdown--,0) //decrement by 1 if there is no patient.
+		if(!idle_ticks_until_shutdown) //shut down after all ticks elapsed to conserve on processing
+			turn_off()
+			idle_ticks_until_shutdown = 60 //reset idle ticks
 
 	updateUsrDialog()
 	return 1
@@ -116,6 +126,7 @@
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
 	data["autoRelease"] = auto_release
+	data["releaseNotice"] = release_notice
 
 	var/occupantData[0]
 	if (occupant)
@@ -195,6 +206,12 @@
 
 	if(href_list["releaseOff"])
 		auto_release = FALSE
+
+	if(href_list["noticeOn"])
+		release_notice = TRUE
+
+	if(href_list["noticeOff"])
+		release_notice = FALSE
 
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
@@ -279,20 +296,21 @@
 /obj/machinery/cryo_cell/proc/go_out(auto_eject = null)
 	if(!( occupant ))
 		return
-	//for(var/obj/O in src)
-	//	O.loc = loc
 	if (occupant.client)
 		occupant.client.eye = occupant.client.mob
 		occupant.client.perspective = MOB_PERSPECTIVE
 	occupant.loc = get_step(loc, SOUTH)	//this doesn't account for walls or anything, but i don't forsee that being a problem.
 	if (occupant.bodytemperature < 261 && occupant.bodytemperature >= 70) //Patch by Aranclanos to stop people from taking burn damage after being ejected
 		occupant.bodytemperature = 261									  // Changed to 70 from 140 by Zuhayr due to reoccurance of bug.
-//	occupant.metabslow = 0
-	occupant = null
 	if(auto_release && auto_eject) //Turn off and announce if auto-ejected.
 		turn_off()
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 14)
-		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Radio: [cryo_announce].</span>")
+		if(release_notice)
+			playsound(src.loc, 'sound/machines/ping.ogg', 100, 14)
+			var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
+			AI.SetName("Cryotube Notification System")
+			AI.aiRadio.talk_into(AI,"Patient [occupant] has been automatically released from the cryotube at [get_area(occupant)].","MedSci","announces")
+			cdel(AI)
+	occupant = null
 	update_use_power(1)
 	update_icon()
 	return

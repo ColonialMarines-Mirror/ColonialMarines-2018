@@ -35,7 +35,7 @@
 		if(!ishuman(occupant))
 			return
 		if(!hasHUD(user,"medical"))
-			"<span class='notice'>It contains: [occupant].</span>")
+			to_chat(user, "<span class='notice'>It contains: [occupant].</span>")
 		var/mob/living/carbon/human/H = occupant
 		for(var/datum/data/record/R in data_core.medical)
 			if (!R.fields["name"] == H.real_name)

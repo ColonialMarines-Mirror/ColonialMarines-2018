@@ -39,7 +39,7 @@
 		var/mob/living/carbon/human/H = occupant
 		for(var/datum/data/record/R in data_core.medical)
 			if (!R.fields["name"] == H.real_name)
-				return
+				continue
 			if(!(R.fields["last_scan_time"]))
 				to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
 			else
@@ -82,7 +82,7 @@
 			idle_ticks_until_shutdown = 60 //reset idle ticks on usage
 			process_occupant()
 		else
-			go_out()
+			go_out(TRUE, TRUE) //Whether auto-eject is on or not, we don't permit literal deadbeats to hang around.
 	else
 		idle_ticks_until_shutdown = max(idle_ticks_until_shutdown--,0) //decrement by 1 if there is no patient.
 		if(!idle_ticks_until_shutdown) //shut down after all ticks elapsed to conserve on processing
@@ -293,7 +293,7 @@
 
 
 
-/obj/machinery/cryo_cell/proc/go_out(auto_eject = null)
+/obj/machinery/cryo_cell/proc/go_out(auto_eject = null, dead = null)
 	if(!( occupant ))
 		return
 	if (occupant.client)
@@ -302,13 +302,16 @@
 	occupant.loc = get_step(loc, SOUTH)	//this doesn't account for walls or anything, but i don't forsee that being a problem.
 	if (occupant.bodytemperature < 261 && occupant.bodytemperature >= 70) //Patch by Aranclanos to stop people from taking burn damage after being ejected
 		occupant.bodytemperature = 261									  // Changed to 70 from 140 by Zuhayr due to reoccurance of bug.
-	if(auto_release && auto_eject) //Turn off and announce if auto-ejected.
+	if(auto_eject) //Turn off and announce if auto-ejected because patient is recovered or dead.
 		turn_off()
-		if(release_notice)
+		if(release_notice) //If auto-release notices are on as it should be, let the doctors know what's up
 			playsound(src.loc, 'sound/machines/ping.ogg', 100, 14)
+			var/reason = "<b>Reason for Release:</b> Patient Recovery."
+			if(dead)
+				reason = "<b>Reason for Release:</b> Patient Death."
 			var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 			AI.SetName("Cryotube Notification System")
-			AI.aiRadio.talk_into(AI,"Patient [occupant] has been automatically released from the cryotube at [get_area(occupant)].","MedSci","announces")
+			AI.aiRadio.talk_into(AI,"Patient [occupant] has been automatically released from the cryotube at [get_area(occupant)]. [reason]","MedSci","announces")
 			cdel(AI)
 	occupant = null
 	update_use_power(1)

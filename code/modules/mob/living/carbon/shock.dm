@@ -51,3 +51,7 @@
 
 /mob/living/carbon/proc/handle_shock()
 	updateshock()
+
+/mob/living/carbon/proc/halloss_recovery()
+	var/rate = (stat || resting) ? REST_HALLOSS_RECOVERY_RATE : BASE_HALLOSS_RECOVERY_RATE
+	adjustHalLoss(rate)

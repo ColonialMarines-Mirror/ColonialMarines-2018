@@ -40,11 +40,16 @@
 	protection_aura = protection_new
 	marskman_aura = marskman_new
 
-	//hud_set_pheromone() //TODO: HOOK THIS UP, ASK PHIL
-
 	mobility_new = 0
 	protection_new = 0
 	marskman_new = 0
+
+	//Natural recovery; enhanced by hold/protection aura.
+	aura_recovery_multiplier = 1 + max(0,0.5 * protection_aura) //Protection aura adds +50% recovery rate per point of leadership beyond the first; +150% for a CO/XO
+	if(aura_recovery_multiplier > 1)
+		Dizzy(- 3 * aura_recovery_multiplier + 3)
+		Jitter(- 3 * aura_recovery_multiplier + 3)
+	//hud_set_pheromone() //TODO: HOOK THIS UP, ASK PHIL
 
 	return 1
 

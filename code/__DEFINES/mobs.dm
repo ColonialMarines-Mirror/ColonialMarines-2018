@@ -371,7 +371,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 //taste sensitivity defines, used in mob/living/proc/taste
 #define TASTE_HYPERSENSITIVE 5 //anything below 5% is not tasted
-#define TASTE_SENSITIVE 10 //anything below 7%
+#define TASTE_SENSITIVE 10 //anything below 10%
 #define TASTE_NORMAL 15 //anything below 15%
 #define TASTE_DULL 30 //anything below 30%
 #define TASTE_NUMB 101 //no taste

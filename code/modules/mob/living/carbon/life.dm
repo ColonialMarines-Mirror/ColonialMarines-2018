@@ -53,8 +53,8 @@
 
 /mob/living/carbon/handle_status_effects()
 	..()
-
-	var/restingpwr = 1 + 4 * resting
+	var/pwr = (stat || resting) ? 1 : 0
+	var/restingpwr = 3 + 12 * pwr
 
 	//Dizziness
 	if(dizziness)
@@ -71,6 +71,8 @@
 		do_jitter_animation(jitteriness)
 		Jitter(-restingpwr)
 
+	halloss_recovery()
+
 	if(hallucination)
 		if(hallucination >= 20)
 			if(prob(3))
@@ -85,21 +87,21 @@
 			hallucinations -=a
 			cdel(a)
 
-	if(halloss > 100)
-		visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
-		"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
-		KnockOut(10)
-		setHalLoss(99)
+	if(halloss > maxHealth*2) //Re-adding, but doubling the allowance to 200, and making it a knockdown so the victim can still interact somewhat
+		if(prob(20))
+			visible_message("<span class='warning'>\The [src] slumps to the ground, too weak to continue fighting.</span>", \
+			"<span class='warning'>You slump to the ground, you're in too much pain to keep going.</span>")
+			if(prob(25) && ishuman()) //only humans can scream, shame.
+				emote("scream")
+		KnockDown(5)
+		setHalLoss(maxHealth*2)
 
-	if(knocked_out)
-		if(halloss > 0)
-			adjustHalLoss(-3)
-	else if(sleeping)
+
+	if(sleeping)
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			H.speech_problem_flag = 1
 		handle_dreams()
-		adjustHalLoss(-3)
 		if(mind)
 			if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 				AdjustSleeping(-1)
@@ -107,12 +109,6 @@
 			if(prob(2) && health && !hal_crit)
 				spawn()
 					emote("snore")
-
-	//Resting
-	if(resting)
-		adjustHalLoss(-3)
-	else
-		adjustHalLoss(-1)
 
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.03), 0)
@@ -130,14 +126,14 @@
 			if(prob(25))
 				confused += 2
 			if(dizziness < 450) // To avoid giving the player overly dizzy too
-				Dizzy(5)
+				Dizzy(8)
 
 		if(drunkenness >= 51)
 			if(prob(5))
 				confused += 5
 				vomit()
 			if(dizziness < 600)
-				Dizzy(10)
+				Dizzy(12)
 
 		if(drunkenness >= 61)
 			if(drunkenness < 81)

@@ -186,7 +186,7 @@
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
 	center_of_mass = list("x"=15, "y"=10)
-	list_reagents = list("coffee" = 20, "water" = 10) //the ratio was previously the opposite because someone hates !!FUN!!
+	list_reagents = list("coffee" = 30)
 
 /obj/item/reagent_container/food/drinks/tea
 	name = "\improper Duke Purple Tea"

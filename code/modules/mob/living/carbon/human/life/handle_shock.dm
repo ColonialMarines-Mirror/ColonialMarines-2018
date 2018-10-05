@@ -61,3 +61,7 @@
 				to_chat(src, "<span class='danger'>[pick("You black out", "You feel like you could die any moment now", "You're about to lose consciousness")]!</span>")
 				KnockOut(5)
 			KnockDown(20)
+
+/mob/living/carbon/human/halloss_recovery()
+	var/rate = (stat || resting) ? REST_HALLOSS_RECOVERY_RATE : BASE_HALLOSS_RECOVERY_RATE * aura_recovery_multiplier
+	adjustHalLoss(rate)

@@ -616,7 +616,7 @@
 			return
 
 // for /obj/machinery/vending/sovietsoda
-/obj/item/reagent_container/food/drinks/drinkingglass/soda/
+/obj/item/reagent_container/food/drinks/drinkingglass/soda
 	name = "soda glass"
 	desc = "A drinking glass for soda."
 	list_reagents = list("sodawater" = 50)

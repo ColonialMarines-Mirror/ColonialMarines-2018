@@ -387,6 +387,7 @@
 	desc = "A donut. Rare on the frontier, so take care of it."
 	icon_state = "donut1"
 	tastes = list("donut" = 1)
+	list_reagents = list ("nutriment" = 3)
 	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/donut/normal/New()
@@ -405,12 +406,11 @@
 	icon_state = "donut1"
 	filling_color = "#ED11E6"
 	tastes = list("donut" = 3, "chaos" = 1)
+	list_reagents = list ("nutriment" = 2, "sprinkles" = 1)
+	bitesize = 10
 
 /obj/item/reagent_container/food/snacks/donut/chaos/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("sprinkles", 1)
-	bitesize = 10
 	var/chaosselect = pick(1,2,3,4,5,6,7,8,9)
 	switch(chaosselect)
 		if(1)
@@ -444,13 +444,11 @@
 	icon_state = "jdonut1"
 	filling_color = "#ED1169"
 	tastes = list("jelly" = 1, "donut" = 3)
+	bitesize = 5
+	list_reagents = list ("nutriment" = 3, "sprinkles" = 1, "berryjuice" = 5)
 
 /obj/item/reagent_container/food/snacks/donut/jelly/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sprinkles", 1)
-	reagents.add_reagent("berryjuice", 5)
-	bitesize = 5
 	if(prob(30))
 		icon_state = "jdonut2"
 		overlay_state = "box-donut2"
@@ -462,13 +460,10 @@
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	filling_color = "#ED1169"
+	list_reagents = list ("nutriment" = 3, "sprinkles" = 1, "cherryjelly" = 5)
 
 /obj/item/reagent_container/food/snacks/donut/cherryjelly/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sprinkles", 1)
-	reagents.add_reagent("cherryjelly", 5)
-	bitesize = 5
 	if(prob(30))
 		icon_state = "jdonut2"
 		overlay_state = "box-donut2"
@@ -599,7 +594,7 @@
 	icon_state = "stuffing"
 	filling_color = "#C9AC83"
 	list_reagents = list("nutriment" = 3)
-	tastes = list("breadcrumbs" = 3, "spices" = 1)
+	tastes = list("breadcrumbs" = 3, "pepper" = 1)
 
 /obj/item/reagent_container/food/snacks/carpmeat
 	name = "carp fillet"
@@ -895,6 +890,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#948051"
 	list_reagents = list("nutriment" = 10)
+	tastes = list("pie" = 1, "meat" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/tofupie
@@ -904,6 +900,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#FFFEE0"
 	list_reagents = list("nutriment" = 10)
+	tastes = list("pie" = 1, "tofu" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/amanita_pie
@@ -911,6 +908,7 @@
 	desc = "Sweet and tasty poison pie."
 	icon_state = "amanita_pie"
 	filling_color = "#FFCCCC"
+	tastes = list("pie" = 1, "mushroom" = 1)
 	list_reagents = list("nutriment" = 5, "amatoxin" = 3, "psilocybin" = 1)
 	bitesize = 3
 
@@ -919,18 +917,17 @@
 	desc = "I bet you love stuff made out of plump helmets!"
 	icon_state = "plump_pie"
 	filling_color = "#B8279B"
+	list_reagents = list("nutriment" = 8)
+	tastes = list("pie" = 1, "mushroom" = 1)
+	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/plump_pie/New()
 	..()
-	if(prob(10))
+	var/fey = prob(10)
+	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
-		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("tricordrazine", 5)
-		bitesize = 2
-	else
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
 
 /obj/item/reagent_container/food/snacks/xemeatpie
 	name = "Xeno-pie"
@@ -939,6 +936,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#43DE18"
 	list_reagents = list("nutriment" = 10)
+	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/wingfangchu
@@ -948,6 +946,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#43DE18"
 	list_reagents = list("nutriment" = 6)
+	tastes = list("soy" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/human/kabob
@@ -957,6 +956,7 @@
 	trash = /obj/item/stack/rods
 	filling_color = "#A85340"
 	list_reagents = list("nutriment" = 8)
+	tastes = list("tender meat" = 3, "metal" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/monkeykabob
@@ -966,6 +966,7 @@
 	trash = /obj/item/stack/rods
 	filling_color = "#A85340"
 	list_reagents = list("nutriment" = 8)
+	tastes = list("meat" = 3, "metal" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/tofukabob
@@ -975,6 +976,7 @@
 	trash = /obj/item/stack/rods
 	filling_color = "#FFFEE0"
 	list_reagents = list("nutriment" = 8)
+	tastes = list("tofu" = 3, "metal" = 1)
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/cubancarp
@@ -984,6 +986,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#E9ADFF"
 	list_reagents = list("nutriment" = 6, "carpotoxin" = 3, "capsaicin" = 3)
+	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
 	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/popcorn
@@ -2734,7 +2737,7 @@
 	desc = "A bar of chocolate, it smells like the medical bay. <i>\"Chocolate always helps the pain go away.\"</i>"
 	icon_state = "barcardine"
 	wrapper = /obj/item/trash/barcardine
-	list_reagents = list("nutriment" = 3, "coco" = 3, "tramadol" = 1)
+	list_reagents = list("nutriment" = 3, "coco" = 2, "tramadol" = 1, "bicaridine" = 1)
 	tastes = list("cough syrup" = 1)
 
 //MREs

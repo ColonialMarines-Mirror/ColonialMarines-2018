@@ -31,20 +31,21 @@
 
 /obj/machinery/cryo_cell/examine(mob/living/user)
 	..()
-	if(occupant) //Allows us to reference medical files/scan reports for cryo via examination.
-		if(!ishuman(occupant))
-			return
-		if(!hasHUD(user,"medical"))
-			to_chat(user, "<span class='notice'>It contains: [occupant].</span>")
-		var/mob/living/carbon/human/H = occupant
-		for(var/datum/data/record/R in data_core.medical)
-			if (!R.fields["name"] == H.real_name)
-				continue
-			if(!(R.fields["last_scan_time"]))
-				to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
-			else
-				to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
-			break
+	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
+		return
+	if(!ishuman(occupant))
+		return
+	if(!hasHUD(user,"medical"))
+		to_chat(user, "<span class='notice'>It contains: [occupant].</span>")
+	var/mob/living/carbon/human/H = occupant
+	for(var/datum/data/record/R in data_core.medical)
+		if (!R.fields["name"] == H.real_name)
+			continue
+		if(!(R.fields["last_scan_time"]))
+			to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
+		else
+			to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
+		break
 
 /obj/machinery/cryo_cell/Topic(href, href_list)
 	if (!href_list["scanreport"])
@@ -59,7 +60,7 @@
 	var/mob/living/carbon/human/H = occupant
 	for(var/datum/data/record/R in data_core.medical)
 		if (!R.fields["name"] == H.real_name)
-			return
+			continue
 		if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
 			usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
 		break

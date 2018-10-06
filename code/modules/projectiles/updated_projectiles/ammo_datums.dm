@@ -47,7 +47,7 @@
 	var/bonus_projectiles_type 					// Type path of the extra projectiles
 	var/bonus_projectiles_amount 	= 0 		// How many extra projectiles it shoots out. Works kind of like firing on burst, but all of the projectiles travel together
 	var/debilitate[]				= null 		// Stun,knockdown,knockout,irradiate,stutter,eyeblur,drowsy,agony
-	var/reagent_type				= null		// Type of reagent transmitted by the projectile on hit.
+	var/list/list_reagents				= null		// Type of reagent transmitted by the projectile on hit.
 	var/reagent_amount				= 0			// Amount of reagents transmitted by the projectile on hit.
 	var/barricade_clear_distance	= 1			// How far the bullet can travel before incurring a chance of hitting barricades; normally 1.
 

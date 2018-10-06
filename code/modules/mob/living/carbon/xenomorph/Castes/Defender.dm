@@ -2,26 +2,27 @@
 	caste = "Defender"
 	name = "Defender"
 	desc = "A alien with an armored head crest."
-	icon = 'icons/Xeno/xenomorph_64x64.dmi'
+	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Defender Walking"
 	melee_damage_lower = 15
 	melee_damage_upper = 25
-	health = 250
-	maxHealth = 250
+	health = 300
+	maxHealth = 300
 	plasma_stored = 50
 	plasma_gain = 8
 	plasma_max = 100
-	evolution_threshold = 200
-	upgrade_threshold = 200
+	evolution_threshold = 100
+	upgrade_threshold = 100
 	caste_desc = "A sturdy front line combatant."
 	speed = -0.2
 	pixel_x = -16
 	old_x = -16
 	evolves_to = list("Warrior")
 	charge_type = 2 //Pounce - Hunter
-	armor_deflection = 40
+	armor_deflection = 20
 	tier = 1
 	upgrade = 0
+	pull_speed = -2
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/regurgitate,

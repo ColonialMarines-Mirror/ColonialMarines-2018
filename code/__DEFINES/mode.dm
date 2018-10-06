@@ -2,7 +2,7 @@
 //Self destruct, nuke, and evacuation.
 #define EVACUATION_TIME_LOCK 36000
 #define DISTRESS_TIME_LOCK 3600
-#define SHUTTLE_TIME_LOCK 15000
+#define SHUTTLE_TIME_LOCK 6000
 #define SHUTTLE_LOCK_COOLDOWN 6000
 #define SHUTTLE_LOCK_TIME_LOCK 27000
 #define EVACUATION_AUTOMATIC_DEPARTURE 1800 //All pods automatically depart in 10 minutes, unless they are full or unable to launch for some reason.
@@ -74,7 +74,7 @@ var/list/be_special_flags = list(
 	)
 
 #define AGE_MIN 17			//youngest a character can be
-#define AGE_MAX 160			//oldest a character can be
+#define AGE_MAX 85			//oldest a character can be
 //Number of marine players against which the Marine's gear scales
 #define MARINE_GEAR_SCALING_NORMAL 30
 #define MAX_GEAR_COST 5 //Used in chargen for loadout limit.

@@ -6,6 +6,18 @@
 	density = 1
 	anchored = 0
 
+/obj/structure/largecrate/attack_alien(mob/living/carbon/Xenomorph/M)
+	M.animation_attack_on(src)
+	playsound(src, 'sound/effects/woodhit.ogg', 25, 1)
+	new /obj/item/stack/sheet/wood(src)
+	var/turf/T = get_turf(src)
+	for(var/obj/O in contents)
+		O.loc = T
+	M.visible_message("<span class='danger'>\The [M] smashes \the [src] apart!</span>", \
+	"<span class='danger'>You smash \the [src] apart!</span>", \
+	"<span class='danger'>You hear splitting wood!</span>", 5)
+	cdel(src)
+
 /obj/structure/largecrate/attack_hand(mob/user as mob)
 	to_chat(user, "<span class='notice'>You need a crowbar to pry this open!</span>")
 	return
@@ -127,6 +139,24 @@
 	name = "small cases"
 	desc = "Two small black storage cases."
 	icon_state = "case_small"
+
+/obj/structure/largecrate/random/barrel/attackby(obj/item/tool/weldingtool/W as obj, mob/user as mob)
+	if(W.welding == 1)
+		if(do_after(user, 50, TRUE, 5, BUSY_ICON_BUILD))
+			new /obj/item/stack/sheet/metal/small_stack(src)
+			W.remove_fuel(1,user)
+			var/turf/T = get_turf(src)
+			for(var/obj/O in contents)
+				O.loc = T
+			user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>", \
+								 "<span class='notice'>You weld open \the [src].</span>", \
+								 "<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
+			playsound(src.loc, 'sound/items/Welder2.ogg', 25, 1)
+			cdel(src)
+		else
+			return FALSE
+	else
+		return attack_hand(user)
 
 /obj/structure/largecrate/random/barrel
 	name = "blue barrel"

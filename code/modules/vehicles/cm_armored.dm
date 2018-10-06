@@ -291,8 +291,8 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 						to_chat(user, "There is a lightly damaged [HP] installed on [i] hardpoint slot.")
 					if(91 to 100)
 						to_chat(user, "There is a non-damaged [HP] installed on [i] hardpoint slot.")
-					else
-						to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
+			else
+				to_chat(user, "There is a [HP.health <= 0 ? "broken" : "working"] [HP] installed on the [i] hardpoint slot.")
 
 //Special armored vic healthcheck that mainly updates the hardpoint states
 /obj/vehicle/multitile/root/cm_armored/healthcheck()
@@ -403,7 +403,15 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 	else if(istype(A, /obj/structure/table))
 		var/obj/structure/table/T = A
 		T.visible_message("<span class='danger'>[root] crushes [T]!</span>")
-		T.destroy(1)
+		T.destroy(TRUE)
+	else if(istype(A, /obj/structure/showcase))
+		var/obj/structure/showcase/S = A
+		S.visible_message("<span class='danger'>[root] bulldozes over [S]!</span>")
+		S.destroy(TRUE)
+	else if(istype(A, /obj/structure/rack))
+		var/obj/structure/rack/R = A
+		R.visible_message("<span class='danger'>[root] smashes through the [R]!</span>")
+		R.destroy(TRUE)
 	else if(istype(A, /obj/structure/window/framed))
 		var/obj/structure/window/framed/W = A
 		W.visible_message("<span class='danger'>[root] crashes through the [W]!</span>")
@@ -431,7 +439,7 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 	if(.)
 		for(var/mob/living/M in get_turf(A))
 			//I don't call Bump() otherwise that would encourage trampling for infinite unpunishable damage
-			M.sleeping = 1e7 //Maintain their lying-down-ness
+			M.sleeping = 5 //Maintain their lying-down-ness
 
 /obj/vehicle/multitile/hitbox/cm_armored/Uncrossed(var/atom/movable/A)
 	if(isliving(A))

@@ -30,6 +30,22 @@
 				update_state()
 	return 1
 
+/obj/structure/girder/attack_alien(mob/living/carbon/Xenomorph/M)
+	if(M.mob_size != MOB_SIZE_BIG || unacidable)
+		to_chat(M, "<span class='warning'>Your claws aren't sharp enough to damage \the [src].</span>")
+		return FALSE
+	else
+		M.animation_attack_on(src)
+		health -= round(rand(M.melee_damage_lower, M.melee_damage_upper) / 2)
+		if(health <= 0)
+			M.visible_message("<span class='danger'>\The [M] smashes \the [src] apart!</span>", \
+			"<span class='danger'>You slice \the [src] apart!</span>", null, 5)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+			dismantle()
+		else
+			M.visible_message("<span class='danger'>[M] smashes \the [src]!</span>", \
+			"<span class='danger'>You slash \the [src]!</span>", null, 5)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
 
 /obj/structure/girder/attackby(obj/item/W, mob/user)
 	for(var/obj/effect/xenomorph/acid/A in src.loc)
@@ -230,8 +246,8 @@
 			to_chat(user, "It needs 1 bolt removed.")
 
 /obj/structure/girder/proc/dismantle()
-	health = 0
-	update_state()
+	new /obj/item/stack/sheet/metal(src)
+	cdel(src)
 
 /obj/structure/girder/proc/repair()
 	health = 200

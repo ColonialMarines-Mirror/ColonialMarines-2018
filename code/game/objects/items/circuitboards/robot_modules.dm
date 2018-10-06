@@ -1,7 +1,7 @@
 /obj/item/circuitboard/robot_module
 	name = "robot module"
 	icon_state = "std_mod"
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	var/channels = list()
 	var/list/modules = list()
 	var/obj/item/emag = null
@@ -381,7 +381,7 @@
 //checks whether this item is a module of the robot it is located in.
 /obj/item/proc/is_robot_module()
 	if (!istype(src.loc, /mob/living/silicon/robot))
-		return 0
+		return FALSE
 
 	var/mob/living/silicon/robot/R = src.loc
 

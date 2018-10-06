@@ -9,7 +9,7 @@
 	item_state = "atoxinbottle"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,60)
-	flags_atom = FPRINT|OPENCONTAINER
+	flags_atom = OPENCONTAINER
 	volume = 60
 	attack_speed = 4
 
@@ -419,3 +419,14 @@
 	New()
 		..()
 		reagents.add_reagent("oxycodone", 10)
+
+/obj/item/reagent_container/glass/bottle/hypervene
+	name = "\improper Hypervene bottle"
+	desc = "A small bottle. Contains Hypervene - A purge chem for flushing toxins. Causes pain and vomiting."
+	icon = 'icons/obj/items/chemistry.dmi'
+	icon_state = "bottle3"
+	volume = 10
+
+	/obj/item/reagent_container/glass/bottle/hypervene/New()
+		..()
+		reagents.add_reagent("hypervene", 10)

@@ -62,7 +62,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	icon_state = "1"
 	item_state = "armor"
 	sprite_sheet_id = 1
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -378,7 +378,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/M35
 	name = "\improper M35 armor"
-	desc = "A custom set of M35 armor designed for use by USCM Pyrotechnicians."
+	desc = "A custom set of M35 armor designed for use by USCM Pyrotechnicians. Contains thick kevlar shielding."
 	icon_state = "pyro_armor"
 	armor = list(melee = 85, bullet = 90, laser = 60, energy = 60, bomb = 30, bio = 0, rad = 0)
 	max_heat_protection_temperature = FIRESUIT_max_heat_protection_temperature
@@ -514,7 +514,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 /obj/item/clothing/suit/storage/faction
 	icon = 'icons/obj/clothing/cm_suits.dmi'
 	sprite_sheet_id = 1
-	flags_atom = FPRINT|CONDUCT
+	flags_atom = CONDUCT
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS

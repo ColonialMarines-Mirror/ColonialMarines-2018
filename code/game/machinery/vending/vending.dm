@@ -56,6 +56,7 @@
 	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 	var/obj/item/coin/coin
+	var/tokensupport = TOKEN_GENERAL
 	var/const/WIRE_EXTEND = 1
 	var/const/WIRE_SCANID = 2
 	var/const/WIRE_SHOCK = 3
@@ -66,6 +67,7 @@
 	var/tipped_level = 0
 	var/hacking_safety = 0 //1 = Will never shoot inventory or allow all access
 	var/wrenchable = TRUE
+	var/isshared = FALSE
 
 /obj/machinery/vending/New()
 	..()
@@ -146,6 +148,60 @@
 //		to_chat(world, "Added: [R.product_name]] - [R.amount] - [R.product_path]")
 	return
 
+/obj/machinery/vending/attack_alien(mob/living/carbon/Xenomorph/M)
+	if(tipped_level)
+		to_chat(M, "<span class='warning'>There's no reason to bother with that old piece of trash.</span>")
+		return FALSE
+
+	if(M.a_intent == "hurt")
+		M.animation_attack_on(src)
+		if(prob(M.melee_damage_lower))
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+			M.visible_message("<span class='danger'>\The [M] smashes \the [src] beyond recognition!</span>", \
+			"<span class='danger'>You enter a frenzy and smash \the [src] apart!</span>", null, 5)
+			malfunction()
+			return TRUE
+		else
+			M.visible_message("<span class='danger'>[M] slashes \the [src]!</span>", \
+			"<span class='danger'>You slash \the [src]!</span>", null, 5)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+		return TRUE
+
+	M.visible_message("<span class='warning'>\The [M] begins to lean against \the [src].</span>", \
+	"<span class='warning'>You begin to lean against \the [src].</span>", null, 5)
+	tipped_level = 1
+	var/shove_time = 100
+	if(M.mob_size == MOB_SIZE_BIG)
+		shove_time = 50
+	if(istype(M,/mob/living/carbon/Xenomorph/Crusher))
+		shove_time = 15
+	if(do_after(M, shove_time, FALSE, 5, BUSY_ICON_HOSTILE))
+		M.visible_message("<span class='danger'>\The [M] knocks \the [src] down!</span>", \
+		"<span class='danger'>You knock \the [src] down!</span>", null, 5)
+		tip_over()
+	else
+		tipped_level = 0
+
+/obj/structure/inflatable/attack_alien(mob/living/carbon/Xenomorph/M)
+	M.animation_attack_on(src)
+	deflate(1)
+
+/obj/machinery/vending/proc/tip_over()
+	var/matrix/A = matrix()
+	tipped_level = 2
+	density = FALSE
+	A.Turn(90)
+	transform = A
+	malfunction()
+
+/obj/machinery/vending/proc/flip_back()
+	icon_state = initial(icon_state)
+	tipped_level = 0
+	density = TRUE
+	var/matrix/A = matrix()
+	transform = A
+	stat &= ~BROKEN //Remove broken. MAGICAL REPAIRS
+
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if(tipped_level)
 		to_chat(user, "Tip it back upright first!")
@@ -168,9 +224,20 @@
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/coin))
-		if(user.drop_inv_item_to_loc(W, src))
-			coin = W
-			to_chat(user, "\blue You insert the [W] into the [src]")
+		var/obj/item/coin/C = W
+		if(coin)
+			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
+			return
+		if(!premium.len && !isshared)
+			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
+			return
+		if(C.flags_token & tokensupport)
+			if(user.drop_inv_item_to_loc(W, src))
+				coin = W
+				to_chat(user, "\blue You insert the [W] into the [src]")
+		else
+			to_chat(user, "<span class='warning'>\The [src] rejects the [W].</span>")
+			return
 		return
 	else if(istype(W, /obj/item/card))
 		var/obj/item/card/I = W
@@ -377,6 +444,7 @@
 		"ewallet_worth" = ewallet ? ewallet.worth : null,
 		"coin" = coin ? coin.name : null,
 		"displayed_records" = display_list,
+		"isshared" = isshared
 	)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -627,7 +695,7 @@
 			icon_state = initial(icon_state)
 		else
 			spawn(rand(0, 15))
-				src.icon_state = "[initial(icon_state)]-off"
+				icon_state = "[initial(icon_state)]-off"
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()

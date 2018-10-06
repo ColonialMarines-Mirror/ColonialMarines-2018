@@ -87,12 +87,17 @@
 	name 		= ammo.name
 	icon_state 	= ammo.icon_state
 	damage 		= ammo.damage + bonus_damage //Mainly for emitters.
-	reagent_amount = ammo.reagent_amount
 	scatter		= ammo.scatter
 	accuracy   += ammo.accuracy
 	accuracy   *= rand(config.proj_variance_low-ammo.accuracy_var_low, config.proj_variance_high+ammo.accuracy_var_high) * config.proj_base_accuracy_mult//Rand only works with integers.
 	damage     *= rand(config.proj_variance_low-ammo.damage_var_low, config.proj_variance_high+ammo.damage_var_high) * config.proj_base_damage_mult
 	damage_falloff = ammo.damage_falloff
+	var/list/list_reagents = ammo.list_reagents 
+	if(list_reagents)
+		create_reagents(50)
+		flags_atom |= NOREACT
+		for(var/reagent in list_reagents)
+			reagents.add_reagent(reagent, list_reagents[reagent])
 
 //Target, firer, shot from. Ie the gun
 /obj/item/projectile/proc/fire_at(atom/target,atom/F, atom/S, range = 30,speed = 1)
@@ -459,10 +464,10 @@
 	if(P.ammo.debilitate && stat != DEAD && ( damage || (P.ammo.flags_ammo_behavior & AMMO_IGNORE_RESIST) ) )
 		apply_effects(arglist(P.ammo.debilitate))
 
-	if(P.ammo.reagent_type && stat != DEAD && P.reagent_amount)
-		if(istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			H.reagents.add_reagent(P.ammo.reagent_type, max(0,P.reagent_amount))
+	if(P.list_reagents && stat != DEAD)
+		if(ishuman() || ismonkey())
+			reagents.reaction(M, TOUCH) // potential extra effects
+			P.reagents.trans_to(src, 50)
 
 	if(damage)
 		bullet_message(P)

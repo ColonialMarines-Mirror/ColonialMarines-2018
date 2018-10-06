@@ -467,7 +467,7 @@
 
 	if(P.list_reagents && stat != DEAD)
 		if(ishuman() || ismonkey())
-			reagents.reaction(src, TOUCH) // potential extra effects
+			P.reagents.reaction(src, TOUCH) // potential extra effects
 			P.reagents.trans_to(src, 50)
 
 	if(damage)

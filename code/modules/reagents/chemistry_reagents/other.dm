@@ -823,9 +823,7 @@
 			M.KnockDown(1)
 
 /datum/reagent/xeno_neurotoxin/on_overdose(mob/living/M)
-		var/toxin_damage = volume * 0.1 * REM
-		M.adjustToxLoss(1 + toxin_damage * REM) //Overdose starts applying more toxin damage
+		M.adjustToxLoss(volume * 0.2 * REM) //Overdose starts applying more toxin damage
 
 /datum/reagent/xeno_neurotoxin/on_overdose_critical(mob/living/M)
-		var/toxin_damage = volume * 0.1 * REM
-		M.adjustToxLoss(2 + toxin_damage * REM) //Even more toxin damage
+		M.adjustToxLoss(volume * 0.4 * REM) //Even more toxin damage

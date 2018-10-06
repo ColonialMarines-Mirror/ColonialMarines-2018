@@ -1177,6 +1177,33 @@
 	var/mob/living/carbon/Xenomorph/Xenoborg/X = owner
 	X.fire_cannon(A)
 
+//Runner abilities
+/datum/action/xeno_action/toggle_savage
+	name = "Toggle Savage"
+	action_icon_state = "savage_on"
+	plasma_cost = 0
+
+/datum/action/xeno_action/toggle_savage/action_activate()
+	var/mob/living/carbon/Xenomorph/X = owner
+
+	if(!X.check_state())
+		return
+
+	if(X.savage)
+		X.savage = FALSE
+		to_chat(X, "<span class='xenowarning'>You untense your muscles, and relax. You will no longer savage when pouncing.</span>")
+		button.overlays.Cut()
+		button.overlays += image('icons/mob/actions.dmi', button, "savage_off")
+	else
+		X.savage = TRUE
+		var/warning = ""
+		if(X.savage_used)
+			warning = " However, you're not quite yet able to savage again."
+		to_chat(X, "<span class='xenowarning'>You ready yourself for a killing strike. You will savage when pouncing.[warning]</span>")
+		button.overlays.Cut()
+		button.overlays += image('icons/mob/actions.dmi', button, "savage_on")
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/living/carbon/Xenomorph/proc/add_abilities()

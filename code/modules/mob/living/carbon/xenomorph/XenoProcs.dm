@@ -255,6 +255,8 @@
 					M.KnockDown(charge_type == 1 ? 1 : 3)
 					step_to(src, M)
 					canmove = FALSE
+					if(savage && !savage_cooldown) //If Runner Savage is toggled on, use it.
+						Savage(M)
 					frozen = TRUE
 					if(!is_robotic) playsound(loc, rand(0, 100) < 95 ? 'sound/voice/alien_pounce.ogg' : 'sound/voice/alien_pounce2.ogg', 25, 1)
 					spawn(charge_type == 1 ? 5 : 15)

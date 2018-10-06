@@ -287,10 +287,11 @@
 		to_chat(src, "<span class='notice'>You are now resting.</span>")
 		update_canmove()
 	else
-		if(!action_busy) // do_after is unoptima
-			if(do_after(src, 10, FALSE, 5, BUSY_ICON_GENERIC))
-				to_chat(src, "<span class='notice'>You get up.</span>")
-				resting = FALSE
-				update_canmove()
-			else
-				to_chat(src, "<span class='notice'>You fail to get up.</span>")
+		if(action_busy) // do_after is unoptimal
+			return
+		if(do_after(src, 10, FALSE, 5, BUSY_ICON_GENERIC))
+			to_chat(src, "<span class='notice'>You get up.</span>")
+			resting = FALSE
+			update_canmove()
+		else
+			to_chat(src, "<span class='notice'>You fail to get up.</span>")

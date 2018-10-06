@@ -967,9 +967,10 @@
 	A.def_zone = get_limbzone_target()
 	A.fire_at(T, src, null, ammo.max_range, ammo.shell_speed)
 	if(A.damage)
-		A.damage += A.damage * (min(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
-	if(A.reagent_amount)
-		A.reagent_amount += A.reagent_amount * (min(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
+		A.damage += A.damage * (max(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
+	if(A.list_reagents)
+		for(var/reagent in A.list_reagents)
+			reagents.add_reagent(reagent, A.list_reagents[reagent] * max(0,upgrade) * 0.15) //increase neuro reagents by 15% per upgrade level.
 	has_spat = world.time + spit_delay + ammo.added_spit_delay
 	use_plasma(ammo.spit_cost)
 	cooldown_notification(spit_delay + ammo.added_spit_delay, "spit")

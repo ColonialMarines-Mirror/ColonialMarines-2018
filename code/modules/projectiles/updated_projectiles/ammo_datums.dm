@@ -48,6 +48,7 @@
 	var/bonus_projectiles_amount 	= 0 		// How many extra projectiles it shoots out. Works kind of like firing on burst, but all of the projectiles travel together
 	var/debilitate[]				= null 		// Stun,knockdown,knockout,irradiate,stutter,eyeblur,drowsy,agony
 	var/list/list_reagents				= null		// Type of reagent transmitted by the projectile on hit.
+	var/reagent_amount				= 0		// Amount of reagent contained by the projectile.
 	var/barricade_clear_distance	= 1			// How far the bullet can travel before incurring a chance of hitting barricades; normally 1.
 
 	New()
@@ -1125,19 +1126,20 @@
 
 /datum/ammo/xeno/toxin
 	name = "neurotoxic spit"
-	list_reagents = list("xeno_toxin" = 5)
+	reagent_amount = 5
+	list_reagents = list("xeno_toxin" = reagent_amount)
 	debilitate = list(0.5,0.5,0,0,0,0,0,0)
 	flags_ammo_behavior = AMMO_XENO_TOX|AMMO_IGNORE_RESIST
 	spit_cost = 50
 
 /datum/ammo/xeno/toxin/medium //Spitter
 	name = "neurotoxic spatter"
-	list_reagents = list("xeno_toxin" = 7)
+	reagent_amount = 7
 	added_spit_delay = 2
 
 /datum/ammo/xeno/toxin/heavy //Praetorian
 	name = "neurotoxic splash"
-	list_reagents = list("xeno_toxin" = 10)
+	reagent_amount = 10
 	added_spit_delay = 5
 
 /datum/ammo/xeno/sticky

@@ -390,7 +390,17 @@
 		online = initial(online)
 	..()
 
+/obj/machinery/power/smes/preset
+	name = "power storage unit"
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	charging = 1
+	chargemode = 1
+	chargelevel = 1000000
+	should_be_mapped = 1
 
+/obj/machinery/power/smes/preset/process()
+	charge = 5000000
+	..()
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"

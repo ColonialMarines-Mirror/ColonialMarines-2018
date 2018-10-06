@@ -25,8 +25,8 @@
 	var/fuel_rate = 0.00 //Rate at which fuel is used.  Based mostly on how long the generator has been running.
 
 /obj/machinery/power/fusion_engine/New()
-	buildstate = rand(0,3) //This is needed to set the state for repair interactions
-	fusion_cell.fuel_amount = rand(15,100)
+	buildstate = 0 //This is needed to set the state for repair interactions
+	fusion_cell.fuel_amount = rand(50,100)
 	update_icon()
 	connect_to_network() //Should start with a cable piece underneath, if it doesn't, something's messed up in mapping
 	..()

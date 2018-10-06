@@ -41,7 +41,6 @@
 
 	var/damage = 0
 	var/accuracy = 85 //Base projectile accuracy. Can maybe be later taken from the mob if desired.
-	var/reagent_amount = 0 //reagents to transfer
 
 	var/damage_falloff = 0 //how many damage point the projectile loses per tiles travelled
 

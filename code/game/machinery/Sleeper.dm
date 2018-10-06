@@ -96,6 +96,10 @@
 					else
 						dat += "<HR><A href='?src=\ref[src];togglefilter=1'>Start Dialysis</A><BR>"
 						dat += "Output Beaker has [connected.beaker.reagents.maximum_volume - connected.beaker.reagents.total_volume] units of free space remaining<BR><HR>"
+					if(src.connected.stasis)
+						dat += "<A href='?src=\ref[src];togglestasis=1'>Deactivate Cryostasis</A><BR>"
+					else
+						dat += "<A href='?src=\ref[src];togglestasis=1'>Activate Cryostasis</A><BR>"
 				else
 					dat += "<HR>Dialysis Disabled - Non-human present.<BR><HR>"
 
@@ -106,7 +110,6 @@
 				dat += "Inject [connected.available_chemicals[chemical]]: "
 				for(var/amount in connected.amounts)
 					dat += "<a href ='?src=\ref[src];chemical=[chemical];amount=[amount]'>[amount] units</a><br> "
-
 
 			dat += "<HR><A href='?src=\ref[src];ejectify=1'>Eject Patient</A>"
 		else
@@ -126,10 +129,8 @@
 				if (src.connected.occupant)
 					if (src.connected.occupant.stat == DEAD)
 						to_chat(usr, "\red \b This person has no life for to preserve anymore. Take them to a department capable of reanimating them.")
-					else if(src.connected.occupant.health > 0 || href_list["chemical"] == "inaprovaline")
-						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
 					else
-						to_chat(usr, "\red \b This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!")
+						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
 					src.updateUsrDialog()
 		if (href_list["refresh"])
 			src.updateUsrDialog()
@@ -138,6 +139,9 @@
 			src.updateUsrDialog()
 		if (href_list["togglefilter"])
 			src.connected.toggle_filter()
+			src.updateUsrDialog()
+		if (href_list["togglestasis"])
+			src.connected.toggle_stasis()
 			src.updateUsrDialog()
 		if (href_list["ejectify"])
 			src.connected.eject()
@@ -169,7 +173,8 @@
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin", "tricordrazine" = "Tricordrazine")
 	var/amounts = list(5, 10)
 	var/obj/item/reagent_container/glass/beaker = null
-	var/filtering = 0
+	var/filtering = FALSE
+	var/stasis = FALSE
 	var/obj/machinery/sleep_console/connected
 
 	use_power = 1
@@ -186,6 +191,55 @@
 		return
 	return
 
+/obj/machinery/sleeper/Dispose()
+	occupant.in_stasis = FALSE //clean up; end stasis; remove from processing
+	occupant = null
+	processing_objects.Remove(src)
+	stop_processing()
+	return ..()
+
+/obj/machinery/sleeper/examine(mob/living/user)
+	..()
+	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
+		return
+	if(!ishuman(occupant))
+		return
+	var/active = ""
+	if(stasis)
+		active += " Cryostasis is active."
+	if(filtering)
+		active += " Dialysis is active."
+	if(!hasHUD(user,"medical"))
+		to_chat(user, "<span class='notice'>It contains: [occupant].[active]</span>")
+		return
+	var/mob/living/carbon/human/H = occupant
+	for(var/datum/data/record/R in data_core.medical)
+		if (!R.fields["name"] == H.real_name)
+			continue
+		if(!(R.fields["last_scan_time"]))
+			to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
+		else
+			to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]].[active]</a></span>\n")
+		break
+
+/obj/machinery/sleeper/Topic(href, href_list)
+	if (!href_list["scanreport"])
+		return
+	if(!hasHUD(usr,"medical"))
+		return
+	if(get_dist(usr, src) > 7)
+		to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
+		return
+	if(!ishuman(occupant))
+		return
+	var/mob/living/carbon/human/H = occupant
+	for(var/datum/data/record/R in data_core.medical)
+		if (!R.fields["name"] == H.real_name)
+			continue
+		if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
+			usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
+		break
+
 
 /obj/machinery/sleeper/allow_drop()
 	return 0
@@ -197,13 +251,18 @@
 
 /obj/machinery/sleeper/process()
 	if (stat & (NOPOWER|BROKEN))
+		if(occupant)
+			occupant.in_stasis = null
+		stasis = FALSE
+		filtering = FALSE
+		stop_processing() //Shut down; stasis off, filtering off, stop processing.
 		return
 
-	if(filtering > 0)
+	if(filtering)
 		if(beaker)
 			if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
 				for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
-					src.occupant.reagents.trans_to(beaker, 3)
+					src.occupant.reagents.trans_to(beaker, 10)
 
 
 	src.updateUsrDialog()
@@ -221,6 +280,10 @@
 			to_chat(user, "\red The sleeper has a beaker already.")
 			return
 
+	else if(istype(W, /obj/item/device/healthanalyzer) && occupant) //Allows us to use the analyzer on the occupant without taking him out.
+		var/obj/item/device/healthanalyzer/J = W
+		J.attack(occupant, user)
+
 	else if(istype(W, /obj/item/grab))
 		if(isXeno(user)) return
 		var/obj/item/grab/G = W
@@ -231,24 +294,22 @@
 			to_chat(user, "\blue <B>The sleeper is already occupied!</B>")
 			return
 
-		visible_message("[user] starts putting [G.grabbed_thing] into the sleeper.", 3)
+		visible_message("[user] puts [G.grabbed_thing] into the sleeper.", 3)
 
-		if(do_after(user, 20, TRUE, 5, BUSY_ICON_GENERIC))
-			if(src.occupant)
-				to_chat(user, "\blue <B>The sleeper is already occupied!</B>")
-				return
-			if(!G || !G.grabbed_thing) return
-			var/mob/M = G.grabbed_thing
-			M.forceMove(src)
-			update_use_power(2)
-			src.occupant = M
-			start_processing()
-			connected.start_processing()
-			src.icon_state = "sleeper_1"
-			if(orient == "RIGHT")
-				icon_state = "sleeper_1-r"
-
-			src.add_fingerprint(user)
+		if(src.occupant)
+			to_chat(user, "\blue <B>The sleeper is already occupied!</B>")
+			return
+		if(!G || !G.grabbed_thing) return
+		var/mob/M = G.grabbed_thing
+		M.forceMove(src)
+		update_use_power(2)
+		src.occupant = M
+		start_processing()
+		connected.start_processing()
+		src.icon_state = "sleeper_1"
+		if(orient == "RIGHT")
+			icon_state = "sleeper_1-r"
+		src.add_fingerprint(user)
 
 
 
@@ -269,6 +330,8 @@
 /obj/machinery/sleeper/emp_act(severity)
 	if(filtering)
 		toggle_filter()
+	if(stasis)
+		toggle_stasis()
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
@@ -296,12 +359,23 @@
 
 /obj/machinery/sleeper/proc/toggle_filter()
 	if(!src.occupant)
-		filtering = 0
+		filtering = FALSE
 		return
 	if(filtering)
-		filtering = 0
+		filtering = FALSE
 	else
-		filtering = 1
+		filtering = TRUE
+
+/obj/machinery/sleeper/proc/toggle_stasis()
+	if(!src.occupant)
+		stasis = FALSE
+		return
+	if(stasis)
+		occupant.in_stasis = null
+		stasis = FALSE
+	else
+		occupant.in_stasis = STASIS_IN_BAG
+		stasis = TRUE
 
 /obj/machinery/sleeper/proc/go_out()
 	if(filtering)
@@ -311,6 +385,8 @@
 	if(src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
+	occupant.in_stasis = null //disable stasis
+	stasis = FALSE
 	src.occupant.loc = src.loc
 	src.occupant = null
 	stop_processing()
@@ -380,7 +456,7 @@
 	if(usr.stat != 0)
 		return
 	if(beaker)
-		filtering = 0
+		filtering = FALSE
 		beaker.loc = usr.loc
 		beaker = null
 	add_fingerprint(usr)
@@ -398,31 +474,30 @@
 		to_chat(usr, "\blue <B>The sleeper is already occupied!</B>")
 		return
 
-	visible_message("[usr] starts climbing into the sleeper.", 3)
+	visible_message("[usr] climbs into the sleeper.", 3)
 	if(usr.pulledby)
 		if(ismob(usr.pulledby))
 			var/mob/grabmob = usr.pulledby
 			grabmob.stop_pulling()
-	if(do_after(usr, 20, FALSE, 5, BUSY_ICON_GENERIC))
-		if(src.occupant)
-			to_chat(usr, "\blue <B>The sleeper is already occupied!</B>")
-			return
-		usr.stop_pulling()
-		if(usr.pulledby)
-			if(ismob(usr.pulledby))
-				var/mob/grabmob = usr.pulledby
-				grabmob.stop_pulling()
-		usr.client.perspective = EYE_PERSPECTIVE
-		usr.client.eye = src
-		usr.loc = src
-		update_use_power(2)
-		src.occupant = usr
-		start_processing()
-		connected.start_processing()
-		src.icon_state = "sleeper_1"
-		if(orient == "RIGHT")
-			icon_state = "sleeper_1-r"
+	if(src.occupant)
+		to_chat(usr, "\blue <B>The sleeper is already occupied!</B>")
+		return
+	usr.stop_pulling()
+	if(usr.pulledby)
+		if(ismob(usr.pulledby))
+			var/mob/grabmob = usr.pulledby
+			grabmob.stop_pulling()
+	usr.client.perspective = EYE_PERSPECTIVE
+	usr.client.eye = src
+	usr.loc = src
+	update_use_power(2)
+	src.occupant = usr
+	start_processing()
+	connected.start_processing()
+	src.icon_state = "sleeper_1"
+	if(orient == "RIGHT")
+		icon_state = "sleeper_1-r"
 
-		for(var/obj/O in src)
-			cdel(O)
-		src.add_fingerprint(usr)
+	for(var/obj/O in src)
+		cdel(O)
+	src.add_fingerprint(usr)

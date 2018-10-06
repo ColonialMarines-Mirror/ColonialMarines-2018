@@ -46,6 +46,8 @@
 	var/damage_falloff = 0 //how many damage point the projectile loses per tiles travelled
 
 	var/scatter = 0
+	
+	var/list/list_reagents = null
 
 	var/distance_travelled = 0
 	var/in_flight = 0
@@ -92,7 +94,7 @@
 	accuracy   *= rand(config.proj_variance_low-ammo.accuracy_var_low, config.proj_variance_high+ammo.accuracy_var_high) * config.proj_base_accuracy_mult//Rand only works with integers.
 	damage     *= rand(config.proj_variance_low-ammo.damage_var_low, config.proj_variance_high+ammo.damage_var_high) * config.proj_base_damage_mult
 	damage_falloff = ammo.damage_falloff
-	var/list/list_reagents = ammo.list_reagents 
+	list_reagents = ammo.list_reagents 
 	if(list_reagents)
 		create_reagents(50)
 		flags_atom |= NOREACT
@@ -466,7 +468,7 @@
 
 	if(P.list_reagents && stat != DEAD)
 		if(ishuman() || ismonkey())
-			reagents.reaction(M, TOUCH) // potential extra effects
+			reagents.reaction(src, TOUCH) // potential extra effects
 			P.reagents.trans_to(src, 50)
 
 	if(damage)

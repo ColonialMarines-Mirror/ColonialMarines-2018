@@ -28,6 +28,11 @@
 	var/const/WIRE_SCANID = 3 //Only used by the secure smartfridge, but required by the cut, mend and pulse procs.
 
 
+/obj/machinery/smartfridge/New()
+	. = ..()
+	create_reagents()
+	reagents.set_reacting(FALSE)
+
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/reagent_container/food/snacks/grown/) || istype(O,/obj/item/seeds/))
 		return 1

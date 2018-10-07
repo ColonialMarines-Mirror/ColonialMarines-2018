@@ -777,7 +777,7 @@
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/atom/proc/create_reagents(var/max_vol)
+/atom/proc/create_reagents(max_vol)
 	if(reagents)
 		cdel(reagents)
 	reagents = new/datum/reagents(max_vol)

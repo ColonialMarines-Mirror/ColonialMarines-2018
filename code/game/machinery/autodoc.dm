@@ -167,10 +167,17 @@
 					surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"missing")
 			if(L.status & LIMB_NECROTIZED)
 				surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"necro")
+			var/skip_embryo_check = FALSE
 			if(L.implants.len)
 				for(var/I in L.implants)
 					if(!is_type_in_list(I,known_implants))
 						surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
+						if(L.name == "chest")
+							skip_embryo_check = TRUE
+			var/obj/item/alien_embryo/A = locate() in M
+			if(A && L.name == "chest" && !skip_embryo_check) //If we're not already doing a shrapnel removal surgery proceed.
+				to_chat(world, "AUTODOC DEBUG: Larva detected")
+				surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
 			if(L.germ_level > INFECTION_LEVEL_ONE)
 				surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"germs")
 			if(L.surgery_open_stage)
@@ -433,7 +440,7 @@
 						close_incision(H,S.limb_ref)
 
 					if("shrapnel")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning shrapnel removal.");
+						if(prob(30)) visible_message("\The [src] speaks, Beginning foreign body removal.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
 							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
@@ -443,6 +450,17 @@
 						open_incision(H,S.limb_ref)
 						if(S.limb_ref.name == "chest" || S.limb_ref.name == "head")
 							open_encased(H,S.limb_ref)
+						if(S.limb_ref.name == "chest") //if it's the chest check for gross parasites
+							var/obj/item/alien_embryo/A = locate() in occupant
+							if(A)
+								occupant.visible_message("<span class='warning'>The [src] defty extracts a wriggling parasite from [occupant]'s ribcage!</span>");
+								var/mob/living/carbon/Xenomorph/Larva/L = locate() in occupant //the larva was fully grown, ready to burst.
+								if(L)
+									L.forceMove(occupant.loc)
+								else
+									A.forceMove(occupant.loc)
+									occupant.status_flags &= ~XENO_HOST
+								cdel(A)
 						if(S.limb_ref.implants.len)
 							for(var/obj/item/I in S.limb_ref.implants)
 								if(!surgery) break
@@ -658,23 +676,49 @@
 		user.drop_held_item()
 		cdel(W)
 		return
+
+	if(istype(W, /obj/item/device/healthanalyzer) && occupant) //Allows us to use the analyzer on the occupant without taking him out.
+		var/obj/item/device/healthanalyzer/J = W
+		J.attack(occupant, user)
+		return
+
 	if(istype(W, /obj/item/grab))
-		var/obj/item/grab/G = W
-		if(!ishuman(G.grabbed_thing)) // stop fucking monkeys and xenos being put in.
-			return
-		var/mob/M = G.grabbed_thing
-		if(src.occupant)
-			to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
-			return
 
 		if(stat & (NOPOWER|BROKEN))
 			to_chat(user, "<span class='notice'>\The [src] is non-functional!</span>")
 			return
 
-		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_PROFESSIONAL && !event)
+		if(src.occupant)
+			to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
+			return
+
+		var/obj/item/grab/G = W
+		var/mob/M
+		if(ismob(G.grabbed_thing))
+			M = G.grabbed_thing
+		else if(istype(G.grabbed_thing,/obj/structure/closet/bodybag/cryobag))
+			var/obj/structure/closet/bodybag/cryobag/C = G.grabbed_thing
+			if(!C.stasis_mob)
+				to_chat(user, "<span class='warning'>The stasis bag is empty!</span>")
+				return
+			M = C.stasis_mob
+			C.open()
+			user.start_pulling(M)
+		else
+			return
+
+		if(!ishuman(M)) // stop fucking monkeys and xenos being put in.
+			to_chat(user, "<span class='notice'>\The [src] is compatible with humanoid anatomies only!</span>")
+			return
+
+		if (M.abiotic())
+			to_chat(user, "<span class='warning'>Subject cannot have abiotic items on.</span>")
+			return
+
+		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !event)
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to put [M] into [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to use put [M] into [src].</span>")
-			var/fumbling_time = SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * ( SKILL_SURGERY_PROFESSIONAL - user.mind.cm_skills.surgery ) ) // 8 secs non-trained, 5 amateur, 2 trained
+			var/fumbling_time = SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * ( SKILL_SURGERY_TRAINED - user.mind.cm_skills.surgery ) ) // 8 secs non-trained, 5 amateur, 2 trained
 			if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 		visible_message("[user] starts putting [M] into [src].", 3)
@@ -683,7 +727,7 @@
 			if(src.occupant)
 				to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
 				return
-			if(!G || !G.grabbed_thing) return
+			if(!M || !G) return
 			M.forceMove(src)
 			update_use_power(2)
 			occupant = M
@@ -827,7 +871,7 @@
 										dat += "Necrosis Removal Surgery"
 									if("shrapnel")
 										surgeryqueue["shrapnel"] = 1
-										dat += "Shrapnel Removal Surgery"
+										dat += "Foreign Body Removal Surgery"
 									if("germ")
 										surgeryqueue["limbgerm"] = 1
 										dat += "Limb Disinfection Procedure"
@@ -874,7 +918,7 @@
 					if(isnull(surgeryqueue["necro"]))
 						dat += "<a href='?src=\ref[src];necro=1'>Necrosis Removal Surgery</a><br>"
 					if(isnull(surgeryqueue["shrapnel"]))
-						dat += "<a href='?src=\ref[src];shrapnel=1'>Shrapnel Removal Surgery</a><br>"
+						dat += "<a href='?src=\ref[src];shrapnel=1'>Foreign Body Removal Surgery</a><br>"
 					if(isnull(surgeryqueue["limbgerm"]))
 						dat += "<a href='?src=\ref[src];limbgerm=1'>Limb Disinfection Procedure</a><br>"
 					if(isnull(surgeryqueue["facial"]))
@@ -985,11 +1029,20 @@
 				var/known_implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
 				for(var/datum/limb/L in connected.occupant.limbs)
 					if(L)
+						var/skip_embryo_check = FALSE
+						var/obj/item/alien_embryo/A = locate() in connected.occupant
 						if(L.implants.len)
 							for(var/I in L.implants)
 								if(!is_type_in_list(I,known_implants))
 									N.fields["autodoc_manual"] += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
 									needed++
+									if(L.name == "chest")
+										skip_embryo_check = TRUE
+						if(A && L.name == "chest" && !skip_embryo_check) //If we're not already doing a shrapnel removal surgery of the chest proceed.
+							to_chat(world, "AUTODOC DEBUG: Larva detected")
+							N.fields["autodoc_manual"] += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
+							needed++
+
 				if(!needed)
 					N.fields["autodoc_manual"] += create_autodoc_surgery(null,LIMB_SURGERY,"shrapnel",1)
 				updateUsrDialog()
@@ -1039,3 +1092,43 @@
 
 /obj/machinery/autodoc/event
 	event = 1
+
+/obj/machinery/autodoc/examine(mob/living/user)
+	..()
+	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
+		return
+	if(!ishuman(occupant))
+		return
+	var/active = ""
+	if(surgery)
+		active += " Surgical procedures are in progress."
+	if(!hasHUD(user,"medical"))
+		to_chat(user, "<span class='notice'>It contains: [occupant].[active]</span>")
+		return
+	var/mob/living/carbon/human/H = occupant
+	for(var/datum/data/record/R in data_core.medical)
+		if (!R.fields["name"] == H.real_name)
+			continue
+		if(!(R.fields["last_scan_time"]))
+			to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
+		else
+			to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]].[active]</a></span>\n")
+		break
+
+/obj/machinery/autodoc/Topic(href, href_list)
+	if (!href_list["scanreport"])
+		return
+	if(!hasHUD(usr,"medical"))
+		return
+	if(get_dist(usr, src) > 7)
+		to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
+		return
+	if(!ishuman(occupant))
+		return
+	var/mob/living/carbon/human/H = occupant
+	for(var/datum/data/record/R in data_core.medical)
+		if (!R.fields["name"] == H.real_name)
+			continue
+		if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
+			usr << browse(R.fields["last_scan_result"], "window=scanresults;size=430x600")
+		break

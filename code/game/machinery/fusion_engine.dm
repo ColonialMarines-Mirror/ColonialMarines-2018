@@ -46,7 +46,7 @@
 		visible_message("\icon[src] <b>[src]</b> flashes that the fuel cell is empty as the engine seizes.")
 		fuel_rate = 0
 		buildstate = 2  //No fuel really fucks it.
-		is_on = TRUE
+		is_on = FALSE
 		power_gen_percent = 0
 		fail_rate+=2 //Each time the engine is allowed to seize up it's fail rate for the future increases because reasons.
 		update_icon()

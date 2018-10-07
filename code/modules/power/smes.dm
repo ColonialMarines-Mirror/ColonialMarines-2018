@@ -375,7 +375,7 @@
 
 
 /obj/machinery/power/smes/emp_act(severity)
-	online = TRUE
+	online = FALSE
 	charging = FALSE
 	output = 0
 	charge -= 1e6/severity

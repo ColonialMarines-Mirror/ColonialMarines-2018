@@ -466,15 +466,16 @@ var/list/slot_equipment_priority = list( \
 	var/laid_down = (stat || knocked_down || knocked_out || !has_legs() || resting || (status_flags & FAKEDEATH) || (pulledby && pulledby.grab_level >= GRAB_NECK))
 
 	if(laid_down)
-		lying = TRUE
+		if(!lying)
+			lying = pick(90, 270)
 	else
-		lying = FALSE
-
+		lying = 0
 	if(buckled)
 		if(buckled.buckle_lying)
-			lying = TRUE
+			if(!lying)
+				lying = 90
 		else
-			lying = FALSE
+			lying = 0
 
 	canmove =  !(stunned || frozen || laid_down)
 
@@ -487,6 +488,7 @@ var/list/slot_equipment_priority = list( \
 
 	if(lying_prev != lying)
 		update_transform()
+		lying_prev = lying
 
 	if(lying)
 		if(layer == initial(layer)) //to avoid things like hiding larvas.

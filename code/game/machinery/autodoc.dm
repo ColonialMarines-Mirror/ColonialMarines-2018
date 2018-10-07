@@ -1038,7 +1038,7 @@
 									if(L.name == "chest")
 										skip_embryo_check = TRUE
 						if(A && L.name == "chest" && !skip_embryo_check) //If we're not already doing a shrapnel removal surgery of the chest proceed.
-							to_chat(world, "AUTODOC DEBUG: Larva detected")
+							//to_chat(world, "AUTODOC DEBUG: Larva detected")
 							N.fields["autodoc_manual"] += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
 							needed++
 

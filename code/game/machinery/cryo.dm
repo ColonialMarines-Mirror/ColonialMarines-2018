@@ -31,21 +31,28 @@
 
 /obj/machinery/cryo_cell/examine(mob/living/user)
 	..()
-	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
+	var/active = ""
+	if(occupant) //Compile and disclose details of operation.
+		active += "It contains: [occupant]."
+	else
+		active += "It is empty."
+	if(auto_release)
+		active += " Auto-release is active."
+	if(release_notice)
+		active += " Auto-notifications are active."
+	to_chat(user, "<span class='notice'>[active]</span>")
+	if(!hasHUD(user,"medical"))
 		return
 	if(!ishuman(occupant))
 		return
-	if(!hasHUD(user,"medical"))
-		to_chat(user, "<span class='notice'>It contains: [occupant].</span>")
 	var/mob/living/carbon/human/H = occupant
-	for(var/datum/data/record/R in data_core.medical)
-		if (!R.fields["name"] == H.real_name)
-			continue
-		if(!(R.fields["last_scan_time"]))
-			to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
-		else
-			to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]]</a></span>\n")
-		break
+	for(var/datum/data/record/R in data_core.medical) //Allows us to reference medical files/scan reports for cryo via examination.
+		if (R.fields["name"] == H.real_name)
+			if(!(R.fields["last_scan_time"]))
+				to_chat(user, "<span class = 'deptradio'>No medical scan report for [occupant] on record.</span>\n")
+			else
+				to_chat(user, "<span class = 'deptradio'>Last medical scan for [occupant]: <a href='?src=\ref[occupant];scanreport=1'>[R.fields["last_scan_time"]]</a></span>\n")
+			break
 
 /obj/machinery/cryo_cell/Topic(href, href_list)
 	if (!href_list["scanreport"])
@@ -238,16 +245,48 @@
 
 		if(user.drop_inv_item_to_loc(W, src))
 			user.visible_message("[user] adds \a [W] to \the [src]!", "You add \a [W] to \the [src]!")
+		return
+
 	else if(istype(W, /obj/item/device/healthanalyzer) && occupant) //Allows us to use the analyzer on the occupant without taking him out.
 		var/obj/item/device/healthanalyzer/J = W
 		J.attack(occupant, user)
-	else if(istype(W, /obj/item/grab))
-		if(isXeno(user)) return
-		var/obj/item/grab/G = W
-		if(!ismob(G.grabbed_thing))
+		return
+
+	if(!istype(W, /obj/item/grab))
+		return
+
+	if(stat & (NOPOWER|BROKEN))
+		to_chat(user, "<span class='notice'>\ [src] is non-functional!</span>")
+		return
+
+	if(src.occupant)
+		to_chat(user, "<span class='notice'>\ [src] is already occupied!</span>")
+		return
+
+	var/obj/item/grab/G = W
+	var/mob/M
+	if(ismob(G.grabbed_thing))
+		M = G.grabbed_thing
+	else if(istype(G.grabbed_thing,/obj/structure/closet/bodybag/cryobag))
+		var/obj/structure/closet/bodybag/cryobag/C = G.grabbed_thing
+		if(!C.stasis_mob)
+			to_chat(user, "<span class='warning'>The stasis bag is empty!</span>")
 			return
-		var/mob/M = G.grabbed_thing
-		put_mob(M)
+		M = C.stasis_mob
+		C.open()
+		user.start_pulling(M)
+	else
+		return
+
+	if(!ishuman(M)) // stop fucking monkeys and xenos being put in.
+		to_chat(user, "<span class='notice'>\ [src] is compatible with humanoid anatomies only!</span>")
+		return
+
+	if (M.abiotic())
+		to_chat(user, "<span class='warning'>Subject cannot have abiotic items on.</span>")
+		return
+
+	put_mob(M, TRUE)
 
 	updateUsrDialog()
 
@@ -307,12 +346,12 @@
 		turn_off()
 		if(release_notice) //If auto-release notices are on as it should be, let the doctors know what's up
 			playsound(src.loc, 'sound/machines/ping.ogg', 100, 14)
-			var/reason = "<b>Reason for Release:</b> Patient Recovery."
+			var/reason = "Reason for release:</b> Patient recovery."
 			if(dead)
-				reason = "<b>Reason for Release:</b> Patient Death."
+				reason = "<b>Reason for release:</b> Patient death."
 			var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 			AI.SetName("Cryotube Notification System")
-			AI.aiRadio.talk_into(AI,"Patient [occupant] has been automatically released from the cryotube at [get_area(occupant)]. [reason]","MedSci","announces")
+			AI.aiRadio.talk_into(AI,"Patient [occupant] has been automatically released from [src] at: [get_area(occupant)]. [reason]","MedSci","announces")
 			cdel(AI)
 	occupant = null
 	update_use_power(1)
@@ -332,12 +371,12 @@
 	start_processing()
 	update_icon()
 
-/obj/machinery/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
+/obj/machinery/cryo_cell/proc/put_mob(mob/living/carbon/M as mob, put_in = null)
 	if (stat & (NOPOWER|BROKEN))
 		to_chat(usr, "\red The cryo cell is not functioning.")
 		return
-	if (!istype(M))
-		to_chat(usr, "\red <B>The cryo cell cannot handle such a lifeform!</B>")
+	if(!ishuman(M)) // stop fucking monkeys and xenos being put in.
+		to_chat(usr, "<span class='notice'>\ [src] is compatible with humanoid anatomies only!</span>")
 		return
 	if (occupant)
 		to_chat(usr, "\red <B>The cryo cell is already occupied!</B>")
@@ -345,9 +384,10 @@
 	if (M.abiotic())
 		to_chat(usr, "\red Subject may not have abiotic items on.")
 		return
-	//if(!node) //Commented out until atmo is fixed.
-	//	to_chat(usr, "\red The cell is not correctly connected to its pipe network!")
-	//	return
+	if(put_in) //Select an appropriate message
+		visible_message("<span class='notice'>[usr] puts [M] in [src].</span>", 3)
+	else
+		visible_message("<span class='notice'>[usr] climbs into [src].</span>", 3)
 	M.forceMove(src)
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
 		to_chat(M, "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>")
@@ -380,6 +420,7 @@
 	set src in oview(1)
 	if (usr.stat != 0)
 		return
+	visible_message("[usr] attempts to climb inside [src].", 3)
 	put_mob(usr)
 	return
 
@@ -393,3 +434,5 @@
 
 /datum/data/function/proc/display()
 	return
+
+

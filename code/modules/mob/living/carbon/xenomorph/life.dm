@@ -20,17 +20,18 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 	..()
 
-	if(DEAD) //Dead, nothing else to do.
+	if(stat == DEAD) //Dead, nothing else to do.
 		return
+
 	handle_aura_receiver()
 	handle_living_health_updates()
 	handle_living_plasma_updates()
 	handle_living_health_updates()
 	update_icons()
-	if(UNCONSCIOUS)
+	if(stat == UNCONSCIOUS)
 		if(is_zoomed)
 			zoom_out()
-	if(CONSCIOUS)
+	else
 		if(is_zoomed)
 			if(loc != zoom_turf || lying)
 				zoom_out()

@@ -29,8 +29,8 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(config.allow_admin_jump)
+		log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 		if(!istype(usr, /mob/dead/observer))
-			log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 			message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]", 1)
 		usr.on_mob_jump()
 		usr.forceMove(T)
@@ -48,8 +48,8 @@
 		return
 
 	if(config.allow_admin_jump)
+		log_admin("[key_name(usr)] jumped to [key_name(M)]")
 		if(!istype(usr, /mob/dead/observer))
-			log_admin("[key_name(usr)] jumped to [key_name(M)]")
 			message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)", 1)
 		if(src.mob)
 			var/mob/A = src.mob
@@ -106,8 +106,8 @@
 			to_chat(src, "No keys found.")
 			return
 		var/mob/M = selection:mob
+		log_admin("[key_name(usr)] jumped to [key_name(M)]")
 		if(!istype(usr, /mob/dead/observer))
-			log_admin("[key_name(usr)] jumped to [key_name(M)]")
 			message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)", 1)
 		usr.on_mob_jump()
 		usr.loc = M.loc

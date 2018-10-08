@@ -865,38 +865,49 @@
 	smoke.set_up(1, get_turf(P))
 	smoke.start()
 
-/datum/ammo/rocket/ap
+/datum/ammo/rocketap
 	name = "anti-armor rocket"
 	damage_falloff = 0
+	ping = null //no bounce off.
+	sound_bounce	= "rocket_bounce"
+	flags_ammo_behavior = AMMO_EXPLOSIVE|AMMO_ROCKET
+	var/datum/effect_system/smoke_spread/smoke
 
-/datum/ammo/rocket/ap/New()
+
+/datum/ammo/rocketap/New()
 	..()
+	smoke = new()
 	accuracy = -config.min_hit_accuracy
 	accuracy_var_low = config.med_proj_variance
 	accurate_range = config.short_shell_range
 	max_range = config.norm_shell_range
 	damage = config.ultra_hit_damage //lmao tons of hit damage but it's never processed due to the below proc redefinitions
 	penetration= config.max_armor_penetration
+	shell_speed = config.slow_shell_speed
 
-/datum/ammo/rocket/ap/on_hit_mob(mob/M, obj/item/projectile/P)
+/datum/ammo/rocketap/on_hit_mob(mob/M, obj/item/projectile/P)
 	explosion(get_turf(M), -1, 1, 2, 5)
 	smoke.set_up(1, get_turf(M))
 	smoke.start()
+	..()
 
-/datum/ammo/rocket/ap/on_hit_obj(obj/O, obj/item/projectile/P)
+/datum/ammo/rocketap/on_hit_obj(obj/O, obj/item/projectile/P)
 	explosion(get_turf(O), -1, 1, 2, 5)
 	smoke.set_up(1, get_turf(O))
 	smoke.start()
+	..()
 
-/datum/ammo/rocket/ap/on_hit_turf(turf/T, obj/item/projectile/P)
+/datum/ammo/rocketap/on_hit_turf(turf/T, obj/item/projectile/P)
 	explosion(T,  -1, 1, 2, 5)
 	smoke.set_up(1, T)
 	smoke.start()
+	..()
 
-/datum/ammo/rocket/ap/do_at_max_range(obj/item/projectile/P)
+/datum/ammo/rocketap/do_at_max_range(obj/item/projectile/P)
 	explosion(get_turf(P),  -1, 1, 2, 5)
 	smoke.set_up(1, get_turf(P))
 	smoke.start()
+	..()
 
 /datum/ammo/rocket/ltb
 	name = "cannon round"

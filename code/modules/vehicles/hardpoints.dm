@@ -821,7 +821,7 @@ Currently only has the tank hardpoints
 	caliber = "rocket" //correlates to any rocket mags
 	icon_state = "quad_rocket"
 	w_class = 10
-	default_ammo = /datum/ammo/rocket/ap //Fun fact, AP rockets seem to be a straight downgrade from normal rockets. Maybe I'm missing something...
+	default_ammo = /datum/ammo/rocketap //Fun fact, AP rockets seem to be a straight downgrade from normal rockets. Maybe I'm missing something...
 	max_rounds = 5
 	point_cost = 100
 	gun_type = /obj/item/hardpoint/secondary/towlauncher

@@ -16,7 +16,7 @@
 
 	traumatic_shock += reagent_shock_modifier
 
-	if(slurring) 								traumatic_shock -= 20
+	if(slurring) 								traumatic_shock -= 10
 	if(analgesic) 								traumatic_shock = 0
 
 

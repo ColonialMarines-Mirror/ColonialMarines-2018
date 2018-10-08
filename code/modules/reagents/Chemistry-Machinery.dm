@@ -269,27 +269,28 @@
 				cdel(src)
 				return
 
-/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob)
+/obj/machinery/chem_master/attackby(var/obj/item/I as obj, var/mob/user as mob)
 
-	if(istype(B, /obj/item/reagent_container) & B.is_open_container())
-
-		if(src.beaker)
+	if(istype(I,/obj/item/reagent_container) && I.is_open_container())
+		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
-		beaker = B
-		user.drop_inv_item_to_loc(B, src)
+		user.drop_inv_item_to_loc(I, src)
+		beaker = I
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
+	else if (istype(I, /obj/item/reagent_container/glass))
+		to_chat(user, "Take the lid off [I] first.")
 
-	else if(istype(B, /obj/item/storage/pill_bottle))
+	else if(istype(I, /obj/item/storage/pill_bottle))
 
-		if(src.loaded_pill_bottle)
+		if(loaded_pill_bottle)
 			to_chat(user, "A pill bottle is already loaded into the machine.")
 			return
 
-		loaded_pill_bottle = B
-		user.drop_inv_item_to_loc(B, src)
+		loaded_pill_bottle = I
+		user.drop_inv_item_to_loc(I, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		updateUsrDialog()
 	return
@@ -378,7 +379,7 @@
 			return
 		else if (href_list["eject"])
 			if(beaker)
-				beaker:loc = src.loc
+				beaker:loc = loc
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
@@ -793,9 +794,11 @@
 
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/reagent_container) && I.is_open_container())
-		if(stat & (NOPOWER|BROKEN))
-			return
+
+	if(stat & (NOPOWER|BROKEN))
+		return
+
+	if(istype(I,/obj/item/reagent_container) && I.is_open_container())
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return

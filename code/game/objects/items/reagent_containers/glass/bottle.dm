@@ -346,7 +346,7 @@
 	desc = "A small bottle. Contains Bicaridine - Used to treat brute damage by doctors."
 	icon = 'icons/obj/items/chemistry.dmi'
 	icon_state = "bottle17"
-	list_reagents = list("bicardine" = 60)
+	list_reagents = list("bicaridine" = 60)
 
 /obj/item/reagent_container/glass/bottle/peridaxon
 	name = "\improper Peridaxon bottle"

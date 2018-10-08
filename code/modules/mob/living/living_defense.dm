@@ -168,11 +168,11 @@
 
 /mob/living/carbon/Xenomorph/ExtinguishMob()
 	. = ..()
-	if(.)
-		if(isXenoBoiler(src))
-			SetLuminosity(3)
-		else
-			SetLuminosity(0)
+	SetLuminosity(0)
+
+/mob/living/carbon/Xenomorph/Boiler/ExtinguishMob()
+	. = ..()
+	SetLuminosity(3)
 
 /mob/living/proc/update_fire()
 	return

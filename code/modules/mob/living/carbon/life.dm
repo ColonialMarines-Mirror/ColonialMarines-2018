@@ -51,6 +51,11 @@
 		adjust_blindness(-1)
 	update_canmove()
 
+/mob/living/proc/handle_organs()
+	reagent_move_delay_modifier = 0
+	reagent_shock_modifier = 0
+	reagent_pain_modifier = 0
+
 /mob/living/carbon/handle_status_effects()
 	..()
 	var/pwr = (stat || resting) ? 1 : 0

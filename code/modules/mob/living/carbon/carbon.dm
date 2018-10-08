@@ -178,12 +178,6 @@
 	if(selhand != src.hand)
 		swap_hand()
 
-/mob/living/proc/handle_organs()
-
-	reagent_move_delay_modifier = 0
-	reagent_shock_modifier = 0
-	reagent_pain_modifier = 0
-
 /mob/living/carbon/proc/vomit()
 
 	var/mob/living/carbon/human/H = src

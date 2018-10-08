@@ -7,7 +7,7 @@
 		if(species && species.has_organ["liver"])
 			var/datum/internal_organ/liver/L = internal_organs_by_name["liver"]
 			var/alien = (species && species.reagent_tag) ? species.reagent_tag : null
-			var/overdose = species.flags & NO_OVERDOSE ? FALSE : TRUE
+			var/overdose = (species.flags & NO_OVERDOSE) ? FALSE : TRUE
 			if(!(status_flags & GODMODE)) //godmode doesn't work as intended anyway
 				if(L)
 					reagents.metabolize(src, alien, can_overdose = overdose)

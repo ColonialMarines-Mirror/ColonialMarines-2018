@@ -162,7 +162,7 @@ var/global/list/randomized_pill_icons
 
 /obj/item/reagent_container/pill/kelotane
 	pill_desc = "A Kelotane pill. Used to treat burns."
-	list_reagents = list("cola" = 15)
+	list_reagents = list("kelotane" = 15)
 
 /obj/item/reagent_container/pill/kelotane/New()
 	..()

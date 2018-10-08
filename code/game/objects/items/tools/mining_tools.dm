@@ -109,7 +109,7 @@
 	..()
 	cell = new /obj/item/cell/high(src)
 	powered = TRUE
-	update_icon()
+	update_plasmacutter()
 
 
 /obj/item/tool/pickaxe/plasmacutter/examine(mob/user)
@@ -136,14 +136,14 @@
 		powered = TRUE
 		if(M)
 			to_chat(M, "<span class='notice'>You switch [src] on. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
-		update_icon()
+		update_plasmacutter()
 
 	else
 		playsound(loc, 'sound/weapons/saberoff.ogg', 25)
 		powered = FALSE
 		if(M)
 			to_chat(M, "<span class='notice'>You switch [src] off. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
-		update_icon()
+		update_plasmacutter()
 
 /obj/item/tool/pickaxe/plasmacutter/proc/fizzle_message(mob/user)
 	playsound(src, 'sound/machines/buzz-two.ogg', 25, 1)
@@ -179,7 +179,7 @@
 	cell.charge -= min(cell.charge, amount)
 	if(mention_charge)
 		to_chat(user, "<span class='notice'><b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
-	update_icon()
+	update_plasmacutter()
 	..()
 
 /obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
@@ -191,15 +191,15 @@
 		"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 		final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
 	else
-		final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3)*5) //We have proper skills; delay lowered by 0.5 per skill point in excess of a field engineer's. 
+		final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3)*5) //We have proper skills; delay lowered by 0.5 per skill point in excess of a field engineer's.
 	return final_delay
 
 /obj/item/tool/pickaxe/plasmacutter/emp_act(severity)
 	cell.use(round(cell.maxcharge / severity))
-	update_icon()
+	update_plasmacutter()
 	..()
 
-/obj/item/tool/pickaxe/plasmacutter/update_icon(mob/user) //Updates the icon and power on/off status of the plasma cutter
+/obj/item/tool/pickaxe/plasmacutter/update_plasmacutter(mob/user) //Updates the icon and power on/off status of the plasma cutter
 	if(!cell || cell.charge <= 0 || powered == FALSE)
 		icon_state = "plasma_cutter_off"
 		if(powered)
@@ -247,7 +247,7 @@
 		cell = W
 		to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 		playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
-		update_icon()
+		update_plasmacutter()
 
 
 /obj/item/tool/pickaxe/plasmacutter/attack_hand(mob/user)
@@ -260,7 +260,7 @@
 	cell = null
 	playsound(user, 'sound/machines/click.ogg', 25, 1, 5)
 	to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-	update_icon()
+	update_plasmacutter()
 	return
 
 
@@ -274,7 +274,7 @@
 		use_charge(user, charge_cost * 0.25)
 		playsound(M, cutting_sound, 25, 1)
 		eyecheck(user)
-		update_icon()
+		update_plasmacutter()
 		var/datum/effect_system/spark_spread/spark_system
 		spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, M)
@@ -319,8 +319,3 @@
 			else
 				fizzle_message(user)
 				return
-
-
-
-
-

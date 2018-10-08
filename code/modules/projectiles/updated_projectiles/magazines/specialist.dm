@@ -130,7 +130,7 @@
 /obj/item/ammo_magazine/rocket/ap
 	name = "\improper 84mm anti-armor rocket"
 	icon_state = "ap_rocket"
-	default_ammo = /datum/ammo/rocket/ap
+	default_ammo = /datum/ammo/rocketap
 	desc = "A tube for an AP rocket, the warhead of which is extremely dense and turns molten on impact. When empty, use this frame to deconstruct it."
 
 /obj/item/ammo_magazine/rocket/wp

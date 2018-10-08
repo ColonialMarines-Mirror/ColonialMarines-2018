@@ -129,10 +129,7 @@
 	if(ismob(loc))
 		M = loc
 	if(!powered)
-		if(!cell)
-			fizzle_message(M)
-			return
-		if(cell.charge <= 0)
+		if(!cell || cell.charge <= 0)
 			fizzle_message(M)
 			return
 		playsound(loc, 'sound/weapons/saberon.ogg', 25)
@@ -187,9 +184,7 @@
 
 /obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
 	var/final_delay = PLASMACUTTER_CUT_DELAY
-	if (!istype(user))
-		return
-	if(user.mind && user.mind.cm_skills)
+	if (!istype(user) || !user.mind || !user.mind.cm_skills)
 		return
 	if(user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI) //We don't have proper skills; time to fumble and bumble.
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
@@ -235,12 +230,12 @@
 			loc.SetLuminosity(-2)
 		else
 			SetLuminosity(0)
-	. = ..()
+	return ..()
 
 
 /obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)
 	if(!istype(W, /obj/item/cell))
-		return
+		return ..()
 	if(user.drop_held_item())
 		W.loc = src
 		var/replace_install = "You replace the cell in [src]"
@@ -256,7 +251,7 @@
 
 
 /obj/item/tool/pickaxe/plasmacutter/attack_hand(mob/user)
-	if(user.get_inactive_hand() == src)
+	if(user.get_inactive_hand() != src)
 		return ..()
 	if(!cell)
 		return ..()

@@ -7,12 +7,12 @@
 //create this define if you want to do configuration outside of this file
 #ifndef TGS_EXTERNAL_CONFIGURATION
 
+//Comment this out once you've filled in the below
+#error TGS API unconfigured
+
 //Uncomment this if you wish to allow the game to interact with TGS 3
 //This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
 //#define TGS_V3_API
-
-//Comment this out once you've filled in the below
-#error TGS API unconfigured
 
 //Required interfaces (fill in with your codebase equivalent):
 
@@ -92,8 +92,8 @@
 /world/proc/TgsInitializationComplete()
 	return
 
-//Put this somewhere in /world/Topic(T, Addr, Master, Keys) that is always run before T is modified
-#define TGS_TOPIC var/tgs_topic_return = TgsTopic(T); if(tgs_topic_return) return tgs_topic_return
+//Put this at the start of /world/Topic()
+#define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 //Call this at the beginning of world/Reboot(reason)
 /world/proc/TgsReboot()

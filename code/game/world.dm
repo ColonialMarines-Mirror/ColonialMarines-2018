@@ -36,7 +36,7 @@ var/global/datum/global_init/init = new ()
 
 	. = ..()
 
-	TgsInitializationsComplete()
+	TgsInitializationComplete()
 	sleep_offline = 1
 
 	// Set up roundstart seed list. This is here because vendors were

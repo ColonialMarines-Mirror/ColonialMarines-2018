@@ -400,7 +400,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	..()
 	accuracy_mod = config.med_hit_accuracy_mult
 	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	movement_acc_penalty_mod = 1
+	movement_acc_penalty_mod = -config.min_movement_acc_penalty
 
 
 /obj/item/attachable/flashlight
@@ -498,7 +498,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	..()
 	burst_delay_mod = config.mhigh_fire_delay
 	accuracy_mod = config.high_hit_accuracy_mult
-	movement_acc_penalty_mod = 2
+	movement_acc_penalty_mod = config.low_movement_acc_penalty
 	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
 
 
@@ -564,7 +564,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.med_recoil_value
 	scatter_mod = -config.med_scatter_value
-	movement_acc_penalty_mod = 1
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 
 	select_gamemode_skin(type)
 
@@ -578,7 +578,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.min_hit_accuracy_mult
 	recoil_mod = -config.med_recoil_value
 	scatter_mod = -config.med_scatter_value
-	movement_acc_penalty_mod = 1
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 
 /obj/item/attachable/stock/slavic
 	name = "wooden stock"
@@ -595,7 +595,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.min_hit_accuracy_mult
 	recoil_mod = -config.med_recoil_value
 	scatter_mod = -config.med_scatter_value
-	movement_acc_penalty_mod = 1
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 
 /obj/item/attachable/stock/rifle
 	name = "\improper M41A skeleton stock"
@@ -614,7 +614,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.min_hit_accuracy_mult
 	recoil_mod = -config.med_recoil_value
 	scatter_mod = -config.med_scatter_value
-	movement_acc_penalty_mod = 1
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 
 /obj/item/attachable/stock/rifle/marksman
 	name = "\improper M41A marksman stock"
@@ -640,7 +640,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.med_recoil_value
 	scatter_mod = -config.med_scatter_value
-	movement_acc_penalty_mod = 1
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 
 
 /obj/item/attachable/stock/revolver
@@ -660,6 +660,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.med_recoil_value
 	scatter_mod = -config.med_scatter_value
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 
 	accuracy_unwielded_mod = config.min_hit_accuracy_mult
 	recoil_unwielded_mod = -config.min_recoil_value
@@ -934,7 +935,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/verticalgrip
 	name = "vertical grip"
-	desc = "A custom-built improved foregrip for better accuracy, less recoil, and less scatter, especially during burst fire. \nHowever, it also increases weapon size."
+	desc = "A custom-built improved foregrip for better accuracy, less recoil, and less scatter when wielded especially during burst fire. \nHowever, it also increases weapon size, slightly increases wield delay and makes unwielded fire more cumbersome."
 	icon_state = "verticalgrip"
 	attach_icon = "verticalgrip_a"
 	wield_delay_mod = WIELD_DELAY_FAST
@@ -945,17 +946,17 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/verticalgrip/New()
 	..()
 	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
+	recoil_mod = -config.low_recoil_value
 	scatter_mod = -config.min_scatter_value
-	burst_scatter_mod = -2
-	movement_acc_penalty_mod = 1
+	burst_scatter_mod = -config.low_burst_scatter_penalty
+	movement_acc_penalty_mod = config.min_movement_acc_penalty
 	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
 	scatter_unwielded_mod = config.min_scatter_value
 
 
 /obj/item/attachable/angledgrip
 	name = "angled grip"
-	desc = "A custom-built improved foregrip for less recoil, and faster wielding time. \nHowever, it also increases weapon size."
+	desc = "A custom-built improved foregrip for less recoil, and faster wielding time. \nHowever, it also increases weapon size, and slightly hinders unwielded firing."
 	icon_state = "angledgrip"
 	attach_icon = "angledgrip_a"
 	wield_delay_mod = -WIELD_DELAY_FAST
@@ -967,30 +968,30 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	..()
 	recoil_mod = -config.min_recoil_value
 	accuracy_mod = config.min_hit_accuracy_mult
-	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
 	scatter_mod = -config.min_scatter_value
+	accuracy_unwielded_mod = -config.min_hit_accuracy_mult
 	scatter_unwielded_mod = config.min_scatter_value
 
 
 
 /obj/item/attachable/gyro
 	name = "gyroscopic stabilizer"
-	desc = "A set of weights and balances to stabilize the weapon when shooting one-handed, burst firing or moving. Significantly reduces burst scatter, movement penalties and one-handed recoil and scatter."
+	desc = "A set of weights and balances to stabilize the weapon when shooting one-handed, burst firing or moving. Greatly reduces movement penalties to accuracy. Significantly reduces burst scatter, and one-handed recoil and scatter."
 	icon_state = "gyro"
 	attach_icon = "gyro_a"
 	slot = "under"
 
 /obj/item/attachable/gyro/New()
 	..()
-	burst_scatter_mod = -2
-	movement_acc_penalty_mod = -3
+	burst_scatter_mod = -config.low_burst_scatter_penalty
+	movement_acc_penalty_mod = -config.med_movement_acc_penalty
 	scatter_unwielded_mod = -config.low_scatter_value
 	accuracy_unwielded_mod = config.min_hit_accuracy_mult
 	recoil_unwielded_mod = -config.low_recoil_value
-	
+
 /obj/item/attachable/lasersight
 	name = "laser sight"
-	desc = "A laser sight placed under the barrel. Significantly increases accuracy while moving, whether wielding or one-handed."
+	desc = "A laser sight placed under the barrel. Significantly increases one-handed accuracy and significantly reduces movement penalties to accuracy."
 	icon_state = "lasersight"
 	attach_icon = "lasersight_a"
 	slot = "under"
@@ -999,8 +1000,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/lasersight/New()
 	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	movement_acc_penalty_mod = -2
+	accuracy_mod = config.min_hit_accuracy_mult
+	movement_acc_penalty_mod = -config.min_burst_scatter_penalty
 	accuracy_unwielded_mod = config.med_hit_accuracy_mult
 
 
@@ -1081,7 +1082,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/burstfire_assembly
 	name = "burst fire assembly"
-	desc = "A mechanism re-assembly kit that allows for automatic fire, or more shots per burst if the weapon already has the ability. \nJust don't mind the increased scatter."
+	desc = "A mechanism re-assembly kit that allows for automatic fire, or more shots per burst if the weapon already has the ability. \nIncreases scatter and decreases accuracy."
 	icon_state = "rapidfire"
 	attach_icon = "rapidfire_a"
 	slot = "under"

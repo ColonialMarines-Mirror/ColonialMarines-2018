@@ -1426,20 +1426,19 @@
 		var/obj/item/clothing/glasses/G = glasses
 		//prescription applies regardless of it the glasses are active
 		if(G.active)
-			see_in_dark = max(G.darkness_view, see_in_dark)
+			see_in_dark += max(G.darkness_view, see_in_dark)
 			sight |= G.vision_flags
 			if(G.fullscreen_vision)
 				overlay_fullscreen("glasses_vision", G.fullscreen_vision)
 			else
 				clear_fullscreen("glasses_vision", 0)
-			if(G.see_invisible >= 0)
-				see_invisible = max(G.see_invisible, see_invisible)
+			see_invisible = min(G.see_invisible, see_invisible)
 	else
 		clear_fullscreen("glasses_vision", 0)
 
 
 	if(XRAY in mutations)
-		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = max(see_in_dark, 8)
 
 
@@ -1451,7 +1450,7 @@
 	if(tinttotal >= 3)
 		blind_eyes(1)
 		return TRUE
-	else
+	else if(eye_blind == 1)
 		adjust_blindness(-1)
 	if(tinttotal == 2)
 		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)

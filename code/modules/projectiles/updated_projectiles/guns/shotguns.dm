@@ -64,9 +64,8 @@ can cause issues with ammo types getting mixed up during the burst.
 			var/obj/item/ammo_magazine/handful/new_handful = retrieve_shell(ammo.type)
 			playsound(user, reload_sound, 25, 1)
 			new_handful.forceMove(get_turf(src))
-		else
-			if(user)
-				to_chat(user, "<span class='warning'>[src] is already empty.</span>")
+		else if(user)
+			to_chat(user, "<span class='warning'>[src] is already empty.</span>")
 		return
 
 	unload_shell(user)

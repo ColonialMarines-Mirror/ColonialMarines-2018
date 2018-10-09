@@ -145,9 +145,8 @@
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(del_on_fail)
 			cdel(W)
-		else
-			if(!disable_warning)
-				to_chat(src, "<span class='warning'>You are unable to equip that.</span>")
+		else if(!disable_warning)
+			to_chat(src, "<span class='warning'>You are unable to equip that.</span>")
 		return
 	var/start_loc = W.loc
 	if(W.time_to_equip && !ignore_delay)

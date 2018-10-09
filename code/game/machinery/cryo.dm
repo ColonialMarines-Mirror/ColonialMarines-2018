@@ -21,10 +21,6 @@
 	var/mob/living/carbon/occupant = null
 	var/obj/item/reagent_container/glass/beaker = null
 
-/obj/machinery/cryo_cell/New()
-
-	return ..()
-
 /obj/machinery/cryo_cell/Dispose()
 	stop_processing()
 	return ..()

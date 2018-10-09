@@ -157,7 +157,7 @@
 
 /obj/structure/dropship_equipment/attackby(obj/item/I, mob/user)
 	if(!istype(I, /obj/item/powerloader_clamp))
-		return FALSE
+		return ..()
 	var/obj/item/powerloader_clamp/PC = I
 	if(PC.loaded)
 		if(!ship_base || !uses_ammo || ammo_equipped || !istype(PC.loaded, /obj/structure/ship_ammo))
@@ -265,7 +265,7 @@
 	return ..()
 
 /obj/structure/dropship_equipment/sentry_holder/examine(mob/user)
-	..()
+	. = ..()
 	if(!deployed_turret)
 		to_chat(user, "Its turret is missing.")
 
@@ -273,21 +273,22 @@
 	undeploy_sentry()
 
 /obj/structure/dropship_equipment/sentry_holder/equipment_interact(mob/user)
-	if(deployed_turret)
-		if(deployment_cooldown > world.time)
-			to_chat(user, "<span class='warning'>[src] is busy.</span>")
-			return //prevents spamming deployment/undeployment
-		if(deployed_turret.loc == src) //not deployed
-			if(z == LOW_ORBIT_Z_LEVEL)
-				to_chat(user, "<span class='warning'>[src] can't deploy mid-flight.</span>")
-			else
-				to_chat(user, "<span class='notice'>You deploy [src].</span>")
-				deploy_sentry()
-		else
-			to_chat(user, "<span class='notice'>You retract [src].</span>")
-			undeploy_sentry()
-	else
+	if(!deployed_turret)
 		to_chat(user, "<span class='warning'>[src] is unresponsive.</span>")
+		return
+	if(deployment_cooldown > world.time)
+		to_chat(user, "<span class='warning'>[src] is busy.</span>")
+		return //prevents spamming deployment/undeployment
+	if(deployed_turret.loc == src) //not deployed
+		if(z == LOW_ORBIT_Z_LEVEL)
+			to_chat(user, "<span class='warning'>[src] can't deploy mid-flight.</span>")
+		else
+			to_chat(user, "<span class='notice'>You deploy [src].</span>")
+			deploy_sentry()
+	else
+		to_chat(user, "<span class='notice'>You retract [src].</span>")
+		undeploy_sentry()
+		
 
 /obj/structure/dropship_equipment/sentry_holder/update_equipment()
 	if(ship_base)
@@ -351,23 +352,24 @@
 	var/obj/machinery/m56d_hmg/mg_turret/deployed_mg
 
 /obj/structure/dropship_equipment/mg_holder/New()
+	. = ..()
 	if(!deployed_mg)
 		deployed_mg = new(src)
-	..()
 
 /obj/structure/dropship_equipment/mg_holder/examine(mob/user)
-	..()
+	. = ..()
 	if(!deployed_mg)
 		to_chat(user, "Its machine gun is missing.")
 
 /obj/structure/dropship_equipment/mg_holder/update_equipment()
-	if(deployed_mg)
-		if(ship_base)
-			deployed_mg.loc = loc
-			icon_state = "mg_system_deployed"
-		else
-			deployed_mg.loc = src
-			icon_state = "mg_system"
+	if(!deployed_mg)
+		return
+	if(ship_base)
+		deployed_mg.loc = loc
+		icon_state = "mg_system_deployed"
+	else
+		deployed_mg.loc = src
+		icon_state = "mg_system"
 
 
 ////////////////////////////////// FUEL EQUIPMENT /////////////////////////////////
@@ -443,7 +445,7 @@
 	spotlights_cooldown = world.time + 50
 
 /obj/structure/dropship_equipment/electronics/spotlights/update_equipment()
-	..()
+	. = ..()
 	if(ship_base)
 		if(luminosity != brightness)
 			icon_state = "spotlights_off"
@@ -598,7 +600,7 @@
 			linked_console.selected_equipment = src
 
 /obj/structure/dropship_equipment/weapon/examine(mob/user)
-	..()
+	. = ..()
 	if(ammo_equipped)
 		ammo_equipped.show_loaded_desc(user)
 	else

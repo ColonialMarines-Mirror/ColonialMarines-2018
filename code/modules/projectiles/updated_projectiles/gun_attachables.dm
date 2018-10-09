@@ -975,24 +975,22 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/gyro
 	name = "gyroscopic stabilizer"
-	desc = "A set of weights and balances to stabilize the weapon when fired with one hand, reducing burst scatter and movement penalties to accuracy. Slightly decrease firing speed."
+	desc = "A set of weights and balances to stabilize the weapon when shooting one-handed, burst firing or moving. Significantly reduces burst scatter, movement penalties and one-handed recoil and scatter."
 	icon_state = "gyro"
 	attach_icon = "gyro_a"
 	slot = "under"
 
 /obj/item/attachable/gyro/New()
 	..()
-	delay_mod = config.low_fire_delay
-	scatter_mod = -config.min_scatter_value
 	burst_scatter_mod = -2
 	movement_acc_penalty_mod = -3
-	scatter_unwielded_mod = -config.med_scatter_value
-	accuracy_unwielded_mod = config.low_hit_accuracy_mult
-
-
+	scatter_unwielded_mod = -config.low_scatter_value
+	accuracy_unwielded_mod = config.min_hit_accuracy_mult
+	recoil_unwielded_mod = -config.low_recoil_value
+	
 /obj/item/attachable/lasersight
 	name = "laser sight"
-	desc = "A laser sight placed under the barrel. Increases accuracy, and decrease scatter when firing one-handed."
+	desc = "A laser sight placed under the barrel. Significantly increases accuracy while moving, whether wielding or one-handed."
 	icon_state = "lasersight"
 	attach_icon = "lasersight_a"
 	slot = "under"
@@ -1001,9 +999,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/lasersight/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	movement_acc_penalty_mod = -1
-	scatter_unwielded_mod = -config.low_scatter_value
+	accuracy_mod = config.med_hit_accuracy_mult
+	movement_acc_penalty_mod = -2
 	accuracy_unwielded_mod = config.med_hit_accuracy_mult
 
 

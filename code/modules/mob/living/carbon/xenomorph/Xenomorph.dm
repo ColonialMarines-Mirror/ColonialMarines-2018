@@ -43,6 +43,7 @@
 	universal_speak = 0
 	health = 5
 	maxHealth = 5
+	rotate_on_lying = 0
 	mob_size = MOB_SIZE_XENO
 	hand = 1 //Make right hand active by default. 0 is left hand, mob defines it as null normally
 	see_in_dark = 8
@@ -54,6 +55,7 @@
 
 
 /mob/living/carbon/Xenomorph/New()
+	verbs += /mob/living/proc/lay_down
 	..()
 	//WO GAMEMODE
 	if(map_tag == MAP_WHISKEY_OUTPOST)
@@ -79,11 +81,6 @@
 
 	living_xeno_list += src
 	round_statistics.total_xenos_created++
-
-	if(adjust_size_x != 1)
-		var/matrix/M = matrix()
-		M.Scale(adjust_size_x, adjust_size_y)
-		transform = M
 
 	spawn(6) //Mind has to be transferred! Hopefully this will give it enough time to do so.
 		generate_name()
@@ -134,8 +131,8 @@
 	if(caste == "Queen")
 		switch(upgrade)
 			if(0) name = "\improper [name_prefix]Queen"			 //Young
-			if(1) name = "\improper [name_prefix]Elite Queen"	 //Mature
-			if(2) name = "\improper [name_prefix]Elite Empress"	 //Elite
+			if(1) name = "\improper [name_prefix]Elder Queen"	 //Mature
+			if(2) name = "\improper [name_prefix]Elder Empress"	 //Elder
 			if(3) name = "\improper [name_prefix]Ancient Empress" //Ancient
 	else if(caste == "Predalien") name = "\improper [name_prefix][name] ([nicknumber])"
 	else name = "\improper [name_prefix][upgrade_name] [caste] ([nicknumber])"
@@ -200,14 +197,13 @@
 	var/mob/living/L = AM
 	if(L.buckled)
 		return FALSE //to stop xeno from pulling marines on roller beds.
-	/*if(ishuman(L) && L.stat == DEAD)
-		var/mob/living/carbon/human/H = L
-		if(H.status_flags & XENO_HOST)
-			if(world.time > H.timeofdeath + H.revive_grace_period)
-				return FALSE // they ain't gonna burst now
-		else
-			return FALSE // leave the dead alone*
-	*/ // this is disabled pending the results of the lighting change -spookydonut
+	if(ishuman(L))
+		pull_speed += XENO_DEADHUMAN_DRAG_SLOWDOWN
+	return ..()
+
+/mob/living/carbon/Xenomorph/stop_pulling()
+	if(pulling && ishuman(pulling))
+		pull_speed -= XENO_DEADHUMAN_DRAG_SLOWDOWN
 	return ..()
 
 /mob/living/carbon/Xenomorph/pull_response(mob/puller)

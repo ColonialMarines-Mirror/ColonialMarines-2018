@@ -519,10 +519,37 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return creatures
 
+/proc/getlivinghumans()
+	var/list/mobs = sorthumans()
+	var/list/names = list()
+	var/list/creatures = list()
+	var/list/namecounts = list()
+	for(var/mob/M in mobs)
+		if(isYautja(M))
+			continue
+		if(iszombie(M))
+			continue
+		if (M.stat == 2)
+			continue
+		if(!M.ckey || !M.client)
+			continue
+		var/name = M.name
+		if (name in names)
+			namecounts[name]++
+			name = "[name] ([namecounts[name]])"
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		if (M.real_name && M.real_name != M.name)
+			name += " \[[M.real_name]\]"
+		creatures[name] = M
+
+	return creatures
+
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/silicon/robot/M in sortmob)
@@ -547,7 +574,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/sortxenos()
 	var/list/xenolist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/carbon/Xenomorph/M in sortmob)
 		if(!M.client)
 			continue
@@ -556,7 +583,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/sortpreds()
 	var/list/predlist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/carbon/human/M in sortmob)
 		if(!M.client || !M.species.name == "Yautja")
 			continue
@@ -565,7 +592,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/sorthumans()
 	var/list/humanlist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/carbon/human/M in sortmob)
 		if(!M.client || M.species.name == "Yautja")
 			continue
@@ -962,7 +989,7 @@ var/global/image/busy_indicator_hostile
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
-	return sortAtom(return_areas())
+	return sortNames(return_areas())
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1530,10 +1557,10 @@ var/list/WALLITEMS = list(
 	var/line[] = list(locate(px,py,M.z))
 	var/dx=N.x-px	//x distance
 	var/dy=N.y-py
-	var/dxabs=abs(dx)//Absolute value of x distance
-	var/dyabs=abs(dy)
-	var/sdx=sign(dx)	//Sign of x distance (+ or -)
-	var/sdy=sign(dy)
+	var/dxabs = abs(dx)//Absolute value of x distance
+	var/dyabs = abs(dy)
+	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdy = SIGN(dy)
 	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
 	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
 	var/j			//Generic integer for counting
@@ -1657,3 +1684,10 @@ var/list/WALLITEMS = list(
 
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
+
+////// Matrices ///////
+
+/matrix/proc/TurnTo(old_angle, new_angle)
+	. = new_angle - old_angle
+	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
+

@@ -235,7 +235,7 @@ Ccomp's first proc.
 
 	var/list/mobs = list()
 	var/list/ghosts = list()
-	var/list/sortmob = sortAtom(mob_list)                           // get the mob list.
+	var/list/sortmob = sortNames(mob_list)                           // get the mob list.
 	/var/any=0
 	for(var/mob/dead/observer/M in sortmob)
 		mobs.Add(M)                                             //filter it where it's only ghosts
@@ -571,8 +571,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Yes")
 			command_announcement.Announce(input, customname, new_sound = 'sound/AI/commandreport.ogg');
 		if("No")
-			to_chat(world, "\red New update available at all communication consoles.")
-			world << sound('sound/AI/commandreport.ogg')
+			command_announcement.Announce("\red New update available at all communication consoles.", customname, new_sound = 'sound/AI/commandreport.ogg')
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
@@ -598,7 +597,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				C.messagetext.Add(P.info)
 
 		log_admin("[key_name(src)] has created an AI report: [input]")
-		message_admins("[key_name_admin(src)] has created an AI report", 1)
+		message_admins("[key_name_admin(src)] has created an AI report: [input]", 1)
 		feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		to_chat(usr, "<span class='warning'>[MAIN_AI_SYSTEM] is not responding. It may be offline or destroyed.</span>")

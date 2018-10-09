@@ -1,3 +1,8 @@
+/mob/living/Life()
+	. = ..()
+
+	if(smokecloaked)
+		update_cloak()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -254,7 +259,7 @@
 
 		if(isXeno(L) && !isXenoLarva(L)) //Handling pushing Xenos in general, but big Xenos and Preds can still push small Xenos
 			var/mob/living/carbon/Xenomorph/X = L
-			if((has_species(src, "Human") && X.mob_size == MOB_SIZE_BIG) || (isXeno(src) && X.mob_size == MOB_SIZE_BIG))
+			if((ishuman(src) && X.mob_size == MOB_SIZE_BIG) || (isXeno(src) && X.mob_size == MOB_SIZE_BIG))
 				if(!isXeno(src) && client)
 					do_bump_delay = 1
 				now_pushing = 0
@@ -262,7 +267,7 @@
 
 		if(isXeno(src) && !isXenoLarva(src) && ishuman(L)) //We are a Xenomorph and pushing a human
 			var/mob/living/carbon/Xenomorph/X = src
-			if(has_species(L, "Human") && X.mob_size == MOB_SIZE_BIG)
+			if(X.mob_size == MOB_SIZE_BIG)
 				L.do_bump_delay = 1
 
 		if(L.pulledby && L.pulledby != src && L.is_mob_restrained())
@@ -395,4 +400,61 @@
 			clear_fullscreen("flash", 20)
 		return 1
 
+/mob/living/proc/smokecloak_on()
 
+	if(smokecloaked)
+		return
+
+	alpha = 5 // bah, let's make it better, it's a disposable device anyway
+
+	if(!isXeno(src)||!isanimal(src))
+		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+		SA.remove_from_hud(src)
+		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+		XI.remove_from_hud(src)
+
+	smokecloaked = TRUE
+
+/mob/living/proc/smokecloak_off()
+
+	if(!smokecloaked)
+		return
+
+	alpha = initial(alpha)
+
+	if(!isXeno(src)|| !isanimal(src))
+		var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
+		SA.add_to_hud(src)
+		var/datum/mob_hud/xeno_infection/XI = huds[MOB_HUD_XENO_INFECTION]
+		XI.add_to_hud(src)
+
+	smokecloaked = FALSE
+
+/mob/living/proc/update_cloak()
+	var/obj/effect/particle_effect/smoke/tactical/S = locate() in src.loc
+	if(S)
+		return
+	else
+		smokecloak_off()
+
+/mob/living/carbon/make_jittery(var/amount)
+	if(stat == DEAD)
+		return
+	jitteriness = min(1000, jitteriness + amount)	// clamped to max 1000
+	if(jitteriness > 100 && !is_jittery)
+		do_jitter_animation(jitteriness)
+
+/mob/living/proc/do_jitter_animation(jitteriness)
+	var/amplitude = min(4, (jitteriness/100) + 1)
+	var/pixel_x_diff = rand(-amplitude, amplitude)
+	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+	var/final_pixel_x = get_standard_pixel_x_offset(lying)
+	var/final_pixel_y = get_standard_pixel_y_offset(lying)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
+	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
+
+/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
+	return initial(pixel_x)
+
+/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)

@@ -1,6 +1,8 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 
+	var/resize = 1 //Badminnery resize
+
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
@@ -63,3 +65,5 @@
 	var/reagent_move_delay_modifier = 0 //negative values increase movement speed
 	var/reagent_shock_modifier = 0 //negative values reduce shock/pain
 	var/reagent_pain_modifier = 0 //same as above, except can potentially mask damage
+
+	var/smokecloaked = FALSE //For the new Smoke Grenade

@@ -9,6 +9,7 @@
 	var/regenZ = 1 //Temp zombie thing until I write a better method ~Apop
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
+	verbs += /mob/living/proc/lay_down
 	b_type = pick(7;"O-", 38;"O+", 6;"A-", 34;"A+", 2;"B-", 9;"B+", 1;"AB-", 3;"AB+")
 
 	if(!dna)
@@ -291,12 +292,11 @@
 //gets paygrade from ID
 //paygrade is a user's actual rank, as defined on their ID.  size 1 returns an abbreviation, size 0 returns the full rank name, the third input is used to override what is returned if no paygrade is assigned.
 /mob/living/carbon/human/proc/get_paygrade(size = 1)
-	switch(species.name)
-		if("Human","Human Hero")
-			var/obj/item/card/id/id = wear_id
-			if(istype(id)) . = get_paygrades(id.paygrade, size, gender)
-			else return ""
-		else return ""
+	if(species.show_paygrade)
+		var/obj/item/card/id/id = wear_id
+		if(istype(id))
+			return get_paygrades(id.paygrade, size, gender)
+	return ""
 
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
@@ -819,8 +819,8 @@
 
 	if (href_list["scanreport"])
 		if(hasHUD(usr,"medical"))
-			if(!has_species(src, "Human"))
-				to_chat(usr, "<span class='warning'>This only works on humans.</span>")
+			if(!ishuman(src))
+				to_chat(usr, "<span class='warning'>This only works on humanoids.</span>")
 				return
 			if(get_dist(usr, src) > 7)
 				to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
@@ -1426,9 +1426,11 @@
 		hud_used.locate_leader.icon_state = "trackon"
 
 
-
-
-
+/mob/living/carbon/get_standard_pixel_y_offset()
+	if(lying)
+		return -6
+	else
+		return initial(pixel_y)
 
 
 /mob/proc/update_sight()

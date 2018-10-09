@@ -1463,7 +1463,7 @@
 	use_plasma(extra_dam * 4) //Expend plasma equal to 4 times the extra damage.
 	do_savage_cooldown()
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/Xenomorph/proc/do_savage_cooldown()
 	spawn(savage_cooldown)

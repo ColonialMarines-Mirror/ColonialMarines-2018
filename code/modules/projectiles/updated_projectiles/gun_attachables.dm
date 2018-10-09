@@ -333,7 +333,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/compensator
 	name = "recoil compensator"
-	desc = "A muzzle attachment that reduces recoil by diverting expelled gasses upwards. \nIncreases accuracy and reduces recoil, at the cost of a small amount of weapon damage."
+	desc = "A muzzle attachment that reduces recoil and scatter by diverting expelled gasses upwards. \nSignificantly reduces recoil and scatter, at the cost of a small amount of weapon damage."
 	slot = "muzzle"
 	icon_state = "comp"
 	attach_icon = "comp_a"
@@ -341,11 +341,11 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/compensator/New()
 	..()
-	accuracy_mod = config.med_hit_accuracy_mult
+	scatter_mod = -config.med_scatter_value
 	damage_mod = -config.min_hit_damage_mult
 	recoil_mod = -config.med_recoil_value
-	accuracy_unwielded_mod = config.med_hit_accuracy_mult
-	recoil_unwielded_mod = -config.low_recoil_value
+	scatter_unwielded_mod = -config.med_scatter_value
+	recoil_unwielded_mod = -config.med_recoil_value
 
 
 /obj/item/attachable/slavicbarrel
@@ -555,19 +555,16 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	name = "\improper M37 wooden stock"
 	desc = "A non-standard heavy wooden stock for the M37 Shotgun. Less quick and more cumbersome than the standard issue stakeout, but reduces recoil and improves accuracy. Allegedly makes a pretty good club in a fight too.."
 	slot = "stock"
-	wield_delay_mod = WIELD_DELAY_NORMAL
+	wield_delay_mod = WIELD_DELAY_FAST
 	matter = null
 	icon_state = "stock"
 
 /obj/item/attachable/stock/shotgun/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
+	accuracy_mod = config.low_hit_accuracy_mult
+	recoil_mod = -config.med_recoil_value
+	scatter_mod = -config.med_scatter_value
+	movement_acc_penalty_mod = 1
 
 	select_gamemode_skin(type)
 
@@ -579,17 +576,15 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/stock/tactical/New()
 	..()
 	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
+	recoil_mod = -config.med_recoil_value
+	scatter_mod = -config.med_scatter_value
+	movement_acc_penalty_mod = 1
 
 /obj/item/attachable/stock/slavic
 	name = "wooden stock"
 	desc = "A non-standard heavy wooden stock for Slavic firearms."
 	icon_state = "slavicstock"
+	wield_delay_mod = WIELD_DELAY_NORMAL
 	pixel_shift_x = 32
 	pixel_shift_y = 13
 	matter = null
@@ -598,14 +593,9 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/stock/slavic/New()
 	..()
 	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	delay_mod = config.med_fire_delay
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
+	recoil_mod = -config.med_recoil_value
+	scatter_mod = -config.med_scatter_value
+	movement_acc_penalty_mod = 1
 
 /obj/item/attachable/stock/rifle
 	name = "\improper M41A skeleton stock"
@@ -621,14 +611,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/rifle/New()
 	..()
-	accuracy_mod = config.low_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
+	accuracy_mod = config.min_hit_accuracy_mult
+	recoil_mod = -config.med_recoil_value
+	scatter_mod = -config.med_scatter_value
+	movement_acc_penalty_mod = 1
 
 /obj/item/attachable/stock/rifle/marksman
 	name = "\improper M41A marksman stock"
@@ -651,21 +637,17 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/smg/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.low_scatter_value
-
+	accuracy_mod = config.low_hit_accuracy_mult
+	recoil_mod = -config.med_recoil_value
+	scatter_mod = -config.med_scatter_value
+	movement_acc_penalty_mod = 1
 
 
 /obj/item/attachable/stock/revolver
 	name = "\improper M44 magnum sharpshooter stock"
 	desc = "A wooden stock modified for use on a 44-magnum. Increases accuracy and reduces recoil at the expense of handling and agility. Less effective in melee as well"
 	slot = "stock"
-	wield_delay_mod = WIELD_DELAY_FAST
+	wield_delay_mod = WIELD_DELAY_VERY_FAST
 	melee_mod = -5
 	size_mod = 2
 	icon_state = "44stock"
@@ -675,16 +657,13 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/revolver/New()
 	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
+	accuracy_mod = config.low_hit_accuracy_mult
+	recoil_mod = -config.med_recoil_value
+	scatter_mod = -config.med_scatter_value
 
 	accuracy_unwielded_mod = config.min_hit_accuracy_mult
 	recoil_unwielded_mod = -config.min_recoil_value
 	scatter_unwielded_mod = -config.min_scatter_value
-
-
-
 
 
 ////////////// Underbarrel Attachments ////////////////////////////////////
@@ -996,14 +975,14 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/gyro
 	name = "gyroscopic stabilizer"
-	desc = "A set of weights and balances to stabilize the weapon when fired with one hand. Slightly decrease firing speed."
+	desc = "A set of weights and balances to stabilize the weapon when fired with one hand, reducing burst scatter and movement penalties to accuracy. Slightly decrease firing speed."
 	icon_state = "gyro"
 	attach_icon = "gyro_a"
 	slot = "under"
 
 /obj/item/attachable/gyro/New()
 	..()
-	delay_mod = config.mlow_fire_delay
+	delay_mod = config.low_fire_delay
 	scatter_mod = -config.min_scatter_value
 	burst_scatter_mod = -2
 	movement_acc_penalty_mod = -3

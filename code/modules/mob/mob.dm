@@ -196,6 +196,7 @@ var/list/slot_equipment_priority = list( \
 		WEAR_BACK,\
 		WEAR_ID,\
 		WEAR_BODY,\
+		WEAR_ACCESSORY,\
 		WEAR_JACKET,\
 		WEAR_FACE,\
 		WEAR_HEAD,\
@@ -207,6 +208,7 @@ var/list/slot_equipment_priority = list( \
 		WEAR_J_STORE,\
 		WEAR_L_STORE,\
 		WEAR_R_STORE,\
+		EQUIP_IN_BOOT,\
 		EQUIP_IN_STORAGE,\
 		EQUIP_IN_L_POUCH,\
 		EQUIP_IN_R_POUCH\

@@ -71,24 +71,26 @@
 			return has_limb("chest")
 		if(WEAR_ACCESSORY)
 			return has_limb("chest")
+		if(EQUIP_IN_BOOT)
+			return has_limb("r_foot") && has_limb("l_foot")
 		if(WEAR_IN_BACK)
-			return TRUE
+			return has_limb("chest")
 		if(WEAR_IN_JACKET)
-			return TRUE
+			return has_limb("chest")
 		if(WEAR_IN_ACCESSORY)
-			return TRUE
+			return has_limb("chest")
 		if(WEAR_IN_HOLSTER)
-			return TRUE
+			return has_limb("chest")
 		if(WEAR_IN_J_HOLSTER)
-			return TRUE
+			return has_limb("chest")
 		if(WEAR_IN_B_HOLSTER)
-			return TRUE
+			return has_limb("chest")
 		if(EQUIP_IN_STORAGE)
 			return TRUE
 		if(EQUIP_IN_L_POUCH)
-			return TRUE
+			return has_limb("chest")
 		if(EQUIP_IN_R_POUCH)
-			return TRUE
+			return has_limb("chest")
 
 /mob/living/carbon/human/put_in_l_hand(obj/item/W)
 	var/datum/limb/O = get_limb("l_hand")
@@ -341,48 +343,43 @@
 			s_store = W
 			W.equipped(src, slot)
 			update_inv_s_store()
-		if(WEAR_IN_BACK) // only used in few istances like ERT spawning rn.
+		if(EQUIP_IN_BOOT)
+			var/obj/item/clothing/shoes/marine/B = shoes
+			B.attackby(W, src)
+		if(WEAR_IN_BACK)
 			var/obj/item/storage/S = back
 			S.handle_item_insertion(W, TRUE, src)
 		if(WEAR_IN_JACKET)
 			var/obj/item/clothing/suit/storage/S = wear_suit
-			if(istype(S) && S.pockets.storage_slots) W.loc = S.pockets//Has to have some slots available.
-
+			if(istype(S) && S.pockets.storage_slots)
+				W.loc = S.pockets//Has to have some slots available.
 		if(WEAR_IN_ACCESSORY)
 			var/obj/item/clothing/under/U = w_uniform
 			if(U && U.hastie)
 				var/obj/item/clothing/tie/storage/T = U.hastie
 				if(istype(T) && T.hold.storage_slots) W.loc = T.hold
-
 		if(WEAR_IN_HOLSTER)
 			var/obj/item/storage/S = belt
 			S.handle_item_insertion(W, FALSE, src)
-
 		if(WEAR_IN_B_HOLSTER)
 			var/obj/item/storage/S = back
 			S.handle_item_insertion(W, FALSE, src)
-
 		if(WEAR_IN_J_HOLSTER)
 			var/obj/item/storage/S = s_store
 			S.handle_item_insertion(W, FALSE, src)
-		
 		if(EQUIP_IN_STORAGE)
 			var/obj/item/storage/S = s_active
 			S.handle_item_insertion(W, FALSE, src)
-		
 		if(EQUIP_IN_L_POUCH)
 			var/obj/item/storage/S = l_store
 			S.handle_item_insertion(W, FALSE, src)
-
 		if(EQUIP_IN_R_POUCH)
 			var/obj/item/storage/S = r_store
 			S.handle_item_insertion(W, FALSE, src)
-
 		else
 			to_chat(src, "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...")
 			return
-
-	return 1
+	return TRUE
 
 
 

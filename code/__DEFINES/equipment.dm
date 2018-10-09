@@ -145,6 +145,7 @@
 #define WEAR_R_HAND			"r_hand"
 #define WEAR_HANDCUFFS		"handcuffs"
 #define WEAR_LEGCUFFS		"legcuffs"
+#define EQUIP_IN_BOOT		"in_boot"
 #define WEAR_IN_BACK		"in_back"
 #define WEAR_IN_JACKET		"in_jacket"
 #define WEAR_IN_ACCESSORY	"in_accessory"

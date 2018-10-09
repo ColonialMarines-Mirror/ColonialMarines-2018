@@ -1197,7 +1197,7 @@
 	else
 		X.savage = TRUE
 		var/warning = ""
-		to_chat(X, "You ready yourself for a killing stroke. You will savage when pouncing.[X.savaged_used ? " However, you're not quite yet able to savage again." : ""]")
+		to_chat(X, "You ready yourself for a killing stroke. You will savage when pouncing.[X.savage_used ? " However, you're not quite yet able to savage again." : ""]")
 		button.overlays.Cut()
 		button.overlays += image('icons/mob/actions.dmi', button, "savage_on")
 

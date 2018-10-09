@@ -1426,7 +1426,7 @@
 		var/obj/item/clothing/glasses/G = glasses
 		//prescription applies regardless of it the glasses are active
 		if(G.active)
-			see_in_dark += max(G.darkness_view, see_in_dark)
+			see_in_dark = max(G.darkness_view, see_in_dark)
 			sight |= G.vision_flags
 			if(G.fullscreen_vision)
 				overlay_fullscreen("glasses_vision", G.fullscreen_vision)

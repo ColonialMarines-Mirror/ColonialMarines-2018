@@ -1456,6 +1456,7 @@
 		to_chat(src, "<span class='xenodanger'>You're too disoriented from the shock to savage!</span>")
 		return
 
+	use_plasma(10) //Base cost of the Savage
 	src.visible_message("<span class='danger'>\ [src] savages [M]!</span>", \
 	"<span class='xenodanger'>You savage [M]!</span>", null, 5)
 	var/extra_dam = min(35, plasma_stored * 0.25)

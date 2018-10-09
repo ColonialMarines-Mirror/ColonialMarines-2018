@@ -65,10 +65,12 @@ can cause issues with ammo types getting mixed up during the burst.
 			playsound(user, reload_sound, 25, 1)
 			new_handful.forceMove(get_turf(src))
 		else
-			if(user) to_chat(user, "<span class='warning'>[src] is already empty.</span>")
+			if(user)
+				to_chat(user, "<span class='warning'>[src] is already empty.</span>")
 		return
 
 	unload_shell(user)
+	to_chat(user, "<span class='warning'>[src] is already empty.</span>")
 	if(!current_mag.current_rounds && !in_chamber) update_icon()
 
 /obj/item/weapon/gun/shotgun/proc/unload_shell(mob/user)
@@ -376,6 +378,7 @@ can cause issues with ammo types getting mixed up during the burst.
 	var/pump_sound = 'sound/weapons/gun_shotgun_pump.ogg'
 	var/pump_delay //Higher means longer delay.
 	var/recent_pump //world.time to see when they last pumped it.
+	var/pump_lock = FALSE //Modern shotguns normally lock after being pumped; this lock is undone by pumping or operating the slide release i.e. unloading a shell manually.
 	attachable_allowed = list(
 						/obj/item/attachable/bayonet,
 						/obj/item/attachable/reddot,
@@ -427,7 +430,12 @@ can cause issues with ammo types getting mixed up during the burst.
 
 //More or less chambers the round instead of load_into_chamber(). Also ejects used casings.
 /obj/item/weapon/gun/shotgun/pump/proc/pump_shotgun(mob/user)	//We can't fire bursts with pumps.
-	if(world.time < (recent_pump + pump_delay) ) return //Don't spam it.
+	if(pump_lock)
+		playsound(user,'sound/weapons/throwtap.ogg', 25, 1)
+		to_chat(user,"<span class='warning'><b>[src] has already been pumped, locking the pump mechanism; fire or unload a shell to unlock it.</b></span>")
+		return
+	if(world.time < (recent_pump + pump_delay) ) //Don't spam it.
+		return
 
 	if(in_chamber) //eject the chambered round
 		in_chamber = null
@@ -436,18 +444,22 @@ can cause issues with ammo types getting mixed up during the burst.
 
 	ready_shotgun_tube()
 
+
 	if(current_mag.used_casings)
 		current_mag.used_casings--
 		make_casing(type_of_casings)
 
+	to_chat(user, "<span class='notice'><b>You pump [src].</b></span>")
 	playsound(user, pump_sound, 25, 1)
 	recent_pump = world.time
+	pump_lock = TRUE
 
 
 /obj/item/weapon/gun/shotgun/pump/reload_into_chamber(mob/user)
 	if(active_attachable)
 		make_casing(active_attachable.type_of_casings)
 	else
+		pump_lock = FALSE //fired successfully; unlock the pump
 		current_mag.used_casings++ //The shell was fired successfully. Add it to used.
 		in_chamber = null
 		//Time to move the tube position.
@@ -456,6 +468,9 @@ can cause issues with ammo types getting mixed up during the burst.
 
 	return 1
 
+/obj/item/weapon/gun/shotgun/pump/unload(mob/user)
+	pump_lock = FALSE //we're operating the slide release to unload, thus unlocking the pump
+	return ..()
 
 //-------------------------------------------------------
 //SHOTGUN FROM ISOLATION

@@ -52,7 +52,7 @@
 	var/max_hit_damage_mult = 0.35
 
 	var/reg_damage_falloff = 1
-	var/smg_damage_falloff = 2
+	var/smg_damage_falloff = 1.5
 	var/buckshot_damage_falloff = 5
 	var/extra_damage_falloff = 10
 

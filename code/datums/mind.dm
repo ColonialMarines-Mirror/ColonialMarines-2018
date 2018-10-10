@@ -429,36 +429,26 @@ datum/mind
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
 	if(new_job)
 		mind.set_cm_skills(J.skills_type) //give new role's job_knowledge to us.
-	else
-		to_chat(world, "error")
 
 /mob/living/proc/reset_comm_title(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
 	if(new_job)
 		mind.role_comm_title = J.comm_title
-	else
-		to_chat(world, "error")
 
 /mob/living/proc/reset_alt_title(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
 	if(new_job)
 		mind.role_alt_title = J.get_alternative_title(src)
-	else
-		to_chat(world, "error")
 
 /mob/living/proc/reset_special_role(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
 	if(new_job)
 		mind.role_alt_title = J.special_role
-	else
-		to_chat(world, "error")
 
 /mob/living/proc/reset_role(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
 	if(new_job)
 		mind.assigned_role = J.title
-	else
-		to_chat(world, "error")
 
 
 //Initialisation procs

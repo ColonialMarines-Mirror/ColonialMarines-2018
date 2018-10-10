@@ -14,18 +14,13 @@
 		return
 	if(!H || !H.mind)
 		return
-	var/obj/item/card/id/I = H.wear_id
 	feedback_add_details("admin_verb","SMRK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(newrank != "Custom")
-		var/datum/job/J = RoleAuthority.roles_by_name[newrank]
-		H.mind.role_comm_title = J.comm_title
-		H.mind.set_cm_skills(J.skills_type)
-		if(istype(I))
-			I.access = J.get_access()
-			I.rank = J.title
-			I.assignment = J.disp_title
-			I.name = "[I.registered_name]'s ID Card ([I.assignment])"
-			I.paygrade = J.paygrade
+		H.reset_comm_title(newrank)
+		H.reset_cm_skills(newrank)
+		H.reset_alt_title(newrank)
+		H.set_ID(newrank)
+		H.update_action_buttons()
 	else
 		var/newcommtitle = input("Write the custom title appearing on comms chat (e.g. Spc)", "Comms title") as null|text
 		if(!newcommtitle)
@@ -34,7 +29,7 @@
 			return
 
 		H.mind.role_comm_title = newcommtitle
-
+		var/obj/item/card/id/I = H.wear_id
 		if(!istype(I) || I != H.wear_id)
 			to_chat(usr, "The mob has no id card, unable to modify ID and chat title.")
 		else
@@ -1486,3 +1481,21 @@
 
 
 	return 1
+
+/mob/living/proc/set_ID(new_job)
+	return
+
+/mob/living/carbon/human/set_ID(new_job)
+	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
+	if(new_job)
+		if(wear_id)
+			var/obj/item/card/id/I = wear_id.GetID()
+			if(I)
+				var/title_alt = J.get_alternative_title(src)
+				I.access = J.get_access()
+				I.rank = J.title
+				I.assignment = title_alt ? title_alt :  J.disp_title
+				I.name = "[I.registered_name]'s ID Card ([I.assignment])"
+				I.paygrade = J.paygrade
+		else
+			J.equip_identification(src, J)

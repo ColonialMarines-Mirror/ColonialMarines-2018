@@ -555,19 +555,15 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	name = "\improper M37 wooden stock"
 	desc = "A non-standard heavy wooden stock for the M37 Shotgun. Less quick and more cumbersome than the standard issue stakeout, but reduces recoil and improves accuracy. Allegedly makes a pretty good club in a fight too.."
 	slot = "stock"
-	wield_delay_mod = WIELD_DELAY_NORMAL
-	matter = null
 	icon_state = "stock"
+	wield_delay_mod = WIELD_DELAY_VERY_FAST //Shotguns don't benefit from the stock nearly as much as rifles, thus the wield delay penalty is reduced.
 
 /obj/item/attachable/stock/shotgun/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
+	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.min_recoil_value
 	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
+	movement_acc_penalty_mod = 1
 
 	select_gamemode_skin(type)
 
@@ -575,21 +571,20 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	name = "\improper MK221 tactical stock"
 	desc = "A sturdy polymer stock for the MK221 shotgun. Supplied in limited numbers and moderately encumbering, it provides an ergonomic surface to ease perceived recoil and usability."
 	icon_state = "tactical_stock"
+	wield_delay_mod = WIELD_DELAY_VERY_FAST
 
 /obj/item/attachable/stock/tactical/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
+	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.min_recoil_value
 	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
+	movement_acc_penalty_mod = 1
 
 /obj/item/attachable/stock/slavic
 	name = "wooden stock"
 	desc = "A non-standard heavy wooden stock for Slavic firearms."
 	icon_state = "slavicstock"
+	wield_delay_mod = WIELD_DELAY_NORMAL
 	pixel_shift_x = 32
 	pixel_shift_y = 13
 	matter = null
@@ -597,15 +592,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/slavic/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
+	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.min_recoil_value
 	scatter_mod = -config.min_scatter_value
-	delay_mod = config.med_fire_delay
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
+	movement_acc_penalty_mod = 1
 
 /obj/item/attachable/stock/rifle
 	name = "\improper M41A skeleton stock"
@@ -624,11 +614,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	accuracy_mod = config.low_hit_accuracy_mult
 	recoil_mod = -config.min_recoil_value
 	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
+	movement_acc_penalty_mod = 1
 
 /obj/item/attachable/stock/rifle/marksman
 	name = "\improper M41A marksman stock"
@@ -641,7 +627,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	name = "submachinegun stock"
 	desc = "A rare stock distributed in small numbers to USCM forces. Compatible with the M39, this stock reduces recoil and improves accuracy, but at a reduction to handling and agility. Seemingly a bit more effective in a brawl"
 	slot = "stock"
-	wield_delay_mod = WIELD_DELAY_FAST
+	wield_delay_mod = WIELD_DELAY_VERY_FAST //SMGs don't benefit from the stock nearly as much as rifles, thus the wield delay penalty is reduced.
 	melee_mod = 5
 	size_mod = 1
 	icon_state = "smgstock"
@@ -651,21 +637,17 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/smg/New()
 	..()
-	accuracy_mod = config.min_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-	movement_acc_penalty_mod = -1
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.low_scatter_value
-
+	accuracy_mod = config.med_hit_accuracy_mult //Better benefits than normal as SMG generally works best one handed/dual wielded and that's a huge part of its appeal.
+	recoil_mod = -config.low_recoil_value
+	scatter_mod = -config.low_scatter_value
+	movement_acc_penalty_mod = 1
 
 
 /obj/item/attachable/stock/revolver
 	name = "\improper M44 magnum sharpshooter stock"
 	desc = "A wooden stock modified for use on a 44-magnum. Increases accuracy and reduces recoil at the expense of handling and agility. Less effective in melee as well"
 	slot = "stock"
-	wield_delay_mod = WIELD_DELAY_FAST
+	wield_delay_mod = WIELD_DELAY_VERY_FAST //Revolvers don't benefit from the stock nearly as much as rifles, thus the wield delay penalty is reduced.
 	melee_mod = -5
 	size_mod = 2
 	icon_state = "44stock"
@@ -675,16 +657,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/stock/revolver/New()
 	..()
-	accuracy_mod = config.med_hit_accuracy_mult
-	recoil_mod = -config.min_recoil_value
-	scatter_mod = -config.min_scatter_value
-
-	accuracy_unwielded_mod = config.min_hit_accuracy_mult
-	recoil_unwielded_mod = -config.min_recoil_value
-	scatter_unwielded_mod = -config.min_scatter_value
-
-
-
+	accuracy_mod = config.med_hit_accuracy_mult //Better benefits than normal as Revolver generally works best one handed/dual wielded and that's a huge part of its appeal.
+	recoil_mod = -config.low_recoil_value
+	scatter_mod = -config.low_scatter_value
+	movement_acc_penalty_mod = 1
 
 
 ////////////// Underbarrel Attachments ////////////////////////////////////
@@ -955,7 +931,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/verticalgrip
 	name = "vertical grip"
-	desc = "A custom-built improved foregrip for better accuracy, less recoil, and less scatter, especially during burst fire. \nHowever, it also increases weapon size."
+	desc = "A custom-built improved foregrip for better accuracy, less recoil, and less scatter, especially during burst fire. \nHowever, it also increases weapon size, and is slightly slower to wield."
 	icon_state = "verticalgrip"
 	attach_icon = "verticalgrip_a"
 	wield_delay_mod = WIELD_DELAY_FAST

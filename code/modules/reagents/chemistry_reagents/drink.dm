@@ -360,7 +360,14 @@
 		M.druggy = max(M.druggy, 30)
 		M.dizziness +=5
 		M.drowsyness = 0
-
+		
+/datum/reagent/drink/cold/Syndie_cola
+	name = "Syndie cola"
+	id = "syndie_cola"
+	description = "Donksoft's first foray in to soft drinks,in a rpg grenade shaped bottle."
+	color = "#df182b" // rgb: 223, 24, 43
+	adj_sleepy = -4
+	
 /datum/reagent/drink/cold/spacemountainwind
 	name = "Mountain Wind"
 	id = "spacemountainwind"

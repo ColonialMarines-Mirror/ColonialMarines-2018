@@ -22,8 +22,9 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 	switch(stat)
 		if(DEAD) //Dead, nothing else to do.
-			if(prob(4+(3*tier)+abs(3*upgrade))) // older, higher tier xenos decay faster to compensate their high plasma storage. (except Queen which tier is 0, but they are a pinata anyway.)
-				use_plasma(rand(1,2))						return
+			if(prob(4+(3*tier)+abs(3*upgrade)) && plasma_stored > 1) // older, higher tier xenos decay faster to compensate their high plasma storage. (except Queen which tier is 0, but they are a pinata anyway.)
+				use_plasma(rand(1,2))
+			return
 		if(UNCONSCIOUS)
 			if(is_zoomed)
 				zoom_out()
@@ -39,7 +40,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				if(loc != zoom_turf || lying)
 					zoom_out()
 			update_progression()
-			update_evolving()	
+			update_evolving()
 			//Status updates, death etc.
 			handle_aura_emiter()
 			handle_aura_receiver()
@@ -105,9 +106,6 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 					continue
 				M.forceMove(loc)
 	return TRUE
-	else
-		if(prob((5*tier)+abs(5*upgrade)) && plasma_stored > 1) // older, higher tier xenos decay faster to compensate their high plasma storage. (except Queen which tier is 0, but they are a pinata anyway.)
-			use_plasma(rand(1,2))
 
 /mob/living/carbon/Xenomorph/handle_statuses()
 	handle_stunned() // 2 each time
@@ -350,7 +348,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind")
-		
+
 		if(interactee)
 			interactee.check_eye(src)
 		else

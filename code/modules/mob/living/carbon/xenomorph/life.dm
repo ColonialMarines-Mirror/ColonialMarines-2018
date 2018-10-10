@@ -38,7 +38,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				if(loc != zoom_turf || lying)
 					zoom_out()
 			update_progression()
-			update_evolving()	
+			update_evolving()
 			//Status updates, death etc.
 			handle_aura_emiter()
 			handle_aura_receiver()
@@ -103,6 +103,9 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				if(M.loc != src)
 					continue
 				M.forceMove(loc)
+				if(isliving(M))
+					var/mob/living/L = M
+					L.blinded = FALSE
 	return TRUE
 
 /mob/living/carbon/Xenomorph/handle_statuses()
@@ -346,7 +349,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind")
-		
+
 		if(interactee)
 			interactee.check_eye(src)
 		else

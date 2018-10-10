@@ -301,19 +301,19 @@
 
 		visible_message("[user] puts [G.grabbed_thing] into the sleeper.", 3)
 
-			if(!G || !G.grabbed_thing)
-				return
-			var/mob/M = G.grabbed_thing
-			M.forceMove(src)
-			update_use_power(2)
-			occupant = M
-			start_processing()
-			connected.start_processing()
-			icon_state = "sleeper_1"
-			if(orient == "RIGHT")
-				icon_state = "sleeper_1-r"
+		if(!G || !G.grabbed_thing)
+			return
+		var/mob/M = G.grabbed_thing
+		M.forceMove(src)
+		update_use_power(2)
+		occupant = M
+		start_processing()
+		connected.start_processing()
+		icon_state = "sleeper_1"
+		if(orient == "RIGHT")
+			icon_state = "sleeper_1-r"
 
-			add_fingerprint(user)
+		add_fingerprint(user)
 
 
 /obj/machinery/sleeper/ex_act(severity)

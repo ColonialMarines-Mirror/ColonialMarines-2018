@@ -70,7 +70,6 @@
 
 /obj/machinery/cryo_cell/process()
 	..()
-	//to_chat(world, "<span class='notice'>DEBUG: Cryo Process. Occupant: [occupant]. On? [on]</span>")
 	if(stat & (NOPOWER|BROKEN))
 		turn_off()
 		updateUsrDialog()
@@ -304,7 +303,6 @@
 			go_out(TRUE)
 			return
 		occupant.bodytemperature = 100 //Temp fix for broken atmos
-		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Occupant: [occupant]. Occupant Temperature: [occupant.bodytemperature]</span>")
 		occupant.stat = 1
 		if(occupant.bodytemperature < T0C)
 			occupant.KnockDown(10)
@@ -318,11 +316,9 @@
 				var/heal_brute = occupant.getBruteLoss() ? min(1, 20/occupant.getBruteLoss()) : 0
 				var/heal_fire = occupant.getFireLoss() ? min(1, 20/occupant.getFireLoss()) : 0
 				occupant.heal_limb_damage(heal_brute,heal_fire)
-				//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Occupant: [occupant]. Brute Heal: [heal_brute] Burn Heal: [heal_fire]</span>")
 		var/has_cryo = occupant.reagents.get_reagent_amount("cryoxadone") >= 1
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
-		//to_chat(world, "<span class='notice'>DEBUG: Process_Occupant. Occupant: [occupant]. Cryo Medicine?: [has_cryo_medicine]</span>")
 		if(beaker && !has_cryo_medicine)
 			beaker.reagents.trans_to(occupant, 1, 10)
 			beaker.reagents.reaction(occupant)

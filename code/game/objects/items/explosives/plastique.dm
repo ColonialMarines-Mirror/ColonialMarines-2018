@@ -81,10 +81,10 @@
 		spawn(timer*10)
 			if(plant_target && !plant_target.disposed)
 				explosion(location, -1, -1, 3)
-				if(istype(plant_target,/turf/closed/wall))
-					plant_target.ex_act(3)
+				if(istype(plant_target,/turf/closed/wall) || istype(plant_target,/obj/machinery/door))
+					cdel(plant_target)
 				else
-					plant_target.ex_act(2)
+					plant_target.ex_act(1)
 				if(plant_target && !plant_target.disposed)
 					plant_target.overlays -= image('icons/obj/items/assemblies.dmi', "plastic-explosive2")
 			cdel(src)

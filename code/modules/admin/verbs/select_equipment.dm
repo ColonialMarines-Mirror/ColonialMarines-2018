@@ -404,7 +404,7 @@
 				M.reset_comm_title(W.rank)
 				M.reset_role(W.rank)
 				M.reset_cm_skills(W.rank)
-				M.mind.special_role = "MODE"
+				M.mind.special_role = "PMC"
 
 
 		if("Weyland-Yutani PMC (Leader)")
@@ -440,7 +440,7 @@
 				M.reset_comm_title(W.rank)
 				M.reset_role(W.rank)
 				M.reset_cm_skills(W.rank)
-				M.mind.special_role = "MODE"
+				M.mind.special_role = "PMC"
 
 		if("Weyland-Yutani PMC (Gunner)")
 			var/obj/item/card/id/W = new(src)
@@ -458,7 +458,7 @@
 				M.reset_comm_title(W.rank)
 				M.reset_role(W.rank)
 				M.reset_cm_skills(W.rank)
-				M.mind.special_role = "MODE"
+				M.mind.special_role = "PMC"
 
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/PMC(M), WEAR_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/m56_goggles(M), WEAR_EYES)
@@ -491,7 +491,7 @@
 				M.reset_comm_title(W.rank)
 				M.reset_role(W.rank)
 				M.reset_cm_skills(W.rank)
-				M.mind.special_role = "MODE"
+				M.mind.special_role = "PMC"
 
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/PMC(M), WEAR_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/marine/veteran/PMC(M), WEAR_BODY)
@@ -540,10 +540,10 @@
 			M.equip_to_slot_or_del(W, WEAR_ID)
 
 			if(M.mind)
-				M.mind.assigned_role = "MODE"
+				M.reset_comm_title(W.rank)
+				M.reset_role(W.rank)
+				M.reset_cm_skills(W.rank)
 				M.mind.special_role = "DEATH SQUAD"
-				M.mind.set_cm_skills(/datum/skills/commando/deathsquad)
-
 
 		if("USCM Officer (USCM Command)")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom/officer(M), WEAR_BODY)

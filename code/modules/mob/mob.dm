@@ -634,6 +634,49 @@ mob/proc/yank_out_object()
 /mob/proc/update_stat()
 	return
 
+/mob/living/proc/handle_statuses()
+	handle_stunned()
+	handle_knocked_down()
+	handle_stuttering()
+	handle_silent()
+	handle_drugged()
+	handle_slurring()
+
+/mob/living/proc/handle_stunned()
+	if(stunned)
+		AdjustStunned(-1)
+	return stunned
+
+/mob/living/proc/handle_knocked_down()
+	if(knocked_down && client)
+		knocked_down = max(knocked_down-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+	return knocked_down
+
+/mob/living/proc/handle_stuttering()
+	if(stuttering)
+		stuttering = max(stuttering-1, 0)
+	return stuttering
+
+/mob/living/proc/handle_silent()
+	if(silent)
+		silent = max(silent-1, 0)
+	return silent
+
+/mob/living/proc/handle_drugged()
+	if(druggy)
+		druggy = max(druggy-1, 0)
+	return druggy
+
+/mob/living/proc/handle_slurring()
+	if(slurring)
+		slurring = max(slurring-1, 0)
+	return slurring
+
+/mob/living/proc/handle_knocked_out()
+	if(knocked_out)
+		AdjustKnockedout(-1)
+	return knocked_out
+
 /mob/proc/update_health_hud()
 	return
 

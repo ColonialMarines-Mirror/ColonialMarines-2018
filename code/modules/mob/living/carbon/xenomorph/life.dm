@@ -38,7 +38,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				if(loc != zoom_turf || lying)
 					zoom_out()
 			update_progression()
-			update_evolving()	
+			update_evolving()
 			//Status updates, death etc.
 			handle_aura_emiter()
 			handle_aura_receiver()
@@ -115,6 +115,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	//handle_slurring()
 	handle_stagger() // 1 each time
 	handle_slowdown() // 0.4 each time
+	handle_stagger_slow() // 0.4 each time
 	handle_halloss() // 3 each time
 
 /mob/living/carbon/Xenomorph/proc/handle_critical_health_updates()
@@ -347,7 +348,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind")
-		
+
 		if(interactee)
 			interactee.check_eye(src)
 		else
@@ -452,6 +453,25 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 /mob/living/carbon/Xenomorph/proc/add_slowdown(amount)
 	slowdown = adjust_slowdown(amount*XENO_SLOWDOWN_REGEN)
 	return slowdown
+
+/mob/living/carbon/Xenomorph/proc/handle_stagger_slow()
+	if(stagger_slow)
+		#if DEBUG_XENO_LIFE
+		world << "<span class='debuginfo'>Regen: Initial stagger slowdown is: <b>[stagger_slow]</b></span>"
+		#endif
+		adjust_stagger_slow(-XENO_SLOWDOWN_REGEN)
+		#if DEBUG_XENO_LIFE
+		world << "<span class='debuginfo'>Regen: Final stagger slowdown is: <b>[stagger_slow]</b></span>"
+		#endif
+	return stagger_slow
+
+/mob/living/carbon/Xenomorph/proc/add_stagger_slow(amount)
+	stagger_slow = adjust_stagger_slow(stagger_slow + amount*XENO_SLOWDOWN_REGEN)
+	return stagger_slow
+
+/mob/living/carbon/Xenomorph/proc/adjust_stagger_slow(amount)
+	stagger_slow = max(stagger_slow + amount,0)
+	return stagger_slow
 
 /mob/living/carbon/Xenomorph/proc/handle_halloss()
 	if(halloss)

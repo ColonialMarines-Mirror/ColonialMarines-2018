@@ -143,8 +143,8 @@
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Initial slowdown is: <b>[target.slowdown]</b></span>")
 			#endif
-			if(!X.slowdown) //No slowdown stacking
-				X.add_slowdown(slowdown)
+			if(!X.stagger_slow) //No slowdown stacking
+				X.add_stagger_slow(slowdown)
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Final slowdown is: <b>[target.slowdown]</b></span>")
 			#endif

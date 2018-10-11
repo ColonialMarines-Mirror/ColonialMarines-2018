@@ -59,6 +59,7 @@
 	var/speed = -0.5 //Regular xeno speed modifier. Positive makes you go slower. (1.5 is equivalent to FAT mutation)
 	var/speed_modifier = 0 //Speed bonus/penalties. Positive makes you go slower.
 	var/slowdown = 0 //Temporary penalty on movement. Regenerates each tick.
+	var/stagger_slow = 0 //Slowdown specifically from the staggerstun effect. Regenerates each tick.
 	var/stagger = 0 //Temporary inability to use special actions. Regenerates each tick.
 	var/tier = 1 //This will track their "tier" to restrict/limit evolutions
 	var/hardcore = 0 //Set to 1 in New() when Whiskey Outpost is active. Prevents healing and queen evolution

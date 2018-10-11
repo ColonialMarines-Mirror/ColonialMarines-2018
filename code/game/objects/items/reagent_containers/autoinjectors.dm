@@ -36,14 +36,14 @@
 
 
 
-/obj/item/reagent_container/hypospray/autoinjector/tricord
+/obj/item/reagent_container/hypospray/autoinjector/tricordrazine
 	name = "\improper Tricordrazine autoinjector"
 	desc = "An autoinjector loaded with 15 units of Tricordrazine, a weak general use medicine for treating damage."
 	icon_state = "tricord"
 	list_reagents = list("tricordrazine" = 15)
 
 
-/obj/item/reagent_container/hypospray/autoinjector/tricord/New()
+/obj/item/reagent_container/hypospray/autoinjector/tricordrazine/New()
 	..()
 	update_icon()
 
@@ -93,13 +93,13 @@
 	..()
 	update_icon()
 
-/obj/item/reagent_container/hypospray/autoinjector/Tramadol
+/obj/item/reagent_container/hypospray/autoinjector/tramadol
 	name = "\improper Tramadol autoinjector"
 	desc = "An auto-injector loaded with 15 units of Tramadol, a weak but effective painkiller for normal wounds."
 	icon_state = "tramadol"
 	list_reagents = list("tramadol" = 15)
 
-/obj/item/reagent_container/hypospray/autoinjector/Tramadol/New()
+/obj/item/reagent_container/hypospray/autoinjector/tramadol/New()
 	..()
 	update_icon()
 
@@ -135,13 +135,13 @@
 	..()
 	update_icon()
 
-/obj/item/reagent_container/hypospray/autoinjector/Inaprovaline
+/obj/item/reagent_container/hypospray/autoinjector/inaprovaline
 	name = "\improper Inaprovaline autoinjector"
 	desc = "An auto-injector loaded with 15 units of Inaprovaline, an emergency stabilization medicine for patients in critical condition."
 	icon_state = "clonefix" //TEMP
 	list_reagents = list("inaprovaline" = 15)
 
-/obj/item/reagent_container/hypospray/autoinjector/Inaprovaline/New()
+/obj/item/reagent_container/hypospray/autoinjector/inaprovaline/New()
 	..()
 	update_icon()
 

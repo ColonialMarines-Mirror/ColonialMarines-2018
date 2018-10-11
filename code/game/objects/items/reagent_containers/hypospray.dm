@@ -4,23 +4,28 @@
 
 /obj/item/reagent_container/hypospray
 	name = "hypospray"
-	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
+	desc = "The hypospray is a handy, sterile, air-needle reusable autoinjector for rapid administration of drugs to patients with customizable dosages. Handy."
 	icon = 'icons/obj/items/syringe.dmi'
 	item_state = "hypo"
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
-	volume = 30
+	possible_transfer_amounts = list(1,3,5,10,15)
+	volume = 60
 	possible_transfer_amounts = null
 	flags_atom = OPENCONTAINER
 	flags_equip_slot = SLOT_WAIST
+	w_class = 2.0
 	var/skilllock = 1
 
 /obj/item/reagent_container/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/item/reagent_container/hypospray/examine(mob/user)
+	to_chat(user, "[src] has [round(reagents.total_volume)] units remaining.")
+
 /obj/item/reagent_container/hypospray/attack(mob/M, mob/living/user)
 	if(!reagents.total_volume)
-		to_chat(user, "\red [src] is empty.")
+		to_chat(user, "\red <b>[src] is empty!</b>")
 		return
 	if (!istype(M))
 		return
@@ -56,16 +61,50 @@
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in [src].")
+			update_icon()
 
 	return 1
 
+/obj/item/reagent_container/hypospray/on_reagent_change()
+	update_icon()
+
+/obj/item/reagent_container/hypospray/pickup(mob/user)
+	..()
+	update_icon()
+
+/obj/item/reagent_container/hypospray/dropped(mob/user)
+	..()
+	update_icon()
+
+/obj/item/reagent_container/hypospray/attack_hand()
+	..()
+	update_icon()
+
+/obj/item/reagent_container/hypospray/update_icon()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)			filling.icon_state = "[icon_state]-10"
+			if(10 to 24) 		filling.icon_state = "[icon_state]10"
+			if(25 to 49)		filling.icon_state = "[icon_state]25"
+			if(50 to 74)		filling.icon_state = "[icon_state]50"
+			if(75 to 79)		filling.icon_state = "[icon_state]75"
+			if(80 to 90)		filling.icon_state = "[icon_state]80"
+			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
 
 
-/obj/item/reagent_container/hypospray/tricordrazine
-	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients. Contains tricordrazine."
-	volume = 30
 
 /obj/item/reagent_container/hypospray/tricordrazine/New()
 	..()
-	reagents.add_reagent("tricordrazine", 30)
+	reagents.add_reagent("tricordrazine", 60)
 
+/obj/item/reagent_container/hypospray/oxycodone/New()
+	..()
+	reagents.add_reagent("oxycodone", 60)

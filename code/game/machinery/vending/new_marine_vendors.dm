@@ -1039,7 +1039,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/device/healthanalyzer,
 						/obj/item/roller/medevac,
 						/obj/item/roller,
-						/obj/item/reagent_container/hypospray,
+						/obj/item/reagent_container/hypospray/oxycodone,
 						/obj/item/reagent_container/syringe
 						)
 

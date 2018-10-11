@@ -73,10 +73,13 @@
 				m_type = 2
 
 		if ("clap")
-			if (!is_mob_restrained())
-				message = "<B>[comm_paygrade][src]</B> claps."
-				m_type = 2
-				playsound(src.loc, 'sound/misc/clap.ogg', 25, 0)
+			if (is_mob_restrained())
+				return
+			if(audio_emote_cooldown(player_caused))
+				return
+			message = "<B>[comm_paygrade][src]</B> claps."
+			m_type = 2
+			playsound(src.loc, 'sound/misc/clap.ogg', 25, 0)
 
 		if ("collapse")
 			KnockOut(2)
@@ -149,10 +152,13 @@
 				message = "<B>[comm_paygrade][src]</B> glares."
 
 		if ("golfclap")
-			if (!is_mob_restrained())
-				message = "<B>[comm_paygrade][src]</B> claps, clearly unimpressed."
-				m_type = 2
-				playsound(src.loc, 'sound/misc/golfclap.ogg', 25, 0)
+			if (is_mob_restrained())
+				return
+			if(audio_emote_cooldown(player_caused))
+				return
+			message = "<B>[comm_paygrade][src]</B> claps, clearly unimpressed."
+			m_type = 2
+			playsound(src.loc, 'sound/misc/golfclap.ogg', 25, 0)
 
 		if ("grin")
 			message = "<B>[comm_paygrade][src]</B> grins."
@@ -225,16 +231,19 @@
 					m_type = 1
 
 		if ("medic")
-			if (!muzzled && !stat)
-				message = "<B>[comm_paygrade][src] calls for a medic!</b>"
-				m_type = 2
-				if(src.gender == "male")
-					if(rand(0,100) < 95)
-						playsound(src.loc, 'sound/voice/human_male_medic.ogg', 25, 0)
-					else
-						playsound(src.loc, 'sound/voice/human_male_medic2.ogg', 25, 0)
+			if (muzzled)
+				return
+			if(audio_emote_cooldown(player_caused))
+				return
+			message = "<B>[comm_paygrade][src] calls for a medic!</b>"
+			m_type = 2
+			if(src.gender == "male")
+				if(rand(0,100) < 95)
+					playsound(src.loc, 'sound/voice/human_male_medic.ogg', 25, 0)
 				else
-					playsound(src.loc, 'sound/voice/human_female_medic.ogg', 25, 0)
+					playsound(src.loc, 'sound/voice/human_male_medic2.ogg', 25, 0)
+			else
+				playsound(src.loc, 'sound/voice/human_female_medic.ogg', 25, 0)
 
 
 		if ("moan")
@@ -250,6 +259,10 @@
 			m_type = 1
 
 		if ("pain")
+			if (muzzled)
+				return
+			if(audio_emote_cooldown(player_caused))
+				return
 			message = "<B>[comm_paygrade][src]</B> cries out in pain!"
 			m_type = 2
 			if(client && species)
@@ -277,6 +290,10 @@
 			m_type = 1
 
 		if("scream")
+			if (muzzled)
+				return
+			if(audio_emote_cooldown(player_caused))
+				return
 			message = "<B>[comm_paygrade][src]</B> screams!"
 			m_type = 2
 			if(client && species)
@@ -555,9 +572,16 @@
 	HTML += "<tt>"
 	src << browse(HTML, "window=flavor_changes;size=430x300")
 
+/mob/living/carbon/human/proc/audio_emote_cooldown(player_caused)
+	if(player_caused)
+		if(recent_audio_emote)
+			src << "You just did an audible emote. Wait a while."
+			return TRUE
+		start_audio_emote_cooldown()
+	return FALSE
 
 /mob/living/carbon/human/proc/start_audio_emote_cooldown()
 	set waitfor = 0
-	recent_audio_emote = 1
-	sleep(300)
-	recent_audio_emote = 0
+	recent_audio_emote = TRUE
+	sleep(50)
+	recent_audio_emote = FALSE

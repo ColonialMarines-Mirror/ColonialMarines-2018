@@ -643,7 +643,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.client.pixel_y = 0
 
 /obj/item/proc/eyecheck(mob/user)
-	if(!iscarbon(user))	return 1
+	if(!iscarbon(user))	
+		return 1
 	var/safety = user.get_eye_protection()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

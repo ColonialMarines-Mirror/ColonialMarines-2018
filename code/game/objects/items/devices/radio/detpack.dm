@@ -169,8 +169,10 @@
 	user.set_interaction(src)
 	var/dat = {"<TT>
 <A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
+
 <B>Current Detonation Mode:</B> [det_mode ? "Demolition" : "Breach"]<BR>
-<A href='?src=\ref[src];det_mode=1'>Set Detonation Mode: [det_mode ? "Breach" : "Demolition"]</A><BR>
+<A href='?src=\ref[src];det_mode=1'><B>Set Detonation Mode:</B> [det_mode ? "Breach" : "Demolition"]</A><BR>
+
 <B>Frequency/Code for Detpack:</B><BR>
 <A href='byond://?src=\ref[src];freq=-10'>-</A>
 <A href='byond://?src=\ref[src];freq=-2'>-</A>

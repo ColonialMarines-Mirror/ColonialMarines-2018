@@ -77,6 +77,9 @@
 	for(var/atom/movable/A in stomach_contents)
 		stomach_contents.Remove(A)
 		A.forceMove(loc)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.blinded = FALSE
 
 	round_statistics.total_xeno_deaths++
 

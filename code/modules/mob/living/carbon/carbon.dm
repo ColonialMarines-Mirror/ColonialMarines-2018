@@ -65,6 +65,10 @@
 		A.forceMove(loc)
 		if(ismob(A))
 			visible_message("<span class='danger'>[A] bursts out of [src]!</span>")
+			if(isliving(A))
+				var/mob/living/L = A
+				L.blinded = FALSE
+
 
 	. = ..()
 

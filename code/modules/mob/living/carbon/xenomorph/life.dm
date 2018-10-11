@@ -38,7 +38,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				if(loc != zoom_turf || lying)
 					zoom_out()
 			update_progression()
-			update_evolving()	
+			update_evolving()
 			//Status updates, death etc.
 			handle_aura_emiter()
 			handle_aura_receiver()
@@ -96,13 +96,8 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	handle_statuses()//natural decrease of stunned, knocked_down, etc...
 
 	//Deal with devoured things and people
-	if(stomach_contents.len)
-		for(var/atom/movable/M in stomach_contents)
-			if(world.time > devour_timer && ishuman(M) && !is_ventcrawling)
-				stomach_contents.Remove(M)
-				if(M.loc != src)
-					continue
-				M.forceMove(loc)
+	unvore_forced(src)
+
 	return TRUE
 
 /mob/living/carbon/Xenomorph/handle_statuses()
@@ -347,7 +342,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind")
-		
+
 		if(interactee)
 			interactee.check_eye(src)
 		else

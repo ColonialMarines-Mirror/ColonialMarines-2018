@@ -60,11 +60,7 @@
 	if(legcuffed)
 		drop_inv_item_on_ground(legcuffed)
 
-	for(var/atom/movable/A in stomach_contents)
-		stomach_contents.Remove(A)
-		A.forceMove(loc)
-		if(ismob(A))
-			visible_message("<span class='danger'>[A] bursts out of [src]!</span>")
+	unvore(src, TRUE)
 
 	. = ..()
 

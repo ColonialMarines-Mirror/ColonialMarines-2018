@@ -44,7 +44,8 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	blinded = null
+	if(!devoured && !eye_blind && !sdisabilities & BLIND) //Clear blind if not devoured, not blind, and if no blind stacks
+		blinded = null
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment()

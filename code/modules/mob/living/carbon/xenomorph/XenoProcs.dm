@@ -271,17 +271,6 @@
 
 	..() //Do the parent otherwise, for turfs.
 
-//Bleuugh
-/mob/living/carbon/Xenomorph/proc/empty_gut()
-	if(stomach_contents.len)
-		for(var/atom/movable/S in stomach_contents)
-			stomach_contents.Remove(S)
-			S.forceMove(get_turf(src))
-
-	if(contents.len) //Get rid of anything that may be stuck inside us as well
-		for(var/atom/movable/A in contents)
-			A.forceMove(get_turf(src))
-
 /mob/living/carbon/Xenomorph/proc/toggle_nightvision()
 	if(see_invisible == SEE_INVISIBLE_MINIMUM)
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO //Turn it off.
@@ -524,3 +513,17 @@
 		leader_aura_strength = Q.aura_strength
 		leader_current_aura = Q.current_aura
 		to_chat(src, "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>")
+
+//Bleuugh
+/mob/living/carbon/Xenomorph/proc/empty_gut()
+	if(stomach_contents.len)
+		for(var/atom/movable/S in stomach_contents)
+			stomach_contents.Remove(S)
+			S.forceMove(get_turf(src))
+			if(isliving(S))
+				var/mob/living/L = S
+				L.devoured = FALSE //remove the devour flag
+
+	if(contents.len) //Get rid of anything that may be stuck inside us as well
+		for(var/atom/movable/A in contents)
+			A.forceMove(get_turf(src))

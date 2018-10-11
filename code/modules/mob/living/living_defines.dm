@@ -67,3 +67,5 @@
 	var/reagent_pain_modifier = 0 //same as above, except can potentially mask damage
 
 	var/smokecloaked = FALSE //For the new Smoke Grenade
+
+	var/devoured = FALSE //Are we devoured?

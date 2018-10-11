@@ -12,7 +12,8 @@
 
 	..()
 
-	blinded = null
+	if(!devoured && !eye_blind && !sdisabilities & BLIND) //Clear blind if not devoured, not blind, and if no blind stacks
+		blinded = null
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 
 	//Apparently, the person who wrote this code designed it so that

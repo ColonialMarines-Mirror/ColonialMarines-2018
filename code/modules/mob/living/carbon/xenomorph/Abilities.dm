@@ -87,13 +87,7 @@
 		to_chat(X, "<span class='warning'>You cannot regurgitate here.</span>")
 		return
 
-	if(X.stomach_contents.len)
-		for(var/mob/M in X.stomach_contents)
-			X.stomach_contents.Remove(M)
-			if(M.loc != X)
-				continue
-			M.forceMove(X.loc)
-
+	if(X.unvore(X))
 		X.visible_message("<span class='xenowarning'>\The [X] hurls out the contents of their stomach!</span>", \
 		"<span class='xenowarning'>You hurl out the contents of your stomach!</span>", null, 5)
 	else

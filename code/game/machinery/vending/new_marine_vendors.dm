@@ -764,7 +764,8 @@
 							list("Metal x10", 5, /obj/item/stack/sheet/metal/small_stack, null, "orange"),
 							list("Plasteel x10", 7, /obj/item/stack/sheet/plasteel/small_stack, null, "orange"),
 							list("Sandbags x25", 10, /obj/item/stack/sandbags_empty/half, null, "orange"),
-							list("Plastique explosive", 5, /obj/item/explosive/plastique, null, "black"),
+							list("Plastique explosive", 3, /obj/item/explosive/plastique, null, "black"),
+							list("Detonation pack", 5, /obj/item/device/radio/detpack, null, "black"),
 							list("Entrenching tool", 1, /obj/item/tool/shovel/etool, null, "black"),
 							list("Range Finder", 10, /obj/item/device/binoculars/tactical/range, null, "black"),
 							list("High capacity powercell", 1, /obj/item/cell/high, null, "black"),
@@ -877,7 +878,8 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 							list("LEADER SUPPLIES", 0, null, null, null),
 							list("Supply beacon", 15, /obj/item/device/squad_beacon, null, "black"),
 							list("Orbital beacon", 25, /obj/item/device/squad_beacon/bomb, null, "black"),
-							list("Plastique explosive", 5, /obj/item/explosive/plastique, null, "black"),
+							list("Plastique explosive", 3, /obj/item/explosive/plastique, null, "black"),
+							list("Detonation pack", 5, /obj/item/device/radio/detpack, null, "black"),
 							list("Sandbags x25", 15, /obj/item/stack/sandbags_empty/half, null, "black"),
 							list("Motion detector", 5, /obj/item/device/motiondetector, null, "black"),
 							list("Smoke grenade", 2, /obj/item/explosive/grenade/smokebomb, null, "black"),
@@ -953,7 +955,9 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/cell/high,
 						/obj/item/tool/shovel/etool,
 						/obj/item/device/lightreplacer,
-						/obj/item/circuitboard/apc
+						/obj/item/circuitboard/apc,
+						/obj/item/device/radio/detpack,
+						/obj/item/device/assembly/signaler,
 						)
 
 
@@ -968,6 +972,8 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/device/squad_beacon/bomb,
 						/obj/item/weapon/gun/flamer,
 						/obj/item/storage/box/zipcuffs,
+						/obj/item/device/radio/detpack,
+						/obj/item/device/assembly/signaler,
 						)
 
 

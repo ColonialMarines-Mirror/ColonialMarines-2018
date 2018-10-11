@@ -49,6 +49,7 @@ var/global/list/cargo_guns_vendors = list() //Used by our gamemode code
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
+var/global/list/processing_timers = list()
 
 //used by binoculars for dropship bombardment
 var/list/global/active_laser_targets = list()
@@ -117,7 +118,7 @@ var/global/list/moth_wings_list = list()
 			else
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
-	
+
 	// Species specific
 	for(var/path in subtypesof(/datum/sprite_accessory/moth_wings))
 		var/datum/sprite_accessory/moth_wings/wings = new path()

@@ -29,7 +29,6 @@
 		new /obj/effect/alien/weeds/node(X.loc, src, X)
 		playsound(X.loc, "alien_resin_build", 25)
 
-
 // Resting
 /datum/action/xeno_action/xeno_resting
 	name = "Rest"

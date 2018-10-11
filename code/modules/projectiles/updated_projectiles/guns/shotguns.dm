@@ -69,7 +69,6 @@ can cause issues with ammo types getting mixed up during the burst.
 		return
 
 	unload_shell(user)
-	to_chat(user, "<span class='warning'>[src] is already empty.</span>")
 	if(!current_mag.current_rounds && !in_chamber) update_icon()
 
 /obj/item/weapon/gun/shotgun/proc/unload_shell(mob/user)

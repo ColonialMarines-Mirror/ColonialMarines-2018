@@ -1428,15 +1428,18 @@
 	var/extra_dam = min(35, plasma_stored * 0.25)
 	M.attack_alien(src,  extra_dam) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
 	use_plasma(extra_dam * 4) //Expend plasma equal to 4 times the extra damage.
+	savage_used = TRUE
 	do_savage_cooldown()
 
 	return TRUE
 
 /mob/living/carbon/Xenomorph/proc/do_savage_cooldown()
+	if(!savage_used)//sanity check/safeguard
+		return
 	spawn(savage_cooldown)
 		savage_used = FALSE
 		to_chat(src, "<span class='xenowarning'><b>You can now savage your victims again.</b></span>")
-		playsound(src, "xeno_newlarva", 1, 100, 0, 1)
+		playsound(src, "xeno_newlarva", 100, 0, 1)
 		for(var/X in actions)
 			var/datum/action/act = X
 			act.update_button_icon()

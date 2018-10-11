@@ -158,7 +158,7 @@
 	//Runner vars
 	var/savage = FALSE
 	var/savage_used = FALSE
-	var/savage_cooldown = 30
+	var/savage_cooldown = 300
 
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL

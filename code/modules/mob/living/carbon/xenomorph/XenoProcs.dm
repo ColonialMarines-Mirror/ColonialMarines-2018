@@ -253,7 +253,7 @@
 					step_to(src, M)
 					canmove = FALSE
 					if(savage) //If Runner Savage is toggled on, attempt to use it.
-						if(!savage_cooldown)
+						if(!savage_used)
 							if(plasma_stored >= 10)
 								Savage(M)
 							else

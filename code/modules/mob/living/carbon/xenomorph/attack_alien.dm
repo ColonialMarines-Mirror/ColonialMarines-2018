@@ -90,16 +90,14 @@
 			M.animation_attack_on(src)
 
 			//Check for a special bite attack
-			if(prob(M.bite_chance))
-				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
-					M.bite_attack(src, damage)
-					return TRUE
+			if(prob(M.bite_chance) && !M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+				M.bite_attack(src, damage)
+				return TRUE
 
 			//Check for a special bite attack
-			if(prob(M.tail_chance))
-				if(!M.critical_proc) //Can't crit if we already crit in the past 3 seconds
-					M.tail_attack(src, damage)
-					return TRUE
+			if(prob(M.tail_chance) && !M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+				M.tail_attack(src, damage)
+				return TRUE
 
 			//Somehow we will deal no damage on this attack
 			if(!damage)
@@ -169,14 +167,12 @@
 				return FALSE
 			M.flick_attack_overlay(src, "disarm")
 
-			if(knocked_down)
-				playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-				M.visible_message("<span class='danger'>\The [M] tries to tackle [src], but they are already down!</span>", \
-				"<span class='danger'>You try to tackle [src], but they are already down!</span>", null, 5)
-			else
+			if(!knocked_down)
 				playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
 				var/knockdown_multiplier = max(1,traumatic_shock * 0.02) //hopefully this fixes suspected rounding issues.
 				KnockDown(0.3 * knockdown_multiplier) //Min 0.3, probable max 1.2
+				M.visible_message("<span class='danger'>\The [M] slams [src] to the ground!</span>", \
+				"<span class='danger'>You slam [src] to the ground!</span>", null, 5)
 
 			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
 			var/tackle_pain = null
@@ -190,7 +186,7 @@
 			var/throttle_message = "The [M] throttles [src]!"
 			var/throttle_message2 = "You throttle [src]!</span>"
 			if(tackle_pain > 40)
-				throttle_message = "<span class='danger'>\The [M] throttles [src]!</span>"
+				throttle_message = "<span class='danger'>\The [M] badly throttles [src]!</span>"
 				throttle_message2 = "<span class='danger'>You badly throttle [src]!</span>"
 			M.visible_message("[throttle_message]", \
 			"[throttle_message2]", null, 5)

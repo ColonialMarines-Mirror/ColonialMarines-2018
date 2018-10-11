@@ -204,7 +204,7 @@
 /turf/closed/wall/indestructible/splashscreen/New()
 	..()
 	if(icon_state == "title_painting1")
-		icon_state = "title_painting[rand(1,4)]"
+		icon_state = "title_painting[rand(1,8)]"
 
 /turf/closed/wall/indestructible/other
 	icon_state = "r_wall"
@@ -385,7 +385,7 @@
 /turf/closed/wall/resin/thick
 	name = "thick resin wall"
 	desc = "Weird slime solidified into a thick wall."
-	damage_cap = 400
+	damage_cap = 300
 	icon_state = "thickresin0"
 	walltype = "thickresin"
 
@@ -411,10 +411,9 @@
 	alpha = 210
 
 /turf/closed/wall/resin/bullet_act(var/obj/item/projectile/Proj)
-	take_damage(Proj.damage/2)
+	take_damage(Proj.damage*0.5)
 	..()
-
-	return 1
+	return TRUE
 
 /turf/closed/wall/resin/ex_act(severity)
 	switch(severity)

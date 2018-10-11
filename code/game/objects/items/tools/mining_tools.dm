@@ -199,7 +199,7 @@
 	update_plasmacutter()
 	..()
 
-/obj/item/tool/pickaxe/plasmacutter/update_plasmacutter(mob/user) //Updates the icon and power on/off status of the plasma cutter
+/obj/item/tool/pickaxe/plasmacutter/proc/update_plasmacutter(mob/user) //Updates the icon and power on/off status of the plasma cutter
 	if(!cell || cell.charge <= 0 || powered == FALSE)
 		icon_state = "plasma_cutter_off"
 		if(powered)
@@ -310,7 +310,6 @@
 			return
 		if(!ST.slayer)
 			return
-		var/turf/open/snow/ST = T
 		ST.slayer = max(0 , ST.slayer - dirt_amt_per_dig)
 		ST.update_icon(1,0)
 		to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")

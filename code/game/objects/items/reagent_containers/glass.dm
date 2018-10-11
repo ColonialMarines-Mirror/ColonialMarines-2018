@@ -241,6 +241,19 @@
 		reagents.add_reagent("clonexadone", 30)
 		update_icon()
 
+/obj/item/reagent_container/glass/beaker/cryomix
+	New()
+		..()
+		reagents.add_reagent("cryoxadone", 10)
+		reagents.add_reagent("clonexadone", 10)
+		reagents.add_reagent("iron", 10)
+		reagents.add_reagent("tricordrazine", 10)
+		reagents.add_reagent("quickclot", 5)
+		reagents.add_reagent("peridaxon", 5)
+		reagents.add_reagent("dexplus", 5)
+		reagents.add_reagent("spaceacillin", 5)
+		update_icon()
+
 /obj/item/reagent_container/glass/beaker/sulphuric
 	New()
 		..()

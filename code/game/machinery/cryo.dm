@@ -25,6 +25,10 @@
 	stop_processing()
 	return ..()
 
+/obj/machinery/cryo_cell/New()
+	beaker = new /obj/item/reagent_container/glass/beaker/cryomix
+	return ..()
+
 /obj/machinery/cryo_cell/examine(mob/living/user)
 	..()
 	var/active = ""

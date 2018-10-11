@@ -199,7 +199,7 @@
 			if (istype(location, /turf))
 				location.add_vomit_floor(src, 1)
 
-			nutrition -= 40
+			nutrition = max(nutrition - 40, 0)
 			adjustToxLoss(-3)
 			spawn(350)	//wait 35 seconds before next volley
 				lastpuke = 0

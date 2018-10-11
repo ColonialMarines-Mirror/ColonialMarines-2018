@@ -28,6 +28,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	handle_living_plasma_updates()
 	handle_living_health_updates()
 	update_icons()
+
 	if(stat == UNCONSCIOUS)
 		if(is_zoomed)
 			zoom_out()
@@ -78,7 +79,6 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 /mob/living/carbon/Xenomorph/handle_status_effects()
 	..()
-
 	handle_stagger() // 1 each time
 	handle_slowdown() // 0.4 each time
 	handle_halloss() // 3 each time

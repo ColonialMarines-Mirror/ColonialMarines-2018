@@ -34,8 +34,10 @@
 
 /obj/item/reagent_container/glass/bottle/update_icon()
 	overlays.Cut()
+
 	if(reagents.total_volume && (icon_state == "bottle-1" || icon_state == "bottle-2" || icon_state == "bottle-3" || icon_state == "bottle-4"))
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
 			if(0 to 9)		filling.icon_state = "[icon_state]--10"
@@ -45,8 +47,10 @@
 			if(75 to 79)	filling.icon_state = "[icon_state]-75"
 			if(80 to 90)	filling.icon_state = "[icon_state]-80"
 			if(91 to INFINITY)	filling.icon_state = "[icon_state]-100"
+
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
+
 	if (!is_open_container())
 		var/image/lid = image(icon, src, "lid_bottle")
 		overlays += lid
@@ -231,7 +235,7 @@
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
 
-/obj/item/reagent_container/glass/bottle/gbs/obj/item/reagent_container/glass/bottle/gbs
+/obj/item/reagent_container/glass/bottle/gbs
 	name = "\improper GBS culture bottle"
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."//Or simply - General BullShit
 	icon = 'icons/obj/items/chemistry.dmi'

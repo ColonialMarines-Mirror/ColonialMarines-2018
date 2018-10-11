@@ -285,37 +285,33 @@
 
 
 /obj/item/tool/pickaxe/plasmacutter/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(user.action_busy)
+	if(!proximity || user.action_busy)
 		return
 
 	if(isturf(target))//Melting snow with the plasma cutter.
 		var/turf/T = target
 		var/turfdirt = T.get_dirt_type()
-		if(turfdirt)
-			if(turfdirt == DIRT_TYPE_SNOW)
-				var/turf/open/snow/ST = T
-				if(!ST.slayer)
-					return
-			if(cell.charge >= charge_cost * PLASMACUTTER_VLOW_MOD && powered)
-				to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
-				playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
-				if(!do_after(user, calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_BUILD))
-					return
-				var/transf_amt = dirt_amt_per_dig
-				if(turfdirt == DIRT_TYPE_SNOW)
-					var/turf/open/snow/ST = T
-					if(!ST.slayer)
-						return
-					transf_amt = min(ST.slayer, dirt_amt_per_dig)
-					ST.slayer -= transf_amt
-					ST.update_icon(1,0)
-					to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
-					use_charge(user, name, ST, charge_cost * PLASMACUTTER_VLOW_MOD) //costs 25% normal
-				else
-					return
-			else
-				fizzle_message(user)
-				return
+		if(!turfdirt == DIRT_TYPE_SNOW)
+			return
+		var/turf/open/snow/ST = T
+		if(!ST.slayer)
+			return
+		if(!cell.charge >= charge_cost * PLASMACUTTER_VLOW_MOD || !powered)
+			fizzle_message(user)
+			return
+		to_chat(user, "<span class='notice'>You start melting the snow with [src].</span>")
+		playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
+		if(!do_after(user, calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_BUILD))
+			return
+		if(!cell.charge >= charge_cost * PLASMACUTTER_VLOW_MOD || !powered)
+			fizzle_message(user)
+			return
+		if(!turfdirt == DIRT_TYPE_SNOW)
+			return
+		if(!ST.slayer)
+			return
+		var/turf/open/snow/ST = T
+		ST.slayer = max(0 , ST.slayer - dirt_amt_per_dig)
+		ST.update_icon(1,0)
+		to_chat(user, "<span class='notice'>You melt the snow with [src].</span>")
+		use_charge(user, name, ST, charge_cost * PLASMACUTTER_VLOW_MOD) //costs 25% normal

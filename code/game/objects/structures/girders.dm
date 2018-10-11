@@ -80,7 +80,8 @@
 				P.start_cut(user, src.name, src)
 				if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Girders take half as long
 					P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_LOW_MOD) //Girders require half the normal power
-					if(!src) return
+					if(!src) 
+						return
 					health = 0
 					update_state()
 			else

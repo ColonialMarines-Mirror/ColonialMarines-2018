@@ -8,6 +8,7 @@
 #define RO_PRICE_VERY_CHEAP	20
 #define RO_PRICE_CHEAP		30
 #define RO_PRICE_NORMAL		40
+#define RO_PRICE_KINDA_PRICY	50
 #define RO_PRICE_PRICY		60
 #define RO_PRICE_VERY_PRICY	100
 
@@ -396,7 +397,7 @@ WEAPONS
 					/obj/item/explosive/plastique,
 					/obj/item/explosive/plastique
 					)
-	cost = RO_PRICE_VERY_CHEAP
+	cost = RO_PRICE_CHEAP
 	containertype = /obj/structure/closet/crate/explosives
 	containername = "\improper plastic explosives crate (WARNING)"
 	group = "Weapons"
@@ -424,7 +425,7 @@ WEAPONS
 					/obj/item/device/assembly/signaler,
 					/obj/item/device/assembly/signaler,
 					)
-	cost = RO_PRICE_NORMAL
+	cost = RO_PRICE_KINDA_PRICY
 	containertype = /obj/structure/closet/crate/explosives
 	containername = "\improper detpack explosives crate (WARNING)"
 	group = "Weapons"

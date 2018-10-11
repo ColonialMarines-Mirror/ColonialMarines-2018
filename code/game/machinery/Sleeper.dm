@@ -203,18 +203,18 @@
 	return ..()
 
 /obj/machinery/sleeper/examine(mob/living/user)
-	..()
+	. = ..()
 	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
 		return
 	if(!ishuman(occupant))
 		return
-	var/active = ""
+	var/feedback = ""
 	if(stasis)
-		active += " Cryostasis is active."
+		feedback += " Cryostasis is active."
 	if(filtering)
-		active += " Dialysis is active."
+		feedback += " Dialysis is active."
 	if(!hasHUD(user,"medical"))
-		to_chat(user, "<span class='notice'>It contains: [occupant].[active]</span>")
+		to_chat(user, "<span class='notice'>It contains: [occupant].[feedback]</span>")
 		return
 	var/mob/living/carbon/human/H = occupant
 	for(var/datum/data/record/R in data_core.medical)
@@ -223,7 +223,7 @@
 		if(!(R.fields["last_scan_time"]))
 			to_chat(user, "<span class = 'deptradio'>No scan report on record</span>\n")
 		else
-			to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]].[active]</a></span>\n")
+			to_chat(user, "<span class = 'deptradio'><a href='?src=\ref[src];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]].[feedback]</a></span>\n")
 		break
 
 /obj/machinery/sleeper/Topic(href, href_list)
@@ -287,6 +287,7 @@
 	else if(istype(W, /obj/item/device/healthanalyzer) && occupant) //Allows us to use the analyzer on the occupant without taking him out.
 		var/obj/item/device/healthanalyzer/J = W
 		J.attack(occupant, user)
+		return
 
 	else if(istype(W, /obj/item/grab))
 		if(isXeno(user))
@@ -299,12 +300,12 @@
 			to_chat(user, "<span class='notice'>The sleeper is already occupied!</span>")
 			return
 
-		visible_message("[user] puts [G.grabbed_thing] into the sleeper.", 3)
-
 		if(!G || !G.grabbed_thing)
 			return
 		var/mob/M = G.grabbed_thing
-		M.forceMove(src)
+		if(!M.forceMove(src))
+			return
+		visible_message("[user] puts [G.grabbed_thing] into the sleeper.", 3)
 		update_use_power(2)
 		occupant = M
 		start_processing()
@@ -458,25 +459,22 @@
 		to_chat(usr, "<span class='notice'>The sleeper is already occupied!</span>")
 		return
 
-	visible_message("[usr] climbs into the sleeper.", 3)
 	if(usr.pulledby)
 		if(ismob(usr.pulledby))
 			var/mob/grabmob = usr.pulledby
 			grabmob.stop_pulling()
-		user.stop_pulling()
-		if(user.pulledby)
-			if(ismob(user.pulledby))
-				var/mob/grabmob = user.pulledby
-				grabmob.stop_pulling()
-		user.forceMove(src)
-		update_use_power(2)
-		occupant = usr
-		start_processing()
-		connected.start_processing()
-		icon_state = "sleeper_1"
-		if(orient == "RIGHT")
-			icon_state = "sleeper_1-r"
+	user.stop_pulling()
+	if(!user.forceMove(src))
+		return
+	visible_message("[usr] climbs into the sleeper.", 3)
+	update_use_power(2)
+	occupant = usr
+	start_processing()
+	connected.start_processing()
+	icon_state = "sleeper_1"
+	if(orient == "RIGHT")
+		icon_state = "sleeper_1-r"
 
-		for(var/obj/O in src)
-			cdel(O)
-		add_fingerprint(usr)
+	for(var/obj/O in src)
+		cdel(O)
+	add_fingerprint(usr)

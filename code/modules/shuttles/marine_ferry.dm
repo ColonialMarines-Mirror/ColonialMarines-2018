@@ -375,7 +375,7 @@
 	var/list/with_queen = list()
 	for(var/mob/living/carbon/Xenomorph/xeno in living_xeno_list)
 		if(xeno.hivenumber != XENO_HIVE_NORMAL) continue
-		if(xeno.loc.z == hive.living_xeno_queen.loc.z) // yes loc because of vent crawling
+		if(xeno.loc.z == MAIN_SHIP_AND_DROPSHIPS_Z_LEVELS) // loc because of vent crawling
 			with_queen += xeno
 		else
 			left_behind += xeno

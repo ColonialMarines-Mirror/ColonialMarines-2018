@@ -20,20 +20,26 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
 	var/msg
-	var/list/type = list ("Suggestion / Bug Report", "Gameplay / Roleplay Issue", "Admins Spawn Shit")
+	var/list/type = list("Suggestion / Bug Report", "Rule Violation / Policy Question", "Gamebreaking Bug", "Gameplay Question")
 	var/selected_type = input("Pick a category.", "Admin Help", null, null) as null|anything in type
-	if(selected_type == "Gameplay / Roleplay Issue")
+	if(selected_type == "Rule Violation / Policy Question")
 		msg = input("Please enter your message:", "Admin Help", null, null) as message|null
-
+		
+	if(selected_type == "Gamebreaking Bug")
+		msg = input("Please enter your message:", "Developer Help", null, null) as message|null
+		switch(alert("Please consider making a report on github after contacting admins.",,"Go to Github","Cancel"))
+			if("Go to Github")
+				src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues")
+	
 	if(selected_type == "Suggestion / Bug Report")
-		switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our Github, and suggestions on our forums. #WHENYOUCODEIT",,"Go to Github","Go to forums","Cancel"))
+		switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our Github, and suggestions on our forums.",,"Go to Github","Go to forums","Cancel"))
 			if("Go to Github")
 				src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues")
 			if("Go to forums")
 				src << link("https://tgstation13.org/phpBB/viewforum.php?f=65")
 
-	if(selected_type == "Admins Spawn Shit")
-		src << "\red <B>No</B>"
+	if(selected_type == "Gameplay Question")
+		msg = input("Please enter your question:", "Mentor Help", null, null) as message|null
 			
 	var/selected_upper = uppertext(selected_type)
 
@@ -42,9 +48,11 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 
 	//clean the input msg
-	if(!msg)	return
+	if(!msg)	
+		return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
+	if(!msg)	
+		return
 	var/original_msg = msg
 
 
@@ -105,6 +113,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	return	//this doesn't happen
 
 	var/mentor_msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 0, 0, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	var/bug_msg = "<br><br><font color='#FF0000'><b>[selected_upper]: [get_options_bar(mob, 0, 0, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>" // Todo, debug verbs?
 	msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 2, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0
@@ -127,14 +136,27 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			if(X.is_afk())
 				admin_number_afk++
 
-	if("Gameplay/Roleplay Issue")
+	if("Rule Violation / Policy Question")
+		if(adminholders.len)
+			for(var/client/X in adminholders)
+				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
+					X << 'sound/effects/adminhelp_new.ogg'
+				to_chat(X, msg)
+	if("Gamebreaking Bug")
+		if(adminholders.len)
+			for(var/client/X in adminholders)
+				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
+					X << 'sound/effects/adminhelp_new.ogg'
+				to_chat(X, bug_msg)
+
+	if("Gameplay Question")
 		if(mentorholders.len)
 			for(var/client/X in mentorholders) // Mentors get a message without buttons and no character name
 				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
 					X << 'sound/effects/adminhelp_new.ogg'
 				to_chat(X, mentor_msg)
 		if(adminholders.len)
-			for(var/client/X in adminholders) // Admins get the full monty
+			for(var/client/X in adminholders)
 				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
 					X << 'sound/effects/adminhelp_new.ogg'
 				to_chat(X, msg)

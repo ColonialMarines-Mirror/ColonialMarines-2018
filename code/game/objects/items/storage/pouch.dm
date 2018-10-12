@@ -250,7 +250,9 @@
 					"/obj/item/explosive/plastique",
 					"/obj/item/explosive/mine",
 					"/obj/item/explosive/grenade",
-					"/obj/item/storage/box/explosive_mines"
+					"/obj/item/storage/box/explosive_mines",
+					"/obj/item/device/radio/detpack",
+					"/obj/item/device/assembly/signaler",
 					)
 
 /obj/item/storage/pouch/explosive/full/New()

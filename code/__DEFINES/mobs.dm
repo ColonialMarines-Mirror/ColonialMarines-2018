@@ -420,10 +420,23 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define PAINFUL 2
 #define EXTREMELY_PAINFUL 3
 
-// xeno abilities cooldown
+// xeno defines
 
 #define CRUSHER_STOMP_COOLDOWN 200
 #define XENO_SLOWDOWN_REGEN 0.4
+#define XENO_HALOSS_REGEN 3
+#define QUEEN_DEATH_TIMER 300 // 5 minutes
+#define DEFENDER_CRESTDEFENSE_ARMOR 30
+#define DEFENDER_CRESTDEFENSE_SLOWDOWN 0.8
+#define DEFENDER_FORTIFY_ARMOR 60
+#define WARRIOR_AGILITY_ARMOR 30
+#define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
+
+
+// halloss defines
+
+#define BASE_HALLOSS_RECOVERY_RATE -2
+#define REST_HALLOSS_RECOVERY_RATE -10
 
 // Human Overlay Indexes
 #define MOTH_WINGS_LAYER		26

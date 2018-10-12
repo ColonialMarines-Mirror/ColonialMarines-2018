@@ -135,7 +135,8 @@
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Initial stagger is: <b>[target.stagger]</b></span>")
 			#endif
-			X.adjust_stagger(stagger)
+			if(!isXenoQueen(X)) //Stagger too powerful vs the Queen.
+				X.adjust_stagger(stagger)
 			#if DEBUG_STAGGER_SLOWDOWN
 			to_chat(world, "<span class='debuginfo'>Damage: Final stagger is: <b>[target.stagger]</b></span>")
 			#endif
@@ -522,7 +523,7 @@
 	penetration= config.low_armor_penetration
 
 /datum/ammo/bullet/shotgun/slug/on_hit_mob(mob/M,obj/item/projectile/P)
-	staggerstun(M, P, config.close_shell_range, 0, 1, 8, 8)
+	staggerstun(M, P, config.close_shell_range, 0, 1, 4, 4)
 
 
 /datum/ammo/bullet/shotgun/beanbag
@@ -741,7 +742,7 @@
 	..()
 	accurate_range = config.short_shell_range
 	damage = config.low_hit_damage
-	penetration= config.low_armor_penetration
+	penetration = config.low_armor_penetration
 
 /datum/ammo/bullet/smartgun/lethal
 	flags_ammo_behavior = AMMO_BALLISTIC
@@ -749,8 +750,8 @@
 
 /datum/ammo/bullet/smartgun/lethal/New()
 	..()
-	damage = config.lmed_hit_damage
-	penetration= config.low_armor_penetration
+	damage = config.low_hit_damage
+	penetration = config.mlow_armor_penetration
 
 /datum/ammo/bullet/smartgun/dirty
 	name = "irradiated smartgun bullet"
@@ -782,9 +783,9 @@
 	accuracy_var_low = config.low_proj_variance
 	accuracy_var_high = config.low_proj_variance
 	max_range = config.short_shell_range
-	damage = config.low_hit_damage
-	penetration= config.mlow_armor_penetration
-	accuracy = -config.low_hit_accuracy
+	damage = config.hlow_hit_damage
+	penetration= config.low_armor_penetration
+	accuracy = -config.min_hit_accuracy
 
 /datum/ammo/bullet/turret/dumb
 	icon_state 	= "bullet"

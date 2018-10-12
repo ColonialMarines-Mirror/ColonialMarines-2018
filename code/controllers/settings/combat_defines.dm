@@ -131,6 +131,18 @@
 	var/high_proj_variance = 4
 	var/max_proj_variance = 5
 
+	var/min_movement_acc_penalty = 1
+	var/low_movement_acc_penalty = 2
+	var/med_movement_acc_penalty = 3
+	var/high_movement_acc_penalty = 4
+	var/max_movement_acc_penalty = 5
+
+	var/min_burst_scatter_penalty = 1
+	var/low_burst_scatter_penalty = 2
+	var/med_burst_scatter_penalty = 3
+	var/high_burst_scatter_penalty = 4
+	var/max_burst_scatter_penalty = 5
+
 /datum/configuration/proc/initialize_combat_defines(name,value)
 	value = text2num(value)
 	switch(name)

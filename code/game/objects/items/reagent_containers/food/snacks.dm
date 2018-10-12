@@ -16,7 +16,7 @@
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
 /obj/item/reagent_container/food/snacks/add_initial_reagents()
-	if(!tastes || tastes.len)
+	if(!tastes || !tastes.len)
 		return ..()
 	else if(list_reagents)
 		for(var/rid in list_reagents)

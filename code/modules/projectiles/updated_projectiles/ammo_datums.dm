@@ -934,24 +934,29 @@
 	damage = config.super_hit_damage
 	max_range = config.norm_shell_range
 
-/datum/ammo/rocket/wp/drop_flame(turf/T)
-	if(!istype(T))
+/datum/ammo/rocket/wp/drop_flame(radius = 3, turf/T) //~Art updated fire.
+	if(!T || !isturf(T))
 		return
 	smoke.set_up(1, T)
 	smoke.start()
-	if(locate(/obj/flamer_fire) in T)
-		return
-	new /obj/flamer_fire(T, pick(15, 20, 25, 30))
-	for(var/mob/living/carbon/M in range(3, T))
+	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
+		cdel(F)
+	playsound(T, 'sound/weapons/gun_flamethrower2.ogg', 50, 1, 4)
+	new /obj/flamer_fire(T, rand(30, 40), rand(30, 40), "red", radius)
+	for(var/mob/living/carbon/M in range(radius, T))
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
 			if(X.fire_immune)
 				continue
 		if(M.stat == DEAD)
 			continue
-		M.adjust_fire_stacks(rand(5, 25))
+		var/dist = get_dist(T,M)
+		var/burnlevel = rand(30, 40)
+		M.adjustFireLoss(rand(burnlevel*0.1,burnlevel*0.4) + rand(burnlevel*0.1,burnlevel*0.4)-dist*5) //Gaussian; averages to 35 minus 5 stacks per tile away from the epicentre
+		M.adjust_fire_stacks(rand(burnlevel*0.1,burnlevel*0.4) + rand(burnlevel*0.1,burnlevel*0.4)-dist*5)//Gaussian; averages to 35 minus 5 stacks per tile away from the epicentre
 		M.IgniteMob()
 		M.visible_message("<span class='danger'>[M] bursts into flames!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You burst into flames!</span>")
+
 
 /datum/ammo/rocket/wp/on_hit_mob(mob/M,obj/item/projectile/P)
 	drop_flame(get_turf(M))

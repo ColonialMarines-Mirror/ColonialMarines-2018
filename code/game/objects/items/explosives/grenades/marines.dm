@@ -129,8 +129,20 @@ proc/flame_radius(radius = 1, turf/T) //~Art updated fire.
 		radius = 5
 	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
 		cdel(F)
-	new /obj/flamer_fire(T, 5 + rand(0,11), 15, null, radius)
-
+	new /obj/flamer_fire(T, rand(20, 30), rand(20, 30), "red", radius)
+	for(var/mob/living/carbon/M in range(radius, T))
+		if(isXeno(M))
+			var/mob/living/carbon/Xenomorph/X = M
+			if(X.fire_immune)
+				continue
+		if(M.stat == DEAD)
+			continue
+		var/dist = get_dist(T,M)
+		var/burnlevel = rand(20, 30)
+		M.adjustFireLoss(rand(burnlevel*0.1,burnlevel*0.4) + rand(burnlevel*0.1,burnlevel*0.4)-dist*5) //Gaussian; averages to 25 minus 5 stacks per tile away from the epicentre
+		M.adjust_fire_stacks(rand(burnlevel*0.1,burnlevel*0.4) + rand(burnlevel*0.1,burnlevel*0.4)-dist*5)//Gaussian; averages to 25 minus 5 stacks per tile away from the epicentre
+		M.IgniteMob()
+		M.visible_message("<span class='danger'>[M] bursts into flames!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You burst into flames!</span>")
 
 /obj/item/explosive/grenade/incendiary/molotov
 	name = "\improper improvised firebomb"

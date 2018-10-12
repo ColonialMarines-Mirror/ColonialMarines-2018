@@ -38,7 +38,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				if(loc != zoom_turf || lying)
 					zoom_out()
 			update_progression()
-			update_evolving()	
+			update_evolving()
 			//Status updates, death etc.
 			handle_aura_emiter()
 			handle_aura_receiver()
@@ -128,6 +128,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
 	if(on_fire && !fire_immune)
 		adjustFireLoss(fire_stacks + 3)
+		return //Burning prevents regeneration.
 	var/turf/T = loc
 	if(!T || !istype(T) || hardcore)
 		return
@@ -187,6 +188,9 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	//Rollercoaster of fucking stupid because Xeno life ticks aren't synchronised properly and values reset just after being applied
 	//At least it's more efficient since only Xenos with an aura do this, instead of all Xenos
 	//Basically, we use a special tally var so we don't reset the actual aura value before making sure they're not affected
+	if(fire_stacks) //Burning Xenos can't emit pheromones; they get burnt up! Null it baby! Disco inferno
+		current_aura = null
+		return
 	if(current_aura && plasma_stored > 5)
 		if(caste == "Queen" && anchored) //stationary queen's pheromone apply around the observed xeno.
 			var/mob/living/carbon/Xenomorph/Queen/Q = src
@@ -236,6 +240,11 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 								Z.recovery_new = leader_aura_strength
 
 /mob/living/carbon/Xenomorph/proc/handle_aura_receiver()
+	if(fire_stacks) //Burning xenos can't benefit from pheromones; 0 everything out, return.
+		frenzy_aura = 0
+		warding_aura = 0
+		recovery_aura = 0
+		return
 	if(frenzy_aura != frenzy_new || warding_aura != warding_new || recovery_aura != recovery_new)
 		frenzy_aura = frenzy_new
 		warding_aura = warding_new
@@ -347,7 +356,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind")
-		
+
 		if(interactee)
 			interactee.check_eye(src)
 		else

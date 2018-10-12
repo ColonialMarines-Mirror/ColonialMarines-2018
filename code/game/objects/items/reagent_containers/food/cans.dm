@@ -1,19 +1,19 @@
 /obj/item/reagent_container/food/drinks/cans
 	name = "soda can"
 	container_type = 0
-	var/canopened = 0
+	var/canopened = FALSE
 
 
 /obj/item/reagent_container/food/drinks/cans/attack_self(mob/user as mob)
-	if(canopened == 0)
+	if(canopened == FALSE)
 		playsound(src,'sound/effects/canopen.ogg', 15, 1)
 		to_chat(user, "<span class='notice'>You open the drink with [pick("an audible", "a satisfying")] pop!</span>")
-		canopened = 1
+		canopened = TRUE
 		container_type = OPENCONTAINER_NOUNIT
 		return
 
 /obj/item/reagent_container/food/drinks/cans/attack(mob/M as mob, mob/user as mob, def_zone)
-	if (canopened == 0)
+	if (canopened == FALSE)
 		to_chat(user, "<span class='notice'>You need to open the drink first!</span>")
 		return
 	..()

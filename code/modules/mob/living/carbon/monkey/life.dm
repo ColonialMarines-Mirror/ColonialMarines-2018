@@ -47,7 +47,7 @@
 			emote(pick("scratch","jump","roll","tail"))
 
 /mob/living/carbon/monkey/handle_disabilities()
-	..()
+	. = ..()
 
 	if (disabilities & EPILEPSY)
 		if ((prob(1) && knocked_out < 10))
@@ -312,14 +312,14 @@
 		adjustFireLoss(5.0*discomfort)
 
 /mob/living/carbon/monkey/handle_organs()
-	..()
+	. = ..()
 	if(reagents && reagents.reagent_list.len)
 		reagents.metabolize(src, 0, can_overdose = TRUE)
 
 	return
 
 /mob/living/carbon/monkey/handle_regular_hud_updates()
-	..()
+	. = ..()
 
 	update_sight()
 

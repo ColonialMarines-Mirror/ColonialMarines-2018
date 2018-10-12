@@ -1,7 +1,7 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/handle_disabilities()
-	..()
+	. = ..()
 	if(stat != DEAD)
 		if(disabilities & EPILEPSY)
 			if((prob(1) && knocked_out < 1))
@@ -62,7 +62,7 @@
 					resting = 1
 
 /mob/living/carbon/human/handle_impaired_vision()
-	..()
+	. = ..()
 	//Eyes
 	if(!(sdisabilities & BLIND))
 		if(tinttotal >= 3) // Covered eyes, heal faster
@@ -82,7 +82,7 @@
 		clear_fullscreen("nearsighted")
 
 /mob/living/carbon/human/handle_impaired_hearing()
-	..()
+	. = ..()
 
 	if(!(sdisabilities & DEAF))
 		if(istype(wear_ear, /obj/item/clothing/ears/earmuffs))	//Resting your ears with earmuffs heals ear damage faster

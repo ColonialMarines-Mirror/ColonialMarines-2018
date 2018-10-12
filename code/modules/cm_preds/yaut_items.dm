@@ -1017,7 +1017,8 @@
 		else
 			to_chat(user, "<span class='warning'>You aren't strong enough to swing the sword properly!</span>")
 			force = round(initial(force)/2)
-			if(prob(50)) user.Dizzy(80)
+			if(prob(50))
+				user.Dizzy(80)
 
 		return ..()
 

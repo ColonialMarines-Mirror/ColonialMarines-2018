@@ -251,10 +251,8 @@
 	return 1
 
 /mob/living/carbon/Xenomorph/get_permeability_protection()
-	return 0.8
+	return XENO_PERM_COEFF
 
-///get_eye_protection()
-///Returns a number between -1 to 2
 /mob/living/carbon/Xenomorph/get_eye_protection()
 	return 2
 

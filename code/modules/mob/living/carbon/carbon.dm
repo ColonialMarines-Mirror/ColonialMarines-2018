@@ -188,7 +188,7 @@
 		return
 
 	if(!lastpuke)
-		lastpuke = 1
+		lastpuke = TRUE
 		to_chat(src, "<spawn class='warning'>You feel like you are about to throw up!")
 		spawn(50)
 			Stun(5)
@@ -202,7 +202,7 @@
 			nutrition = max(nutrition - 40, 0)
 			adjustToxLoss(-3)
 			spawn(350)	//wait 35 seconds before next volley
-				lastpuke = 0
+				lastpuke = FALSE
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (health >= config.health_threshold_crit)

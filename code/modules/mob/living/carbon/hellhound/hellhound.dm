@@ -251,7 +251,7 @@
 	return
 
 /mob/living/carbon/hellhound/get_permeability_protection()
-	return 0.5
+	return HELLHOUND_PERM_COEFF
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return FALSE

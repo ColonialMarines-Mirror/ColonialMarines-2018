@@ -9,23 +9,22 @@
 	var/trash = null
 	var/slice_path
 	var/slices_num
-	var/package = 0
+	var/package = FALSE
 	center_of_mass = list("x"=15, "y"=15)
 	var/list/tastes // for example list("crisps" = 2, "salt" = 1)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
 /obj/item/reagent_container/food/snacks/add_initial_reagents()
-	if(tastes && tastes.len)
-		if(list_reagents)
-			for(var/rid in list_reagents)
-				var/amount = list_reagents[rid]
-				if(rid == "nutriment")
-					reagents.add_reagent(rid, amount, tastes.Copy())
-				else
-					reagents.add_reagent(rid, amount)
-	else
-		..()
+	if(!tastes || tastes.len)
+		return ..()
+	else if(list_reagents)
+		for(var/rid in list_reagents)
+			var/amount = list_reagents[rid]
+			if(rid == "nutriment")
+				reagents.add_reagent(rid, amount, tastes.Copy())
+			else
+				reagents.add_reagent(rid, amount)
 
 
 /obj/item/reagent_container/food/snacks/proc/On_Consume(var/mob/M)
@@ -391,7 +390,7 @@
 	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/donut/normal/New()
-	..()
+	. = ..()
 	if(prob(40))
 		icon_state = "donut2"
 		overlay_state = "fdonut"
@@ -409,7 +408,7 @@
 	bitesize = 10
 
 /obj/item/reagent_container/food/snacks/donut/chaos/New()
-	..()
+	. = ..()
 	var/chaosselect = pick(1,2,3,4,5,6,7,8,9)
 	switch(chaosselect)
 		if(1)
@@ -447,7 +446,7 @@
 	list_reagents = list ("nutriment" = 3, "sprinkles" = 1, "berryjuice" = 5)
 
 /obj/item/reagent_container/food/snacks/donut/jelly/New()
-	..()
+	. = ..()
 	if(prob(30))
 		icon_state = "jdonut2"
 		overlay_state = "box-donut2"
@@ -462,7 +461,7 @@
 	list_reagents = list ("nutriment" = 3, "sprinkles" = 1, "cherryjelly" = 5)
 
 /obj/item/reagent_container/food/snacks/donut/cherryjelly/New()
-	..()
+	. = ..()
 	if(prob(30))
 		icon_state = "jdonut2"
 		overlay_state = "box-donut2"
@@ -567,7 +566,7 @@
 
 /obj/item/reagent_container/food/snacks/organ/New()
 	list_reagents = list("nutriment" = rand(3,5), "toxin" = rand(1,3))
-	..()
+	return ..()
 
 /obj/item/reagent_container/food/snacks/tofu
 	name = "Tofu"
@@ -761,6 +760,7 @@
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 
 /obj/item/reagent_container/food/snacks/roburger/New()
+	. = ..()
 	if(prob(5))
 		reagents.add_reagent("nanites", 2)
 
@@ -931,7 +931,7 @@
 	bitesize = 2
 
 /obj/item/reagent_container/food/snacks/plump_pie/New()
-	..()
+	. = ..()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"
@@ -1010,14 +1010,14 @@
 	tastes = list("popcorn" = 3, "butter" = 1)
 
 /obj/item/reagent_container/food/snacks/popcorn/New()
-	..()
+	. = ..()
 	unpopped = rand(1,10)
 
 /obj/item/reagent_container/food/snacks/popcorn/On_Consume()
 	if(prob(unpopped))	//lol ...what's the point?
 		to_chat(usr, "\red You bite down on an un-popped kernel!")
 		unpopped = max(0, unpopped-1)
-	..()
+	return ..()
 
 
 /obj/item/reagent_container/food/snacks/sosjerky
@@ -1221,7 +1221,7 @@
 
 
 /obj/item/reagent_container/food/snacks/mysterysoup/New()
-	..()
+	. = ..()
 	var/mysteryselect = pick(1,2,3,4,5,6,7,8,9)
 	switch(mysteryselect)
 		if(1)
@@ -1267,8 +1267,9 @@
 	tastes = list("wishes" = 1)
 
 /obj/item/reagent_container/food/snacks/wishsoup/New()
-	..()
-	if(prob(25))
+	. = ..()
+	var/wish = prob(25)
+	if(wish)
 		desc = "A wish come true!"
 		reagents.add_reagent("nutriment", 8)
 
@@ -1327,14 +1328,14 @@
 		to_chat(user, "You place \the [name] under a stream of water...")
 		user.drop_held_item()
 		return Expand()
-	..()
+	return ..()
 
 /obj/item/reagent_container/food/snacks/monkeycube/attack_self(mob/user)
 	if(package)
 		icon_state = "monkeycube"
 		desc = "Just add water!"
 		to_chat(user, "You unwrap the cube.")
-		package = 0
+		package = FALSE
 
 /obj/item/reagent_container/food/snacks/monkeycube/On_Consume(var/mob/M)
 	to_chat(M, "<span class = 'warning'>Something inside of you suddently expands!</span>")
@@ -1368,7 +1369,7 @@
 		ook.transform *= 0.6
 		ook.add_mob_blood(M)
 		M.gib()
-	..()
+	return ..()
 
 /obj/item/reagent_container/food/snacks/monkeycube/proc/Expand()
 	for(var/mob/M in viewers(src,7))
@@ -1382,7 +1383,7 @@
 /obj/item/reagent_container/food/snacks/monkeycube/wrapped
 	desc = "Still wrapped in some paper."
 	icon_state = "monkeycubewrap"
-	package = 1
+	package = TRUE
 
 
 /obj/item/reagent_container/food/snacks/monkeycube/farwacube
@@ -1736,7 +1737,7 @@
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 		list_reagents = list("nutriment" = 8, "tricordrazine" = 5)
-	..()
+	return ..()
 
 /obj/item/reagent_container/food/snacks/chawanmushi
 	name = "chawanmushi"
@@ -2609,7 +2610,7 @@
 	desc = "A hard microwavable burrito. There's no time given for how long to cook it. Packaged by the Weyland-Yutani Corporation."
 	icon_state = "burrito"
 	bitesize = 2
-	package = 1
+	package = TRUE
 	list_reagents = list("nutriment" = 5)
 	tastes = list("tortilla" = 2, "beans" = 2)
 
@@ -2617,7 +2618,7 @@
 	if(package)
 		playsound(src.loc,'sound/effects/pageturn2.ogg', 15, 1)
 		to_chat(user, "<span class='notice'>You pull off the wrapping from the squishy burrito!</span>")
-		package = 0
+		package = FALSE
 		icon_state = "openburrito"
 
 /obj/item/reagent_container/food/snacks/packaged_burger
@@ -2625,7 +2626,7 @@
 	desc = "A soggy microwavable burger. There's no time given for how long to cook it. Packaged by the Weyland-Yutani Corporation."
 	icon_state = "burger"
 	bitesize = 3
-	package = 1
+	package = TRUE
 	list_reagents = list("nutriment" = 5, "sodiumchloride" = 2)
 	tastes = list("bun" = 4, "soy protein" = 2) //Cheap fridge burgers.
 
@@ -2634,7 +2635,7 @@
 	if (package)
 		playsound(src.loc,'sound/effects/pageturn2.ogg', 15, 1)
 		to_chat(user, "<span class='notice'>You pull off the wrapping from the squishy hamburger!</span>")
-		package = 0
+		package = FALSE
 		icon_state = "hburger"
 
 /obj/item/reagent_container/food/snacks/packaged_hdogs
@@ -2642,7 +2643,7 @@
 	desc = "A singular squishy, room temperature, hot dog. There's no time given for how long to cook it, so you assume its probably good to go. Packaged by the Weyland-Yutani Corporation."
 	icon_state = "hot_dogs"
 	bitesize = 2
-	package = 1
+	package = TRUE
 	list_reagents = list("nutriment" = 3, "sodiumchloride" = 2)
 	tastes = list("dough" = 1, "chicken" = 1)
 
@@ -2650,7 +2651,7 @@
 	if (package)
 		playsound(src.loc,'sound/effects/pageturn2.ogg', 15, 1)
 		to_chat(user, "<span class='notice'>You pull off the wrapping from the squishy hotdog!</span>")
-		package = 0
+		package = FALSE
 		icon_state = "hotdog"
 
 /obj/item/reagent_container/food/snacks/upp
@@ -2658,7 +2659,7 @@
 	desc = "A sealed, freeze-dried, compressed package containing a single item of food. Commonplace in the UPP military, especially those units stationed on far-flung colonies. This one is stamped for consumption by the UPP's 'Smoldering Sons' battalion and was packaged in 2179."
 	icon_state = "upp_ration"
 	bitesize = 2
-	package = 1
+	package = TRUE
 	var/variation = 1
 
 /obj/item/reagent_container/food/snacks/upp/New()
@@ -2674,7 +2675,7 @@
 	if (package)
 		playsound(src.loc,'sound/effects/pageturn2.ogg', 15, 1)
 		to_chat(user, "<span class='notice'>You tear off the ration seal and pull out the contents!</span>")
-		package = 0
+		package = FALSE
 		desc = "An extremely dried item of food, with little flavoring or coloration. Looks to be prepped for long term storage, but will expire without the packaging. Best to eat it now to avoid waste. At least things are equal."
 		switch(variation)
 			if(1)
@@ -2710,7 +2711,7 @@
 //Wrapped candy bars
 
 /obj/item/reagent_container/food/snacks/wrapped
-	package = 1
+	package = TRUE
 	bitesize = 3
 	var/obj/item/trash/wrapper = null //Why this and not trash? Because it pulls the wrapper off when you unwrap it as a trash item.
 
@@ -2721,7 +2722,7 @@
 
 		new wrapper (user.loc)
 		icon_state = "[initial(icon_state)]-o"
-		package = 0
+		package = FALSE
 
 
 /obj/item/reagent_container/food/snacks/wrapped/booniebars
@@ -2755,7 +2756,7 @@
 
 /obj/item/reagent_container/food/snacks/packaged_meal
 	name = "\improper MRE component"
-	package = 1
+	package = TRUE
 	bitesize = 1
 	icon_state = "entree"
 	var/flavor = "boneless pork ribs"//default value
@@ -2773,7 +2774,7 @@
 		name = "\improper" + flavor
 		desc = "The contents of a USCM Standard issue MRE. This one is " + flavor + "."
 		icon_state = flavor
-		package = 0
+		package = FALSE
 
 /obj/item/reagent_container/food/snacks/packaged_meal/proc/determinetype(newflavor)
 	name = "\improper MRE component" + " (" + newflavor + ")"

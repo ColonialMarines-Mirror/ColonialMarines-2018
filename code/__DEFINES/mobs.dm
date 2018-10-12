@@ -48,6 +48,11 @@
 #define INFECTION_LEVEL_THREE	800
 
 #define MIN_ANTIBIOTICS			0
+
+
+#define LIVING_PERM_COEFF 0
+#define HELLHOUND_PERM_COEFF 0.5
+#define XENO_PERM_COEFF 0.8
 //=================================================
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.

@@ -244,13 +244,13 @@
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(!R.holder) //There is no QDELETED counterpart, this is it for now
+		if(R.holder.disposed)
 			continue
 		if(liverless && !R.self_consuming) //need to be metabolized
 			continue
 		if(!C)
 			C = R.holder.my_atom
-		if(C && R)
+		if(R)
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
 					if(R.overdose_threshold)

@@ -1,7 +1,7 @@
 
 // Takes care of organ & limb related updates, such as broken and missing limbs
 /mob/living/carbon/human/handle_organs()
-	..()
+	. = ..()
 
 	if(reagents && !(species.flags & NO_CHEM_METABOLIZATION))
 		if(species && species.has_organ["liver"])

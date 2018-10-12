@@ -18,7 +18,7 @@ var/global/list/randomized_pill_icons
 	var/pill_desc = "An unknown pill." //the real description of the pill, shown when examined by a medically trained person
 
 /obj/item/reagent_container/pill/New()
-	..()
+	. = ..()
 	if(!randomized_pill_icons)
 		var/allowed_numbers = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)
 		randomized_pill_icons = list()
@@ -26,10 +26,6 @@ var/global/list/randomized_pill_icons
 			randomized_pill_icons += "pill[pick_n_take(allowed_numbers)]"
 	if(!icon_state)
 		icon_state = "pill[rand(1,21)]"
-
-/obj/item/reagent_container/pill/examine(mob/user)
-	..()
-
 
 /obj/item/reagent_container/pill/attack_self(mob/user as mob)
 	return
@@ -50,7 +46,7 @@ var/global/list/randomized_pill_icons
 			reagents.trans_to(M, reagents.total_volume)
 
 		cdel(src)
-		return 1
+		return TRUE
 
 	else if(istype(M, /mob/living/carbon/human) )
 
@@ -125,7 +121,7 @@ var/global/list/randomized_pill_icons
 	pill_desc = "An anti-toxins pill. It neutralizes many common toxins."
 	list_reagents = list("anti_toxin" = 25)
 /obj/item/reagent_container/pill/antitox/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[1]
 
 /obj/item/reagent_container/pill/tox
@@ -133,15 +129,16 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("toxin" = 50)
 
 /obj/item/reagent_container/pill/tox/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[2]
 
 /obj/item/reagent_container/pill/cyanide
 	desc = "A cyanide pill. Don't swallow this!"
 	pill_desc = null//so even non medics can see what this pill is.
 	list_reagents = list("cyanide" = 50)
+
 /obj/item/reagent_container/pill/cyanide/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[2]
 
 /obj/item/reagent_container/pill/adminordrazine
@@ -149,7 +146,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("adminordrazine" = 50)
 
 /obj/item/reagent_container/pill/adminordrazine/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[3]
 
 /obj/item/reagent_container/pill/stox
@@ -157,7 +154,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("stoxin" = 15)
 
 /obj/item/reagent_container/pill/stox/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[4]
 
 /obj/item/reagent_container/pill/kelotane
@@ -165,7 +162,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("kelotane" = 15)
 
 /obj/item/reagent_container/pill/kelotane/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[5]
 
 /obj/item/reagent_container/pill/paracetamol
@@ -173,7 +170,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("paracetamol" = 15)
 
 /obj/item/reagent_container/pill/paracetamol/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[6]
 
 /obj/item/reagent_container/pill/tramadol
@@ -181,7 +178,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("tramadol" = 15)
 
 /obj/item/reagent_container/pill/tramadol/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[7]
 
 
@@ -190,7 +187,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("methylphenidate" = 15)
 
 /obj/item/reagent_container/pill/methylphenidate/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[8]
 
 /obj/item/reagent_container/pill/citalopram
@@ -198,7 +195,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("citalopram" = 15)
 
 /obj/item/reagent_container/pill/citalopram/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[9]
 
 
@@ -207,7 +204,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("inaprovaline" = 30)
 
 /obj/item/reagent_container/pill/inaprovaline/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[10]
 
 /obj/item/reagent_container/pill/dexalin
@@ -215,16 +212,15 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("dexalin" = 15)
 
 /obj/item/reagent_container/pill/dexalin/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[11]
-	reagents.add_reagent("dexalin", 15)
 
 /obj/item/reagent_container/pill/spaceacillin
 	pill_desc = "A Spaceacillin pill. Used to treat infected wounds and slow down viral infections."
 	list_reagents = list("spaceacillin" = 10)
 
 /obj/item/reagent_container/pill/spaceacillin/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[12]
 
 /obj/item/reagent_container/pill/happy
@@ -232,7 +228,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("space_drugs" = 15, "sugar" = 15)
 
 /obj/item/reagent_container/pill/happy/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[13]
 
 /obj/item/reagent_container/pill/zoom
@@ -240,14 +236,15 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("impedrezene" = 10, "synaptizine" = 5, "hyperzine" = 5)
 
 /obj/item/reagent_container/pill/zoom/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[14]
 
 /obj/item/reagent_container/pill/russianRed
 	pill_desc = "A Russian Red pill. A very dangerous radiation-countering substance."
 	list_reagents = list("russianred" = 10)
+
 /obj/item/reagent_container/pill/russianRed/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[15]
 
 
@@ -256,7 +253,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("peridaxon" = 10)
 
 /obj/item/reagent_container/pill/peridaxon/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[16]
 
 
@@ -265,7 +262,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("imidazoline" = 10)
 
 /obj/item/reagent_container/pill/imidazoline/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[17]
 
 
@@ -274,7 +271,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("alkysine" = 10)
 
 /obj/item/reagent_container/pill/alkysine/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[18]
 
 
@@ -283,7 +280,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("bicaridine" = 15)
 
 /obj/item/reagent_container/pill/bicaridine/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[19]
 
 /obj/item/reagent_container/pill/quickclot
@@ -291,7 +288,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("quickclot" = 10)
 
 /obj/item/reagent_container/pill/quickclot/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[20]
 
 /obj/item/reagent_container/pill/tricordrazine
@@ -299,7 +296,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("tricordrazine" = 15)
 
 /obj/item/reagent_container/pill/tricordrazine/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[9]
 
 /obj/item/reagent_container/pill/hypervene
@@ -307,7 +304,7 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("hypervene" = 3)
 
 /obj/item/reagent_container/pill/hypervene/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[14]
 
 /obj/item/reagent_container/pill/ultrazine
@@ -315,5 +312,5 @@ var/global/list/randomized_pill_icons
 	list_reagents = list("ultrazine" = 5)
 
 /obj/item/reagent_container/pill/ultrazine/New()
-	..()
+	. = ..()
 	icon_state = randomized_pill_icons[21]

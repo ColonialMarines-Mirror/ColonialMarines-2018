@@ -622,7 +622,7 @@
 	list_reagents = list("sodawater" = 50)
 
 /obj/item/reagent_container/food/drinks/drinkingglass/soda/New()
-	..()
+	. = ..()
 	on_reagent_change()
 
 /obj/item/reagent_container/food/drinks/drinkingglass/cola
@@ -631,5 +631,5 @@
 	list_reagents = list("cola" = 50)
 
 /obj/item/reagent_container/food/drinks/drinkingglass/cola/New()
-	..()
+	. = ..()
 	on_reagent_change()

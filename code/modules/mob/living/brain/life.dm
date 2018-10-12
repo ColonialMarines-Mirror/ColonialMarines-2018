@@ -82,7 +82,7 @@
 
 
 /mob/living/brain/handle_organs()
-	..()
+	. = ..()
 
 	if(reagents)
 		reagents.metabolize(src, 0, can_overdose = TRUE)
@@ -157,7 +157,7 @@
 
 
 /mob/living/brain/handle_regular_hud_updates()
-	..()
+	. = ..()
 
 	update_sight()
 

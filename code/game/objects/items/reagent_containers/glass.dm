@@ -16,9 +16,9 @@
 
 	var/label_text = ""
 
-	New()
-		..()
-		base_name = name
+/obj/item/reagent_container/glass/New()
+	. = ..()
+	base_name = name
 
 /obj/item/reagent_container/glass/examine(mob/user)
 	..()
@@ -204,21 +204,21 @@
 	list_reagents = list("cryoxadone" = 30)
 
 /obj/item/reagent_container/glass/beaker/cryoxadone/New()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_container/glass/beaker/cryopredmix
 	list_reagents = list("cryoxadone" = 30, "clonexadone" = 30)
 
 /obj/item/reagent_container/glass/beaker/cryopredmix/New()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_container/glass/beaker/sulphuric
 	list_reagents = list("sacid" = 60)
 
 /obj/item/reagent_container/glass/beaker/sulphuric/New()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_container/glass/bucket

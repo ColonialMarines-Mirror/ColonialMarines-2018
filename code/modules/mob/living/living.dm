@@ -480,7 +480,7 @@
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection()
-	return 0
+	return LIVING_PERM_COEFF
 
 /mob/proc/flash_eyes()
 	return

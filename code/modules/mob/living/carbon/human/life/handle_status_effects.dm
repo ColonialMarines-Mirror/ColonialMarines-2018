@@ -1,7 +1,7 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/handle_status_effects()
-	..()
+	. = ..()
 
 
 	//The analgesic effect wears off slowly

@@ -56,15 +56,10 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 	if(knocked_out || sleeping || health < 0)
 		stat = UNCONSCIOUS
-		if(isXenoRunner() && layer != initial(layer))
-			layer = MOB_LAYER
 		see_in_dark = 5
 	else
 		stat = CONSCIOUS
-		if(isXenoBoiler())
-			see_in_dark = 20
-		else
-			see_in_dark = 8
+		see_in_dark = 8
 	update_canmove()
 
 	//Deal with devoured things and people
@@ -77,8 +72,18 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				M.forceMove(loc)
 	return TRUE
 
+/mob/living/carbon/Xenomorph/Runner/update_stat()
+	. = ..()
+	if(stat != CONSCIOUS && layer != initial(layer))
+		layer = MOB_LAYER
+
+/mob/living/carbon/Xenomorph/Boiler/update_stat()
+	. = ..()
+	if(stat == CONSCIOUS)
+		see_in_dark = 20
+
 /mob/living/carbon/Xenomorph/handle_status_effects()
-	..()
+	. = ..()
 	handle_stagger() // 1 each time
 	handle_slowdown() // 0.4 each time
 	handle_halloss() // 3 each time
@@ -217,8 +222,8 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		armor_pheromone_bonus = warding_aura * 3 //Bonus armor from pheromones, no matter what the armor was previously. Was 5
 
 /mob/living/carbon/Xenomorph/handle_regular_hud_updates()
-	..()
-
+	if(!client)
+		return FALSE
 	if(hud_used && hud_used.healths)
 		if(stat != DEAD)
 			switch(round(health * 100 / maxHealth)) //Maxhealth should never be zero or this will generate runtimes.

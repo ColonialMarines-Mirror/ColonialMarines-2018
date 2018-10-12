@@ -3,33 +3,32 @@
 	if(stat != DEAD) //Chemicals in body and some other stuff.
 		handle_organs()
 
-	..()
+	. = ..()
 
 	handle_fire() //Check if we're on fire
 
 /mob/living/carbon/handle_regular_hud_updates()
-	..()
+	. = ..()
 
-	if(!isXeno(src)) // They have a different HUD.
-		if (hud_used && hud_used.healths)
-			if (stat != DEAD)
-				switch(round(health * 100 / maxHealth))
-					if(100 to INFINITY)
-						hud_used.healths.icon_state = "health0"
-					if(75 to 99)
-						hud_used.healths.icon_state = "health1"
-					if(50 to 74)
-						hud_used.healths.icon_state = "health2"
-					if(25 to 49)
-						hud_used.healths.icon_state = "health3"
-					if(10 to 24)
-						hud_used.healths.icon_state = "health4"
-					if(0 to 9)
-						hud_used.healths.icon_state = "health5"
-					else
-						hud_used.healths.icon_state = "health6"
-			else
-				hud_used.healths.icon_state = "health7"
+	if (hud_used && hud_used.healths)
+		if (stat != DEAD)
+			switch(round(health * 100 / maxHealth))
+				if(100 to INFINITY)
+					hud_used.healths.icon_state = "health0"
+				if(75 to 99)
+					hud_used.healths.icon_state = "health1"
+				if(50 to 74)
+					hud_used.healths.icon_state = "health2"
+				if(25 to 49)
+					hud_used.healths.icon_state = "health3"
+				if(10 to 24)
+					hud_used.healths.icon_state = "health4"
+				if(0 to 9)
+					hud_used.healths.icon_state = "health5"
+				else
+					hud_used.healths.icon_state = "health6"
+		else
+			hud_used.healths.icon_state = "health7"
 
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
@@ -57,7 +56,7 @@
 	reagent_pain_modifier = 0
 
 /mob/living/carbon/handle_status_effects()
-	..()
+	. = ..()
 	var/pwr = (stat || resting) ? 1 : 0
 	var/restingpwr = 3 + 12 * pwr
 
@@ -126,8 +125,6 @@
 			slurring += 1.2
 
 		if(drunkenness >= 41)
-			if(drunkenness < 61)
-				reagent_shock_modifier += PAIN_REDUCTION_VERY_LIGHT
 			if(prob(25))
 				confused += 2
 			if(dizziness < 450) // To avoid giving the player overly dizzy too
@@ -141,8 +138,6 @@
 				Dizzy(12)
 
 		if(drunkenness >= 61)
-			if(drunkenness < 81)
-				reagent_shock_modifier += PAIN_REDUCTION_LIGHT
 			if(prob(25))
 				blur_eyes(3)
 
@@ -150,15 +145,12 @@
 			blur_eyes(4)
 
 		if(drunkenness >= 81)
-			if(drunkenness < 91)
-				reagent_shock_modifier += PAIN_REDUCTION_MEDIUM
 			adjustToxLoss(0.2)
 			if(prob(10) && !stat)
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 				drowsyness += 5
 
 		if(drunkenness >= 91)
-			reagent_shock_modifier += PAIN_REDUCTION_HEAVY
 			adjustBrainLoss(0.2)
 			if(prob(15 && !stat))
 				to_chat(src, "<span class='warning'>Just a quick nap...</span>")
@@ -166,3 +158,11 @@
 
 		if(drunkenness >=101) //Let's be honest, you should be dead by now
 			adjustToxLoss(4)
+
+	switch(drunkenness) //painkilling effects
+		if(51 to 71)
+			reagent_shock_modifier += PAIN_REDUCTION_LIGHT
+		if(71 to 81)
+			reagent_shock_modifier += PAIN_REDUCTION_MEDIUM
+		if(81 to INFINITY)
+			reagent_shock_modifier += PAIN_REDUCTION_HEAVY

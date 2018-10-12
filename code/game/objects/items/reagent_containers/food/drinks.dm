@@ -226,9 +226,6 @@
 	volume = 10
 	center_of_mass = list("x"=16, "y"=12)
 
-/obj/item/reagent_container/food/drinks/sillycup/New()
-	..()
-
 /obj/item/reagent_container/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)
 		icon_state = "water_cup"

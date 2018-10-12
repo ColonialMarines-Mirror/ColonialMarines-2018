@@ -11,13 +11,13 @@
 	update_icons()
 
 /mob/living/carbon/hellhound/handle_organs()
-	..()
+	. = ..()
 
 	if(reagents && reagents.reagent_list.len)
 		reagents.metabolize(src, 0, can_overdose = FALSE) //set it to true for hyperzine craving dog
 
 /mob/living/carbon/hellhound/handle_status_effects()
-	..()
+	. = ..()
 
 	if(confused)
 		confused = 0

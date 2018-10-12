@@ -379,7 +379,7 @@
 	list_reagents = list("inaprovaline" = 15)
 
 /obj/item/reagent_container/syringe/inaprovaline/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
@@ -389,7 +389,7 @@
 	list_reagents = list("anti_toxin" = 15)
 
 /obj/item/reagent_container/syringe/antitoxin/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
@@ -399,7 +399,7 @@
 	list_reagents = list("spaceacillin" = 15)
 
 /obj/item/reagent_container/syringe/robot/antiviral/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
@@ -409,7 +409,7 @@
 	list_reagents = list("space_drugs" = 5, "mindbreaker" = 5, "cryptobiolin" = 5)
 
 /obj/item/reagent_container/syringe/robot/drugs/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
@@ -417,7 +417,7 @@
 	list_reagents = list("chloralhydrate" = 50)
 
 /obj/item/reagent_container/syringe/ld50_syringe/choral/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
@@ -430,7 +430,7 @@
 	list_reagents = list("anti_toxin" = 15)
 
 /obj/item/reagent_container/syringe/robot/antitoxin/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
@@ -440,7 +440,7 @@
 	list_reagents = list("inaprovaline" = 15)
 
 /obj/item/reagent_container/syringe/robot/inaprovaline/New()
-	..()
+	. = ..()
 	reagents.add_reagent("inaprovaline", 15)
 	mode = SYRINGE_INJECT
 	update_icon()
@@ -451,6 +451,6 @@
 	list_reagents = list("inaprovaline" = 7, "anti_toxin" = 8)
 
 /obj/item/reagent_container/syringe/robot/mixed/New()
-	..()
+	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()

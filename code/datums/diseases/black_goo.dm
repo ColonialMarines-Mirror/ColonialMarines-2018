@@ -39,8 +39,10 @@
 		if(2)
 			if(goo_message_cooldown < world.time)
 				if (prob(3)) to_chat(affected_mob, "\red Your throat is really dry...")
-				else if (prob(6)) to_chat(affected_mob, "\red You feel really warm...")
-				else if (prob(2)) H.vomit()
+				else if (prob(6))
+					to_chat(affected_mob, "\red You feel really warm...")
+				else if (prob(2))
+					H.vomit()
 				goo_message_cooldown = world.time + 100
 		if(3)
 			hidden = list(0,0)

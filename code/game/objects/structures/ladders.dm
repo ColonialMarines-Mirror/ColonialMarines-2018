@@ -66,7 +66,8 @@
 	return attack_hand(M)
 
 /obj/structure/ladder/attack_hand(mob/user)
-	if(user.stat || get_dist(user, src) > 1 || is_blind(user) || user.lying || user.buckled || user.anchored) return
+	if(user.stat || get_dist(user, src) > 1 || is_blind(user) || user.lying || user.buckled || user.anchored)
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone else is currently using [src].</span>")
 		return

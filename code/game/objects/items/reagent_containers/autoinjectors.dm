@@ -71,15 +71,15 @@
 	..()
 	update_icon()
 
-/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate
+/obj/item/reagent_container/hypospray/autoinjector/stoxin
 	name = "anesthetic autoinjector"
-	desc = "An autoinjector loaded with 1 unit of Chloral Hydrate and 9 units of Sleeping Agent. Good to quickly pacify someone, for surgery of course."
+	desc = "An autoinjector loaded with 10 units of Sleeping Agent. Good to quickly pacify someone, for surgery of course."
 	amount_per_transfer_from_this = 10
 	volume = 10
 	icon_state = "anesthetic"
 	list_reagents = list("stoxin" = 10)
 
-/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate/New()
+/obj/item/reagent_container/hypospray/autoinjector/stoxin/New()
 	..()
 	update_icon()
 
@@ -87,7 +87,7 @@
 	name = "\improper Dylovene (anti-tox) autoinjector"
 	desc = "An auto-injector loaded with 15 units of Dylovene, an anti-toxin agent useful in cases of poisoning, overdoses and toxin build-up."
 	icon_state = "dylovene"
-	list_reagents = list("anti_toxin" = 10)
+	list_reagents = list("anti_toxin" = 15)
 
 /obj/item/reagent_container/hypospray/autoinjector/Dylovene/New()
 	..()

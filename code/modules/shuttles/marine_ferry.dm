@@ -411,7 +411,11 @@
 	var/list/with_queen = list()
 	for(var/mob/living/carbon/Xenomorph/xeno in living_xeno_list)
 		if(xeno.hivenumber != XENO_HIVE_NORMAL) continue
-		if(xeno.loc.z == hive.living_xeno_queen.loc.z) // yes loc because of vent crawling
+		if(xeno.loc.z == hive.living_xeno_queen.loc.z || xeno.loc.z != 1) // yes loc because of vent crawling
+			/* or != 1 because '#include "maps\Z.01.LV624.dmm"' is the first map loaded in ColonialMarinesALPHA.dme,
+			 * i.e. this assumes the first map will always be the planet/station map,
+			 * and it is assumed all xenos not on the planet/station can be killed/lose or can win
+			 */
 			with_queen += xeno
 		else
 			left_behind += xeno

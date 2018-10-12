@@ -432,7 +432,7 @@
 	icon_state = "hangar_alpha"
 
 /area/prison/hanger/research
-	name = "\improper Research Hanger"
+	name = "\improper Civilian Hanger"
 	icon_state = "hangar_beta"
 
 /area/prison/hangar_storage/main

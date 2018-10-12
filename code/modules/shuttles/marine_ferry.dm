@@ -370,7 +370,6 @@
 			F.turn_off()
 
 	// sanity checking
-	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 	var/list/left_behind = list()
 	var/list/with_queen = list()
 	for(var/mob/living/carbon/Xenomorph/xeno in living_xeno_list)

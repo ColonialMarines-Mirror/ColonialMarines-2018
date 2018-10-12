@@ -97,8 +97,7 @@
 	if(list_reagents)
 		create_reagents(50)
 		flags_atom |= NOREACT
-		for(var/reagent in list_reagents)
-			reagents.add_reagent(reagent, list_reagents[reagent])
+		reagents.add_reagent_list(list_reagents)
 
 //Target, firer, shot from. Ie the gun
 /obj/item/projectile/proc/fire_at(atom/target,atom/F, atom/S, range = 30,speed = 1)

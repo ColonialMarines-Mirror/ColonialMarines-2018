@@ -359,7 +359,7 @@
 					if(selected)
 						selected.overwatch_officer = usr //Link everything together, squad, console, and officer
 						current_squad = selected
-						send_to_squad("Attention - Your squad has been selected for Overwatch. Check your Status panel for objectives.")
+						send_to_squad("Attention - Your squad has been selected for Overwatch. Check your Status pane for objectives.")
 						send_to_squad("Your Overwatch officer is: [operator.name].")
 						visible_message("\icon[src] <span class='boldnotice'>Tactical data for squad '[current_squad]' loaded. All tactical functions initialized.</span>")
 						attack_hand(usr)

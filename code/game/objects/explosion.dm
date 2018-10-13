@@ -7,12 +7,13 @@
 	else		return dy + (0.5*dx)
 
 
-/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 0, flame_range = 0)
+/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 0, flame_range = 0, verbose_cause = "no explanation")
+	var/explosion_source = src.name
 	src = null	//so we don't abort once src is deleted
 	spawn(0)
 		if(config.use_recursive_explosions)
 			var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
-			explosion_rec(epicenter, power)
+			explosion_rec(epicenter, power, verbose_cause, explosion_source)
 			return
 
 		var/start = world.timeofday
@@ -61,8 +62,8 @@
 						if(!istype(M.loc, /turf/open/space))
 							M << 'sound/effects/explosionfar.ogg'
 		if(adminlog)
-			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
-			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
+			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]), from atom [explosion_source], cause: [verbose_cause] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name], from atom named [explosion_source], cause: [verbose_cause] ")
 
 		var/approximate_intensity = (devastation_range * 3) + (heavy_impact_range * 2) + light_impact_range
 

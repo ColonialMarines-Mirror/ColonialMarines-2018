@@ -10,7 +10,7 @@
 var/list/explosion_turfs = list()
 var/explosion_in_progress = 0
 
-proc/explosion_rec(turf/epicenter, power)
+proc/explosion_rec(turf/epicenter, power, verbose cause = "no explanation", explosion_source = "unknown")
 	var/loopbreak = 0
 	while(explosion_in_progress)
 		if(loopbreak >= 15) return
@@ -21,8 +21,8 @@ proc/explosion_rec(turf/epicenter, power)
 	epicenter = get_turf(epicenter)
 	if(!epicenter) return
 
-	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
-	log_game("Explosion with size ([power]) in area [epicenter.loc.name] ")
+	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z], from atom [explosion_source], cause: [verbose_cause])")
+	log_game("Explosion with size ([power]) in area [epicenter.loc.name], from atom named [explosion_source], cause: [verbose_cause] ")
 
 	playsound(epicenter, 'sound/effects/explosionfar.ogg', 75, 1, max(round(8*power,1),14) )
 	playsound(epicenter, "explosion", 75, 1, max(round(4*power,1),7) )

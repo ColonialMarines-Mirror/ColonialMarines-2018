@@ -92,7 +92,7 @@
 /obj/item/reagent_container/food/drinks/cans/cola
 	name = "\improper Nanotrasen Cola"
 	desc = "A can of artificial flavors, sweeteners, and coloring, at least it's carbonated. Canned by Nanotrasen."
-	icon_state = "fruit_beer"
+	icon_state = "nt_cola"
 	center_of_mass = list("x"=16, "y"=10)
 	New()
 		..()

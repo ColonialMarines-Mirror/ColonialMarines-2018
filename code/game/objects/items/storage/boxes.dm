@@ -667,7 +667,7 @@
 	var/main = pick("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti chunks", "chicken tender")
 	var/second = pick("cracker", "cheese spread", "rice onigiri", "mashed potatoes", "risotto")
 	var/side = pick("biscuit", "meatballs", "pretzels", "peanuts", "sushi")
-	var/desert = pick("spiced apples", "chocolate brownie", "sugar cookie", "coco bar", "flan", "honey flan")
+	var/desert = pick("spiced apples", "chocolate brownie", "sugar cookie", "coco bar", "flan", "honey flan","crayon")
 	name = "[initial(name)] ([main])"
 	new /obj/item/reagent_container/food/snacks/packaged_meal(src, main)
 	new /obj/item/reagent_container/food/snacks/packaged_meal(src, second)

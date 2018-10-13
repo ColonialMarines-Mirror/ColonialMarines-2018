@@ -2,8 +2,8 @@
 	name = "detonation pack"
 	desc = "Programmable remotely triggered 'smart' explosive used for demolitions and impromptu booby traps. Can be set to breach or demolition detonation patterns."
 	gender = PLURAL
-	icon = 'icons/obj/items/assemblies.dmi'
-	icon_state = "plastic-explosive_off"
+	icon = 'icons/obj/det.dmi'
+	icon_state = "detpack_off"
 	item_state = "plasticx"
 	flags_item = NOBLUDGEON
 	frequency = 1457
@@ -40,18 +40,18 @@
 /obj/item/device/radio/detpack/update_icon()
 	if(!anchored)
 		if(on)
-			icon_state = "plastic-explosive_on"
+			icon_state = "detpack_on"
 			if(armed)
-				icon_state = "plastic-explosive_armed"
+				icon_state = "detpack_armed"
 		else
-			icon_state = "plastic-explosive_off"
+			icon_state = "detpack_off"
 	else
 		if(on)
-			icon_state = "plastic-explosive_set_on"
+			icon_state = "detpack_set_on"
 			if(armed)
-				icon_state = "plastic-explosive_set_armed"
+				icon_state = "detpack_set_armed"
 		else
-			icon_state = "plastic-explosive_set"
+			icon_state = "detpack_set_off"
 
 /obj/item/device/radio/detpack/attackby(obj/item/W as obj, mob/user as mob)
 	..()

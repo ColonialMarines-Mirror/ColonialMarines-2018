@@ -539,6 +539,11 @@ var/const/INGEST = 2
 
 	return trans_data
 
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+	for(var/r_id in list_reagents)
+		var/amt = list_reagents[r_id]
+		add_reagent(r_id, amt, data)
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 
@@ -547,3 +552,4 @@ var/const/INGEST = 2
 atom/proc/create_reagents(var/max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+

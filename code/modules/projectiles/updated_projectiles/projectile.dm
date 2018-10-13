@@ -45,11 +45,11 @@
 	var/damage_falloff = 0 //how many damage point the projectile loses per tiles travelled
 
 	var/scatter = 0
-	
-	var/list/list_reagents = null
 
 	var/distance_travelled = 0
 	var/in_flight = 0
+
+	var/list_reagents = null
 
 	New()
 		..()
@@ -93,11 +93,7 @@
 	accuracy   *= rand(config.proj_variance_low-ammo.accuracy_var_low, config.proj_variance_high+ammo.accuracy_var_high) * config.proj_base_accuracy_mult//Rand only works with integers.
 	damage     *= rand(config.proj_variance_low-ammo.damage_var_low, config.proj_variance_high+ammo.damage_var_high) * config.proj_base_damage_mult
 	damage_falloff = ammo.damage_falloff
-	list_reagents = ammo.list_reagents 
-	if(list_reagents)
-		create_reagents(50)
-		flags_atom |= NOREACT
-		reagents.add_reagent_list(list_reagents)
+	list_reagents = ammo.ammo_reagents
 
 //Target, firer, shot from. Ie the gun
 /obj/item/projectile/proc/fire_at(atom/target,atom/F, atom/S, range = 30,speed = 1)
@@ -466,8 +462,7 @@
 
 	if(P.list_reagents && stat != DEAD)
 		if(ishuman() || ismonkey())
-			P.reagents.reaction(src, TOUCH) // potential extra effects
-			P.reagents.trans_to(src, 50)
+			reagents.add_reagent_list(P.list_reagents)
 
 	if(damage)
 		bullet_message(P)
@@ -571,6 +566,9 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 		if(species.name != "Yautja" && !(species.flags & IS_SYNTHETIC)) apply_effects(arglist(P.ammo.debilitate))
 
 	bullet_message(P) //We still want this, regardless of whether or not the bullet did damage. For griefers and such.
+
+	if(P.list_reagents && stat != DEAD)
+		reagents.add_reagent_list(P.list_reagents)
 
 	if(damage)
 		apply_damage(damage, P.ammo.damage_type, P.def_zone)

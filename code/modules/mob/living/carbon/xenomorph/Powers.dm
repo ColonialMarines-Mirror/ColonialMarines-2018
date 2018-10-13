@@ -939,12 +939,14 @@
 	A.generate_bullet(ammo)
 	A.permutated += src
 	A.def_zone = get_limbzone_target()
-	A.fire_at(T, src, null, ammo.max_range, ammo.shell_speed)
+
 	if(A.damage)
 		A.damage += A.damage * (max(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
-	if(A.list_reagents)
+	if(A.ammo.ammo_reagents)
 		for(var/reagent in A.list_reagents)
-			reagents.add_reagent(reagent, A.list_reagents[reagent] * max(0,upgrade) * 0.15) //increase neuro reagents by 15% per upgrade level.
+			A.list_reagents[reagent] *= 1 + max(0,upgrade) * 0.15 //increase neuro reagents by 15% per upgrade level.
+
+	A.fire_at(T, src, null, ammo.max_range, ammo.shell_speed)
 	has_spat = world.time + spit_delay + ammo.added_spit_delay
 	use_plasma(ammo.spit_cost)
 	cooldown_notification(spit_delay + ammo.added_spit_delay, "spit")

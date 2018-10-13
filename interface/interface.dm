@@ -8,7 +8,7 @@
 			return
 		src << link(config.wikiurl)
 	else
-		src << "\red The wiki URL is not set in the server configuration."
+		to_chat(src, "<span class='warning'>The wiki URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/forum()
@@ -20,7 +20,7 @@
 			return
 		src << link(config.forumurl)
 	else
-		src << "\red The forum URL is not set in the server configuration."
+		to_chat(src, "<span class='warning'>The forum URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/rules()
@@ -32,25 +32,31 @@
 			return
 		src << link(config.rulesurl)
 	else
-		src << "\red The rules URL is not set in the server configuration."
+		to_chat(src, "<span class='warning'>The rules URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/patreon()
 	set name = "Patreon"
 	set desc = "Like our server? Buy us and get satisfaction for your efforts."
 	set hidden = 1
-
-	src << "<br>View our donation page for more info: https://www.patreon.com/tgstation.<br>"
+	if( config.donationurl )
+		if(alert("This will open our donation page in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.donationurl)
+	else
+		to_chat(src, "<span class='warning'>The donation URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/submitbug()
 	set name = "Submit Bug"
 	set desc = "Submit a bug."
 	set hidden = 1
-
-	if(alert("Please search for the bug first to make sure you aren't posting a duplicate.",,"Ok","Cancel")=="Cancel")
-		return
-	src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018")
+	if( config.bugtrackerurl )
+		if(alert("This will open our bug tracker page in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.bugtrackerurl)
+	else
+		to_chat(src, "<span class='warning'>The bug tracker URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/webmap()

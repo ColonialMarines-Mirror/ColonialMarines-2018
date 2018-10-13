@@ -80,14 +80,14 @@
 	if (target == loc || !target || action_busy)
 		return
 
-	if(!do_after(src, 12, TRUE, 5, BUSY_ICON_HOSTILE))
-		return
-
 	if (used_acid_spray || !check_plasma(200))
 		return
 
 	if(stagger)
 		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
+		return
+
+	if(!do_after(src, 5, TRUE, 5, BUSY_ICON_HOSTILE))
 		return
 
 	round_statistics.praetorian_acid_sprays++
@@ -122,7 +122,7 @@
 			if(!O.CheckExit(src, next_T))
 				if(istype(O, /obj/structure/barricade))
 					var/obj/structure/barricade/B = O
-					B.health -= rand(20, 30)
+					B.health -= rand(40,60) + 8 * upgrade
 					B.update_health(1)
 				return
 
@@ -135,7 +135,7 @@
 			if(!O.CanPass(src, loc))
 				if(istype(O, /obj/structure/barricade))
 					var/obj/structure/barricade/B = O
-					B.health -= rand(20, 30)
+					B.health -= rand(40,60) + 8 * upgrade
 					B.update_health(1)
 				return
 
@@ -171,7 +171,7 @@
 				if(!O.CheckExit(left_S, next_normal_turf))
 					if(istype(O, /obj/structure/barricade))
 						var/obj/structure/barricade/B = O
-						B.health -= rand(20, 30)
+						B.health -= rand(40,60) + 8 * upgrade
 						B.update_health(1)
 					normal_density_flag = 1
 					break
@@ -186,7 +186,7 @@
 					if(!O.CanPass(left_S, left_S.loc))
 						if(istype(O, /obj/structure/barricade))
 							var/obj/structure/barricade/B = O
-							B.health -= rand(20, 30)
+							B.health -= rand(40,60) + 8 * upgrade
 							B.update_health(1)
 						normal_density_flag = 1
 						break
@@ -203,7 +203,7 @@
 				if(!O.CheckExit(right_S, next_inverse_normal_turf))
 					if(istype(O, /obj/structure/barricade))
 						var/obj/structure/barricade/B = O
-						B.health -= rand(20, 30)
+						B.health -= rand(40,60) + 8 * upgrade
 						B.update_health(1)
 					inverse_normal_density_flag = 1
 					break
@@ -218,7 +218,7 @@
 					if(!O.CanPass(right_S, right_S.loc))
 						if(istype(O, /obj/structure/barricade))
 							var/obj/structure/barricade/B = O
-							B.health -= rand(20, 30)
+							B.health -= rand(40,60) + 8 * upgrade
 							B.update_health(1)
 						inverse_normal_density_flag = 1
 						break
@@ -235,7 +235,7 @@
 
 		// This should probably be moved into obj/effect/xenomorph/spray or something
 		for (var/obj/structure/barricade/B in T)
-			B.health -= rand(20, 30)
+			B.health -= rand(40,60) + 8 * upgrade
 			B.update_health(1)
 
 		for (var/mob/living/carbon/C in T)
@@ -246,12 +246,12 @@
 				continue
 
 			round_statistics.praetorian_spray_direct_hits++
-			C.adjustFireLoss(rand(20,30) + 5 * upgrade)
+			C.adjustFireLoss(rand(30,40) + 5 * upgrade)
 			to_chat(C, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
 
 			if (!isYautja(C))
 				C.emote("scream")
-				C.KnockDown(rand(3, 4))
+				C.KnockDown(1)
 
 
 // Warrior Fling
@@ -1403,3 +1403,116 @@
 		to_chat(src, "<span class='notice'>The selected xeno ability will now be activated with shift clicking.</span>")
 	else
 		to_chat(src, "<span class='notice'>The selected xeno ability will now be activated with middle mouse clicking.</span>")
+
+
+/mob/living/carbon/Xenomorph/proc/spray_turfs(list/turflist)
+	set waitfor = 0
+
+	if(isnull(turflist))
+		return
+	var/turf/prev_turf
+	var/distance = 0
+
+	turf_loop:
+		for(var/turf/T in turflist)
+			distance++
+
+			if(!prev_turf && turflist.len > 1)
+				prev_turf = get_turf(src)
+				continue //So we don't burn the tile we be standin on
+
+			if(T.density || istype(T, /turf/open/space))
+				break
+			if(distance > 7)
+				break
+
+			if(locate(/obj/structure/girder, T))
+				break //Nope.avi
+
+			var/obj/machinery/M = locate() in T
+			if(M)
+				if(M.density)
+					break
+
+			if(prev_turf && LinkBlocked(prev_turf, T))
+				break
+
+			for(var/obj/structure/barricade/B in T)
+				B.health -= rand(45, 60) + 8 * upgrade
+				B.update_health(TRUE)
+				if(prev_turf)
+					if(get_dir(B, prev_turf) & B.dir)
+						break turf_loop
+
+			prev_turf = T
+			splat_turf(T)
+			sleep(2)
+
+
+/mob/living/carbon/Xenomorph/proc/splat_turf(var/turf/target)
+	if(!istype(target) || istype(target,/turf/open/space))
+		return
+
+	for(var/obj/effect/xenomorph/spray/S in target) //No stacking spray!
+		cdel(S)
+	new /obj/effect/xenomorph/spray(target)
+	for(var/mob/living/carbon/M in target)
+		if(ishuman(M) || ismonkey(M))
+			if((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))
+				continue //nested infected hosts are not hurt by acid spray
+			M.adjustFireLoss(rand(30, 45) + 5 * upgrade)
+			to_chat(M, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
+			if(!isYautja(M))
+				M.emote("scream")
+				M.KnockDown(1)
+
+/mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 150, acid_delay = src.acid_delay)
+	if(!T) return
+
+	if(!check_state())
+		return
+
+	if(acid_cooldown)
+		return
+
+	if(!isturf(loc) || istype(loc, /turf/open/space))
+		to_chat(src, "<span class='warning'>You can't do that from there.</span>")
+		return
+
+	if(!check_plasma(plasmacost))
+		return
+
+	if(T)
+		var/turf/target
+
+		if(isturf(T))
+			target = T
+		else
+			target = get_turf(T)
+
+		if(!istype(target)) //Something went horribly wrong. Clicked off edge of map probably
+			return
+
+		if(target == loc)
+			to_chat(src, "<span class='warning'>That's far too close!</span>")
+			return
+
+		if(!target)
+			return
+
+		acid_cooldown = 1
+		use_plasma(plasmacost)
+		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1)
+		visible_message("<span class='xenowarning'>\The [src] spews forth a virulent spray of acid!</span>", \
+		"<span class='xenowarning'>You spew forth a spray of acid!</span>", null, 5)
+		var/turflist = getline(src, target)
+		spray_turfs(turflist)
+		spawn(acid_delay)
+			acid_cooldown = 0
+			playsound(src.loc, 'sound/voice/alien_drool1.ogg', 50, 1)
+			to_chat(src, "<span class='warning'>You feel your acid glands refill. You can spray <B>acid</b> again.</span>")
+			for(var/X in actions)
+				var/datum/action/A = X
+				A.update_button_icon()
+	else
+		to_chat(src, "<span class='warning'>You see nothing to spit at!</span>")

@@ -1274,6 +1274,10 @@
 	..()
 	damage = config.low_hit_damage
 
+/datum/ammo/xeno/acid/heavy/spitter
+	..()
+	spit_cost = 75
+
 /datum/ammo/xeno/boiler_gas
 	name = "glob of gas"
 	icon_state = "boiler_gas2"

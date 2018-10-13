@@ -527,9 +527,11 @@
 
 
 /mob/living/carbon/Xenomorph/proc/update_spits()
-	if(!ammo) //Only update xenos with ammo.
+	if(!ammo || !spit_types.len) //Only update xenos with ammo and spit types.
 		return
 	for(var/i in 1 to spit_types.len)
 		if(ammo.icon_state == ammo_list[spit_types[i]].icon_state)
 			ammo = ammo_list[spit_types[i]]
 			return
+	ammo = ammo_list[spit_types[1]] //No matching projectile time; default to first spit type
+	return

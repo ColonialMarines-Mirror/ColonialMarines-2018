@@ -48,6 +48,7 @@
 	layer = ABOVE_OBJ_LAYER
 	mouse_opacity = 0
 	flags_pass = PASSTABLE|PASSMOB|PASSGRILLE
+	var/slow_amt = 8
 
 /obj/effect/xenomorph/spray/New() //Self-deletes
 	..()
@@ -64,16 +65,16 @@
 		if(!H.lying)
 			to_chat(H, "<span class='danger'>Your feet scald and burn! Argh!</span>")
 			H.emote("pain")
-			H.KnockDown(3)
+			H.next_move_slowdown += slow_amt
 			var/datum/limb/affecting = H.get_limb("l_foot")
-			if(istype(affecting) && affecting.take_damage(0, rand(5, 10)))
+			if(istype(affecting) && affecting.take_damage(0, rand(10, 20)))
 				H.UpdateDamageIcon()
 			affecting = H.get_limb("r_foot")
-			if(istype(affecting) && affecting.take_damage(0, rand(5, 10)))
+			if(istype(affecting) && affecting.take_damage(0, rand(10, 20)))
 				H.UpdateDamageIcon()
 			H.updatehealth()
 		else
-			H.adjustFireLoss(rand(2, 5)) //This is ticking damage!
+			H.adjustFireLoss(rand(5, 10)) //This is ticking damage!
 			to_chat(H, "<span class='danger'>You are scalded by the burning acid!</span>")
 
 /obj/effect/xenomorph/spray/process()

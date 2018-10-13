@@ -179,7 +179,7 @@
 		X.acid_spray_cone(A)
 		return
 
-	var/mob/living/carbon/Xenomorph/Boiler/B = X
+	var/mob/living/carbon/Xenomorph/B = X
 	B.acid_spray(A)
 
 /datum/action/xeno_action/activable/spray_acid/action_cooldown_check()
@@ -188,7 +188,7 @@
 	if (isXenoPraetorian(owner))
 		return !X.used_acid_spray
 
-	var/mob/living/carbon/Xenomorph/Boiler/B = X
+	var/mob/living/carbon/Xenomorph/B = X
 	return !B.acid_cooldown
 
 // Warrior Agility

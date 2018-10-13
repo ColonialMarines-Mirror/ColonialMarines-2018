@@ -158,7 +158,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 400
 					caste_desc = "A ranged damage dealer. It looks a little more dangerous."
-					spit_types = list(/datum/ammo/xeno/toxin/medium/upgrade1, /datum/ammo/xeno/acid/medium)
+					spit_types = list(/datum/ammo/xeno/acid/heavy/spitter)
 					armor_deflection = 25
 					tacklemin = 3
 					tacklemax = 5
@@ -376,7 +376,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 800
 					caste_desc = "A ranged damage dealer. It looks pretty strong."
-					spit_types = list(/datum/ammo/xeno/toxin/medium/upgrade2, /datum/ammo/xeno/acid/medium)
+					spit_types = list(/datum/ammo/xeno/acid/heavy/spitter)
 					armor_deflection = 30
 					tacklemin = 4
 					tacklemax = 6
@@ -593,7 +593,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_max = 900
 					spit_delay = 10
 					caste_desc = "A ranged destruction machine."
-					spit_types = list(/datum/ammo/xeno/toxin/medium/upgrade3, /datum/ammo/xeno/acid/medium)
+					spit_types = list(/datum/ammo/xeno/acid/heavy/spitter)
 					armor_deflection = 30
 					tacklemin = 5
 					tacklemax = 7

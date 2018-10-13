@@ -36,6 +36,8 @@
 		midi_playing = 0
 		if(heard_midi == 0)
 			message_admins("No-one heard the midi")
+			total_silenced = 0
+			return
 		if((total_silenced / heard_midi) != 0)
 			midi_warning = " <span style='color: red'>[round((total_silenced / heard_midi) * 100)]% of players don't want to hear it, and likely more if the midi is longer than 30 seconds.</span>"
 		message_admins("'Silence Current Midi' usage reporting 30-sec timer has expired. [total_silenced] player(s) silenced the midi in the first 30 seconds out of [heard_midi] total player(s) that have 'Play Admin Midis' enabled.[midi_warning]")

@@ -3,7 +3,7 @@
 	set name = "wiki"
 	set desc = "Visit the wiki."
 	set hidden = 1
-	if( config.wikiurl )
+	if(config.wikiurl)
 		if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.wikiurl)
@@ -15,7 +15,7 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
-	if( config.forumurl )
+	if(config.forumurl)
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.forumurl)
@@ -27,7 +27,7 @@
 	set name = "rules"
 	set desc = "Read our rules."
 	set hidden = 1
-	if( config.rulesurl )
+	if(config.rulesurl)
 		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.rulesurl)
@@ -39,7 +39,7 @@
 	set name = "Patreon"
 	set desc = "Like our server? Buy us and get satisfaction for your efforts."
 	set hidden = 1
-	if( config.donationurl )
+	if(config.donationurl)
 		if(alert("This will open our donation page in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.donationurl)
@@ -51,7 +51,7 @@
 	set name = "Submit Bug"
 	set desc = "Submit a bug."
 	set hidden = 1
-	if( config.bugtrackerurl )
+	if(config.bugtrackerurl)
 		if(alert("This will open our bug tracker page in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.bugtrackerurl)

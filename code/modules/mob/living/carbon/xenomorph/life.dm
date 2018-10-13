@@ -108,6 +108,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 /mob/living/carbon/Xenomorph/handle_statuses()
 	handle_stunned() // 2 each time
 	handle_knocked_down() // 5 each time, used to recover 2 here and 3 elsewhere
+	handle_knocked_out()
 	//handle_stuttering()
 	//handle_silent()
 	//handle_drugged()
@@ -243,10 +244,9 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	frenzy_new = 0
 	warding_new = 0
 	recovery_new = 0
-	armor_bonus = 0
+	armor_pheromone_bonus = 0
 	if(warding_aura > 0)
-		armor_bonus = warding_aura * 3 //Bonus armor from pheromones, no matter what the armor was previously. Was 5
-
+		armor_pheromone_bonus = warding_aura * 3 //Bonus armor from pheromones, no matter what the armor was previously. Was 5
 
 /mob/living/carbon/Xenomorph/proc/handle_regular_hud_updates()
 

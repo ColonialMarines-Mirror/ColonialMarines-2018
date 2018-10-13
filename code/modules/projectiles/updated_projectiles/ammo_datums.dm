@@ -402,7 +402,7 @@
 	damage_var_low = config.med_proj_variance
 	damage_var_high = config.high_proj_variance
 	accurate_range = config.close_shell_range
-	damage_falloff = config.smg_damage_falloff
+	damage_falloff = config.reg_damage_falloff
 
 /datum/ammo/bullet/smg/ap
 	name = "armor-piercing submachinegun bullet"
@@ -742,7 +742,7 @@
 	..()
 	accurate_range = config.short_shell_range
 	damage = config.low_hit_damage
-	penetration= config.low_armor_penetration
+	penetration = config.low_armor_penetration
 
 /datum/ammo/bullet/smartgun/lethal
 	flags_ammo_behavior = AMMO_BALLISTIC
@@ -750,8 +750,8 @@
 
 /datum/ammo/bullet/smartgun/lethal/New()
 	..()
-	damage = config.lmed_hit_damage
-	penetration= config.low_armor_penetration
+	damage = config.low_hit_damage
+	penetration = config.mlow_armor_penetration
 
 /datum/ammo/bullet/smartgun/dirty
 	name = "irradiated smartgun bullet"
@@ -783,9 +783,9 @@
 	accuracy_var_low = config.low_proj_variance
 	accuracy_var_high = config.low_proj_variance
 	max_range = config.short_shell_range
-	damage = config.low_hit_damage
-	penetration= config.mlow_armor_penetration
-	accuracy = -config.low_hit_accuracy
+	damage = config.hlow_hit_damage
+	penetration= config.low_armor_penetration
+	accuracy = -config.min_hit_accuracy
 
 /datum/ammo/bullet/turret/dumb
 	icon_state 	= "bullet"

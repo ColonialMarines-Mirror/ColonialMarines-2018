@@ -439,7 +439,7 @@
 						close_incision(H,S.limb_ref)
 
 					if("shrapnel")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning foreign body removal.");
+						visible_message("\The [src] speaks, Beginning foreign body removal.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
 							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
@@ -452,14 +452,16 @@
 						if(S.limb_ref.name == "chest") //if it's the chest check for gross parasites
 							var/obj/item/alien_embryo/A = locate() in occupant
 							if(A)
-								occupant.visible_message("<span class='warning'>The [src] defty extracts a wriggling parasite from [occupant]'s ribcage!</span>");
-								var/mob/living/carbon/Xenomorph/Larva/L = locate() in occupant //the larva was fully grown, ready to burst.
-								if(L)
-									L.forceMove(occupant.loc)
-								else
-									A.forceMove(occupant.loc)
-									occupant.status_flags &= ~XENO_HOST
-								cdel(A)
+								for(A in occupant)
+									sleep(HEMOSTAT_REMOVE_MAX_DURATION*surgery_mod)
+									occupant.visible_message("<span class='warning'>The [src] defty extracts a wriggling parasite from [occupant]'s ribcage!</span>");
+									var/mob/living/carbon/Xenomorph/Larva/L = locate() in occupant //the larva was fully grown, ready to burst.
+									if(L)
+										L.forceMove(occupant.loc)
+									else
+										A.forceMove(occupant.loc)
+										occupant.status_flags &= ~XENO_HOST
+									cdel(A)
 						if(S.limb_ref.implants.len)
 							for(var/obj/item/I in S.limb_ref.implants)
 								if(!surgery) break
@@ -601,7 +603,7 @@
 		if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !event)
 			usr.visible_message("<span class='notice'>[usr] fumbles around figuring out how to use [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
-			var/fumbling_time = SKILL_TASK_AVERAGE - ( SKILL_TASK_VERY_EASY * ( SKILL_SURGERY_TRAINED - usr.mind.cm_skills.surgery ) ) // 3 seconds with medical skill, 5 without
+			var/fumbling_time = max(0 , SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * usr.mind.cm_skills.surgery ))// 8 secs non-trained, 5 amateur
 			if(!do_after(usr, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 		if(surgery)
 			visible_message("\The [src] malfunctions as [usr] aborts the surgery in progress.")
@@ -631,7 +633,7 @@
 	if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !event)
 		usr.visible_message("<span class='notice'>[usr] fumbles around figuring out how to get into \the [src].</span>",
 		"<span class='notice'>You fumble around figuring out how to get into \the [src].</span>")
-		var/fumbling_time = SKILL_TASK_AVERAGE - ( SKILL_TASK_VERY_EASY * ( SKILL_SURGERY_TRAINED - usr.mind.cm_skills.surgery ) ) // 3 seconds with medical skill, 5 without
+		var/fumbling_time = max(0 , SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * usr.mind.cm_skills.surgery ))// 8 secs non-trained, 5 amateur
 		if(!do_after(usr, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 	usr.visible_message("<span class='notice'>[usr] starts climbing into \the [src].</span>",
@@ -717,7 +719,7 @@
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !event)
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to put [M] into [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to put [M] into [src].</span>")
-			var/fumbling_time = SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * ( SKILL_SURGERY_TRAINED - user.mind.cm_skills.surgery ) ) // 8 secs non-trained, 5 amateur, 2 trained
+			var/fumbling_time = max(0 , SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * user.mind.cm_skills.surgery ))// 8 secs non-trained, 5 amateur
 			if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 
 		visible_message("[user] starts putting [M] into [src].", 3)

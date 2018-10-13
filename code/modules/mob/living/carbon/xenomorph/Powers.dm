@@ -531,6 +531,9 @@
 	if (!check_state())
 		return
 
+	if (!check_state())
+		return
+
 	if (used_headbutt)
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
@@ -564,7 +567,10 @@
 	use_plasma(10)
 
 	if(H.stat != DEAD && (!(H.status_flags & XENO_HOST) || !istype(H.buckled, /obj/structure/bed/nest)) )
-		H.apply_damage(20)
+		var/damage = 20 + 3 * upgrade
+		if(frenzy_aura > 0)
+			damage += (frenzy_aura * 2)
+		H.apply_damage(damage)
 		shake_camera(H, 2, 1)
 
 	var/facing = get_dir(src, H)
@@ -623,12 +629,15 @@
 
 	for (var/mob/living/carbon/human/H in L)
 		step_away(H, src, sweep_range, 2)
-		H.apply_damage(10)
+		if(H.stat != DEAD)
+			var/damage = 20 + 3 * upgrade
+			if(frenzy_aura > 0)
+				damage += (frenzy_aura * 2)
+			H.apply_damage(damage)
 		round_statistics.defender_tail_sweep_hits++
 		shake_camera(H, 2, 1)
 
-		if (prob(50))
-			H.KnockDown(2, 1)
+		H.KnockDown(1, 1)
 
 		to_chat(H, "<span class='xenowarning'>You are struck by \the [src]'s tail sweep!</span>")
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)

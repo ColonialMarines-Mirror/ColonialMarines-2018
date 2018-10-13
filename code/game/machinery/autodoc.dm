@@ -716,7 +716,7 @@
 
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !event)
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to put [M] into [src].</span>",
-			"<span class='notice'>You fumble around figuring out how to use put [M] into [src].</span>")
+			"<span class='notice'>You fumble around figuring out how to put [M] into [src].</span>")
 			var/fumbling_time = SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * ( SKILL_SURGERY_TRAINED - user.mind.cm_skills.surgery ) ) // 8 secs non-trained, 5 amateur, 2 trained
 			if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 

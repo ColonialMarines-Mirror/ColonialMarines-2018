@@ -3106,7 +3106,7 @@
 			icon_state = "snack"
 			reagents.add_reagent("nutriment", 2)
 			reagents.add_reagent("sodiumchloride", 1)
-		if("spiced apples", "chocolate brownie", "sugar cookie", "coco bar", "flan", "honey flan","crayon")
+		if("spiced apples", "chocolate brownie", "sugar cookie", "coco bar", "flan", "honey flan")
 			icon_state = "dessert"
 			reagents.add_reagent("nutriment", 1)
 			reagents.add_reagent("sugar", 1)

@@ -32,9 +32,11 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1", "damaged2", "damaged3"
 											  "light_on_broken", "light_off", "wall_thermite", "grass1", "grass2", "grass3", "grass4",
 											  "asteroid", "asteroid_dug",
 											  "asteroid0", "asteroid1", "asteroid2", "asteroid3", "asteroid4",
-											  "asteroid5", "asteroid6", "asteroid7", "asteroid8", "asteroid9", "asteroid10", "asteroid11", "asteroid12",
-											  "oldburning", "light-on-r", "light-on-y", "light-on-g", "light-on-b", "wood", "wood-broken", "carpet",
-											  "carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
+											  "asteroid5", "asteroid6", "asteroid7", "asteroid8", "asteroid9",
+											  "asteroid10", "asteroid11", "asteroid12",
+											  "oldburning", "light-on-r", "light-on-y", "light-on-g", "light-on-b",
+											  "wood", "wood-broken1", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7",
+											  "carpet", "carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 											  "ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 											  "ironsand12", "ironsand13", "ironsand14", "ironsand15")
 
@@ -42,7 +44,7 @@ var/list/plating_icons = list("plating", "platingdmg1", "platingdmg2", "platingd
 							  "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
 							  "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 							  "ironsand12", "ironsand13", "ironsand14", "ironsand15")
-var/list/wood_icons = list("wood", "wood-broken")
+var/list/wood_icons = list("wood", "wood-broken0", "wood-broken1", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6")
 
 
 /turf/open/floor/New()
@@ -231,7 +233,7 @@ var/list/wood_icons = list("wood", "wood-broken")
 		icon_state = "platingdmg[pick(1, 2, 3)]"
 		broken = 1
 	else if(is_wood_floor())
-		icon_state = "wood-broken"
+		icon_state = "wood-broken[pick(1, 2, 3, 4, 5, 6, 7)]"
 		broken = 1
 	else if(is_carpet_floor())
 		icon_state = "carpet-broken"
@@ -254,7 +256,7 @@ var/list/wood_icons = list("wood", "wood-broken")
 		icon_state = "panelscorched"
 		burnt = 1
 	else if(is_wood_floor())
-		icon_state = "wood-broken"
+		icon_state = "wood-broken[pick(1, 2, 3, 4, 5, 6, 7)]"
 		burnt = 1
 	else if(is_carpet_floor())
 		icon_state = "carpet-broken"

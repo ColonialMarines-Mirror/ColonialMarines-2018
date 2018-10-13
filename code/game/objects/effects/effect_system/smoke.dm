@@ -371,8 +371,8 @@
 	//Topical damage (neurotoxin on exposed skin)
 	to_chat(M, "<span class='danger'>Your body is going numb, almost as if paralyzed!</span>")
 	if(prob(round(reagent_amount*5))) //Likely to momentarily freeze up/fall due to arms/hands seizing up
-		M.KnockDown(0.5)
-		M.stunned += 0.5
+		M.AdjustKnockeddown(0.5)
+		M.AdjustStunned(0.5)
 
 /////////////////////////////////////////////
 // Smoke spread

@@ -800,7 +800,7 @@
 	description = "A debilitating nerve toxin. Impedes motor control. Causes temporary blindness, hallucinations and deafness at higher doses."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	custom_metabolism = 0.5 // Fast meta rate.
+	custom_metabolism = 1 // Fast meta rate.
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
 
@@ -813,11 +813,12 @@
 	if(volume > 5) //2nd level neurotoxin effects: screen shake, drug overlay, stuttering, minor toxin damage
 		M.druggy += 1.5
 		M.stuttering += 1.5
-	if(volume > 15) //3rd level neurotoxin effects: blindness, deafness
-		M.ear_deaf += 1.5
+	if(volume > 15) //3rd level neurotoxin effects: eye blur
 		M.eye_blurry += 1.5
+	if(volume > 20) //4th level neurotoxin effects: blindness, deafness
+		M.ear_deaf += 1.5
 		M.eye_blind += 1.5
-	if(volume > 20) //4th level neurotoxin effects: paralysis
+	if(volume > 25) //5th level neurotoxin effects: paralysis
 		M.stunned += 1
 		M.KnockDown(1)
 

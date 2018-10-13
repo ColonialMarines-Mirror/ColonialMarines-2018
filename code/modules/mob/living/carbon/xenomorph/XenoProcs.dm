@@ -524,3 +524,12 @@
 		leader_aura_strength = Q.aura_strength
 		leader_current_aura = Q.current_aura
 		to_chat(src, "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>")
+
+
+/mob/living/carbon/Xenomorph/proc/update_spits()
+	if(!ammo) //Only update xenos with ammo.
+		return
+	for(var/i in 1 to spit_types.len)
+		if(ammo.icon_state == ammo_list[spit_types[i]].icon_state)
+			ammo = ammo_list[spit_types[i]]
+			return

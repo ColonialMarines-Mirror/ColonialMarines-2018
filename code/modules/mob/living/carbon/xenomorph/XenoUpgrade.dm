@@ -142,6 +142,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 200
 					caste_desc = "A ranged combat alien. It looks a little more dangerous."
+					spit_types = list(/datum/ammo/xeno/toxin/upgrade1)
 					armor_deflection = 15
 					tacklemin = 3
 					tacklemax = 5
@@ -157,6 +158,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 400
 					caste_desc = "A ranged damage dealer. It looks a little more dangerous."
+					spit_types = list(/datum/ammo/xeno/toxin/medium/upgrade1, /datum/ammo/xeno/acid/medium)
 					armor_deflection = 25
 					tacklemin = 3
 					tacklemax = 5
@@ -188,6 +190,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 800
 					caste_desc = "A giant ranged monster. It looks a little more dangerous."
+					spit_types = list(/datum/ammo/xeno/toxin/heavy/upgrade1, /datum/ammo/xeno/acid/heavy, /datum/ammo/xeno/sticky)
 					armor_deflection = 40
 					tacklemin = 5
 					tacklemax = 8
@@ -357,6 +360,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 400
 					caste_desc = "A ranged combat alien. It looks pretty strong."
+					spit_types = list(/datum/ammo/xeno/toxin/upgrade2)
 					armor_deflection = 20
 					tacklemin = 4
 					tacklemax = 6
@@ -372,6 +376,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					spit_delay = 10
 					upgrade_threshold = 800
 					caste_desc = "A ranged damage dealer. It looks pretty strong."
+					spit_types = list(/datum/ammo/xeno/toxin/medium/upgrade2, /datum/ammo/xeno/acid/medium)
 					armor_deflection = 30
 					tacklemin = 4
 					tacklemax = 6
@@ -403,6 +408,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					upgrade_threshold = 1600
 					spit_delay = 15
 					caste_desc = "A giant ranged monster. It looks pretty strong."
+					spit_types = list(/datum/ammo/xeno/toxin/heavy/upgrade2, /datum/ammo/xeno/acid/heavy, /datum/ammo/xeno/sticky)
 					armor_deflection = 40
 					tacklemin = 6
 					tacklemax = 9
@@ -571,6 +577,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_max = 600
 					spit_delay = 15
 					caste_desc = "Neurotoxin Factory, don't let it get you."
+					spit_types = list(/datum/ammo/xeno/toxin/upgrade3)
 					armor_deflection = 20
 					tacklemin = 4
 					tacklemax = 6
@@ -586,6 +593,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_max = 900
 					spit_delay = 10
 					caste_desc = "A ranged destruction machine."
+					spit_types = list(/datum/ammo/xeno/toxin/medium/upgrade3, /datum/ammo/xeno/acid/medium)
 					armor_deflection = 30
 					tacklemin = 5
 					tacklemax = 7
@@ -608,7 +616,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_chance = 80
 					speed = 0.4
 				if("Praetorian")
-					to_chat(src, "<span class='xenoannounce'>You are the strongest range fighter around. Your spit is devestating and you can fire nearly a constant stream.</span>")
+					to_chat(src, "<span class='xenoannounce'>You are the strongest range fighter around. Your spit is devastating and you can fire nearly a constant stream.</span>")
 					melee_damage_lower = 35
 					melee_damage_upper = 40
 					health = 250
@@ -617,6 +625,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					plasma_max = 1000
 					spit_delay = 10
 					caste_desc = "Its mouth looks like a minigun."
+					spit_types = list(/datum/ammo/xeno/toxin/heavy/upgrade3, /datum/ammo/xeno/acid/heavy, /datum/ammo/xeno/sticky)
 					armor_deflection = 45
 					tacklemin = 7
 					tacklemax = 10
@@ -693,6 +702,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 
 	hud_set_queen_overwatch() //update the upgrade level insignia on our xeno hud.
 
+	update_spits() //Update spits to new/better ones
 
 //Tiered spawns.
 /mob/living/carbon/Xenomorph/Runner/mature/New()

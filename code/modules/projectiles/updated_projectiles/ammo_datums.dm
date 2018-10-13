@@ -1133,7 +1133,7 @@
 	..()
 	accuracy = config.max_hit_accuracy
 	accurate_range = config.short_shell_range
-	shell_speed = config.fast_shell_speed
+	shell_speed = config.reg_shell_speed
 	max_range = config.short_shell_range
 	accuracy_var_low = config.low_proj_variance
 	accuracy_var_high = config.low_proj_variance
@@ -1145,15 +1145,53 @@
 	flags_ammo_behavior = AMMO_XENO_TOX|AMMO_IGNORE_RESIST
 	spit_cost = 50
 
+/datum/ammo/xeno/toxin/on_hit_mob(mob/M, obj/item/projectile/P)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.status_flags & XENO_HOST && istype(C.buckled, /obj/structure/bed/nest) || C.stat == DEAD)
+			return
+	..()
+
+/datum/ammo/xeno/toxin/upgrade1
+	name = "neurotoxic spit"
+	ammo_reagents = list("xeno_toxin" = 5.75)
+
+/datum/ammo/xeno/toxin/upgrade2
+	ammo_reagents = list("xeno_toxin" = 6.5)
+
+/datum/ammo/xeno/toxin/upgrade3
+	ammo_reagents = list("xeno_toxin" = 7.25)
+
+
 /datum/ammo/xeno/toxin/medium //Spitter
 	name = "neurotoxic spatter"
-	ammo_reagents = list("xeno_toxin" = 7)
-	added_spit_delay = 2
+	ammo_reagents = list("xeno_toxin" = 8)
+	added_spit_delay = 5
+	spit_cost = 75
+
+/datum/ammo/xeno/toxin/medium/upgrade1
+	ammo_reagents = list("xeno_toxin" = 9.2)
+
+/datum/ammo/xeno/toxin/medium/upgrade2
+	ammo_reagents = list("xeno_toxin" = 10.4)
+
+/datum/ammo/xeno/toxin/medium/upgrade3
+	ammo_reagents = list("xeno_toxin" = 11.6)
 
 /datum/ammo/xeno/toxin/heavy //Praetorian
 	name = "neurotoxic splash"
 	ammo_reagents = list("xeno_toxin" = 10)
-	added_spit_delay = 5
+	added_spit_delay = 8
+	spit_cost = 100
+
+/datum/ammo/xeno/toxin/heavy/upgrade1
+	ammo_reagents = list("xeno_toxin" = 11.5)
+
+/datum/ammo/xeno/toxin/heavy/upgrade2
+	ammo_reagents = list("xeno_toxin" = 13)
+
+/datum/ammo/xeno/toxin/heavy/upgrade3
+	ammo_reagents = list("xeno_toxin" = 14.5)
 
 /datum/ammo/xeno/sticky
 	name = "sticky resin spit"
@@ -1201,8 +1239,8 @@
 	sound_hit 	 = "acid_hit"
 	sound_bounce	= "acid_bounce"
 	damage_type = BURN
-	added_spit_delay = 10
-	spit_cost = 100
+	added_spit_delay = 5
+	spit_cost = 75
 
 /datum/ammo/xeno/acid/New()
 	..()
@@ -1229,12 +1267,12 @@
 
 /datum/ammo/xeno/acid/heavy
 	name = "acid splash"
-	added_spit_delay = 20
+	added_spit_delay = 8
+	spit_cost = 100
 
 /datum/ammo/xeno/acid/heavy/New()
 	..()
-	damage = config.lmed_hit_damage
-	shell_speed = config.reg_shell_speed
+	damage = config.low_hit_damage
 
 /datum/ammo/xeno/boiler_gas
 	name = "glob of gas"

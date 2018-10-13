@@ -936,15 +936,9 @@
 	playsound(src.loc, sound_to_play, 25, 1)
 
 	var/obj/item/projectile/A = rnew(/obj/item/projectile, current_turf)
-	A.generate_bullet(ammo)
+	A.generate_bullet(ammo, ammo.damage * (max(0,upgrade) * 0.15)) //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
 	A.permutated += src
 	A.def_zone = get_limbzone_target()
-
-	if(A.damage)
-		A.damage += A.damage * (max(0,upgrade)) * 0.15 //increase damage by 15% per upgrade level; compensates for the loss of insane attack speeds.
-	if(A.ammo.ammo_reagents)
-		for(var/reagent in A.list_reagents)
-			A.list_reagents[reagent] *= 1 + max(0,upgrade) * 0.15 //increase neuro reagents by 15% per upgrade level.
 
 	A.fire_at(T, src, null, ammo.max_range, ammo.shell_speed)
 	has_spat = world.time + spit_delay + ammo.added_spit_delay

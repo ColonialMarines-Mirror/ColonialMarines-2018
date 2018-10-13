@@ -881,7 +881,7 @@
 		to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
 		to_chat(M, "\red This is a temporary ban, it will be removed in [mins] minutes.")
 		to_chat(M, "\blue This ban was made using a one-click ban system. If you think an error has been made, please visit our forums' ban appeal section.")
-		to_chat(M, "\blue If you make sure to mention that this was a one-click ban, The administration team may double-check this code for you.")
+		to_chat(M, "\blue If you make sure to mention that this was a one-click ban, the administration team may double-check this code for you.")
 		if(config.banappeals)
 			to_chat(M, "\blue The ban appeal forums are located here: [config.banappeals]")
 		else

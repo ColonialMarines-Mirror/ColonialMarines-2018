@@ -10,7 +10,7 @@
 	flags_equip_slot = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	storage_slots = null
-	max_storage_space = 21
+	max_storage_space = 30
 	var/worn_accessible = FALSE //whether you can access its content while worn on the back
 
 /obj/item/storage/backpack/attack_hand(mob/user)
@@ -275,9 +275,6 @@
 	icon_state = "ert_medical"
 
 
-
-
-
 //==========================// MARINE BACKPACKS\\================================\\
 //=======================================================================\\
 
@@ -292,15 +289,40 @@
 			select_gamemode_skin(type)
 		..()
 
+/obj/item/storage/backpack/marine/standard
+	name = "\improper lightweight IMP backpack"
+	desc = "The standard-issue pack of the USCM forces. Designed to slug gear into the battlefield."
+	bypass_w_limit = list("/obj/item/device/m56d_gun",
+					"/obj/item/ammo_magazine/m56d",
+					"/obj/item/device/m56d_post",
+					"/obj/item/device/turret_top",
+					"/obj/item/device/turret_sensor",
+					"/obj/item/ammo_magazine/sentry",
+					)
+
 /obj/item/storage/backpack/marine/medic
 	name = "\improper USCM medic backpack"
 	desc = "The standard-issue backpack worn by USCM medics."
 	icon_state = "marinepackm"
+	bypass_w_limit = list("/obj/item/device/m56d_gun",
+					"/obj/item/ammo_magazine/m56d",
+					"/obj/item/device/m56d_post",
+					"/obj/item/device/turret_top",
+					"/obj/item/device/turret_sensor",
+					"/obj/item/ammo_magazine/sentry",
+					)
 
 /obj/item/storage/backpack/marine/tech
 	name = "\improper USCM technician backpack"
 	desc = "The standard-issue backpack worn by USCM technicians."
 	icon_state = "marinepackt"
+	bypass_w_limit = list("/obj/item/device/m56d_gun",
+					"/obj/item/ammo_magazine/m56d",
+					"/obj/item/device/m56d_post",
+					"/obj/item/device/turret_top",
+					"/obj/item/device/turret_sensor",
+					"/obj/item/ammo_magazine/sentry",
+					)
 
 /obj/item/storage/backpack/marine/satchel
 	name = "\improper USCM satchel"
@@ -444,8 +466,7 @@
 	name = "\improper USCM technician welderpack"
 	desc = "A specialized backpack worn by USCM technicians. It carries a fueltank for quick welder refueling and use,"
 	icon_state = "engineerpack"
-	var/max_fuel = 260
-	max_storage_space = 15
+	var/max_fuel = 500
 	storage_slots = null
 	has_gamemode_skin = FALSE //same sprites for all gamemodes
 

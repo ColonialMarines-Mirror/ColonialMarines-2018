@@ -800,7 +800,7 @@
 	description = "A debilitating nerve toxin. Impedes motor control. Causes temporary blindness, hallucinations and deafness at higher doses."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	custom_metabolism = 1 // Fast meta rate.
+	custom_metabolism = 1.25 // Fast meta rate.
 	overdose = REAGENTS_OVERDOSE
 	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
 
@@ -823,7 +823,7 @@
 		M.KnockDown(1)
 
 /datum/reagent/xeno_neurotoxin/on_overdose(mob/living/M)
-		M.adjustOxyLoss(volume * 0.2 * REM) //Overdose starts applying more oxy damage
+		M.adjustOxyLoss(max(2,volume * 0.2 * REM)) //Overdose starts applying more oxy damage
 
 /datum/reagent/xeno_neurotoxin/on_overdose_critical(mob/living/M)
-		M.adjustOxyLoss(volume * 0.4 * REM) //Overdose starts applying more oxy damage
+		M.adjustOxyLoss(max(4,volume * 0.4 * REM)) //Overdose starts applying more oxy damage

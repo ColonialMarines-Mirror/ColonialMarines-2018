@@ -395,7 +395,7 @@
 					)
 
 /obj/item/storage/pouch/field_pouch/full/New()
-	..()
+	.=..()
 	new /obj/item/device/motiondetector (src)
 	new /obj/item/device/whistle (src)
 	new /obj/item/device/radio (src)

@@ -214,6 +214,20 @@
 		M.knocked_out = max(M.knocked_out, 20)
 		M.drowsyness = max(M.drowsyness, 30)
 
+/datum/reagent/mothpheromones
+	name = "Moth pheromones"
+	id = "mothpheromones"
+	description = "Basicly the liquid concept of fluttering towards a lamp."
+	reagent_state = LIQUID
+	color = "#8fddf7" // rgb: 143, 221, 247
+
+/datum/reagent/mothpheromones/on_mob_life(mob/living/M)
+	. = ..()
+	if(!.) return
+	if(ishuman(M) && M.has_species(src,"Moth"))
+		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
+
 /datum/reagent/oxygen
 	name = "Oxygen"
 	id = "oxygen"

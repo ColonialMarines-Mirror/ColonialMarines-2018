@@ -63,6 +63,11 @@
 	..()
 
 /obj/item/device/motiondetector/process()
+	if (prob(50))
+		return process_new
+	return process_old
+		
+/obj/item/device/motiondetector/proc/process_new()
 	if(!active)
 		processing_objects.Remove(src)
 		return
@@ -87,6 +92,47 @@
 
 	var/detected
 	for(var/mob/living/M in range(detector_range, src))
+		if(M == loc) continue //device user isn't detected
+		if(!isturf(M.loc)) continue
+		if(world.time > M.l_move_time + 20) continue //hasn't moved recently
+		if(isrobot(M)) continue
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.wear_ear, /obj/item/device/radio/headset/almayer))
+				continue //device detects marine headset and ignores the wearer.
+		detected = TRUE
+
+		if(human_user)
+			show_blip(human_user, M)
+
+		if(detected)
+			playsound(loc, 'sound/items/tick.ogg', 50, 0, 7, 2)
+
+/obj/item/device/motiondetector/process_old()
+	if(!active)
+		processing_objects.Remove(src)
+		return
+	recycletime--
+	if(!recycletime)
+		recycletime = initial(recycletime)
+		for(var/X in blip_pool) //we dump and remake the blip pool every few minutes
+			if(blip_pool[X])	//to clear blips assigned to mobs that are long gone.
+				cdel(blip_pool[X]) //the blips are garbage-collected and reused via rnew() below
+		blip_pool = list()
+
+	if(!detector_mode)
+		long_range_cooldown--
+		if(long_range_cooldown) return
+		else long_range_cooldown = initial(long_range_cooldown)
+
+	playsound(loc, 'sound/items/detector.ogg', 60, 0, 7, 2)
+
+	var/mob/living/carbon/human/human_user
+	if(ishuman(loc))
+		human_user = loc
+
+	var/detected
+	for(var/mob/M in living_mob_list)
 		if(loc == null || M == null) continue
 		if(loc.z != M.z) continue
 		if(get_dist(M, src) > detector_range) continue
@@ -105,6 +151,7 @@
 
 		if(detected)
 			playsound(loc, 'sound/items/tick.ogg', 50, 0, 7, 2)
+
 
 /obj/item/device/motiondetector/proc/show_blip(mob/user, mob/target)
 	set waitfor = 0

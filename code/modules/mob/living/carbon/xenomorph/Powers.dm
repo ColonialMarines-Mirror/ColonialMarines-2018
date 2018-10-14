@@ -531,9 +531,6 @@
 	if (!check_state())
 		return
 
-	if (!check_state())
-		return
-
 	if (used_headbutt)
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
@@ -567,10 +564,11 @@
 	use_plasma(10)
 
 	if(H.stat != DEAD && (!(H.status_flags & XENO_HOST) || !istype(H.buckled, /obj/structure/bed/nest)) )
-		var/damage = 20 + 3 * upgrade
+		var/damage = rand(melee_damage_lower,melee_damage_upper) * 1.5
 		if(frenzy_aura > 0)
 			damage += (frenzy_aura * 2)
-		H.apply_damage(damage)
+		var/armor_block = run_armor_check(affecting, "melee")
+		H.apply_damage(damage, BRUTE, def_zone = null, armor_block)
 		shake_camera(H, 2, 1)
 
 	var/facing = get_dir(src, H)
@@ -630,10 +628,11 @@
 	for (var/mob/living/carbon/human/H in L)
 		step_away(H, src, sweep_range, 2)
 		if(H.stat != DEAD)
-			var/damage = 20 + 3 * upgrade
+			var/damage = rand(melee_damage_lower,melee_damage_upper) * 1.25
 			if(frenzy_aura > 0)
 				damage += (frenzy_aura * 2)
-			H.apply_damage(damage)
+			var/armor_block = run_armor_check(affecting, "melee")
+			H.apply_damage(damage, BRUTE, def_zone = null, armor_block)
 		round_statistics.defender_tail_sweep_hits++
 		shake_camera(H, 2, 1)
 

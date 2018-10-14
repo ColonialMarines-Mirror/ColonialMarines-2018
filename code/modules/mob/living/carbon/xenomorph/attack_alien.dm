@@ -8,7 +8,7 @@
  */
 
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, set_location = FALSE, random_location = FALSE, no_head = FALSE)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, set_location = FALSE, random_location = FALSE, no_head = FALSE, no_crit = FALSE)
 	if (M.fortify)
 		return FALSE
 
@@ -90,12 +90,12 @@
 			M.animation_attack_on(src)
 
 			//Check for a special bite attack
-			if(prob(M.bite_chance))
+			if(prob(M.bite_chance) && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				M.bite_attack(src, damage)
 				return TRUE
 
 			//Check for a special bite attack
-			if(prob(M.tail_chance))
+			if(prob(M.tail_chance) && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				M.tail_attack(src, damage)
 				return TRUE
 

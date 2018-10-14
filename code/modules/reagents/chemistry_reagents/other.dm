@@ -224,7 +224,7 @@
 /datum/reagent/mothpheromones/on_mob_life(mob/living/M)
 	. = ..()
 	if(!.) return
-	if(ishuman(M) && M.has_species(src,"Moth"))
+	if(M.has_species(src, "Moth"))
 		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
 		holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
 

@@ -168,23 +168,22 @@
 			M.flick_attack_overlay(src, "disarm")
 
 			if(!knocked_down)
-				playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
 				var/knockdown_multiplier = max(1,traumatic_shock * 0.02) //hopefully this fixes suspected rounding issues.
 				KnockDown(0.3 * knockdown_multiplier) //Min 0.3, probable max 1.2
 				M.visible_message("<span class='danger'>\The [M] slams [src] to the ground!</span>", \
 				"<span class='danger'>You slam [src] to the ground!</span>", null, 5)
 
-			playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-			var/tackle_pain = null
-			tackle_pain = (M.tackle_damage * rand(0.5,1.5) + M.tackle_damage * rand(0.5,1.5)) * 0.5 //Gaussian distribution
+			playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
+			var/tackle_pain = (rand(M.tackle_damage * 0.75 , M.tackle_damage * 1.25) + rand(M.tackle_damage * 0.75 , M.tackle_damage * 1.25)) * 0.5
 			if(M.frenzy_aura)
-				tackle_pain *= 1 + (0.05 * M.frenzy_aura)  //Halloss damage increased by 5% per rank of frenzy aura
+				tackle_pain = tackle_pain * (1 + (0.05 * M.frenzy_aura))  //Halloss damage increased by 5% per rank of frenzy aura
 			if(protection_aura)
-				tackle_pain *= 1 - (0.10 + 0.05 * protection_aura)  //Halloss damage decreased by 10% + 5% per rank of protection aura
+				tackle_pain = tackle_pain * (1 - (0.10 + 0.05 * protection_aura))  //Halloss damage decreased by 10% + 5% per rank of protection aura
 			apply_damage(tackle_pain, HALLOSS)
 			updatehealth()
-			var/throttle_message = "The [M] throttles [src]!"
-			var/throttle_message2 = "You throttle [src]!</span>"
+			updateshock()
+			var/throttle_message = "<span class='danger'>The [M] throttles [src]!</span>"
+			var/throttle_message2 = "<span class='danger'>You throttle [src]!</span>"
 			if(tackle_pain > 40)
 				throttle_message = "<span class='danger'>\The [M] badly throttles [src]!</span>"
 				throttle_message2 = "<span class='danger'>You badly throttle [src]!</span>"

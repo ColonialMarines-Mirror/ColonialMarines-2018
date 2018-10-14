@@ -3,7 +3,7 @@
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
-	if(species && species.flags & NO_PAIN)
+	if(species && species.flags & NO_PAIN || stat == DEAD)
 		traumatic_shock = 0
 		return
 
@@ -40,7 +40,7 @@
 			if(O.germ_level >= INFECTION_LEVEL_ONE) 				traumatic_shock += O.germ_level * 0.05
 
 		if(M.protection_aura)
-			traumatic_shock -= M.protection_aura * 10
+			traumatic_shock -= M.protection_aura * 20
 
 	traumatic_shock = max(0, traumatic_shock)	//stuff below this has the potential to mask damage
 

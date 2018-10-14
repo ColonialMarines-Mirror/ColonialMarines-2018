@@ -64,8 +64,8 @@
 
 /obj/item/device/motiondetector/process()
 	if (prob(50))
-		return process_new
-	return process_old
+		return process_new()
+	return process_old()
 		
 /obj/item/device/motiondetector/proc/process_new()
 	if(!active)

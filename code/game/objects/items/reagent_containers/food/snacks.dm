@@ -3042,7 +3042,7 @@
 	reagents.add_reagent("coco", 4)
 	reagents.add_reagent("mothpheromones", 4)
 
-/obj/item/reagent_container/food/snacks/wrapped/attack_self(mob/user as mob)
+/obj/item/reagent_container/food/snacks/wrapped/lampbar/attack_self(mob/user as mob)
 	SetLuminosity(brightness_on)
 	..()
 

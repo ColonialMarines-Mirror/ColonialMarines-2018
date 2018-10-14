@@ -73,9 +73,7 @@
 				m_type = 2
 
 		if ("clap")
-			if (is_mob_restrained())
-				return
-			if(audio_emote_cooldown(player_caused))
+			if (is_mob_restrained() || audio_emote_cooldown(player_caused))
 				return
 			message = "<B>[comm_paygrade][src]</B> claps."
 			m_type = 2
@@ -152,9 +150,7 @@
 				message = "<B>[comm_paygrade][src]</B> glares."
 
 		if ("golfclap")
-			if (is_mob_restrained())
-				return
-			if(audio_emote_cooldown(player_caused))
+			if (is_mob_restrained() || audio_emote_cooldown(player_caused))
 				return
 			message = "<B>[comm_paygrade][src]</B> claps, clearly unimpressed."
 			m_type = 2
@@ -231,9 +227,7 @@
 					m_type = 1
 
 		if ("medic")
-			if (muzzled)
-				return
-			if(audio_emote_cooldown(player_caused))
+			if (muzzled || audio_emote_cooldown(player_caused))
 				return
 			message = "<B>[comm_paygrade][src] calls for a medic!</b>"
 			m_type = 2
@@ -259,9 +253,7 @@
 			m_type = 1
 
 		if ("pain")
-			if (muzzled)
-				return
-			if(audio_emote_cooldown(player_caused))
+			if (muzzled || audio_emote_cooldown(player_caused))
 				return
 			message = "<B>[comm_paygrade][src]</B> cries out in pain!"
 			m_type = 2
@@ -290,9 +282,7 @@
 			m_type = 1
 
 		if("scream")
-			if (muzzled)
-				return
-			if(audio_emote_cooldown(player_caused))
+			if (muzzled || audio_emote_cooldown(player_caused))
 				return
 			message = "<B>[comm_paygrade][src]</B> screams!"
 			m_type = 2

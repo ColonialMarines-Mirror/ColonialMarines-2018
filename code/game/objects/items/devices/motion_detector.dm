@@ -86,7 +86,7 @@
 		human_user = loc
 
 	var/detected
-	for(var/mob/M in living_mob_list)
+	for(var/mob/living/M in range(detector_range, src))
 		if(loc == null || M == null) continue
 		if(loc.z != M.z) continue
 		if(get_dist(M, src) > detector_range) continue

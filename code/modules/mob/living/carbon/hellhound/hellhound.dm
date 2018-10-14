@@ -253,7 +253,7 @@
 /mob/living/carbon/hellhound/get_permeability_protection()
 	return HELLHOUND_PERM_COEFF
 
-/mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
+/mob/living/carbon/hellhound/reagent_check(datum/reagent/R) //can't recover from crit otherwise.
 	return FALSE
 
 /mob/living/carbon/hellhound/say(var/message)

@@ -22,13 +22,6 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 	if(stat == DEAD) //Dead, nothing else to do.
 		return
-
-	handle_aura_receiver()
-	handle_living_health_updates()
-	handle_living_plasma_updates()
-	handle_living_health_updates()
-	update_icons()
-
 	if(stat == UNCONSCIOUS)
 		if(is_zoomed)
 			zoom_out()
@@ -39,6 +32,12 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		update_progression()
 		update_evolving()
 		handle_aura_emiter()
+
+	handle_aura_receiver()
+	handle_living_health_updates()
+	handle_living_plasma_updates()
+	handle_living_health_updates()
+	update_icons()
 
 /mob/living/carbon/Xenomorph/update_stat()
 	if(status_flags & GODMODE)

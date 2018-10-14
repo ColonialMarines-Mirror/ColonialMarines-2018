@@ -2,7 +2,7 @@
 
 /mob/living/carbon/human/handle_shock()
 	..()
-	if(status_flags & GODMODE || analgesic || (species && species.flags & NO_PAIN) || stat == DEAD || !traumatic_shock)
+	if(status_flags & GODMODE || analgesic || (species && species.flags & NO_PAIN) || stat == DEAD)
 		return //Godmode or some other pain reducers. //Analgesic avoids all traumatic shock temporarily
 
 	switch(CLAMP(traumatic_shock,0,400))
@@ -10,7 +10,7 @@
 			shock_stage = CLAMP(shock_stage + 5,150,200) //Indescribable pain. At this point, you will immediately be knocked down, with shock stage set to 150.
 
 		if(150 to 200)
-			shock_stage = min(200,shock_stage + 2) //If their shock exceeds 100, add more to their shock stage, regardless of health.
+			shock_stage = min(200,shock_stage + 2) //If their shock exceeds 150, add more to their shock stage, regardless of health.
 
 		if(100 to 149)
 			shock_stage = min(200,shock_stage + 1) //If their shock exceeds 100, add more to their shock stage, regardless of health.
@@ -68,7 +68,7 @@
 			if(prob(2))
 				to_chat(src, "<span class='danger'>[pick("You black out", "You feel like you could die any moment now", "You're about to lose consciousness")]!</span>")
 				KnockOut(5)
-		if(10000 to 150)
+		if(150 to INFINITY)
 			if(shock_stage == 150 && !lying) emote("me", 1, "can no longer stand, collapsing!")
 			eye_blurry = max(2, eye_blurry)
 			stuttering = max(stuttering, 5)

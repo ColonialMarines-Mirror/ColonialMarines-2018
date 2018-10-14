@@ -1275,7 +1275,7 @@
 	damage = config.low_hit_damage
 
 /datum/ammo/xeno/acid/heavy/spitter
-	. = ..()
+	..()
 	spit_cost = 75
 
 /datum/ammo/xeno/boiler_gas

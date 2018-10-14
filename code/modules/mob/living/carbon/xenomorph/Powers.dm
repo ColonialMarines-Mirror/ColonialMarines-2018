@@ -246,7 +246,7 @@
 				continue
 
 			round_statistics.praetorian_spray_direct_hits++
-			C.adjustFireLoss(rand(30,40) + 5 * upgrade)
+			C.adjustFireLoss(rand(25,38) + 4 * upgrade)
 			to_chat(C, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
 
 			if (!isYautja(C))
@@ -1460,7 +1460,7 @@
 		if(ishuman(M) || ismonkey(M))
 			if((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))
 				continue //nested infected hosts are not hurt by acid spray
-			M.adjustFireLoss(rand(30, 45) + 5 * upgrade)
+			M.adjustFireLoss(rand(25, 38) + 4 * upgrade)
 			to_chat(M, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
 			if(!isYautja(M))
 				M.emote("scream")
@@ -1480,6 +1480,9 @@
 		return
 
 	if(!check_plasma(plasmacost))
+		return
+
+	if(!do_after(src, 5, TRUE, 5, BUSY_ICON_HOSTILE))
 		return
 
 	if(T)

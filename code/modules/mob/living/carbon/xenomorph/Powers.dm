@@ -567,8 +567,11 @@
 		var/damage = rand(melee_damage_lower,melee_damage_upper) * 1.5
 		if(frenzy_aura > 0)
 			damage += (frenzy_aura * 2)
+		var/affecting = H.get_limb(ran_zone(null, 0))
+		if(!affecting) //Still nothing??
+			affecting = H.get_limb("chest") //Gotta have a torso?!
 		var/armor_block = run_armor_check(affecting, "melee")
-		H.apply_damage(damage, BRUTE, def_zone = null, armor_block)
+		H.apply_damage(damage, BRUTE, affecting, armor_block)
 		shake_camera(H, 2, 1)
 
 	var/facing = get_dir(src, H)
@@ -631,8 +634,11 @@
 			var/damage = rand(melee_damage_lower,melee_damage_upper) * 1.25
 			if(frenzy_aura > 0)
 				damage += (frenzy_aura * 2)
+			var/affecting = H.get_limb(ran_zone(null, 0))
+			if(!affecting) //Still nothing??
+				affecting = H.get_limb("chest") //Gotta have a torso?!
 			var/armor_block = run_armor_check(affecting, "melee")
-			H.apply_damage(damage, BRUTE, def_zone = null, armor_block)
+			H.apply_damage(damage, BRUTE, affecting, armor_block)
 		round_statistics.defender_tail_sweep_hits++
 		shake_camera(H, 2, 1)
 

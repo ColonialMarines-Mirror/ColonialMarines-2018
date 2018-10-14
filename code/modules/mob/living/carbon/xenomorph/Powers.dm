@@ -83,11 +83,11 @@
 	if (used_acid_spray || !check_plasma(200))
 		return
 
-	if(stagger)
-		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
+	if(!do_after(src, 5, TRUE, 5, BUSY_ICON_HOSTILE))
 		return
 
-	if(!do_after(src, 5, TRUE, 5, BUSY_ICON_HOSTILE))
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
 		return
 
 	round_statistics.praetorian_acid_sprays++
@@ -1483,6 +1483,10 @@
 		return
 
 	if(!do_after(src, 5, TRUE, 5, BUSY_ICON_HOSTILE))
+		return
+		
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
 		return
 
 	if(T)

@@ -307,7 +307,7 @@
 "fU" = (/obj/structure/bed/chair/wood/wings{tag = "icon-wooden_chair_wings (WEST)"; icon_state = "wooden_chair_wings"; dir = 8},/turf/open/floor/holofloor{icon_state = "cult"; dir = 2},/area/yautja)
 "fV" = (/obj/structure/table/reinforced,/obj/effect/decal/warning_stripes,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4; health = 80},/obj/machinery/door/window/southleft{dir = 8; icon_state = "left"; layer = 2.8; tag = "icon-left (WEST)"},/turf/open/floor/holofloor{icon_state = "cult"; dir = 2},/area/yautja)
 "fW" = (/turf/open/floor/plating/plating_catwalk,/area/centcom/ferry)
-"fX" = (/obj/machinery/door/airlock/almayer/generic{dir = 2},/obj/machinery/door/poddoor/shutters/transit/open,/turf/open/floor/plating/almayer,/area/shuttle/distress/start_big)
+"fX" = (/obj/machinery/computer/shuttle_control/ert/centcom{density = 0; pixel_y = 32},/turf/open/floor/almayer{tag = "icon-emerald (NORTH)"; icon_state = "emerald"; dir = 1},/area/centcom)
 "fY" = (/turf/open/floor/almayer{dir = 2; icon_state = "orange"; tag = "icon-orange (NORTH)"},/area/centcom)
 "fZ" = (/turf/open/floor/almayer{tag = "icon-orangecorner"; icon_state = "orangecorner"},/area/centcom)
 "ga" = (/obj/machinery/door/airlock/secure{name = "\improper Meeting Chamber"},/turf/open/floor/holofloor{icon_state = "cult"; dir = 2},/area/yautja)
@@ -317,7 +317,7 @@
 "ge" = (/obj/structure/window/framed/almayer/requisitions,/turf/open/floor/plating/almayer,/area/centcom/suppy)
 "gf" = (/turf/closed/wall/almayer/outer{name = "reinforced hull"},/area/centcom/suppy)
 "gg" = (/obj/machinery/door/airlock/almayer/marine/requisitions{dir = 1; name = "\improper ASRS Lift"; req_one_access_txt = null},/turf/open/floor/almayer,/area/centcom/suppy)
-"gh" = (/obj/machinery/door/airlock/centcom,/turf/open/floor/almayer,/area/centcom)
+"gh" = (/obj/machinery/computer/shuttle_control/ert/centcom{density = 0; pixel_y = 32; shuttle_tag = "Distress_PMC"},/turf/open/floor/almayer{tag = "icon-silver (NORTH)"; icon_state = "silver"; dir = 1},/area/centcom)
 "gi" = (/turf/open/floor/wood,/area/centcom)
 "gj" = (/turf/open/floor/almayer,/area/centcom/suppy)
 "gk" = (/turf/open/floor/almayer{tag = "icon-blue (NORTHWEST)"; icon_state = "blue"; dir = 9},/area/centcom)
@@ -538,7 +538,7 @@
 "kr" = (/turf/closed/shuttle/ert{icon_state = "upp3"},/area/shuttle/distress/start_upp)
 "ks" = (/turf/closed/shuttle/ert{icon_state = "rightengine_1"; opacity = 0},/area/shuttle/distress/start_upp)
 "kt" = (/obj/effect/decal/warning_stripes{icon_state = "E"; tag = "icon-E"},/turf/open/floor/plating/almayer,/area/shuttle/distress/start_big)
-"ku" = (/obj/structure/largecrate/random/barrel/red,/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/shuttle/distress/start_big)
+"ku" = (/obj/machinery/computer/shuttle_control/ert/centcom{density = 0; pixel_y = 32; shuttle_tag = "Distress_UPP"},/turf/open/floor/almayer{tag = "icon-green (NORTH)"; icon_state = "green"; dir = 1},/area/centcom)
 "kv" = (/obj/structure/table/woodentable,/turf/open/floor/holofloor{icon_state = "cult"; dir = 2},/area/yautja)
 "kw" = (/obj/machinery/computer/crew,/turf/open/floor/holofloor{icon_state = "cult"; dir = 2},/area/yautja)
 "kx" = (/turf/closed/wall/indestructible/splashscreen,/area/start)
@@ -681,9 +681,9 @@
 "ne" = (/turf/open/floor/carpet,/area/centcom)
 "nf" = (/turf/open/floor/carpet{tag = "icon-carpetside (EAST)"; icon_state = "carpetside"; dir = 4},/area/centcom)
 "ng" = (/obj/structure/closet/crate/charlie,/turf/open/floor/almayer{tag = "icon-test_floor5"; icon_state = "test_floor5"},/area/centcom/suppy)
-"nh" = (/turf/open/floor/almayer{icon_state = "ai_floors"; tag = "icon-sterile"},/area/centcom)
-"ni" = (/obj/machinery/power/am_control_unit,/turf/open/floor/almayer{icon_state = "ai_floors"; tag = "icon-sterile"},/area/centcom)
-"nj" = (/obj/machinery/power/breakerbox/activated,/turf/open/floor/almayer{icon_state = "ai_floors"; tag = "icon-sterile"},/area/centcom)
+"nh" = (/turf/closed/wall/almayer/white{tiles_with = list(/turf/closed/wall/almayer/white,/obj/structure/window/framed/almayer/white)},/area/shuttle/distress/start_big)
+"ni" = (/obj/machinery/door/airlock/almayer/generic{dir = 2},/obj/machinery/door/poddoor/shutters/transit/open{id = "top_ERTLARGE"},/turf/open/floor/plating/almayer,/area/shuttle/distress/start_big)
+"nj" = (/obj/structure/largecrate/random/barrel/red,/obj/machinery/door_control{id = "top_ERTLARGE"; name = "shutter controller"; pixel_x = 32},/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/shuttle/distress/start_big)
 "nk" = (/turf/open/floor/almayer{tag = "icon-bluecorner (EAST)"; icon_state = "bluecorner"; dir = 4},/area/centcom)
 "nl" = (/obj/structure/showcase{desc = "A statue covered in blue armor, it's face plate sends chills up your spine. It is almost like it knows you are not supposed to be here."; name = "Statue"},/turf/open/floor/almayer{tag = "icon-bluefull"; icon_state = "bluefull"},/area/centcom)
 "nm" = (/obj/structure/table/reinforced,/obj/item/clipboard,/obj/item/tool/pen,/turf/open/floor/almayer,/area/centcom)
@@ -691,19 +691,19 @@
 "no" = (/obj/structure/showcase{desc = "A statue covered in blue armor, it's face plate sends chills up your spine. It is almost like it knows you are not supposed to be here."; name = "Statue"},/turf/open/floor/vault,/area/centcom)
 "np" = (/turf/open/floor/almayer{dir = 8; icon_regular_floor = "cargo_arrow"; icon_state = "cargo_arrow"},/area/centcom/suppy)
 "nq" = (/turf/open/floor/almayer{dir = 4; icon_regular_floor = "cargo_arrow"; icon_state = "cargo_arrow"},/area/centcom/suppy)
-"nr" = (/obj/machinery/hologram/holopad,/turf/open/floor/almayer{icon_state = "ai_floors"; tag = "icon-sterile"},/area/centcom)
-"ns" = (/obj/structure/AIcore,/turf/open/floor/almayer{icon_state = "ai_floors"; tag = "icon-sterile"},/area/centcom)
-"nt" = (/obj/machinery/door/airlock/almayer/generic{dir = 1; name = "\improper AI Core Room"; req_access_txt = "19"},/turf/open/floor/almayer{icon_state = "ai_floors"; tag = "icon-sterile"},/area/centcom)
+"nr" = (/turf/open/floor/almayer{tag = "icon-bluecorner"; icon_state = "bluecorner"; dir = 8},/area/centcom)
+"ns" = (/obj/structure/flora/ausbushes/fullgrass,/turf/open/floor/grass,/area/centcom)
+"nt" = (/obj/structure/window/framed/almayer/requisitions,/turf/open/floor/plating/almayer,/area/centcom)
 "nu" = (/obj/machinery/door/airlock/centcom{name = "\improper Meeting Room"},/turf/open/floor/almayer,/area/centcom)
 "nv" = (/obj/structure/table/reinforced,/obj/item/folder/yellow,/turf/open/floor/almayer,/area/centcom)
 "nw" = (/obj/machinery/door/airlock/vault,/turf/open/floor/vault,/area/centcom)
-"nx" = (/obj/structure/safe{desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Developer Secrets, do not open without at least two development team members present and permission from the host and head-dev.\""},/turf/open/floor/vault,/area/centcom)
+"nx" = (/obj/structure/flora/ausbushes/genericbush,/turf/open/floor/grass,/area/centcom)
 "ny" = (/turf/open/floor/vault,/area/centcom)
 "nz" = (/obj/structure/prop/almayer/ship_memorial{desc = "A memorial to all that have contributed to DMCA code"; name = "slab of remembrance"},/turf/open/floor/carpet,/area/centcom)
 "nA" = (/obj/structure/prop/almayer/ship_memorial{desc = "A memorial to all who helped run the server, from admins to mentors"; name = "slab of remembrance"},/turf/open/floor/carpet,/area/centcom)
 "nB" = (/obj/machinery/hologram/holopad,/obj/structure/prop/almayer/arc,/turf/open/floor/carpet,/area/centcom)
 "nC" = (/obj/structure/closet/crate/delta,/turf/open/floor/almayer{tag = "icon-test_floor5"; icon_state = "test_floor5"},/area/centcom/suppy)
-"nD" = (/turf/open/floor/mech_bay_recharge_floor,/area/centcom)
+"nD" = (/obj/structure/flora/ausbushes,/turf/open/floor/grass,/area/centcom)
 "nE" = (/obj/structure/table/reinforced,/turf/open/floor/almayer,/area/centcom)
 "nF" = (/obj/structure/holowindow{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/turf/open/floor/vault,/area/centcom)
 "nG" = (/obj/machinery/door/airlock/centcom{name = "\improper Xeno Tear Storage"},/turf/open/floor/almayer,/area/centcom)
@@ -711,9 +711,9 @@
 "nI" = (/obj/structure/closet/crate/science,/turf/open/floor/almayer{tag = "icon-test_floor5"; icon_state = "test_floor5"},/area/centcom/suppy)
 "nJ" = (/obj/machinery/computer/supplycomp,/turf/open/floor/plating/plating_catwalk,/area/centcom/suppy)
 "nK" = (/turf/open/floor/almayer{icon_regular_floor = "cargo_arrow"; icon_state = "cargo_arrow"},/area/centcom/suppy)
-"nL" = (/obj/mecha/medical/odysseus,/turf/open/floor/mech_bay_recharge_floor,/area/centcom)
-"nM" = (/obj/mecha/working/ripley,/turf/open/floor/mech_bay_recharge_floor,/area/centcom)
-"nN" = (/obj/mecha/combat/durand,/turf/open/floor/mech_bay_recharge_floor,/area/centcom)
+"nL" = (/obj/structure/window/framed/almayer/toughened,/turf/open/floor/plating/almayer,/area/centcom)
+"nM" = (/obj/structure/flora/ausbushes/leafybush,/turf/open/floor/grass,/area/centcom)
+"nN" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/grass,/area/centcom)
 "nO" = (/obj/structure/reagent_dispensers/fueltank{desc = "A tank with a label on the side. It reads: Xeno Tears - 100% organically harvested."; name = "Xeno Tears"},/turf/open/floor/almayer{tag = "icon-test_floor4"; icon_state = "test_floor4"},/area/centcom)
 "nP" = (/obj/structure/bed/chair/wood/normal{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/carpet{icon_state = "carpetside"},/area/centcom)
 "nQ" = (/turf/open/floor/carpet{tag = "icon-carpetside (SOUTHWEST)"; icon_state = "carpetside"; dir = 10},/area/centcom)
@@ -721,11 +721,11 @@
 "nS" = (/obj/structure/table/woodentable,/turf/open/floor/carpet{icon_state = "carpetside"},/area/centcom)
 "nT" = (/turf/open/floor/carpet{icon_state = "carpetside"},/area/centcom)
 "nU" = (/turf/open/floor/carpet{tag = "icon-carpetside (SOUTHEAST)"; icon_state = "carpetside"; dir = 6},/area/centcom)
-"nV" = (/obj/machinery/door/airlock/centcom{name = "\improper Suit Storage and Repair"},/turf/open/floor/almayer,/area/centcom)
+"nV" = (/obj/structure/flora/ausbushes/palebush,/turf/open/floor/grass,/area/centcom)
 "nW" = (/obj/structure/closet/crate/construction,/turf/open/floor/almayer{tag = "icon-test_floor5"; icon_state = "test_floor5"},/area/centcom/suppy)
 "nX" = (/obj/structure/bookcase{icon_state = "book-5"},/turf/open/floor/wood,/area/centcom)
-"nY" = (/obj/structure/table/reinforced,/obj/effect/spawner/random/technology_scanner,/turf/open/floor/almayer,/area/centcom)
-"nZ" = (/obj/structure/table/reinforced,/obj/effect/spawner/random/tool,/turf/open/floor/almayer,/area/centcom)
+"nY" = (/obj/structure/flora/ausbushes/ywflowers,/turf/open/floor/grass,/area/centcom)
+"nZ" = (/obj/machinery/hologram/holopad,/turf/open/floor/almayer{icon_regular_floor = "mono"; icon_state = "mono"},/area/centcom)
 "oa" = (/turf/open/floor/almayer{tag = "icon-blue (SOUTHWEST)"; icon_state = "blue"; dir = 10},/area/centcom)
 "ob" = (/obj/effect/decal/warning_stripes{tag = "icon-S"; icon_state = "S"},/turf/open/floor/plating/almayer,/area/centcom/ferry)
 "oc" = (/obj/effect/decal/warning_stripes{icon_state = "E"; tag = "icon-E"},/turf/open/floor/plating/almayer,/area/centcom/ferry)
@@ -763,6 +763,19 @@
 "oI" = (/obj/effect/step_trigger/teleporter/random{affect_ghosts = 1; name = "escapeshuttle_leave"; teleport_x = 25; teleport_x_offset = 245; teleport_y = 25; teleport_y_offset = 245; teleport_z = 1; teleport_z_offset = 1},/turf/open/space/transit/east/shuttlespace_ew9,/area/space)
 "oJ" = (/obj/effect/step_trigger/teleporter/random{affect_ghosts = 1; name = "escapeshuttle_leave"; teleport_x = 25; teleport_x_offset = 245; teleport_y = 25; teleport_y_offset = 245; teleport_z = 1; teleport_z_offset = 1},/turf/open/space/transit/east/shuttlespace_ew8,/area/space)
 "oK" = (/obj/effect/step_trigger/teleporter/random{affect_ghosts = 1; name = "escapeshuttle_leave"; teleport_x = 25; teleport_x_offset = 245; teleport_y = 25; teleport_y_offset = 245; teleport_z = 1; teleport_z_offset = 1},/turf/open/space/transit/east/shuttlespace_ew10,/area/space)
+"oL" = (/turf/open/floor/grass,/area/centcom)
+"oM" = (/obj/structure/flora/ausbushes/sunnybush,/turf/open/floor/grass,/area/centcom)
+"oN" = (/obj/structure/flora/ausbushes/ppflowers,/turf/open/floor/grass,/area/centcom)
+"oO" = (/obj/structure/safe{desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Developer Secrets, do not open without at least two development team members present and permission from the host and head-dev.\""},/obj/item/clothing/head/boonie,/turf/open/floor/vault,/area/centcom)
+"oP" = (/obj/structure/flora/ausbushes/stalkybush,/turf/open/floor/grass,/area/centcom)
+"oQ" = (/obj/structure/flora/ausbushes/pointybush,/turf/open/floor/grass,/area/centcom)
+"oR" = (/obj/effect/decal/warning_stripes{tag = "icon-SE-out"; icon_state = "SE-out"},/turf/open/floor/plating/almayer,/area/centcom/ferry)
+"oS" = (/obj/structure/flora/ausbushes/reedbush,/turf/open/floor/grass,/area/centcom)
+"oT" = (/obj/machinery/computer/shuttle_control/ert{shuttle_tag = "Distress_Big"},/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/centcom/ferry)
+"oU" = (/obj/structure/closet/crate,/obj/machinery/door_control{id = "bot_ERTLARGE"; name = "shutter controller"; pixel_x = 32},/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/shuttle/distress/start_big)
+"oV" = (/obj/effect/decal/warning_stripes{tag = "icon-S"; icon_state = "S"},/obj/effect/decal/warning_stripes{icon_state = "E"; tag = "icon-E"},/turf/open/floor/plating/almayer,/area/centcom/ferry)
+"oW" = (/turf/open/floor/almayer{tag = "icon-bluecorner"; icon_state = "bluecorner"; dir = 1},/area/centcom)
+"oX" = (/obj/machinery/door/airlock/almayer/generic{dir = 2},/obj/machinery/door/poddoor/shutters/transit/open{id = "bot_ERTLARGE"},/turf/open/floor/plating/almayer,/area/shuttle/distress/start_big)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -784,25 +797,25 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaepfhfhfhfhfhfhfhfhfhdXeoeoeodXjThNiojAiohTjUdXeoeoeoeoeoeodXjVjmisjFisjqjWdXeoeoeoeoeoeodXjXibiwjKiwihjYdXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaepfmflflflfofnfsfrftdXeoeoeodXkbkcfukefukfkgdXeoeoeoeoeoeodXkhkifvkkfvklkmdXeoeoeoeoeoeodXknkofwkqfwkrksdXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXeoeoeodXdXdXfydXfydXdXdXdXdXfzeodXdXdXdXdXfAdXfAdXdXdXdXdXfzeodXdXdXdXdXfBdXfBdXdXdXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfDfFfFfFfFfFfFfFfFfFfFfFfFeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeofHfGfGfIfGfGfJeoeoeoeoeoeoeoeofKfLfLfMfLfLfNeoeoeoeoeoeoeoeofPfOfOfQfOfOfRdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfDfFfFfFfFfFfFfFfFfFfFfFfFeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeofHfXfGfIfGfGfJeoeoeoeoeoeoeoeofKghfLfMfLfLfNeoeoeoeoeoeoeoeofPkufOfQfOfOfRdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfDfFfWfWfWfWfWfWfWfWfWfWfFeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCiUiUfXfXiUiUfCfCfCfCfDfFfFfFfFfFfFfFfFfFfFfFfFfZfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYgceoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCfCiUiWiWiUiUjejvktkuiUiUiUiUiUiUgdgdgdgdgdgdgdgdgdgdgdgdgfgegegegegegegegegfgggfgegegegegegegedXdXdXdXdXdXghdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXgigigigigigigigigigigigigidXdXdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCiUiUkykykziUkAjvktkBiUkCkDkEkFiUfCfCfCfCfCfCfCfCfCfCfCfCgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjdXeoeoeodXgkeogldXgmeogmdXgkgngngngngngngldXgigigigigigigigigigigigigigigidXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCiWkGkHkHkIiUkJjvktkKkLkKkHkHkMiUiUiWiWiUiUfCfCfCfCfCfCfCgfgjgogogogjgqgpgpgjgjgjgjgjgjgjgjgjgjdXeogseogheoeogvdXgmgsgmdXgweoeoeoeoeoeogvdXgigxgigxgxgxgxgigxgxgxgxgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCiUkNkOkPkQiUiWkRkRiWiUkSkKkTkUiUkVkWkXkYiWfCfCfCfCfCfCfCgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjdXeoeoeogheoeogvdXgmeogmdXgweoeoeoeoeoeogvdXgigxgigigigigigigigigigigigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCiUiWiUiUiUkZiUiUlajvktlbiUiUlciUiUiUldlekXlfiUiUiWiUiUfCfCfCgfgjgWgWgWgjgqgpgpgjirininivininirgjgjdXeoeoeodXgweogvdXgmeogmdXgweogseokdiViVkjdXgigxgimRkpmTmSmUkpmTmSmVgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCiUiUlglhiUliljlklllmjvktlilllkljlklniUlolpkXlqiUlrlsltiUiUfCfCgfgjgjgjgjgjgjgjgjgjinejejejejejingjgjdXdXdXdXdXgweogvdXdXmWdXdXgwmXmZmYgvdXdXdXdXgigxginbnandncnenandncnfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCiWlulvlwiUlwlxlylylylzlAlylylylBlClDiUiUiUlEiUiUlFlGlHlIiWfCfCgfgjngngnggjgqgpgpgjinejelejelejingjgjdXninhnjdXgweonkgngneonldXgwmXnmmYgvdXnonndXgigiginbnenenenenenenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCiUlJlKlLlMlLktlklklkjvktlklklklNlkjvlOlPlQlRlSlOlLlTlUlViWfCfCgfgjgjgjgjgjgjgjgjgjnpejejejejejnqgjgjdXnsnrnhnteogseoeoeoeoeonueomXnvmYeonwnynxdXgigiginbnenznenBnAnenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCiWlWlXlYiUlYlZlylylylzlAlylylymalymbiUiUiWmciWiUmdmemfmgiWfCfCgfgjnCnCnCgjgqgpgpgjinejelejelejingjgjdXninhnDdXgweokdiViVeonldXgwmXnEmYgvdXnonFdXgigxginbnenenenenenenenfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCiUiUmhmiiUmjljlkmklijvktlimklkljlklniUmlmmmnmoiUmpmqmriUiUfCfCgfgjgjgjgjgjgjgjgjgjinejejejejejingjgjdXdXdXdXdXgweogvdXdXnGdXdXgwmXnHmYgvdXdXdXdXgigxginbnandncnenandncnfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCiUiWiUiUiUmsiUiUlajvktlbiUiUmtiUiUiUmumvmwmxiUiUiWiUiUfCfCfCgfgjnInInIgjgqgpgpgjnJininnKininirgjgjdXnMnLnNdXgweogvdXnOeonOdXgweogseonkgngngldXgigxginQnPnSnRnTnPnSnRnUgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCiUmyjvktmziUiWkRkRiWiUmAlNiUmBiUmlmmmnmCiUfCfCfCfCfCfCfCgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjdXeoeoeonVeoeogvdXnOeonOdXgweoeoeoeoeoeogvdXgigxgigigigigigigigigigigigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCiWmymDmEmFiUmGjvktliiUmHmImJmKiUiUiUiUiUiUfCfCfCfCfCfCfCgfgjnWnWnWgjgqgpgpgjgjgjgjgjgjgjgjgjgjdXeogseonVeoeogvdXnOgsnOdXgweoeoeoeoeoeogvdXgigigigxgxgxnXgigxgxgxgxgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCiUiUmLmMmNiUmOjvktmPiUmAlNiUmQiUfCfCfCfCfCfCfCfCfCfCfCfCgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjdXnZnYnZdXoaeokjdXnOeonOdXoaiViViViViViVkjdXgigigigigigigigigigigigigigigidXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCfCiUiWiWiUiUlijvktjeiUiUiWiUiUiUobobobobobobobobobobobobgfgegegegegegegegegfgggfgegegegegegegedXdXdXdXdXdXghdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXgigigigigigigigigigigigigidXdXdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCiUiUfXfXiUiUfCfCfCfCocfFfFfFfFfFfFfFfFfFfFfFfFoeododododododododododododododododododofeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCnhiWniniiWnhfCfCfCfCfDfFfFfFfFfFfFfFfFfFfFfFfFfZfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYfYgceoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCfCiUiWiWiUiUjejvktnjiUiUiUiUiUiUgdgdgdgdgdgdgdgdgdgdgdgdgfgegegegegegegegegfgggfgegegegegegegedXdXdXdXdXnreokddXdXdXdXdXdXdXdXdXdXdXdXdXdXdXgigigigigigigigigigigigigidXdXdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCiUiUkykykziUkAjvktkBiUkCkDkEkFiUfCfCfCfCfCfCfCfCfCfCfCfCgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjdXnsnsnsdXgweogvdXgmeogmdXgkgngngngngngngldXgigigigigigigigigigigigigigigidXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCiWkGkHkHkIiUkJjvktkKkLkKkHkHkMiUiUiWiWiUiUfCfCfCfCfCfCfCgfgjgogogogjgqgpgpgjgjgjgjgjgjgjgjgjgjntnDnxnMnLgweogvdXgmgsgmdXgweoeoeoeoeoeogvdXgigxgigxgxgxgxgigxgxgxgxgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCiUkNkOkPkQiUiWkRkRiWiUkSkKkTkUiUkVkWkXkYiWfCfCfCfCfCfCfCgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjntnNnMnNnLgweogvdXgmeogmdXgweoeoeoeoeoeogvdXgigxgigigigigigigigigigigigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCiUiWiUiUiUkZiUiUlajvktlbiUiUlciUiUiUldlekXlfiUiUiWiUiUfCfCfCgfgjgWgWgWgjgqgpgpgjirininivininirgjgjntnVnNnYnLgweogvdXgmeogmdXgweonZeokdiViVkjdXgigxgimRkpmTmSmUkpmTmSmVgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCiUiUlglhiUliljlklllmjvktlilllkljlklniUlolpkXlqiUlrlsltiUiUfCfCgfgjgjgjgjgjgjgjgjgjinejejejejejingjgjntnNnYoLnLgweogvdXdXmWdXdXgwmXmZmYgvdXdXdXdXgigxginbnandncnenandncnfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCiWlulvlwiUlwlxlylylylzlAlylylylBlClDiUiUiUlEiUiUlFlGlHlIiWfCfCgfgjngngnggjgqgpgpgjinejelejelejingjgjntnYoMoNnLgweonkgngneonldXgwmXnmmYgvdXnonndXgigiginbnenenenenenenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCiUlJlKlLlMlLktlklklkjvktlklklklNlkjvlOlPlQlRlSlOlLlTlUlViWfCfCgfgjgjgjgjgjgjgjgjgjnpejejejejejnqgjgjntoNnMnVnLgwnZeoeoeoeoeonueomXnvmYeonwnyoOdXgigiginbnenznenBnAnenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCiWlWlXlYiUlYlZlylylylzlAlylylymalymbiUiUiWmciWiUmdmemfmgiWfCfCgfgjnCnCnCgjgqgpgpgjinejelejelejingjgjntoNoPoMnLgweokdiViVeonldXgwmXnEmYgvdXnonFdXgigxginbnenenenenenenenfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCiUiUmhmiiUmjljlkmklijvktlimklkljlklniUmlmmmnmoiUmpmqmriUiUfCfCgfgjgjgjgjgjgjgjgjgjinejejejejejingjgjntnVoQnMnLgweogvdXdXnGdXdXgwmXnHmYgvdXdXdXdXgigxginbnandncnenandncnfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCiUiWiUiUiUmsiUiUlajvktlbiUiUmtiUiUiUmumvmwmxiUiUiWiUiUfCfCfCgfgjnInInIgjgqgpgpgjnJininnKininirgjgjntnNnNoPnLgweogvdXnOeonOdXgweonZeonkgngngldXgigxginQnPnSnRnTnPnSnRnUgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCiUmyjvktmziUiWkRkRiWiUmAlNiUmBiUmlmmmnmCiUfCfCfCoRobobobgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjntoPoQnNnLgweogvdXnOeonOdXgweoeoeoeoeoeogvdXgigxgigigigigigigigigigigigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCiWmymDmEmFiUmGjvktliiUmHmImJmKiUiUiUiUiUiUfCfCfCocfFfFfFgfgjnWnWnWgjgqgpgpgjgjgjgjgjgjgjgjgjgjntnMoSnxnLgweogvdXnOgsnOdXgweoeoeoeoeoeogvdXgigigigxgxgxnXgigxgxgxgxgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCiUiUmLmMmNiUmOjvktmPiUmAlNiUmQiUfCfCfCfCfCfCfCfCocfFoTfFgfgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjdXnsnsnsdXgweogvdXnOeonOdXoaiViViViViViVkjdXgigigigigigigigigigigigigigigidXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCfCiUiWiWiUiUlijvktoUiUiUiWiUiUiUoboboboboboboboboVfFfFfFgfgegegegegegegegegfgggfgegegegegegegedXdXdXdXdXoWeonkdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXgigigigigigigigigigigigigidXdXdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCnhiWoXoXiWnhfCfCfCfCocfFfFfFfFfFfFfFfFfFfFfFfFoeododododododododododododododododododofeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCocfFfWfWfWfWfWfWfWfWfWfWfFeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCfCocfFfFfFfFfFfFfFfFfFfFfFfFeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeodWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxfxdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdXdWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

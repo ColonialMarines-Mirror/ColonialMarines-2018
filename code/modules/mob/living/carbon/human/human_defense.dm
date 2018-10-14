@@ -121,7 +121,7 @@ Contains most of the procs that are called when a mob is attacked by something
 
 
 //Returns 1 if the attack hit, 0 if it missed.
-/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, bonus_damage = 0)
 	if(!I || !user)	return 0
 
 	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_selected, src)
@@ -163,7 +163,8 @@ Contains most of the procs that are called when a mob is attacked by something
 	else
 		user.flick_attack_overlay(src, "punch")
 
-	apply_damage(I.force, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
+	//Add the bonus damage, such as from the Move Aura.
+	apply_damage(I.force += bonus_damage, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
 
 	var/bloody = 0
 	if((I.damtype == BRUTE || I.damtype == HALLOSS) && prob(I.force*2 + 25))
@@ -327,7 +328,6 @@ Contains most of the procs that are called when a mob is attacked by something
 	if(w_uniform)
 		w_uniform.add_mob_blood(source)
 		update_inv_w_uniform()
-
 
 /mob/living/carbon/human/proc/handle_suit_punctures(var/damtype, var/damage)
 	if(!wear_suit) return

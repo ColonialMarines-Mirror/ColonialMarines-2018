@@ -108,7 +108,7 @@
 		if(detected)
 			playsound(loc, 'sound/items/tick.ogg', 50, 0, 7, 2)
 
-/obj/item/device/motiondetector/process_old()
+/obj/item/device/motiondetector/proc/process_old()
 	if(!active)
 		processing_objects.Remove(src)
 		return

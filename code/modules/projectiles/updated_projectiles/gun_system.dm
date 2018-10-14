@@ -635,10 +635,6 @@ and you're good to go.
 					projectile_to_fire.damage *= config.base_hit_damage_mult + config.low_hit_damage_mult//Lower chance of a damage buff.
 				if(i == 1)
 					to_chat(user, "<span class='notice'>Your bipod keeps [src] steady!</span>")
-			else
-				under.activate_attachment(src, user, TRUE) //If there is no support, retract it to warn the user.
-				to_chat(user, "<span class='notice'>Your bipod retracts due to lack of support.</span>")
-				playsound(user, 'sound/machines/click.ogg', 15, 1)
 		//End of bipods.
 
 		target = original_target ? original_target : targloc

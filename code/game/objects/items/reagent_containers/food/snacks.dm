@@ -3028,6 +3028,23 @@
 		icon_state = "[initial(icon_state)]-o"
 		package = 0
 
+/obj/item/reagent_container/food/snacks/wrapped/lampbar  //LAMP!
+	name = "LAMP Bar"
+	desc = "A glow in the dark candybar. Made with real glowshrooms. <B>\"LAMP!\"</B>"
+	icon_state = "lamp"
+	var/brightness_on = 3	//its not a very strong light
+	wrapper = /obj/item/trash/lamp
+	
+	
+/obj/item/reagent_container/food/snacks/wrapped/lampbar/New()
+	..()
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("coco", 4)
+	reagents.add_reagent("mothpheromones", 4)
+
+/obj/item/reagent_container/food/snacks/wrapped/attack_self(mob/user as mob)
+	SetLuminosity(brightness_on)
+	..()
 
 /obj/item/reagent_container/food/snacks/wrapped/booniebars
 	name = "Boonie Bars"

@@ -1037,16 +1037,16 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 			G.wield_delay -= WIELD_DELAY_FAST
 			bipod_deployed = !bipod_deployed
 		else
-			var/obj/support = check_bipod_support(G, user)
-			if(support)
-				if(do_after(user, 10, TRUE, 5, BUSY_ICON_BUILD))
+			if(do_after(user, 10, TRUE, 5, BUSY_ICON_BUILD))
+				if(!bipod_deployed) //Prevents stacking penalties from trying to do several deploy actions at once.
 					bipod_deployed = !bipod_deployed
-					to_chat(user, "<span class='notice'>You deploy [src] on [support].</span>")
+					to_chat(user, "<span class='notice'>You deploy [src].</span>")
 					G.aim_slowdown += SLOWDOWN_ADS_SCOPE
 					G.wield_delay += WIELD_DELAY_FAST
-			else
-				to_chat(user, "<span class='notice'>There is nothing to support [src].</span>")
-				return FALSE
+				else
+					to_chat(user, "<span class='notice'>[src] is already deployed.</span>")
+	if (G.flags_item & WIELDED) //Updates slowdown, otherwise requires wielding again to update.
+		G.slowdown = G.aim_slowdown
 	//var/image/targeting_icon = image('icons/mob/mob.dmi', null, "busy_targeting", "pixel_y" = 22) //on hold until the bipod is fixed
 	if(bipod_deployed)
 		icon_state = "bipod-on"

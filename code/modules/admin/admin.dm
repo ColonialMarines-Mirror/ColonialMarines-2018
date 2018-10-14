@@ -849,14 +849,13 @@ var/global/respawntime = 15
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/toggleatime()
+/datum/admins/proc/toggleatime(time as num)
 	set category = "Server"
 	set desc="Sets the respawn time"
 	set name="Set Respawn Timer"
-	var/message = input("Enter time in minutes:") as message
-	respawntime = text2num(message)
-	message_admins("\blue [key_name_admin(usr)] set the respawn time to [respawntime].", 1)
-	log_admin("[key_name(usr)] set the respawn time to [respawntime].")
+	respawntime = time
+	message_admins("\blue [key_name_admin(usr)] set the respawn time to [respawntime] minutes.", 1)
+	log_admin("[key_name(usr)] set the respawn time to [respawntime] minutes.")
 	world.update_status()
 	feedback_add_details("admin_verb","TRT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

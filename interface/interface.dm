@@ -53,6 +53,33 @@
 	src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018")
 	return
 
+/client/verb/webmap()
+	var/ship_link = ""
+	var/ground_link = ""
+	set name = "webmap"
+	set desc = "Opens the webmap"
+	set hidden = 1
+	var/choice = alert("Do you want to view the ground or the ship?",,"Ship","Ground","Cancel")
+	if(choice == "Cancel")
+		return
+	if(choice == "Ship")
+		if(MAIN_SHIP_NAME == "USS Almayer")
+			ship_link = config.almayer_url
+		src << link(ship_link)
+	if(choice == "Ground")
+		if(map_tag == "Ice Colony")
+			ground_link = config.icecolony_url
+		if(map_tag == "LV-624")
+			ground_link = config.lv624_url
+		if(map_tag == "Solaris Ridge")
+			ground_link = config.bigred_url
+		if(map_tag == "Prison Station")
+			ground_link = config.prisonstation_url
+		if(map_tag == "Whiskey Outpost")
+			ground_link = config.whiskeyoutpost_url
+		src << link(ground_link)
+	return
+
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"

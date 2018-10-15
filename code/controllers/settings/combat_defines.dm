@@ -122,7 +122,7 @@
 	var/min_armor_penetration = 5
 	var/mlow_armor_penetration = 10
 	var/low_armor_penetration = 20
-	var/mlow_armor_penetration = 25
+	var/lmed_armor_penetration = 25
 	var/med_armor_penetration = 30
 	var/hmed_armor_penetration = 40
 	var/high_armor_penetration = 50

@@ -223,10 +223,12 @@
 
 /datum/reagent/mothpheromones/on_mob_life(mob/living/M)
 	. = ..()
-	if(!.) return
-	if(has_species(M, "Moth"))
-		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
-		holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
+	if(!.)
+		return
+	if(alien == IS_MOTH)
+		if(prob(7))
+		M.emote(pick("twitch","drool","moan","gasp"))
+	holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
 
 /datum/reagent/oxygen
 	name = "Oxygen"

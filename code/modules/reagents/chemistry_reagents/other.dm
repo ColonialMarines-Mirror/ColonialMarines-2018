@@ -223,8 +223,6 @@
 
 /datum/reagent/mothpheromones/on_mob_life(mob/living/M)
 	. = ..()
-	if(!.)
-		return
 	if(has_species(M, "Moth"))
 		if(prob(7))
 		M.emote(pick("twitch","drool","moan","gasp"))

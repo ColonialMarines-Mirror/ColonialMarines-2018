@@ -165,14 +165,18 @@
 		on_fire = FALSE
 		fire_stacks = 0
 		update_fire()
+		return TRUE
 
 /mob/living/carbon/Xenomorph/ExtinguishMob()
 	. = ..()
-	SetLuminosity(0)
+	if(.)
+		SetLuminosity(0)
 
 /mob/living/carbon/Xenomorph/Boiler/ExtinguishMob()
 	. = ..()
-	SetLuminosity(3)
+	if(.)
+		SetLuminosity(3)
+
 
 /mob/living/proc/update_fire()
 	return

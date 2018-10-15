@@ -1,4 +1,7 @@
 /mob/living/carbon/human/examine(mob/user)
+	if( user.sdisabilities & BLIND || user.blinded || user.stat==UNCONSCIOUS )
+		to_chat(user, "<span class='notice'>Something is there but you can't see it.</span>")
+		return
 
 	if (isXeno(user))
 		var/msg = "<span class='info'>*---------*\nThis is "
@@ -204,7 +207,7 @@
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
-	if(stat != DEAD)
+	if(is_jittery)
 		if(jitteriness >= 300)
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
 		else if(jitteriness >= 200)

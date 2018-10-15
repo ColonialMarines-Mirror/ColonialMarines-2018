@@ -6,7 +6,7 @@ Basically a cheap knock-off of the Protolathe that I wrote in the middle of the 
 /obj/machinery/r_n_d/bioprinter
 	name = "Weyland Yutani Brand Bio-Organic Printer(TM)"
 	icon_state = "protolathe"
-	container_type = REFILLABLE
+	flags_atom = OPENCONTAINER
 
 	use_power = 1
 	idle_power_usage = 30

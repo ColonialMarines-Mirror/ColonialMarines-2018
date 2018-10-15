@@ -4,7 +4,6 @@
 	icon = 'icons/obj/items/bloodpack.dmi'
 	icon_state = "empty"
 	volume = 200
-	container_type = AMOUNT_ESTIMEE
 
 	var/blood_type = null
 

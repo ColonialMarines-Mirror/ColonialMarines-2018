@@ -5,7 +5,7 @@
 	w_class = 2.0
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
-	var/see_invisible = 0
+	var/invisa_view = 0
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/eyes.dmi')
 	var/prescription = 0
 	var/toggleable = 0
@@ -14,6 +14,7 @@
 	flags_equip_slot = SLOT_EYES
 	flags_armor_protection = EYES
 	var/deactive_state = "degoggles"
+	var/has_tint = FALSE //whether it blocks vision like a welding helmet
 	var/fullscreen_vision
 
 
@@ -39,8 +40,10 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			if(H.glasses == src)
-				H.update_tint()
+				if(has_tint)
+					H.update_tint()
 				H.update_sight()
+				H.update_glass_vision(src)
 
 		for(var/X in actions)
 			var/datum/action/A = X
@@ -150,7 +153,7 @@
 	flags_inventory = COVEREYES
 	flags_inv_hide = HIDEEYES
 	eye_protection = 2
-	tint = 2
+	has_tint = TRUE
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
@@ -169,7 +172,6 @@
 			flags_armor_protection &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			eye_protection = 0
-			tint = 0
 			to_chat(usr, "You push [src] up out of your face.")
 		else
 			active = 1
@@ -178,7 +180,6 @@
 			flags_armor_protection |= EYES
 			icon_state = initial(icon_state)
 			eye_protection = initial(eye_protection)
-			tint = initial(tint)
 			to_chat(usr, "You flip [src] down to protect your eyes.")
 
 
@@ -216,8 +217,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	tint = 3
-	eye_protection = 2
+	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"

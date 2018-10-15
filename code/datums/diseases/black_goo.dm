@@ -39,10 +39,8 @@
 		if(2)
 			if(goo_message_cooldown < world.time)
 				if (prob(3)) to_chat(affected_mob, "\red Your throat is really dry...")
-				else if (prob(6))
-					to_chat(affected_mob, "\red You feel really warm...")
-				else if (prob(2))
-					H.vomit()
+				else if (prob(6)) to_chat(affected_mob, "\red You feel really warm...")
+				else if (prob(2)) H.vomit_on_floor()
 				goo_message_cooldown = world.time + 100
 		if(3)
 			hidden = list(0,0)
@@ -60,14 +58,14 @@
 					goo_message_cooldown = world.time + 100
 				else if(prob(5))
 					goo_message_cooldown = world.time + 100
-					H.vomit()
+					H.vomit_on_floor()
 		if(4)
 			H.next_move_slowdown = max(H.next_move_slowdown, 2)
 			if(prob(5) || age >= stage_minimum_age-1)
 				if(!zombie_transforming)
 					zombie_transform(H)
 			else if(prob(5))
-				H.vomit()
+				H.vomit_on_floor()
 		if(5)
 			if(!zombie_transforming && prob(10))
 				if(H.stat != DEAD)
@@ -86,11 +84,10 @@
 /datum/disease/black_goo/proc/zombie_transform(mob/living/carbon/human/H)
 	set waitfor = 0
 	zombie_transforming = TRUE
-	H.vomit()
-	sleep(50)
+	H.vomit_on_floor()
 	H.AdjustStunned(5)
 	sleep(20)
-	H.Jitter(500)
+	H.make_jittery(500)
 	sleep(30)
 	if(H && H.loc)
 		if(H.stat == DEAD) H.revive(TRUE)

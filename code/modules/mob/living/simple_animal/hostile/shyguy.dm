@@ -87,7 +87,7 @@
 	for(var/mob/living/carbon/H in viewers(src, null))
 		if(H in shitlist)
 			continue
-		if(H.stat || is_blind(H))
+		if(H.stat || H.blinded)
 			continue
 
 		var/observed = 0

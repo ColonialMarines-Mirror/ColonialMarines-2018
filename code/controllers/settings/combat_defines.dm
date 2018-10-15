@@ -2,30 +2,30 @@
 	var/proj_base_accuracy_mult = 0.01
 	var/proj_base_damage_mult = 0.01
 
-	var/proj_variance_high = 100
-	var/proj_variance_low = 100
+	var/proj_variance_high = 105
+	var/proj_variance_low = 95
 
 	var/critical_chance_low = 5
 	var/critical_chance_high = 10
-	var/base_armor_resist_low = 0.5
-	var/base_armor_resist_high = 1
+	var/base_armor_resist_low = 1.0
+	var/base_armor_resist_high = 2.0
 	var/xeno_armor_resist_low = 0.5
-	var/xeno_armor_resist_high = 1
+	var/xeno_armor_resist_high = 1.5
 
-	var/min_hit_accuracy = 1
-	var/low_hit_accuracy = 5
-	var/med_hit_accuracy = 10
-	var/hmed_hit_accuracy = 15
-	var/high_hit_accuracy = 25
-	var/max_hit_accuracy = 50
+	var/min_hit_accuracy = 5
+	var/low_hit_accuracy = 10
+	var/med_hit_accuracy = 15
+	var/hmed_hit_accuracy = 20
+	var/high_hit_accuracy = 30
+	var/max_hit_accuracy = 40
 
 	var/base_hit_accuracy_mult = 1
-	var/min_hit_accuracy_mult = 0.01
-	var/low_hit_accuracy_mult = 0.05
-	var/med_hit_accuracy_mult = 0.10
-	var/hmed_hit_accuracy_mult = 0.15
-	var/high_hit_accuracy_mult = 0.25
-	var/max_hit_accuracy_mult = 0.35
+	var/min_hit_accuracy_mult = 0.05
+	var/low_hit_accuracy_mult = 0.10
+	var/med_hit_accuracy_mult = 0.20
+	var/hmed_hit_accuracy_mult = 0.30
+	var/high_hit_accuracy_mult = 0.40
+	var/max_hit_accuracy_mult = 0.50
 
 	var/base_hit_damage = 10
 	var/min_hit_damage = 15
@@ -44,13 +44,13 @@
 	var/ultra_hit_damage = 150
 
 	var/base_hit_damage_mult = 1
-	var/min_hit_damage_mult = 0.01
-	var/low_hit_damage_mult = 0.05
-	var/med_hit_damage_mult = 0.10
-	var/hmed_hit_damage_mult = 0.15
+	var/min_hit_damage_mult = 0.05
+	var/low_hit_damage_mult = 0.10
+	var/med_hit_damage_mult = 0.20
 	var/tacshottie_damage_mult = 0.25
-	var/high_hit_damage_mult = 0.25
-	var/max_hit_damage_mult = 0.35
+	var/hmed_hit_damage_mult = 0.30
+	var/high_hit_damage_mult = 0.40
+	var/max_hit_damage_mult = 0.50
 
 	var/reg_damage_falloff = 1
 	var/smg_damage_falloff = 1.5
@@ -70,22 +70,25 @@
 	var/low_burst_value = 2
 	var/med_burst_value = 3
 	var/high_burst_value = 4
-	var/max_burst_value = 5
+	var/vhigh_burst_value = 5
+	var/max_burst_value = 6
 
-	var/min_fire_delay = 0
-	var/mlow_fire_delay = 1
-	var/low_fire_delay = 2
-	var/med_fire_delay = 3
-	var/high_fire_delay = 4
-	var/mhigh_fire_delay = 5
-	var/max_fire_delay = 6
+	var/min_fire_delay = 1
+	var/mlow_fire_delay = 2
+	var/low_fire_delay = 3
+	var/med_fire_delay = 4
+	var/high_fire_delay = 5
+	var/mhigh_fire_delay = 6
+	var/max_fire_delay = 7
 	var/tacshottie_fire_delay = 15
 
 	var/min_scatter_value = 5
-	var/low_scatter_value = 10
-	var/med_scatter_value = 15
-	var/high_scatter_value = 20
-	var/max_scatter_value = 25
+	var/mlow_scatter_value = 10
+	var/low_scatter_value = 15
+	var/med_scatter_value = 20
+	var/high_scatter_value = 25
+	var/mhigh_scatter_value = 35
+	var/max_scatter_value = 40
 
 	var/min_recoil_value = 1
 	var/low_recoil_value = 2
@@ -93,19 +96,22 @@
 	var/high_recoil_value = 4
 	var/max_recoil_value = 5
 
-	var/min_shrapnel_chance = 10
-	var/low_shrapnel_chance = 20
-	var/med_shrapnel_chance = 30
-	var/high_shrapnel_chance = 40
-	var/max_shrapnel_chance = 50
+	var/min_shrapnel_chance = 5
+	var/low_shrapnel_chance = 10
+	var/mlow_shrapnel_chance = 20
+	var/med_shrapnel_chance = 25
+	var/high_shrapnel_chance = 45
+	var/max_shrapnel_chance = 75
 
 	var/min_shell_range = 3
 	var/close_shell_range = 5
 	var/near_shell_range = 10
 	var/short_shell_range = 15
 	var/norm_shell_range = 20
-	var/long_shell_range = 25
-	var/max_shell_range = 30
+	var/lnorm_shell_range = 25
+	var/long_shell_range = 30
+	var/mlong_shell_range = 35
+	var/max_shell_range = 40
 
 	var/slow_shell_speed = 1
 	var/reg_shell_speed = 2
@@ -114,24 +120,34 @@
 	var/ultra_shell_speed = 5
 
 	var/min_armor_penetration = 5
-	var/mlow_armor_penetration = 15
-	var/low_armor_penetration = 25
-	var/med_armor_penetration = 35
-	var/high_armor_penetration = 45
-	var/mhigh_armor_penetration = 55
-	var/max_armor_penetration = 65
+	var/mlow_armor_penetration = 10
+	var/low_armor_penetration = 20
+	var/mlow_armor_penetration = 25
+	var/med_armor_penetration = 30
+	var/hmed_armor_penetration = 40
+	var/high_armor_penetration = 50
+	var/mhigh_armor_penetration = 60
+	var/vhigh_armor_penetration = 70
+	var/max_armor_penetration = 80
 
 	var/min_proj_extra = 1
 	var/low_proj_extra = 2
 	var/med_proj_extra = 3
-	var/high_proj_extra = 4
-	var/max_proj_extra = 5
+	var/hmed_proj_extra = 4
+	var/high_proj_extra = 5
+	var/mhigh_proj_extra = 6
+	var/vhigh_proj_extra = 7
+	var/max_proj_extra = 8
 
 	var/min_proj_variance = 1
-	var/low_proj_variance = 2
-	var/med_proj_variance = 3
-	var/high_proj_variance = 4
-	var/max_proj_variance = 5
+	var/low_proj_variance = 3
+	var/mlow_proj_variance = 5
+	var/med_proj_variance = 7
+	var/hmed_proj_variance = 8
+	var/high_proj_variance = 9
+	var/max_proj_variance = 10
+
+//The following is *NOT* featured in combat_defines.txt
 
 	var/min_movement_acc_penalty = 1
 	var/low_movement_acc_penalty = 2

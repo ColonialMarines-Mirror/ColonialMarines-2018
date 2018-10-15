@@ -225,7 +225,8 @@
 
 				if(!status) status = "OK"
 
-				if(org.status & LIMB_SPLINTED) status += " <b>(SPLINTED)</b>"
+				if(org.status & LIMB_SPLINTED)
+					status += " <b>(SPLINTED)</b>"
 				if(org.status & LIMB_MUTATED)
 					status = "weirdly shapen."
 				if(org.status & LIMB_DESTROYED)
@@ -234,6 +235,7 @@
 				to_chat(src, "\t [status=="OK"?"\blue ":"\red "]My [org.display_name] is [status].")
 			if((SKELETON in mutations) && !w_uniform && !wear_suit)
 				play_xylophone()
+
 		else
 			var/t_him = "it"
 			if (gender == MALE)
@@ -272,3 +274,6 @@
 
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)
+
+	..()
+

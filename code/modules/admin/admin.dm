@@ -1,6 +1,6 @@
-
 var/global/BSACooldown = 0
 var/global/floorIsLava = 0
+var/global/respawntime = 15
 
 
 ////////////////////////////////
@@ -849,6 +849,19 @@ var/global/floorIsLava = 0
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggleatime(time as num)
+	set category = "Server"
+	set desc="Sets the respawn time"
+	set name="Set Respawn Timer"
+	if (time >= 0)
+		respawntime = time
+	else
+		to_chat(usr, "The respawn time cannot be a negative number!")
+	message_admins("\blue [key_name_admin(usr)] set the respawn time to [respawntime] minutes.", 1)
+	log_admin("[key_name(usr)] set the respawn time to [respawntime] minutes.")
+	world.update_status()
+	feedback_add_details("admin_verb","TRT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/end_round()
 	set category = "Server"
 	set desc="Immediately ends the round, be very careful"
@@ -1032,20 +1045,6 @@ var/global/floorIsLava = 0
 
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/datum/admins/proc/toggletintedweldhelmets()
-	set category = "Debug"
-	set desc="Reduces view range when wearing welding helmets"
-	set name="Toggle tinted welding helmes"
-	tinted_weldhelh = !( tinted_weldhelh )
-	if (tinted_weldhelh)
-		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
-	else
-		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
-	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
-	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
-	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
 	set category = "Server"

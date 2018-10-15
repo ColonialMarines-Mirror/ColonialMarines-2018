@@ -36,7 +36,6 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	handle_aura_receiver()
 	handle_living_health_updates()
 	handle_living_plasma_updates()
-	handle_living_health_updates()
 	update_icons()
 
 /mob/living/carbon/Xenomorph/update_stat()

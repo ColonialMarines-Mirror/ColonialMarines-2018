@@ -48,9 +48,9 @@
 	var/low_hit_damage_mult = 0.05
 	var/med_hit_damage_mult = 0.10
 	var/hmed_hit_damage_mult = 0.15
+	var/tacshottie_damage_mult = 0.25
 	var/high_hit_damage_mult = 0.25
 	var/max_hit_damage_mult = 0.35
-	var/tacshottie_damage_mult = 0.25
 
 	var/reg_damage_falloff = 1
 	var/smg_damage_falloff = 1.5

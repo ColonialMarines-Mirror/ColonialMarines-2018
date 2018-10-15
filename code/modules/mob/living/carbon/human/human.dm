@@ -801,7 +801,7 @@
 
 	if (href_list["medholocard"])
 		if(species?.count_human)
-			to_chat(usr, "<span class='warning'>Triage holocards only works on organical humanoid entities.</span>")
+			to_chat(usr, "<span class='warning'>Triage holocards only works on organic humanoid entities.</span>")
 			return
 		var/newcolor = input("Choose a triage holo card to add to the patient:", "Triage holo card", null, null) in list("black", "red", "orange", "none")
 		if(!newcolor) return

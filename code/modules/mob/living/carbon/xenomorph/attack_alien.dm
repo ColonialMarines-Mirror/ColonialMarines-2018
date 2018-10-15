@@ -12,9 +12,7 @@
 	if (M.fortify)
 		return FALSE
 
-	var/intent = M.a_intent
-	if(force_intent)
-		intent = force_intent
+	var/intent = force_intent ? force_intent : M.a_intent
 
 	//Reviewing the four primary intents
 	switch(intent)
@@ -187,7 +185,7 @@
 			if(protection_aura)
 				tackle_pain = tackle_pain * (1 - (0.10 + 0.05 * protection_aura))  //Halloss damage decreased by 10% + 5% per rank of protection aura
 			if(dam_bonus)
-				tackle_pain = tackle_pain + dam_bonus
+				tackle_pain += dam_bonus
 			apply_damage(tackle_pain, HALLOSS)
 			updatehealth()
 			updateshock()

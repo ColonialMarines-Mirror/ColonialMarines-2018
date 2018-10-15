@@ -54,8 +54,8 @@
 	return
 
 /client/verb/webmap()
-	var/ship_link = ""
-	var/ground_link = ""
+	var/ship_link
+	var/ground_link
 	set name = "webmap"
 	set desc = "Opens the webmap"
 	set hidden = 1
@@ -66,8 +66,9 @@
 		switch(MAIN_SHIP_NAME)
 			if("USS Almayer")
 				ship_link = config.almayer_url
-		if(ship_link == "")
+		if(!ship_link)
 			to_chat(src, "<span class='warning'>This ship map has no webmap setup.</span>")
+			return
 		src << link(ship_link)
 	if(choice == "Ground")
 		switch(map_tag)
@@ -81,8 +82,9 @@
 				ground_link = config.prisonstation_url
 			if("Whiskey Outpost")
 				ground_link = config.whiskeyoutpost_url
-		if(ground_link == "")
+		if(!ground_link)
 			to_chat(src, "<span class='warning'>This ground map has no webmap setup.</span>")
+			return
 		src << link(ground_link)
 	return
 

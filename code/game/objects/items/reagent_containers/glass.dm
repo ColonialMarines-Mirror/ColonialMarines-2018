@@ -242,8 +242,8 @@
 		update_icon()
 
 /obj/item/reagent_container/glass/beaker/cryomix
-	New()
-		..()
+/obj/item/reagent_container/glass/beaker/cryomix/New()
+		. = ..()
 		reagents.add_reagent("cryoxadone", 10)
 		reagents.add_reagent("clonexadone", 10)
 		reagents.add_reagent("iron", 10)

@@ -113,6 +113,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
+	/datum/admins/proc/toggleatime,
 	/datum/admins/proc/end_round,
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/toggleAI,
@@ -793,7 +794,6 @@ var/list/admin_verbs_mentor = list(
 		to_chat(usr, "<span class='boldnotice'>You will now get friendly fire attack log messages.</span>")
 	else
 		to_chat(usr, "<span class='boldnotice'>You will no longer get friendly fire attack log messages.</span>")
-
 
 /client/proc/toggleghostwriters()
 	set name = "Toggle Ghost Blood Writing"

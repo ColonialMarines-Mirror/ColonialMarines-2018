@@ -50,6 +50,7 @@
 	var/hmed_hit_damage_mult = 0.15
 	var/high_hit_damage_mult = 0.25
 	var/max_hit_damage_mult = 0.35
+	var/tacshottie_damage_mult = 0.25
 
 	var/reg_damage_falloff = 1
 	var/smg_damage_falloff = 1.5
@@ -78,6 +79,7 @@
 	var/high_fire_delay = 4
 	var/mhigh_fire_delay = 5
 	var/max_fire_delay = 6
+	var/tacshottie_fire_delay = 1.5
 
 	var/min_scatter_value = 5
 	var/low_scatter_value = 10

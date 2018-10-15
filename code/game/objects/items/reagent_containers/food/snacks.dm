@@ -3043,7 +3043,8 @@
 	reagents.add_reagent("mothpheromones", 4)
 
 /obj/item/reagent_container/food/snacks/wrapped/lampbar/attack_self(mob/user as mob)
-	SetLuminosity(brightness_on)
+	if (package)
+		SetLuminosity(brightness_on)
 	..()
 
 /obj/item/reagent_container/food/snacks/wrapped/booniebars

@@ -63,20 +63,26 @@
 	if(choice == "Cancel")
 		return
 	if(choice == "Ship")
-		if(MAIN_SHIP_NAME == "USS Almayer")
-			ship_link = config.almayer_url
+		switch(MAIN_SHIP_NAME)
+			if("USS Almayer")
+				ship_link = config.almayer_url
+		if(ship_link == "")
+			to_chat(src, "<span class='warning'>This ship map has no webmap setup.</span>")
 		src << link(ship_link)
 	if(choice == "Ground")
-		if(map_tag == "Ice Colony")
-			ground_link = config.icecolony_url
-		if(map_tag == "LV-624")
-			ground_link = config.lv624_url
-		if(map_tag == "Solaris Ridge")
-			ground_link = config.bigred_url
-		if(map_tag == "Prison Station")
-			ground_link = config.prisonstation_url
-		if(map_tag == "Whiskey Outpost")
-			ground_link = config.whiskeyoutpost_url
+		switch(map_tag)
+			if("Ice Colony")
+				ground_link = config.icecolony_url
+			if("LV-624")
+				ground_link = config.lv624_url
+			if("Solaris Ridge")
+				ground_link = config.bigred_url
+			if("Prison Station")
+				ground_link = config.prisonstation_url
+			if("Whiskey Outpost")
+				ground_link = config.whiskeyoutpost_url
+		if(ground_link == "")
+			to_chat(src, "<span class='warning'>This ground map has no webmap setup.</span>")
 		src << link(ground_link)
 	return
 

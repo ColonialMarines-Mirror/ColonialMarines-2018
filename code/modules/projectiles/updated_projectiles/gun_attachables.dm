@@ -1030,23 +1030,20 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 			bipod_deployed = FALSE
 			G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
 			G.wield_delay -= WIELD_DELAY_FAST
-	else
+	else if(bipod_deployed)
+		to_chat(user, "<span class='notice'>You retract [src].</span>")
+		G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
+		G.wield_delay -= WIELD_DELAY_FAST
+		bipod_deployed = !bipod_deployed
+	else if(do_after(user, 10, TRUE, 5, BUSY_ICON_BUILD))
 		if(bipod_deployed)
-			to_chat(user, "<span class='notice'>You retract [src].</span>")
-			G.aim_slowdown -= SLOWDOWN_ADS_SCOPE
-			G.wield_delay -= WIELD_DELAY_FAST
-			bipod_deployed = !bipod_deployed
-		else
-			if(do_after(user, 10, TRUE, 5, BUSY_ICON_BUILD))
-				if(!bipod_deployed) //Prevents stacking penalties from trying to do several deploy actions at once.
-					bipod_deployed = !bipod_deployed
-					to_chat(user, "<span class='notice'>You deploy [src].</span>")
-					G.aim_slowdown += SLOWDOWN_ADS_SCOPE
-					G.wield_delay += WIELD_DELAY_FAST
-				else
-					to_chat(user, "<span class='notice'>[src] is already deployed.</span>")
-	if (G.flags_item & WIELDED) //Updates slowdown, otherwise requires wielding again to update.
-		G.slowdown = G.aim_slowdown
+			return
+		bipod_deployed = !bipod_deployed
+		to_chat(user, "<span class='notice'>You deploy [src].</span>")
+		G.aim_slowdown += SLOWDOWN_ADS_SCOPE
+		G.wield_delay += WIELD_DELAY_FAST
+	G.update_slowdown()
+		
 	//var/image/targeting_icon = image('icons/mob/mob.dmi', null, "busy_targeting", "pixel_y" = 22) //on hold until the bipod is fixed
 	if(bipod_deployed)
 		icon_state = "bipod-on"

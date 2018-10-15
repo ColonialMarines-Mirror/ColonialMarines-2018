@@ -238,7 +238,7 @@
 	flags_item 	   ^= WIELDED
 	name 	   += " (Wielded)"
 	item_state += "_w"
-	slowdown = initial(slowdown) + aim_slowdown
+	update_slowdown()
 	place_offhand(user, initial(name))
 	wield_time = world.time + wield_delay
 	//slower or faster wield delay depending on skill.
@@ -274,9 +274,16 @@
 	flags_item ^= WIELDED
 	name 	    = copytext(name, 1, -10)
 	item_state  = copytext(item_state, 1, -2)
-	slowdown = initial(slowdown)
+	update_slowdown()
 	remove_offhand(user)
 	return TRUE
+	
+/obj/item/weapon/gun/proc/update_slowdown()
+	if(flags_item & WIELDED)
+		slowdown = initial(slowdown) + aim_slowdown
+	else
+		slowdown = initial(slowdown)
+	
 
 //----------------------------------------------------------
 			//							        \\

@@ -79,7 +79,7 @@
 	var/high_fire_delay = 4
 	var/mhigh_fire_delay = 5
 	var/max_fire_delay = 6
-	var/tacshottie_fire_delay = 1.5
+	var/tacshottie_fire_delay = 15
 
 	var/min_scatter_value = 5
 	var/low_scatter_value = 10

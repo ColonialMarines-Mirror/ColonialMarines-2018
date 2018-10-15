@@ -74,15 +74,6 @@
 	// Records the world.tick_usage (0 to 100) at which the process last began running
 	/var/tmp/tick_start = 0
 
-	// Records the total usage of the current run, each 100 = 1 byond tick
-	/var/tmp/current_usage = 0
-
-	// Records the total usage of the last run, each 100 = 1 byond tick
-	/var/tmp/last_usage = 0
-
-	// Records the total usage over the life of the process, each 100 = 1 byond tick
-	/var/tmp/total_usage = 0
-
 	// Records the number of times this process has been killed and restarted
 	var/tmp/times_killed
 
@@ -103,9 +94,6 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	last_slept = 0
 	run_start = 0
 	tick_start = 0
-	current_usage = 0
-	last_usage = 0
-	total_usage = 0
 	ticks = 0
 	last_task = 0
 	last_object = null
@@ -120,9 +108,6 @@ datum/controller/process/proc/started()
 	// Initialize tick_start so we can know when to sleep
 	tick_start = world.tick_usage
 
-	// Initialize the cpu usage counter
-	current_usage = 0
-
 	// Initialize defer count
 	cpu_defer_count = 0
 
@@ -133,9 +118,6 @@ datum/controller/process/proc/started()
 
 datum/controller/process/proc/finished()
 	ticks++
-	current_usage += world.tick_usage - tick_start
-	last_usage = current_usage
-	current_usage = 0
 	idle()
 	main.processFinished(src)
 
@@ -204,7 +186,7 @@ datum/controller/process/proc/kill()
 		// This should del
 		del(src)
 
-datum/controller/process/proc/scheck()
+datum/controller/process/proc/scheck(var/tickId = 0)
 	if (killed)
 		// The kill proc is the only place where killed is set.
 		// The kill proc should have deleted this datum, and all sleeping procs that are
@@ -217,9 +199,8 @@ datum/controller/process/proc/scheck()
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
-	if (world.tick_usage > 100 || world.tick_usage - tick_start > tick_allowance)
-		current_usage += world.tick_usage - tick_start
-		sleep(world.tick_lag * main.running.len)
+	if (world.tick_usage > 100 || (world.tick_usage - tick_start) > tick_allowance)
+		sleep(world.tick_lag)
 		cpu_defer_count++
 		last_slept = TimeOfHour
 		tick_start = world.tick_usage
@@ -311,8 +292,6 @@ datum/controller/process/proc/_copyStateFrom(var/datum/controller/process/target
 	last_slept = 0
 	run_start = 0
 	tick_start = 0
-	last_usage = 0
-	total_usage = 0
 	times_killed = target.times_killed
 	ticks = target.ticks
 	last_task = target.last_task
@@ -324,7 +303,6 @@ datum/controller/process/proc/copyStateFrom(var/datum/controller/process/target)
 datum/controller/process/proc/onKill()
 
 datum/controller/process/proc/onStart()
-	LAGCHECK(world.tick_usage > 100 - tick_allowance)
 
 datum/controller/process/proc/onFinish()
 

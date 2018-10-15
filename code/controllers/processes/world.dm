@@ -16,4 +16,3 @@ datum/controller/process/world/doWork()
 
 	TrashAuthority.EmptyTrash()
 	vote.process()
-	scheck()

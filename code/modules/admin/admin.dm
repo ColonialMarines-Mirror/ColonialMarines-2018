@@ -853,7 +853,10 @@ var/global/respawntime = 15
 	set category = "Server"
 	set desc="Sets the respawn time"
 	set name="Set Respawn Timer"
-	respawntime = time
+	if (time > 0)
+		respawntime = time
+	else
+		to_chat(usr, "The respawn time must be larger than 0!")
 	message_admins("\blue [key_name_admin(usr)] set the respawn time to [respawntime] minutes.", 1)
 	log_admin("[key_name(usr)] set the respawn time to [respawntime] minutes.")
 	world.update_status()

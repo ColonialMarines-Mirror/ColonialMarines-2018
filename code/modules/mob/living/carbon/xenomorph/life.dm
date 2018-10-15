@@ -138,10 +138,13 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		if(current_aura)
 			current_aura = null
 			to_chat(src, "<span class='warning'>You have ran out of plasma and stopped emitting pheromones.</span>")
-	hud_set_plasma() //update plasma amount on the plasma mob_hud
+
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.update_button_icon()
+
+	hud_set_plasma() //update plasma amount on the plasma mob_hud
+
 
 /mob/living/carbon/Xenomorph/Hivelord/handle_living_plasma_updates()
 	if(speed_activated)

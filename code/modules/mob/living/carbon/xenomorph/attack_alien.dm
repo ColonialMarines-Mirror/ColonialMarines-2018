@@ -8,12 +8,16 @@
  */
 
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, force_intent = FALSE, set_location = FALSE, random_location = FALSE, no_head = FALSE, no_crit = FALSE)
 	if (M.fortify)
 		return FALSE
 
+	var/intent = M.a_intent
+	if(force_intent)
+		intent = force_intent
+
 	//Reviewing the four primary intents
-	switch(M.a_intent)
+	switch(intent)
 
 		if("help")
 			M.visible_message("<span class='notice'>\The [M] caresses [src] with its scythe-like arm.</span>", \
@@ -90,12 +94,12 @@
 			M.animation_attack_on(src)
 
 			//Check for a special bite attack
-			if(prob(M.bite_chance) && !M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+			if(prob(M.bite_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				M.bite_attack(src, damage)
 				return TRUE
 
 			//Check for a special bite attack
-			if(prob(M.tail_chance) && !M.critical_proc) //Can't crit if we already crit in the past 3 seconds
+			if(prob(M.tail_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				M.tail_attack(src, damage)
 				return TRUE
 
@@ -182,6 +186,8 @@
 				tackle_pain = tackle_pain * (1 + (0.05 * M.frenzy_aura))  //Halloss damage increased by 5% per rank of frenzy aura
 			if(protection_aura)
 				tackle_pain = tackle_pain * (1 - (0.10 + 0.05 * protection_aura))  //Halloss damage decreased by 10% + 5% per rank of protection aura
+			if(dam_bonus)
+				tackle_pain = tackle_pain + dam_bonus
 			apply_damage(tackle_pain, HALLOSS)
 			updatehealth()
 			updateshock()

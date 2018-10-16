@@ -151,6 +151,7 @@
 	var/welding = 0 	//Whether or not the blowtorch is off(0), on(1) or currently welding(2)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/weld_tick = 0	//Used to slowly deplete the fuel when the tool is left on.
+	var/status = TRUE //When welder is secured on unsecured
 
 /obj/item/tool/weldingtool/New()
 //	var/random_fuel = min(rand(10,20),max_fuel)
@@ -185,6 +186,11 @@
 	else //should never be happening, but just in case
 		toggle(TRUE)
 
+/obj/item/tool/weldingtool/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/tool/screwdriver))
+		flamethrower_screwdriver(src, user)
+	else
+		. = ..()
 
 /obj/item/tool/weldingtool/attack(mob/M, mob/user)
 
@@ -198,7 +204,7 @@
 
 		if(H.species.flags & IS_SYNTHETIC)
 			if(M == user)
-				to_chat(user, "\red You can't repair damage to your own body - it's against OH&S.")
+				to_chat(user, "<span class='warning'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
 
 		if(S.brute_dam && welding)
@@ -215,7 +221,10 @@
 		return ..()
 
 /obj/item/tool/weldingtool/afterattack(obj/O as obj, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
+	if(!status && O.is_refillable())
+		reagents.trans_to(O, reagents.total_volume)
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1)
 		if(!welding)
 			O.reagents.trans_to(src, max_fuel)
@@ -240,6 +249,9 @@
 
 
 /obj/item/tool/weldingtool/attack_self(mob/user as mob)
+	if(!status)
+		to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
+		return
 	toggle()
 	return
 
@@ -322,6 +334,17 @@
 			SetLuminosity(0)
 		processing_objects.Remove(src)
 
+/obj/item/tool/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
+	if(welding)
+		to_chat(user, "<span class='warning'>Turn it off first!</span>")
+		return
+	status = !status
+	if(status)
+		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
+		container_type = 0
+	else
+		to_chat(user, "<span class='notice'>[src] can now be refuelled and emptied.</span>")
+		container_type = OPENCONTAINER
 
 /obj/item/tool/weldingtool/pickup(mob/user)
 	if(welding && loc != user)

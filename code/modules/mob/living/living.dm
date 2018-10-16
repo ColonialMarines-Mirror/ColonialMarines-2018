@@ -61,7 +61,7 @@
 
 /mob/living/proc/handle_impaired_vision()
 	//Eyes
-	if(sdisabilities & BLIND)	//blindness from disability or unconsciousness doesn't get better on its own
+	if(sdisabilities & BLIND || devoured)	//blindness from disability or unconsciousness doesn't get better on its own
 		blind_eyes(1)
 	if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)

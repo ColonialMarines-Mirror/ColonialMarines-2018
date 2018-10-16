@@ -115,7 +115,6 @@
 				X.stomach_contents.Add(pulled)
 				pulled.forceMove(X)
 				pulled.devoured = TRUE //We've been vored
-				pulled.blinded = TRUE //Blinded me with sci-vore
 				return 1
 		if(!(pulled in X.stomach_contents))
 			to_chat(X, "<span class='warning'>You stop devouring \the [pulled]. \He probably tasted gross anyways.</span>")

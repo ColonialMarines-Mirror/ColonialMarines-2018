@@ -232,14 +232,12 @@
 	var/dat
 	if (delete && temphtml) //Window in buffer but its just simple message, so nothing
 		delete = delete
-		to_chat(world, "\icon[src]<span class='warning'>SCANNER DEBUG: DELETE TRIGGERED</span>")
 	else if (!delete && temphtml) //Window in buffer - its a menu, dont add clear message
 		dat = text("[]<BR><BR><A href='?src=\ref[];clear=1'>Main Menu</A>", temphtml, src)
 	else
 		if (connected) //Is something connected?
 			var/mob/living/carbon/human/H = connected.occupant
 			dat = med_scan(H, dat, known_implants)
-			to_chat(world, "\icon[src]<span class='warning'>SCANNER DEBUG: MEDSCAN TRIGGERED: Occupant: [H], Connected: [connected]</span>")
 		else
 			dat = "<font color='red'> Error: No Body Scanner connected.</font>"
 
@@ -250,7 +248,6 @@
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
 	if (..())
-		to_chat(world, "\icon[src]<span class='warning'>TOPIC DEBUG: RETURNING EARLY</span>")
 		return
 
 	if (href_list["print"])

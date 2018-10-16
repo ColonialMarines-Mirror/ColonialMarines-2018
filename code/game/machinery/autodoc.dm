@@ -134,7 +134,6 @@
 		return list()
 	var/surgery_list = list()
 	var/known_implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
-	to_chat(world, "\icon[src]<span class='warning'>AUTODOC DEBUG: SURGERY LIST TRIGGERED: Occupant: [M]</span>")
 	for(var/datum/limb/L in M.limbs)
 		if(L)
 			for(var/datum/wound/W in L.wounds)
@@ -884,9 +883,7 @@
 					dat += "<span class='danger'>Automatic Mode Unavaliable, Scan Patient First.</span><br>"
 			else
 				if(!isnull(N.fields["autodoc_manual"]))
-					//to_chat(world, "AUTODOC DEBUG: non null autodoc data")
 					for(var/datum/autodoc_surgery/A in N.fields["autodoc_manual"])
-						//to_chat(world, "AUTODOC DEBUG: found a surgery")
 						switch(A.type_of_surgery)
 							if(EXTERNAL_SURGERY)
 								switch(A.surgery_procedure)
@@ -1100,7 +1097,6 @@
 									if(L.name == "chest")
 										skip_embryo_check = TRUE
 						if(A && L.name == "chest" && !skip_embryo_check) //If we're not already doing a shrapnel removal surgery of the chest proceed.
-							//to_chat(world, "AUTODOC DEBUG: Larva detected")
 							N.fields["autodoc_manual"] += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
 							needed++
 

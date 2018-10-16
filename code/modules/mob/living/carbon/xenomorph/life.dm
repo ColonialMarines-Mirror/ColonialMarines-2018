@@ -97,12 +97,12 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 /mob/living/carbon/Xenomorph/handle_fire()
 	if(..())
 		return
-	if(!fire_immune)
+	if(!fire_immune && on_fire) //Sanity check; have to be on fire to actually take the damage.
 		adjustFireLoss(fire_stacks + 3)
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
 	var/turf/T = loc
-	if(!T || !istype(T) || hardcore || fire_stacks) //Can't regenerate while on fire
+	if(!T || !istype(T) || hardcore || on_fire) //Can't regenerate while on fire
 		return
 	if(health < maxHealth && (locate(/obj/effect/alien/weeds) in T) || innate_healing)
 		var/datum/hive_status/hive = hive_datum[hivenumber]
@@ -161,7 +161,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	//Rollercoaster of fucking stupid because Xeno life ticks aren't synchronised properly and values reset just after being applied
 	//At least it's more efficient since only Xenos with an aura do this, instead of all Xenos
 	//Basically, we use a special tally var so we don't reset the actual aura value before making sure they're not affected
-	if(fire_stacks) //Burning Xenos can't emit pheromones; they get burnt up! Null it baby! Disco inferno
+	if(on_fire) //Burning Xenos can't emit pheromones; they get burnt up! Null it baby! Disco inferno
 		current_aura = null
 		return
 	if(current_aura && plasma_stored > 5)
@@ -213,7 +213,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 								Z.recovery_new = leader_aura_strength
 
 /mob/living/carbon/Xenomorph/proc/handle_aura_receiver()
-	if(fire_stacks) //Burning xenos can't benefit from pheromones; 0 everything out, return.
+	if(on_fire) //Burning xenos can't benefit from pheromones; 0 everything out, return.
 		frenzy_aura = 0
 		warding_aura = 0
 		recovery_aura = 0

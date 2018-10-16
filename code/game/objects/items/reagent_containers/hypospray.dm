@@ -4,7 +4,7 @@
 
 /obj/item/reagent_container/hypospray
 	name = "hypospray"
-	desc = "The hypospray is a handy, sterile, air-needle reusable autoinjector for rapid administration of drugs to patients with customizable dosages. Handy."
+	desc = "The hypospray is a sterile, air-needle reusable autoinjector for rapid administration of drugs to patients with customizable dosages. Handy."
 	icon = 'icons/obj/items/syringe.dmi'
 	item_state = "hypo"
 	icon_state = "hypo"
@@ -19,9 +19,6 @@
 
 /obj/item/reagent_container/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
-
-/obj/item/reagent_container/hypospray/examine(mob/user)
-	to_chat(user, "[src] has [round(reagents.total_volume)] units remaining.")
 
 /obj/item/reagent_container/hypospray/attack(mob/M, mob/living/user)
 	if(!reagents.total_volume)

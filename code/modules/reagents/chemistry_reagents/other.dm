@@ -228,12 +228,12 @@
 	reagent_state = LIQUID
 	color = "#8fddf7" // rgb: 143, 221, 247
 
-/datum/reagent/mothpheromones/on_mob_life(mob/living/M)
-	. = ..()
-	if(has_species(M, "Moth"))
+/datum/reagent/mothpheromones/on_mob_life(mob/living/M, alien)
+	if(alien == IS_MOTH)
 		if(prob(7))
 			M.emote(pick("twitch","drool","moan","gasp"))
 	holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
+	..()
 
 /datum/reagent/oxygen
 	name = "Oxygen"

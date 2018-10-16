@@ -280,7 +280,6 @@
 		spark_system.set_up(5, 0, M)
 		spark_system.attach(M)
 		spark_system.start(M)
-		//to_chat(user, "<span class='notice'>Attack Debug: Damtype: [damtype] Force: [force].</span>")
 		return ..()
 
 

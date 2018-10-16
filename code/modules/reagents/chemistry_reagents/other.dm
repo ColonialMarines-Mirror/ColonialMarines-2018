@@ -791,8 +791,8 @@
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	custom_metabolism = 1.25 // Fast meta rate.
-	overdose = REAGENTS_OVERDOSE
-	overdose_critical = REAGENTS_OVERDOSE_CRITICAL
+	overdose_threshold = REAGENTS_OVERDOSE
+	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 
 /datum/reagent/xeno_neurotoxin/on_mob_life(mob/living/M)
 	. = ..()
@@ -812,8 +812,8 @@
 		M.stunned += 1
 		M.KnockDown(1)
 
-/datum/reagent/xeno_neurotoxin/on_overdose(mob/living/M)
+/datum/reagent/xeno_neurotoxin/overdose_process(mob/living/M)
 		M.adjustOxyLoss(min(2,volume * 0.1 * REM)) //Overdose starts applying more oxy damage
 
-/datum/reagent/xeno_neurotoxin/on_overdose_critical(mob/living/M)
+/datum/reagent/xeno_neurotoxin/overdose_crit_process(mob/living/M)
 		M.adjustOxyLoss(min(4,volume * 0.2 * REM)) //Overdose starts applying more oxy damage

@@ -12,7 +12,7 @@
 	possible_transfer_amounts = list(1,3,5,10,15)
 	volume = 60
 	possible_transfer_amounts = null
-	flags_atom = OPENCONTAINER
+	container_type = OPENCONTAINER
 	flags_equip_slot = SLOT_WAIST
 	w_class = 2.0
 	var/skilllock = 1
@@ -40,13 +40,13 @@
 			M.visible_message("<span class='danger'>[M]'s reflexes kick in and knock [user] to the ground before they could use \the [src]'!</span>", \
 				"<span class='warning'>You knock [user] to the ground before they inject you!</span>", null, 5)
 			playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)
-			return 0
+			return FALSE
 
-		to_chat(user, "\blue You inject [M] with [src].")
-		to_chat(M, "\red You feel a tiny prick!")
+		to_chat(user, "<span class='notice'>You inject [M] with [src]</span>.")
+		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		playsound(loc, 'sound/items/hypospray.ogg', 50, 1)
 
-		src.reagents.reaction(M, INGEST)
+		reagents.reaction(M, INJECT)
 		if(M.reagents)
 
 			var/list/injected = list()
@@ -60,7 +60,7 @@
 			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in [src].")
 			update_icon()
 
-	return 1
+	return TRUE
 
 /obj/item/reagent_container/hypospray/on_reagent_change()
 	update_icon()
@@ -97,11 +97,11 @@
 		overlays += filling
 
 
-
 /obj/item/reagent_container/hypospray/tricordrazine/New()
 	..()
-	reagents.add_reagent("tricordrazine", 60)
+	list_reagents = list("tricordrazine" = 60)
 
 /obj/item/reagent_container/hypospray/oxycodone/New()
 	..()
-	reagents.add_reagent("oxycodone", 60)
+	list_reagents = list("oxycodone", 60)
+

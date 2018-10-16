@@ -1,11 +1,13 @@
 //Autodoc
 /obj/machinery/autodoc
 	name = "\improper autodoc medical system"
-	desc = "A fancy machine developed to be capable of operating on people with minimal human intervention. The interface is rather complex and would only be useful to trained Doctors however."
+	desc = "A fancy machine developed to be capable of operating on people with minimal human intervention. However, the interface is rather complex and most of it would only be useful to trained medical personnel."
 	icon = 'icons/obj/machines/cryogenics.dmi'
 	icon_state = "autodoc_open"
 	density = 1
 	anchored = 1
+	req_one_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_MEDPREP)
+	var/locked = FALSE
 	var/mob/living/carbon/human/occupant = null
 	var/list/surgery_todo_list = list() //a list of surgeries to do.
 //	var/surgery_t = 0 //Surgery timer in seconds.
@@ -22,8 +24,6 @@
 
 	var/obj/machinery/autodoc_console/connected
 
-	//req_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY) // limit to doc IDs
-
 	//It uses power
 	use_power = 1
 	idle_power_usage = 15
@@ -36,7 +36,7 @@
 	if(stat & NOPOWER)
 		visible_message("\The [src] engages the safety override, ejecting the occupant.")
 		surgery = 0
-		go_out()
+		go_out(4)
 		return
 
 /obj/machinery/autodoc/process()
@@ -45,7 +45,7 @@
 		if(occupant.stat == DEAD)
 			visible_message("\The [src] speaks: Patient has expired.")
 			surgery = 0
-			go_out()
+			go_out(2)
 			return
 		if(surgery)
 			// keep them alive
@@ -54,8 +54,8 @@
 			if(filtering)
 				var/filtered = 0
 				for(var/datum/reagent/x in occupant.reagents.reagent_list)
-					occupant.reagents.remove_reagent(x.id, 3) // same as sleeper, may need reducing
-					filtered += 3
+					occupant.reagents.remove_reagent(x.id, 10) // same as sleeper, may need reducing
+					filtered += 10
 				if(!filtered)
 					filtering = 0
 					visible_message("\The [src] speaks: Blood filtering complete.")
@@ -133,7 +133,7 @@
 		return list()
 	var/surgery_list = list()
 	var/known_implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
-
+	to_chat(world, "\icon[src]<span class='warning'>AUTODOC DEBUG: SURGERY LIST TRIGGERED: Occupant: [M]</span>")
 	for(var/datum/limb/L in M.limbs)
 		if(L)
 			for(var/datum/wound/W in L.wounds)
@@ -203,7 +203,7 @@
 /obj/machinery/autodoc/proc/surgery_op(mob/living/carbon/M)
 	if(M.stat == DEAD||!ishuman(M))
 		visible_message("\The [src] buzzes.")
-		src.go_out() //kick them out too.
+		src.go_out(2) //kick them out too.
 		return
 
 	var/mob/living/carbon/human/H = M
@@ -213,7 +213,7 @@
 			N = R
 	if(isnull(N))
 		visible_message("\The [src] buzzes: No records found for occupant.")
-		src.go_out() //kick them out too.
+		src.go_out(3) //kick them out too.
 		return
 
 	var/list/surgery_todo_list
@@ -536,7 +536,7 @@
 
 	visible_message("\The [src] clicks and opens up having finished the requested operations.")
 	surgery = 0
-	go_out()
+	go_out(1)
 
 
 /obj/machinery/autodoc/proc/open_incision(mob/living/carbon/human/target, var/datum/limb/L)
@@ -585,11 +585,15 @@
 	set src in oview(1)
 	if(usr.stat == DEAD)
 		return // nooooooooooo
+	if(locked && !allowed(usr)) //Check access if locked.
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		playsound(loc,'sound/machines/buzz-two.ogg', 25, 1)
+		return
 	if(occupant)
-		if(isXeno(usr)) // let xenos eject people hiding inside.
+		if(isXeno(usr) && !surgery) // let xenos eject people hiding inside; a xeno ejecting someone during surgery does so like someone untrained
 			message_staff("[key_name(usr)] ejected [key_name(occupant)] from the autodoc.")
 			log_admin("[key_name(usr)] ejected [key_name(occupant)] from the autodoc.")
-			go_out()
+			go_out(5)
 			add_fingerprint(usr)
 			return
 		if(!ishuman(usr))
@@ -606,12 +610,14 @@
 			var/fumbling_time = max(0 , SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * usr.mind.cm_skills.surgery ))// 8 secs non-trained, 5 amateur
 			if(!do_after(usr, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
 		if(surgery)
-			visible_message("\The [src] malfunctions as [usr] aborts the surgery in progress.")
-			occupant.take_limb_damage(rand(30,50),rand(30,50))
 			surgery = 0
-			// message_staff for now, may change to message_admins later
-			message_staff("[key_name(usr)] ejected [key_name(occupant)] from the autodoc during surgery causing damage.")
-			log_admin("[key_name(usr)] ejected [key_name(occupant)] from the autodoc during surgery causing damage.")
+			if(usr.mind && usr.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED) //Untrained people will fail to terminate the surgery properly.
+				visible_message("\The [src] malfunctions as [usr] aborts the surgery in progress.")
+				occupant.take_limb_damage(rand(30,50),rand(30,50))
+				// message_staff for now, may change to message_admins later
+				message_staff("[key_name(usr)] ejected [key_name(occupant)] from the autodoc during surgery causing damage.")
+				log_admin("[key_name(usr)] ejected [key_name(occupant)] from the autodoc during surgery causing damage.")
+				go_out(6)
 		go_out()
 		add_fingerprint(usr)
 
@@ -638,7 +644,7 @@
 
 	usr.visible_message("<span class='notice'>[usr] starts climbing into \the [src].</span>",
 	"<span class='notice'>You start climbing into \the [src].</span>")
-	if(do_after(usr, 20, FALSE, 5, BUSY_ICON_GENERIC))
+	if(do_after(usr, 10, FALSE, 5, BUSY_ICON_GENERIC))
 		if(occupant)
 			to_chat(usr, "<span class='notice'>\The [src] is already occupied!</span>")
 			return
@@ -649,6 +655,10 @@
 		update_use_power(2)
 		occupant = usr
 		icon_state = "autodoc_closed"
+		var/implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
+		var/mob/living/carbon/human/H = occupant
+		var/doc_dat
+		med_scan(H, doc_dat, implants, TRUE)
 		start_processing()
 		connected.start_processing()
 
@@ -656,9 +666,34 @@
 			cdel(O)
 		add_fingerprint(usr)
 
-/obj/machinery/autodoc/proc/go_out()
-	if(!occupant) return
+/obj/machinery/autodoc/proc/go_out(notice_code = FALSE)
+	if(!occupant)
+		return
 	occupant.forceMove(loc)
+	if(connected.release_notice) //If auto-release notices are on as they should be, let the doctors know what's up
+		var/reason = "Reason for discharge: Procedural completion."
+		switch(notice_code)
+			if(1)
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE) //All steps finished properly; this is the 'normal' notification.
+			if(2)
+				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
+				reason = "Reason for discharge: Patient death."
+			if(3)
+				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
+				reason = "Reason for discharge: Medical records not detected. Alerting security advised."
+			if(4)
+				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
+				reason = "Reason for discharge: Power failure."
+			if(5)
+				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
+				reason = "Reason for discharge: Unauthorized manual release. Alerting security advised."
+			if(6)
+				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
+				reason = "Reason for discharge: Unauthorized manual release during surgery. Alerting security advised."
+		var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
+		AI.SetName("Autodoc Notification System")
+		AI.aiRadio.talk_into(AI,"<b>Patient: [occupant] has been released from the [src] at: [get_area(src)]. [reason]</b>","MedSci","announces")
+		cdel(AI)
 	occupant = null
 	surgery_todo_list = list()
 	update_use_power(1)
@@ -724,7 +759,7 @@
 
 		visible_message("[user] starts putting [M] into [src].", 3)
 
-		if(do_after(user, 20, FALSE, 5, BUSY_ICON_GENERIC))
+		if(do_after(user, 10, FALSE, 5, BUSY_ICON_GENERIC))
 			if(src.occupant)
 				to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
 				return
@@ -733,6 +768,10 @@
 			update_use_power(2)
 			occupant = M
 			icon_state = "autodoc_closed"
+			var/implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
+			var/mob/living/carbon/human/H = occupant
+			var/doc_dat
+			med_scan(H, doc_dat, implants, TRUE)
 			start_processing()
 			connected.start_processing()
 
@@ -746,6 +785,9 @@
 	icon = 'icons/obj/machines/cryogenics.dmi'
 	icon_state = "sleeperconsole"
 	var/obj/machinery/autodoc/connected = null
+	var/release_notice = TRUE //Are notifications for patient discharges turned on?
+	var/locked = FALSE //Medics, Doctors and so on can lock this.
+	req_one_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_MEDPREP) //Valid access while locked
 	anchored = 1 //About time someone fixed this.
 	density = 0
 
@@ -777,12 +819,20 @@
 	if(!connected || (connected.stat & (NOPOWER|BROKEN)))
 		dat += "This console is not connected to a Med-Pod or the Med-Pod is non-functional."
 		to_chat(user, "This console seems to be powered down.")
+	if(locked && !allowed(user)) //Check access if locked.
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		playsound(loc,'sound/machines/buzz-two.ogg', 25, 1)
 	else
-		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !connected.event)
-			to_chat(user, "<span class='warning'>You have no idea how to use this.</span>")
-			return
 		var/mob/living/occupant = connected.occupant
-		dat += "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
+		if(locked)
+			dat += "<hr><font color='red'><B><span class='warning'>Lock Console</span> | <a href='?src=\ref[src];locktoggle=1'>Unlock Console</a></B></FONT><BR>"
+		else
+			dat += "<hr><font color='red'><B><span class='warning'><a href='?src=\ref[src];locktoggle=1'>Lock Console</a> | <span class='notice'>Unlock Console</B></span></FONT><BR>"
+		if(release_notice)
+			dat += "<hr><font color='red'><B><span class='warning'>Notifications On</span> | <a href='?src=\ref[src];noticetoggle=1'>Notifications Off</a></B></FONT><BR>"
+		else
+			dat += "<hr><font color='red'><B><span class='warning'><a href='?src=\ref[src];noticetoggle=1'>Notifications On</a> | <span class='notice'>Notifications Off</B></span></FONT><BR>"
+		dat += "<hr><font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
 		if(occupant)
 			var/t1
 			switch(occupant.stat)
@@ -792,7 +842,7 @@
 			var/operating
 			switch(connected.surgery)
 				if(0) operating = "Not in surgery"
-				if(1) operating = "IN SURGERY: DO NOT MANUALLY EJECT OR PATIENT HARM WILL BE CAUSED"
+				if(1) operating = "<font color='red'><B>SURGERY IN PROGRESS: MANUAL EJECTION ONLY TO BE ATTEMPTED BY TRAINED OPERATORS!</B></FONT>"
 			dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), round(occupant.health), t1)
 			if(iscarbon(occupant))
 				var/mob/living/carbon/C = occupant
@@ -802,6 +852,10 @@
 			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
 			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
 			//dat += text("<HR> Surgery Estimate: [] seconds<BR>", (connected.surgery_t * 0.1))
+			//if(locked)
+			//	dat += "<hr><span class='warning'>Lock Console</span> | <a href='?src=\ref[src];locktoggle=1'>Unlock Console</a>"
+			//else
+			//	dat += "<hr><a href='?src=\ref[src];locktoggle=1'>Lock Console</a> | <span class='notice'>Unlock Console</span>"
 			if(connected.automaticmode)
 				dat += "<hr><span class='notice'>Automatic Mode</span> | <a href='?src=\ref[src];automatictoggle=1'>Manual Mode</a>"
 			else
@@ -816,11 +870,13 @@
 					N = R
 			if(isnull(N))
 				N = create_medical_record(connected.occupant)
-			var/list/autosurgeries = N.fields["autodoc_data"]
+
 			if(connected.automaticmode)
+				var/list/autosurgeries = N.fields["autodoc_data"]
 				if(autosurgeries.len)
 					dat += "<span class='danger'>Automatic Mode Ready.</span><br>"
 				else
+
 					dat += "<span class='danger'>Automatic Mode Unavaliable, Scan Patient First.</span><br>"
 			else
 				if(!isnull(N.fields["autodoc_manual"]))
@@ -1077,6 +1133,23 @@
 			if(href_list["clear"])
 				N.fields["autodoc_manual"] = list()
 				updateUsrDialog()
+		if(href_list["locktoggle"]) //Toggle the autodoc lock on/off if we have authorization.
+			if(allowed(usr))
+				locked = !locked
+				connected.locked = !connected.locked
+				updateUsrDialog()
+			else
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				playsound(loc,'sound/machines/buzz-two.ogg', 25, 1)
+				updateUsrDialog()
+		if(href_list["noticetoggle"]) //Toggle notifications on/off if we have authorization.
+			if(allowed(usr))
+				release_notice = !release_notice
+				updateUsrDialog()
+			else
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				playsound(loc,'sound/machines/buzz-two.ogg', 25, 1)
+				updateUsrDialog()
 		if(href_list["automatictoggle"])
 			connected.automaticmode = !connected.automaticmode
 			updateUsrDialog()
@@ -1093,6 +1166,13 @@
 
 /obj/machinery/autodoc/event
 	event = 1
+
+/obj/machinery/autodoc_console/examine(mob/living/user)
+	..()
+	if(locked)
+		to_chat(user, "<span class='warning'>It's currently locked down!</span>")
+	if(release_notice)
+		to_chat(user, "<span class='notice'>Release notifications are turned on.</span>")
 
 /obj/machinery/autodoc/examine(mob/living/user)
 	..()

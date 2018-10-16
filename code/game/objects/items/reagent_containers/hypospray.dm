@@ -97,11 +97,17 @@
 		overlays += filling
 
 
-/obj/item/reagent_container/hypospray/tricordrazine/New()
-	..()
+/obj/item/reagent_container/hypospray/tricordrazine
 	list_reagents = list("tricordrazine" = 60)
 
-/obj/item/reagent_container/hypospray/oxycodone/New()
-	..()
-	list_reagents = list("oxycodone", 60)
+/obj/item/reagent_container/hypospray/tricordrazine/New()
+	. = ..()
+	update_icon()
 
+
+/obj/item/reagent_container/hypospray/oxycodone
+	list_reagents = list("oxycodone" = 60)
+
+/obj/item/reagent_container/hypospray/oxycodone/New()
+	. = ..()
+	update_icon()

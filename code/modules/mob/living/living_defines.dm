@@ -1,6 +1,8 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 
+	var/resize = 1 //Badminnery resize
+
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
@@ -13,6 +15,10 @@
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
+
+	var/confused = 0	//Makes the mob move in random directions.
+	var/is_dizzy = FALSE
+	var/druggy = 0
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
@@ -46,6 +52,11 @@
 	var/is_being_hugged = 0 //Is there a hugger humping our face?
 	var/chestburst = 0 // 0: normal, 1: bursting, 2: bursted.
 	var/in_stasis = FALSE //Is the mob in stasis bag?
+	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and (TODO) regulate body temperature..
+
+	//Speech
+	var/stuttering = 0
+	var/slurring = 0
 
 	var/list/icon/pipes_shown = list()
 	var/last_played_vent

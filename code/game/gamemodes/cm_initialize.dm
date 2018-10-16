@@ -89,9 +89,9 @@ Additional game mode variables.
 
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
-	xeno_starting_num = Clamp((ready_players/7), xeno_required_num, INFINITY) //(n, minimum, maximum)
-	surv_starting_num = Clamp((ready_players/25), 0, 8)
-	merc_starting_num = Clamp((ready_players/3), 1, INFINITY)
+	xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
+	surv_starting_num = CLAMP((ready_players/25), 0, 8)
+	merc_starting_num = max((ready_players/3), 1)
 	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
 	for(var/datum/squad/sq in RoleAuthority.squads)
 		if(sq)
@@ -310,7 +310,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
 		return
 
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
@@ -320,60 +320,113 @@ datum/game_mode/proc/initialize_special_clamps()
 	if(jobban_isbanned(xeno_candidate, "Alien")) // User is jobbanned
 		to_chat(xeno_candidate, "<span class='warning'>You are banned from playing aliens and cannot spawn as a xenomorph.</span>")
 		return
-	return 1
+	return TRUE
+
+/datum/game_mode/proc/attempt_to_join_as_larva(mob/xeno_candidate)
+	if(!ticker.mode.stored_larva)
+		to_chat(xeno_candidate, "<span class='warning'>There are no burrowed larvas.</span>")
+		return FALSE
+	var/available_queens[] = list()
+	for(var/mob/A in living_mob_list)
+		if(!isXenoQueen(A) || A.z == ADMIN_Z_LEVEL)
+			continue
+		var/mob/living/carbon/Xenomorph/Queen/Q = A
+		if(Q.ovipositor && !Q.is_mob_incapacitated(TRUE))
+			available_queens += Q
+	if(!available_queens.len)
+		to_chat(xeno_candidate, "<span class='warning'>There are no mothers with an ovipositor deployed.</span>")
+		return FALSE
+	var/mob/living/carbon/Xenomorph/Queen/mother = input("Available Mothers") as null|anything in available_queens
+	if (!istype(mother) || !xeno_candidate || !xeno_candidate.client)
+		return FALSE
+	if(!ticker.mode.stored_larva)
+		to_chat(xeno_candidate, "<span class='warning'>There are no longer burrowed larvas available.</span>")
+		return FALSE
+	if(!mother.ovipositor || mother.is_mob_incapacitated(TRUE))
+		to_chat(xeno_candidate, "<span class='warning'>Mother is not in a state to receive us.</span>")
+		return FALSE
+	if(!xeno_bypass_timer && !istype(xeno_candidate, /mob/new_player))
+		var/deathtime = world.time - xeno_candidate.timeofdeath
+		var/deathtimeminutes = round(deathtime / 600)
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+		if(deathtime < 3000 && ( !xeno_candidate.client.holder || !(xeno_candidate.client.holder.rights & R_ADMIN)) )
+			to_chat(xeno_candidate, "<span class='warning'>You have been dead for [deathtimeminutes >= 1 ? "[deathtimeminutes] minute\s and " : ""][deathtimeseconds] second\s.</span>")
+			to_chat(xeno_candidate, "<span class='warning'>You must wait 5 minutes before rejoining the game!</span>")
+			return FALSE
+	return mother
+
+/datum/game_mode/proc/spawn_larva(mob/xeno_candidate, var/mob/living/carbon/Xenomorph/Queen/mother)
+	if(!xeno_candidate)
+		return FALSE
+	if(!ticker.mode.stored_larva || !mother || !istype(mother))
+		to_chat(xeno_candidate, "<span class='warning'>Something went awry. Can't spawn at the moment.</span>")
+		log_admin("[xeno_candidate.key] has failed to join as a larva.")
+		return FALSE
+	var/mob/living/carbon/Xenomorph/Larva/new_xeno = new /mob/living/carbon/Xenomorph/Larva(mother.loc)
+	new_xeno.visible_message("<span class='xenodanger'>A larva suddenly burrows out of the ground!</span>",
+	"<span class='xenodanger'>You burrow out of the ground and awaken from your slumber. For the Hive!</span>")
+	new_xeno << sound('sound/effects/xeno_newlarva.ogg')
+	new_xeno.key = xeno_candidate.key
+	if(new_xeno.client)
+		new_xeno.client.change_view(world.view)
+	to_chat(new_xeno, "<span class='xenoannounce'>You are a xenomorph larva awakened from slumber!</span>")
+	new_xeno << sound('sound/effects/xeno_newlarva.ogg')
+	ticker.mode.stored_larva--
+	log_admin("[new_xeno.key] has joined as [new_xeno].")
 
 /datum/game_mode/proc/attempt_to_join_as_xeno(mob/xeno_candidate, instant_join = 0)
 	var/available_xenos[] = list()
 	var/available_xenos_non_ssd[] = list()
 
 	for(var/mob/A in living_mob_list)
-		if(A.z == ADMIN_Z_LEVEL) continue //xenos on admin z level don't count
+		if(A.z == ADMIN_Z_LEVEL)
+			continue //xenos on admin z level don't count
 		if(isXeno(A) && !A.client)
 			if(A.away_timer >= 300) available_xenos_non_ssd += A
 			available_xenos += A
 
 	if(!available_xenos.len || (instant_join && !available_xenos_non_ssd.len))
-		to_chat(xeno_candidate, "<span class='warning'>There aren't any available xenomorphs. You can try getting spawned as a chestburster larva by toggling your Xenomorph candidacy in Preferences -> Toggle SpecialRole Candidacy.</span>")
+		to_chat(xeno_candidate, "<span class='warning'>There aren't any available living xenomorphs. You can also try getting spawned as a chestburster larva by toggling your Xenomorph candidacy in Preferences -> Toggle SpecialRole Candidacy.</span>")
 		// xeno_candidate.client.prefs.be_special |= BE_ALIEN
-		return
+		return FALSE
 
 	var/mob/living/carbon/Xenomorph/new_xeno
-	if(!instant_join)
-		new_xeno = input("Available Xenomorphs") as null|anything in available_xenos
-		if (!istype(new_xeno) || !xeno_candidate) return //It could be null, it could be "cancel" or whatever that isn't a xenomorph.
+	if(instant_join)
+		return pick(available_xenos_non_ssd) //Just picks something at random.
 
-		if(!(new_xeno in living_mob_list) || new_xeno.stat == DEAD)
-			to_chat(xeno_candidate, "<span class='warning'>You cannot join if the xenomorph is dead.</span>")
-			return
+	new_xeno = input("Available Xenomorphs") as null|anything in available_xenos
+	if(!istype(new_xeno) || !xeno_candidate?.client)
+		return FALSE
 
-		if(new_xeno.client)
-			to_chat(xeno_candidate, "<span class='warning'>That xenomorph has been occupied.</span>")
-			return
+	if(!(new_xeno in living_mob_list) || new_xeno.stat == DEAD)
+		to_chat(xeno_candidate, "<span class='warning'>You cannot join if the xenomorph is dead.</span>")
+		return FALSE
 
-		if(!xeno_candidate.client) //the runtime logs say this can happen.
-			return
+	if(new_xeno.client)
+		to_chat(xeno_candidate, "<span class='warning'>That xenomorph has been occupied.</span>")
+		return FALSE
 
-		if(!xeno_bypass_timer)
-			var/deathtime = world.time - xeno_candidate.timeofdeath
-			if(istype(xeno_candidate, /mob/new_player))
-				deathtime = 3000 //so new players don't have to wait to latejoin as xeno in the round's first 5 mins.
-			var/deathtimeminutes = round(deathtime / 600)
-			var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-			if(deathtime < 3000 && ( !xeno_candidate.client.holder || !(xeno_candidate.client.holder.rights & R_ADMIN)) )
-				to_chat(xeno_candidate, "<span class='warning'>You have been dead for [deathtimeminutes >= 1 ? "[deathtimeminutes] minute\s and " : ""][deathtimeseconds] second\s.</span>")
-				to_chat(xeno_candidate, "<span class='warning'>You must wait 5 minutes before rejoining the game!</span>")
-				return
-			if(new_xeno.away_timer < 300) //We do not want to occupy them if they've only been gone for a little bit.
-				to_chat(xeno_candidate, "<span class='warning'>That player hasn't been away long enough. Please wait [300 - new_xeno.away_timer] second\s longer.</span>")
-				return
+	if(!xeno_bypass_timer)
+		var/deathtime = world.time - xeno_candidate.timeofdeath
+		if(istype(xeno_candidate, /mob/new_player))
+			deathtime = 3000 //so new players don't have to wait to latejoin as xeno in the round's first 5 mins.
+		var/deathtimeminutes = round(deathtime / 600)
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+		if(deathtime < 3000 && ( !xeno_candidate.client.holder || !(xeno_candidate.client.holder.rights & R_ADMIN)) )
+			to_chat(xeno_candidate, "<span class='warning'>You have been dead for [deathtimeminutes >= 1 ? "[deathtimeminutes] minute\s and " : ""][deathtimeseconds] second\s.</span>")
+			to_chat(xeno_candidate, "<span class='warning'>You must wait 5 minutes before rejoining the game!</span>")
+			return FALSE
+		if(new_xeno.away_timer < 300) //We do not want to occupy them if they've only been gone for a little bit.
+			to_chat(xeno_candidate, "<span class='warning'>That player hasn't been away long enough. Please wait [300 - new_xeno.away_timer] second\s longer.</span>")
+			return FALSE
 
-		if(alert(xeno_candidate, "Everything checks out. Are you sure you want to transfer yourself into [new_xeno]?", "Confirm Transfer", "Yes", "No") == "Yes")
-			if(new_xeno.client || !(new_xeno in living_mob_list) || new_xeno.stat == DEAD || !xeno_candidate) // Do it again, just in case
-				to_chat(xeno_candidate, "<span class='warning'>That xenomorph can no longer be controlled. Please try another.</span>")
-				return
-		else return
-	else new_xeno = pick(available_xenos_non_ssd) //Just picks something at random.
-	return new_xeno
+	if(alert(xeno_candidate, "Everything checks out. Are you sure you want to transfer yourself into [new_xeno]?", "Confirm Transfer", "Yes", "No") == "Yes")
+		if(new_xeno.client || !(new_xeno in living_mob_list) || new_xeno.stat == DEAD || !xeno_candidate) // Do it again, just in case
+			to_chat(xeno_candidate, "<span class='warning'>That xenomorph can no longer be controlled. Please try another.</span>")
+			return FALSE
+		return new_xeno
+	else
+		return FALSE
 
 /datum/game_mode/proc/transfer_xeno(mob/xeno_candidate, mob/new_xeno)
 	new_xeno.ghostize(0) //Make sure they're not getting a free respawn.
@@ -402,11 +455,11 @@ datum/game_mode/proc/initialize_special_clamps()
 	if(is_queen)
 		to_chat(new_xeno, "<B>You are now the alien queen!</B>")
 		to_chat(new_xeno, "<B>Your job is to spread the hive.</B>")
-		to_chat(new_xeno, "Talk in Hivemind using <strong>:a</strong> (e.g. ':aMy life for the queen!')")
+		to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the hive!')")
 	else
 		to_chat(new_xeno, "<B>You are now an alien!</B>")
 		to_chat(new_xeno, "<B>Your job is to spread the hive and protect the Queen. If there's no Queen, you can become the Queen yourself by evolving into a drone.</B>")
-		to_chat(new_xeno, "Talk in Hivemind using <strong>:a</strong> (e.g. ':aMy life for the queen!')")
+		to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the queen!')")
 
 	new_xeno.update_icons()
 
@@ -711,7 +764,9 @@ datum/game_mode/proc/initialize_special_clamps()
 			current_survivors -= survivor
 			continue //Not a mind? How did this happen?
 
-		random_name = pick(random_name(FEMALE),random_name(MALE))
+		var/mob/living/carbon/human/current = survivor.current
+		var/datum/species/species = istype(current) ? current.species : all_species[DEFAULT_SPECIES]
+		random_name = species.random_name(pick(MALE, FEMALE))
 
 		if(current_survivors.len > 1) //If we have another survivor to pick from.
 			if(survivor_multi_story.len) //Unlikely.
@@ -807,33 +862,55 @@ datum/game_mode/proc/initialize_special_clamps()
 		CA.product_records = list()
 
 		CA.products = list(
-						///obj/item/weapon/claymore/mercsword/machete = 5,
 						/obj/item/storage/large_holster/machete/full = round(scale * 10),
 						/obj/item/ammo_magazine/pistol = round(scale * 20),
-						/obj/item/ammo_magazine/pistol/hp = 0,
 						/obj/item/ammo_magazine/pistol/ap = round(scale * 5),
 						/obj/item/ammo_magazine/pistol/incendiary = round(scale * 2),
 						/obj/item/ammo_magazine/pistol/extended = round(scale * 10),
 						/obj/item/ammo_magazine/pistol/m1911 = round(scale * 10),
 						/obj/item/ammo_magazine/revolver = round(scale * 20),
 						/obj/item/ammo_magazine/revolver/marksman = round(scale * 5),
-						/obj/item/ammo_magazine/smg/m39 = round(scale * 20),
+						/obj/item/ammobox/m39 = round(scale * 3),
+						/obj/item/ammo_magazine/smg/m39 = round(scale * 15),
+						/obj/item/ammobox/m39ap = round(scale * 1),
 						/obj/item/ammo_magazine/smg/m39/ap = round(scale * 5),
-						/obj/item/ammo_magazine/smg/m39/extended = round(scale * 10),
-						/obj/item/ammo_magazine/rifle = round(scale * 30),
-						/obj/item/ammo_magazine/rifle/extended = round(scale * 10),
-						/obj/item/ammo_magazine/rifle/incendiary = 0,
-						/obj/item/ammo_magazine/rifle/ap = round(scale * 10),
-						/obj/item/ammo_magazine/rifle/m4ra = 0,
-						/obj/item/ammo_magazine/rifle/m41aMK1 = 0,
-						/obj/item/ammo_magazine/rifle/lmg = 0,
-						/obj/item/ammo_magazine/shotgun = round(scale * 15),
+						/obj/item/ammobox/m39ext = round(scale * 1),
+						/obj/item/ammo_magazine/smg/m39/extended = round(scale * 5),
+						/obj/item/ammobox = round(scale * 3),
+						/obj/item/ammo_magazine/rifle = round(scale * 15),
+						/obj/item/ammobox/ext = round(scale * 1),
+						/obj/item/ammo_magazine/rifle/extended = round(scale * 5),
+						/obj/item/ammobox/ap = round (scale * 1),
+						/obj/item/ammo_magazine/rifle/ap = round(scale * 5),
+						/obj/item/ammo_magazine/shotgunbox = round(scale * 3),
+						/obj/item/ammo_magazine/shotgun = round(scale * 10),
+						/obj/item/ammo_magazine/shotgunbox/buckshot = round(scale * 3),
 						/obj/item/ammo_magazine/shotgun/buckshot = round(scale * 10),
-						/obj/item/ammo_magazine/shotgun/flechette = round(scale * 10),
+						/obj/item/ammo_magazine/shotgun/flechette = round(scale * 15),
+						/obj/item/smartgun_powerpack = round(scale * 2)
+						)
+
+		CA.contraband = list(
+						/obj/item/ammo_magazine/smg/ppsh/ = round(scale * 20),
+						/obj/item/ammo_magazine/smg/ppsh/extended = round(scale * 4),
 						/obj/item/ammo_magazine/sniper = 0,
 						/obj/item/ammo_magazine/sniper/incendiary = 0,
 						/obj/item/ammo_magazine/sniper/flak = 0,
-						/obj/item/smartgun_powerpack = round(scale * 2)
+						/obj/item/ammo_magazine/rifle/m4ra = 0,
+						/obj/item/ammo_magazine/rifle/incendiary = 0,
+						/obj/item/ammo_magazine/rifle/m41aMK1 = 0,
+						/obj/item/ammo_magazine/rifle/lmg = 0,
+						/obj/item/ammo_magazine/pistol/hp = 0,
+						/obj/item/ammo_magazine/pistol/heavy = 0,
+						/obj/item/ammo_magazine/pistol/holdout = 0,
+						/obj/item/ammo_magazine/pistol/highpower = 0,
+						/obj/item/ammo_magazine/pistol/vp70 = 0,
+						/obj/item/ammo_magazine/revolver/small = 0,
+						/obj/item/ammo_magazine/revolver/cmb = 0,
+						/obj/item/ammo_magazine/smg/mp7 = 0,
+						/obj/item/ammo_magazine/smg/skorpion = 0,
+						/obj/item/ammo_magazine/smg/uzi = 0,
+						/obj/item/ammo_magazine/smg/p90 = 0
 						)
 
 		CA.build_inventory(CA.products)
@@ -849,9 +926,9 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/storage/backpack/marine = round(scale * 15),
 						/obj/item/storage/belt/marine = round(scale * 15),
 						/obj/item/storage/belt/shotgun = round(scale * 10),
-						/obj/item/clothing/tie/storage/webbing = round(scale * 5),
-						/obj/item/clothing/tie/storage/brown_vest = 0,
-						/obj/item/clothing/tie/holster = 0,
+						/obj/item/clothing/tie/storage/webbing = round(scale * 3),
+						/obj/item/clothing/tie/storage/brown_vest = round(scale * 1),
+						/obj/item/clothing/tie/holster = round(scale * 1),
 						/obj/item/storage/belt/gun/m4a3 = round(scale * 10),
 						/obj/item/storage/belt/gun/m44 = round(scale * 5),
 						/obj/item/storage/large_holster/m39 = round(scale * 5),
@@ -865,29 +942,47 @@ datum/game_mode/proc/initialize_special_clamps()
 						/obj/item/storage/pouch/magazine = round(scale * 5),
 						/obj/item/storage/pouch/flare/full = round(scale * 5),
 						/obj/item/storage/pouch/firstaid/full = round(scale * 5),
-						/obj/item/storage/pouch/pistol = round(scale * 15),
+						/obj/item/storage/pouch/pistol = round(scale * 10),
 						/obj/item/storage/pouch/magazine/pistol/large = round(scale * 5),
 						/obj/item/weapon/gun/pistol/m4a3 = round(scale * 20),
 						/obj/item/weapon/gun/pistol/m1911 = round(scale * 2),
 						/obj/item/weapon/gun/revolver/m44 = round(scale * 10),
 						/obj/item/weapon/gun/smg/m39 = round(scale * 15),
-						/obj/item/weapon/gun/smg/m39/elite = 0,
-						/obj/item/weapon/gun/rifle/m41aMK1 = 0,
 						/obj/item/weapon/gun/rifle/m41a = round(scale * 20),
-						/obj/item/weapon/gun/rifle/m41a/elite = 0,
-						/obj/item/weapon/gun/rifle/lmg = 0,
 						/obj/item/weapon/gun/shotgun/pump = round(scale * 10),
-						/obj/item/weapon/gun/shotgun/combat = 0,
+						// /obj/item/weapon/gun/shotgun/combat = round(scale * 1),
 						/obj/item/explosive/mine = round(scale * 2),
 						/obj/item/storage/box/nade_box = round(scale * 2),
-						/obj/item/explosive/grenade/frag = 0,
 						/obj/item/explosive/grenade/frag/m15 = round(scale * 2),
-						/obj/item/explosive/grenade/incendiary = round(scale * 2),
+						/obj/item/explosive/grenade/incendiary = round(scale * 4),
 						/obj/item/explosive/grenade/smokebomb = round(scale * 5),
-						/obj/item/explosive/grenade/phosphorus = 0,
-						/obj/item/storage/box/m94 = round(scale * 10),
+						/obj/item/explosive/grenade/cloakbomb = round(scale * 3),
+						/obj/item/storage/box/m94 = round(scale * 30),
 						/obj/item/device/flashlight/combat = round(scale * 5),
 						/obj/item/clothing/mask/gas = round(scale * 10)
+						)
+
+		CG.contraband = list(
+						/obj/item/weapon/gun/smg/ppsh = round(scale * 4),
+						/obj/item/weapon/gun/shotgun/double = round(scale * 2),
+						/obj/item/weapon/gun/smg/m39/elite = 0,
+						/obj/item/weapon/gun/rifle/m41aMK1 = 0,
+						/obj/item/weapon/gun/rifle/m41a/elite = 0,
+						/obj/item/weapon/gun/rifle/lmg = 0,
+						/obj/item/explosive/grenade/frag = 0,
+						/obj/item/explosive/grenade/phosphorus = 0,
+						/obj/item/weapon/gun/pistol/holdout = 0,
+						/obj/item/weapon/gun/pistol/heavy = 0,
+						/obj/item/weapon/gun/pistol/highpower = 0,
+						/obj/item/weapon/gun/pistol/vp70 = 0,
+						/obj/item/weapon/gun/revolver/small = 0,
+						/obj/item/weapon/gun/revolver/cmb = 0,
+						/obj/item/weapon/gun/shotgun/merc = 0,
+						/obj/item/weapon/gun/shotgun/pump/cmb = 0,
+						/obj/item/weapon/gun/smg/mp7 = 0,
+						/obj/item/weapon/gun/smg/skorpion = 0,
+						/obj/item/weapon/gun/smg/uzi = 0,
+						/obj/item/weapon/gun/smg/p90 = 0
 						)
 
 		CG.build_inventory(CG.products)

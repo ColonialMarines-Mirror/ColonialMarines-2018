@@ -43,6 +43,7 @@
 	universal_speak = 0
 	health = 5
 	maxHealth = 5
+	rotate_on_lying = 0
 	mob_size = MOB_SIZE_XENO
 	hand = 1 //Make right hand active by default. 0 is left hand, mob defines it as null normally
 	see_in_dark = 8
@@ -54,6 +55,7 @@
 
 
 /mob/living/carbon/Xenomorph/New()
+	verbs += /mob/living/proc/lay_down
 	..()
 	//WO GAMEMODE
 	if(map_tag == MAP_WHISKEY_OUTPOST)
@@ -79,11 +81,6 @@
 
 	living_xeno_list += src
 	round_statistics.total_xenos_created++
-
-	if(adjust_size_x != 1)
-		var/matrix/M = matrix()
-		M.Scale(adjust_size_x, adjust_size_y)
-		transform = M
 
 	spawn(6) //Mind has to be transferred! Hopefully this will give it enough time to do so.
 		generate_name()
@@ -134,8 +131,8 @@
 	if(caste == "Queen")
 		switch(upgrade)
 			if(0) name = "\improper [name_prefix]Queen"			 //Young
-			if(1) name = "\improper [name_prefix]Elite Queen"	 //Mature
-			if(2) name = "\improper [name_prefix]Elite Empress"	 //Elite
+			if(1) name = "\improper [name_prefix]Elder Queen"	 //Mature
+			if(2) name = "\improper [name_prefix]Elder Empress"	 //Elder
 			if(3) name = "\improper [name_prefix]Ancient Empress" //Ancient
 	else if(caste == "Predalien") name = "\improper [name_prefix][name] ([nicknumber])"
 	else name = "\improper [name_prefix][upgrade_name] [caste] ([nicknumber])"
@@ -192,28 +189,29 @@
 /mob/living/carbon/Xenomorph/slip(slip_source_name, stun_level, weaken_level, run_only, override_noslip, slide_steps)
 	return FALSE
 
-
+/mob/living/carbon/Xenomorph/handle_knocked_out()
+	if(knocked_out)
+		AdjustKnockedout(-2)
+	return knocked_out
 
 /mob/living/carbon/Xenomorph/start_pulling(atom/movable/AM, lunge, no_msg)
 	if(!isliving(AM))
 		return FALSE
 	var/mob/living/L = AM
-	if(isSynth(L) && L.stat == DEAD) //no meta hiding synthetic bodies
-		return FALSE
 	if(L.buckled)
 		return FALSE //to stop xeno from pulling marines on roller beds.
-	/*if(ishuman(L) && L.stat == DEAD)
-		var/mob/living/carbon/human/H = L
-		if(H.status_flags & XENO_HOST)
-			if(world.time > H.timeofdeath + H.revive_grace_period)
-				return FALSE // they ain't gonna burst now
-		else
-			return FALSE // leave the dead alone*
-	*/ // this is disabled pending the results of the lighting change -spookydonut
+	if(ishuman(L))
+		pull_speed += XENO_DEADHUMAN_DRAG_SLOWDOWN
+	return ..()
+
+/mob/living/carbon/Xenomorph/stop_pulling()
+	if(pulling && ishuman(pulling))
+		pull_speed -= XENO_DEADHUMAN_DRAG_SLOWDOWN
 	return ..()
 
 /mob/living/carbon/Xenomorph/pull_response(mob/puller)
-	if(stat != DEAD && has_species(puller,"Human")) // If the Xeno is alive, fight back against a grab/pull
+	var/mob/living/carbon/human/H = puller
+	if(stat == CONSCIOUS && H.species?.count_human) // If the Xeno is conscious, fight back against a grab/pull
 		puller.KnockDown(rand(tacklemin,tacklemax))
 		playsound(puller.loc, 'sound/weapons/pierce.ogg', 25, 1)
 		puller.visible_message("<span class='warning'>[puller] tried to pull [src] but instead gets a tail swipe to the head!</span>")
@@ -253,9 +251,14 @@
 	visible_message("<b>[src]</b> points to [A]")
 	return 1
 
+/mob/living/carbon/Xenomorph/get_permeability_protection()
+	return XENO_PERM_COEFF
 
-
-///get_eye_protection()
-///Returns a number between -1 to 2
 /mob/living/carbon/Xenomorph/get_eye_protection()
 	return 2
+
+/mob/living/carbon/Xenomorph/vomit()
+	return
+
+/mob/living/carbon/Xenomorph/reagent_check(datum/reagent/R) //For the time being they can't metabolize chemicals.
+	return TRUE

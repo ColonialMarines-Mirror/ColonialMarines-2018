@@ -45,7 +45,7 @@
 			speaking.broadcast(src,trim(message))
 			return
 		//If we've gotten this far, keep going!
-		verb = speaking.get_spoken_verb(ending)
+		verb = speaking.get_spoken_verb(ending, src)
 	else
 		if(ending=="!")
 			verb=pick("exclaims","shouts","yells")
@@ -101,7 +101,7 @@
 		for(var/mob/living/M in hearers(message_range, src))
 			if(M != src)
 				M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
-		if(has_species(src,"Human"))
+		if(species?.count_human)
 			playsound(src.loc, 'sound/effects/radiostatic.ogg', 15, 1)
 
 		italics = 1
@@ -195,7 +195,7 @@
 	var/ending = copytext(message, length(message))
 
 	if(speaking)
-		verb = speaking.get_spoken_verb(ending)
+		verb = speaking.get_spoken_verb(ending, src)
 	else
 		if(ending == "!")
 			verb=pick("exclaims","shouts","yells")

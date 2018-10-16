@@ -45,8 +45,8 @@ You are also next in the chain of command, should the bridge crew fall in the li
 	flag = ROLE_REQUISITION_OFFICER
 	department_flag = ROLEGROUP_MARINE_ENGINEERING
 	selection_color = "#9990B2"
-	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO, ACCESS_MARINE_RO, ACCESS_MARINE_BRIDGE)
-	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO, ACCESS_MARINE_RO, ACCESS_MARINE_BRIDGE)
+	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO, ACCESS_MARINE_RO, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_PREP, ACCESS_MARINE_ALPHA, ACCESS_MARINE_BRAVO, ACCESS_MARINE_CHARLIE, ACCESS_MARINE_DELTA)
+	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO, ACCESS_MARINE_RO, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_PREP, ACCESS_MARINE_ALPHA, ACCESS_MARINE_BRAVO, ACCESS_MARINE_CHARLIE, ACCESS_MARINE_DELTA)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/RO
 
@@ -103,13 +103,14 @@ A happy ship is a well-functioning ship."}
 				WEAR_FEET = /obj/item/clothing/shoes/marine,
 				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
 				WEAR_WAIST = /obj/item/storage/belt/utility/full,
+				WEAR_EYES = /obj/item/clothing/glasses/welding,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
 				WEAR_R_STORE = /obj/item/storage/pouch/general/medium
 				)
 
 	generate_stored_equipment()
 		. = list(
-				WEAR_L_HAND = /obj/item/device/t_scanner
+				WEAR_L_HAND = /obj/item/tool/weldpack
 				)
 
 	generate_entry_message(mob/living/carbon/human/H)

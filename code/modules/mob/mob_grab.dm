@@ -97,7 +97,7 @@
 						return */
 		X.visible_message("<span class='danger'>[X] starts to devour [pulled]!</span>", \
 		"<span class='danger'>You start to devour [pulled]!</span>", null, 5)
-		if(do_after(X, min(30, 200 - pulled.traumatic_shock), FALSE, 5, BUSY_ICON_HOSTILE)) //Devour delay scales inversely with victim's pain; 20 seconds max, 3 seconds min
+		if(do_after(X, CLAMP(200 - pulled.traumatic_shock,30,200), FALSE, 5, BUSY_ICON_HOSTILE)) //Devour delay scales inversely with victim's pain; 20 seconds max, 3 seconds min
 			if(X.pulling == pulled && !pulled.buckled && pulled.stat != DEAD && !X.stomach_contents.len) //make sure you've still got them in your claws, and alive
 				X.visible_message("<span class='warning'>[X] devours [pulled]!</span>", \
 				"<span class='warning'>You devour [pulled]!</span>", null, 5)

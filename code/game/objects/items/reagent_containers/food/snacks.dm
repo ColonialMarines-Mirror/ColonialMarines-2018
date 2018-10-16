@@ -2772,7 +2772,7 @@
 		to_chat(user, "<span class='notice'>You pull open the package of the meal!</span>")
 		playsound(loc,'sound/effects/pageturn2.ogg', 15, 1)
 		name = "\improper" + flavor
-		desc = "The contents of a USCM Standard issue MRE. This one is " + flavor + "."
+		desc = "The contents of a standard issue MRE. This one is " + flavor + "."
 		icon_state = flavor
 		package = FALSE
 
@@ -2781,15 +2781,15 @@
 	flavor = newflavor
 
 	switch(newflavor)
-		if("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti chunks", "chicken tender")
+		if("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "red crayon")
 			icon_state = "entree"
 			list_reagents = list("nutriment" = 5, "sodiumchloride" = 1)
-		if("cracker", "cheese spread", "rice onigiri", "mashed potatoes", "risotto")
+		if("meatballs", "cheese spread", "beef turnover", "mashed potatoes", "yellow crayon" )
 			icon_state = "side"
 			list_reagents = list("nutriment" = 3, "sodiumchloride" = 1)
-		if("biscuit", "meatballs", "pretzels", "peanuts", "sushi")
+		if("biscuit", "pretzels", "peanuts", "cracker", "purple crayon")
 			icon_state = "snack"
 			list_reagents = list("nutriment" = 2, "sodiumchloride" = 1)
-		if("spiced apples", "chocolate brownie", "sugar cookie", "coco bar", "flan", "honey flan")
+		if("spiced apples", "chocolate brownie", "sugar cookie", "choco bar", "blue crayon")
 			icon_state = "dessert"
 			list_reagents = list("nutriment" = 2, "sugar" = 1)

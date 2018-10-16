@@ -9,6 +9,7 @@
 	var/regenZ = 1 //Temp zombie thing until I write a better method ~Apop
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
+	verbs += /mob/living/proc/lay_down
 	b_type = pick(7;"O-", 38;"O+", 6;"A-", 34;"A+", 2;"B-", 9;"B+", 1;"AB-", 3;"AB+")
 
 	if(!dna)
@@ -291,12 +292,11 @@
 //gets paygrade from ID
 //paygrade is a user's actual rank, as defined on their ID.  size 1 returns an abbreviation, size 0 returns the full rank name, the third input is used to override what is returned if no paygrade is assigned.
 /mob/living/carbon/human/proc/get_paygrade(size = 1)
-	switch(species.name)
-		if("Human","Human Hero")
-			var/obj/item/card/id/id = wear_id
-			if(istype(id)) . = get_paygrades(id.paygrade, size, gender)
-			else return ""
-		else return ""
+	if(species.show_paygrade)
+		var/obj/item/card/id/id = wear_id
+		if(istype(id))
+			return get_paygrades(id.paygrade, size, gender)
+	return ""
 
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
@@ -800,8 +800,8 @@
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 
 	if (href_list["medholocard"])
-		if(!has_species(src, "Human"))
-			to_chat(usr, "<span class='warning'>Triage holocards only works on humans.</span>")
+		if(species?.count_human)
+			to_chat(usr, "<span class='warning'>Triage holocards only works on organic humanoid entities.</span>")
 			return
 		var/newcolor = input("Choose a triage holo card to add to the patient:", "Triage holo card", null, null) in list("black", "red", "orange", "none")
 		if(!newcolor) return
@@ -819,8 +819,8 @@
 
 	if (href_list["scanreport"])
 		if(hasHUD(usr,"medical"))
-			if(!has_species(src, "Human"))
-				to_chat(usr, "<span class='warning'>This only works on humans.</span>")
+			if(!ishuman(src))
+				to_chat(usr, "<span class='warning'>This only works on humanoids.</span>")
 				return
 			if(get_dist(usr, src) > 7)
 				to_chat(usr, "<span class='warning'>[src] is too far away.</span>")
@@ -920,35 +920,6 @@
 		spawn(1200)
 			xylophone=0
 	return
-
-/mob/living/carbon/human/proc/vomit()
-
-	if(species.flags & IS_SYNTHETIC)
-		return //Machines don't throw up.
-
-	if(stat == 2) //Corpses don't puke
-		return
-
-	if(!lastpuke)
-		lastpuke = 1
-		to_chat(src, "<spawn class='warning'>You feel nauseous...")
-		spawn(150)	//15 seconds until second warning
-			to_chat(src, "<spawn class='warning'>You feel like you are about to throw up!")
-			spawn(100)	//and you have 10 more for mad dash to the bucket
-				Stun(5)
-				if(stat == 2) //One last corpse check
-					return
-				src.visible_message("<spawn class='warning'>[src] throws up!","<spawn class='warning'>You throw up!", null, 5)
-				playsound(loc, 'sound/effects/splat.ogg', 25, 1, 7)
-
-				var/turf/location = loc
-				if (istype(location, /turf))
-					location.add_vomit_floor(src, 1)
-
-				nutrition -= 40
-				adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
-					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
@@ -1394,15 +1365,8 @@
 		return
 	..()
 
-
-
-/mob/living/carbon/human/proc/vomit_on_floor()
-	var/turf/T = get_turf(src)
-	visible_message("<span class = 'danger'>[src] vomits on the floor!</span>", null, null, 5)
-	nutrition -= 20
-	adjustToxLoss(-3)
-	playsound(T, 'sound/effects/splat.ogg', 25, 1, 7)
-	T.add_vomit_floor(src)
+/mob/living/carbon/human/reagent_check(datum/reagent/R)
+	return species.handle_chemicals(R,src) // if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 
 /mob/living/carbon/human/slip(slip_source_name, stun_level, weaken_level, run_only, override_noslip, slide_steps)
 	if(shoes && !override_noslip) // && (shoes.flags_inventory & NOSLIPPING)) // no more slipping if you have shoes on. -spookydonut
@@ -1426,78 +1390,84 @@
 		hud_used.locate_leader.icon_state = "trackon"
 
 
-
-
-
+/mob/living/carbon/get_standard_pixel_y_offset()
+	if(lying)
+		return -6
+	else
+		return initial(pixel_y)
 
 
 /mob/proc/update_sight()
 	return
 
 /mob/living/carbon/human/update_sight()
+	if(!client)
+		return
 	if(stat == DEAD)
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		return
+
+	sight = initial(sight)
+	see_in_dark = species.darksight
+	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
+	if(dna)
+		switch(dna.mutantrace)
+			if("slime")
+				see_in_dark = 3
+				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+			if("shadow")
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+
+
+	if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		//prescription applies regardless of it the glasses are active
+		if(G.active)
+			see_in_dark = max(G.darkness_view, see_in_dark)
+			sight |= G.vision_flags
+			if(G.fullscreen_vision)
+				overlay_fullscreen("glasses_vision", G.fullscreen_vision)
+			else
+				clear_fullscreen("glasses_vision", 0)
+			see_invisible = min(G.see_invisible, see_invisible)
 	else
-		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = species.darksight
-		see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
-		if(dna)
-			switch(dna.mutantrace)
-				if("slime")
-					see_in_dark = 3
-					see_invisible = SEE_INVISIBLE_LEVEL_ONE
-				if("shadow")
-					see_in_dark = 8
-					see_invisible = SEE_INVISIBLE_LEVEL_ONE
+		clear_fullscreen("glasses_vision", 0)
 
-		if(XRAY in mutations)
-			sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if(glasses)
-			process_glasses(glasses)
-		else
-			see_invisible = SEE_INVISIBLE_LIVING
+	if(XRAY in mutations)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = max(see_in_dark, 8)
 
 
 
 
-/mob/proc/update_tint()
 
 /mob/living/carbon/human/update_tint()
-	var/is_tinted = FALSE
-
-	if(istype(head, /obj/item/clothing/head/welding))
-		var/obj/item/clothing/head/welding/O = head
-		if(!O.up && tinted_weldhelh)
-			is_tinted = TRUE
-
-	if(glasses && glasses.has_tint && glasses.active && tinted_weldhelh)
-		is_tinted = TRUE
-
-	if(istype(wear_mask, /obj/item/clothing/mask/gas))
-		var/obj/item/clothing/mask/gas/G = wear_mask
-		if(G.vision_impair && tinted_weldhelh)
-			is_tinted = TRUE
-
-	if(is_tinted)
+	tinttotal = get_total_tint()
+	if(tinttotal >= 3)
+		blind_eyes(1)
+		return TRUE
+	else if(eye_blind == 1)
+		adjust_blindness(-1)
+	if(tinttotal == 2)
 		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
-		return 1
+		return TRUE
 	else
 		clear_fullscreen("tint", 0)
-		return 0
+		return FALSE
 
-
-/mob/proc/update_glass_vision(obj/item/clothing/glasses/G)
-	return
-
-/mob/living/carbon/human/update_glass_vision(obj/item/clothing/glasses/G)
-	if(G.fullscreen_vision)
-		if(G == glasses && G.active) //equipped and activated
-			overlay_fullscreen("glasses_vision", G.fullscreen_vision)
-			return 1
-		else //unequipped or deactivated
-			clear_fullscreen("glasses_vision", 0)
+/mob/living/carbon/human/proc/get_total_tint()
+	. = 0
+	var/obj/item/clothing/C
+	if(istype(head, /obj/item/clothing/head))
+		C = head
+		. += C.tint
+	if(istype(wear_mask, /obj/item/clothing/mask))
+		C = wear_mask
+		. += C.tint
+	if(istype(glasses, /obj/item/clothing/glasses))
+		C = glasses
+		. += C.tint

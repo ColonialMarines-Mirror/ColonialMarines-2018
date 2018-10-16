@@ -9,7 +9,6 @@
 	stat = DEAD
 	density = 0
 	canmove = 0
-	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
 	layer = ABOVE_FLY_LAYER
@@ -41,6 +40,7 @@
 			var/mob/living/carbon/human/H = body
 			icon = H.stand_icon
 			overlays = H.overlays_standing
+			underlays = H.underlays_standing
 		else
 			icon = body.icon
 			icon_state = body.icon_state
@@ -338,7 +338,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /atom/movable/Moved()
 	..()
-	
+
 	if(followers.len)
 		for(var/_F in followers)
 			var/mob/dead/observer/F = _F //Read this was faster than var/typepath/F in list
@@ -603,7 +603,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(ticker.mode.check_xeno_late_join(src))
 		var/mob/new_xeno = ticker.mode.attempt_to_join_as_xeno(src)
-		if(new_xeno) ticker.mode.transfer_xeno(src, new_xeno)
+		if(new_xeno)
+			ticker.mode.transfer_xeno(src, new_xeno)
+
+/mob/dead/verb/join_as_larva()
+	set category = "Ghost"
+	set name = "Join as Larva"
+	set desc = "Attempt to be born as a burrowed larva should a Queen be in ovi."
+	if (!stat || !client || !ticker.mode.check_xeno_late_join(src))
+		return FALSE
+	if(!ticker || ticker.current_state < GAME_STATE_PLAYING || !ticker.mode)
+		to_chat(src, "<span class='warning'>The game hasn't started yet!</span>")
+		return FALSE
+	var/mob/living/carbon/Xenomorph/Queen/mother = ticker.mode.attempt_to_join_as_larva(src)
+	if(!mother)
+		return FALSE
+	else
+		ticker.mode.spawn_larva(src, mother)
+		return TRUE
 
 /mob/dead/verb/join_as_zombie() //Adapted from join as hellhoud
 	set category = "Ghost"

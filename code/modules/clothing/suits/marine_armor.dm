@@ -71,6 +71,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 40, laser = 35, energy = 20, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
+	permeability_coefficient = 0.8
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 	allowed = list(/obj/item/weapon/gun/,
 		/obj/item/tank/emergency_oxygen,
@@ -338,7 +339,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		return 0
 
 	to_chat(usr, "You feel a faint hiss and an injector drops into your hand.")
-	var/obj/item/reagent_container/hypospray/autoinjector/tricord/O = new(usr)
+	var/obj/item/reagent_container/hypospray/autoinjector/tricordrazine/O = new(usr)
 	usr.put_in_active_hand(O)
 	injections--
 	playsound(src,'sound/machines/click.ogg', 15, 1)
@@ -378,7 +379,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/M35
 	name = "\improper M35 armor"
-	desc = "A custom set of M35 armor designed for use by USCM Pyrotechnicians."
+	desc = "A custom set of M35 armor designed for use by USCM Pyrotechnicians. Contains thick kevlar shielding."
 	icon_state = "pyro_armor"
 	armor = list(melee = 85, bullet = 90, laser = 60, energy = 60, bomb = 30, bio = 0, rad = 0)
 	max_heat_protection_temperature = FIRESUIT_max_heat_protection_temperature

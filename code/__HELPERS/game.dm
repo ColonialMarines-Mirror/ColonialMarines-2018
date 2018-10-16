@@ -39,21 +39,6 @@
 
 	return heard
 
-
-
-
-//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
-//They should approximate pythagoras theorem well enough for our needs.
-#define k1 0.934
-#define k2 0.427
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
-	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
-	var/dy = abs(Ay - By)
-	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k2*dx) + (k1*dy)
-#undef k1
-#undef k2
-
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
@@ -225,8 +210,6 @@
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
-#define SIGN(X) ((X<0)?-1:1)
-
 proc
 	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 		var/turf/T
@@ -234,7 +217,7 @@ proc
 			if(Y1==Y2)
 				return 1 //Light cannot be blocked on same tile
 			else
-				var/s = SIGN(Y2-Y1)
+				var/s = (((Y2-Y1)<0)?-1:1)
 				Y1+=s
 				while(Y1!=Y2)
 					T=locate(X1,Y1,Z)
@@ -244,8 +227,8 @@ proc
 		else
 			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
 			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			var/signX = SIGN(X2-X1)
-			var/signY = SIGN(Y2-Y1)
+			var/signX = (((X2-X1)<0)?-1:1)
+			var/signY = (((Y2-Y1)<0)?-1:1)
 			if(X1<X2)
 				b+=m
 			while(X1!=X2 || Y1!=Y2)
@@ -257,7 +240,6 @@ proc
 				if(T.opacity)
 					return 0
 		return 1
-#undef SIGN
 
 proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)

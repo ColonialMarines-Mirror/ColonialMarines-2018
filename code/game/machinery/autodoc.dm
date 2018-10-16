@@ -29,7 +29,8 @@
 	idle_power_usage = 15
 	active_power_usage = 450 //Capable of doing various activities
 
-	var/stored_metal = 500 // starts with 500 metal loaded
+	var/stored_metal = 1000 // starts with 500 metal loaded
+	var/stored_metal_max = 2000
 
 /obj/machinery/autodoc/power_change(var/area/master_area = null)
 	..()
@@ -707,8 +708,11 @@
 		return // no
 	if(istype(W, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = W
-		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
-		stored_metal += M.amount * 100
+		if(stored_metal == stored_metal_max)
+			to_chat(user, "<span class='warning'>\The [src]'s metal reservoir is full; it can't hold any more material!</span>")
+			return
+		stored_metal = min(stored_metal_max,stored_metal + M.amount * 100)
+		to_chat(user, "<span class='notice'>\The [src] processes \the [W]. Its metal reservoir now contains [stored_metal] of [stored_metal_max] units.</span>")
 		user.drop_held_item()
 		cdel(W)
 		return
@@ -1176,6 +1180,7 @@
 
 /obj/machinery/autodoc/examine(mob/living/user)
 	..()
+	to_chat(user, "<span class='notice'>Its metal reservoir contains [stored_metal] of [stored_metal_max] units.</span>")
 	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
 		return
 	if(!ishuman(occupant))

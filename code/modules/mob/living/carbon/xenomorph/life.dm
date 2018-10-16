@@ -102,7 +102,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
 	var/turf/T = loc
-	if(!T || !istype(T) || hardcore)
+	if(!T || !istype(T) || hardcore || fire_stacks) //Can't regenerate while on fire
 		return
 	if(health < maxHealth && (locate(/obj/effect/alien/weeds) in T) || innate_healing)
 		var/datum/hive_status/hive = hive_datum[hivenumber]

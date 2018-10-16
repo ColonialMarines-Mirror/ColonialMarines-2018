@@ -139,9 +139,11 @@
 	disabilities = 0
 
 	// fix blindness and deafness
-	set_blindness(0)
-	set_blurriness(0)
-	setEarDamage(0, 0)
+	blinded = 0
+	eye_blind = 0
+	eye_blurry = 0
+	ear_deaf = 0
+	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 
 	// restore all of a human's blood

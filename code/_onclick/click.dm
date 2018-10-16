@@ -139,7 +139,8 @@
 
 	if (mods["shift"] && !mods["middle"])
 		if(user.client && user.client.eye == user)
-			user.examinate(src)
+			examine(user)
+			user.face_atom(src)
 		return 1
 
 	if (mods["alt"])

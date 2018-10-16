@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/spray.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	container_type = OPENCONTAINER_NOUNIT
+	flags_atom = OPENCONTAINER
 	flags_item = NOBLUDGEON
 	flags_equip_slot = SLOT_WAIST
 	throwforce = 3
@@ -23,7 +23,7 @@
 	..()
 	src.verbs -= /obj/item/reagent_container/verb/set_APTFT
 
-/obj/item/reagent_container/spray/afterattack(atom/A as mob|obj, mob/user)
+/obj/item/reagent_container/spray/afterattack(atom/A, mob/user, proximity)
 	//this is what you get for using afterattack() TODO: make is so this is only called if attackby() returns 0 or something
 	if(istype(A, /obj/item/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/reagent_container) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart || istype(A, /obj/structure/ladder)))
@@ -32,13 +32,13 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
-	if((A.is_drainable() && !A.is_refillable()) && get_dist(src,A) <= 1)
-		if(!A.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[A] is empty.</span>")
+	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+		if(!A.reagents.total_volume && A.reagents)
+			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
 			return
 
-		if(reagents.holder_full())
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return
 
 		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
@@ -46,7 +46,7 @@
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>[src] is empty!</span>")
+		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 		return
 
 	if(safety)
@@ -77,7 +77,8 @@
 			step_towards(D,A)
 			D.reagents.reaction(get_turf(D))
 			for(var/atom/T in get_turf(D))
-				D.reagents.reaction(T, VAPOR)
+				D.reagents.reaction(T)
+
 				// When spraying against the wall, also react with the wall, but
 				// not its contents. BS12
 				if(get_dist(D, A_turf) == 1 && A_turf.density)
@@ -93,6 +94,11 @@
 	amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
 	spray_size = next_in_list(spray_size, spray_sizes)
 	to_chat(user, "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
+
+
+/obj/item/reagent_container/spray/examine(mob/user)
+	..()
+	to_chat(user, "[round(reagents.total_volume)] units left.")
 
 /obj/item/reagent_container/spray/verb/empty()
 
@@ -129,7 +135,11 @@
 	possible_transfer_amounts = null
 	volume = 40
 	safety = TRUE
-	list_reagents = list("condensedcapsaicin" = 40)
+
+
+/obj/item/reagent_container/spray/pepper/New()
+	..()
+	reagents.add_reagent("condensedcapsaicin", 40)
 
 /obj/item/reagent_container/spray/pepper/examine(mob/user)
 	..()
@@ -150,7 +160,10 @@
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = null
 	volume = 10
-	list_reagents = list("water" = 10)
+
+/obj/item/reagent_container/spray/waterflower/New()
+	..()
+	reagents.add_reagent("water", 10)
 
 //chemsprayer
 /obj/item/reagent_container/spray/chemsprayer
@@ -197,7 +210,7 @@
 				step_towards(D, my_target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/t in get_turf(D))
-					D.reagents.reaction(t, VAPOR)
+					D.reagents.reaction(t)
 				sleep(2)
 			cdel(D)
 
@@ -210,10 +223,13 @@
 	icon_state = "plantbgone"
 	item_state = "plantbgone"
 	volume = 100
-	list_reagents = list("plantbgone" = 100)
+
+
+/obj/item/reagent_container/spray/plantbgone/New()
+	..()
+	reagents.add_reagent("plantbgone", 100)
 
 
 /obj/item/reagent_container/spray/plantbgone/afterattack(atom/A, mob/user, proximity)
-	if(!proximity)
-		return
+	if(!proximity) return
 	..()

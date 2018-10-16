@@ -62,36 +62,33 @@
 		src.client.screen = null
 	..()
 
-/mob/living/simple_animal/handle_status_effects()
-	..()
-	if(stuttering)
-		stuttering = 0
-
 /mob/living/simple_animal/updatehealth()
-	..()
-	health = CLAMP(health, 0, maxHealth)
-
-/mob/living/simple_animal/update_stat()
-	if(status_flags & GODMODE)
-		return
-	if(stat != DEAD)
-		if(health <= 0)
-			death()
-		else
-			stat = CONSCIOUS
+	return
 
 /mob/living/simple_animal/Life()
-	..()
 
 	//Health
-	if(stat != DEAD)
+	if(stat == DEAD)
 		if(health > 0)
 			icon_state = icon_living
+			dead_mob_list -= src
+			living_mob_list += src
 			stat = CONSCIOUS
 			lying = 0
 			density = 1
 			reload_fullscreens()
 		return 0
+
+
+	if(health < 1)
+		death()
+
+	if(health > maxHealth)
+		health = maxHealth
+
+	handle_stunned()
+	handle_knocked_down()
+	handle_knocked_out()
 
 	//Movement
 	if(!client && !stop_automated_movement && wander && !anchored)
@@ -200,27 +197,11 @@
 		else
 			..()
 
-/mob/living/simple_animal/blind_eyes()
-	return
-
-/mob/living/simple_animal/adjust_blindness()
-	return
-
-/mob/living/simple_animal/set_blindness()
-	return
-
-/mob/living/simple_animal/blur_eyes()
-	return
-
-/mob/living/simple_animal/adjust_blurriness()
-	return
-
-/mob/living/simple_animal/set_blurriness()
-	return
 
 /mob/living/simple_animal/death()
 	. = ..()
-		icon_state = icon_dead
+	if(!.)	return //was already dead
+	icon_state = icon_dead
 
 
 /mob/living/simple_animal/gib()
@@ -279,7 +260,7 @@
 		if("help")
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
-					if ((O.client && !is_blind(O)))
+					if ((O.client && !( O.blinded )))
 						O.show_message("\blue [M] [response_help] [src]")
 
 		if("grab")
@@ -292,7 +273,7 @@
 		if("hurt", "disarm")
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
-				if ((O.client && !is_blind(O)))
+				if ((O.client && !( O.blinded )))
 					O.show_message("\red [M] [response_harm] [src]")
 
 	return
@@ -308,7 +289,7 @@
 					adjustBruteLoss(-MED.heal_brute)
 					MED.use(1)
 					for(var/mob/M in viewers(src, null))
-						if ((M.client && !is_blind(M)))
+						if ((M.client && !( M.blinded )))
 							M.show_message("\blue [user] applies the [MED] on [src]")
 		else
 			to_chat(user, "\blue this [src] is dead, medical items won't bring it back to life.")
@@ -326,12 +307,12 @@
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !is_blind(M)))
+				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
 			to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !is_blind(M)))
+				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 
 

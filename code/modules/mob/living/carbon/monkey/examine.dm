@@ -1,4 +1,7 @@
 /mob/living/carbon/monkey/examine(mob/user)
+	if( (user.sdisabilities & BLIND || user.blinded || user.stat) && !istype(user,/mob/dead/observer) )
+		to_chat(user, "<span class='notice'>Something is there but you can't see it.</span>")
+		return
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 

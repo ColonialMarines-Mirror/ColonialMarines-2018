@@ -6,12 +6,14 @@
 /datum/job/civilian/colonist
 	title = "Colonist"
 	comm_title = "CLN"
+	paygrade = "C"
 	access = list(ACCESS_IFF_MARINE)
 	minimal_access = list(ACCESS_IFF_MARINE)
 
 /datum/job/civilian/passenger
 	title = "Passenger"
 	comm_title = "PAS"
+	paygrade = "C"
 	access = list(ACCESS_IFF_MARINE)
 	minimal_access = list(ACCESS_IFF_MARINE)
 
@@ -35,19 +37,20 @@
 				WEAR_EAR = /obj/item/device/radio/headset/almayer/cmo,
 				WEAR_BODY = /obj/item/clothing/under/rank/medical/green,
 				WEAR_FEET = /obj/item/clothing/shoes/white,
+				WEAR_WAIST = /obj/item/storage/belt/medical,
 				WEAR_HANDS = /obj/item/clothing/gloves/latex,
 				WEAR_JACKET = /obj/item/clothing/suit/storage/labcoat,
 				WEAR_EYES = /obj/item/clothing/glasses/hud/health,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/medical,
-				WEAR_L_STORE = /obj/item/storage/pouch/syringe,
-				WEAR_HEAD = /obj/item/clothing/head/surgery/green
+				WEAR_R_STORE = /obj/item/storage/pouch/medkit,
+				WEAR_L_STORE = /obj/item/storage/pouch/medical/full,
+				WEAR_HEAD = /obj/item/clothing/head/surgery/green,
+				WEAR_FACE = /obj/item/clothing/mask/surgical
 				//WEAR_HEAD = /obj/item/clothing/head/cmo //2.10.2018 Will want to work on this a bit more, it doesn't quite fit. - Joshuu
 				)
 
 	generate_stored_equipment()
 		. = list(
-				WEAR_WAIST = /obj/item/device/healthanalyzer,
 				WEAR_J_STORE = /obj/item/device/flashlight/pen,
 				WEAR_L_HAND = /obj/item/storage/firstaid/adv
 				)
@@ -85,18 +88,19 @@ Make sure that the doctors and nurses are doing their jobs and keeping the marin
 				WEAR_EAR = /obj/item/device/radio/headset/almayer/doc,
 				WEAR_BODY = /obj/item/clothing/under/rank/medical/green,
 				WEAR_FEET = /obj/item/clothing/shoes/white,
+				WEAR_WAIST = /obj/item/storage/belt/medical,
 				WEAR_HANDS = /obj/item/clothing/gloves/latex,
 				//WEAR_JACKET = /obj/item/clothing/suit/storage/labcoat,
 				WEAR_EYES = /obj/item/clothing/glasses/hud/health,
 				WEAR_HEAD = /obj/item/clothing/head/surgery/green,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/medical,
-				WEAR_L_STORE = /obj/item/storage/pouch/syringe
+				WEAR_R_STORE = /obj/item/storage/pouch/medkit,
+				WEAR_L_STORE = /obj/item/storage/pouch/medical/full,
+				WEAR_FACE = /obj/item/clothing/mask/surgical
 				)
 
 	generate_stored_equipment()
 		. = list(
-				WEAR_WAIST = /obj/item/device/healthanalyzer,
 				WEAR_L_HAND = /obj/item/storage/firstaid/adv
 				)
 
@@ -133,24 +137,26 @@ You are also an expert when it comes to medication and treatment. If you do not 
 				WEAR_EAR = /obj/item/device/radio/headset/almayer/doc,
 				WEAR_BODY = /obj/item/clothing/under/marine/officer/researcher,
 				WEAR_FEET = /obj/item/clothing/shoes/laceup,
+				WEAR_WAIST = /obj/item/storage/belt/medical,
 				WEAR_HANDS = /obj/item/clothing/gloves/latex,
 				WEAR_JACKET = /obj/item/clothing/suit/storage/labcoat/researcher,
 				WEAR_EYES = /obj/item/clothing/glasses/hud/health,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/medical,
-				WEAR_L_STORE = /obj/item/storage/pouch/syringe
+				WEAR_R_STORE = /obj/item/storage/pouch/medkit,
+				WEAR_L_STORE = /obj/item/storage/pouch/medical/full,
+				WEAR_FACE = /obj/item/clothing/mask/surgical
 				)
 
 	generate_stored_equipment()
 		. = list(
-				WEAR_WAIST = /obj/item/device/healthanalyzer,
-				WEAR_J_STORE = /obj/item/device/flashlight/pen
+				WEAR_J_STORE = /obj/item/device/flashlight/pen,
+				WEAR_L_HAND = /obj/item/storage/firstaid/adv
 				)
 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You are tasked with researching and developing new medical treatments, helping your fellow doctors, and generally learning new things.
-Your role involves a lot of roleplaying, but you can perform the function of a regular doctor. Do not hand out things to marines without getting permission from your supervisor."}
+Your role involves some roleplaying and gimmickry, but you can perform the function of a regular doctor."}
 
 //Liaison
 /datum/job/civilian/liaison
@@ -179,10 +185,10 @@ Your role involves a lot of roleplaying, but you can perform the function of a r
 
 
 	generate_entry_message(mob/living/carbon/human/H)
-		. = {"As a representative of Weyland-Yutani Corporation, your job requires you to stay in character at all times.
+		. = {"As a representative of Weyland-Yutani Corporation you are expected to stay professional and loyal to the corporation at all times.
 You are not required to follow military orders; however, you cannot give military orders.
 Your primary job is to observe and report back your findings to Weyland-Yutani. Follow regular game rules unless told otherwise by your superiors.
-Use your office fax machine to communicate with corporate headquarters or to acquire new directives. You may not receive anything back, and this is normal."}
+Use your office fax machine to communicate with corporate headquarters or to acquire new directives. You may not receive anything back (especially if the game staff is absent or otherwise busy), and this is normal."}
 
 	generate_entry_conditions(mob/living/carbon/human/H)
 		if(ticker && H.mind) ticker.liaison = H.mind //TODO Look into CL tracking in game mode.

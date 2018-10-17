@@ -185,7 +185,7 @@
 						if(L.name == "chest")
 							skip_embryo_check = TRUE
 			var/obj/item/alien_embryo/A = locate() in M
-			if(A && L.name == "chest" && !skip_embryo_check) //If we're not already doing a shrapnel removal surgery proceed.
+			if(A && L.name == "chest" && !skip_embryo_check) //If we're not already doing a shrapnel removal surgery on the chest, add an extraction surgery to remove it
 				surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"shrapnel")
 			if(L.germ_level > INFECTION_LEVEL_ONE)
 				surgery_list += create_autodoc_surgery(L,LIMB_SURGERY,"germs")

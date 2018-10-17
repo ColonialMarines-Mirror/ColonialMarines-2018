@@ -266,7 +266,7 @@
 		R.info = format_occupant_data(src.connected.get_occupant_data())
 
 /obj/machinery/bodyscanner/examine(mob/living/user)
-	..()
+	. = ..()
 	if(!occupant)
 		return
 	if(!hasHUD(user,"medical"))

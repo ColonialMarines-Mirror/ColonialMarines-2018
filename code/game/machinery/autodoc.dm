@@ -1,3 +1,10 @@
+#define AUTODOC_NOTICE_SUCCESS 1
+#define AUTODOC_NOTICE_DEATH 2
+#define AUTODOC_NOTICE_NO_RECORD 3
+#define AUTODOC_NOTICE_NO_POWER 4
+#define AUTODOC_NOTICE_XENO_FUCKERY 5
+#define AUTODOC_NOTICE_IDIOT_EJECT 6
+
 //Autodoc
 /obj/machinery/autodoc
 	name = "\improper autodoc medical system"
@@ -37,7 +44,7 @@
 	if(stat & NOPOWER)
 		visible_message("\The [src] engages the safety override, ejecting the occupant.")
 		surgery = 0
-		go_out(4)
+		go_out(AUTODOC_NOTICE_NO_POWER)
 		return
 
 /obj/machinery/autodoc/update_icon()
@@ -56,7 +63,7 @@
 		if(occupant.stat == DEAD)
 			visible_message("\The [src] speaks: Patient has expired.")
 			surgery = 0
-			go_out(2)
+			go_out(AUTODOC_NOTICE_DEATH)
 			return
 		if(surgery)
 			// keep them alive
@@ -213,7 +220,7 @@
 /obj/machinery/autodoc/proc/surgery_op(mob/living/carbon/M)
 	if(M.stat == DEAD||!ishuman(M))
 		visible_message("\The [src] buzzes.")
-		src.go_out(2) //kick them out too.
+		src.go_out(AUTODOC_NOTICE_DEATH) //kick them out too.
 		return
 
 	var/mob/living/carbon/human/H = M
@@ -223,7 +230,7 @@
 			N = R
 	if(isnull(N))
 		visible_message("\The [src] buzzes: No records found for occupant.")
-		src.go_out(3) //kick them out too.
+		src.go_out(AUTODOC_NOTICE_NO_RECORD) //kick them out too.
 		return
 
 	var/list/surgery_todo_list
@@ -546,7 +553,7 @@
 
 	visible_message("\The [src] clicks and opens up having finished the requested operations.")
 	surgery = 0
-	go_out(1)
+	go_out(AUTODOC_NOTICE_SUCCESS)
 
 
 /obj/machinery/autodoc/proc/open_incision(mob/living/carbon/human/target, var/datum/limb/L)
@@ -603,7 +610,7 @@
 		if(isXeno(usr) && !surgery) // let xenos eject people hiding inside; a xeno ejecting someone during surgery does so like someone untrained
 			message_staff("[key_name(usr)] ejected [key_name(occupant)] from the autodoc.")
 			log_admin("[key_name(usr)] ejected [key_name(occupant)] from the autodoc.")
-			go_out(5)
+			go_out(AUTODOC_NOTICE_XENO_FUCKERY)
 			add_fingerprint(usr)
 			return
 		if(!ishuman(usr))
@@ -627,7 +634,7 @@
 				// message_staff for now, may change to message_admins later
 				message_staff("[key_name(usr)] ejected [key_name(occupant)] from the autodoc during surgery causing damage.")
 				log_admin("[key_name(usr)] ejected [key_name(occupant)] from the autodoc during surgery causing damage.")
-				go_out(6)
+				go_out(AUTODOC_NOTICE_IDIOT_EJECT)
 		go_out()
 		add_fingerprint(usr)
 

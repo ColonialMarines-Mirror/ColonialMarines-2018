@@ -191,7 +191,7 @@
 					/obj/item/ammobox = 3,
 					/obj/item/ammo_magazine/rifle = 15,
 					/obj/item/ammobox/ext = 1,
-					/obj/item/ammo_magazine/rifle/extended = 5,				
+					/obj/item/ammo_magazine/rifle/extended = 5,
 					/obj/item/ammobox/ap = 1,
 					/obj/item/ammo_magazine/rifle/ap = 5,
 					/obj/item/ammo_magazine/shotgunbox = 3,
@@ -281,10 +281,10 @@
 					/obj/item/reagent_container/hypospray/autoinjector/Bicard = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/dexP = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/Dylovene = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/Inaprovaline = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/inaprovaline = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/Kelo = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/Oxycodone = 4,
-					/obj/item/reagent_container/hypospray/autoinjector/tricord = 8,
+					/obj/item/reagent_container/hypospray/autoinjector/tricordrazine = 8,
 					/obj/item/reagent_container/hypospray/autoinjector/hypervene = 4,
 					/obj/item/storage/pill_bottle/bicaridine = 3,
 					/obj/item/storage/pill_bottle/dexalin = 3,
@@ -305,7 +305,7 @@
 					/obj/item/device/healthanalyzer = 3,
 					/obj/item/bodybag/cryobag = 2)
 
-	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate =3)
+	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/stoxin =3)
 
 
 

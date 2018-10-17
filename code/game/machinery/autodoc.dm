@@ -40,6 +40,16 @@
 		go_out(4)
 		return
 
+/obj/machinery/autodoc/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "autodoc_off"
+	else if(surgery)
+		icon_state = "autodoc_operate"
+	else if (occupant)
+		icon_state = "autodoc_closed"
+	else
+		icon_state = "autodoc_open"
+
 /obj/machinery/autodoc/process()
 	updateUsrDialog()
 	if(occupant)
@@ -192,7 +202,7 @@
 		surgery_list += create_autodoc_surgery(null,EXTERNAL_SURGERY,"toxin")
 	var/overdoses = 0
 	for(var/datum/reagent/x in M.reagents.reagent_list)
-		if(istype(x,/datum/reagent/toxin)||M.reagents.get_reagent_amount(x.id) > x.overdose)
+		if(istype(x,/datum/reagent/toxin)||M.reagents.get_reagent_amount(x.id) > x.overdose_threshold)
 			overdoses++
 	if(overdoses)
 		surgery_list += create_autodoc_surgery(null,EXTERNAL_SURGERY,"dialysis")
@@ -228,7 +238,7 @@
 
 	visible_message("\The [src] begins to operate, loud audible clicks lock the pod.")
 	surgery = 1
-	icon_state = "autodoc_operate"
+	update_icon()
 
 	var/known_implants = list(/obj/item/implant/chem, /obj/item/implant/death_alarm, /obj/item/implant/loyalty, /obj/item/implant/tracking, /obj/item/implant/neurostim)
 
@@ -264,7 +274,7 @@
 					if("germs") // Just dose them with the maximum amount of antibiotics and hope for the best
 						if(prob(30)) visible_message("\The [src] speaks, Beginning organ disinfection.");
 						var/datum/reagent/R = chemical_reagents_list["spaceacillin"]
-						var/amount = R.overdose - H.reagents.get_reagent_amount("spaceacillin")
+						var/amount = R.overdose_threshold - H.reagents.get_reagent_amount("spaceacillin")
 						var/inject_per_second = 3
 						to_chat(occupant, "<span class='info'>You feel a soft prick from a needle.</span>")
 						while(amount > 0)
@@ -478,7 +488,7 @@
 						if(prob(30)) visible_message("\The [src] speaks, Beginning limb disinfection.");
 
 						var/datum/reagent/R = chemical_reagents_list["spaceacillin"]
-						var/amount = (R.overdose/2) - H.reagents.get_reagent_amount("spaceacillin")
+						var/amount = (R.overdose_threshold/2) - H.reagents.get_reagent_amount("spaceacillin")
 						var/inject_per_second = 3
 						to_chat(occupant, "<span class='info'>You feel a soft prick from a needle.</span>")
 						while(amount > 0)
@@ -697,7 +707,7 @@
 	occupant = null
 	surgery_todo_list = list()
 	update_use_power(1)
-	icon_state = "autodoc_open"
+	update_icon()
 	stop_processing()
 	connected.stop_processing()
 	connected.process() // one last update

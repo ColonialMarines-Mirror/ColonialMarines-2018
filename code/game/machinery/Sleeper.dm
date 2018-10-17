@@ -96,7 +96,7 @@
 					else
 						dat += "<HR><A href='?src=\ref[src];togglefilter=1'>Start Dialysis</A><BR>"
 						dat += "Output Beaker has [connected.beaker.reagents.maximum_volume - connected.beaker.reagents.total_volume] units of free space remaining<BR><HR>"
-					if(src.connected.stasis)
+					if(connected.stasis)
 						dat += "<A href='?src=\ref[src];togglestasis=1'>Deactivate Cryostasis</A><BR>"
 					else
 						dat += "<A href='?src=\ref[src];togglestasis=1'>Activate Cryostasis</A><BR>"

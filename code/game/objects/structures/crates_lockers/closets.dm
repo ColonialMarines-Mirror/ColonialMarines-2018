@@ -219,6 +219,7 @@
 				new /obj/item/stack/sheet/metal(src.loc)
 				for(var/mob/M in viewers(src))
 					M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with [P].</span>", 3, "You hear welding.", 2)
+				P.debris(loc, 1, 0) //Generate some metal
 				cdel(src)
 				return
 			else

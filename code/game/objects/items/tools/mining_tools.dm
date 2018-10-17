@@ -175,6 +175,22 @@
 	use_charge(user, charge_amount, FALSE)
 	to_chat(user, "<span class='notice'>You cut apart the [name] with [src]. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 
+/obj/item/tool/pickaxe/plasmacutter/proc/debris(location, metal = 0, rods = 0, wood = 0, wires = 0, shards = 0, plasteel = 0)
+	if(metal)
+		new /obj/item/stack/sheet/metal (location, metal)
+	if(rods)
+		new /obj/item/stack/rods (location, rods)
+	if(wood)
+		new /obj/item/stack/sheet/wood (location, wood)
+	if(wires)
+		new /obj/item/stack/cable_coil (location, wires)
+	if(shards)
+		while(shards > 0)
+			new /obj/item/shard (location)
+			shards--
+	if(plasteel)
+		new /obj/item/stack/sheet/plasteel (location, plasteel)
+
 /obj/item/tool/pickaxe/plasmacutter/proc/use_charge(mob/user, amount = charge_cost, mention_charge = TRUE)
 	cell.charge -= min(cell.charge, amount)
 	if(mention_charge)

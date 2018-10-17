@@ -69,6 +69,7 @@
 			P.start_cut(user, src.name, src)
 			if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P && src) //Window frames require half the normal time
 				P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_LOW_MOD) //Window frames require half the normal power
+				P.debris(loc, 1, 1) //Generate some rods and metal
 				cdel(src)
 			return
 		else

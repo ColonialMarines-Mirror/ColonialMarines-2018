@@ -1004,6 +1004,7 @@ About the new airlock wires panel:
 			P.start_cut(user, src.name, src)
 			if(do_after(user, P.calc_delay(user), TRUE, 5, BUSY_ICON_HOSTILE) && P)
 				P.cut_apart(user, src.name, src, P.charge_cost) //Airlocks cost as much as a wall to fully cut apart.
+				P.debris(loc, 1, 1, 0, 3) //Metal sheet, some rods and wires.
 				cdel(src)
 			return
 

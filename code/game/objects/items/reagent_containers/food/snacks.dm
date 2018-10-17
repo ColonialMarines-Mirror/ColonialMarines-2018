@@ -2764,12 +2764,12 @@
 /obj/item/reagent_container/food/snacks/packaged_meal/New(loc, newflavor)
 	tastes = list("[pick(food_adjectives)]" = 1) //idea, list, gimmick
 	determinetype(newflavor)
-	desc = "A packaged [icon_state] from a Meal Ready-to-Eat,on the rear is a lengthy list of [pick("obscure", "arcane", "unknowledgeable", "revolutionary", "sophisticated", "unspellable")] ingredients and addictives.</i>"
+	desc = "A packaged [icon_state] from a Meal Ready-to-Eat, there is a lengthy list of [pick("obscure", "arcane", "unintelligible", "revolutionary", "sophisticated", "unspellable")] ingredients and addictives printed on the back.</i>"
 	..()
 
 /obj/item/reagent_container/food/snacks/packaged_meal/attack_self(mob/user as mob)
 	if (package)
-		to_chat(user, "<span class='notice'>You pull open the package of the meal!</span>")
+		to_chat(user, "<span class='notice'>You pull open the MRE package!</span>")
 		playsound(loc,'sound/effects/pageturn2.ogg', 15, 1)
 		name = "\improper" + flavor
 		desc = "The contents of a standard issue MRE. This one is " + flavor + "."

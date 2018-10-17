@@ -16,7 +16,7 @@
 	var/code = 2
 	var/det_mode = FALSE //FALSE for breach, TRUE for demolition.
 	var/atom/plant_target = null //which atom the detpack is planted on
-
+	var/target_drag_delay = null //store this for restoration later
 
 /obj/item/device/radio/detpack/examine(mob/user)
 	. = ..()
@@ -33,8 +33,8 @@
 
 
 /obj/item/device/radio/detpack/Dispose()
-	plant_target = null
 	processing_timers.Remove(src)
+	nullvars()
 	. = ..()
 
 /obj/item/device/radio/detpack/update_icon()
@@ -84,9 +84,17 @@
 			user.visible_message("<span class='notice'>[user] unsecures [src] from [plant_target].</span>",
 			"<span class='notice'>You unsecure [src] from [plant_target].</span>")
 			anchored = FALSE
-			plant_target = null
+			nullvars()
 			update_icon()
 	return ..()
+
+/obj/item/device/radio/detpack/proc/nullvars()
+	if(istype(plant_target, /atom/movable))
+		var/atom/movable/T = plant_target
+		if(target_drag_delay && T.drag_delay == 3)
+			T.drag_delay = target_drag_delay //reset the drag delay of whatever we attached the detpack to
+	plant_target = null //null everything out now
+	target_drag_delay = null
 
 /obj/item/device/radio/detpack/receive_signal(datum/signal/signal)
 	if(signal?.encryption != code || !on)
@@ -220,6 +228,11 @@
 		if(!W.damageable)
 			to_chat(user, "<span class='warning'>[W] is much too tough for you to do anything to it with [src]</span>.")
 			return FALSE
+	if(istype(target, /atom/movable))
+		var/atom/movable/T = target
+		if(T.drag_delay < 3) //Anything with a fast drag delay we need to modify to avoid kamikazi tactics
+			target_drag_delay = T.drag_delay
+			T.drag_delay = 3
 
 	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_METAL)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
@@ -230,7 +243,7 @@
 
 	user.visible_message("<span class='warning'>[user] is trying to plant [name] on [target]!</span>",
 	"<span class='warning'>You are trying to plant [name] on [target]!</span>")
-	bombers += "[key_name(user)] attached C4 to [target.name]."
+	bombers += "[key_name(user)] attached [src] to [target.name]."
 
 	if(do_mob(user, target, 30, BUSY_ICON_HOSTILE))
 		user.drop_held_item()
@@ -264,7 +277,10 @@
 		return
 	if(timer)
 		timer--
-		playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 50, FALSE)
+		if(timer < 11)
+			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 150 + (timer-timer*2)*10, FALSE)
+		else
+			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 50, FALSE)
 		to_chat(world, "<font color='red'>DEBUG: Detpack Timer: [timer]</font>")
 		return
 	else

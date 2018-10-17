@@ -144,9 +144,9 @@
 	if (href_list["togglefilter"])
 		connected.toggle_filter()
 		updateUsrDialog()
-		if (href_list["togglestasis"])
-			src.connected.toggle_stasis()
-			src.updateUsrDialog()
+	if (href_list["togglestasis"])
+		connected.toggle_stasis()
+		updateUsrDialog()
 	if (href_list["ejectify"])
 		connected.eject()
 		updateUsrDialog()
@@ -265,8 +265,8 @@
 	if(filtering)
 		if(beaker)
 			if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-				for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
-					src.occupant.reagents.trans_to(beaker, 10)
+				for(var/datum/reagent/x in occupant.reagents.reagent_list)
+					occupant.reagents.trans_to(beaker, 10)
 
 
 	updateUsrDialog()
@@ -353,7 +353,7 @@
 		filtering = TRUE
 
 /obj/machinery/sleeper/proc/toggle_stasis()
-	if(!src.occupant)
+	if(!occupant)
 		stasis = FALSE
 		return
 	if(stasis)
@@ -456,17 +456,16 @@
 	var/mob/living/carbon/human/user = usr
 
 	if(occupant)
-		to_chat(usr, "<span class='notice'>The sleeper is already occupied!</span>")
+		to_chat(user, "<span class='notice'>The sleeper is already occupied!</span>")
 		return
 
-	if(usr.pulledby)
-		if(ismob(usr.pulledby))
-			var/mob/grabmob = usr.pulledby
-			grabmob.stop_pulling()
+	if(ismob(user.pulledby))
+		var/mob/grabmob = user.pulledby
+		grabmob.stop_pulling()
 	user.stop_pulling()
 	if(!user.forceMove(src))
 		return
-	visible_message("[usr] climbs into the sleeper.", 3)
+	visible_message("[user] climbs into the sleeper.", 3)
 	update_use_power(2)
 	occupant = usr
 	start_processing()

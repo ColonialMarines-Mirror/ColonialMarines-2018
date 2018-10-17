@@ -112,8 +112,8 @@
 				else
 					P.fizzle_message(user)
 					return
-		else if((W.w_class < 4 || !W.sharp || W.force < 20) && !W.damtype == "burn" ) //only big strong sharp weapon are adequate
-			multiplier -= 0.75
+		else if(W.w_class < 4 || !W.sharp || W.force < 20) //only big strong sharp weapon are adequate
+			multiplier *= 0.25
 		damage *= max(0,multiplier)
 		health -= max(0,round(damage))
 		if(istype(src, /obj/effect/alien/resin/sticky))

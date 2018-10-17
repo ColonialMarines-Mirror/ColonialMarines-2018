@@ -30,15 +30,9 @@
 
 /obj/item/storage/pouch/general
 	name = "light general pouch"
-	desc = "A general purpose pouch used to carry small items and ammo magazines."
+	desc = "A general purpose pouch used to carry small items."
 	icon_state = "small_drop"
 	draw_mode = 1
-	bypass_w_limit = list("/obj/item/ammo_magazine/rifle",
-					"/obj/item/ammo_magazine/smg",
-					"/obj/item/ammo_magazine/pistol",
-					"/obj/item/ammo_magazine/revolver",
-					"/obj/item/ammo_magazine/sniper",
-					)
 
 /obj/item/storage/pouch/general/medium
 	name = "medium general pouch"

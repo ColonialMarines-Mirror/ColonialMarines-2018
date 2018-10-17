@@ -19,7 +19,7 @@
 
 
 /obj/item/device/radio/detpack/examine(mob/user)
-	..()
+	. = ..()
 	var/details
 	if(timer)
 		details += "Its timer has [timer] seconds left."
@@ -54,7 +54,7 @@
 			icon_state = "detpack_set_off"
 
 /obj/item/device/radio/detpack/attackby(obj/item/W as obj, mob/user as mob)
-	..()
+	. = ..()
 	if(istype(W, /obj/item/device/multitool))
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_METAL)
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use the [src].</span>",
@@ -86,10 +86,10 @@
 			anchored = FALSE
 			plant_target = null
 			update_icon()
-	..()
+	return ..()
 
 /obj/item/device/radio/detpack/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption != code || !on)
+	if(signal?.encryption != code || !on)
 		return
 
 	if(!armed)

@@ -84,7 +84,9 @@
 		last_move_dir = get_dir(oldloc, loc)
 	if(.)
 		Moved(oldloc,direct)
-
+		var/obj/item/device/radio/detpack/D = locate() in oldloc //Performance friendly way of having the detpack follow the moveable
+		if(D.plant_target == src)
+			D.forceMove(NewLoc)
 
 
 /atom/movable/Bump(atom/A, yes) //yes arg is to distinguish our calls of this proc from the calls native from byond.

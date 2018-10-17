@@ -38,7 +38,7 @@
 	. = ..()
 
 /obj/item/device/radio/detpack/update_icon()
-	if(!anchored)
+	if(!plant_target)
 		if(on)
 			icon_state = "detpack_on"
 			if(armed)
@@ -77,39 +77,43 @@
 	if(armed)
 		to_chat(user, "<font color='warning'>Active anchor bolts are holding it in place! Disarm [src] first to remove it!</font>")
 		return
-	if(anchored)
+	if(plant_target)
 		user.visible_message("<span class='notice'>[user] begins unsecuring [src] from [plant_target].</span>",
 		"<span class='notice'>You begin unsecuring [src] from [plant_target].</span>")
-		if(do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
-			user.visible_message("<span class='notice'>[user] unsecures [src] from [plant_target].</span>",
-			"<span class='notice'>You unsecure [src] from [plant_target].</span>")
-			anchored = FALSE
-			nullvars()
-			update_icon()
+		if(!do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
+			return
+		user.visible_message("<span class='notice'>[user] unsecures [src] from [plant_target].</span>",
+		"<span class='notice'>You unsecure [src] from [plant_target].</span>")
+		nullvars()
+		update_icon()
 	return ..()
 
 /obj/item/device/radio/detpack/proc/nullvars()
-	if(istype(plant_target, /atom/movable))
+	if(istype(plant_target, /atom/movable) && plant_target.loc)
 		var/atom/movable/T = plant_target
-		if(target_drag_delay && T.drag_delay == 3)
+		//to_chat(world, "<font color='red'>DEBUG: Drag delay reset. Target drag delay: [T.drag_delay], Stored drag delay: [target_drag_delay]</font>")
+		if(T.drag_delay == 3)
 			T.drag_delay = target_drag_delay //reset the drag delay of whatever we attached the detpack to
 	plant_target = null //null everything out now
 	target_drag_delay = null
+	armed = FALSE
+	update_icon()
 
 /obj/item/device/radio/detpack/receive_signal(datum/signal/signal)
 	if(signal?.encryption != code || !on)
 		return
 
 	if(!armed)
-		if(!anchored) //has to be planted on something to begin detonating.
+		if(!plant_target) //has to be planted on something to begin detonating.
 			return
 		armed = TRUE
 		//bombtick()
 		processing_timers.Add(src)
-		to_chat(world, "<font color='red'>DEBUG: Detpack Triggered: [loc]</font>")
+		update_icon()
+		//to_chat(world, "<font color='red'>DEBUG: Detpack Triggered: [loc]</font>")
 	else
 		armed = FALSE
-		to_chat(world, "<font color='red'>DEBUG: Detpack Disarmed: [loc]</font>")
+		//to_chat(world, "<font color='red'>DEBUG: Detpack Disarmed: [loc]</font>")
 		update_icon()
 
 	if(master && wires & 1)
@@ -228,11 +232,6 @@
 		if(!W.damageable)
 			to_chat(user, "<span class='warning'>[W] is much too tough for you to do anything to it with [src]</span>.")
 			return FALSE
-	if(istype(target, /atom/movable))
-		var/atom/movable/T = target
-		if(T.drag_delay < 3) //Anything with a fast drag delay we need to modify to avoid kamikazi tactics
-			target_drag_delay = T.drag_delay
-			T.drag_delay = 3
 
 	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_METAL)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
@@ -247,13 +246,15 @@
 
 	if(do_mob(user, target, 30, BUSY_ICON_HOSTILE))
 		user.drop_held_item()
-		plant_target = target
 		playsound(src.loc, 'sound/weapons/mine_armed.ogg', 25, 1)
 		var/location
 		if (isturf(target))
 			location = target
 		if (isobj(target))
 			location = target.loc
+
+		//anchored = TRUE
+
 
 		forceMove(location)
 
@@ -263,29 +264,51 @@
 		//target.overlays += image('icons/obj/items/assemblies.dmi', "plastic-explosive2")
 		user.visible_message("<span class='warning'>[user] plants [name] on [target]!</span>",
 		"<span class='warning'>You plant [name] on [target]! Timer set for [timer] seconds.</span>")
-		anchored = TRUE
+
+		plant_target = target
+		if(istype(plant_target, /atom/movable))
+			var/atom/movable/T = plant_target
+			if(T.drag_delay < 3) //Anything with a fast drag delay we need to modify to avoid kamikazi tactics
+				target_drag_delay = T.drag_delay
+				T.drag_delay = 3
+			//follow_target()
 		update_icon()
 
+
 /obj/item/device/radio/detpack/process()
+	//to_chat(world, "<font color='red'>DEBUG: Detpack Process.</font>")
+	if(plant_target == null || !plant_target.loc) //need a target to be attached to
+		//to_chat(world, "<font color='red'>DEBUG: Location mismatch.</font>")
+		processing_timers.Remove(src)
+		if(timer < 10) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
+			timer = 10
+		nullvars()
+		return
 	if(!on) //need to be active and armed.
+		processing_timers.Remove(src)
+		armed = FALSE
+		if(timer < 10) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
+			timer = 10
+		update_icon()
 		return
 	if(!armed)
 		if(timer < 10) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
 			timer = 10
-		to_chat(world, "<font color='red'>DEBUG: Detpack Detonation Aborted.</font>")
+		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonation Aborted.</font>")
 		processing_timers.Remove(src)
+		update_icon()
 		return
 	if(timer)
 		timer--
 		if(timer < 11)
-			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 150 + (timer-timer*2)*10, FALSE)
+			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 160 + (timer-timer*2)*10, FALSE) //Gets louder as we count down to armaggedon
 		else
 			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 50, FALSE)
-		to_chat(world, "<font color='red'>DEBUG: Detpack Timer: [timer]</font>")
+		//to_chat(world, "<font color='red'>DEBUG: Detpack Timer: [timer]</font>")
 		return
 	else
 		playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
-		to_chat(world, "<font color='red'>DEBUG: Detpack Detonated: [timer]</font>")
+		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonated: [timer]</font>")
 		if(det_mode == TRUE) //If we're on demolition mode, big boom.
 			explosion(loc, 2, 4, 5, 6)
 		else //if we're not, focused boom.

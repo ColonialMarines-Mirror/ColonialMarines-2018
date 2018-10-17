@@ -830,6 +830,7 @@
 							list("Multitool", 1, /obj/item/device/multitool, null, "black"),
 							list("Power control module", 1, /obj/item/circuitboard/apc, null, "black"),
 							list("Airlock electronics", 1, /obj/item/circuitboard/airlock, null, "black"),
+							list("Signaler (for detpacks)", 1, /obj/item/device/assembly/signaler, null, "black"),
 
 							list("SPECIAL AMMUNITION", 0, null, null, null),
 							list("AP M4A3 magazine", 3, /obj/item/ammo_magazine/pistol/ap, null, "black"),
@@ -1055,7 +1056,6 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/tool/shovel/etool,
 						/obj/item/device/lightreplacer,
 						/obj/item/circuitboard/apc,
-						/obj/item/device/radio/detpack,
 						/obj/item/device/assembly/signaler,
 						)
 

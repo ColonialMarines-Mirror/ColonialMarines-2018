@@ -6,12 +6,11 @@
 	b:attack_flag - What type of attack, bullet, laser, energy, melee
 
 	Returns
-	0 - no block
-	1 - halfblock
-	2 - fullblock
+	The armour percentage which is deducted om the damage.
 */
 /mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
-	var/armor = CLAMP(1.00 - (getarmor(def_zone, attack_flag) / 100),0.00,1.00)
+	var/armor = 0.00 //Define our float
+	armor = getarmor(def_zone, attack_flag) * 0.01 //Change the armour into a %
 	return armor
 
 
@@ -65,7 +64,7 @@
 		src.visible_message("\red [src] has been hit by [O].", null, null, 5)
 		var/armor = run_armor_check(null, "melee")
 
-		if(armor < 2)
+		if(armor < 1)
 			apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
 
 		O.throwing = 0		//it hit, so stop moving

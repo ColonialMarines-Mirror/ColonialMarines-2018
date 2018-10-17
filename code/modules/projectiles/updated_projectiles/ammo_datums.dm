@@ -409,8 +409,7 @@
 
 /datum/ammo/bullet/smg/ap/New()
 	..()
-	scatter = config.min_scatter_value
-	damage = config.llow_hit_damage
+	damage = config.mlow_hit_damage
 	penetration= config.med_armor_penetration
 
 /datum/ammo/bullet/smg/ppsh

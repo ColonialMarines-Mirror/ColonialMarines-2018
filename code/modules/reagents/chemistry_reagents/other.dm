@@ -232,8 +232,7 @@
 	if(alien == IS_MOTH)
 		if(prob(7))
 			M.emote(pick("twitch","drool","moan","gasp"))
-	holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
-	..()
+	return ..()
 
 /datum/reagent/oxygen
 	name = "Oxygen"

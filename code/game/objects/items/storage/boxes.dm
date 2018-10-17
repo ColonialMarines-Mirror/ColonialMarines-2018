@@ -648,7 +648,7 @@
 
 /obj/item/storage/box/MRE
 	name = "\improper USCM MRE"
-	desc = "Meal Ready-to-Eat, meant to be consumed in the field, and has an expiration that is two decades past an marine's average combat life expectancy."
+	desc = "Meal Ready-to-Eat, meant to be consumed in the field, and has an expiration that is two decades past a marine's average combat life expectancy."
 	icon_state = "mealpack"
 	w_class = 2
 	can_hold = list()

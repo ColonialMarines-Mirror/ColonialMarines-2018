@@ -2764,7 +2764,7 @@
 /obj/item/reagent_container/food/snacks/packaged_meal/New(loc, newflavor)
 	tastes = list("[pick(food_adjectives)]" = 1) //idea, list, gimmick
 	determinetype(newflavor)
-	desc = "A packaged [icon_state] from a Meal Ready-to-Eat, property of the US Colonial Marines and prepared for field consumption. <i> On the rear is a lengthy list of [pick("obscure", "arcane", "unknowledgeable", "revolutionary", "sophisticated", "unspellable")] ingredients and addictives.</i>"
+	desc = "A packaged [icon_state] from a Meal Ready-to-Eat,on the rear is a lengthy list of [pick("obscure", "arcane", "unknowledgeable", "revolutionary", "sophisticated", "unspellable")] ingredients and addictives.</i>"
 	..()
 
 /obj/item/reagent_container/food/snacks/packaged_meal/attack_self(mob/user as mob)

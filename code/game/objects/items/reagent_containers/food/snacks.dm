@@ -2781,7 +2781,7 @@
 	flavor = newflavor
 
 	switch(newflavor)
-		if("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "red crayon")
+		if("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "chicken tenders", "red crayon")
 			icon_state = "entree"
 			list_reagents = list("nutriment" = 5, "sodiumchloride" = 1)
 		if("meatballs", "cheese spread", "beef turnover", "mashed potatoes", "yellow crayon" )

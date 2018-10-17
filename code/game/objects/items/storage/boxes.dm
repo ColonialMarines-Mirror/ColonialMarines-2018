@@ -662,7 +662,7 @@
 		pickflavor()
 
 /obj/item/storage/box/MRE/proc/pickflavor()
-	var/entree = pick("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "red crayon")
+	var/entree = pick("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "chicken tenders", "red crayon")
 	var/side = pick("meatballs", "cheese spread", "beef turnover", "mashed potatoes", "yellow crayon")
 	var/snack = pick("biscuit", "pretzels", "peanuts", "cracker", "purple crayon")
 	var/desert = pick("spiced apples", "chocolate brownie", "sugar cookie", "choco bar", "blue crayon")

@@ -80,6 +80,7 @@
 
 /obj/item/reagent_container/hypospray/advanced
 	icon_state = "hypo"
+	container_type = REFILLABLE|DRAINABLE
 	var/core_name = "hypospray"
 
 /obj/item/reagent_container/hypospray/advanced/tricordrazine

@@ -252,6 +252,14 @@
 					M.KnockDown(1)
 					step_to(src, M)
 					canmove = FALSE
+					if(savage) //If Runner Savage is toggled on, attempt to use it.
+						if(!savage_used)
+							if(plasma_stored >= 10)
+								Savage(M)
+							else
+								to_chat(src, "<span class='xenodanger'>You attempt to savage your victim, but you need [10-plasma_stored] more plasma.</span>")
+						else
+							to_chat(src, "<span class='xenodanger'>You attempt to savage your victim, but you aren't yet ready.</span>")
 					frozen = TRUE
 					if(charge_type == 2)
 						M.attack_alien(src, null, "disarm") //Hunters get a free throttle in exchange for lower initial stun.

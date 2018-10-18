@@ -25,6 +25,7 @@ exalted12 - Admin
 excessiveuseofcobby - Admin
 feemjmeem - Admin
 forcefulcjs - Admin
+francinum - Admin
 imsxz - Admin
 incoming - Admin
 ispiria - Admin
@@ -75,4 +76,3 @@ virtualjohn - Admin
 wjohnston - Admin
 wubli - Admin
 wilchen - Admin
-francinum - Admin

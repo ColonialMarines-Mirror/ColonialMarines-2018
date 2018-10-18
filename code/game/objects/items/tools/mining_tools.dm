@@ -88,7 +88,7 @@
 
 /obj/item/tool/pickaxe/plasmacutter
 	name = "plasma cutter"
-	icon_state = "plasma_cutter_on"
+	icon_state = "plasma_cutter_off"
 	item_state = "plasmacutter"
 	w_class = 4.0
 	flags_equip_slot = SLOT_WAIST|SLOT_BACK
@@ -225,8 +225,11 @@
 		force = 5
 		damtype = "brute"
 		heat_source = 0
-		if(user)
-			user.SetLuminosity(-2)
+		var/mob/M
+		if(ismob(loc))
+			M = loc
+		if(M)
+			M.SetLuminosity(-2)
 		else
 			SetLuminosity(0)
 	else
@@ -235,8 +238,11 @@
 		force = 40
 		damtype = "fire"
 		heat_source = 3800
-		if(user)
-			user.SetLuminosity(2)
+		var/mob/M
+		if(ismob(loc))
+			M = loc
+		if(M)
+			M.SetLuminosity(2)
 		else
 			SetLuminosity(2)
 
@@ -246,8 +252,18 @@
 			loc.SetLuminosity(-2)
 		else
 			SetLuminosity(0)
-	return ..()
+	. = ..()
 
+/obj/item/tool/pickaxe/plasmacutter/pickup(mob/user)
+	if(powered && loc != user)
+		SetLuminosity(0)
+		user.SetLuminosity(2)
+
+/obj/item/tool/pickaxe/plasmacutter/dropped(mob/user)
+	if(powered && loc != user)
+		user.SetLuminosity(-2)
+		SetLuminosity(2)
+	return ..()
 
 /obj/item/tool/pickaxe/plasmacutter/attackby(obj/item/W, mob/user)
 	if(!istype(W, /obj/item/cell))

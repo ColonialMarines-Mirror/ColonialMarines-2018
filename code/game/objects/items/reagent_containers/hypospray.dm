@@ -4,7 +4,7 @@
 
 /obj/item/reagent_container/hypospray
 	name = "hypospray"
-	desc = "The hypospray is a sterile, air-needle reusable autoinjector for rapid administration of drugs to patients with customizable dosages. Handy."
+	desc = "The hypospray is a sterile, air-needle reusable autoinjector for rapid administration of drugs to patients with customizable dosages. Comes complete with an internal reagent analyzer and digital labeler. Handy."
 	icon = 'icons/obj/items/syringe.dmi'
 	item_state = "hypo"
 	icon_state = "hypo"
@@ -16,9 +16,29 @@
 	flags_equip_slot = SLOT_WAIST
 	w_class = 2.0
 	var/skilllock = 1
+	var/core_name = "hypospray"
 
 /obj/item/reagent_container/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
+
+/obj/item/reagent_container/hypospray/examine(mob/user as mob)
+	if(get_dist(user,src) > 2)
+		to_chat(user, "\red You're too far away to see [src]'s reagent display!")
+		return
+
+	if(!isnull(reagents))
+		var/dat = "\n \t \blue <b>Total Reagents:</b> [reagents.total_volume]/[volume]. <b>Dosage Size:</b> [min(reagents.total_volume, amount_per_transfer_from_this)]</br>"
+		if(reagents.reagent_list.len > 0)
+			for (var/datum/reagent/R in reagents.reagent_list)
+				var/percent = round(R.volume / max(0.01 , reagents.total_volume * 0.01),0.01)
+				var/dose = round(min(reagents.total_volume, amount_per_transfer_from_this) * percent * 0.01,0.01)
+				if(R.scannable)
+					dat += "\n \t \blue <b>[R]:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
+				else
+					dat += "\n \t \blue <b>Unknown:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
+		if(dat)
+			to_chat(user, "\blue [src]'s reagent display shows the following contents: [dat]")
+
 
 /obj/item/reagent_container/hypospray/attack(mob/M, mob/living/user)
 	if(!reagents.total_volume)
@@ -111,3 +131,12 @@
 /obj/item/reagent_container/hypospray/oxycodone/New()
 	. = ..()
 	update_icon()
+
+/obj/item/reagent_container/hypospray/attack_self(mob/user) //set amount_per_transfer_from_this
+	var/str = copytext(reject_bad_text(input(user,"Label text?", "Set label", "")), 1, MAX_NAME_LEN)
+	if(!str || !length(str))
+		to_chat(user, "<span class='notice'>Invalid text.</span>")
+		return
+	user.visible_message("<span class='notice'>[user] labels [src] as \"[str]\".</span>", \
+						 "<span class='notice'>You label [src] as \"[str]\".</span>")
+	name = "[core_name] ([str])"

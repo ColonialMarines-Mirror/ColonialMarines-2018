@@ -102,8 +102,7 @@
 	if(!str || !length(str))
 		to_chat(user, "<span class='notice'>Invalid text.</span>")
 		return
-	user.visible_message("<span class='notice'>[user] labels [src] as \"[str]\".</span>", \
-						 "<span class='notice'>You label [src] as \"[str]\".</span>")
+	to_chat(user, "<span class='notice'>You label [src] as \"[str]\".</span>")
 	name = "[core_name] ([str])"
 
 /obj/item/reagent_container/hypospray/advanced/update_icon()

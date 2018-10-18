@@ -252,7 +252,7 @@
 			loc.SetLuminosity(-2)
 		else
 			SetLuminosity(0)
-	. = ..()
+	return ..()
 
 /obj/item/tool/pickaxe/plasmacutter/pickup(mob/user)
 	if(powered && loc != user)

@@ -8,7 +8,7 @@
  */
 
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, force_intent = FALSE, set_location = FALSE, random_location = FALSE, no_head = FALSE, no_crit = FALSE)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, force_intent = FALSE, set_location = FALSE, random_location = FALSE, no_crit = FALSE, no_head = FALSE)
 	if (M.fortify)
 		return FALSE
 

@@ -160,7 +160,7 @@
 		"/obj/item/reagent_container/syringe",
 		"/obj/item/storage/pill_bottle",
 		"/obj/item/clothing/gloves/latex",
-		"/obj/item/reagent_container",
+		"/obj/item/reagent_container/hypospray/autoinjector",
 		"/obj/item/stack/medical"
 	)
 

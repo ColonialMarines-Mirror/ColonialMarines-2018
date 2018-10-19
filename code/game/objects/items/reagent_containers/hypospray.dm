@@ -22,7 +22,7 @@
 
 /obj/item/reagent_container/hypospray/attack(mob/M, mob/living/user)
 	if(!reagents.total_volume)
-		to_chat(user, <span class = 'danger'>[src] is empty!</span>")
+		to_chat(user, "<span class ='danger'>[src] is empty!</span>")
 		return
 	if (!istype(M))
 		return
@@ -57,7 +57,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in [src].")
+			to_chat(user, "<span class='notice'> [trans] units injected. [reagents.total_volume] units remaining in [src].")
 			update_icon()
 
 	return TRUE
@@ -131,7 +131,7 @@
 		return
 
 	if(!isnull(reagents))
-		var/dat = "\n \t \blue <b>Total Reagents:</b> [reagents.total_volume]/[volume]. <b>Dosage Size:</b> [min(reagents.total_volume, amount_per_transfer_from_this)]</br>"
+		var/dat = "\n \t <span class='notice'><b>Total Reagents:</b> [reagents.total_volume]/[volume]. <b>Dosage Size:</b> [min(reagents.total_volume, amount_per_transfer_from_this)]</span></br>"
 		if(reagents.reagent_list.len > 0)
 			for (var/datum/reagent/R in reagents.reagent_list)
 				var/percent = round(R.volume / max(0.01 , reagents.total_volume * 0.01),0.01)

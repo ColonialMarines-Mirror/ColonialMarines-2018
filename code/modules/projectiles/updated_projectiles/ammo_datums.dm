@@ -1278,6 +1278,11 @@
 	..()
 	spit_cost = 75
 
+/datum/ammo/xeno/acid/heavy/spitter/proc/drop_acid(turf/T) //Leaves behind a short lived acid pool; lasts for 1-3 seconds.
+	if(!istype(T))
+		return
+	new /obj/effect/xenomorph/spray(T, 10)
+
 /datum/ammo/xeno/boiler_gas
 	name = "glob of gas"
 	icon_state = "boiler_gas2"

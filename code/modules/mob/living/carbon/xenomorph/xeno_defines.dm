@@ -158,6 +158,11 @@
 	var/acid_cooldown = 0
 	var/acid_delay = 90 //9 seconds delay on acid. Reduced by -1 per upgrade down to 5 seconds
 
+	//Runner vars
+	var/savage = FALSE
+	var/savage_used = FALSE
+	var/savage_cooldown = 300
+
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL
 	var/mob/living/carbon/Xenomorph/Queen/living_xeno_queen

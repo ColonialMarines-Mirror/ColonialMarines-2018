@@ -96,7 +96,6 @@
 			T.drag_delay = target_drag_delay //reset the drag delay of whatever we attached the detpack to
 	plant_target = null //null everything out now
 	target_drag_delay = null
-	vis_contents -= src
 	armed = FALSE
 	update_icon()
 
@@ -218,7 +217,7 @@
 /obj/item/device/radio/detpack/afterattack(atom/target, mob/user, flag)
 	if(!flag)
 		return FALSE
-	if(istype(target, /obj/structure/ladder) || istype(target, /obj/item) || istype(target, /turf/open) || istype(target, /mob))
+	if(istype(target, /obj/structure/ladder) || istype(target, /obj/item) || istype(target, /mob))
 		return FALSE
 	if(istype(target, /obj/effect) || istype(target, /obj/machinery))
 		var/obj/O = target
@@ -249,8 +248,11 @@
 		user.drop_held_item()
 		playsound(src.loc, 'sound/weapons/mine_armed.ogg', 25, 1)
 		var/location
-		location = target
-		vis_contents += src
+		if (isturf(target))
+			location = target
+		if (isobj(target))
+			location = target.loc
+
 		//anchored = TRUE
 
 
@@ -270,7 +272,7 @@
 			if(T.drag_delay < 3) //Anything with a fast drag delay we need to modify to avoid kamikazi tactics
 				target_drag_delay = T.drag_delay
 				T.drag_delay = 3
-			//follow_target()
+				follow_target(target)
 		update_icon()
 
 
@@ -319,6 +321,17 @@
 		cdel(src)
 		processing_timers.Remove(src)
 	return
+
+/obj/item/device/radio/detpack/proc/follow_target(var/atom/movable/target)
+	spawn(0) //Backup
+		while(plant_target && plant_target == target)
+			var/turf/T = get_turf(plant_target)
+			if(!T)
+				break //No location? Cancel out.
+			if(loc != T)
+				loc = T
+			sleep(5)
+		nullvars() //Null vars if the loop ends becaue we have no target, no location, or the plant target has changed somehow
 
 /obj/item/device/radio/detpack/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

@@ -172,7 +172,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				phero_center = Q.observed_xeno
 			var/pheromone_range = round(6 + aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, phero_center)) //Goes from 8 for Queen to 16 for Ancient Queen
-				if(Z.stat != DEAD && hivenumber == Z.hivenumber)
+				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(current_aura)
 						if("frenzy")
 							if(aura_strength > Z.frenzy_new)
@@ -186,7 +186,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		else
 			var/pheromone_range = round(6 + aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, src)) //Goes from 7 for Young Drone to 16 for Ancient Queen
-				if(Z.stat != DEAD && hivenumber == Z.hivenumber)
+				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(current_aura)
 						if("frenzy")
 							if(aura_strength > Z.frenzy_new)
@@ -200,7 +200,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		if(leader_current_aura && !stat)
 			var/pheromone_range = round(6 + leader_aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, src)) //Goes from 7 for Young Drone to 16 for Ancient Queen
-				if(Z.stat != DEAD && hivenumber == Z.hivenumber)
+				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(leader_current_aura)
 						if("frenzy")
 							if(leader_aura_strength > Z.frenzy_new)
@@ -217,12 +217,11 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		frenzy_aura = 0
 		warding_aura = 0
 		recovery_aura = 0
-		return
-	if(frenzy_aura != frenzy_new || warding_aura != warding_new || recovery_aura != recovery_new)
+	else if(frenzy_aura != frenzy_new || warding_aura != warding_new || recovery_aura != recovery_new)
 		frenzy_aura = frenzy_new
 		warding_aura = warding_new
 		recovery_aura = recovery_new
-		hud_set_pheromone()
+	hud_set_pheromone()
 	frenzy_new = 0
 	warding_new = 0
 	recovery_new = 0

@@ -120,16 +120,15 @@
 			cdel(src)
 		return
 
-proc/flame_radius(radius = 1, turf/T) //~Art updated fire.
+proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, burn_damage = 25, fire_stacks = 25, int_var = 0.5, dur_var = 0.5, colour = "red") //~Art updated fire.
 	if(!T || !isturf(T))
 		return
-	if(radius < 0)
-		radius = 0
-	if(radius > 5)
-		radius = 5
+	radius = CLAMP(radius, 1, 7) //Sterilize inputs
+	int_var = CLAMP(int_var, 0.1,0.5)
+	dur_var = CLAMP(int_var, 0.1,0.5)
 	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
 		cdel(F)
-	new /obj/flamer_fire(T, rand(20, 30), rand(20, 30), "red", radius)
+	new /obj/flamer_fire(T, rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5-int_var)) + rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5-int_var)), rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)) + rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)), colour, radius) //Gaussian.
 	for(var/mob/living/carbon/M in range(radius, T))
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
@@ -138,9 +137,8 @@ proc/flame_radius(radius = 1, turf/T) //~Art updated fire.
 		if(M.stat == DEAD)
 			continue
 		var/dist = get_dist(T,M)
-		var/burnlevel = rand(20, 30)
-		M.adjustFireLoss(rand(burnlevel*0.1,burnlevel*0.4) + rand(burnlevel*0.1,burnlevel*0.4)-dist*5) //Gaussian; averages to 25 minus 5 stacks per tile away from the epicentre
-		M.adjust_fire_stacks(rand(burnlevel*0.1,burnlevel*0.4) + rand(burnlevel*0.1,burnlevel*0.4)-dist*5)//Gaussian; averages to 25 minus 5 stacks per tile away from the epicentre
+		M.adjustFireLoss(rand(burn_damage*(0.5-int_var),burn_damage*(0.5+int_var)) + rand(burn_damage*(0.5-int_var),burn_damage*(0.5+int_var))*min(1,(1-(dist-1)/radius)))//Gaussian
+		M.adjust_fire_stacks(rand(burn_damage*(0.5-int_var),burn_damage*(0.5-int_var)) + rand(burn_damage*(0.5-int_var),burn_damage*(0.5-int_var))*min(1,(1-(dist-1)/radius)))//Gaussian
 		M.IgniteMob()
 		M.visible_message("<span class='danger'>[M] bursts into flames!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You burst into flames!</span>")
 

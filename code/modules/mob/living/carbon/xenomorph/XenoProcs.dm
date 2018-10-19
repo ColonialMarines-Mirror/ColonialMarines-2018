@@ -527,7 +527,7 @@
 	if(!Q || !Q.anchored || !queen_chosen_lead || !Q.current_aura || Q.loc.z != loc.z) //We are no longer a leader, or the Queen attached to us has dropped from her ovi, disabled her pheromones or even died
 		leader_aura_strength = 0
 		leader_current_aura = ""
-		to_chat(src, "<span class='xenowarning'>Your Queen's pheromones are burnt away by the hated fire!</span>")
+		to_chat(src, "<span class='xenowarning'>Your pheromones wane. The Queen is no longer granting you her pheromones.</span>")
 	else
 		leader_aura_strength = Q.aura_strength
 		leader_current_aura = Q.current_aura

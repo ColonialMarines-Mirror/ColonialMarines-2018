@@ -96,6 +96,7 @@
 			T.drag_delay = target_drag_delay //reset the drag delay of whatever we attached the detpack to
 	plant_target = null //null everything out now
 	target_drag_delay = null
+	vis_contents -= src
 	armed = FALSE
 	update_icon()
 
@@ -248,11 +249,8 @@
 		user.drop_held_item()
 		playsound(src.loc, 'sound/weapons/mine_armed.ogg', 25, 1)
 		var/location
-		if (isturf(target))
-			location = target
-		if (isobj(target))
-			location = target.loc
-
+		location = target
+		vis_contents += src
 		//anchored = TRUE
 
 
@@ -268,6 +266,7 @@
 		plant_target = target
 		if(istype(plant_target, /atom/movable))
 			var/atom/movable/T = plant_target
+
 			if(T.drag_delay < 3) //Anything with a fast drag delay we need to modify to avoid kamikazi tactics
 				target_drag_delay = T.drag_delay
 				T.drag_delay = 3

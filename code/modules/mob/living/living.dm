@@ -2,6 +2,9 @@
 	. = ..()
 
 	if(stat != DEAD)
+		if(no_stun)//anti-chainstun flag
+			no_stun = FALSE
+
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 		handle_regular_hud_updates()
@@ -28,11 +31,15 @@
 /mob/living/proc/handle_stunned()
 	if(stunned)
 		AdjustStunned(-1)
+		if(!stunned && !no_stun) //anti chain stun
+			no_stun = TRUE
 	return stunned
 
 /mob/living/proc/handle_knocked_down()
 	if(knocked_down && client)
 		AdjustKnockeddown(-1)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+		if(!knocked_down && !no_stun) //anti chain stun
+			no_stun = TRUE
 	return knocked_down
 
 /mob/living/proc/handle_stuttering()

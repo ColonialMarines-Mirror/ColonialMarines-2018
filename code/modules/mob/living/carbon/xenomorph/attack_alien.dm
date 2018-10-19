@@ -177,9 +177,9 @@
 				return FALSE
 			M.flick_attack_overlay(src, "disarm")
 
-			if(!knocked_down)
-				//var/knockdown_multiplier = max(1,traumatic_shock * 0.02) //hopefully this fixes suspected rounding issues.
-				KnockDown(0.3) //Min 0.3, probable max 1.2
+			if(!knocked_down && !no_stun)
+				var/knockdown_multiplier = max(1,traumatic_shock * 0.02) //hopefully this fixes suspected rounding issues.
+				KnockDown(0.3 * knockdown_multiplier) //Min 0.3, probable max 1.2
 				M.visible_message("<span class='danger'>\The [M] slams [src] to the ground!</span>", \
 				"<span class='danger'>You slam [src] to the ground!</span>", null, 5)
 

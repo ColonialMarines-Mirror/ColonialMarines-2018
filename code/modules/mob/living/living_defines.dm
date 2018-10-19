@@ -76,3 +76,5 @@
 	var/reagent_pain_modifier = 0 //same as above, except can potentially mask damage
 
 	var/smokecloaked = FALSE //For the new Smoke Grenade
+
+	var/no_stun = FALSE

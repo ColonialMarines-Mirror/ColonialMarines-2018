@@ -7,8 +7,10 @@
 
 	var/critical_chance_low = 5
 	var/critical_chance_high = 10
+
 	var/base_armor_resist_low = 1.0
 	var/base_armor_resist_high = 2.0
+
 	var/xeno_armor_resist_low = 0.5
 	var/xeno_armor_resist_high = 1.5
 
@@ -184,6 +186,7 @@
 			xeno_armor_resist_low = value
 		if("xeno_armor_resist_high")
 			xeno_armor_resist_high = value
+
 		if("min_hit_accuracy")
 			min_hit_accuracy = value
 		if("low_hit_accuracy")
@@ -196,6 +199,7 @@
 			high_hit_accuracy = value
 		if("max_hit_accuracy")
 			max_hit_accuracy = value
+
 		if("base_hit_accuracy_mult")
 			base_hit_accuracy_mult = value
 		if("min_hit_accuracy_mult")
@@ -210,6 +214,7 @@
 			high_hit_accuracy_mult = value
 		if("max_hit_accuracy_mult")
 			max_hit_accuracy_mult = value
+
 		if("base_hit_damage")
 			base_hit_damage = value
 		if("min_hit_damage")
@@ -240,6 +245,7 @@
 			super_hit_damage = value
 		if("ultra_hit_damage")
 			ultra_hit_damage = value
+
 		if("base_hit_damage_mult")
 			base_hit_damage_mult = value
 		if("min_hit_damage_mult")
@@ -248,12 +254,15 @@
 			low_hit_damage_mult = value
 		if("med_hit_damage_mult")
 			med_hit_damage_mult = value
+		if("tacshottie_damage_mult")
+			tacshottie_damage_mult = value
 		if("hmed_hit_damage_mult")
 			hmed_hit_damage_mult = value
 		if("high_hit_damage_mult")
 			high_hit_damage_mult = value
 		if("max_hit_damage_mult")
 			max_hit_damage_mult = value
+
 		if("reg_damage_falloff")
 			reg_damage_falloff = value
 		if("smg_damage_falloff")
@@ -262,6 +271,7 @@
 			buckshot_damage_falloff = value
 		if("extra_damage_falloff")
 			extra_damage_falloff = value
+
 		if("base_damage_falloff_mult")
 			base_damage_falloff_mult = value
 		if("min_damage_falloff_mult")
@@ -278,6 +288,7 @@
 			high_damage_falloff_mult = value
 		if("max_damage_falloff_mult")
 			max_damage_falloff_mult = value
+
 		if("min_burst_value")
 			min_burst_value = value
 		if("low_burst_value")
@@ -286,8 +297,11 @@
 			med_burst_value = value
 		if("high_burst_value")
 			high_burst_value = value
+		if("vhigh_burst_value")
+			vhigh_burst_value = value
 		if("max_burst_value")
 			max_burst_value = value
+
 		if("min_fire_delay")
 			min_fire_delay = value
 		if("mlow_fire_delay")
@@ -302,16 +316,24 @@
 			mhigh_fire_delay = value
 		if("max_fire_delay")
 			max_fire_delay = value
+		if("tacshottie_fire_delay")
+			tacshottie_fire_delay = value
+
 		if("min_scatter_value")
 			min_scatter_value = value
+		if("mlow_scatter_value")
+			low_scatter_value = value
 		if("low_scatter_value")
 			low_scatter_value = value
 		if("med_scatter_value")
 			med_scatter_value = value
 		if("high_scatter_value")
 			high_scatter_value = value
+		if("mhigh_scatter_value")
+			mhigh_scatter_value = value
 		if("max_scatter_value")
 			max_scatter_value = value
+
 		if("min_recoil_value")
 			min_recoil_value = value
 		if("low_recoil_value")
@@ -322,9 +344,12 @@
 			high_recoil_value = value
 		if("max_recoil_value")
 			max_recoil_value = value
+
 		if("min_shrapnel_chance")
 			min_shrapnel_chance = value
 		if("low_shrapnel_chance")
+			low_shrapnel_chance = value
+		if("mlow_shrapnel_chance")
 			low_shrapnel_chance = value
 		if("med_shrapnel_chance")
 			med_shrapnel_chance = value
@@ -332,6 +357,7 @@
 			high_shrapnel_chance = value
 		if("max_shrapnel_chance")
 			max_shrapnel_chance = value
+
 		if("min_shell_range")
 			min_shell_range = value
 		if("close_shell_range")
@@ -342,10 +368,15 @@
 			near_shell_range = value
 		if("norm_shell_range")
 			norm_shell_range = value
+		if("lnorm_shell_range")
+			lnorm_shell_range = value
 		if("long_shell_range")
 			long_shell_range = value
+		if("mlong_shell_range")
+			mlong_shell_range = value
 		if("max_shell_range")
 			max_shell_range = value
+
 		if("slow_shell_speed")
 			slow_shell_speed = value
 		if("reg_shell_speed")
@@ -356,39 +387,59 @@
 			super_shell_speed = value
 		if("ultra_shell_speed")
 			ultra_shell_speed = value
+
 		if("min_armor_penetration")
 			min_armor_penetration = value
 		if("mlow_armor_penetration")
 			mlow_armor_penetration = value
 		if("low_armor_penetration")
 			low_armor_penetration = value
+		if("lmed_armor_penetration")
+			lmed_armor_penetration = value
 		if("med_armor_penetration")
 			med_armor_penetration = value
+		if("hmed_armor_penetration")
+			hmed_armor_penetration = value
 		if("high_armor_penetration")
 			high_armor_penetration = value
 		if("mhigh_armor_penetration")
 			mhigh_armor_penetration = value
+		if("vhigh_armor_penetration")
+			vhigh_armor_penetration = value
 		if("max_armor_penetration")
 			max_armor_penetration = value
+
 		if("min_proj_extra")
 			min_proj_extra = value
 		if("low_proj_extra")
 			low_proj_extra = value
 		if("med_proj_extra")
 			med_proj_extra = value
+		if("hmed_proj_extra")
+			hmed_proj_extra = value
 		if("high_proj_extra")
 			high_proj_extra = value
+		if("mhigh_proj_extra")
+			mhigh_proj_extra = value
+		if("vhigh_proj_extra")
+			vhigh_proj_extra = value
 		if("max_proj_extra")
 			max_proj_extra = value
+
 		if("min_proj_variance")
 			min_proj_variance = value
 		if("low_proj_variance")
 			low_proj_variance = value
+		if("mlow_proj_variance")
+			mlow_proj_variance = value
 		if("med_proj_variance")
 			med_proj_variance = value
+		if("hmed_proj_variance")
+			hmed_proj_variance = value
 		if("high_proj_variance")
 			high_proj_variance = value
 		if("max_proj_variance")
 			max_proj_variance = value
+
 		else
 			log_misc("Unknown setting in combat defines: '[name]'")

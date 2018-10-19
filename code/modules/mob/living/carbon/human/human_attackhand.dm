@@ -236,44 +236,4 @@
 			if((SKELETON in mutations) && !w_uniform && !wear_suit)
 				play_xylophone()
 
-		else
-			var/t_him = "it"
-			if (gender == MALE)
-				t_him = "him"
-			else if (gender == FEMALE)
-				t_him = "her"
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-
-
-			if(lying || sleeping)
-				if(client)
-					sleeping = max(0,src.sleeping-5)
-				if(!sleeping)
-					resting = 0
-					update_canmove()
-				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!", \
-									"<span class='notice'>You shake [src] trying to wake [t_him] up!", null, 4)
-			else
-				var/mob/living/carbon/human/H = M
-				if(istype(H))
-					H.species.hug(H,src)
-				else
-					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
-								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>", null, 4)
-
-			AdjustKnockedout(-3)
-			AdjustStunned(-3)
-			AdjustKnockeddown(-3)
-
-			if(halloss > 0)
-				var/protection_mod = 1
-				if(protection_aura)
-					protection_mod += 0.5 + 0.5 * protection_aura //SL Hold Aura bonus: +100% of the normal recovery bonus, SO: +150%, XO/CO: +200%
-				adjustHalLoss(REST_HALLOSS_RECOVERY_RATE * protection_mod) //UP AND AT THEM SOLDIER!!
-
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)
-
 	..()
-

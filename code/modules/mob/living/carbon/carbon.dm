@@ -232,6 +232,14 @@
 			AdjustStunned(-3)
 			AdjustKnockeddown(-3)
 
+			if(halloss > 0)
+				var/halloss_mod = 1
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					if(H.protection_aura)
+						halloss_mod = 0.5 + 0.5 * H.protection_aura //SL Hold Aura bonus: +100% of the normal recovery bonus, SO: +150%, XO/CO: +200%
+				adjustHalLoss(REST_HALLOSS_RECOVERY_RATE * halloss_mod) //UP AND AT THEM SOLDIER!!
+
 			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 5)
 
 

@@ -22,7 +22,7 @@
 
 /obj/item/reagent_container/hypospray/attack(mob/M, mob/living/user)
 	if(!reagents.total_volume)
-		to_chat(user, "\red <b>[src] is empty!</b>")
+		to_chat(user, <span class = 'danger'>[src] is empty!</span>")
 		return
 	if (!istype(M))
 		return
@@ -127,7 +127,7 @@
 
 /obj/item/reagent_container/hypospray/advanced/examine(mob/user as mob)
 	if(get_dist(user,src) > 2)
-		to_chat(user, "\red You're too far away to see [src]'s reagent display!")
+		to_chat(user, "<span class = 'warning'>You're too far away to see [src]'s reagent display!</span>")
 		return
 
 	if(!isnull(reagents))
@@ -137,9 +137,9 @@
 				var/percent = round(R.volume / max(0.01 , reagents.total_volume * 0.01),0.01)
 				var/dose = round(min(reagents.total_volume, amount_per_transfer_from_this) * percent * 0.01,0.01)
 				if(R.scannable)
-					dat += "\n \t \blue <b>[R.name]:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
+					dat += "\n \t <b>[R.name]:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
 				else
-					dat += "\n \t \blue <b>Unknown:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
+					dat += "\n \t <b>Unknown:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
 		if(dat)
-			to_chat(user, "\blue [src]'s reagent display shows the following contents: [dat]")
+			to_chat(user, "<span class = 'notice'>[src]'s reagent display shows the following contents: [dat]</span>")
 	. = ..()

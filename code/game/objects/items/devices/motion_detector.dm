@@ -62,7 +62,7 @@
 	blip_pool = list()
 	..()
 	
-/obj/item/device/motiondetector/proc/process()
+/obj/item/device/motiondetector/process()
 	if(!active)
 		processing_objects.Remove(src)
 		return

@@ -800,8 +800,8 @@
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 
 	if (href_list["medholocard"])
-		if(!has_species(src, "Human"))
-			to_chat(usr, "<span class='warning'>Triage holocards only works on humans.</span>")
+		if(species?.count_human)
+			to_chat(usr, "<span class='warning'>Triage holocards only works on organic humanoid entities.</span>")
 			return
 		var/newcolor = input("Choose a triage holo card to add to the patient:", "Triage holo card", null, null) in list("black", "red", "orange", "none")
 		if(!newcolor) return
@@ -1432,7 +1432,8 @@
 				overlay_fullscreen("glasses_vision", G.fullscreen_vision)
 			else
 				clear_fullscreen("glasses_vision", 0)
-			see_invisible = min(G.see_invisible, see_invisible)
+			if(G.see_invisible)
+				see_invisible = min(G.see_invisible, see_invisible)
 	else
 		clear_fullscreen("glasses_vision", 0)
 

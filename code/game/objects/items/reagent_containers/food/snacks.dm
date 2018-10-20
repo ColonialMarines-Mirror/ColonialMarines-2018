@@ -2730,16 +2730,11 @@
 	icon_state = "lamp"
 	var/brightness_on = 3	//its not a very strong light
 	wrapper = /obj/item/trash/lamp
-	
-	
-/obj/item/reagent_container/food/snacks/wrapped/lampbar/New()
-	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("coco", 4)
-	reagents.add_reagent("mothpheromones", 4)
+	list_reagents = list("nutriment" = 4, "coco" = 4, "mothpheromones" = 4)
+	tastes = list("chocolate" = 20, "vineger" = 1, "stereotypes" = 1) //very low chance to get the funny discriptions
 
 /obj/item/reagent_container/food/snacks/wrapped/lampbar/attack_self(mob/user as mob)
-	if (package)
+	if(package)
 		SetLuminosity(brightness_on)
 	..()
 

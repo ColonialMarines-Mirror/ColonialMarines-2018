@@ -225,15 +225,6 @@
 	if(firer && T == firer.loc)
 		return 0
 
-	// Explosive ammo always explodes on the turf of the clicked target
-	if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)
-		ammo.on_hit_turf(T,src)
-
-		if(T && T.loc)
-			T.bullet_act(src)
-
-		return 1
-
 	// Empty turf, keep moving
 	if(!T.contents.len)
 		return 0
@@ -278,6 +269,8 @@
 				if(mob_is_hit)
 					ammo.on_hit_mob(L,src)
 					if(L && L.loc)
+						if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
+							ammo.on_hit_turf(L,src)
 						L.bullet_act(src)
 					return 1
 				else if (!L.lying)
@@ -288,9 +281,19 @@
 			else if(isobj(A))
 				ammo.on_hit_obj(A,src)
 				if(A && A.loc)
+					if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
+						ammo.on_hit_turf(A,src)
 					A.bullet_act(src)
 				return 1
 
+	// Explosive ammo always explodes on the turf of the clicked target
+	if(src && ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)
+		ammo.on_hit_turf(T,src)
+
+		if(T && T.loc)
+			T.bullet_act(src)
+
+		return 1
 
 //----------------------------------------------------------
 		    	//				    	\\

@@ -51,7 +51,7 @@
 	var/slow_amt = 8
 	var/duration = 100
 
-/obj/effect/xenomorph/spray/New() //Self-deletes
+/obj/effect/xenomorph/spray/New(loc, duration = 100) //Self-deletes
 	..()
 	processing_objects.Add(src)
 	spawn(duration + rand(0, 20))

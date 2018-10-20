@@ -1269,19 +1269,32 @@
 	name = "acid splash"
 	added_spit_delay = 8
 	spit_cost = 100
+	flags_ammo_behavior = AMMO_XENO_ACID|AMMO_EXPLOSIVE
 
 /datum/ammo/xeno/acid/heavy/New()
 	..()
 	damage = config.low_hit_damage
 
-/datum/ammo/xeno/acid/heavy/spitter
-	..()
-	spit_cost = 75
+/datum/ammo/xeno/acid/heavy/on_hit_mob(mob/M,obj/item/projectile/P)
+	drop_acid(get_turf(M))
 
-/datum/ammo/xeno/acid/heavy/spitter/proc/drop_acid(turf/T) //Leaves behind a short lived acid pool; lasts for 1-3 seconds.
-	if(!istype(T))
+/datum/ammo/xeno/acid/heavy/on_hit_obj(obj/O,obj/item/projectile/P)
+	drop_acid(get_turf(P))
+
+/datum/ammo/xeno/acid/heavy/on_hit_turf(turf/T,obj/item/projectile/P)
+	drop_acid(T)
+
+/datum/ammo/xeno/acid/heavy/do_at_max_range(obj/item/projectile/P)
+	drop_acid(get_turf(P))
+
+/datum/ammo/xeno/acid/proc/drop_acid(turf/T) //Leaves behind a short lived acid pool; lasts for 1-3 seconds.
+	if(T.density)
 		return
 	new /obj/effect/xenomorph/spray(T, 10)
+
+/datum/ammo/xeno/acid/heavy/spitter
+	spit_cost = 75
+
 
 /datum/ammo/xeno/boiler_gas
 	name = "glob of gas"

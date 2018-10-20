@@ -81,5 +81,16 @@
 
 
 /mob/living/carbon/human/halloss_recovery()
-	var/rate = (stat || resting) ? REST_HALLOSS_RECOVERY_RATE : BASE_HALLOSS_RECOVERY_RATE * aura_recovery_multiplier
+	var/rate = BASE_HALLOSS_RECOVERY_RATE
+
+	if(lying || last_move_intent < world.time - 20) //If we're standing still or knocked down we benefit from the downed halloss rate
+		if(resting || sleeping) //we're deliberately resting, comfortably taking a breather
+			rate = REST_HALLOSS_RECOVERY_RATE
+		else
+			rate = DOWNED_HALLOSS_RECOVERY_RATE
+	else if(m_intent == MOVE_INTENT_WALK)
+		rate = WALK_HALLOSS_RECOVERY_RATE
+	if(aura_recovery_multiplier)
+		rate *= aura_recovery_multiplier
+
 	adjustHalLoss(rate)

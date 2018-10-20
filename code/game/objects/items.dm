@@ -44,6 +44,7 @@
 	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
 
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
+	var/body_parts_covered = 0
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
@@ -155,26 +156,6 @@ cases. Override_icon_state should be a list.*/
 				if(new_protection) min_cold_protection_temperature = new_protection
 
 		item_state = icon_state
-
-
-/obj/item/examine(mob/user)
-	var/size
-	switch(w_class)
-		if(1.0)
-			size = "tiny"
-		if(2.0)
-			size = "small"
-		if(3.0)
-			size = "normal-sized"
-		if(4.0)
-			size = "bulky"
-		if(5.0)
-			size = "huge"
-		else
-	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	to_chat(user, "This is a [blood_DNA ? blood_color != "#030303" ? "bloody " : "oil-stained " : ""]\icon[src][src.name]. It is a [size] item.")
-	if(desc)
-		to_chat(user, desc)
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user)
@@ -614,17 +595,18 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!user)
 		return
 	var/zoom_device = zoomdevicename ? "\improper [zoomdevicename] of [src]" : "\improper [src]"
+	var/mob/living/carbon/human/H = user
 
 	for(var/obj/item/I in user.contents)
 		if(I.zoom && I != src)
 			to_chat(user, "<span class='warning'>You are already looking through \the [zoom_device].</span>")
 			return //Return in the interest of not unzooming the other item. Check first in the interest of not fucking with the other clauses
 
-	if(user.eye_blind)
+	if(is_blind(user))
 		to_chat(user, "<span class='warning'>You are too blind to see anything.</span>")
 	else if(user.stat || !ishuman(user))
 		to_chat(user, "<span class='warning'>You are unable to focus through \the [zoom_device].</span>")
-	else if(!zoom && user.client && user.update_tint())
+	else if(!zoom && user.client && H.tinttotal >= 3)
 		to_chat(user, "<span class='warning'>Your welding equipment gets in the way of you looking through \the [zoom_device].</span>")
 	else if(!zoom && user.get_active_hand() != src)
 		to_chat(user, "<span class='warning'>You need to hold \the [zoom_device] to look through it.</span>")
@@ -673,7 +655,47 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 
+/obj/item/proc/eyecheck(mob/user)
+	if(!ishuman(user))
+		return 1
+	var/safety = user.get_eye_protection()
+	var/mob/living/carbon/human/H = user
+	var/datum/internal_organ/eyes/E = H.internal_organs_by_name["eyes"]
+	if(!E)
+		return
+	if(E.robotic == ORGAN_ROBOT)
+		return
+	switch(safety)
+		if(1)
+			to_chat(user, "<span class='danger'>Your eyes sting a little.</span>")
+			E.damage += rand(1, 2)
+			if(E.damage > 12)
+				H.eye_blurry += rand(3,6)
+		if(0)
+			to_chat(user, "<span class='warning'>Your eyes burn.</span>")
+			E.damage += rand(2, 4)
+			if(E.damage > 10)
+				E.damage += rand(4,10)
+		if(-1)
+			to_chat(user, "<span class='warning'>Your thermals intensify [src]'s glow. Your eyes itch and burn severely.</span>")
+			H.eye_blurry += rand(12,20)
+			E.damage += rand(12, 16)
+	if(safety<2)
+		if(E.damage > 10)
+			to_chat(H, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
+		if(E.damage >= E.min_broken_damage)
+			to_chat(H, "<span class='warning'>You go blind!</span>")
+			H.sdisabilities |= BLIND
+		else if (E.damage >= E.min_bruised_damage)
+			to_chat(H, "<span class='warning'>You go blind!</span>")
+			H.eye_blind = 5
+			H.eye_blurry = 5
+			H.disabilities |= NEARSIGHTED
+			spawn(100)
+				H.disabilities &= ~NEARSIGHTED
+
 //This proc is here to prevent Xenomorphs from picking up objects (default attack_hand behaviour)
 //Note that this is overriden by every proc concerning a child of obj unless inherited
 /obj/item/attack_alien(mob/living/carbon/Xenomorph/M)
 	return FALSE
+

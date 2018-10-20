@@ -550,7 +550,6 @@
 		if(world.time > (recent_notice + notice_delay)) //anti-notice spam
 			to_chat(src, "<span class='xenowarning'>Your target is too far away!</span>")
 
-		to_chat(src, "<span class='xenowarning'>Your target is too far away!</span>")
 		recent_notice = world.time //anti-notice spam
 		return
 

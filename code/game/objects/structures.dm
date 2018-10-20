@@ -119,9 +119,10 @@
 			return
 		if(user.loc == loc)
 			var/turf/target = get_step(T, dir)
-			if(target.density) //Turf is dense, not gonna work
-				to_chat(user, "<span class='warning'>You cannot leap this way.</span>")
-				return
+			for(var/atom/A in T.contents)
+   				if(A.density)
+					to_chat(user, "<span class='warning'>You cannot leap this way.</span>")
+					return
 			for(var/atom/movable/A in target)
 				if(A && A.density && !(A.flags_atom & ON_BORDER))
 					if(istype(A, /obj/structure))

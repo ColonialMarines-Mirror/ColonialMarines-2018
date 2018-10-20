@@ -279,7 +279,7 @@
 
 
 /obj/machinery/marine_selector/clothes
-	name = "Nanotrasen Automated Closet"
+	name = "GHMME Automated Closet"
 	desc = "An automated closet hooked up to a colossal storage unit of standard-issue uniform and armor."
 	icon_state = "marineuniform"
 	vendor_role = "Squad Marine"
@@ -710,7 +710,7 @@
 
 
 /obj/machinery/marine_selector/gear
-	name = "Automated Equipment Rack"
+	name = "ARCHND Automated Equipment Rack"
 	desc = "An automated equipment rack hooked up to a colossal storage unit."
 	icon_state = "marinearmory"
 	use_points = TRUE
@@ -739,7 +739,7 @@
 	req_access = list(ACCESS_MARINE_DELTA)
 
 /obj/machinery/marine_selector/gear/medic
-	name = "Automated Medic Equipment Rack"
+	name = "ARCHND Automated Medic Equipment Rack"
 	desc = "An automated medic equipment rack hooked up to a colossal storage unit."
 	icon_state = "medic"
 	vendor_role = "Squad Medic"
@@ -807,7 +807,7 @@
 
 
 /obj/machinery/marine_selector/gear/engi
-	name = "Automated Engineer Equipment Rack"
+	name = "ARCHND Automated Engineer Equipment Rack"
 	desc = "An automated engineer equipment rack hooked up to a colossal storage unit."
 	icon_state = "engineer"
 	vendor_role = "Squad Engineer"
@@ -862,8 +862,8 @@
 
 
 /obj/machinery/marine_selector/gear/smartgun
-	name = "Automated Smartgunner Equipment Rack"
-	desc = "An automated equipment rack hooked up to a colossal storage unit."
+	name = "ARCHND Automated Smartgunner Equipment Rack"
+	desc = "An automated smartgunner equipment rack hooked up to a colossal storage unit."
 	icon_state = "smartgunner"
 	vendor_role = "Squad Smartgunner"
 	req_access = list(ACCESS_MARINE_SMARTPREP)
@@ -908,7 +908,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 
 
 /obj/machinery/marine_selector/gear/spec
-	name = "Automated Specialist Equipment Rack"
+	name = "ARCHND Automated Specialist Equipment Rack"
 	desc = "An automated specialist equipment rack hooked up to a colossal storage unit."
 	icon_state = "specialist"
 	vendor_role = "Squad Specialist"
@@ -955,8 +955,8 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 
 
 /obj/machinery/marine_selector/gear/leader
-	name = "Automated Squad Leader Equipment Rack"
-	desc = "An automated specialist equipment rack hooked up to a colossal storage unit."
+	name = "ARCHND Automated Squad Leader Equipment Rack"
+	desc = "An automated squad leader equipment rack hooked up to a colossal storage unit."
 	icon_state = "squadleader"
 	vendor_role = "Squad Leader"
 	req_access = list(ACCESS_MARINE_LEADER)

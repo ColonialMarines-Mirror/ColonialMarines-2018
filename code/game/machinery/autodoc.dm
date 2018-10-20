@@ -690,21 +690,21 @@
 	if(connected.release_notice) //If auto-release notices are on as they should be, let the doctors know what's up
 		var/reason = "Reason for discharge: Procedural completion."
 		switch(notice_code)
-			if(1)
+			if(AUTODOC_NOTICE_SUCCESS)
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE) //All steps finished properly; this is the 'normal' notification.
-			if(2)
+			if(AUTODOC_NOTICE_DEATH)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
 				reason = "Reason for discharge: Patient death."
-			if(3)
+			if(AUTODOC_NOTICE_NO_RECORD)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
 				reason = "Reason for discharge: Medical records not detected. Alerting security advised."
-			if(4)
+			if(AUTODOC_NOTICE_NO_POWER)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
 				reason = "Reason for discharge: Power failure."
-			if(5)
+			if(AUTODOC_NOTICE_XENO_FUCKERY)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
 				reason = "Reason for discharge: Unauthorized manual release. Alerting security advised."
-			if(6)
+			if(AUTODOC_NOTICE_IDIOT_EJECT)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
 				reason = "Reason for discharge: Unauthorized manual release during surgery. Alerting security advised."
 		var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)

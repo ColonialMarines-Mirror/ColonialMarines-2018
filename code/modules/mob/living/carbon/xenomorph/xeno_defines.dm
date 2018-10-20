@@ -155,6 +155,15 @@
 	var/leader_aura_strength = 0 //Pheromone strength inherited from Queen
 	var/leader_current_aura = "" //Pheromone type inherited from Queen
 
+	//Runner vars
+	var/savage = FALSE
+	var/savage_used = FALSE
+	var/savage_cooldown = 300
+
+	//Notification spam controls
+	var/recent_notice = 0
+	var/notice_delay = 20 //2 second between notices
+
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL
 	var/mob/living/carbon/Xenomorph/Queen/living_xeno_queen

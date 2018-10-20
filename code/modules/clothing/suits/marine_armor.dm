@@ -17,7 +17,7 @@
 #endif
 
 //=======================================================================\\
-//=======================================================================\\
+//=======================================================================
 
 #define ALPHA		1
 #define BRAVO		2
@@ -51,8 +51,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		helmetmarkings_sql += helmet
 
 
-
-
 // MARINE STORAGE ARMOR
 
 /obj/item/clothing/suit/storage/marine
@@ -71,6 +69,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 40, laser = 35, energy = 20, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
+	permeability_coefficient = 0.8
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 	allowed = list(/obj/item/weapon/gun/,
 		/obj/item/tank/emergency_oxygen,
@@ -103,11 +102,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	new_name[] 			= list(MAP_ICE_COLONY = "\improper M3 pattern marine snow armor"))
 	if(type == /obj/item/clothing/suit/storage/marine)
 		var/armor_variation = rand(1,6)
-		switch(armor_variation)
-			if(2,3)
-				flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS
-				flags_cold_protection = flags_armor_protection
-				flags_heat_protection = flags_armor_protection
 		icon_state = "[armor_variation]"
 
 	select_gamemode_skin(expected_type,,new_name)
@@ -121,7 +115,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	"/obj/item/ammo_magazine/sniper",
 	 )
 	pockets.max_storage_space = 6
-
 
 
 /obj/item/clothing/suit/storage/marine/update_icon(mob/user)
@@ -199,8 +192,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.update_button_icon()
-
-
 
 
 /obj/item/clothing/suit/storage/marine/MP
@@ -294,8 +285,8 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		select_gamemode_skin(type)
 		..()
 
-//===========================//SPECIALIST\\================================\\
-//=======================================================================\\
+//===========================SPECIALIST================================
+
 
 /obj/item/clothing/suit/storage/marine/specialist
 	name = "\improper B18 defensive armor"
@@ -423,8 +414,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		..(loc,expected_type,,new_name)
 
 
-//=============================//PMCS\\==================================\\
-//=======================================================================\\
+//=============================//PMCS\\==================================
 
 /obj/item/clothing/suit/storage/marine/veteran
 	flags_marine_armor = ARMOR_LAMP_OVERLAY
@@ -484,8 +474,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	unacidable = 1
 	uniform_restricted = list(/obj/item/clothing/under/marine/veteran/PMC/commando)
 
-//===========================//DISTRESS\\================================\\
-//=======================================================================\\
+//===========================//DISTRESS\\================================
 
 /obj/item/clothing/suit/storage/marine/veteran/bear
 	name = "\improper H1 Iron Bears vest"
@@ -508,8 +497,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 
 
-//===========================//U.P.P\\================================\\
-//=====================================================================\\
+//===========================//U.P.P\\================================
 
 /obj/item/clothing/suit/storage/faction
 	icon = 'icons/obj/clothing/cm_suits.dmi'
@@ -650,8 +638,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 85, bullet = 85, laser = 50, energy = 60, bomb = 60, bio = 10, rad = 10)
 	uniform_restricted = list(/obj/item/clothing/under/marine/veteran/UPP)
 
-//===========================//FREELANCER\\================================\\
-//=====================================================================\\
+//===========================FREELANCER================================
 
 /obj/item/clothing/suit/storage/faction/freelancer
 	name = "\improper freelancer cuirass"
@@ -701,8 +688,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	blood_overlay_type = "coat"
 	flags_armor_protection = UPPER_TORSO|ARMS
 
-//===========================//HELGHAST - MERCENARY\\================================\\
-//=====================================================================\\
+//===========================//HELGHAST - MERCENARY\\================================
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary
 	name = "\improper K12 ceramic plated armor"

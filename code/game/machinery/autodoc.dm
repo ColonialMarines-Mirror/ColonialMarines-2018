@@ -42,7 +42,7 @@
 /obj/machinery/autodoc/power_change(var/area/master_area = null)
 	..()
 	if(stat & NOPOWER)
-		visible_message("\The [src] engages the safety override, ejecting the occupant.")
+		visible_message("\ [src] engages the safety override, ejecting the occupant.")
 		surgery = 0
 		go_out(AUTODOC_NOTICE_NO_POWER)
 		return
@@ -76,49 +76,49 @@
 					filtered += 10
 				if(!filtered)
 					filtering = 0
-					visible_message("\The [src] speaks: Blood filtering complete.")
+					visible_message("\ [src] speaks: Blood filtering complete.")
 				else if(prob(10))
-					visible_message("\The [src] whirrs and gurgles as the dialysis module operates.")
+					visible_message("\ [src] whirrs and gurgles as the dialysis module operates.")
 					to_chat(occupant, "<span class='info'>You feel slightly better.</span>")
 			if(blood_transfer)
 				if(occupant.blood_volume < BLOOD_VOLUME_NORMAL)
 					if(blood_pack.reagents.get_reagent_amount("blood") < 4)
 						blood_pack.reagents.add_reagent("blood", 195, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"="O-","resistances"=null))
-						visible_message("\The [src] speaks: Blood reserves depleted, switching to fresh bag.")
+						visible_message("\ [src] speaks: Blood reserves depleted, switching to fresh bag.")
 					occupant.inject_blood(blood_pack, 8) // double iv stand rate
 					if(prob(10))
-						visible_message("\The [src] whirrs and gurgles as it tranfuses blood.")
+						visible_message("\ [src] whirrs and gurgles as it tranfuses blood.")
 						to_chat(occupant, "<span class='info'>You feel slightly less faint.</span>")
 				else
 					blood_transfer = 0
-					visible_message("\The [src] speaks: Blood transfer complete.")
+					visible_message("\ [src] speaks: Blood transfer complete.")
 			if(heal_brute)
 				if(occupant.getBruteLoss() > 0)
 					occupant.heal_limb_damage(3,0)
 					if(prob(10))
-						visible_message("\The [src] whirrs and clicks as it stitches flesh together.")
+						visible_message("\ [src] whirrs and clicks as it stitches flesh together.")
 						to_chat(occupant, "<span class='info'>You feel your wounds being stitched and sealed shut.</span>")
 				else
 					heal_brute = 0
-					visible_message("\The [src] speaks: Trauma repair surgery complete.")
+					visible_message("\ [src] speaks: Trauma repair surgery complete.")
 			if(heal_burn)
 				if(occupant.getFireLoss() > 0)
 					occupant.heal_limb_damage(0,3)
 					if(prob(10))
-						visible_message("\The [src] whirrs and clicks as it grafts synthetic skin.")
+						visible_message("\ [src] whirrs and clicks as it grafts synthetic skin.")
 						to_chat(occupant, "<span class='info'>You feel your burned flesh being sliced away and replaced.</span>")
 				else
 					heal_burn = 0
-					visible_message("\The [src] speaks: Skin grafts complete.")
+					visible_message("\ [src] speaks: Skin grafts complete.")
 			if(heal_toxin)
 				if(occupant.getToxLoss() > 0)
 					occupant.adjustToxLoss(-3)
 					if(prob(10))
-						visible_message("\The [src] whirrs and gurgles as it kelates the occupant.")
+						visible_message("\ [src] whirrs and gurgles as it kelates the occupant.")
 						to_chat(occupant, "<span class='info'>You feel slighly less ill.</span>")
 				else
 					heal_toxin = 0
-					visible_message("\The [src] speaks: Chelation complete.")
+					visible_message("\ [src] speaks: Chelation complete.")
 
 
 #define LIMB_SURGERY 1
@@ -219,7 +219,7 @@
 
 /obj/machinery/autodoc/proc/surgery_op(mob/living/carbon/M)
 	if(M.stat == DEAD||!ishuman(M))
-		visible_message("\The [src] buzzes.")
+		visible_message("\ [src] buzzes.")
 		src.go_out(AUTODOC_NOTICE_DEATH) //kick them out too.
 		return
 
@@ -229,7 +229,7 @@
 		if (R.fields["name"] == H.real_name)
 			N = R
 	if(isnull(N))
-		visible_message("\The [src] buzzes: No records found for occupant.")
+		visible_message("\ [src] buzzes: No records found for occupant.")
 		src.go_out(AUTODOC_NOTICE_NO_RECORD) //kick them out too.
 		return
 
@@ -240,10 +240,10 @@
 		surgery_todo_list = N.fields["autodoc_manual"]
 
 	if(!surgery_todo_list.len)
-		visible_message("\The [src] buzzes, no surgical procedures were queued.")
+		visible_message("\ [src] buzzes, no surgical procedures were queued.")
 		return
 
-	visible_message("\The [src] begins to operate, loud audible clicks lock the pod.")
+	visible_message("\ [src] begins to operate, loud audible clicks lock the pod.")
 	surgery = 1
 	update_icon()
 
@@ -279,7 +279,7 @@
 			if(ORGAN_SURGERY)
 				switch(S.surgery_procedure)
 					if("germs") // Just dose them with the maximum amount of antibiotics and hope for the best
-						if(prob(30)) visible_message("\The [src] speaks, Beginning organ disinfection.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning organ disinfection.");
 						var/datum/reagent/R = chemical_reagents_list["spaceacillin"]
 						var/amount = R.overdose_threshold - H.reagents.get_reagent_amount("spaceacillin")
 						var/inject_per_second = 3
@@ -295,10 +295,10 @@
 								sleep(10*surgery_mod)
 
 					if("damage")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning organ restoration.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning organ restoration.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 						open_incision(H,S.limb_ref)
@@ -316,7 +316,7 @@
 						if(istype(S.organ_ref,/datum/internal_organ))
 							S.organ_ref.rejuvenate()
 						else
-							visible_message("\The [src] speaks, Organ is missing.");
+							visible_message("\ [src] speaks, Organ is missing.");
 
 						// close them
 						if(S.limb_ref.name != "groin") // TODO: fix brute damage before closing
@@ -324,10 +324,10 @@
 						close_incision(H,S.limb_ref)
 
 					if("eyes")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning corrective eye surgery.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning corrective eye surgery.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 						if(istype(S.organ_ref,/datum/internal_organ/eyes))
@@ -361,10 +361,10 @@
 			if(LIMB_SURGERY)
 				switch(S.surgery_procedure)
 					if("internal")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning internal bleeding procedure.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning internal bleeding procedure.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 						open_incision(H,S.limb_ref)
@@ -377,10 +377,10 @@
 						close_incision(H,S.limb_ref)
 
 					if("broken")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning broken bone procedure.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning broken bone procedure.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 						open_incision(H,S.limb_ref)
@@ -398,10 +398,10 @@
 						close_incision(H,S.limb_ref)
 
 					if("missing")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning limb replacement.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning limb replacement.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 
@@ -410,7 +410,7 @@
 						sleep(ROBOLIMB_PREPARE_MAX_DURATION*surgery_mod)
 
 						if(stored_metal < LIMB_METAL_AMOUNT)
-							visible_message("\The [src] croaks, Metal reserves depleted.")
+							visible_message("\ [src] croaks, Metal reserves depleted.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 15, 1)
 							surgery_todo_list -= S
 							continue // next surgery
@@ -418,7 +418,7 @@
 						stored_metal -= LIMB_METAL_AMOUNT
 
 						if(S.limb_ref.parent.status & LIMB_DESTROYED) // there's nothing to attach to
-							visible_message("\The [src] croaks, Limb attachment failed.")
+							visible_message("\ [src] croaks, Limb attachment failed.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 15, 1)
 							surgery_todo_list -= S
 							continue
@@ -440,10 +440,10 @@
 						H.UpdateDamageIcon()
 
 					if("necro")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning necrotic tissue removal.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning necrotic tissue removal.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 
@@ -456,10 +456,10 @@
 						close_incision(H,S.limb_ref)
 
 					if("shrapnel")
-						visible_message("\The [src] speaks, Beginning foreign body removal.");
+						visible_message("\ [src] speaks, Beginning foreign body removal.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 
@@ -471,7 +471,7 @@
 							if(A)
 								for(A in occupant)
 									sleep(HEMOSTAT_REMOVE_MAX_DURATION*surgery_mod)
-									occupant.visible_message("<span class='warning'>The [src] defty extracts a wriggling parasite from [occupant]'s ribcage!</span>");
+									occupant.visible_message("<span class='warning'> [src] defty extracts a wriggling parasite from [occupant]'s ribcage!</span>");
 									var/mob/living/carbon/Xenomorph/Larva/L = locate() in occupant //the larva was fully grown, ready to burst.
 									if(L)
 										L.forceMove(occupant.loc)
@@ -492,7 +492,7 @@
 						close_incision(H,S.limb_ref)
 
 					if("germ")
-						if(prob(30)) visible_message("\The [src] speaks, Beginning limb disinfection.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning limb disinfection.");
 
 						var/datum/reagent/R = chemical_reagents_list["spaceacillin"]
 						var/amount = (R.overdose_threshold/2) - H.reagents.get_reagent_amount("spaceacillin")
@@ -509,10 +509,10 @@
 								sleep(10)
 
 					if("facial") // dumb but covers for incomplete facial surgery
-						if(prob(30)) visible_message("\The [src] speaks, Beginning Facial Reconstruction Surgery.");
+						if(prob(30)) visible_message("\ [src] speaks, Beginning Facial Reconstruction Surgery.");
 						if(S.unneeded)
 							sleep(UNNEEDED_DELAY)
-							visible_message("\The [src] speaks, Procedure has been deemed unnecessary.");
+							visible_message("\ [src] speaks, Procedure has been deemed unnecessary.");
 							surgery_todo_list -= S
 							continue
 						if(istype(S.limb_ref,/datum/limb/head))
@@ -538,18 +538,18 @@
 								F.face_surgery_stage = 0
 
 					if("open")
-						if(prob(30)) visible_message("\The [src] croaks, Closing surgical incision.");
+						if(prob(30)) visible_message("\ [src] croaks, Closing surgical incision.");
 						close_encased(H,S.limb_ref)
 						close_incision(H,S.limb_ref)
 
-		if(prob(30)) visible_message("\The [src] speaks, Procedure complete.");
+		if(prob(30)) visible_message("\ [src] speaks, Procedure complete.");
 		surgery_todo_list -= S
 		continue
 
 	while(heal_brute||heal_burn||heal_toxin||filtering||blood_transfer)
 		if(!surgery) break
 		sleep(20)
-		if(prob(5)) visible_message("\The [src] beeps as it continues working.");
+		if(prob(5)) visible_message("\ [src] beeps as it continues working.");
 
 	visible_message("\The [src] clicks and opens up having finished the requested operations.")
 	surgery = 0
@@ -646,11 +646,11 @@
 	if(usr.stat != 0 || !ishuman(usr)) return
 
 	if(occupant)
-		to_chat(usr, "<span class='notice'>\The [src] is already occupied!</span>")
+		to_chat(usr, "<span class='notice'>\ [src] is already occupied!</span>")
 		return
 
 	if(stat & (NOPOWER|BROKEN))
-		to_chat(usr, "<span class='notice'>\The [src] is non-functional!</span>")
+		to_chat(usr, "<span class='notice'>\ [src] is non-functional!</span>")
 		return
 
 	if(usr.mind && usr.mind.cm_skills && usr.mind.cm_skills.surgery < SKILL_SURGERY_TRAINED && !event)
@@ -663,7 +663,7 @@
 	"<span class='notice'>You start climbing into \the [src].</span>")
 	if(do_after(usr, 10, FALSE, 5, BUSY_ICON_GENERIC))
 		if(occupant)
-			to_chat(usr, "<span class='notice'>\The [src] is already occupied!</span>")
+			to_chat(usr, "<span class='notice'>\ [src] is already occupied!</span>")
 			return
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
@@ -709,7 +709,7 @@
 				reason = "Reason for discharge: Unauthorized manual release during surgery. Alerting security advised."
 		var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 		AI.SetName("Autodoc Notification System")
-		AI.aiRadio.talk_into(AI,"<b>Patient: [occupant] has been released from the [src] at: [get_area(src)]. [reason]</b>","MedSci","announces")
+		AI.aiRadio.talk_into(AI,"<b>Patient: [occupant] has been released from [src] at: [get_area(src)]. [reason]</b>","MedSci","announces")
 		cdel(AI)
 	occupant = null
 	surgery_todo_list = list()
@@ -725,10 +725,10 @@
 	if(istype(W, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = W
 		if(stored_metal == stored_metal_max)
-			to_chat(user, "<span class='warning'>\The [src]'s metal reservoir is full; it can't hold any more material!</span>")
+			to_chat(user, "<span class='warning'>\ [src]'s metal reservoir is full; it can't hold any more material!</span>")
 			return
 		stored_metal = min(stored_metal_max,stored_metal + M.amount * 100)
-		to_chat(user, "<span class='notice'>\The [src] processes \the [W]. Its metal reservoir now contains [stored_metal] of [stored_metal_max] units.</span>")
+		to_chat(user, "<span class='notice'>\ [src] processes \the [W]. Its metal reservoir now contains [stored_metal] of [stored_metal_max] units.</span>")
 		user.drop_held_item()
 		cdel(W)
 		return
@@ -741,11 +741,11 @@
 	if(istype(W, /obj/item/grab))
 
 		if(stat & (NOPOWER|BROKEN))
-			to_chat(user, "<span class='notice'>\The [src] is non-functional!</span>")
+			to_chat(user, "<span class='notice'>\ [src] is non-functional!</span>")
 			return
 
 		if(src.occupant)
-			to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
+			to_chat(user, "<span class='notice'>\ [src] is already occupied!</span>")
 			return
 
 		var/obj/item/grab/G = W
@@ -764,7 +764,7 @@
 			return
 
 		if(!ishuman(M)) // stop fucking monkeys and xenos being put in.
-			to_chat(user, "<span class='notice'>\The [src] is compatible with humanoid anatomies only!</span>")
+			to_chat(user, "<span class='notice'>\ [src] is compatible with humanoid anatomies only!</span>")
 			return
 
 		if (M.abiotic())
@@ -781,7 +781,7 @@
 
 		if(do_after(user, 10, FALSE, 5, BUSY_ICON_GENERIC))
 			if(src.occupant)
-				to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
+				to_chat(user, "<span class='notice'>\ [src] is already occupied!</span>")
 				return
 			if(!M || !G) return
 			M.forceMove(src)

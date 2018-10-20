@@ -8,7 +8,7 @@
 /mob/living/proc/adjustBruteLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	bruteloss += amount
+	bruteloss = CLAMP(bruteloss+amount,0,maxHealth*2)
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
@@ -16,7 +16,7 @@
 /mob/living/proc/adjustOxyLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	oxyloss += amount
+	oxyloss = CLAMP(oxyloss+amount,0,maxHealth*2)
 
 /mob/living/proc/setOxyLoss(var/amount)
 	if(status_flags & GODMODE)
@@ -29,7 +29,7 @@
 /mob/living/proc/adjustToxLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	toxloss += amount
+	toxloss = CLAMP(toxloss+amount,0,maxHealth*2)
 
 /mob/living/proc/setToxLoss(var/amount)
 	if(status_flags & GODMODE)
@@ -42,7 +42,7 @@
 /mob/living/proc/adjustFireLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	fireloss += amount
+	fireloss = CLAMP(fireloss+amount,0,maxHealth*2)
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
@@ -50,7 +50,7 @@
 /mob/living/proc/adjustCloneLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	cloneloss += amount
+	cloneloss = CLAMP(cloneloss+amount,0,maxHealth*2)
 
 /mob/living/proc/setCloneLoss(var/amount)
 	if(status_flags & GODMODE)
@@ -63,7 +63,7 @@
 /mob/living/proc/adjustBrainLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	brainloss += amount
+	brainloss = CLAMP(brainloss+amount,0,maxHealth*2)
 
 /mob/living/proc/setBrainLoss(var/amount)
 	if(status_flags & GODMODE)
@@ -76,7 +76,7 @@
 /mob/living/proc/adjustHalLoss(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	halloss += amount
+	halloss = CLAMP(halloss+amount,0,maxHealth*2)
 
 /mob/living/proc/setHalLoss(var/amount)
 	if(status_flags & GODMODE)
@@ -89,7 +89,7 @@
 /mob/living/proc/adjustTraumatic_Shock(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	traumatic_shock += amount
+	traumatic_shock = CLAMP(traumatic_shock+amount,0,maxHealth*2)
 
 /mob/living/proc/setTraumatic_Shock(var/amount)
 	if(status_flags & GODMODE)
@@ -102,7 +102,7 @@
 /mob/living/proc/adjustShock_Stage(var/amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
-	shock_stage += amount
+	shock_stage = CLAMP(shock_stage+amount,0,maxHealth*2)
 
 /mob/living/proc/setShock_Stage(var/amount)
 	if(status_flags & GODMODE)

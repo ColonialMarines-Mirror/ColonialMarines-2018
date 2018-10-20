@@ -119,7 +119,7 @@
 			return
 		if(user.loc == loc)
 			var/turf/target = get_step(T, dir)
-			for(var/atom/A in T.contents)
+			for(var/atom/A in target.contents)
    				if(A.density)
 					to_chat(user, "<span class='warning'>You cannot leap this way.</span>")
 					return

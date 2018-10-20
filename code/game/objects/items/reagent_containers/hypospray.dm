@@ -57,7 +57,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'> [trans] units injected. [reagents.total_volume] units remaining in [src].")
+			to_chat(user, "<span class='notice'> [trans] units injected. [reagents.total_volume] units remaining in [src]."</span>)
 			update_icon()
 
 	return TRUE

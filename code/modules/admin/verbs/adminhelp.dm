@@ -26,10 +26,10 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		msg = input("Please enter your message:", "Admin Help", null, null) as message|null
 		
 	if(selected_type == "Gamebreaking Bug")
-		msg = input("Please enter your message:", "Developer Help", null, null) as message|null
-		switch(alert("Please consider making a report on github after contacting admins.",,"Go to Github","Cancel"))
+		switch(alert("Please consider making a report on github before contacting admins.",,"Go to Github","Cancel"))
 			if("Go to Github")
 				src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues")
+		msg = input("Please enter your message:", "Developer Help", null, null) as message|null
 	
 	if(selected_type == "Suggestion / Bug Report")
 		switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our Github, and suggestions on our forums.",,"Go to Github","Go to forums","Cancel"))

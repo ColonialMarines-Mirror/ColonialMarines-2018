@@ -375,7 +375,7 @@ This function restores all limbs.
 	if(!organ)	return 0
 
 	if(blocked)
-		damage *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
+		damage *= CLAMP01(1-blocked,0.00,1.00) //Percentage reduction
 
 	switch(damagetype)
 		if(BRUTE)

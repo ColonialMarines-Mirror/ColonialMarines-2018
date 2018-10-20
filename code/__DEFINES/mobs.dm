@@ -443,8 +443,10 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 // halloss defines
 
-#define BASE_HALLOSS_RECOVERY_RATE -6
-#define REST_HALLOSS_RECOVERY_RATE -20
+#define BASE_HALLOSS_RECOVERY_RATE -4
+#define WALK_HALLOSS_RECOVERY_RATE -8
+#define DOWNED_HALLOSS_RECOVERY_RATE -10
+#define REST_HALLOSS_RECOVERY_RATE -16
 
 // Human Overlay Indexes
 #define MOTH_WINGS_LAYER		26

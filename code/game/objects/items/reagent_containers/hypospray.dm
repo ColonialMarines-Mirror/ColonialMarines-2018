@@ -70,7 +70,7 @@
 	update_icon()
 
 /obj/item/reagent_container/hypospray/dropped(mob/user)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_container/hypospray/attack_hand()

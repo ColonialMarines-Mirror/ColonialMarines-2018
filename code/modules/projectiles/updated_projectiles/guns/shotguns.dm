@@ -428,11 +428,11 @@ can cause issues with ammo types getting mixed up during the burst.
 
 //More or less chambers the round instead of load_into_chamber(). Also ejects used casings.
 /obj/item/weapon/gun/shotgun/pump/proc/pump_shotgun(mob/user)	//We can't fire bursts with pumps.
+	if(world.time < (recent_pump + pump_delay) ) //Don't spam it.
+		return
 	if(pump_lock)
 		playsound(user,'sound/weapons/throwtap.ogg', 25, 1)
 		to_chat(user,"<span class='warning'><b>[src] has already been pumped, locking the pump mechanism; fire or unload a shell to unlock it.</b></span>")
-		return
-	if(world.time < (recent_pump + pump_delay) ) //Don't spam it.
 		return
 
 	if(in_chamber) //eject the chambered round

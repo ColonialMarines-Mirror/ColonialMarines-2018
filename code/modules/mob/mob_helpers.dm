@@ -558,6 +558,58 @@ var/list/intents = list("help","disarm","grab","hurt")
 		hud_used.action_intent.icon_state = "intent_[a_intent]"
 
 
+/mob/verb/a_select_zone(input as text)
+	set name = "a-select-zone"
+	set hidden = 1
+
+	switch(input)
+		if("head")
+			if (usr.zone_selected == "head")
+				usr.zone_selected = "eyes"
+				usr.client.screen[zone_selected].selecting = "eyes"
+			if (usr.zone_selected == "eyes")
+				usr.zone_selected = "mouth"
+				usr.client.screen[zone_selected].selecting = "mouth"
+			if (usr.zone_selected == "mouth")
+				usr.zone_selected = "head"
+				usr.client.screen[zone_selected].selecting = "head"
+			else
+				usr.zone_selected = "head"
+				usr.client.screen[zone_selected].selecting = "head"
+		if("chest")
+			usr.zone_selected = "chest"
+			usr.client.screen[zone_selected].selecting = "chest"
+		if("groin")
+			usr.zone_selected = "groin"
+			usr.client.screen[zone_selected].selecting = "groin"
+		if("rarm")
+			usr.zone_selected = "r_arm"
+			usr.client.screen[zone_selected].selecting = "r_arm"
+		if("rhand")
+			usr.zone_selected = "r_hand"
+			usr.client.screen[zone_selected].selecting = "r_hand"
+		if("larm")
+			usr.zone_selected = "l_arm"
+			usr.client.screen[zone_selected].selecting = "l_arm"
+		if("lhand")
+			usr.zone_selected = "l_hand"
+			usr.client.screen[zone_selected].selecting = "l_hand"
+		if("rleg")
+			usr.zone_selected = "r_leg"
+			usr.client.screen[zone_selected].selecting = "r_leg"
+		if("rfoot")
+			usr.zone_selected = "r_foot"
+			usr.client.screen[zone_selected].selecting = "r_foot"
+		if("lleg")
+			usr.zone_selected = "l_leg"
+			usr.client.screen[zone_selected].selecting = "l_leg"
+		if("lfoot")
+			usr.zone_selected = "l_foot"
+			usr.client.screen[zone_selected].selecting = "l_foot"
+
+	usr.client.screen[zone_selected].overlays.Cut()
+	usr.client.screen[zone_selected].overlays += image('icons/mob/zone_sel.dmi', "l_foot")
+
 //can the mob be operated on?
 /mob/proc/can_be_operated_on()
 	return FALSE

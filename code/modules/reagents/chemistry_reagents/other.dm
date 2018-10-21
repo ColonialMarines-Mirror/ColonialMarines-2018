@@ -224,7 +224,7 @@
 /datum/reagent/mothpheromones
 	name = "Moth pheromones"
 	id = "mothpheromones"
-	description = "Basicly the liquid concept of fluttering towards a lamp."
+	description = "Basically the liquid concept of fluttering towards a lamp."
 	reagent_state = LIQUID
 	color = "#8fddf7" // rgb: 143, 221, 247
 

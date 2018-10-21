@@ -159,7 +159,7 @@
 		to_chat(M, "\red You are stunned by the powerful acid of the deathnettle!")
 
 		log_combat(user, M, "hit", src)
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[user.name]'>FLW</a>)")
 
 		M.adjust_blurriness(force/7)
 		if(prob(20))

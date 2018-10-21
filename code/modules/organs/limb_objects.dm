@@ -160,7 +160,7 @@ obj/item/limb/New(loc, mob/living/carbon/human/H)
 				to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
 
 				log_combat(user, brainmob, "debrained", W, "(INTENT: [uppertext(user.a_intent)])")
-				msg_admin_attack("[user] ([user.ckey]) debrained [brainmob] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				msg_admin_attack("[user] ([user.ckey]) debrained [brainmob] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[user]'>FLW</a>)")
 
 				//TODO: ORGAN REMOVAL UPDATE.
 				var/obj/item/organ/brain/B = new brain_item_type(loc)

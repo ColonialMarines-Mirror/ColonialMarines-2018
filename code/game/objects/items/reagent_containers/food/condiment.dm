@@ -45,7 +45,7 @@
 			var/rgt_list_text = get_reagent_list_text()
 
 			log_combat(user, M, "fed", src, "Reagents: [rgt_list_text]")
-			msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[user.name]'>FLW</a>)")
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)

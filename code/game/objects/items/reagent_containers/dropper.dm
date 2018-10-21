@@ -77,7 +77,7 @@
 					injected += R.name
 				var/contained = english_list(injected)
 				log_combat(user, M, "squirted", src, "Reagents: [contained]")
-				msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[user.name]'>FLW</a>)")
 
 			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "\blue You transfer [trans] units of the solution.")

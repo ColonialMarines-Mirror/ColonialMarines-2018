@@ -20,16 +20,10 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
 	var/msg
-	var/list/type = list("Suggestion / Bug Report", "Rule Violation / Policy Question", "Gamebreaking Bug", "Gameplay Question")
+	var/list/type = list("Suggestion / Bug Report", "Rule Violation / Policy Question / Gamebreaking Bug", "Gameplay Question")
 	var/selected_type = input("Pick a category.", "Admin Help", null, null) as null|anything in type
 	if(selected_type == "Rule Violation / Policy Question")
 		msg = input("Please enter your message:", "Admin Help", null, null) as message|null
-		
-	if(selected_type == "Gamebreaking Bug")
-		switch(alert("Please consider making a report on github before contacting admins.",,"Go to Github","Cancel"))
-			if("Go to Github")
-				src << link("https://github.com/ColonialMarines-Mirror/ColonialMarines-2018/issues")
-		msg = input("Please enter your message:", "Developer Help", null, null) as message|null
 	
 	if(selected_type == "Suggestion / Bug Report")
 		switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our Github, and suggestions on our forums.",,"Go to Github","Go to forums","Cancel"))
@@ -142,12 +136,6 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
 					X << 'sound/effects/adminhelp_new.ogg'
 				to_chat(X, msg)
-	if("Gamebreaking Bug")
-		if(debugholders.len)
-			for(var/client/X in adminholders)
-				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
-					X << 'sound/effects/adminhelp_new.ogg'
-				to_chat(X, bug_msg)
 
 	if("Gameplay Question")
 		if(mentorholders.len)

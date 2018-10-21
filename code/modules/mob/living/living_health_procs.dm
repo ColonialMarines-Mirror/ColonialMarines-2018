@@ -157,7 +157,6 @@
 /mob/living/proc/revive(keep_viruses)
 	rejuvenate()
 
-
 /mob/living/proc/rejuvenate()
 
 	// shut down various types of badness
@@ -187,15 +186,6 @@
 	setEarDamage(0, 0)
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 
-	// restore all of a human's blood
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.restore_blood()
-		H.reagents.clear_reagents() //and clear all reagents in them
-		H.undefibbable = FALSE
-		H.chestburst = 0
-		H.mutations.Remove(HUSK)
-
 	// fix all of our organs
 	restore_all_organs()
 
@@ -215,3 +205,17 @@
 	med_hud_set_status()
 	med_hud_set_health()
 	reload_fullscreens()
+
+/mob/living/carbon/human/rejuvenate()
+	restore_blood() //restore all of a human's blood
+	reagents.clear_reagents() //and clear all reagents in them
+	undefibbable = FALSE
+	chestburst = 0
+	mutations.Remove(HUSK)
+	return ..()
+
+/mob/living/carbon/Xenomorph/rejuvenate()
+	plasma_stored = plasma_max
+	stagger = 0
+	slowdown = 0
+	return ..()

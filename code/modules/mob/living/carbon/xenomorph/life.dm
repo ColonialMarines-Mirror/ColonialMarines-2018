@@ -29,6 +29,7 @@
 	handle_aura_receiver()
 	handle_living_health_updates()
 	handle_living_plasma_updates()
+	update_action_button_icons()
 	update_icons()
 
 /mob/living/carbon/Xenomorph/update_stat()
@@ -153,10 +154,6 @@
 		if(current_aura)
 			current_aura = null
 			to_chat(src, "<span class='warning'>You have ran out of plasma and stopped emitting pheromones.</span>")
-
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
 
 	hud_set_plasma() //update plasma amount on the plasma mob_hud
 

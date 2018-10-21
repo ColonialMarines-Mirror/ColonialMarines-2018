@@ -91,7 +91,7 @@
 	step(user, get_dir(user, src))
 	user.visible_message("<span class='notice'>[user] starts climbing [ladder_dir_name] [src].</span>",
 	"<span class='notice'>You start climbing [ladder_dir_name] [src].</span>")
-	busy = 1
+	busy = TRUE
 	if(do_after(user, 20, FALSE, 5, BUSY_ICON_GENERIC))
 		if(!user.is_mob_incapacitated() && get_dist(user, src) <= 1 && !is_blind(user) && !user.lying && !user.buckled && !user.anchored)
 			//TODO: Using forceMove is desirable here, but this breaks the pull. If you know how to preserve the pull, this would be nice!
@@ -111,7 +111,9 @@
 					if(O.buckled_mob)
 						O.buckled_mob.loc = ladder_dest.loc //Cannot use forceMove method on pulls! Move manually
 						O.buckled_mob.smokecloak_off()
-	busy = 0
+		busy = FALSE
+	else 
+		busy = FALSE
 	add_fingerprint(user)
 
 /obj/structure/ladder/attack_paw(mob/user as mob)

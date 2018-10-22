@@ -23,7 +23,7 @@
 	return
 
 /obj/item/reagent_container/hypospray/autoinjector/update_icon()
-	if(reagents.total_volume <= 0)
+	if(reagents.total_volume <= 0 && findtext(icon_state,0,0) != "0") //Added findtext to hedge out subsequent updates fucking up the icon reference
 		icon_state += "0"
 		name += " expended" //So people can see what have been expended since we have smexy new sprites people aren't used too...
 
@@ -65,7 +65,7 @@
 	amount_per_transfer_from_this = 1
 	volume = 1
 	icon_state = "dexalin"
-	list_reagents = list("dexalinp" = 1)
+	list_reagents = list("dexalinplus" = 1)
 
 /obj/item/reagent_container/hypospray/autoinjector/dexP/New()
 	..()

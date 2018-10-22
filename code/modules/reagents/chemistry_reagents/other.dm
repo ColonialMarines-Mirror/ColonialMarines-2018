@@ -231,7 +231,7 @@
 
 /datum/reagent/mothpheromones/on_mob_life(mob/living/M, alien)
 	if(alien == IS_MOTH && prob(7))
-			M.emote(pick("twitch","drool","moan","gasp"))
+		M.emote(pick("twitch","drool","moan","gasp"))
 	return ..()
 
 /datum/reagent/oxygen

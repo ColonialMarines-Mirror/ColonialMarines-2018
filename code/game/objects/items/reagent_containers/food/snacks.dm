@@ -2731,7 +2731,7 @@
 	var/brightness_on = 3	//its not a very strong light
 	wrapper = /obj/item/trash/lamp
 	list_reagents = list("nutriment" = 4, "coco" = 4, "mothpheromones" = 4)
-	tastes = list("chocolate" = 20, "vineger" = 1, "stereotypes" = 1) //very low chance to get the funny discriptions
+	tastes = list("chocolate" = 20, "vinegar" = 1, "stereotypes" = 1) //very low chance to get the funny descriptions
 
 /obj/item/reagent_container/food/snacks/wrapped/lampbar/attack_self(mob/user as mob)
 	if(package)

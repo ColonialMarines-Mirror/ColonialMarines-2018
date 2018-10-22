@@ -179,7 +179,8 @@
 		var/datum/limb/affecting = get_limb(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
-		if(armor >= 2)	return
+		if(armor >= 1) //Complete negation
+			return
 
 
 /mob/living/carbon/human/proc/implant_loyalty(mob/living/carbon/human/M, override = FALSE) // Won't override by default.
@@ -1432,7 +1433,8 @@
 				overlay_fullscreen("glasses_vision", G.fullscreen_vision)
 			else
 				clear_fullscreen("glasses_vision", 0)
-			see_invisible = min(G.see_invisible, see_invisible)
+			if(G.see_invisible)
+				see_invisible = min(G.see_invisible, see_invisible)
 	else
 		clear_fullscreen("glasses_vision", 0)
 

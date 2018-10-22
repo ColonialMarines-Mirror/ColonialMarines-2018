@@ -61,11 +61,20 @@
 		cdel(X)
 	blip_pool = list()
 	..()
-	
+
 /obj/item/device/motiondetector/process()
 	if(!active)
 		processing_objects.Remove(src)
 		return
+
+	var/mob/living/carbon/human/human_user
+	if(ishuman(loc))
+		human_user = loc
+	else
+		icon_state = "detector_off" //No appropriate user detected; shut down to conserve resources.
+		processing_objects.Remove(src)
+		return
+
 	recycletime--
 	if(!recycletime)
 		recycletime = initial(recycletime)
@@ -81,23 +90,27 @@
 
 	playsound(loc, 'sound/items/detector.ogg', 60, 0, 7, 2)
 
-	var/mob/living/carbon/human/human_user
-	if(ishuman(loc))
-		human_user = loc
-
 	var/detected
-	for(var/mob/living/M in orange(detector_range, src))
-		if(M == loc) continue //device user isn't detected
-		if(!isturf(M.loc)) continue
-		if(world.time > M.l_move_time + 20) continue //hasn't moved recently
-		if(isrobot(M)) continue
+	for(var/mob/living/M in orange(detector_range, human_user))
+		to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Moving mob detected: [M.name]. Detector range: [detector_range].</span>")
+		if(!isturf(M.loc))
+			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Aborted: No turf detected.</span>")
+			continue
+		if(world.time > M.l_move_time + 20)
+			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Aborted: Subject hasn't moved.</span>")
+			continue //hasn't moved recently
+		if(isrobot(M))
+			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Aborted: Subject is a robot.</span>")
+			continue
 		if(ishuman(M))
+			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Human detected.</span>")
 			var/mob/living/carbon/human/H = M
 			if(istype(H.wear_ear, /obj/item/device/radio/headset/almayer))
 				continue //device detects marine headset and ignores the wearer.
 		detected = TRUE
 
 		if(human_user)
+			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Show blip triggered.</span>")
 			show_blip(human_user, M)
 
 		if(detected)

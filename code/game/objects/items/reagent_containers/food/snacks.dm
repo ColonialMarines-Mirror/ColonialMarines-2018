@@ -2660,6 +2660,7 @@
 	icon_state = "upp_ration"
 	bitesize = 2
 	package = TRUE
+	list_reagents = list("nutriment" = 4, "sodiumchloride" = 0.5)
 	var/variation = null
 
 /obj/item/reagent_container/food/snacks/upp/New()

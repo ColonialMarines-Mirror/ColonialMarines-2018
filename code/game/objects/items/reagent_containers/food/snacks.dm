@@ -2736,7 +2736,7 @@
 /obj/item/reagent_container/food/snacks/wrapped/lampbar/attack_self(mob/user as mob)
 	if(package)
 		SetLuminosity(brightness_on)
-	..()
+	return ..()
 
 /obj/item/reagent_container/food/snacks/wrapped/booniebars
 	name = "Boonie Bars"

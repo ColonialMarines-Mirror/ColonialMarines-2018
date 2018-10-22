@@ -86,7 +86,7 @@
 		human_user = loc
 
 	var/detected
-	for(var/mob/living/M in range(detector_range, src))
+	for(var/mob/living/M in orange(detector_range, src))
 		if(M == loc) continue //device user isn't detected
 		if(!isturf(M.loc)) continue
 		if(world.time > M.l_move_time + 20) continue //hasn't moved recently

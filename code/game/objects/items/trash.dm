@@ -125,6 +125,11 @@
 	desc = "Finished with its tour of duty"
 	icon_state = "MREtray"
 
+/obj/item/trash/lamp
+	name = "lamp bar wrapper"
+	desc = "The empty wrapper of a lamp bar. The inside has a warning about mind-altering substances."
+	icon_state = "lamp_trash"
+
 /obj/item/trash/boonie
 	name = "boonie bar wrapper"
 	desc = "A minty green wrapper. Reminds you of another terrible decision involving minty green, but you can't remember what..."

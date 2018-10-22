@@ -221,6 +221,20 @@
 		M.Sleeping(30)
 	M.drowsyness = max(M.drowsyness, 30)
 
+/datum/reagent/mothpheromones
+	name = "Moth pheromones"
+	id = "mothpheromones"
+	description = "Basically the liquid concept of fluttering towards a lamp."
+	reagent_state = LIQUID
+	color = "#8fddf7" // rgb: 143, 221, 247
+	taste_description = "silk"
+
+/datum/reagent/mothpheromones/on_mob_life(mob/living/M, alien)
+	if(alien == IS_MOTH)
+		if(prob(7))
+			M.emote(pick("twitch","drool","moan","gasp"))
+	return ..()
+
 /datum/reagent/oxygen
 	name = "Oxygen"
 	id = "oxygen"

@@ -2726,7 +2726,7 @@
 
 /obj/item/reagent_container/food/snacks/wrapped/lampbar  //LAMP!
 	name = "LAMP Bar"
-	desc = "A glow in the dark candybar. Made with real glowshrooms. <B>\"LAMP!\"</B>"
+	desc = "A glow-in-the-dark candybar. Made with real glowshrooms. <B>\"LAMP!\"</B>"
 	icon_state = "lamp"
 	var/brightness_on = 3	//its not a very strong light
 	wrapper = /obj/item/trash/lamp

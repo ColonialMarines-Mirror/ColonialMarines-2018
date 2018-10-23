@@ -80,7 +80,7 @@ Come hell or high water, you are going to be there for them."}
 				WEAR_BODY = /obj/item/clothing/under/marine/officer/exec,
 				WEAR_FEET = /obj/item/clothing/shoes/marine,
 				WEAR_WAIST = /obj/item/storage/belt/gun/m4a3/vp70,
-				WEAR_HEAD = /obj/item/clothing/head/cmcap,
+				WEAR_HEAD = /obj/item/clothing/head/cmberet/tan,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
 				WEAR_R_STORE = /obj/item/storage/pouch/general/large
 				)

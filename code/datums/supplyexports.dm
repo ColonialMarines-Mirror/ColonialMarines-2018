@@ -10,7 +10,7 @@
 
 
 /datum/supply_export/xemomorph/larva
-	cost = 0
+	cost = 3
 	export_obj = /mob/living/carbon/Xenomorph/Larva
 
 

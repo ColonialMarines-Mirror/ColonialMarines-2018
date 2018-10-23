@@ -1487,6 +1487,10 @@
 	if(!istype(M, /mob/living)) //Sanity check
 		return
 
+	if(M.mob_size >= MOB_SIZE_BIG) //We can't fling big aliens/mobs
+		to_chat(src, "<span class='xenowarning'>[M] is too large to fling!</span>")
+		return
+
 	icon_state = "Crusher Charging"  //Momentarily lower the crest for visual effect
 	visible_message("<span class='xenowarning'>\The [src] flings [M] away with its crest!</span>", \
 	"<span class='xenowarning'>You fling [M] away with your crest!</span>")

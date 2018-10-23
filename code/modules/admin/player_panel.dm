@@ -82,7 +82,7 @@
 					body += "<a href='?src=\ref[src];traitor="+ref+"'>TP</a> - "
 					body += "<a href='?src=\ref[usr];priv_msg=\ref"+ref+"'>PM</a> - "
 					body += "<a href='?src=\ref[src];subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
+					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a> - "
 					body += "<a href='?src=\ref[src];adminplayerfollow="+ref+"'>FLW</a><br>"
 					body += "<a href='?src=\ref[src];individuallog="+ref+"'>LOGS</a><br>"
 					if(antagonist > 0)

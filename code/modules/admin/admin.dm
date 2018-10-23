@@ -305,10 +305,10 @@ var/global/respawntime = 15
 			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
 			if(I.author == usr.key || I.author == "Adminbot" || ishost(usr))
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A> "
-				if(I.hidden)
-					dat += "<A href='?src=\ref[src];unhide_player_info=[key];remove_index=[i]'>Unhide</A>"
-				if(!(I.hidden))
-					dat += "<A href='?src=\ref[src];hide_player_info=[key];remove_index=[i]'>Hide</A>"
+			if(I.hidden)
+				dat += "<A href='?src=\ref[src];unhide_player_info=[key];remove_index=[i]'>Unhide</A>"
+			if(!(I.hidden))
+				dat += "<A href='?src=\ref[src];hide_player_info=[key];remove_index=[i]'>Hide</A>"
 			dat += "<br><br>"
 		if(update_file) to_chat(info, infos)
 

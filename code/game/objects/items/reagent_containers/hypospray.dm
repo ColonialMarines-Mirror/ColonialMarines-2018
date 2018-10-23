@@ -137,9 +137,9 @@
 				var/percent = round(R.volume / max(0.01 , reagents.total_volume * 0.01),0.01)
 				var/dose = round(min(reagents.total_volume, amount_per_transfer_from_this) * percent * 0.01,0.01)
 				if(R.scannable)
-					dat += "\n \t <b>[R.name]:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
+					dat += "\n \t <b>[R.name]:</b> [R.volume]|[percent]% <b>Amount per dose:</b> [dose]</br>"
 				else
-					dat += "\n \t <b>Unknown:</b> [R.volume]|[percent]% Amount per dose: [dose]</br>"
+					dat += "\n \t <b>Unknown:</b> [R.volume]|[percent]% <b>Amount per dose:</b> [dose]</br>"
 		if(dat)
 			to_chat(user, "<span class = 'notice'>[src]'s reagent display shows the following contents: [dat]</span>")
 	. = ..()

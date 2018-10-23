@@ -19,7 +19,7 @@
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 //	var/has_enabled_antagHUD = 0
-	var/list/HUD_toggled = list(0,0,0,0)
+	var/list/HUD_toggled = list(1,0,1,1)
 //	var/antagHUD = 0
 	universal_speak = 1
 	var/atom/movable/following = null
@@ -73,6 +73,14 @@
 		spawn(20)
 			to_chat(src, "\red This is a <b>PREDATOR ROUND</b>! If you are whitelisted, you may Join the Hunt!")
 			return
+
+	var/datum/mob_hud/H
+	H = huds[MOB_HUD_MEDICAL_OBSERVER]
+	H.add_hud_to(src)
+	H = huds[MOB_HUD_SQUAD]
+	H.add_hud_to(src)
+	H = huds[MOB_HUD_XENO_STATUS]
+	H.add_hud_to(src)
 
 
 

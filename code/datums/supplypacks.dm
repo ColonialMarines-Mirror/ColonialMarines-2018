@@ -2082,11 +2082,35 @@ ENGINEERING
 	containername = "\improper metal sheets crate"
 	group = "Engineering"
 
+/datum/supply_packs/metal100
+	name = "100 metal sheets (x100)"
+	contains = list(
+					/obj/item/stack/sheet/metal,
+					/obj/item/stack/sheet/metal
+					)
+	amount = 100
+	cost = RO_PRICE_NORMAL
+	containertype = /obj/structure/closet/crate/supply
+	containername = "\improper metal sheets crate"
+	group = "Engineering"
+
 /datum/supply_packs/plas50
 	name = "plasteel sheets (x30)"
 	contains = list(/obj/item/stack/sheet/plasteel)
 	amount = 30
 	cost = RO_PRICE_NORMAL
+	containertype = /obj/structure/closet/crate/supply
+	containername = "\improper plasteel sheets crate"
+	group = "Engineering"
+
+/datum/supply_packs/plas100
+	name = "plasteel sheets (x60)"
+	contains = list(
+					/obj/item/stack/sheet/plasteel,
+					/obj/item/stack/sheet/plasteel
+					)
+	amount = 60
+	cost = RO_PRICE_PRICY
 	containertype = /obj/structure/closet/crate/supply
 	containername = "\improper plasteel sheets crate"
 	group = "Engineering"

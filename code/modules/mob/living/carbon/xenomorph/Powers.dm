@@ -1477,14 +1477,15 @@
 	if (!check_plasma(40))
 		return
 
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't maneuver your body properly with that thing on your leg!</span>")
+		return
+
 	if(stagger)
 		to_chat(src, "<span class='xenowarning'>You try to fling away [M] but are unable as you fail to shake off the shock!</span>")
 		return
 
-	if (!Adjacent(M)) //Sanity check
-		return
-
-	if(!istype(M, /mob/living)) //Sanity check
+	if (!Adjacent(M) || !istype(M, /mob/living)) //Sanity check
 		return
 
 	if(M.mob_size >= MOB_SIZE_BIG) //We can't fling big aliens/mobs
@@ -1532,8 +1533,8 @@
 		//Handle the damage
 		if(!isXeno(M)) //Friendly xenos don't take damage.
 			var/damage = toss_distance * 5
-			if(frenzy_aura > 0)
-				damage *= (1 + round(frenzy_aura * 0.1,0.01))
+			if(frenzy_aura)
+				damage *= (1 + round(frenzy_aura * 0.1,0.01)) //+10% damage per level of frenzy
 			var/armor_block = M.run_armor_check("chest", "melee")
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M

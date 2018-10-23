@@ -290,7 +290,7 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 	if(status_flags & GODMODE)	return	//godmode
 
 	if(blocked >= 1) //Complete negation
-		return 0
+		return FALSE
 
 	if(blocked)
 		if(brute)
@@ -299,7 +299,7 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 			burn *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
 
 	if(!brute && !burn) //Complete negation
-		return 0
+		return FALSE
 
 	if(protection_aura)
 		if(brute)

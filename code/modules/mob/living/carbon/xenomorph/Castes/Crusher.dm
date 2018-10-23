@@ -57,7 +57,8 @@
 		to_chat(src, "<span class='xenowarning'>You try to stomp but are unable as you fail to shake off the shock!</span>")
 		return
 
-	if(!check_plasma(80)) return
+	if(!check_plasma(80))
+		return
 	has_screeched = world.time
 	use_plasma(80)
 
@@ -378,6 +379,3 @@
 			icon_state = "Crusher Walking"
 
 	update_fire() //the fire overlay depends on the xeno's stance, so we must update it.
-
-
-/mob/living/carbon/Xenomorph/Crusher/proc/horn_toss()

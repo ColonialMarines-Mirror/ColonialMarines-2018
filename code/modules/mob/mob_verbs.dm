@@ -306,7 +306,7 @@
 			if(!I.rank)
 				I.rank = "N/A"
 				update_file = 1
-			if(!(findtext(I.content,"HIDDEN")))
+			if(!(I.hidden))
 				dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
 				dat += "<br><br>"
 		if(update_file) to_chat(info, infos)

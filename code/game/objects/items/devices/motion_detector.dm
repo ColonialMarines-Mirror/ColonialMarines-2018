@@ -27,6 +27,7 @@
 	var/active = 0
 	var/recycletime = 120
 	var/long_range_cooldown = 2
+	var/iff_signal = ACCESS_IFF_MARINE
 
 /obj/item/device/motiondetector/verb/toggle_range_mode()
 	set name = "Toggle Range Mode"
@@ -92,25 +93,19 @@
 
 	var/detected
 	for(var/mob/living/M in orange(detector_range, human_user))
-		to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Moving mob detected: [M.name]. Detector range: [detector_range].</span>")
 		if(!isturf(M.loc))
-			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Aborted: No turf detected.</span>")
 			continue
 		if(world.time > M.l_move_time + 20)
-			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Aborted: Subject hasn't moved.</span>")
 			continue //hasn't moved recently
 		if(isrobot(M))
-			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Aborted: Subject is a robot.</span>")
 			continue
 		if(ishuman(M))
-			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Human detected.</span>")
 			var/mob/living/carbon/human/H = M
-			if(istype(H.wear_ear, /obj/item/device/radio/headset/almayer))
-				continue //device detects marine headset and ignores the wearer.
+			if(H.get_target_lock(iff_signal))
+				continue //device checks for IFF data; if it matches, skip.
 		detected = TRUE
 
 		if(human_user)
-			to_chat(world, "<span class='danger'>MOTION SENSOR DEBUG: Show blip triggered.</span>")
 			show_blip(human_user, M)
 
 		if(detected)
@@ -152,3 +147,8 @@
 		sleep(12)
 		if(user.client)
 			user.client.screen -= DB
+
+/obj/item/device/motiondetector/pmc
+	name = "motion detector (PMC)"
+	desc = "A device that detects movement, but ignores friendlies. It has a mode selection button on the side. It has been modified for use by the W-Y PMC forces."
+	iff_signal = ACCESS_IFF_PMC

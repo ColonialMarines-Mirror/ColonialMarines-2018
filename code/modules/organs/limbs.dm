@@ -225,7 +225,9 @@
 	src.update_damages()
 
 	//If limb took enough damage, try to cut or tear it off
-	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO && !no_limb_loss)
+	var/obj/item/clothing/worn_helmet = owner.head
+	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO && !no_limb_loss && (body_part != HEAD && !istype(worn_helmet, /obj/item/clothing/head/helmet) && !owner.species.flags & IS_SYNTHETIC)) //Synth heads can come off, not human ones for gameplay/balance reasons... if they're wearing a helmet.
+
 		if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 			var/cut_prob = brute/max_damage * 10
 			if(prob(cut_prob))

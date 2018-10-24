@@ -33,6 +33,8 @@
 
 
 /obj/item/device/radio/detpack/Dispose()
+	if(plant_target && !plant_target.loc)
+		new /obj/item/device/radio/detpack(get_turf(src)) //in the event we have a target that can prematurely get deleted, like a roller bed that's folded up.
 	processing_timers.Remove(src)
 	nullvars()
 	. = ..()
@@ -94,6 +96,7 @@
 		//to_chat(world, "<font color='red'>DEBUG: Drag delay reset. Target drag delay: [T.drag_delay], Stored drag delay: [target_drag_delay]</font>")
 		if(T.drag_delay == 3)
 			T.drag_delay = target_drag_delay //reset the drag delay of whatever we attached the detpack to
+		T.vis_contents -= src
 	plant_target = null //null everything out now
 	target_drag_delay = null
 	armed = FALSE
@@ -248,14 +251,7 @@
 		user.drop_held_item()
 		playsound(src.loc, 'sound/weapons/mine_armed.ogg', 25, 1)
 		var/location
-		if (isturf(target))
-			location = target
-		if (isobj(target))
-			location = target.loc
-
-		//anchored = TRUE
-
-
+		location = target
 		forceMove(location)
 
 		message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
@@ -268,11 +264,10 @@
 		plant_target = target
 		if(istype(plant_target, /atom/movable))
 			var/atom/movable/T = plant_target
-
+			T.vis_contents += src
 			if(T.drag_delay < 3) //Anything with a fast drag delay we need to modify to avoid kamikazi tactics
 				target_drag_delay = T.drag_delay
 				T.drag_delay = 3
-				follow_target(target)
 		update_icon()
 
 
@@ -311,27 +306,18 @@
 		playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
 		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonated: [timer]</font>")
 		if(det_mode == TRUE) //If we're on demolition mode, big boom.
-			explosion(loc, 2, 4, 5, 6)
+			explosion(plant_target.loc, 2, 4, 5, 6)
 		else //if we're not, focused boom.
-			explosion(loc, 1, 1, 2, 3)
+			explosion(plant_target.loc, 1, 1, 2, 3)
 		if(plant_target)
 			plant_target.ex_act(1)
 			if(isobj(plant_target))
+				plant_target = null
 				cdel(plant_target)
 		cdel(src)
 		processing_timers.Remove(src)
 	return
 
-/obj/item/device/radio/detpack/proc/follow_target(var/atom/movable/target)
-	spawn(0) //Backup
-		while(plant_target && plant_target == target)
-			var/turf/T = get_turf(plant_target)
-			if(!T)
-				break //No location? Cancel out.
-			if(loc != T)
-				loc = T
-			sleep(5)
-		nullvars() //Null vars if the loop ends becaue we have no target, no location, or the plant target has changed somehow
-
 /obj/item/device/radio/detpack/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
+

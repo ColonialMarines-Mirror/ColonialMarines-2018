@@ -12,9 +12,6 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 
 /mob/living/carbon/Xenomorph/Life()
 
-	set invisibility = 0
-	set background = 1
-
 	if(monkeyizing || !loc)
 		return
 

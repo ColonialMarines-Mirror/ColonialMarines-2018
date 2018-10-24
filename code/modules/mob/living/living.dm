@@ -1,6 +1,8 @@
 /mob/living/Life()
 	. = ..()
 
+	update_cloak()
+
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
@@ -21,9 +23,6 @@
 	handle_slurring()
 	handle_silent()
 	handle_disabilities()
-
-	if(smokecloaked)
-		update_cloak()
 
 /mob/living/proc/handle_stunned()
 	if(stunned)
@@ -523,6 +522,9 @@
 	smokecloaked = FALSE
 
 /mob/living/proc/update_cloak()
+	if(!smokecloaked)
+		return
+
 	var/obj/effect/particle_effect/smoke/tactical/S = locate() in loc
 	if(S)
 		return

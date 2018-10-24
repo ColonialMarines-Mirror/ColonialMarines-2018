@@ -1488,6 +1488,9 @@
 	if (!Adjacent(M) || !istype(M, /mob/living)) //Sanity check
 		return
 
+	if(M.stat == DEAD || (M.status_flags & XENO_HOST && istype(M.buckled, /obj/structure/bed/nest) ) ) //no bully
+		return
+
 	if(M.mob_size >= MOB_SIZE_BIG) //We can't fling big aliens/mobs
 		to_chat(src, "<span class='xenowarning'>[M] is too large to fling!</span>")
 		return
@@ -1501,52 +1504,51 @@
 
 	face_atom(M) //Face towards the target so we don't look silly
 
-	if(M.stat != DEAD && !(M.status_flags & XENO_HOST && istype(M.buckled, /obj/structure/bed/nest)))
-		var/facing = get_dir(src, M)
-		var/toss_distance = rand(3,5)
-		var/turf/T = loc
-		var/turf/temp = loc
-		if(a_intent == "hurt") //If we use the ability on hurt intent, we throw them in front; otherwise we throw them behind.
-			for (var/x = 0, x < toss_distance, x++)
-				temp = get_step(T, facing)
-				if (!temp)
-					break
-				T = temp
+	var/facing = get_dir(src, M)
+	var/toss_distance = rand(3,5)
+	var/turf/T = loc
+	var/turf/temp = loc
+	if(a_intent == "hurt") //If we use the ability on hurt intent, we throw them in front; otherwise we throw them behind.
+		for (var/x = 0, x < toss_distance, x++)
+			temp = get_step(T, facing)
+			if (!temp)
+				break
+			T = temp
+	else
+		facing = get_dir(M, src)
+		M.loc = get_step(T, facing) //Move the target behind us before flinging
+		for (var/x = 0, x < toss_distance, x++)
+			temp = get_step(T, facing)
+			if (!temp)
+				break
+			T = temp
+	//The target location deviates up to 1 tile in any direction
+	var/scatter_x = rand(-1,1)
+	var/scatter_y = rand(-1,1)
+	var/turf/new_target = locate(T.x + round(scatter_x),T.y + round(scatter_y),T.z) //Locate an adjacent turf.
+	if(new_target)
+		T = new_target//Looks like we found a turf.
+
+	M.throw_at(T, toss_distance, 1, src)
+
+	//Handle the damage
+	if(!isXeno(M)) //Friendly xenos don't take damage.
+		var/damage = toss_distance * 5
+		if(frenzy_aura)
+			damage *= (1 + round(frenzy_aura * 0.1,0.01)) //+10% damage per level of frenzy
+		var/armor_block = M.run_armor_check("chest", "melee")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
 		else
-			facing = get_dir(M, src)
-			M.loc = get_step(T, facing) //Move the target behind us before flinging
-			for (var/x = 0, x < toss_distance, x++)
-				temp = get_step(T, facing)
-				if (!temp)
-					break
-				T = temp
-		//The target location deviates up to 1 tile in any direction
-		var/scatter_x = rand(-1,1)
-		var/scatter_y = rand(-1,1)
-		var/turf/new_target = locate(T.x + round(scatter_x),T.y + round(scatter_y),T.z) //Locate an adjacent turf.
-		if(new_target)
-			T = new_target//Looks like we found a turf.
-
-		M.throw_at(T, toss_distance, 1, src)
-		M.KnockDown(1, 1)
-
-		//Handle the damage
-		if(!isXeno(M)) //Friendly xenos don't take damage.
-			var/damage = toss_distance * 5
-			if(frenzy_aura)
-				damage *= (1 + round(frenzy_aura * 0.1,0.01)) //+10% damage per level of frenzy
-			var/armor_block = M.run_armor_check("chest", "melee")
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
-			else
-				M.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
-			M.apply_damage(damage, HALLOSS) //...But decent armour ignoring Halloss
+			M.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
+		M.apply_damage(damage, HALLOSS) //...But decent armour ignoring Halloss
 		shake_camera(M, 2, 2)
-
 		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
+		M.KnockDown(1, 1)
+		
 	cresttoss_cooldown()
-	spawn(5) //Revert to our prior icon state.
+	spawn(3) //Revert to our prior icon state.
 		if(m_intent == MOVE_INTENT_RUN)
 			icon_state = "Crusher Running"
 		else

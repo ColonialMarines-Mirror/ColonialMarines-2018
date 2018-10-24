@@ -1464,7 +1464,7 @@
 	spawn(savage_cooldown)
 		savage_used = FALSE
 		to_chat(src, "<span class='xenowarning'><b>You can now savage your victims again.</b></span>")
-		playsound(src, "xeno_newlarva", 100, 0, 1)
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
 		for(var/X in actions)
 			var/datum/action/act = X
 			act.update_button_icon()
@@ -1558,7 +1558,7 @@
 	spawn(cresttoss_cooldown)
 		cresttoss_used = FALSE
 		to_chat(src, "<span class='xenowarning'><b>You can now crest toss again.</b></span>")
-		playsound(src, "xeno_newlarva", 50, 0, 1)
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
 		for(var/X in actions)
 			var/datum/action/act = X
 			act.update_button_icon()

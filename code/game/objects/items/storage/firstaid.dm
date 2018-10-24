@@ -133,8 +133,8 @@
 	new /obj/item/storage/pill_bottle/antitox(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/tricordrazine(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/tricordrazine(src)
-	new /obj/item/reagent_container/hypospray/autoinjector/Bicard(src)
-	new /obj/item/reagent_container/hypospray/autoinjector/Bicard(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/bicaridine(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/bicaridine(src)
 
 
 	/*

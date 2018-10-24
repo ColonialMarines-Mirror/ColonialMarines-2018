@@ -184,7 +184,7 @@
 	new /obj/item/reagent_container/hypospray/autoinjector/quickclot(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
-	new /obj/item/reagent_container/hypospray/autoinjector/Oxycodone(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/oxycodone(src)
 	new /obj/item/reagent_container/hypospray/autoinjector/hypervene(src)
 
 /obj/item/storage/belt/combatLifesaver/upp

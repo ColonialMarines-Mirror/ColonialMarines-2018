@@ -611,7 +611,7 @@
 						H.equip_to_slot_or_del(new /obj/item/storage/belt/combatLifesaver(H), WEAR_WAIST)
 						H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/med(H), WEAR_BACK)
 					//	H.equip_to_slot_or_del(new /obj/item/reagent_container/hypospray/autoinjector/quickclot(H), WEAR_L_STORE)
-						H.equip_to_slot_or_del(new /obj/item/reagent_container/hypospray/autoinjector/Oxycodone(H), WEAR_L_STORE)
+						H.equip_to_slot_or_del(new /obj/item/reagent_container/hypospray/autoinjector/oxycodone(H), WEAR_L_STORE)
 						H.equip_to_slot_or_del(new /obj/item/storage/firstaid/regular(H.back), WEAR_IN_BACK)
 						H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H.back), WEAR_IN_BACK)
 						H.equip_to_slot_or_del(new /obj/item/device/defibrillator(H.back), WEAR_IN_BACK)

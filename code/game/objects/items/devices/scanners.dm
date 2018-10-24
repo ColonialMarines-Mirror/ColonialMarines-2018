@@ -384,7 +384,7 @@ REAGENT SCANNER
 			if(fracture_detected)
 				advice += "<span class='scanner'><b>Unsecured Fracture:</b> Administer splints to specified areas.</span>\n"
 			if(internal_bleed_detected)
-				var/internal_bleed_advice = "Administer one dose of quickclot then seek surgical remedy."
+				var/internal_bleed_advice = "Administer one dose of quick-clot then seek surgical remedy."
 				if(reagents_in_body["quickclot"] > 4)
 					internal_bleed_advice = "Quickclot has been administered to patient. Seek surgical remedy."
 				advice += "<span class='scanner'><b>Internal Bleeding:</b> [internal_bleed_advice]</span>\n"

@@ -30,16 +30,17 @@ var/global/respawntime = 15
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
 		if(R_MOD & C.holder.rights)
-			if(C.prefs.toggles_chat & CHAT_ATTACKLOGS)
+			if((C.prefs.toggles_chat & CHAT_ATTACKLOGS) && !((ticker.current_state == GAME_STATE_FINISHED) && (C.prefs.toggles_chat & CHAT_ENDROUNDLOGS)))
 				var/msg = rendered
 				to_chat(C, msg)
 
 /proc/msg_admin_ff(var/text)
 	log_attack(text) //Do everything normally BUT IN GREEN SO THEY KNOW
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <font color=#00ff00><b>[text]</b></font></span>" //I used <font> because I never learned html correctly, fix this if you want
+		
 	for(var/client/C in admins)
 		if(R_MOD & C.holder.rights)
-			if(C.prefs.toggles_chat & CHAT_FFATTACKLOGS)
+			if((C.prefs.toggles_chat & CHAT_FFATTACKLOGS) && !((ticker.current_state == GAME_STATE_FINISHED) && (C.prefs.toggles_chat & CHAT_ENDROUNDLOGS)))
 				var/msg = rendered
 				to_chat(C, msg)
 
@@ -51,13 +52,14 @@ var/global/respawntime = 15
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 
-	if(!M)
-		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
-		return
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
 		to_chat(usr, "Error: you are not an admin!")
+		return
+
+	if(M.disposed)
+		to_chat(usr, "That mob doesn't seem to exist, close the panel and try again.")
 		return
 
 	var/body = "<html><head><title>Options for [M.key]</title></head>"

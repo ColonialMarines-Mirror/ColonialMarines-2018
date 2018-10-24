@@ -1,6 +1,10 @@
 
-#define MOTION_DETECTOR_LONG	0
-#define MOTION_DETECTOR_SHORT	1
+#define MOTION_DETECTOR_LONG		0
+#define MOTION_DETECTOR_SHORT		1
+
+#define MOTION_DETECTOR_HOSTILE		0
+#define MOTION_DETECTOR_FRIENDLY	1
+#define MOTION_DETECTOR_DEAD		2
 
 
 /obj/effect/detector_blip
@@ -13,8 +17,8 @@
 		return TA_REVIVE_ME
 
 /obj/item/device/motiondetector
-	name = "motion detector"
-	desc = "A device that detects movement, but ignores marines. It has a mode selection button on the side."
+	name = "tactical sensor"
+	desc = "A device that detects hostile movement. Hostiles appear as red blips. Friendlies with the correct IFF signature appear as green, and their bodies as blue. It has a mode selection button on the side."
 	icon = 'icons/Marine/marine-items.dmi'
 	icon_state = "detector_off"
 	item_state = "electronic"
@@ -92,32 +96,42 @@
 	playsound(loc, 'sound/items/detector.ogg', 60, 0, 7, 2)
 
 	var/detected
+	var/status = MOTION_DETECTOR_HOSTILE
 	for(var/mob/living/M in orange(detector_range, human_user))
 		if(!isturf(M.loc))
 			continue
-		if(world.time > M.l_move_time + 20)
-			continue //hasn't moved recently
 		if(isrobot(M))
 			continue
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.get_target_lock(iff_signal))
-				continue //device checks for IFF data; if it matches, skip.
+			if(H.get_target_lock(iff_signal)) //device checks for IFF data and status
+				status = MOTION_DETECTOR_FRIENDLY
+				if(M.stat == DEAD)
+					status = MOTION_DETECTOR_DEAD
+		if(world.time > M.l_move_time + 20 && status != MOTION_DETECTOR_DEAD)
+			continue //hasn't moved recently
+
 		detected = TRUE
 
 		if(human_user)
-			show_blip(human_user, M)
+			show_blip(human_user, M, status)
 
 		if(detected)
 			playsound(loc, 'sound/items/tick.ogg', 50, 0, 7, 2)
 
 
-/obj/item/device/motiondetector/proc/show_blip(mob/user, mob/target)
+/obj/item/device/motiondetector/proc/show_blip(mob/user, mob/target, status = MOTION_DETECTOR_HOSTILE)
 	set waitfor = 0
 	if(user.client)
 
 		if(!blip_pool[target])
-			blip_pool[target] = rnew(/obj/effect/detector_blip)
+			switch(status)
+				if(MOTION_DETECTOR_HOSTILE)
+					blip_pool[target] = rnew(/obj/effect/detector_blip)
+				if(MOTION_DETECTOR_FRIENDLY)
+					blip_pool[target] = rnew(/obj/effect/detector_blip, icon_state = "detector_blip_friendly")
+				if(MOTION_DETECTOR_DEAD)
+					blip_pool[target] = rnew(/obj/effect/detector_blip, icon_state = "detector_blip_dead")
 
 		var/obj/effect/detector_blip/DB = blip_pool[target]
 		var/c_view = user.client.view
@@ -136,7 +150,13 @@
 		if(target.y - user.y > c_view + view_y_offset) diff_dir_y = 1
 		else if(target.y - user.y < -c_view + view_y_offset) diff_dir_y = 2
 		if(diff_dir_x || diff_dir_y)
-			DB.icon_state = "detector_blip_dir"
+			switch(status)
+				if(MOTION_DETECTOR_HOSTILE)
+					DB.icon_state = "detector_blip_dir"
+				if(MOTION_DETECTOR_FRIENDLY)
+					DB.icon_state = "detector_blip_dir_friendly"
+				if(MOTION_DETECTOR_DEAD)
+					DB.icon_state = "detector_blip_dir_dead"
 			DB.dir = diff_dir_x + diff_dir_y
 		else
 			DB.icon_state = initial(DB.icon_state)
@@ -150,5 +170,5 @@
 
 /obj/item/device/motiondetector/pmc
 	name = "motion detector (PMC)"
-	desc = "A device that detects movement, but ignores friendlies. It has a mode selection button on the side. It has been modified for use by the W-Y PMC forces."
+	desc = "A device that detects hostile movement. Hostiles appear as red blips. Friendlies with the correct IFF signature appear as green, and their bodies as blue. It has a mode selection button on the side.It has been modified for use by the W-Y PMC forces."
 	iff_signal = ACCESS_IFF_PMC

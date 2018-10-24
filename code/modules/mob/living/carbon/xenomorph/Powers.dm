@@ -1471,10 +1471,10 @@
 
 // Crusher Horn Toss
 /mob/living/carbon/Xenomorph/proc/cresttoss(var/mob/living/carbon/M)
-	if (cresttoss_used)
+	if(cresttoss_used)
 		return
 
-	if (!check_plasma(40))
+	if(!check_plasma(40))
 		return
 
 	if(legcuffed)
@@ -1501,7 +1501,7 @@
 
 	face_atom(M) //Face towards the target so we don't look silly
 
-	if(M.stat != DEAD && (!(M.status_flags & XENO_HOST) || !istype(M.buckled, /obj/structure/bed/nest)) )
+	if(M.stat != DEAD && !(M.status_flags & XENO_HOST && istype(M.buckled, /obj/structure/bed/nest)))
 		var/facing = get_dir(src, M)
 		var/toss_distance = rand(3,5)
 		var/turf/T = loc
@@ -1545,12 +1545,12 @@
 		shake_camera(M, 2, 2)
 
 		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
-		cresttoss_cooldown()
-		spawn(5) //Revert to our prior icon state.
-			if(m_intent == MOVE_INTENT_RUN)
-				icon_state = "Crusher Running"
-			else
-				icon_state = "Crusher Walking"
+	cresttoss_cooldown()
+	spawn(5) //Revert to our prior icon state.
+		if(m_intent == MOVE_INTENT_RUN)
+			icon_state = "Crusher Running"
+		else
+			icon_state = "Crusher Walking"
 
 /mob/living/carbon/Xenomorph/proc/cresttoss_cooldown()
 	if(!cresttoss_used)//sanity check/safeguard

@@ -386,7 +386,7 @@ REAGENT SCANNER
 			if(internal_bleed_detected)
 				var/internal_bleed_advice = "Administer one dose of quick-clot then seek surgical remedy."
 				if(reagents_in_body["quickclot"] > 4)
-					internal_bleed_advice = "Quickclot has been administered to patient. Seek surgical remedy."
+					internal_bleed_advice = "Quick-Clot has been administered to patient. Seek surgical remedy."
 				advice += "<span class='scanner'><b>Internal Bleeding:</b> [internal_bleed_advice]</span>\n"
 			if(H.getToxLoss() > 10)
 				var/dylovene = ""

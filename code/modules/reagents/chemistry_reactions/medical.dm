@@ -163,7 +163,7 @@
 	required_catalysts = list("phoron" = 5)
 
 /datum/chemical_reaction/quickclot
-	name = "Quickclot"
+	name = "Quick-Clot"
 	id = "quickclot"
 	results = list("quickclot" = 1)
 	required_reagents = list("kelotane" = 2, "clonexadone" = 2)

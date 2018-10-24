@@ -94,6 +94,9 @@
 	var/wikiurl
 	var/forumurl
 	var/rulesurl
+	var/chaturl
+	var/donationurl
+	var/bugtrackerurl
 
 	//Alert level description
 	var/alert_desc_green = "All security alerts have passed."
@@ -125,6 +128,13 @@
 	var/admin_irc = ""
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
+	// Map urls
+	var/almayer_url
+	var/bigred_url
+	var/icecolony_url
+	var/lv624_url
+	var/prisonstation_url
+	var/whiskeyoutpost_url
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -332,6 +342,15 @@
 		if ("rulesurl")
 			config.rulesurl = value
 
+		if ("chaturl")
+			config.chaturl = value
+
+		if ("donationurl")
+			config.donationurl = value
+
+		if ("bugtrackerurl")
+			config.bugtrackerurl = value
+
 		if ("guest_jobban")
 			config.guest_jobban = 1
 
@@ -502,6 +521,24 @@
 
 		if("max_maint_drones")
 			config.max_maint_drones = text2num(value)
+
+		if("almayer_url")
+			config.almayer_url = value
+
+		if("bigred_url")
+			config.bigred_url = value
+
+		if("icecolony_url")
+			config.icecolony_url = value
+
+		if("lv624_url")
+			config.lv624_url = value
+
+		if("prisonstation_url")
+			config.prisonstation_url = value
+
+		if("whiskeyoutpost_url")
+			config.whiskeyoutpost_url = value
 
 		else
 			log_misc("Unknown setting in configuration: '[name]'")

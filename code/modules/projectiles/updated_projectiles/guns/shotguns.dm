@@ -216,12 +216,12 @@ can cause issues with ammo types getting mixed up during the burst.
 
 
 /obj/item/weapon/gun/shotgun/combat/set_gun_config_values()
-	fire_delay = config.mhigh_fire_delay*2
-	accuracy_mult = config.base_hit_accuracy_mult
-	accuracy_mult_unwielded = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult - config.hmed_hit_accuracy_mult
+	fire_delay = config.tacshottie_fire_delay //one shot every 1.5 seconds.
+	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
+	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.max_hit_accuracy_mult //you need to wield this gun for any kind of accuracy
 	scatter = config.med_scatter_value
 	scatter_unwielded = config.max_scatter_value
-	damage_mult = config.base_hit_damage_mult - config.low_hit_damage_mult
+	damage_mult = config.base_hit_damage_mult - config.tacshottie_damage_mult  //normalizing gun for vendors; damage reduced by 25% to compensate for faster fire rate; still higher DPS than M37.
 	recoil = config.low_recoil_value
 	recoil_unwielded = config.high_recoil_value
 
@@ -450,7 +450,8 @@ can cause issues with ammo types getting mixed up during the burst.
 	to_chat(user, "<span class='notice'><b>You pump [src].</b></span>")
 	playsound(user, pump_sound, 25, 1)
 	recent_pump = world.time
-	pump_lock = TRUE
+	if(in_chamber) //Lock only if we have ammo loaded.
+		pump_lock = TRUE
 
 
 /obj/item/weapon/gun/shotgun/pump/reload_into_chamber(mob/user)

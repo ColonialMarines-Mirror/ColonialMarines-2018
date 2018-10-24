@@ -491,7 +491,7 @@
 	attack_hand(usr) //The above doesn't ever seem to work.
 
 /obj/machinery/computer/overwatch/check_eye(mob/user)
-	if(user.is_mob_incapacitated(TRUE) || get_dist(user, src) > 1 || user.blinded) //user can't see - not sure why canmove is here.
+	if(user.is_mob_incapacitated(TRUE) || get_dist(user, src) > 1 || is_blind(user)) //user can't see - not sure why canmove is here.
 		user.unset_interaction()
 	else if(!cam || !cam.can_use()) //camera doesn't work, is no longer selected or is gone
 		user.unset_interaction()
@@ -599,8 +599,8 @@
 			busy = 0
 			return
 		if(A)
-			message_mods("ALERT: [usr] ([usr.key]) fired an orbital bombardment in [A.name] for squad '[current_squad]' (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-			log_attack("[usr.name] ([usr.ckey]) fired an orbital bombardment in [A.name] for squad '[current_squad]'")
+			message_mods("ALERT: [key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) fired an orbital bombardment in [A.name] for squad '[current_squad]' (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+			log_attack("[key_name(usr)] fired an orbital bombardment in [A.name] for squad '[current_squad]'")
 		busy = 0
 		if(current_squad.bbeacon)
 			cdel(current_squad.bbeacon) //Wipe the beacon. It's only good for one use.
@@ -767,7 +767,7 @@
 
 	var/obj/item/card/id/ID = transfer_marine.wear_id
 	ID.assigned_fireteam = 0 //reset fireteam assignment
-	
+
 	//Changes headset frequency to match new squad
 	var/obj/item/device/radio/headset/almayer/marine/H = transfer_marine.wear_ear
 	if(istype(H, /obj/item/device/radio/headset/almayer/marine))

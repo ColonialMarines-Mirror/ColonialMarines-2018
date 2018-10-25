@@ -160,14 +160,19 @@
 			#endif
 		to_chat(M, "[impact_message]") //Summarize all the bad shit that happened
 
-	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE)
+	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE, radius = 1, modifier = 0.5, attack_type = "bullet", apply_armor = TRUE)
 		if(!target || !P)
 			return
-		for(var/mob/living/carbon/M in orange(1,target))
+		for(var/mob/living/carbon/M in orange(radius,target))
 			if(P.firer == M)
 				continue
 			M.visible_message("<span class='danger'>[M] is hit by backlash from \a [P.name]!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You are hit by backlash from \a </b>[P.name]</b>!</span>")
-			M.apply_damage(rand(5,P.damage/2),damage_type)
+			if(apply_armor)
+				var/armor_block = M.run_armor_check(M, attack_type)
+				M.apply_damage(rand(P.damage * modifier * 0.1,P.damage * modifier),damage_type, null, armor_block)
+			else
+				M.apply_damage(rand(P.damage * modifier * 0.1,P.damage * modifier),damage_type)
+
 
 	proc/fire_bonus_projectiles(obj/item/projectile/original_P)
 		set waitfor = 0
@@ -343,9 +348,7 @@
 
 /datum/ammo/bullet/revolver/New()
 	..()
-	accuracy = -config.med_hit_accuracy
-	damage = config.lmed_hit_damage
-	penetration= config.min_armor_penetration
+	damage = config.hlow_hit_damage
 
 /datum/ammo/bullet/revolver/on_hit_mob(mob/M,obj/item/projectile/P)
 	staggerstun(M, P, config.close_shell_range, 0, 0, 1, 0.5, 0)
@@ -420,9 +423,8 @@
 
 /datum/ammo/bullet/smg/ap/New()
 	..()
-	scatter = config.min_scatter_value
 	damage = config.llow_hit_damage
-	penetration= config.med_armor_penetration
+	penetration= config.hmed_armor_penetration //40 AP
 
 /datum/ammo/bullet/smg/ppsh
 	name = "submachinegun light bullet"
@@ -453,7 +455,7 @@
 
 /datum/ammo/bullet/rifle/ap/New()
 	..()
-	damage = config.hlow_hit_damage
+	damage = config.low_hit_damage
 	penetration = config.high_armor_penetration
 
 /datum/ammo/bullet/rifle/incendiary
@@ -498,14 +500,14 @@
 
 /datum/ammo/bullet/rifle/m4ra/impact/New()
 	..()
-	damage = config.hmed_hit_damage
+	damage = config.med_hit_damage
 	accuracy = -config.low_hit_accuracy
 	scatter = -config.low_scatter_value
 	penetration= config.low_armor_penetration
 	shell_speed = config.fast_shell_speed
 
 /datum/ammo/bullet/rifle/m4ra/impact/on_hit_mob(mob/M, obj/item/projectile/P)
-	knockback(M, P, config.max_shell_range)
+	staggerstun(M, P, config.max_shell_range, 0, 1, 1)
 
 /datum/ammo/bullet/rifle/mar40
 	name = "heavy rifle bullet"
@@ -534,7 +536,7 @@
 	penetration= config.low_armor_penetration
 
 /datum/ammo/bullet/shotgun/slug/on_hit_mob(mob/M,obj/item/projectile/P)
-	staggerstun(M, P, config.close_shell_range, 0, 1, 4, 4)
+	staggerstun(M, P, config.close_shell_range, 0, 1, 2, 4)
 
 
 /datum/ammo/bullet/shotgun/beanbag
@@ -713,12 +715,9 @@
 
 /datum/ammo/bullet/sniper/flak/New()
 	..()
-	accuracy = -config.low_hit_accuracy
-	max_range = config.norm_shell_range
-	scatter = config.low_scatter_value
-	damage = config.hmed_hit_damage
+	damage = config.max_hit_damage
 	damage_var_high = config.low_proj_variance
-	penetration= -config.min_armor_penetration
+	penetration= -config.mlow_armor_penetration
 
 /datum/ammo/bullet/sniper/flak/on_hit_mob(mob/M,obj/item/projectile/P)
 	burst(get_turf(M),P,damage_type)

@@ -60,7 +60,7 @@
 		details: += "[detect_revivable ? " <b>Friendly revivable corpse detection:</b> ACTIVE</br>" : " <b>Friendly revivable corpse detection:</b> INACTIVE</br>"]"
 		details: += "[detect_fubar ? " <b>Friendly unrevivable corpse detection:</b> ACTIVE</br>" : " <b>Friendly unrevivable corpse detection:</b> INACTIVE</br>"]"
 		to_chat(user, "<span class = 'notice'>[src]'s display shows the following settings:</br>[details]</span>")
-	. = ..()
+	return ..()
 
 
 /obj/item/device/motiondetector/Dispose()

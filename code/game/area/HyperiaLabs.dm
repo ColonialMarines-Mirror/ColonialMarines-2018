@@ -9,6 +9,10 @@
 	name = "\improper Primary Hallway"
 	icon_state = "hallway"
 
+/area/hyperia/hallways/secondary
+	name = "\improper Secondary Hallway"
+	icon_state = "hallway"
+
 /area/hyperia/hallways/security
 	name = "\improper Security Hallway"
 	icon_state = "sechalls"
@@ -40,6 +44,10 @@
 
 /area/hyperia/misc/maintenance
 	name = "\improper Maintenance Tunnels"
+	icon_state = "maintcentral"
+
+/area/hyperia/misc/maintstore
+	name = "\improper Maintenance Storage"
 	icon_state = "maintcentral"
 
 // Security Areas

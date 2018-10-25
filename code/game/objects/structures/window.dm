@@ -244,7 +244,7 @@
 			step(src, get_dir(user, src))
 		healthcheck(1, 1, 1, user, W)
 	dismantle = FALSE
-	..()
+	return ..()
 	return
 
 

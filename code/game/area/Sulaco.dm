@@ -292,6 +292,10 @@
 	name = "\improper Dropship Alamo"
 	icon_state = "shuttle"
 
+/area/shuttle/drop1/hyperia
+	name = "\improper Dropship Alamo"
+	icon_state = "shuttle"
+
 /area/shuttle/drop1/transit
 	name = "\improper Dropship Alamo Transit"
 	icon_state = "shuttle2"
@@ -328,6 +332,11 @@
 /area/shuttle/drop2/ice_colony
 	name = "\improper Dropship Normandy"
 	icon_state = "shuttle2"
+
+/area/shuttle/drop2/hyperia
+	name = "\improper Dropship Normandy"
+	icon_state = "shuttle2"
+
 
 /area/shuttle/drop2/transit
 	name = "\improper Dropship Normandy Transit"

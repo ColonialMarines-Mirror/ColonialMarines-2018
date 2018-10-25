@@ -23,7 +23,7 @@
 	return
 
 /obj/item/reagent_container/hypospray/autoinjector/update_icon()
-	if(reagents.total_volume <= 0 && !findtext(icon_state,"0",0,1)) //Added findtext to hedge out subsequent updates fucking up the icon reference
+	if(reagents.total_volume <= 0)
 		icon_state += "0"
 		name += " expended" //So people can see what have been expended since we have smexy new sprites people aren't used too...
 

@@ -376,6 +376,7 @@ can cause issues with ammo types getting mixed up during the burst.
 	var/pump_sound = 'sound/weapons/gun_shotgun_pump.ogg'
 	var/pump_delay //Higher means longer delay.
 	var/recent_pump //world.time to see when they last pumped it.
+	var/recent_notice //world.time to see when they last got a notice.
 	var/pump_lock = FALSE //Modern shotguns normally lock after being pumped; this lock is undone by pumping or operating the slide release i.e. unloading a shell manually.
 	attachable_allowed = list(
 						/obj/item/attachable/bayonet,
@@ -431,8 +432,10 @@ can cause issues with ammo types getting mixed up during the burst.
 	if(world.time < (recent_pump + pump_delay) ) //Don't spam it.
 		return
 	if(pump_lock)
-		playsound(user,'sound/weapons/throwtap.ogg', 25, 1)
-		to_chat(user,"<span class='warning'><b>[src] has already been pumped, locking the pump mechanism; fire or unload a shell to unlock it.</b></span>")
+		if(world.time > recent_notice + config.max_fire_delay)
+			playsound(user,'sound/weapons/throwtap.ogg', 25, 1)
+			to_chat(user,"<span class='warning'><b>[src] has already been pumped, locking the pump mechanism; fire or unload a shell to unlock it.</b></span>")
+			recent_notice = world.time
 		return
 
 	if(in_chamber) //eject the chambered round

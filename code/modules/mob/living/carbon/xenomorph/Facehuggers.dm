@@ -320,6 +320,15 @@
 				if(!H || !H.species || !(H.species.flags & IS_SYNTHETIC)) //synthetics aren't paralyzed
 					target.KnockOut(FACEHUGGER_KNOCKOUT) //THIS MIGHT NEED TWEAKS
 
+					if(luminosity > 0) //Knock out the lights so the victim can't be cam tracked/spotted as easily
+						H.visible_message("<span class='danger'>[H]'s lights flicker and short out in a struggle!")
+						var/datum/effect_system/spark_spread/spark_system2
+						spark_system2 = new /datum/effect_system/spark_spread()
+						spark_system2.set_up(5, 0, src)
+						spark_system2.attach(src)
+						spark_system2.start(src)
+						H.disable_lights()
+
 	GoIdle()
 
 	sleep(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))

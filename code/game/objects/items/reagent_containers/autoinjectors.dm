@@ -43,7 +43,7 @@
 	icon_state = "quickclot"
 	list_reagents = list("quickclot" = 10)
 
-/obj/item/reagent_container/hypospray/autoinjector/dexP
+/obj/item/reagent_container/hypospray/autoinjector/dexalinplus
 	name = "dexalin plus autoinjector"
 	desc = "An autoinjector loaded with 1 unit of dexalin plus, designed to immediately oxygenate the entire body."
 	amount_per_transfer_from_this = 1

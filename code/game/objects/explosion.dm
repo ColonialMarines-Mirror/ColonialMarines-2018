@@ -7,7 +7,7 @@
 	else		return dy + (0.5*dx)
 
 
-/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 0, flame_range = 0, verbose_cause = "no explanation")
+/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, verbose_cause = "no explanation", adminlog = 1, z_transfer = 0, flame_range = 0)
 	var/explosion_source = src.name
 	src = null	//so we don't abort once src is deleted
 	spawn(0)

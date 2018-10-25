@@ -57,7 +57,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 10
 	icon_state = "anesthetic"
-	list_reagents = list("stoxin" = 10)
+	list_reagents = list("sleeptoxin" = 10)
 
 /obj/item/reagent_container/hypospray/autoinjector/dylovene
 	name = "dylovene autoinjector"

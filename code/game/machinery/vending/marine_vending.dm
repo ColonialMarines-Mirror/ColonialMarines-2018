@@ -271,7 +271,7 @@
 	wrenchable = FALSE
 	products = list(/obj/item/reagent_container/hypospray/autoinjector/quickclot = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/bicaridine = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/dexP = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/dexalinplus = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/dylovene = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/inaprovaline = 6,
 					/obj/item/reagent_container/hypospray/autoinjector/kelotane = 6,

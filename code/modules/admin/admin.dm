@@ -307,7 +307,7 @@ var/global/respawntime = 15
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A> "
 			if(I.hidden)
 				dat += "<A href='?src=\ref[src];unhide_player_info=[key];remove_index=[i]'>Unhide</A>"
-			if(!(I.hidden))
+			else
 				dat += "<A href='?src=\ref[src];hide_player_info=[key];remove_index=[i]'>Hide</A>"
 			dat += "<br><br>"
 		if(update_file) to_chat(info, infos)

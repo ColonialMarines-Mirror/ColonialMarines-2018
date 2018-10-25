@@ -75,7 +75,7 @@
 		icon_state = "detector_on_[detector_mode]"
 	else
 		icon_state = "detector_off"
-	..()
+	return ..()
 
 /obj/item/device/motiondetector/process()
 	if(!active)

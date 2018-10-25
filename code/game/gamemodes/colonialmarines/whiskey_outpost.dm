@@ -1188,7 +1188,7 @@
 								/obj/item/reagent_container/hypospray/autoinjector/tricordrazine,
 								/obj/item/reagent_container/hypospray/autoinjector/tricordrazine,
 								/obj/item/reagent_container/hypospray/autoinjector/quickclot,
-								/obj/item/reagent_container/hypospray/autoinjector/dexP,
+								/obj/item/reagent_container/hypospray/autoinjector/dexalinplus,
 								/obj/item/reagent_container/hypospray/autoinjector/bicaridine,
 								/obj/item/reagent_container/hypospray/autoinjector/kelotane)
 

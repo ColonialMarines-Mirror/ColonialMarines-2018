@@ -2,7 +2,7 @@
 
 //TODO: Make these simple_animals
 
-#define FACEHUGGER_KNOCKOUT 30
+#define FACEHUGGER_KNOCKOUT 20
 
 #define MIN_IMPREGNATION_TIME 100 //Time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150
@@ -265,11 +265,8 @@
 			var/obj/item/clothing/head/D = H.head
 			if(istype(D))
 				if(D.anti_hug > 1)
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [D.name]!")
 					cannot_infect = 1
 				else
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [D.name] and rips it off!")
-					H.drop_inv_item_on_ground(D)
 					if(istype(D, /obj/item/clothing/head/helmet/marine)) //Marine helmets now get a fancy overlay.
 						var/obj/item/clothing/head/helmet/marine/m_helmet = D
 						m_helmet.add_hugger_damage()
@@ -277,6 +274,7 @@
 
 				if(D.anti_hug && prob(15)) //15% chance the hugger will go idle after ripping off a helmet. Otherwise it will keep going.
 					D.anti_hug = max(0, --D.anti_hug)
+					H.visible_message("<span class='danger'>[src] smashes against [H]'s [D.name], damaging it!")
 					GoIdle()
 					return
 				D.anti_hug = max(0, --D.anti_hug)

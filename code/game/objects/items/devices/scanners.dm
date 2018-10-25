@@ -421,7 +421,7 @@ REAGENT SCANNER
 				if(reagents_in_body["dexalin"] < 5)
 					dexalin = "dexalin"
 				if(reagents_in_body["dexalinplus"] < 1)
-					dexplus = "dexalinplus"
+					dexplus = "dexalin plus"
 				advice += "<span class='scanner'><b>Oxygen Deprivation:</b> Administer one dose of: [dexalin] | [dexplus].</span>\n"
 			if(H.getFireLoss(1)  > 10)
 				var/kelotane = ""

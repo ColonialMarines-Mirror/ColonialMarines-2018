@@ -51,7 +51,7 @@
 	icon_state = "dexalin"
 	list_reagents = list("dexalinp" = 1)
 
-/obj/item/reagent_container/hypospray/autoinjector/stoxin
+/obj/item/reagent_container/hypospray/autoinjector/sleeptoxin
 	name = "anesthetic autoinjector"
 	desc = "An autoinjector loaded with 10 units of sleeping agent. Good to quickly pacify someone, for surgery of course."
 	amount_per_transfer_from_this = 10

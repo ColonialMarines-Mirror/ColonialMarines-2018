@@ -1,8 +1,6 @@
 /mob/living/Life()
 	. = ..()
 
-	update_cloak()
-
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
@@ -90,6 +88,9 @@
 
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
 	update_stat()
+
+/mob/living/update_stat()
+	update_cloak()
 
 /mob/living/New()
 	..()

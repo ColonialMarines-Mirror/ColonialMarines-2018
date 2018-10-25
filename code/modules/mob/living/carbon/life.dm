@@ -38,6 +38,7 @@
 		return TRUE
 
 /mob/living/carbon/update_stat()
+	.=..()
 	if(status_flags & GODMODE)
 		return
 

@@ -36,6 +36,9 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	update_icons()
 
 /mob/living/carbon/Xenomorph/update_stat()
+
+	update_cloak()
+
 	if(status_flags & GODMODE)
 		return
 

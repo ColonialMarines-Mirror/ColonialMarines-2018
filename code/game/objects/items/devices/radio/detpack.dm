@@ -306,9 +306,9 @@
 		playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
 		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonated: [timer]</font>")
 		if(det_mode == TRUE) //If we're on demolition mode, big boom.
-			explosion(plant_target.loc, 2, 4, 5, 6)
+			explosion(get_turf(plant_target), 2, 4, 5, 6)
 		else //if we're not, focused boom.
-			explosion(plant_target.loc, 1, 1, 2, 3)
+			explosion(get_turf(plant_target), 1, 1, 2, 3)
 		if(plant_target)
 			plant_target.ex_act(1)
 			if(isobj(plant_target))

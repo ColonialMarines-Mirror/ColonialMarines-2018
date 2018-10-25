@@ -349,7 +349,7 @@
 			return
 
 		visible_message("<span class='xenowarning'>\The [src] hits [H] in the [L.display_name] with a devistatingly powerful punch!</span>", \
-		"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devistatingly powerful punch!</span>")
+		"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devastatingly powerful punch!</span>")
 
 
 		if(L.status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.

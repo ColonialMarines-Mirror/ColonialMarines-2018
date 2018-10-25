@@ -245,7 +245,6 @@
 		healthcheck(1, 1, 1, user, W)
 	dismantle = FALSE
 	return ..()
-	return
 
 
 /obj/structure/window/proc/disassemble_window()

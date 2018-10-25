@@ -297,7 +297,7 @@
 					/obj/item/device/healthanalyzer = 3,
 					/obj/item/bodybag/cryobag = 2)
 
-	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/stoxin =3)
+	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/sleeptoxin =3)
 
 
 
@@ -485,7 +485,6 @@
 	icon_state = "squadleader"
 	icon_deny = "squadleader-deny"
 	wrenchable = FALSE
-	tokensupport = "marine"
 
 	products = list(
 						/obj/item/clothing/suit/storage/marine/leader = 1,
@@ -534,7 +533,6 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	wrenchable = FALSE
-	tokensupport = "marine"
 
 	products = list(
 						/obj/item/attachable/suppressor = 8,

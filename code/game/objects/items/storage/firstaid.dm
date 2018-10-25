@@ -100,9 +100,9 @@
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/storage/pill_bottle/dexalin(src)
 	new /obj/item/storage/pill_bottle/inaprovaline(src)
-	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
-	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
-	new /obj/item/reagent_container/hypospray/autoinjector/dexP(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/dexalinplus(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/dexalinplus(src)
+	new /obj/item/reagent_container/hypospray/autoinjector/dexalinplus(src)
 	new /obj/item/storage/syringe_case/oxy(src)
 
 
@@ -173,7 +173,7 @@
 /obj/item/storage/syringe_case/tox/New()
 	..()
 	new /obj/item/reagent_container/syringe(src)
-	new /obj/item/reagent_container/glass/bottle/antitoxin(src)
+	new /obj/item/reagent_container/glass/bottle/dylovene(src)
 	new /obj/item/reagent_container/glass/bottle/hypervene(src)
 
 /obj/item/storage/syringe_case/oxy

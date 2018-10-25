@@ -394,7 +394,7 @@ REAGENT SCANNER
 				var/dylo_recommend = ""
 				//if(reagents_in_body["hypervene"] < 3)
 				//	hypervene = "hypervene"
-				if(reagents_in_body["anti_toxin"] < 5)
+				if(reagents_in_body["dylovene"] < 5)
 					if(synaptizine_amount)
 						dylo_recommend = "Addendum: Dylovene recommended, but conflicting synaptizine present."
 					else

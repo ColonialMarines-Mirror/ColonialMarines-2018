@@ -374,7 +374,7 @@
 
 
 /obj/item/reagent_container/syringe/inaprovaline
-	name = "\improper syringe (Inaprovaline)"
+	name = "syringe (inaprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
 	list_reagents = list("inaprovaline" = 15)
 
@@ -383,22 +383,22 @@
 	mode = SYRINGE_INJECT
 	update_icon()
 
-/obj/item/reagent_container/syringe/antitoxin
-	name = "syringe (anti-toxin)"
+/obj/item/reagent_container/syringe/dylovene
+	name = "syringe (dylovene)"
 	desc = "Contains anti-toxins."
-	list_reagents = list("anti_toxin" = 15)
+	list_reagents = list("dylovene" = 15)
 
-/obj/item/reagent_container/syringe/antitoxin/New()
+/obj/item/reagent_container/syringe/dylovene/New()
 	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
 
 /obj/item/reagent_container/syringe/antiviral
-	name = "\improper syringe (Spaceacillin)"
+	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents. Can also be used to treat infected wounds."
 	list_reagents = list("spaceacillin" = 15)
 
-/obj/item/reagent_container/syringe/robot/antiviral/New()
+/obj/item/reagent_container/syringe/antiviral/New()
 	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
@@ -408,7 +408,7 @@
 	desc = "Contains aggressive drugs meant for torture."
 	list_reagents = list("space_drugs" = 5, "mindbreaker" = 5, "cryptobiolin" = 5)
 
-/obj/item/reagent_container/syringe/robot/drugs/New()
+/obj/item/reagent_container/syringe/drugs/New()
 	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()
@@ -421,36 +421,12 @@
 	mode = SYRINGE_INJECT
 	update_icon()
 
+/obj/item/reagent_container/syringe/mixed
+	name = "syringe (mixed)"
+	desc = "Contains inaprovaline & dylovene."
+	list_reagents = list("inaprovaline" = 7, "dylovene" = 8)
 
-//Robot syringes
-//Not special in any way, code wise. They don't have added variables or procs.
-/obj/item/reagent_container/syringe/robot/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
-	list_reagents = list("anti_toxin" = 15)
-
-/obj/item/reagent_container/syringe/robot/antitoxin/New()
-	. = ..()
-	mode = SYRINGE_INJECT
-	update_icon()
-
-/obj/item/reagent_container/syringe/robot/inoprovaline
-	name = "\improper syringe (Inoprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
-	list_reagents = list("inaprovaline" = 15)
-
-/obj/item/reagent_container/syringe/robot/inaprovaline/New()
-	. = ..()
-	reagents.add_reagent("inaprovaline", 15)
-	mode = SYRINGE_INJECT
-	update_icon()
-
-/obj/item/reagent_container/syringe/robot/mixed
-	name = "\improper syringe (mixed)"
-	desc = "Contains inaprovaline & anti-toxins."
-	list_reagents = list("inaprovaline" = 7, "anti_toxin" = 8)
-
-/obj/item/reagent_container/syringe/robot/mixed/New()
+/obj/item/reagent_container/syringe/mixed/New()
 	. = ..()
 	mode = SYRINGE_INJECT
 	update_icon()

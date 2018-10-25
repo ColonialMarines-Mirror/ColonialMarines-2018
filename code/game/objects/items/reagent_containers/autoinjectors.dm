@@ -63,7 +63,7 @@
 	name = "dylovene autoinjector"
 	desc = "An auto-injector loaded with 15 units of dylovene, an anti-toxin agent useful in cases of poisoning, overdoses and toxin build-up."
 	icon_state = "dylovene"
-	list_reagents = list("anti_toxin" = 15)
+	list_reagents = list("dylovene" = 15)
 
 /obj/item/reagent_container/hypospray/autoinjector/tramadol
 	name = "tramadol autoinjector"

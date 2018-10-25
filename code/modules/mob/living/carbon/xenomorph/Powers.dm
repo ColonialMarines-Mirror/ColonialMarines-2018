@@ -434,14 +434,11 @@
 	var/mob/living/carbon/human/H = M
 	var/datum/limb/L = H.get_limb(check_zone(zone_selected))
 
-	if (!L || L.body_part == UPPER_TORSO || L.body_part == LOWER_TORSO || (L.status & LIMB_DESTROYED)) //Only limbs and head.
+	if (!L || L.body_part == UPPER_TORSO || L.body_part == LOWER_TORSO || (L.status & LIMB_DESTROYED) || L.body_part == HEAD) //Only limbs; no head
 		to_chat(src, "<span class='xenowarning'>You can't rip off that limb.</span>")
 		return FALSE
 	round_statistics.warrior_limb_rips++
 	var/limb_time = rand(40,60)
-
-	if (L.body_part == HEAD)
-		limb_time = rand(90,110)
 
 	visible_message("<span class='xenowarning'>\The [src] begins pulling on [M]'s [L.display_name] with incredible strength!</span>", \
 	"<span class='xenowarning'>You begin to pull on [M]'s [L.display_name] with incredible strength!</span>")
@@ -520,18 +517,24 @@
 	if (!M || !istype(M, /mob/living/carbon/human))
 		return
 
+	if(M.stat == DEAD || (istype(M.buckled, /obj/structure/bed/nest) && M.status_flags & XENO_HOST) ) //No bullying the dead/secured hosts
+		return
+
 	if (fortify)
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
+		return
+
+	if (!check_state())
+		return
+
+	if (used_headbutt)
+		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
 
 	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
 		if (!check_plasma(20))
 			return
 	else if (!check_plasma(10))
-		return
-
-	if (used_headbutt)
-		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
 
 	if(stagger)
@@ -543,7 +546,12 @@
 	var/distance = get_dist(src, H)
 
 	if (distance > 2)
+		if(world.time > (recent_notice + notice_delay)) //anti-notice spam
+			to_chat(src, "<span class='xenowarning'>Your target is too far away!</span>")
+
+			recent_notice = world.time //anti-notice spam
 		return
+
 
 	if (distance > 1)
 		step_towards(src, H, 1)
@@ -557,15 +565,24 @@
 	"<span class='xenowarning'>You ram [H] with your armored crest!</span>")
 
 	used_headbutt = 1
-
 	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
 		use_plasma(20)
 	else
 		use_plasma(10)
 
-	if(H.stat != DEAD && (!(H.status_flags & XENO_HOST) || !istype(H.buckled, /obj/structure/bed/nest)) )
-		H.apply_damage(20)
-		shake_camera(H, 2, 1)
+	face_atom(H) //Face towards the target so we don't look silly
+
+	var/damage = rand(melee_damage_lower,melee_damage_upper)
+	if(frenzy_aura > 0)
+		damage += (frenzy_aura * 2)
+	damage *= (1 + distance * 0.25) //More distance = more momentum = stronger Headbutt.
+	var/affecting = H.get_limb(ran_zone(null, 0))
+	if(!affecting) //Still nothing??
+		affecting = H.get_limb("chest") //Gotta have a torso?!
+	var/armor_block = H.run_armor_check(affecting, "melee")
+	H.apply_damage(damage, BRUTE, affecting, armor_block) //We deal crap brute damage after armor...
+	H.apply_damage(damage, HALLOSS) //...But some sweet armour ignoring Halloss
+	shake_camera(H, 2, 1)
 
 	var/facing = get_dir(src, H)
 	var/headbutt_distance = 3
@@ -579,6 +596,7 @@
 		T = temp
 
 	H.throw_at(T, headbutt_distance, 1, src)
+	H.KnockDown(1, 1)
 	playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	spawn(headbutt_cooldown)
 		used_headbutt = 0
@@ -594,17 +612,17 @@
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
 
-	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
-		if (!check_plasma(30))
-			return
-	else if (!check_plasma(15))
-		return
-
 	if (!check_state())
 		return
 
 	if (used_tail_sweep)
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before tail sweeping.</span>")
+		return
+
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(30))
+			return
+	else if (!check_plasma(15))
 		return
 
 	if(stagger)
@@ -622,17 +640,25 @@
 
 	for (var/mob/living/carbon/human/H in L)
 		step_away(H, src, sweep_range, 2)
-		H.apply_damage(10)
+		if(H.stat != DEAD && !(istype(H.buckled, /obj/structure/bed/nest) && H.status_flags & XENO_HOST) ) //No bully
+			var/damage = rand(melee_damage_lower,melee_damage_upper)
+			if(frenzy_aura > 0)
+				damage += (frenzy_aura * 2)
+			var/affecting = H.get_limb(ran_zone(null, 0))
+			if(!affecting) //Still nothing??
+				affecting = H.get_limb("chest") //Gotta have a torso?!
+			var/armor_block = H.run_armor_check(affecting, "melee")
+			H.apply_damage(damage, BRUTE, affecting, armor_block) //Crap base damage after armour...
+			H.apply_damage(damage, HALLOSS) //...But some sweet armour ignoring Halloss
+			H.KnockDown(1, 1)
 		round_statistics.defender_tail_sweep_hits++
 		shake_camera(H, 2, 1)
 
-		if (prob(50))
-			H.KnockDown(2, 1)
+
 
 		to_chat(H, "<span class='xenowarning'>You are struck by \the [src]'s tail sweep!</span>")
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	used_tail_sweep = TRUE
-
 	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
 		use_plasma(30)
 	else
@@ -683,8 +709,8 @@
 	round_statistics.defender_crest_raises++
 	to_chat(src, "<span class='xenowarning'>You raise your crest.</span>")
 	armor_bonus -= crest_defense_armor
-	speed_modifier -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	xeno_explosion_resistance = 0
+	speed_modifier -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	update_icons()
 	do_crest_defense_cooldown()
 
@@ -1410,3 +1436,46 @@
 		to_chat(src, "<span class='notice'>The selected xeno ability will now be activated with shift clicking.</span>")
 	else
 		to_chat(src, "<span class='notice'>The selected xeno ability will now be activated with middle mouse clicking.</span>")
+
+
+// Runner Savage
+/mob/living/carbon/Xenomorph/proc/Savage(var/mob/living/carbon/M)
+
+	if(!check_state())
+		return
+
+	if(savage_used)
+		to_chat(src, "<span class='xenowarning'>You're too tired to savage right now.</span>")
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't savage with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenodanger'>You're too disoriented from the shock to savage!</span>")
+		return
+
+	var/alien_roar = "alien_roar[rand(1,6)]"
+	playsound(src, alien_roar, 50)
+	use_plasma(10) //Base cost of the Savage
+	src.visible_message("<span class='danger'>\ [src] savages [M]!</span>", \
+	"<span class='xenodanger'>You savage [M]!</span>", null, 5)
+	var/extra_dam = min(15, plasma_stored * 0.2)
+	M.attack_alien(src,  extra_dam, FALSE, TRUE, TRUE, TRUE) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
+	use_plasma(extra_dam * 5) //Expend plasma equal to 4 times the extra damage.
+	savage_used = TRUE
+	do_savage_cooldown()
+
+	return TRUE
+
+/mob/living/carbon/Xenomorph/proc/do_savage_cooldown()
+	if(!savage_used)//sanity check/safeguard
+		return
+	spawn(savage_cooldown)
+		savage_used = FALSE
+		to_chat(src, "<span class='xenowarning'><b>You can now savage your victims again.</b></span>")
+		playsound(src, "xeno_newlarva", 100, 0, 1)
+		for(var/X in actions)
+			var/datum/action/act = X
+			act.update_button_icon()

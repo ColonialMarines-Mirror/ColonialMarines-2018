@@ -325,7 +325,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An alien with an armored head crest. It looks pretty strong."
 					speed = -0.4
 					armor_deflection = 28
-					fortify_armor = 85
+					fortify_armor = 87
 					crest_defense_armor = 43
 				if ("Warrior")
 					melee_damage_lower = 40

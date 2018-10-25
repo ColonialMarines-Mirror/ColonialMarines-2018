@@ -109,10 +109,10 @@
 	updatehealth()
 	return TRUE
 
-/mob/living/carbon/Xenomorph/adjustBruteLoss(var/amount)
+/mob/living/carbon/Xenomorph/adjustBruteLoss(amount)
 	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth - crit_health)
 
-/mob/living/carbon/Xenomorph/adjustFireLoss(var/amount)
+/mob/living/carbon/Xenomorph/adjustFireLoss(amount)
 	fireloss = CLAMP(fireloss + amount, 0, maxHealth - crit_health)
 
 /mob/living/carbon/Xenomorph/proc/check_blood_splash(damage = 0, damtype = BRUTE, chancemod = 0, radius = 1)

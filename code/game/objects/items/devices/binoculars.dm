@@ -114,7 +114,11 @@
 	var/datum/squad/S = user.assigned_squad
 
 	var/laz_name = ""
-	if(S) laz_name = S.name
+	laz_name += user.get_paygrade()
+	laz_name += user.name
+	if(S)
+		laz_name += " ([S.name])"
+
 
 	var/turf/TU = get_turf(A)
 	var/area/targ_area = get_area(A)

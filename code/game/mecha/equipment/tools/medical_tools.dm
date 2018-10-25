@@ -407,13 +407,11 @@
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/critfail()
 	. = ..()
 	reagents.set_reacting(TRUE)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/get_equip_info()
 	. = ..()
 	if(.)
 		return "[.] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes]|Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/action(atom/movable/target)
 	if(!action_checks(target))
@@ -445,7 +443,7 @@
 	log_message("Launched [S] from [src], targeting [target].")
 	spawn(-1)
 		src = null //if src is deleted, still process the syringe
-		for(var/i=0, i<6, i++)
+		for(var/i in 0 to 5)
 			if(!S)
 				break
 			if(step_towards(S,trg))
@@ -511,8 +509,6 @@
 		return
 	if(filterhref.get("purge_all"))
 		reagents.clear_reagents()
-		return
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
@@ -626,12 +622,11 @@
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 		return TRUE
-	return
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/on_reagent_change()
 	. = ..()
 	update_equip_info()
-	return
 
 /datum/global_iterator/mech_synth
 	delay = 100

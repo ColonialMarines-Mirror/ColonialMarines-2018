@@ -317,29 +317,17 @@ macro "hotkeymode"
 		name = "Numpad2"
 		command = "a-select-zone groin"
 	elem 
-		name = "Numpad7"
+		name = "Numpad4"
 		command = "a-select-zone rarm"
 	elem 
-		name = "Numpad4"
-		command = "a-select-zone rhand"
-	elem 
-		name = "Numpad9"
-		command = "a-select-zone larm"
-	elem 
 		name = "Numpad6"
-		command = "a-select-zone lhand"
+		command = "a-select-zone larm"
 	elem 
 		name = "Numpad1"
 		command = "a-select-zone rleg"
 	elem 
-		name = "Numpad0"
-		command = "a-select-zone rfoot"
-	elem 
 		name = "Numpad3"
 		command = "a-select-zone lleg"
-	elem 
-		name = "Numpad."
-		command = "a-select-zone lfoot"
 
 
 

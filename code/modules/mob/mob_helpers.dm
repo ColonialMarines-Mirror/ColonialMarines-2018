@@ -564,51 +564,66 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 	switch(input)
 		if("head")
-			if (usr.zone_selected == "head")
+			if(usr.zone_selected == "head")
 				usr.zone_selected = "eyes"
-				usr.client.screen[zone_selected].selecting = "eyes"
-			if (usr.zone_selected == "eyes")
+				usr.client.screen[21].selecting = "eyes"
+			else if(usr.zone_selected == "eyes")
 				usr.zone_selected = "mouth"
-				usr.client.screen[zone_selected].selecting = "mouth"
-			if (usr.zone_selected == "mouth")
+				usr.client.screen[21].selecting = "mouth"
+			else if(usr.zone_selected == "mouth")
 				usr.zone_selected = "head"
-				usr.client.screen[zone_selected].selecting = "head"
+				usr.client.screen[21].selecting = "head"
 			else
 				usr.zone_selected = "head"
-				usr.client.screen[zone_selected].selecting = "head"
+				usr.client.screen[21].selecting = "head"
 		if("chest")
 			usr.zone_selected = "chest"
-			usr.client.screen[zone_selected].selecting = "chest"
+			usr.client.screen[21].selecting = "chest"
 		if("groin")
 			usr.zone_selected = "groin"
-			usr.client.screen[zone_selected].selecting = "groin"
+			usr.client.screen[21].selecting = "groin"
 		if("rarm")
-			usr.zone_selected = "r_arm"
-			usr.client.screen[zone_selected].selecting = "r_arm"
-		if("rhand")
-			usr.zone_selected = "r_hand"
-			usr.client.screen[zone_selected].selecting = "r_hand"
+			if(usr.zone_selected == "r_arm")
+				usr.zone_selected = "r_hand"
+				usr.client.screen[21].selecting = "r_hand"
+			else if(usr.zone_selected == "r_hand")
+				usr.zone_selected = "r_arm"
+				usr.client.screen[21].selecting = "r_arm"
+			else
+				usr.zone_selected = "r_arm"
+				usr.client.screen[21].selecting = "r_arm"
 		if("larm")
-			usr.zone_selected = "l_arm"
-			usr.client.screen[zone_selected].selecting = "l_arm"
-		if("lhand")
-			usr.zone_selected = "l_hand"
-			usr.client.screen[zone_selected].selecting = "l_hand"
+			if(usr.zone_selected == "l_arm")
+				usr.zone_selected = "l_hand"
+				usr.client.screen[21].selecting = "l_hand"
+			else if(usr.zone_selected == "l_hand")
+				usr.zone_selected = "l_arm"
+				usr.client.screen[21].selecting = "l_arm"
+			else
+				usr.zone_selected = "l_arm"
+				usr.client.screen[21].selecting = "l_arm"
 		if("rleg")
-			usr.zone_selected = "r_leg"
-			usr.client.screen[zone_selected].selecting = "r_leg"
-		if("rfoot")
-			usr.zone_selected = "r_foot"
-			usr.client.screen[zone_selected].selecting = "r_foot"
+			if(usr.zone_selected == "r_leg")
+				usr.zone_selected = "r_foot"
+				usr.client.screen[21].selecting = "r_foot"
+			else if(usr.zone_selected == "r_foot")
+				usr.zone_selected = "r_leg"
+				usr.client.screen[21].selecting = "r_leg"
+			else
+				usr.zone_selected = "r_leg"
+				usr.client.screen[21].selecting = "r_leg"
 		if("lleg")
-			usr.zone_selected = "l_leg"
-			usr.client.screen[zone_selected].selecting = "l_leg"
-		if("lfoot")
-			usr.zone_selected = "l_foot"
-			usr.client.screen[zone_selected].selecting = "l_foot"
+			if(usr.zone_selected == "l_leg")
+				usr.zone_selected = "l_foot"
+				usr.client.screen[21].selecting = "l_foot"
+			else if(usr.zone_selected == "l_foot")
+				usr.zone_selected = "l_leg"
+				usr.client.screen[21].selecting = "l_leg"
+			else
+				usr.zone_selected = "l_leg"
+				usr.client.screen[21].selecting = "l_leg"
 
-	usr.client.screen[zone_selected].overlays.Cut()
-	usr.client.screen[zone_selected].overlays += image('icons/mob/zone_sel.dmi', "l_foot")
+	usr.client.screen[21].update_icon()
 
 //can the mob be operated on?
 /mob/proc/can_be_operated_on()

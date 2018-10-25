@@ -281,7 +281,7 @@
 <BR>
 <B>Detection Settings:</B><BR>
 <BR>
- <B>Friendly Detection Status:</B> [detector_mode ? "Short Range" : "Long Range"]<BR>
+ <B>Detection Mode:</B> [detector_mode ? "Short Range" : "Long Range"]<BR>
 <A href='?src=\ref[src];detector_mode=1'><B>Set Detector Mode:</B> [detector_mode ? "Long Range" : "Short Range"]</A><BR>
 <BR>
  <B>Friendly Detection Status:</B> [detect_friendlies ? "ACTIVE" : "INACTIVE"]<BR>

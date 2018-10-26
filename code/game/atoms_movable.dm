@@ -383,8 +383,3 @@
 //called when a mob tries to breathe while inside us.
 /atom/movable/proc/handle_internal_lifeform(mob/lifeform_inside_me)
 	. = return_air()
-
-/atom/movable/proc/update_action_button_icons()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()

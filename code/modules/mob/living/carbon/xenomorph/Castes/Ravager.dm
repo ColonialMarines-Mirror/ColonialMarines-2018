@@ -136,7 +136,7 @@
 			break
 		W = locate() in T
 		if(W)
-			if(W.is_full_window())
+			if(W.fulltile)
 				break
 			if(W.dir == dir)
 				break

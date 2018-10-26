@@ -1,6 +1,11 @@
 
 //for all defines that doesn't fit in any other file.
 
+#define CARDINAL_DIRS 		list(1,2,4,8)
+#define CARDINAL_ALL_DIRS 	list(1,2,4,5,6,8,9,10)
+
+#define LEFT 1
+#define RIGHT 2
 
 //dirt type for each turf types.
 
@@ -17,5 +22,9 @@
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+//Gets the turf this atom inhabits
+#define get_turf(A) get_step(A, 0)
+
 
 #define RESIZE_DEFAULT_SIZE 1

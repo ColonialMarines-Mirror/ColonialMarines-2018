@@ -7,10 +7,14 @@
 	anchored = TRUE
 	layer = WINDOW_LAYER
 	flags_atom = ON_BORDER
-	var/health = 15
+	var/health = 25
 	var/state = 2
 	var/reinf = FALSE
+	var/heat_resistance = 800
 	var/basestate = "window"
+	var/fulltile = FALSE
+	var/glass_type = /obj/item/stack/sheet/glass
+	var/glass_amount = 1
 	var/shardtype = /obj/item/shard
 	var/windowknock_cooldown = 0
 	var/static_frame = FALSE //If true, can't move the window
@@ -62,17 +66,10 @@
 			health -= rand(25, 75)
 			healthcheck(0, 1)
 
-//TODO: Make full windows a separate type of window.
-//Once a full window, it will always be a full window, so there's no point
-//having the same type for both.
-/obj/structure/window/proc/is_full_window()
-	if(!(flags_atom & ON_BORDER))
-		return TRUE
-
 /obj/structure/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return TRUE
-	if(is_full_window())
+	if(fulltile)
 		return FALSE //Full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
@@ -211,51 +208,56 @@
 	if(W.flags_item & NOBLUDGEON)
 		return
 
-	if(istype(W, /obj/item/tool/screwdriver) && deconstructable)
-		if(reinf && state >= 1)
-			state = 3 - state
+
+	if(deconstructable)
+		if(istype(W, /obj/item/tool/screwdriver))
+			if(static_frame)
+				state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
+				to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
+			else if(state != WINDOW_OUT_OF_FRAME)
+				if(reinf)
+					if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
+						state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
+						to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
+					if(state == WINDOW_OUT_OF_FRAME)
+						anchored = !anchored
+						update_nearby_icons()
+						to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
+				else
+					anchored = !anchored
+					update_nearby_icons()
+					to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 25, 1)
-			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
-		else if(reinf && state == 0 && !static_frame)
-			anchored = !anchored
+			return
+		else if(istype(W, /obj/item/tool/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
+			state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
+			playsound(loc, 'sound/items/Crowbar.ogg', 25, 1)
+			to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
+			return
+		else if(istype(W,/obj/item/tool/wrench) && (!anchored || (static_frame && state == WINDOW_IN_FRAME)))
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			to_chat(user, "<span class='notice'>You disassemble [src].</span>")
+			disassemble_window(user)
+			return
+	if(damageable) //Possible to destroy
+		health -= W.force
+		if(health <= 7  && !reinf && !static_frame && deconstructable)
+			anchored = FALSE
 			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 25, 1)
-			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
-		else if(!reinf && !static_frame)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 25, 1)
-			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
-		else if(static_frame && state == 0)
-			disassemble_window()
-	else if(istype(W, /obj/item/tool/crowbar) && reinf && state <= 1 && deconstructable)
-		state = 1 - state
-		playsound(loc, 'sound/items/Crowbar.ogg', 25, 1)
-		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
-	else
-		if(damageable) //Possible to destroy
-			health -= W.force
-			if(health <= 7  && !reinf && !static_frame && deconstructable)
-				anchored = FALSE
-				update_nearby_icons()
-				step(src, get_dir(user, src))
+			step(src, get_dir(user, src))
 		healthcheck(1, 1, 1, user, W)
-		..()
-	return
+	return ..()
 
 
-/obj/structure/window/proc/disassemble_window()
-	if(reinf)
-		new /obj/item/stack/sheet/glass/reinforced(loc, 2)
-	else
-		new /obj/item/stack/sheet/glass/reinforced(loc, 2)
+/obj/structure/window/proc/disassemble_window(mob/user)
+	new glass_type(get_turf(user), glass_amount)
 	cdel(src)
 
 
 /obj/structure/window/proc/shatter_window(create_debris)
 	if(create_debris)
 		new shardtype(loc)
-		if(is_full_window())
+		if(fulltile)
 			new shardtype(loc)
 		if(reinf)
 			new /obj/item/stack/rods(loc)
@@ -295,22 +297,15 @@
 	dir = turn(dir, 270)
 
 
-/obj/structure/window/New(Loc, start_dir = null, constructed = 0)
-	..()
-
-	//player-constructed windows
-	if(constructed)
-		anchored = FALSE
-
-	if(start_dir)
-		dir = start_dir
+/obj/structure/window/New()
+	. = ..()
 
 	update_nearby_icons()
 
 /obj/structure/window/Dispose()
 	density = FALSE
 	update_nearby_icons()
-	. = ..()
+	return ..()
 
 /obj/structure/window/Move()
 	var/ini_dir = dir
@@ -332,12 +327,12 @@
 	spawn(2)
 		if(!src)
 			return
-		if(!is_full_window())
+		if(!fulltile)
 			icon_state = "[basestate]"
 			return
 		if(anchored)
-			for(var/obj/structure/window/W in orange(src, 1))
-				if(W.anchored && W.density	&& W.is_full_window()) //Only counts anchored, not-destroyed fill-tile windows.
+			for(var/obj/structure/window/W in Adjacent(src))
+				if(W.anchored && W.density	&& W.fulltile) //Only counts anchored, not-destroyed fill-tile windows.
 					if(abs(x - W.x) - abs(y - W.y)) //Doesn't count windows, placed diagonally to src
 						junction |= get_dir(src, W)
 		if(opacity)
@@ -351,45 +346,96 @@
 		return
 
 /obj/structure/window/fire_act(exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 800)
+	if(exposed_temperature > T0C + heat_resistance)
 		if(damageable)
 			health -= round(exposed_volume / 100)
 		healthcheck(0) //Don't make hit sounds, it's dumb with fire/heat
 	..()
 
-/obj/structure/window/phoronbasic
+
+/obj/structure/window/spawner/east
+	dir = EAST
+
+/obj/structure/window/spawner/west
+	dir = WEST
+
+/obj/structure/window/spawner/north
+	dir = NORTH
+
+/obj/structure/window/unanchored
+	state = 0
+	anchored = FALSE
+
+/obj/structure/window/phoron
 	name = "phoron window"
 	desc = "A phoron-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
 	basestate = "phoronwindow"
 	icon_state = "phoronwindow"
 	shardtype = /obj/item/shard/phoron
-	health = 120
+	heat_resistance = 25000
+	health = 250
+	glass_type = /obj/item/stack/sheet/glass/phoron
 
-/obj/structure/window/phoronbasic/fire_act(exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 32000)
-		health -= round(exposed_volume / 1000)
-		healthcheck(0) //Don't make hit sounds, it's dumb with fire/heat
-	..()
+/obj/structure/window/phoron/spawner/east
+	dir = EAST
 
-/obj/structure/window/phoronreinforced
+/obj/structure/window/phoron/spawner/west
+	dir = WEST
+
+/obj/structure/window/phoron/spawner/north
+	dir = NORTH
+
+/obj/structure/window/phoron/unanchored
+	state = 0
+	anchored = FALSE
+
+/obj/structure/window/phoron/reinforced
 	name = "reinforced phoron window"
 	desc = "A phoron-glass alloy window with a rod matrice. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
 	basestate = "phoronrwindow"
 	icon_state = "phoronrwindow"
 	shardtype = /obj/item/shard/phoron
 	reinf = TRUE
-	health = 160
+	heat_resistance = 50000
+	health = 500
+	glass_type = /obj/item/stack/sheet/glass/phoron/reinforced
 
-/obj/structure/window/phoronreinforced/fire_act(exposed_temperature, exposed_volume)
-	return
+
+/obj/structure/window/phoron/reinforced/spawner/east
+	dir = EAST
+
+/obj/structure/window/phoron/reinforced/spawner/west
+	dir = WEST
+
+/obj/structure/window/phoron/reinforced/spawner/north
+	dir = NORTH
+
+/obj/structure/window/phoron/reinforced/unanchored
+	state = 0
+	anchored = FALSE
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "A glass window with a rod matrice. It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
 	basestate = "rwindow"
-	health = 40
+	heat_resistance = 1600
+	health = 50
 	reinf = TRUE
+	glass_type = /obj/item/stack/sheet/glass/reinforced
+
+/obj/structure/window/reinforced/spawner/east
+	dir = EAST
+
+/obj/structure/window/reinforced/spawner/west
+	dir = WEST
+
+/obj/structure/window/reinforced/spawner/north
+	dir = NORTH
+
+/obj/structure/window/reinforced/unanchored
+	state = 0
+	anchored = FALSE
 
 /obj/structure/window/reinforced/toughened
 	name = "safety glass"
@@ -399,12 +445,14 @@
 	health = 300
 	reinf = TRUE
 
-/obj/structure/window/New(Loc, constructed = 0)
-	..()
+/obj/structure/window/reinforced/toughened/spawner/east
+	dir = EAST
 
-	//player-constructed windows
-	if(constructed)
-		state = 0
+/obj/structure/window/reinforced/toughened/spawner/west
+	dir = WEST
+
+/obj/structure/window/reinforced/toughened/spawner/north
+	dir = NORTH
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -413,12 +461,30 @@
 	basestate = "twindow"
 	opacity = TRUE
 
+/obj/structure/window/reinforced/tinted/spawner/east
+	dir = EAST
+
+/obj/structure/window/reinforced/tinted/spawner/west
+	dir = WEST
+
+/obj/structure/window/reinforced/tinted/spawner/north
+	dir = NORTH
+
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	desc = "A glass window with a rod matrice. It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
 	basestate = "fwindow"
-	health = 30
+	health = 40
+
+/obj/structure/window/reinforced/tinted/frosted/spawner/east
+	dir = EAST
+
+/obj/structure/window/reinforced/tinted/frosted/spawner/west
+	dir = WEST
+
+/obj/structure/window/reinforced/tinted/frosted/spawner/north
+	dir = NORTH
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
@@ -426,18 +492,74 @@
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
-	health = 40
+	health = 200
 	reinf = TRUE
+	fulltile = TRUE
+	heat_resistance = 1600
+	glass_amount = 4
 
-/obj/structure/window/shuttle/update_icon() //icon_state has to be set manually
-	return
+/obj/structure/window/shuttle/tinted
+	opacity = TRUE
+
+/obj/structure/window/shuttle/unanchored
+	state = 0
+	anchored = FALSE
+
+/obj/structure/window/fulltile
+	flags_atom = 0
+	dir = FULLTILE_WINDOW_DIR
+	fulltile = TRUE
+	health = 50
+	glass_amount = 4
+
+/obj/structure/window/fulltile/unanchored
+	anchored = FALSE
+
+/obj/structure/window/phoron/fulltile
+	flags_atom = 0
+	dir = FULLTILE_WINDOW_DIR
+	fulltile = TRUE
+	health = 500
+	glass_amount = 4
+
+/obj/structure/window/phoron/fulltile/unanchored
+	anchored = FALSE
+
+/obj/structure/window/phoron/reinforced/fulltile
+	flags_atom = 0
+	dir = FULLTILE_WINDOW_DIR
+	health = 1000
+	fulltile = TRUE
+	glass_amount = 4
+
+/obj/structure/window/phoron/reinforced/fulltile/unanchored
+	anchored = FALSE
+
+/obj/structure/window/reinforced/fulltile
+	flags_atom = 0
+	dir = FULLTILE_WINDOW_DIR
+	fulltile = TRUE
+	health = 100
+	glass_amount = 4
+
+/obj/structure/window/reinforced/fulltile/unanchored
+	anchored = FALSE
+
+/obj/structure/window/reinforced/tinted/fulltile
+	flags_atom = 0
+	dir = FULLTILE_WINDOW_DIR
+	fulltile = TRUE
+	health = 80
+	glass_amount = 4
 
 //Framed windows
 
 /obj/structure/window/framed
-	name = "theoretical window"
 	layer = TABLE_LAYER
 	static_frame = TRUE
+	fulltile = TRUE
+	glass_type = /obj/item/stack/sheet/glass/reinforced
+	glass_amount = 4
 	var/window_frame //For perspective windows,so the window frame doesn't magically dissapear
 	var/list/tiles_special = list(/obj/machinery/door/airlock,
 		/obj/structure/window/framed,
@@ -457,10 +579,6 @@
 		cdel(WW)
 	. = ..()
 
-
-/obj/structure/window/framed/is_full_window()
-	return TRUE
-
 /obj/structure/window/framed/update_nearby_icons()
 	relativewall_neighbours()
 
@@ -473,14 +591,14 @@
 		var/obj/structure/window_frame/WF = new window_frame(loc)
 		WF.icon_state = "[WF.basestate][junction]_frame"
 		WF.dir = dir
-	..()
+	return ..()
 
 /obj/structure/window/framed/shatter_window(create_debris)
 	if(window_frame)
 		var/obj/structure/window_frame/new_window_frame = new window_frame(loc, TRUE)
 		new_window_frame.icon_state = "[new_window_frame.basestate][junction]_frame"
 		new_window_frame.dir = dir
-	..()
+	return ..()
 
 
 /obj/structure/window/framed/proc/drop_window_frame()
@@ -497,7 +615,8 @@
 	basestate = "alm_rwindow"
 	health = 100 //Was 600
 	reinf = TRUE
-	dir = 5
+	dir = NORTHEAST
+	flags_atom = 0
 	window_frame = /obj/structure/window_frame/almayer
 
 /obj/structure/window/framed/almayer/toughened
@@ -528,7 +647,6 @@
 
 
 /obj/structure/window/framed/colony
-	name = "window"
 	icon_state = "col_window0"
 	basestate = "col_window"
 	window_frame = /obj/structure/window_frame/colony

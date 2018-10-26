@@ -437,7 +437,7 @@
 			var/t = get_dir(src, AM)
 			if (istype(AM, /obj/structure/window))
 				var/obj/structure/window/W = AM
-				if(W.is_full_window())
+				if(W.fulltile)
 					for(var/obj/structure/window/win in get_step(AM,t))
 						now_pushing = 0
 						return

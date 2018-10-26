@@ -12,7 +12,7 @@
 	var/destroyed = FALSE
 
 
-/obj/structure/grille/fence/
+/obj/structure/grille/fence
 	var/width = 3
 	health = 50
 
@@ -136,7 +136,7 @@
 	if(Proj.ammo.damage_type == HALLOSS)
 		return FALSE
 
-	src.health -= round(Proj.damage*0.3)
+	health -= round(Proj.damage*0.3)
 	healthcheck()
 	return TRUE
 
@@ -156,57 +156,44 @@
 
 //window placing begin
 	else if(istype(W,/obj/item/stack/sheet/glass))
+		if(destroyed)
+			return
+		if(!anchored)
+			to_chat(user, "<span class='warning'>[src] needs to be fastened to the floor first!</span>")
+			return
 		var/obj/item/stack/sheet/glass/ST = W
-		var/dir_to_set = 1
-		if(loc == user.loc)
-			dir_to_set = user.dir
-		else
-			if( ( x == user.x ) || (y == user.y) ) //Only supposed to work for cardinal directions.
-				if( x == user.x )
-					if( y > user.y )
-						dir_to_set = 2
-					else
-						dir_to_set = 1
-				else if( y == user.y )
-					if( x > user.x )
-						dir_to_set = 8
-					else
-						dir_to_set = 4
-			else
-				to_chat(user, "<span class='notice'>You can't reach.</span>")
-				return //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
+		if (ST.get_amount() < 4)
+			to_chat(user, "<span class='warning'>You need at least four sheets of glass for that!</span>")
+			return
 		for(var/obj/structure/window/WINDOW in loc)
-			if(WINDOW.dir == dir_to_set)
-				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
-				return
+			to_chat(user, "<span class='notice'>There is already a window there.</span>")
+			return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
 		if(do_after(user,20, TRUE, 5, BUSY_ICON_BUILD))
+			if(loc || !anchored) //Grille destroyed or unanchored while waiting
+				return
 			for(var/obj/structure/window/WINDOW in loc)
-				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
-					to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
-					return
-
+				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
+				return
 			var/wtype = ST.created_window
-			if (ST.use(1))
-				var/obj/structure/window/WD = new wtype(loc, dir_to_set, 1)
+			if (ST.use(4))
+				var/obj/structure/window/WD = new wtype(loc)
 				to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
-				WD.update_icon()
 		return
 //window placing end
 
-	else if(istype(W, /obj/item/shard))
-		health -= W.force * 0.1
-	else if(!shock(user, 70))
-		playsound(loc, 'sound/effects/grillehit.ogg', 25, 1)
+	else if(!shock(user, 70) || istype(W, /obj/item/shard))
 		switch(W.damtype)
-			if("fire")
-				health -= W.force
-			if("brute")
-				health -= W.force * 0.1
+			if(BRUTE)
+				if(W.force)
+					playsound(loc, 'sound/effects/grillehit.ogg', 25, 1)
+				else
+					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+			if(BURN)
+				playsound(src, 'sound/items/welder.ogg', 80, 1)
+		health -= W.force
 	healthcheck()
-	..()
-	return
-
+	return ..()
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 0)

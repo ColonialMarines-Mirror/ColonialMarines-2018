@@ -192,7 +192,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)
 			continue
-		if(D.is_full_window())
+		if(D.fulltile)
 			return TRUE
 	for(var/obj/machinery/door/D in loc)
 		if(!D.density)
@@ -270,7 +270,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)
 			continue
-		if(D.is_full_window())
+		if(D.fulltile)
 			return TRUE
 		if(D.dir == direction)
 			return TRUE

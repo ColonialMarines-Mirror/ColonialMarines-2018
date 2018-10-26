@@ -4,12 +4,16 @@
  *		Reinforced glass sheets
  *		Phoron Glass Sheets
  *		Reinforced Phoron Glass Sheets (AKA Holy fuck strong windows)
- *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
 /*
  * Glass sheets
  */
+var/global/list/datum/stack_recipe/glass_recipes = list ( \
+	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, one_per_turf = 2, on_floor = TRUE, skill_req = SKILL_CONSTRUCTION_METAL), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 4, time = 20, one_per_turf = 1, on_floor = TRUE, skill_req = SKILL_CONSTRUCTION_METAL) \
+	)
+
 /obj/item/stack/sheet/glass
 	name = "glass"
 	desc = "Glass is a non-crystalline solid, made out of silicate, the primary constituent of sand. It is valued for its transparency, albeit it is not too resistant to damage."
@@ -18,130 +22,51 @@
 	matter = list("glass" = 3750)
 	origin_tech = "materials=1"
 	stack_id = "glass sheet"
-	var/created_window = /obj/structure/window
 	var/is_reinforced = 0
-	var/list/construction_options = list("One Direction", "Full Window")
+	var/created_window = /obj/structure/window/fulltile/unanchored //only used by grilles now
 
 /obj/item/stack/sheet/glass/cyborg
 	matter = null
 
-/obj/item/stack/sheet/glass/attack_self(mob/user as mob)
-
-	if(istype(get_area(usr.loc),/area/sulaco/hangar))  //HANGER BUILDING
-		to_chat(usr, "<span class='warning'>No. This area is needed for the dropships and personnel.</span>")
-		return
-
-	construct_window(user)
-
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
+	add_fingerprint(user)
+
 	if(!is_reinforced)
 		if(istype(W,/obj/item/stack/cable_coil))
 			var/obj/item/stack/cable_coil/CC = W
-			if (get_amount() < 1 || CC.get_amount() < 5)
+			if (!(CC.get_amount() >= 5 && get_amount() >= 1))
 				to_chat(user, "<span class='warning'>You need five lengths of coil and one sheet of glass to make wired glass.</span>")
 				return
-
 			CC.use(5)
-			new /obj/item/stack/light_w(user.loc, 1)
 			use(1)
 			to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
+			var/obj/item/stack/light_w/new_tile = new(get_turf(user))
+			new_tile.add_fingerprint(user)
 		else if(istype(W, /obj/item/stack/rods))
 			var/obj/item/stack/rods/V  = W
 			if (V.get_amount() < 1 || get_amount() < 1)
 				to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass.</span>")
 				return
-
-			var/obj/item/stack/sheet/glass/reinforced/RG = new (user.loc)
+			var/obj/item/stack/sheet/glass/reinforced/RG = new(get_turf(user))
 			RG.add_fingerprint(user)
 			RG.add_to_stacks(user)
 			var/obj/item/stack/sheet/glass/G = src
-			src = null
-			var/replace = (user.get_inactive_hand()==G)
+			var/replace = (user.get_inactive_hand()==src)
 			V.use(1)
-			G.use(1)
-			if (!G && replace)
+			use(1)
+			if (G.disposed && replace)
 				user.put_in_hands(RG)
-
-/obj/item/stack/sheet/glass/proc/construct_window(mob/user)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "\red You don't have the dexterity to do this!")
-		return 0
-	if(ishuman(user) && user.mind && user.mind.cm_skills && user.mind.cm_skills.construction < SKILL_CONSTRUCTION_PLASTEEL)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to build with [src].</span>",
-		"<span class='notice'>You fumble around figuring out how to build with [src].</span>")
-		var/fumbling_time = 100 - 20 * user.mind.cm_skills.construction
-		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
-	var/title = "Sheet-[name]"
-	title += " ([src.amount] sheet\s left)"
-	switch(input(title, "What would you like to construct?") as null|anything in construction_options)
-		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
-
-			var/list/directions = new/list(cardinal)
-			var/i = 0
-			for (var/obj/structure/window/win in user.loc)
-				i++
-				if(i >= 4)
-					to_chat(user, "\red There are too many windows in this location.")
-					return 1
-				directions-=win.dir
-				if(!(win.dir in cardinal))
-					to_chat(user, "\red Can't let you do that.")
-					return 1
-
-			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
-			var/dir_to_set = 2
-			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
-				var/found = 0
-				for(var/obj/structure/window/WT in user.loc)
-					if(WT.dir == direction)
-						found = 1
-				if(!found)
-					dir_to_set = direction
-					break
-			new created_window( user.loc, dir_to_set, 1 )
-			src.use(1)
-		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
-			if(src.amount < 4)
-				to_chat(user, "\red You need more glass to do that.")
-				return 1
-			if(locate(/obj/structure/window) in user.loc)
-				to_chat(user, "\red There is a window in the way.")
-				return 1
-			new created_window( user.loc, SOUTHWEST, 1 )
-			src.use(4)
-		if("Windoor")
-			if(!is_reinforced) return 1
-
-			if(!src || src.loc != user) return 1
-
-			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
-				to_chat(user, "\red There is already a windoor assembly in that location.")
-				return 1
-
-			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
-				to_chat(user, "\red There is already a windoor in that location.")
-				return 1
-
-			if(src.amount < 5)
-				to_chat(user, "\red You need more glass to do that.")
-				return 1
-
-			new /obj/structure/windoor_assembly(user.loc, user.dir, 1)
-			src.use(5)
-
-	return 0
-
 
 /*
  * Reinforced glass sheets
  */
+
+var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
+	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 20, on_floor = TRUE, one_per_turf = 2, skill_req = SKILL_CONSTRUCTION_ADVANCED), \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, on_floor = TRUE, one_per_turf = 1, skill_req = SKILL_CONSTRUCTION_METAL), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 4, time = 10, on_floor = TRUE, one_per_turf = 1, skill_req = SKILL_CONSTRUCTION_METAL) \
+)
+
 /obj/item/stack/sheet/glass/reinforced
 	name = "reinforced glass"
 	desc = "Reinforced glass is made out of squares of regular silicate glass layered on a metallic rod matrice. This glass is more resistant to direct impacts, even if it may crack."
@@ -152,9 +77,9 @@
 	matter = list("metal" = 1875,"glass" = 3750)
 	origin_tech = "materials=2"
 
-	created_window = /obj/structure/window/reinforced
 	is_reinforced = 1
-	construction_options = list("One Direction", "Full Window", "Windoor")
+	created_window = /obj/structure/window/reinforced/fulltile/unanchored //only used by grilles now
+
 
 /obj/item/stack/sheet/glass/reinforced/cyborg
 	matter = null
@@ -162,36 +87,51 @@
 /*
  * Phoron Glass sheets
  */
-/obj/item/stack/sheet/glass/phoronglass
+var/global/list/datum/stack_recipe/pglass_recipes = list ( \
+	new/datum/stack_recipe("directional window", /obj/structure/window/phoron/unanchored, on_floor = TRUE, one_per_turf = 2, skill_req = SKILL_CONSTRUCTION_PLASTEEL), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/phoron/fulltile/unanchored, 4, time = 10, on_floor = TRUE, one_per_turf = 1, skill_req = SKILL_CONSTRUCTION_PLASTEEL) \
+)
+
+/obj/item/stack/sheet/glass/phoron
 	name = "phoron glass"
 	desc = "Phoron glass is a silicate-phoron alloy turned into a non-crystalline solid. It is transparent just like glass, even if visibly tainted pink, and very resistant to damage and heat."
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
 	matter = list("glass" = 7500)
 	origin_tech = "materials=3;phorontech=2"
-	created_window = /obj/structure/window/phoronbasic
+	created_window = /obj/structure/window/phoron/fulltile/unanchored //only used by grilles now
 
-/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
-	..()
-	if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
+
+/obj/item/stack/sheet/glass/phoron/attackby(obj/item/W, mob/user, params)
+	if(!is_reinforced)
+		add_fingerprint(user)
+		if(istype(W,/obj/item/stack/rods))
+			var/obj/item/stack/rods/V  = W
+			if (V.get_amount() >= 1 && get_amount() >= 1)
+				var/obj/item/stack/sheet/glass/phoron/reinforced/RG = new (get_turf(user))
+				RG.add_fingerprint(user)
+				RG.add_to_stacks(user)
+				V.use(1)
+				var/replace = (user.get_inactive_hand()==src)
+				use(1)
+				if (disposed && !RG && replace)
+					user.put_in_hands(RG)
+			else
+				to_chat(user, "<span class='warning'>You need one rod and one sheet of plasma glass to make reinforced plasma glass!</span>")
+				return
 	else
 		return ..()
 
 /*
  * Reinforced phoron glass sheets
  */
-/obj/item/stack/sheet/glass/phoronrglass
+
+var/global/list/datum/stack_recipe/prglass_recipes = list ( \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/phoron/reinforced/unanchored, on_floor = TRUE, one_per_turf = 2, skill_req = SKILL_CONSTRUCTION_PLASTEEL), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/phoron/reinforced/fulltile/unanchored, 4, time = 10, on_floor = TRUE, one_per_turf = 1, skill_req = SKILL_CONSTRUCTION_PLASTEEL) \
+)
+
+/obj/item/stack/sheet/glass/phoron/reinforced
 	name = "reinforced phoron glass"
 	desc = "Reinforced phoron glass is made out of squares of silicate-phoron alloy glass layered on a metallic rod matrice. It is insanely resistant to both physical shock and heat."
 	singular_name = "reinforced phoron glass sheet"
@@ -199,5 +139,6 @@
 	matter = list("glass" = 7500,"metal" = 1875)
 
 	origin_tech = "materials=4;phorontech=2"
-	created_window = /obj/structure/window/phoronreinforced
 	is_reinforced = 1
+	created_window = /obj/structure/window/phoron/reinforced/fulltile/unanchored //only used by grilles now
+

@@ -134,7 +134,7 @@
 						status = MOTION_DETECTOR_FRIENDLY
 					else
 						continue
-		if(world.time > M.l_move_time + 20 && (status < MOTION_DETECTOR_FRIENDLY))
+		if(world.time > M.l_move_time + 20 && (status == MOTION_DETECTOR_HOSTILE))
 			continue //hasn't moved recently
 
 		detected = TRUE

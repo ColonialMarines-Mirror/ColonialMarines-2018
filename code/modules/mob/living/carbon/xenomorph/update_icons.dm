@@ -37,11 +37,6 @@
 			icon_state = "[caste] Walking"
 	update_fire() //the fire overlay depends on the xeno's stance, so we must update it.
 
-/mob/living/carbon/Xenomorph/proc/update_action_button_icons()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
-
 /mob/living/carbon/Xenomorph/regenerate_icons()
 	..()
 	if(monkeyizing)

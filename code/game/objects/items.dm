@@ -680,8 +680,3 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 //Note that this is overriden by every proc concerning a child of obj unless inherited
 /obj/item/attack_alien(mob/living/carbon/Xenomorph/M)
 	return FALSE
-
-/obj/item/proc/update_action_button_icons()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()

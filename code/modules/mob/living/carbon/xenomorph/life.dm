@@ -96,7 +96,7 @@
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
 	if(health >= maxHealth || hardcore) //no damage, don't bother
-		updatehealth()
+		updatehealth() //Update health-related stats, like health itself (using brute and fireloss), health HUD and status.
 		return
 	var/turf/T = loc
 	if(!T || !istype(T)) //where are we?

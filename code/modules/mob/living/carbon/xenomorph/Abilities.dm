@@ -1198,7 +1198,7 @@
 		button.overlays.Cut()
 		button.overlays += image('icons/mob/actions.dmi', button, "savage_on")
 
-// Defender Headbutt
+// Crusher Crest Toss
 /datum/action/xeno_action/activable/cresttoss
 	name = "Crest Toss"
 	action_icon_state = "cresttoss"

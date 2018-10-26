@@ -16,4 +16,4 @@
 	if(ghost_xenohud)
 		H = huds[MOB_HUD_XENO_STATUS]
 		H.add_hud_to(src)
-	..()
+	return ..()

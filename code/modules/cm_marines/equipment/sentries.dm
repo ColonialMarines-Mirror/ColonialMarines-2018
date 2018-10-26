@@ -1,6 +1,10 @@
 //Deployable turrets. They can be either automated, manually fired, or installed with a pAI.
 //They are built in stages, and only engineers have access to them.
 
+#define SENTRY_ALERT_AMMO			0
+#define SENTRY_ALERT_HOSTILE		1
+#define SENTRY_ALERT_FALLEN			2
+
 /obj/item/ammo_magazine/sentry
 	name = "M30 box magazine (10x28mm Caseless)"
 	desc = "A box of 500 10x28mm caseless rounds for the UA 571-C Sentry Gun. Just feed it into the sentry gun's ammo port when its ammo is depleted."
@@ -271,7 +275,7 @@
 	var/safety_off = FALSE
 	var/rounds = 500
 	var/rounds_max = 500
-	var/burst_size = 10
+	var/burst_size = 5
 	var/locked = FALSE
 	var/atom/target = null
 	var/manual_override = FALSE
@@ -284,6 +288,7 @@
 	var/burst_fire = FALSE
 	var/obj/machinery/camera/camera = null
 	var/fire_delay = 3
+	var/burst_delay = 5
 	var/last_fired = 0
 	var/is_bursting = FALSE
 	var/range = 7
@@ -292,6 +297,11 @@
 	var/immobile = 0 //Used for prebuilt ones.
 	var/datum/ammo/bullet/turret/ammo = /datum/ammo/bullet/turret
 	var/obj/item/projectile/in_chamber = null
+	var/alerts_on = TRUE
+	var/last_alert = 0
+	var/alert_delay = 20 //20 seconds
+	var/list/alert_list = list()
+	var/radial_mode = FALSE
 
 /obj/machinery/marine_turret/New()
 	spark_system = new /datum/effect_system/spark_spread
@@ -319,6 +329,7 @@
 		cell = null
 	if(target)
 		target = null
+	alert_list = list()
 	SetLuminosity(0)
 	//processing_objects.Remove(src)
 	. = ..()
@@ -378,6 +389,8 @@
 		"burst_fire" = burst_fire,
 		"safety_toggle" = !safety_off,
 		"manual_override" = manual_override,
+		"alerts_on" = alerts_on,
+		"radial_mode" = radial_mode,
 	)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -411,7 +424,7 @@
 				to_chat(usr, "\blue You deactivate the burst fire mode.")
 			else
 				burst_fire = 1
-				fire_delay = 15
+				fire_delay = burst_delay
 				user.visible_message("<span class='notice'>[user] activates [src]'s burst fire mode.</span>",
 				"<span class='notice'>You activate [src]'s burst fire mode.</span>")
 				visible_message("\icon[src] <span class='notice'>A green light on [src] blinks rapidly.</span>")
@@ -475,6 +488,36 @@
 				user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
 				"<span class='notice'>You deactivate [src].</span>")
 				visible_message("\icon[src] <span class='notice'>The [name] powers down and goes silent.</span>")
+				update_icon()
+
+		if("toggle_alert")
+			if(!alerts_on)
+				user.visible_message("<span class='notice'>[user] activates [src]'s alert notifications.</span>",
+				"<span class='notice'>You activate [src]'s alert notifications.</span>")
+				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Alert notification system initiated'.</span>'")
+				alerts_on = TRUE
+				update_icon()
+			else
+				alerts_on = FALSE
+				user.visible_message("<span class='notice'>[user] deactivates [src]'s alert notifications.</span>",
+				"<span class='notice'>You deactivate [src]'s alert notifications.</span>")
+				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Alert notification system deactivated'.</span>'")
+				update_icon()
+
+		if("toggle_radial")
+			if(!alerts_on)
+				user.visible_message("<span class='notice'>[user] activates [src]'s radial mode.</span>",
+				"<span class='notice'>You activate [src]'s radial mode.</span>")
+				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Radial mode initiated'.</span>'")
+				radial_mode = TRUE
+				range = 3 //360 coverage, but detection range reduced to 3 tiles.
+				update_icon()
+			else
+				radial_mode = FALSE
+				user.visible_message("<span class='notice'>[user] deactivates [src]'s radial mode.</span>",
+				"<span class='notice'>You deactivate [src]'s radial mode.</span>")
+				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Radial mode deactivated'.</span>'")
+				range = 7
 				update_icon()
 
 	attack_hand(user)
@@ -704,6 +747,8 @@
 			visible_message("\icon[src] <span class='danger'>The [name] is knocked over!</span>")
 			stat = 1
 			on = FALSE
+			if(alerts_on)
+				sentry_alert(SENTRY_ALERT_FALLEN)
 	if(stat)
 		density = FALSE
 	else
@@ -801,6 +846,10 @@
 		update_icon()
 		return
 
+	//Clear the list after the delay
+	if(world.time > last_alert + alert_delay)
+		alert_list = list()
+
 	manual_override = FALSE
 	target = get_target()
 	process_shot()
@@ -859,7 +908,23 @@
 
 	if(!check_power(2)) return
 
-	if(get_dir(src, targloc) & turn(dir, 180)) return
+	if(get_dir(src, targloc) & turn(dir, 180) && !radial_mode) return
+
+	else
+		var/target_dir = get_dir(src, targloc)
+		if(target_dir == NORTHWEST || target_dir == NORTHEAST || target_dir == SOUTHEAST || target_dir == SOUTHWEST)
+			switch(get_dir(src, targloc))
+				if(NORTHWEST)
+					dir = NORTH
+				if(NORTHEAST)
+					dir = EAST
+				if(SOUTHEAST)
+					dir = SOUTH
+				if(SOUTHWEST)
+					dir = WEST
+		else
+			dir = target_dir
+
 
 	if(load_into_chamber())
 		if(istype(in_chamber,/obj/item/projectile))
@@ -868,6 +933,7 @@
 				//Apply scatter
 				var/scatter_chance = in_chamber.ammo.scatter
 				scatter_chance += (burst_size * 2)
+				in_chamber.accuracy = round(in_chamber.accuracy * (config.base_hit_accuracy_mult - config.med_hit_accuracy_mult)) //This is gross but needed to make accuracy behave like the minigun's
 
 				if (prob(scatter_chance))
 					var/scatter_x = rand(-1, 1)
@@ -875,11 +941,12 @@
 					var/turf/new_target = locate(targloc.x + round(scatter_x),targloc.y + round(scatter_y),targloc.z) //Locate an adjacent turf.
 					if(new_target) //Looks like we found a turf.
 						target = new_target
+			else
+				in_chamber.accuracy = round(in_chamber.accuracy * (config.base_hit_accuracy_mult + config.med_hit_accuracy_mult)) //much more accurate on single fire
 
 			//Setup projectile
 			in_chamber.original = target
 			in_chamber.dir = dir
-			in_chamber.accuracy = round(in_chamber.accuracy * (config.base_hit_accuracy_mult - config.med_hit_accuracy_mult)) //This is gross but needed to make accuracy behave like the minigun's
 			in_chamber.def_zone = pick("chest", "chest", "chest", "head")
 
 			//Shoot at the thing
@@ -892,7 +959,10 @@
 			rounds--
 			if(rounds == 0)
 				visible_message("\icon[src] <span class='warning'>The [name] beeps steadily and its ammo light blinks red.</span>")
-				playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 25, 1)
+				playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 50, 1)
+				if(alerts_on)
+					sentry_alert(SENTRY_ALERT_AMMO)
+
 	return 1
 
 //Mostly taken from gun code.
@@ -931,6 +1001,16 @@
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && H.get_target_lock(iff_signal)) continue
 
+
+
+		if(alerts_on)
+			var/list_match = alert_list[M]
+			if((world.time > last_alert + alert_delay) || !list_match) //if we're not on cooldown or the target isn't in the list, sound the alarm
+				playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
+				sentry_alert(SENTRY_ALERT_HOSTILE, M)
+				alert_list += M
+				last_alert = world.time
+
 		var/angle = get_dir(src, M)
 		if(angle & dir)
 			path = getline2(src, M)
@@ -939,7 +1019,13 @@
 
 		if(path.len)
 			for(T in path)
-				if(T.opacity) continue
+				if(T.opacity || T.density) continue //don't pass on targets we can't actually fire at.
+			var/obj/machinery/MA
+			for(MA in path)
+				if(MA.opacity || MA.density) continue //don't pass on targets we can't actually fire at.
+			var/obj/structure/S
+			for(S in path)
+				if(S.opacity || S.density) continue //don't pass on targets we can't actually fire at.
 			targets += M
 
 	if(targets.len) . = pick(targets)
@@ -1092,6 +1178,9 @@
 //the turret inside the sentry deployment system
 /obj/machinery/marine_turret/premade/dropship
 	density = FALSE
+	ammo = /datum/ammo/bullet/turret/gauss //This is a gauss cannon; it will be significantly deadlier
+	burst_size = 10
+	burst_delay = 15
 	var/obj/structure/dropship_equipment/sentry_holder/deployment_system
 
 /obj/machinery/marine_turret/premade/dropship/Dispose()
@@ -1099,3 +1188,20 @@
 		deployment_system.deployed_turret = null
 		deployment_system = null
 	. = ..()
+
+
+/obj/machinery/marine_turret/proc/sentry_alert(alert_code, mob/M = null)
+	if(!alert_code)
+		return
+	var/notice
+	switch(alert_code)
+		if(SENTRY_ALERT_AMMO)
+			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)].</b>"
+		if(SENTRY_ALERT_HOSTILE)
+			notice = "<b>ALERT! Hostile/unknown: [M] detected at: [get_area(M)].</b>"
+		if(SENTRY_ALERT_FALLEN)
+			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)].</b>"
+	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
+	AI.SetName("Sentry Gun Alert System")
+	AI.aiRadio.talk_into(AI,"[notice]","General","announces")
+	cdel(AI)

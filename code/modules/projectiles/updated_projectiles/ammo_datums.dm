@@ -792,14 +792,19 @@
 	accurate_range = config.short_shell_range
 	accuracy_var_low = config.low_proj_variance
 	accuracy_var_high = config.low_proj_variance
-	max_range = config.short_shell_range
-	damage = config.hlow_hit_damage
+	damage = config.lmed_hit_damage
 	penetration= config.low_armor_penetration
-	accuracy = -config.min_hit_accuracy
 
 /datum/ammo/bullet/turret/dumb
 	icon_state 	= "bullet"
 	iff_signal = 0
+
+/datum/ammo/bullet/turret/gauss
+
+/datum/ammo/bullet/turret/gauss/New()
+	..()
+	damage = config.med_hit_damage
+	penetration= config.mhigh_armor_penetration
 
 /datum/ammo/bullet/machinegun //Adding this for the MG Nests (~Art)
 	name = "machinegun bullet"

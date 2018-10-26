@@ -73,4 +73,26 @@
         <br>
         {{:helper.link(data.manual_override ? 'Turn off Manual Override' : 'Turn on Manual Override', data.manual_override ? 'close' : 'check', { '?src' : data.self_ref, 'op' : 'manual'}, data.is_on ? null : 'disabled')}}
     </div>
+	
+    <br><br>
+        
+    <div class="itemLabel">
+        Radial Mode:
+    </div>
+    <div class="itemContent">
+        Radial Mode is currently <b>{{:data.radial_mode ? '<span class="good">ON</span>' : '<span class="bad">OFF</span>'}}</b>
+        <br>
+        {{:helper.link(data.radial_mode ? 'Turn off Radial Mode' : 'Turn on Radial Mode', data.radial_mode ? 'close' : 'check', { '?src' : data.self_ref, 'op' : 'toggle_radial'}, data.is_on ? null : 'disabled')}}
+    </div>
+	
+    <br><br>
+        
+    <div class="itemLabel">
+        Alert Mode:
+    </div>
+    <div class="itemContent">
+        Alert Mode is currently <b>{{:data.alerts_on ? '<span class="good">ON</span>' : '<span class="bad">OFF</span>'}}</b>
+        <br>
+        {{:helper.link(data.alerts_on ? 'Turn off Alert Mode' : 'Turn on Alert Mode', data.alerts_on ? 'close' : 'check', { '?src' : data.self_ref, 'op' : 'toggle_alert'}, data.is_on ? null : 'disabled')}}
+    </div>
 </div>

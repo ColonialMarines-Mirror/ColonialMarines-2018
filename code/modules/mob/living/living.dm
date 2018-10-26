@@ -88,8 +88,7 @@
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		return
-
-	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
 
 /mob/living/New()

@@ -70,50 +70,12 @@
 		return FALSE	//godmode
 	brainloss = amount
 
-/mob/living/proc/getHalLoss()
-	return halloss
-
-/mob/living/proc/adjustHalLoss(var/amount)
-	if(status_flags & GODMODE)
-		return FALSE	//godmode
-	halloss = CLAMP(halloss+amount,0,maxHealth*2)
-
-/mob/living/proc/setHalLoss(var/amount)
-	if(status_flags & GODMODE)
-		return FALSE	//godmode
-	halloss = amount
-
-/mob/living/proc/getTraumatic_Shock()
-	return traumatic_shock
-
-/mob/living/proc/adjustTraumatic_Shock(var/amount)
-	if(status_flags & GODMODE)
-		return FALSE	//godmode
-	traumatic_shock = CLAMP(traumatic_shock+amount,0,maxHealth*2)
-
-/mob/living/proc/setTraumatic_Shock(var/amount)
-	if(status_flags & GODMODE)
-		return FALSE	//godmode
-	traumatic_shock = amount
-
-/mob/living/proc/getShock_Stage()
-	return shock_stage
-
-/mob/living/proc/adjustShock_Stage(var/amount)
-	if(status_flags & GODMODE)
-		return FALSE	//godmode
-	shock_stage = CLAMP(shock_stage+amount,0,maxHealth*2)
-
-/mob/living/proc/setShock_Stage(var/amount)
-	if(status_flags & GODMODE)
-		return FALSE	//godmode
-	shock_stage = amount
-
 /mob/living/proc/getMaxHealth()
 	return maxHealth
 
 /mob/living/proc/setMaxHealth(var/newMaxHealth)
 	maxHealth = newMaxHealth
+
 
 
 
@@ -164,9 +126,6 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
-	setHalLoss(0)
-	setTraumatic_Shock(0)
-	setShock_Stage(0)
 	SetKnockedout(0)
 	SetStunned(0)
 	SetKnockeddown(0)
@@ -205,6 +164,12 @@
 	med_hud_set_status()
 	med_hud_set_health()
 	reload_fullscreens()
+
+/mob/living/carbon/rejuvenate()
+	setHalLoss(0)
+	setTraumatic_Shock(0)
+	setShock_Stage(0)
+	return ..()
 
 /mob/living/carbon/human/rejuvenate()
 	restore_blood() //restore all of a human's blood

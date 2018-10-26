@@ -335,7 +335,7 @@
 	playsound(M, S, 50, 1)
 
 	if(!ishuman(M))
-		apply_damage(damage, BRUTE, target_zone, armor_block) //If we're not a humie, just apply brute.
+		M.apply_damage(damage, BRUTE, target_zone, armor_block) //If we're not a humie, just apply brute.
 	else
 		var/mob/living/carbon/human/H = M
 
@@ -370,7 +370,7 @@
 			L.take_damage(damage, 0, 0, 0, null, null, null, armor_block)
 			if(prob(fracture_chance))
 				L.fracture()
-	apply_damage(damage, HALLOSS) //Armor penetrating halloss also applies.
+		H.apply_damage(damage, HALLOSS) //Armor penetrating halloss also applies.
 	shake_camera(M, 2, 1)
 	step_away(M, src, 2)
 

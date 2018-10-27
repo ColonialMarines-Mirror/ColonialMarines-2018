@@ -29,9 +29,7 @@
 		if(CLONE)
 			adjustCloneLoss(damage)
 		if(HALLOSS)
-			var/mob/living/carbon/C = src
-			if(istype(C))
-				C.adjustHalLoss(damage)
+			adjustHalLoss(damage)
 	updatehealth()
 	return TRUE
 
@@ -50,9 +48,7 @@
 	if(clone)
 		apply_damage(clone, CLONE, def_zone, blocked)
 	if(halloss)
-		var/mob/living/carbon/C = src
-		if(istype(C))
-			C.apply_damage(halloss, HALLOSS, def_zone, blocked)
+		apply_damage(halloss, HALLOSS, def_zone, blocked)
 	return TRUE
 
 
@@ -67,9 +63,7 @@
 		if(PARALYZE)
 			KnockOut(effect/(blocked+1))
 		if(AGONY)
-			var/mob/living/carbon/C = src
-			if(istype(C))
-				C.halloss += effect // Useful for objects that cause "subdual" damage. PAIN!
+			adjustHalLoss(effect/blocked+1)
 		if(IRRADIATE)
 			var/rad_protection = getarmor(null, "rad")/100
 			radiation += max((1-rad_protection)*effect/(blocked+1),0)//Rads auto check armor

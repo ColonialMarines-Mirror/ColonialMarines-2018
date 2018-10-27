@@ -76,7 +76,8 @@
 /mob/living/proc/setMaxHealth(var/newMaxHealth)
 	maxHealth = newMaxHealth
 
-
+mob/living/proc/adjustHalLoss(amount) //This only makes sense for carbon.
+	return
 
 
 

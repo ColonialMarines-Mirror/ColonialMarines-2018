@@ -1,12 +1,12 @@
 /mob/living/carbon/proc/getHalLoss()
 	return halloss
 
-/mob/living/carbon/proc/adjustHalLoss(var/amount)
+/mob/living/carbon/adjustHalLoss(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
 	halloss = CLAMP(halloss+amount,0,maxHealth*2)
 
-/mob/living/carbon/proc/setHalLoss(var/amount)
+/mob/living/carbon/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
 	halloss = amount
@@ -14,12 +14,12 @@
 /mob/living/carbon/proc/getTraumatic_Shock()
 	return traumatic_shock
 
-/mob/living/carbon/proc/adjustTraumatic_Shock(var/amount)
+/mob/living/carbon/proc/adjustTraumatic_Shock(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
 	traumatic_shock = CLAMP(traumatic_shock+amount,0,maxHealth*2)
 
-/mob/living/carbon/proc/setTraumatic_Shock(var/amount)
+/mob/living/carbon/proc/setTraumatic_Shock(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
 	traumatic_shock = amount
@@ -27,12 +27,12 @@
 /mob/living/carbon/proc/getShock_Stage()
 	return shock_stage
 
-/mob/living/carbon/proc/adjustShock_Stage(var/amount)
+/mob/living/carbon/proc/adjustShock_Stage(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
 	shock_stage = CLAMP(shock_stage+amount,0,maxHealth*2)
 
-/mob/living/carbon/proc/setShock_Stage(var/amount)
+/mob/living/carbon/proc/setShock_Stage(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
 	shock_stage = amount

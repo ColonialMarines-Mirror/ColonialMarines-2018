@@ -605,6 +605,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=WO Role;jobban4=\ref[M]'>WO Role</a></td>"
 
+		//Synthetic
+		if(jobban_isbanned(M, "Synthetic") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Synthetic;jobban4=\ref[M]'><font color=red>Synthetic</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Synthetic;jobban4=\ref[M]'>Synthetic</a></td>"
+
 
 		jobs += "</tr></table>"
 

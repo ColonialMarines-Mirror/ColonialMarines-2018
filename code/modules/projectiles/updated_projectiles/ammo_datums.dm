@@ -802,7 +802,7 @@
 /datum/ammo/bullet/turret/gauss
 
 /datum/ammo/bullet/turret/gauss/New()
-	..()
+	. = ..()
 	damage = config.med_hit_damage
 	penetration= config.mhigh_armor_penetration
 

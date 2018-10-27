@@ -33,7 +33,8 @@
 	var/num_engineers = 0
 	var/num_medics = 0
 	var/count = 0 //Current # in the squad
-	var/list/marines_list = list() // list of mobs (or name, not always a mob ref) in that squad.
+	var/mob/living/carbon/human/list/marines_list = list() // list of humans in that squad.
+	var/gibbed_marines_list[0] // List of the names of the gibbed humans associated with roles.
 
 	var/mob/living/carbon/human/overwatch_officer = null //Who's overwatching this squad?
 	var/supply_cooldown = 0 //Cooldown for supply drops

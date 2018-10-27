@@ -361,6 +361,7 @@ var/global/list/frozen_items = list("Alpha"=list(),"Bravo"=list(),"Charlie"=list
 						if("Squad Leader")
 							S.num_leaders--
 					S.count--
+				H.clean_from_squad(TRUE) //Remove from squad recods, if any.
 
 			ticker.mode.latejoin_tally-- //Cryoing someone out removes someone from the Marines, blocking further larva spawns until accounted for
 

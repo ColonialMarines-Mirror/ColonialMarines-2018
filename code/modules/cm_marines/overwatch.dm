@@ -117,155 +117,7 @@
 					dat += "<BR><BR><A href='?src=\ref[src];operation=refresh'>{Refresh}</a></Body>"
 
 			if(OW_MONITOR)//Info screen.
-				if(!current_squad)
-					dat += "No Squad selected!<BR>"
-				else
-
-					var/leader_text = ""
-					var/leader_count = 0
-					var/spec_text = ""
-					var/spec_count = 0
-					var/medic_text = ""
-					var/medic_count = 0
-					var/engi_text = ""
-					var/engi_count = 0
-					var/smart_text = ""
-					var/smart_count = 0
-					var/marine_text = ""
-					var/marine_count = 0
-					var/misc_text = ""
-					var/living_count = 0
-
-					var/conscious_text = ""
-					var/unconscious_text = ""
-					var/dead_text = ""
-
-					var/SL_z //z level of the Squad Leader
-					if(current_squad.squad_leader)
-						var/turf/SL_turf = get_turf(current_squad.squad_leader)
-						SL_z = SL_turf.z
-
-
-					for(var/X in current_squad.marines_list)
-						if(!X) continue //just to be safe
-						var/mob_name = "unknown"
-						var/mob_state = ""
-						var/role = "unknown"
-						var/act_sl = ""
-						var/fteam = ""
-						var/dist = "<b>???</b>"
-						var/area_name = "<b>???</b>"
-						var/mob/living/carbon/human/H
-						if(ishuman(X))
-							H = X
-							mob_name = H.real_name
-							var/area/A = get_area(H)
-							var/turf/M_turf = get_turf(H)
-							if(A)
-								area_name = sanitize(A.name)
-
-							if(z_hidden && z_hidden == M_turf.z)
-								continue
-
-							if(H.mind && H.mind.assigned_role)
-								role = H.mind.assigned_role
-							else if(istype(H.wear_id, /obj/item/card/id)) //decapitated marine is mindless,
-								var/obj/item/card/id/ID = H.wear_id		//we use their ID to get their role.
-								if(ID.rank) role = ID.rank
-
-							if(current_squad.squad_leader)
-								if(H == current_squad.squad_leader)
-									dist = "<b>N/A</b>"
-									if(H.mind && H.mind.assigned_role != "Squad Leader")
-										act_sl = " (acting SL)"
-								else if(M_turf.z == SL_z)
-									dist = "[get_dist(H, current_squad.squad_leader)] ([dir2text_short(get_dir(current_squad.squad_leader, H))])"
-
-							switch(H.stat)
-								if(CONSCIOUS)
-									mob_state = "Conscious"
-									living_count++
-									conscious_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-
-								if(UNCONSCIOUS)
-									mob_state = "<b>Unconscious</b>"
-									living_count++
-									unconscious_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-
-								if(DEAD)
-									if(dead_hidden)
-										continue
-									mob_state = "<font color='red'>DEAD</font>"
-									dead_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-
-
-							if(!H.key || !H.client)
-								if(H.stat != DEAD)
-									mob_state += " (SSD)"
-
-
-							if(istype(H.wear_id, /obj/item/card/id))
-								var/obj/item/card/id/ID = H.wear_id
-								if(ID.assigned_fireteam)
-									fteam = " \[[ID.assigned_fireteam]\]"
-
-						else //listed marine was deleted or gibbed, all we have is their name
-							if(dead_hidden)
-								continue
-							if(z_hidden) //gibbed marines are neither on the colony nor on the almayer
-								continue
-							for(var/datum/data/record/t in data_core.general)
-								if(t.fields["name"] == X)
-									role = t.fields["real_rank"]
-									break
-							mob_state = "<font color='red'>DEAD</font>"
-							mob_name = X
-							dead_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-
-
-						var/marine_infos = "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl][fteam]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-						switch(role)
-							if("Squad Leader")
-								leader_text += marine_infos
-								leader_count++
-							if("Squad Specialist")
-								spec_text += marine_infos
-								spec_count++
-							if("Squad Medic")
-								medic_text += marine_infos
-								medic_count++
-							if("Squad Engineer")
-								engi_text += marine_infos
-								engi_count++
-							if("Squad Smartgunner")
-								smart_text += marine_infos
-								smart_count++
-							if("Squad Marine")
-								marine_text += marine_infos
-								marine_count++
-							else
-								misc_text += marine_infos
-
-					dat += "<b>[leader_count ? "Squad Leader Deployed":"<font color='red'>No Squad Leader Deployed!</font>"]</b><BR>"
-					dat += "<b>[spec_count ? "Squad Specialist Deployed":"<font color='red'>No Specialist Deployed!</font>"]</b><BR>"
-					dat += "<b>[smart_count ? "Squad Smartgunner Deployed":"<font color='red'>No Smartgunner Deployed!</font>"]</b><BR>"
-					dat += "<b>Squad Medics: [medic_count] Deployed | Squad Engineers: [engi_count] Deployed</b><BR>"
-					dat += "<b>Squad Marines: [marine_count] Deployed</b><BR>"
-					dat += "<b>Total: [current_squad.marines_list.len] Deployed</b><BR>"
-					dat += "<b>Marines alive: [living_count]</b><BR><BR>"
-					dat += "<table border='1' style='width:100%' align='center'><tr>"
-					dat += "<th>Name</th><th>Role</th><th>State</th><th>Location</th><th>SL Distance</th></tr>"
-					if(!living_marines_sorting)
-						dat += leader_text + spec_text + medic_text + engi_text + smart_text + marine_text + misc_text
-					else
-						dat += conscious_text + unconscious_text + dead_text
-					dat += "</table>"
-				dat += "<BR><BR>----------------------<br>"
-				dat += "<A href='?src=\ref[src];operation=refresh'>{Refresh}</a><br>"
-				dat += "<A href='?src=\ref[src];operation=change_sort'>{Change Sorting Method}</a><br>"
-				dat += "<A href='?src=\ref[src];operation=hide_dead'>{[dead_hidden ? "Show Dead Marines" : "Hide Dead Marines" ]}</a><br>"
-				dat += "<A href='?src=\ref[src];operation=choose_z'>{Change Locations Ignored}</a><br>"
-				dat += "<br><A href='?src=\ref[src];operation=back'>{Back}</a></body>"
+				dat += get_squad_info()
 			if(OW_SUPPLIES)
 				dat += "<BR><B>Supply Drop Control</B><BR><BR>"
 				if(!current_squad)
@@ -548,10 +400,10 @@
 		switch(state)
 			if(OW_MAIN)
 				for(var/datum/squad/S in squads)
-					dat += "<br><b>[S.name] Squad</b> <a href='?src=\ref[src];operation=message'>\[Message Squad\]</a><br>"
+					dat += "<br><b>[S.name] Squad</b> <a href='?src=\ref[src];operation=message;current_squad=\ref[S]'>\[Message Squad\]</a><br>"
 					if(S.squad_leader)
 						dat += "<b>Leader:</b> <a href='?src=\ref[src];operation=use_cam;cam_target=\ref[S.squad_leader]'>[S.squad_leader.name]</a> "
-						dat += "<a href='?src=\ref[src];operation=sl_message'>\[MSG\]</a><br>"
+						dat += "<a href='?src=\ref[src];operation=sl_message;current_squad=\ref[S]'>\[MSG\]</a><br>"
 					else
 						dat += "<B>Leader:</B> <font color=red>NONE</font><br>"
 					if(S.overwatch_officer)
@@ -574,143 +426,7 @@
 				dat += "----------------------<BR></Body>"
 				dat += "<A href='?src=\ref[src];operation=refresh'>{Refresh}</a></Body>"
 			if(OW_MONITOR)//Info screen.
-				if(!current_squad)
-					dat += "<br>No Squad selected!<BR>"
-				else
-					var/leader_text = ""
-					var/leader_count = 0
-					var/spec_text = ""
-					var/spec_count = 0
-					var/medic_text = ""
-					var/medic_count = 0
-					var/engi_text = ""
-					var/engi_count = 0
-					var/smart_text = ""
-					var/smart_count = 0
-					var/marine_text = ""
-					var/marine_count = 0
-					var/misc_text = ""
-					var/living_count = 0
-					var/conscious_text = ""
-					var/unconscious_text = ""
-					var/dead_text = ""
-					var/SL_z //z level of the Squad Leader
-					if(current_squad.squad_leader)
-						var/turf/SL_turf = get_turf(current_squad.squad_leader)
-						SL_z = SL_turf.z
-					for(var/X in current_squad.marines_list)
-						if(!X)
-							continue //just to be safe
-						var/mob_name = "unknown"
-						var/mob_state = ""
-						var/role = "unknown"
-						var/act_sl = ""
-						var/fteam = ""
-						var/dist = "<b>???</b>"
-						var/area_name = "<b>???</b>"
-						var/mob/living/carbon/human/H
-						if(ishuman(X))
-							H = X
-							mob_name = H.real_name
-							var/area/A = get_area(H)
-							var/turf/M_turf = get_turf(H)
-							if(A)
-								area_name = sanitize(A.name)
-							if(z_hidden && z_hidden == M_turf.z)
-								continue
-							if(H.mind && H.mind.assigned_role)
-								role = H.mind.assigned_role
-							else if(istype(H.wear_id, /obj/item/card/id)) //decapitated marine is mindless,
-								var/obj/item/card/id/ID = H.wear_id		//we use their ID to get their role.
-								if(ID.rank)
-									role = ID.rank
-							if(current_squad.squad_leader)
-								if(H == current_squad.squad_leader)
-									dist = "<b>N/A</b>"
-									if(H.mind && H.mind.assigned_role != "Squad Leader")
-										act_sl = " (acting SL)"
-								else if(M_turf.z == SL_z)
-									dist = "[get_dist(H, current_squad.squad_leader)] ([dir2text_short(get_dir(current_squad.squad_leader, H))])"
-							switch(H.stat)
-								if(CONSCIOUS)
-									mob_state = "Conscious"
-									living_count++
-									conscious_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-								if(UNCONSCIOUS)
-									mob_state = "<b>Unconscious</b>"
-									living_count++
-									unconscious_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-								if(DEAD)
-									if(dead_hidden)
-										continue
-									mob_state = "<font color='red'>DEAD</font>"
-									dead_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-							if(!H.key || !H.client)
-								if(H.stat != DEAD)
-									mob_state += " (SSD)"
-							if(istype(H.wear_id, /obj/item/card/id))
-								var/obj/item/card/id/ID = H.wear_id
-								if(ID.assigned_fireteam)
-									fteam = " \[[ID.assigned_fireteam]\]"
-						else //listed marine was deleted or gibbed, all we have is their name
-							if(dead_hidden)
-								continue
-							if(z_hidden) //gibbed marines are neither on the colony nor on the almayer
-								continue
-							for(var/datum/data/record/t in data_core.general)
-								if(t.fields["name"] == X)
-									role = t.fields["real_rank"]
-									break
-							mob_state = "<font color='red'>DEAD</font>"
-							mob_name = X
-							dead_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-						var/marine_infos = "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl][fteam]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
-						switch(role)
-							if("Squad Leader")
-								leader_text += marine_infos
-								leader_count++
-							if("Squad Specialist")
-								spec_text += marine_infos
-								spec_count++
-							if("Squad Medic")
-								medic_text += marine_infos
-								medic_count++
-							if("Squad Engineer")
-								engi_text += marine_infos
-								engi_count++
-							if("Squad Smartgunner")
-								smart_text += marine_infos
-								smart_count++
-							if("Squad Marine")
-								marine_text += marine_infos
-								marine_count++
-							else
-								misc_text += marine_infos
-					if(current_squad.overwatch_officer)
-						dat += "<br><B>Squad Overwatch:</b> [current_squad.overwatch_officer.name]<BR>"
-					else
-						dat += "<B>Squad Overwatch:</b> <font color=red>NONE</font><BR>"
-					dat += "----------------------<br>"
-					dat += "<b>[leader_count ? "Squad Leader Deployed":"<font color='red'>No Squad Leader Deployed!</font>"]</b><BR>"
-					dat += "<b>[spec_count ? "Squad Specialist Deployed":"<font color='red'>No Specialist Deployed!</font>"]</b><BR>"
-					dat += "<b>[smart_count ? "Squad Smartgunner Deployed":"<font color='red'>No Smartgunner Deployed!</font>"]</b><BR>"
-					dat += "<b>Squad Medics: [medic_count] Deployed | Squad Engineers: [engi_count] Deployed</b><BR>"
-					dat += "<b>Squad Marines: [marine_count] Deployed</b><BR>"
-					dat += "<b>Total: [current_squad.marines_list.len] Deployed</b><BR>"
-					dat += "<b>Marines alive: [living_count]</b><BR><BR>"
-					dat += "<table border='1' style='width:100%' align='center'><tr>"
-					dat += "<th>Name</th><th>Role</th><th>State</th><th>Location</th><th>SL Distance</th></tr>"
-					if(!living_marines_sorting)
-						dat += leader_text + spec_text + medic_text + engi_text + smart_text + marine_text + misc_text
-					else
-						dat += conscious_text + unconscious_text + dead_text
-					dat += "</table>"
-				dat += "<BR><BR>----------------------<br>"
-				dat += "<A href='?src=\ref[src];operation=refresh'>{Refresh}</a><br>"
-				dat += "<A href='?src=\ref[src];operation=change_sort'>{Change Sorting Method}</a><br>"
-				dat += "<A href='?src=\ref[src];operation=hide_dead'>{[dead_hidden ? "Show Dead Marines" : "Hide Dead Marines" ]}</a><br>"
-				dat += "<A href='?src=\ref[src];operation=choose_z'>{Change Locations Ignored}</a><br>"
-				dat += "<br><A href='?src=\ref[src];operation=back'>{Back}</a></body>"
+				get_squad_info()
 			if(OW_BOMBS)
 				dat += "<br><br><b>Orbital Bombardment Control</b><br><br>"
 				dat += "<b>Current Cannon Status:</b> "
@@ -1320,6 +1036,165 @@
 		if(S.id == id)
 			return S
 	return FALSE
+
+/obj/machinery/computer/overwatch/proc/get_squad_info()
+	var/dat = ""
+	if(!current_squad)
+		dat += "No Squad selected!<BR>"
+		dat += get_squad_info_ending()
+		return dat
+	var/leader_text = ""
+	var/leader_count = 0
+	var/spec_text = ""
+	var/spec_count = 0
+	var/medic_text = ""
+	var/medic_count = 0
+	var/engi_text = ""
+	var/engi_count = 0
+	var/smart_text = ""
+	var/smart_count = 0
+	var/marine_text = ""
+	var/marine_count = 0
+	var/misc_text = ""
+	var/living_count = 0
+	var/conscious_text = ""
+	var/unconscious_text = ""
+	var/dead_text = ""
+	var/gibbed_text = ""
+	var/SL_z //z level of the Squad Leader
+	if(current_squad.squad_leader)
+		var/turf/SL_turf = get_turf(current_squad.squad_leader)
+		SL_z = SL_turf?.z
+	for(var/mob/living/carbon/human/H in current_squad.marines_list)
+		var/mob_name = "unknown"
+		var/mob_state = ""
+		var/role = "unknown"
+		var/act_sl = ""
+		var/fteam = ""
+		var/dist = "<b>???</b>"
+		var/area_name = "<b>???</b>"
+		mob_name = H.real_name
+		var/area/A = get_area(H)
+		var/turf/M_turf = get_turf(H)
+		if(A)
+			area_name = sanitize(A.name)
+		if(z_hidden && z_hidden == M_turf?.z)
+			continue
+		if(H.mind?.assigned_role)
+			role = H.mind.assigned_role
+		else
+			var/obj/item/card/id/ID = H.wear_id //we use their ID to get their role.
+			if(ID?.rank)
+				role = ID.rank
+		if(current_squad.squad_leader)
+			if(H == current_squad.squad_leader)
+				dist = "<b>N/A</b>"
+				if(H.mind && H.mind.assigned_role != "Squad Leader")
+					act_sl = " (acting SL)"
+			else if(M_turf.z == SL_z)
+				dist = "[get_dist(H, current_squad.squad_leader)] ([dir2text_short(get_dir(current_squad.squad_leader, H))])"
+		switch(H.stat)
+			if(CONSCIOUS)
+				mob_state = "Conscious"
+				living_count++
+				conscious_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
+			if(UNCONSCIOUS)
+				mob_state = "<b>Unconscious</b>"
+				living_count++
+				unconscious_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
+			if(DEAD)
+				if(dead_hidden)
+					continue
+				mob_state = "<font color='red'>DEAD</font>"
+				dead_text += "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
+		if((!H.key || !H.client) && H.stat != DEAD)
+			mob_state += " (SSD)"
+		var/obj/item/card/id/ID = H.wear_id
+		if(ID?.assigned_fireteam)
+			fteam = " \[[ID.assigned_fireteam]\]"
+		var/marine_infos = "<tr><td><A href='?src=\ref[src];operation=use_cam;cam_target=\ref[H]'>[mob_name]</a></td><td>[role][act_sl][fteam]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
+		switch(role)
+			if("Squad Leader")
+				leader_text += marine_infos
+				leader_count++
+			if("Squad Specialist")
+				spec_text += marine_infos
+				spec_count++
+			if("Squad Medic")
+				medic_text += marine_infos
+				medic_count++
+			if("Squad Engineer")
+				engi_text += marine_infos
+				engi_count++
+			if("Squad Smartgunner")
+				smart_text += marine_infos
+				smart_count++
+			if("Squad Marine")
+				marine_text += marine_infos
+				marine_count++
+			else
+				misc_text += marine_infos
+	if(!dead_hidden && !z_hidden) //gibbed marines are neither on the colony nor on the almayer
+		for(var/X in current_squad.gibbed_marines_list) //listed marine was deleted or gibbed, all we have is their name
+			var/role = current_squad.gibbed_marines_list[X]
+			var/mob_state = "<font color='red'>FUBAR</font>"
+			var/mob_name = X
+			var/area_name = "<b>???</b>"
+			var/dist = "<b>???</b>"
+			gibbed_text += "<tr><td>[mob_name]</td><td>[role]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
+			var/marine_infos = "<tr><td>[mob_name]</td><td>[role]</td><td>[mob_state]</td><td>[area_name]</td><td>[dist]</td></tr>"
+			switch(role)
+				if("Squad Leader")
+					leader_text += marine_infos
+					leader_count++
+				if("Squad Specialist")
+					spec_text += marine_infos
+					spec_count++
+				if("Squad Medic")
+					medic_text += marine_infos
+					medic_count++
+				if("Squad Engineer")
+					engi_text += marine_infos
+					engi_count++
+				if("Squad Smartgunner")
+					smart_text += marine_infos
+					smart_count++
+				if("Squad Marine")
+					marine_text += marine_infos
+					marine_count++
+				else
+					misc_text += marine_infos
+	if(current_squad.overwatch_officer)
+		dat += "<br><B>Squad Overwatch:</b> [current_squad.overwatch_officer.name]<BR>"
+	else
+		dat += "<B>Squad Overwatch:</b> <font color=red>NONE</font><BR>"
+	dat += "----------------------<br>"
+	dat += "<b>[leader_count ? "Squad Leader Deployed":"<font color='red'>No Squad Leader Deployed!</font>"]</b><BR>"
+	dat += "<b>[spec_count ? "Squad Specialist Deployed":"<font color='red'>No Specialist Deployed!</font>"]</b><BR>"
+	dat += "<b>[smart_count ? "Squad Smartgunner Deployed":"<font color='red'>No Smartgunner Deployed!</font>"]</b><BR>"
+	dat += "<b>Squad Medics: [medic_count] Deployed | Squad Engineers: [engi_count] Deployed</b><BR>"
+	dat += "<b>Squad Marines: [marine_count] Deployed</b><BR>"
+	dat += "<b>Total: [current_squad.marines_list.len] Deployed</b><BR>"
+	dat += "<b>Marines alive: [living_count]</b><BR><BR>"
+	dat += "<table border='1' style='width:100%' align='center'><tr>"
+	dat += "<th>Name</th><th>Role</th><th>State</th><th>Location</th><th>SL Distance</th></tr>"
+	if(!living_marines_sorting)
+		dat += leader_text + spec_text + medic_text + engi_text + smart_text + marine_text + misc_text
+	else
+		dat += conscious_text + unconscious_text + dead_text + gibbed_text
+	dat += "</table>"
+	dat += get_squad_info_ending()
+	return dat
+	
+/obj/machinery/computer/overwatch/proc/get_squad_info_ending()
+	var/dat = ""
+	dat += "<BR><BR>----------------------<br>"
+	dat += "<A href='?src=\ref[src];operation=refresh'>{Refresh}</a><br>"
+	dat += "<A href='?src=\ref[src];operation=change_sort'>{Change Sorting Method}</a><br>"
+	dat += "<A href='?src=\ref[src];operation=hide_dead'>{[dead_hidden ? "Show Dead Marines" : "Hide Dead Marines" ]}</a><br>"
+	dat += "<A href='?src=\ref[src];operation=choose_z'>{Change Locations Ignored}</a><br>"
+	dat += "<br><A href='?src=\ref[src];operation=back'>{Back}</a></body>"
+	return dat
 
 #undef OW_MAIN
 #undef OW_MONITOR

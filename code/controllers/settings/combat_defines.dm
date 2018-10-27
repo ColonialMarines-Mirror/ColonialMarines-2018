@@ -44,6 +44,8 @@
 	var/max_hit_damage = 90
 	var/super_hit_damage = 120
 	var/ultra_hit_damage = 150
+	var/aprocket_hit_damage = 250
+	var/LTB_hit_damage = 300
 
 	var/base_hit_damage_mult = 1
 	var/min_hit_damage_mult = 0.05
@@ -245,6 +247,11 @@
 			super_hit_damage = value
 		if("ultra_hit_damage")
 			ultra_hit_damage = value
+		if("aprocket_hit_damage")
+			aprocket_hit_damage = value
+		if("ltb_hit_damage")
+			ltb_hit_damage = value
+
 
 		if("base_hit_damage_mult")
 			base_hit_damage_mult = value

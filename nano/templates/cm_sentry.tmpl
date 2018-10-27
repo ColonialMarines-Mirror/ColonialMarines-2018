@@ -47,9 +47,15 @@
         Burst Fire:
     </div>
     <div class="itemContent">
-        Burst fire is currently <b>{{:data.burst_fire ? '<span class="good">ON</span>' : '<span class="bad">OFF</span>'}}</b>
+        Burst fire is currently <b>{{:data.burst_fire ? '<span class="good">ON</span>' : '<span class="bad">OFF</span>'}}</b>.
+		<br>
+		Burst count set to: <b>{{:data.burst_size}}</b>
         <br>
         {{:helper.link(data.burst_fire ? 'Turn off burst fire' : 'Turn on burst fire', data.burst_fire ? 'seek-next' : 'play', { '?src' : data.self_ref, 'op' : 'burst'}, data.is_on ? null : 'disabled')}}
+		<br>
+		{{:helper.link('Increment Burst Count', 'plus', { '?src' : data.self_ref, 'op' : 'burstup'}, data.is_on ? null : 'disabled')}}
+		<br>
+		{{:helper.link('Decrement Burst Count', 'minus', { '?src' : data.self_ref, 'op' : 'burstdown'}, data.is_on ? null : 'disabled')}}
     </div>
     
     <br><br>

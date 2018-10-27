@@ -1,10 +1,6 @@
 //Deployable turrets. They can be either automated, manually fired, or installed with a pAI.
 //They are built in stages, and only engineers have access to them.
 
-#define SENTRY_ALERT_AMMO			0
-#define SENTRY_ALERT_HOSTILE		1
-#define SENTRY_ALERT_FALLEN			2
-
 /obj/item/ammo_magazine/sentry
 	name = "M30 box magazine (10x28mm Caseless)"
 	desc = "A box of 500 10x28mm caseless rounds for the UA 571-C Sentry Gun. Just feed it into the sentry gun's ammo port when its ammo is depleted."
@@ -41,6 +37,7 @@
 	icon_state = "sentry_base"
 	anchored = FALSE
 	density = TRUE
+	throwpass = TRUE//You can throw objects over this, despite it's density.")
 	layer = ABOVE_OBJ_LAYER
 	var/has_cable = FALSE
 	var/has_top = FALSE
@@ -299,8 +296,8 @@
 	var/obj/item/projectile/in_chamber = null
 	var/alerts_on = TRUE
 	var/last_alert = 0
-	var/alert_delay = 20 //20 seconds
-	var/list/alert_list = list()
+	var/last_damage_alert = 0
+	var/list/obj/alert_list = list()
 	var/radial_mode = FALSE
 
 /obj/machinery/marine_turret/New()
@@ -391,6 +388,7 @@
 		"manual_override" = manual_override,
 		"alerts_on" = alerts_on,
 		"radial_mode" = radial_mode,
+		"burst_size" = burst_size,
 	)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -428,6 +426,22 @@
 				user.visible_message("<span class='notice'>[user] activates [src]'s burst fire mode.</span>",
 				"<span class='notice'>You activate [src]'s burst fire mode.</span>")
 				visible_message("\icon[src] <span class='notice'>A green light on [src] blinks rapidly.</span>")
+
+		if("burstup")
+			if(!cell || cell.charge <= 0 || !anchored || immobile || !on || stat)
+				return
+
+			burst_size = CLAMP(burst_size + 1,2,6)
+			user.visible_message("<span class='notice'>[user] increments the [src]'s burst count.</span>",
+			"<span class='notice'>You increment [src]'s burst fire count.</span>")
+
+		if("burstdown")
+			if(!cell || cell.charge <= 0 || !anchored || immobile || !on || stat)
+				return
+
+			burst_size = CLAMP(burst_size - 1,2,6)
+			user.visible_message("<span class='notice'>[user] decrements the [src]'s burst count.</span>",
+			"<span class='notice'>You decrement [src]'s burst fire count.</span>")
 
 		if("safety")
 			if(!cell || cell.charge <= 0 || !anchored || immobile || !on || stat)
@@ -505,7 +519,7 @@
 				update_icon()
 
 		if("toggle_radial")
-			if(!alerts_on)
+			if(!radial_mode)
 				user.visible_message("<span class='notice'>[user] activates [src]'s radial mode.</span>",
 				"<span class='notice'>You activate [src]'s radial mode.</span>")
 				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Radial mode initiated'.</span>'")
@@ -717,12 +731,18 @@
 		return
 
 	if(on)
-		icon_state = "sentry_on"
+		if(!radial_mode)
+			icon_state = "sentry_on"
+		else
+			icon_state = "sentry_on_radial"
 	else
 		icon_state = "sentry_off"
 
 /obj/machinery/marine_turret/proc/update_health(var/damage) //Negative damage restores health.
 	health -= damage
+	if(damage && alerts_on && (world.time > (last_damage_alert + SENTRY_ALERT_DELAY) ) ) //Alert friendlies
+		sentry_alert(SENTRY_ALERT_DAMAGE, null)
+		last_damage_alert = world.time
 	if(health <= 0 && stat != 2)
 		stat = 2
 		visible_message("\icon[src] <span class='warning'>The [name] starts spitting out sparks and smoke!")
@@ -821,9 +841,9 @@
 	visible_message("[src] is hit by the [Proj.name]!")
 
 	if(Proj.ammo.flags_ammo_behavior & AMMO_XENO_ACID) //Fix for xenomorph spit doing baby damage.
-		update_health(round(Proj.damage/3))
+		update_health(round(Proj.damage * 0.33))
 	else
-		update_health(round(Proj.damage/10))
+		update_health(round(Proj.damage * 0.1))
 	return 1
 
 /obj/machinery/marine_turret/process()
@@ -846,9 +866,14 @@
 		update_icon()
 		return
 
-	//Clear the list after the delay
-	if(world.time > last_alert + alert_delay)
+	//Clear the target list after the delay
+	if(world.time > last_alert + SENTRY_ALERT_DELAY)
 		alert_list = list()
+
+	if(radial_mode) //Little hint for the xenos.
+		playsound(loc, 'sound/items/tick.ogg', 25, FALSE)
+	else
+		playsound(loc, 'sound/items/detector.ogg', 25, FALSE)
 
 	manual_override = FALSE
 	target = get_target()
@@ -908,22 +933,12 @@
 
 	if(!check_power(2)) return
 
-	if(get_dir(src, targloc) & turn(dir, 180) && !radial_mode) return
+	var/target_dir = get_dir(src, targloc)
+	//if( ( target_dir & turn(dir, 180) ) && !radial_mode)
+	//	return
 
-	else
-		var/target_dir = get_dir(src, targloc)
-		if(target_dir == NORTHWEST || target_dir == NORTHEAST || target_dir == SOUTHEAST || target_dir == SOUTHWEST)
-			switch(get_dir(src, targloc))
-				if(NORTHWEST)
-					dir = NORTH
-				if(NORTHEAST)
-					dir = EAST
-				if(SOUTHEAST)
-					dir = SOUTH
-				if(SOUTHWEST)
-					dir = WEST
-		else
-			dir = target_dir
+	if(radial_mode)
+		dir = target_dir
 
 
 	if(load_into_chamber())
@@ -933,7 +948,7 @@
 				//Apply scatter
 				var/scatter_chance = in_chamber.ammo.scatter
 				scatter_chance += (burst_size * 2)
-				in_chamber.accuracy = round(in_chamber.accuracy * (config.base_hit_accuracy_mult - config.med_hit_accuracy_mult)) //This is gross but needed to make accuracy behave like the minigun's
+				in_chamber.accuracy = round(in_chamber.accuracy * (config.base_hit_accuracy_mult - config.min_hit_accuracy_mult * max(0,burst_size - 2) ) ) //Accuracy penalty scales with burst count.
 
 				if (prob(scatter_chance))
 					var/scatter_x = rand(-1, 1)
@@ -959,7 +974,7 @@
 			rounds--
 			if(rounds == 0)
 				visible_message("\icon[src] <span class='warning'>The [name] beeps steadily and its ammo light blinks red.</span>")
-				playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 50, 1)
+				playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 50, FALSE)
 				if(alerts_on)
 					sentry_alert(SENTRY_ALERT_AMMO)
 
@@ -1004,29 +1019,42 @@
 
 
 		if(alerts_on)
-			var/list_match = alert_list[M]
-			if((world.time > last_alert + alert_delay) || !list_match) //if we're not on cooldown or the target isn't in the list, sound the alarm
-				playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
+			if(world.time > (last_alert + SENTRY_ALERT_DELAY) || !(M in alert_list)) //if we're not on cooldown or the target isn't in the list, sound the alarm
+				playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
 				sentry_alert(SENTRY_ALERT_HOSTILE, M)
-				alert_list += M
+				alert_list.Add(M)
 				last_alert = world.time
 
 		var/angle = get_dir(src, M)
-		if(angle & dir)
-			path = getline2(src, M)
+		if(angle & dir || radial_mode)
+			path = getline2(src, M, TRUE)
 		else
 			continue
 
 		if(path.len)
+			var/blocked = FALSE //reset blocked
 			for(T in path)
-				if(T.opacity || T.density) continue //don't pass on targets we can't actually fire at.
-			var/obj/machinery/MA
-			for(MA in path)
-				if(MA.opacity || MA.density) continue //don't pass on targets we can't actually fire at.
-			var/obj/structure/S
-			for(S in path)
-				if(S.opacity || S.density) continue //don't pass on targets we can't actually fire at.
-			targets += M
+				if(T.opacity || T.density)
+					blocked = TRUE
+					continue //don't pass on targets we can't actually fire at.
+
+				if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks LoS/LoF
+					if(locate(/obj/machinery) in T)
+						var/obj/machinery/MA
+						for(MA in T)
+							if(MA.opacity || MA.density)
+								blocked = TRUE
+								continue //don't pass on targets we can't actually fire at.
+
+				if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks LoS/LoF
+					if(locate(/obj/structure) in T)
+						var/obj/structure/S
+						for(S in T)
+							if(S.opacity || S.density)
+								blocked = TRUE
+								continue //don't pass on targets we can't actually fire at.
+			if(!blocked)
+				targets += M
 
 	if(targets.len) . = pick(targets)
 
@@ -1190,7 +1218,7 @@
 	. = ..()
 
 
-/obj/machinery/marine_turret/proc/sentry_alert(alert_code, mob/M = null)
+/obj/machinery/marine_turret/proc/sentry_alert(alert_code, mob/M)
 	if(!alert_code)
 		return
 	var/notice
@@ -1198,10 +1226,16 @@
 		if(SENTRY_ALERT_AMMO)
 			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)].</b>"
 		if(SENTRY_ALERT_HOSTILE)
-			notice = "<b>ALERT! Hostile/unknown: [M] detected at: [get_area(M)].</b>"
+			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)].</b>"
 		if(SENTRY_ALERT_FALLEN)
 			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)].</b>"
+		if(SENTRY_ALERT_DAMAGE)
+			var/percent = max(0,(health / max(1,health_max))*100)
+			if(percent)
+				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Remaining Structural Integrity: [percent]%</b>"
+			else
+				notice = "<b>ALERT! [src] at: [get_area(src)] has been destroyed.</b>"
 	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
-	AI.SetName("Sentry Gun Alert System")
-	AI.aiRadio.talk_into(AI,"[notice]","General","announces")
+	AI.SetName("Sentry Alert System")
+	AI.aiRadio.talk_into(AI,"[notice]","Almayer","announces")
 	cdel(AI)

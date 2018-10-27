@@ -680,14 +680,16 @@ mob/proc/yank_out_object()
 		conga_line += A
 		var/mob/M = A
 		if(istype(M)) //Is a mob
+			if(M.buckled && !(M.buckled in conga_line))
+				if(M.buckled.anchored)
+					conga_line -= A //Remove from the conga line if on anchored buckles.
+					end_of_conga = TRUE //Party is over, they won't be dragging anyone themselves.
+					break
+				else
+					conga_line += M.buckled //Or bring the buckles along.
 			var/mob/living/L = M
 			if(istype(L))
 				L.smokecloak_off()
-			if(M.buckled && !(M.buckled in conga_line))
-				if(M.buckled.anchored)
-					M.buckled.unbuckle() //Force the dragged people out of anchored buckles.
-				else
-					conga_line += M.buckled //Or bring the buckles along.
 			if(M.pulling)
 				S = M
 			else

@@ -740,7 +740,7 @@
 
 /obj/machinery/marine_turret/proc/update_health(var/damage) //Negative damage restores health.
 	health -= damage
-	if(damage && alerts_on && (world.time > (last_damage_alert + SENTRY_ALERT_DELAY) ) ) //Alert friendlies
+	if(on && damage && alerts_on && (world.time > (last_damage_alert + SENTRY_ALERT_DELAY) || health <= 0) ) //Alert friendlies
 		sentry_alert(SENTRY_ALERT_DAMAGE, null)
 		last_damage_alert = world.time
 	if(health <= 0 && stat != 2)
@@ -767,7 +767,7 @@
 			visible_message("\icon[src] <span class='danger'>The [name] is knocked over!</span>")
 			stat = 1
 			on = FALSE
-			if(alerts_on)
+			if(alerts_on && on)
 				sentry_alert(SENTRY_ALERT_FALLEN)
 	if(stat)
 		density = FALSE
@@ -1018,16 +1018,15 @@
 
 
 
-		if(alerts_on)
-			if(world.time > (last_alert + SENTRY_ALERT_DELAY) || !(M in alert_list)) //if we're not on cooldown or the target isn't in the list, sound the alarm
-				playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
-				sentry_alert(SENTRY_ALERT_HOSTILE, M)
-				alert_list.Add(M)
-				last_alert = world.time
-
 		var/angle = get_dir(src, M)
 		if(angle & dir || radial_mode)
 			path = getline2(src, M, TRUE)
+			if(alerts_on) //They're within our field of detection and thus can trigger the alarm
+				if(world.time > (last_alert + SENTRY_ALERT_DELAY) || !(M in alert_list)) //if we're not on cooldown or the target isn't in the list, sound the alarm
+					playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, FALSE)
+					sentry_alert(SENTRY_ALERT_HOSTILE, M)
+					alert_list.Add(M)
+					last_alert = world.time
 		else
 			continue
 

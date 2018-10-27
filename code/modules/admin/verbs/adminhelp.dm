@@ -124,7 +124,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	var/list/mentorholders = list()
 	var/list/adminholders = list()
 	for(var/client/X in admins)
-		if((R_MENTOR & X.holder.rights) && (!(R_ADMIN & X.holder.rights) || !(R_MOD & X.holder.rights))) // we don't want to count admins twice. This list should be JUST mentors
+		if((R_MENTOR & X.holder.rights) && !((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights))) // we don't want to count admins twice. This list should be JUST mentors
 			mentorholders += X
 			if(X.is_afk())
 				admin_number_afk++

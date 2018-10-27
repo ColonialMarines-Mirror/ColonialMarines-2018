@@ -26,18 +26,14 @@ var/list/admin_datums = list()
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
-	to_chat(usr, "associate triggered")
 	if(istype(C))
-		to_chat(usr, "client works")
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
 		admins |= C
 
 /datum/admins/proc/disassociate()
-	to_chat(usr, "disassociate triggered")
 	if(owner)
-		to_chat(usr, "[owner] | owner")
 		admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null

@@ -45,7 +45,7 @@
 	var/super_hit_damage = 120
 	var/ultra_hit_damage = 150
 	var/aprocket_hit_damage = 250
-	var/LTB_hit_damage = 300
+	var/ltb_hit_damage = 300
 
 	var/base_hit_damage_mult = 1
 	var/min_hit_damage_mult = 0.05

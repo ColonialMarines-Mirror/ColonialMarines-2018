@@ -37,7 +37,8 @@
 	icon_state = "sentry_base"
 	anchored = FALSE
 	density = TRUE
-	throwpass = TRUE//You can throw objects over this, despite it's density.")
+	throwpass = TRUE //You can throw objects over this, despite it's density.
+	flags_atom = ON_BORDER
 	layer = ABOVE_OBJ_LAYER
 	var/has_cable = FALSE
 	var/has_top = FALSE
@@ -310,9 +311,9 @@
 	camera.c_tag = "[name] ([rand(0, 1000)])"
 	spawn(2)
 		stat = 0
-		//processing_objects.Add(src)
+	//processing_objects.Add(src)
 	ammo = ammo_list[ammo]
-	start_processing()
+
 
 /obj/machinery/marine_turret/Dispose() //Clear these for safety's sake.
 	if(operator)
@@ -328,7 +329,7 @@
 		target = null
 	alert_list = list()
 	SetLuminosity(0)
-	//processing_objects.Remove(src)
+	stop_processing()
 	. = ..()
 
 /obj/machinery/marine_turret/attack_hand(mob/user as mob)
@@ -502,6 +503,7 @@
 				user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
 				"<span class='notice'>You deactivate [src].</span>")
 				visible_message("\icon[src] <span class='notice'>The [name] powers down and goes silent.</span>")
+				processing_objects.Remove(src)
 				update_icon()
 
 		if("toggle_alert")
@@ -719,11 +721,21 @@
 
 /obj/machinery/marine_turret/update_icon()
 	if(stat && health > 0) //Knocked over
+		on = FALSE
+		density = FALSE
 		icon_state = "sentry_fallen"
 		return
+	else
+		density = initial(density)
 
 	if(!cell)
+		on = FALSE
 		icon_state = "sentry_battery_none"
+		return
+
+	if(cell.charge <= 0)
+		on = FALSE
+		icon_state = "sentry_battery_dead"
 		return
 
 	if(!rounds)
@@ -731,12 +743,14 @@
 		return
 
 	if(on)
+		start_processing()
 		if(!radial_mode)
 			icon_state = "sentry_on"
 		else
 			icon_state = "sentry_on_radial"
 	else
 		icon_state = "sentry_off"
+		stop_processing()
 
 /obj/machinery/marine_turret/proc/update_health(var/damage) //Negative damage restores health.
 	health -= damage
@@ -763,36 +777,29 @@
 	if(!stat && damage > 0 && !immobile)
 		if(prob(10))
 			spark_system.start()
-		if(prob(5 + round(damage/5)))
+		if(damage > 100) //Knockdown is certain if we deal this much in one hit; no more RNG nonsense, the fucking thing is bolted.
 			visible_message("\icon[src] <span class='danger'>The [name] is knocked over!</span>")
 			stat = 1
-			on = FALSE
 			if(alerts_on && on)
 				sentry_alert(SENTRY_ALERT_FALLEN)
-	if(stat)
-		density = FALSE
-	else
-		density = initial(density)
+			on = FALSE
 	update_icon()
 
 /obj/machinery/marine_turret/proc/check_power(var/power)
 	if (!cell)
-		icon_state = "sentry_battery_none"
+		update_icon()
 		return FALSE
 
 	if(!on || stat)
-		on = FALSE
-		icon_state = "sentry_off"
+		update_icon()
 		return FALSE
 
 	if(cell.charge - power <= 0)
 		cell.charge = 0
 		visible_message("\icon[src] <span class='warning'>[src] emits a low power warning and immediately shuts down!</span>")
 		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 25, 1)
-		on = FALSE
-		update_icon()
 		SetLuminosity(0)
-		icon_state = "sentry_battery_dead"
+		update_icon()
 		return FALSE
 
 	cell.charge -= power
@@ -811,6 +818,7 @@
 			on = FALSE
 	if(health > 0)
 		update_health(25)
+	update_icon()
 	return
 
 /obj/machinery/marine_turret/ex_act(severity)
@@ -1003,11 +1011,14 @@
 
 	var/list/turf/path = list()
 	var/turf/T
-	var/mob/M
+	var/mob/living/M
 
 	for(M in oview(range, src))
-		if(!isliving(M) || M.stat || isrobot(M)) continue //No unconscious/deads, or non living.
-
+		if(M.stat != DEAD || isrobot(M)) //No deads, or non living.
+			if(safety_off)
+				continue
+			else if(!isXeno(M)) //When safeties are on, Xenos only.
+				continue
 		/*
 		I really, really need to replace this with some that isn't insane. You shouldn't have to fish for access like this.
 		This should be enough shortcircuiting, but it is possible for the code to go all over the possibilities and generally
@@ -1041,7 +1052,7 @@
 					if(locate(/obj/machinery) in T)
 						var/obj/machinery/MA
 						for(MA in T)
-							if(MA.opacity || MA.density && !MA.throwpass)
+							if(MA.opacity || MA.density && !(MA.flags_atom & ON_BORDER))
 								blocked = TRUE
 								continue //don't pass on targets we can't actually fire at.
 
@@ -1049,7 +1060,7 @@
 					if(locate(/obj/structure) in T)
 						var/obj/structure/S
 						for(S in T)
-							if(S.opacity || S.density && !S.throwpass)
+							if(S.opacity || S.density && !(S.flags_atom & ON_BORDER) )
 								blocked = TRUE
 								continue //don't pass on targets we can't actually fire at.
 			if(!blocked)
@@ -1157,8 +1168,6 @@
 	camera.c_tag = "[src.name] ([rand(0,1000)])"
 	spawn(2)
 		stat = 0
-		//processing_objects.Add(src)
-		start_processing()
 	ammo = ammo_list[ammo]
 
 /obj/machinery/marine_turret/premade/dumb

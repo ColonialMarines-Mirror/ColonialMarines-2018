@@ -1042,7 +1042,7 @@
 					if(locate(/obj/machinery) in T)
 						var/obj/machinery/MA
 						for(MA in T)
-							if(MA.opacity || MA.density)
+							if(MA.opacity || MA.density && !MA.throwpass)
 								blocked = TRUE
 								continue //don't pass on targets we can't actually fire at.
 
@@ -1050,7 +1050,7 @@
 					if(locate(/obj/structure) in T)
 						var/obj/structure/S
 						for(S in T)
-							if(S.opacity || S.density)
+							if(S.opacity || S.density && !S.throwpass)
 								blocked = TRUE
 								continue //don't pass on targets we can't actually fire at.
 			if(!blocked)

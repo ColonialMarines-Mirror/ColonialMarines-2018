@@ -592,6 +592,7 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Queen;jobban4=\ref[M]'>Queen</a></td>"
 
+		jobs += "</tr><tr align='center'>"
 
 		//Survivor
 		if(jobban_isbanned(M, "Survivor") || isbanned_dept)
@@ -610,6 +611,12 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Synthetic;jobban4=\ref[M]'><font color=red>Synthetic</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Synthetic;jobban4=\ref[M]'>Synthetic</a></td>"
+
+		//Predator
+		if(jobban_isbanned(M, "Predator") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Predator;jobban4=\ref[M]'><font color=red>Predator</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Predator;jobban4=\ref[M]'>Predator</a></td>"
 
 
 		jobs += "</tr></table>"

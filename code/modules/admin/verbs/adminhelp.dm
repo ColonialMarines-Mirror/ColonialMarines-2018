@@ -116,8 +116,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	
 		return
 
-	var/mentor_msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 1, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
-	msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 2, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	var/mentor_msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0
 
@@ -201,9 +201,6 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			return "<b>[key_name(C, link, name, highlight_special)]</b>"
 		if(1)
 			return "<b>[key_name(C, link, name, highlight_special)] \
-			(<A HREF='?_src_=holder;mark=[ref_mob]'>Mark</A>) \
-			(<A HREF='?_src_=holder;noresponse=[ref_mob]'>NR</A>) \
-			(<A HREF='?_src_=holder;autoresponse=[ref_mob]'>AutoResponse...</A>) \
 			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
 			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
@@ -223,5 +220,13 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		if(3)
 			return "<b>[key_name(C, link, name, highlight_special)] \
 			(<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) \
+			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
+		if(4)
+			return "<b>[key_name(C, link, name, highlight_special)] \
+			(<A HREF='?_src_=holder;mark=[ref_mob]'>Mark</A>) \
+			(<A HREF='?_src_=holder;noresponse=[ref_mob]'>NR</A>) \
+			(<A HREF='?_src_=holder;autoresponse=[ref_mob]'>AutoResponse...</A>) \
+			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
 			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"

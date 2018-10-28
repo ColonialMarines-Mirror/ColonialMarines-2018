@@ -2437,7 +2437,6 @@
 		player_notes_show(key)
 
 	if(href_list["hide_player_info"])
-		message_admins("hide button clicked.")
 		var/key = href_list["hide_player_info"]
 		var/index = text2num(href_list["remove_index"])
 
@@ -2445,7 +2444,6 @@
 		player_notes_show(key)
 
 	if(href_list["unhide_player_info"])
-		message_admins("notes unhide button clicked.")
 		var/key = href_list["unhide_player_info"]
 		var/index = text2num(href_list["remove_index"])
 

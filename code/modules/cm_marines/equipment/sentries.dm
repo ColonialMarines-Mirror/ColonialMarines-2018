@@ -1014,11 +1014,10 @@
 	var/mob/living/M
 
 	for(M in oview(range, src))
-		if(M.stat != DEAD || isrobot(M)) //No deads, or non living.
-			if(safety_off)
-				continue
-			else if(!isXeno(M)) //When safeties are on, Xenos only.
-				continue
+		if(M.stat == DEAD || isrobot(M)) //No deads, or non living.
+			continue
+		if(!safety_off && !isXeno(M)) //When safeties are on, Xenos only.
+			continue
 		/*
 		I really, really need to replace this with some that isn't insane. You shouldn't have to fish for access like this.
 		This should be enough shortcircuiting, but it is possible for the code to go all over the possibilities and generally

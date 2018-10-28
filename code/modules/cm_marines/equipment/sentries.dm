@@ -1042,7 +1042,10 @@
 
 		if(path.len)
 			var/blocked = FALSE //reset blocked
+			var/current_turf = get_turf(src)
 			for(T in path)
+				if(T == current_turf) //Don't deal with the current turf
+					continue
 				if(T.opacity || T.density)
 					blocked = TRUE
 					continue //don't pass on targets we can't actually fire at.

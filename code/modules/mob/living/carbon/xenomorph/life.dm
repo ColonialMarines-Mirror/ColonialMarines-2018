@@ -225,11 +225,7 @@
 								Z.recovery_new = leader_aura_strength
 
 /mob/living/carbon/Xenomorph/proc/handle_aura_receiver()
-	if(on_fire) //Burning xenos can't benefit from pheromones; 0 everything out, return.
-		frenzy_aura = 0
-		warding_aura = 0
-		recovery_aura = 0
-	else if(frenzy_aura != frenzy_new || warding_aura != warding_new || recovery_aura != recovery_new)
+	if(frenzy_aura != frenzy_new || warding_aura != warding_new || recovery_aura != recovery_new)
 		frenzy_aura = frenzy_new
 		warding_aura = warding_new
 		recovery_aura = recovery_new

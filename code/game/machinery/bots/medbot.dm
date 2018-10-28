@@ -43,10 +43,10 @@
 	name = "Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "dexalinp"
+	treatment_oxy = "dexalinplus"
 	treatment_brute = "bicaridine"
 	treatment_fire = "kelotane"
-	treatment_tox = "anti_toxin"
+	treatment_tox = "dylovene"
 
 
 

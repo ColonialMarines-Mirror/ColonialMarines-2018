@@ -25,9 +25,6 @@
 	handle_silent()
 	handle_disabilities()
 
-	if(smokecloaked)
-		update_cloak()
-
 /mob/living/proc/handle_stunned()
 	if(stunned)
 		AdjustStunned(-1)
@@ -95,9 +92,11 @@
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		return
-
-	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
+
+/mob/living/update_stat()
+	update_cloak()
 
 /mob/living/New()
 	..()
@@ -530,6 +529,9 @@
 	smokecloaked = FALSE
 
 /mob/living/proc/update_cloak()
+	if(!smokecloaked)
+		return
+
 	var/obj/effect/particle_effect/smoke/tactical/S = locate() in loc
 	if(S)
 		return
@@ -581,3 +583,8 @@ below 100 is not dizzy
 	if(client)
 		client.pixel_x = 0
 		client.pixel_y = 0
+
+/mob/living/proc/update_action_button_icons()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.update_button_icon()

@@ -226,7 +226,7 @@
 		if(user.get_inactive_hand()) //Failsafe; if there's somehow still something in the off-hand (undroppable), bail.
 			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 			return
-			
+
 	if(ishuman(user))
 		var/check_hand = user.r_hand == src ? "l_hand" : "r_hand"
 		var/mob/living/carbon/human/wielder = user
@@ -693,7 +693,6 @@ and you're good to go.
 			if(able_to_fire(user))
 				flags_gun_features ^= GUN_CAN_POINTBLANK //If they try to click again, they're going to hit themselves.
 				M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger.</span>")
-				message_admins("[key_name(user)] is trying to commit suicide (<A HREF='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[user.name]'>FLW</A>).", 1)
 				log_game("[key_name(user)] is trying to commit suicide.")
 				var/u = "[key_name(user)] is trying to commit suicide."
 				user.log_message(u, LOG_ATTACK, "red")
@@ -937,7 +936,7 @@ and you're good to go.
 				playsound(user, actual_sound, 60)
 				if(bullets_fired == 1)
 					user.visible_message(
-					"<span class='danger'>[user] [src][reflex ? " by reflex":""]!</span>", \
+					"<span class='danger'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
 					"<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[current_mag.current_rounds-1]</b>/[current_mag.max_rounds]" : ""]</span>", \
 					"<span class='warning'>You hear a [istype(projectile_to_fire.ammo, /datum/ammo/bullet) ? "gunshot" : "blast"]!</span>", 4
 					)

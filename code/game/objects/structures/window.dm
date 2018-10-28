@@ -210,6 +210,14 @@
 
 
 	if(deconstructable)
+		if(istype(W, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy)
+			var/obj/item/tool/pickaxe/plasmacutter/P = W
+			if(P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD))
+				if(do_after(user, P.calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+					P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD)
+					health = 0
+					healthcheck(0, 0, 1)
+					return
 		if(istype(W, /obj/item/tool/screwdriver))
 			if(static_frame)
 				state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
@@ -636,7 +644,8 @@
 /obj/structure/window/framed/almayer/requisitions
 	name = "kevlar-weave infused bulletproof window"
 	desc = "A borosilicate glass window infused with kevlar fibres and mounted within a special shock-absorbing frame, this is gonna be seriously hard to break through."
-	health = 400
+	health = 2000
+	deconstructable = FALSE
 	window_frame = /obj/structure/window_frame/almayer/requisitions
 
 /obj/structure/window/framed/almayer/white

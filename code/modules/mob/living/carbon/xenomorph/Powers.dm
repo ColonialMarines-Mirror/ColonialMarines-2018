@@ -301,9 +301,9 @@
 			var/datum/action/act = X
 			act.update_button_icon()
 
-/mob/living/carbon/Xenomorph/proc/punch(atom/A)
+/mob/living/carbon/Xenomorph/proc/punch(var/mob/living/M)
 
-	if (!A || !ishuman(A))
+	if (!M)
 		return
 
 	if (!check_state() || agility)
@@ -313,55 +313,70 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before punching.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (!check_plasma(20))
 		return
 
-	if (!Adjacent(A))
+	if (!Adjacent(M))
 		return
 
 	if(stagger)
-		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake up the shock!</span>")
+		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake off the shock!</span>")
 		return
 
-	var/mob/living/carbon/human/H = A
-	if(H.stat == DEAD)
+	if(M.stat == DEAD || ((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))) //Can't bully the dead/nested hosts.
 		return
 	round_statistics.warrior_punches++
-	var/datum/limb/L = H.get_limb(check_zone(zone_selected))
 
-	if (!L || (L.status & LIMB_DESTROYED))
-		return
 
-	visible_message("<span class='xenowarning'>\The [src] hits [H] in the [L.display_name] with a devistatingly powerful punch!</span>", \
-	"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devistatingly powerful punch!</span>")
 	var/S = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-	playsound(H,S, 50, 1)
+	var/target_zone = check_zone(zone_selected)
+	if(!target_zone)
+		target_zone = "chest"
+	var/armor_block = M.run_armor_check(target_zone)
+	var/damage = rand(melee_damage_lower, melee_damage_upper)
 	used_punch = TRUE
-	use_plasma(10)
+	use_plasma(20)
+	playsound(M, S, 50, 1)
 
-	if(L.status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.
-		L.status &= ~LIMB_SPLINTED
-		to_chat(H, "<span class='danger'>The splint on your [L.display_name] comes apart!</span>")
-
-	if(isYautja(H))
-		L.take_damage(rand(8,12))
-	else if(L.status & LIMB_ROBOT)
-		L.take_damage(rand(30,40), 0, 0) // just do more damage
+	if(!ishuman(M))
+		apply_damage(damage, BRUTE, target_zone, armor_block) //If we're not a humie, just apply brute.
 	else
-		var/fracture_chance = 100
-		switch(L.body_part)
-			if(HEAD)
-				fracture_chance = 20
-			if(UPPER_TORSO)
-				fracture_chance = 30
-			if(LOWER_TORSO)
-				fracture_chance = 40
+		var/mob/living/carbon/human/H = M
 
-		L.take_damage(rand(15,25), 0, 0)
-		if(prob(fracture_chance))
-			L.fracture()
-	shake_camera(H, 2, 1)
-	step_away(H, src, 2)
+		var/datum/limb/L = H.get_limb(check_zone(zone_selected))
+
+		if (!L || (L.status & LIMB_DESTROYED))
+			return
+
+		visible_message("<span class='xenowarning'>\The [src] hits [H] in the [L.display_name] with a devastatingly powerful punch!</span>", \
+		"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devastatingly powerful punch!</span>")
+
+
+		if(L.status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.
+			L.status &= ~LIMB_SPLINTED
+			to_chat(H, "<span class='danger'>The splint on your [L.display_name] comes apart!</span>")
+
+		if(isYautja(H))
+			L.take_damage(damage, 0, 0, 0, null, null, null, armor_block)
+		else if(L.status & LIMB_ROBOT)
+			L.take_damage(damage * 2, 0, 0, 0, null, null, null, armor_block)
+		else
+			var/fracture_chance = 100
+			switch(L.body_part)
+				if(HEAD)
+					fracture_chance = 50
+				if(UPPER_TORSO)
+					fracture_chance = 50
+				if(LOWER_TORSO)
+					fracture_chance = 50
+			fracture_chance *= max(0,round(1 - armor_block,0.01)) //Reduce the fracture chance by a % equal to the armor.
+
+			L.take_damage(damage, 0, 0, 0, null, null, null, armor_block)
+			if(prob(fracture_chance))
+				L.fracture()
+	apply_damage(damage, HALLOSS) //Armor penetrating halloss also applies.
+	shake_camera(M, 2, 1)
+	step_away(M, src, 2)
 
 	spawn(punch_cooldown)
 		used_punch = FALSE
@@ -517,6 +532,9 @@
 	if (!M || !istype(M, /mob/living/carbon/human))
 		return
 
+	if(M.stat == DEAD || (istype(M.buckled, /obj/structure/bed/nest) && M.status_flags & XENO_HOST) ) //No bullying the dead/secured hosts
+		return
+
 	if (fortify)
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
@@ -567,18 +585,17 @@
 
 	face_atom(H) //Face towards the target so we don't look silly
 
-	if(H.stat != DEAD && (!(H.status_flags & XENO_HOST) || !istype(H.buckled, /obj/structure/bed/nest)) )
-		var/damage = rand(melee_damage_lower,melee_damage_upper)
-		if(frenzy_aura > 0)
-			damage += (frenzy_aura * 2)
-		damage *= (1 + distance * 0.25) //More distance = more momentum = stronger Headbutt.
-		var/affecting = H.get_limb(ran_zone(null, 0))
-		if(!affecting) //Still nothing??
-			affecting = H.get_limb("chest") //Gotta have a torso?!
-		var/armor_block = H.run_armor_check(affecting, "melee")
-		H.apply_damage(damage, BRUTE, affecting, armor_block) //We deal crap brute damage after armor...
-		H.apply_damage(damage, HALLOSS) //...But some sweet armour ignoring Halloss
-		shake_camera(H, 2, 1)
+	var/damage = rand(melee_damage_lower,melee_damage_upper)
+	if(frenzy_aura > 0)
+		damage += (frenzy_aura * 2)
+	damage *= (1 + distance * 0.25) //More distance = more momentum = stronger Headbutt.
+	var/affecting = H.get_limb(ran_zone(null, 0))
+	if(!affecting) //Still nothing??
+		affecting = H.get_limb("chest") //Gotta have a torso?!
+	var/armor_block = H.run_armor_check(affecting, "melee")
+	H.apply_damage(damage, BRUTE, affecting, armor_block) //We deal crap brute damage after armor...
+	H.apply_damage(damage, HALLOSS) //...But some sweet armour ignoring Halloss
+	shake_camera(H, 2, 1)
 
 	var/facing = get_dir(src, H)
 	var/headbutt_distance = 3
@@ -637,7 +654,7 @@
 
 	for (var/mob/living/carbon/human/H in L)
 		step_away(H, src, sweep_range, 2)
-		if(H.stat != DEAD)
+		if(H.stat != DEAD && !(istype(H.buckled, /obj/structure/bed/nest) && H.status_flags & XENO_HOST) ) //No bully
 			var/damage = rand(melee_damage_lower,melee_damage_upper)
 			if(frenzy_aura > 0)
 				damage += (frenzy_aura * 2)

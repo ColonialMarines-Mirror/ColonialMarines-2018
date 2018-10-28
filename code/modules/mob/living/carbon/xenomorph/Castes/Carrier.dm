@@ -45,6 +45,9 @@
 		/datum/action/xeno_action/activable/retrieve_egg,
 		/datum/action/xeno_action/place_trap,
 		)
+	inherent_verbs = list(
+		/mob/living/carbon/Xenomorph/proc/vent_crawl,
+		)
 
 	death(gibbed)
 		if(..() && !gibbed && huggers_cur)

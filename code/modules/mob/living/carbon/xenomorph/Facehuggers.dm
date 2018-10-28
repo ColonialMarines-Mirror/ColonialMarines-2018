@@ -180,7 +180,7 @@
 				icon_state = "[initial(icon_state)]_inactive"
 				step(src, turn(dir, 180)) //We want the hugger to bounce off if it hits a mob.
 				throwing = FALSE
-				sleep(15) //1.5 seconds.
+				sleep(5) //0.5 seconds.
 				if(loc && stat != DEAD)
 					stat = CONSCIOUS
 					icon_state = "[initial(icon_state)]"

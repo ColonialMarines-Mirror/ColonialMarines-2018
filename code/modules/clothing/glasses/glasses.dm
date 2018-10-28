@@ -225,6 +225,7 @@
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
+	name = "large sunglasses"
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 

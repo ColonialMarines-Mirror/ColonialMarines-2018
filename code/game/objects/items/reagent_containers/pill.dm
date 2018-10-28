@@ -120,6 +120,11 @@ var/global/list/randomized_pill_icons
 /obj/item/reagent_container/pill/dylovene
 	pill_desc = "A dylovene pill. It neutralizes many common toxins."
 	list_reagents = list("dylovene" = 25)
+
+/obj/item/reagent_container/pill/antitox
+	pill_desc = "An anti-toxins pill. It neutralizes many common toxins."
+	list_reagents = list("anti_toxin" = 25)
+
 /obj/item/reagent_container/pill/antitox/New()
 	. = ..()
 	icon_state = randomized_pill_icons[1]

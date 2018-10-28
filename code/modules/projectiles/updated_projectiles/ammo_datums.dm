@@ -886,7 +886,8 @@
 	accuracy_var_low = config.med_proj_variance
 	accurate_range = config.short_shell_range
 	max_range = config.norm_shell_range
-	damage = config.ultra_hit_damage //lmao tons of hit damage but it's never processed due to the below proc redefinitions
+	penetration = config.aprocket_armor_penetration
+	damage = config.aprocket_hit_damage //lmao tons of hit damage but it's never processed due to the below proc redefinitions
 
 /datum/ammo/rocket/ap/on_hit_mob(mob/M, obj/item/projectile/P)
 	explosion(get_turf(M), -1, 1, 2, 5)
@@ -918,7 +919,8 @@
 	accuracy = config.med_hit_accuracy
 	accurate_range = config.long_shell_range
 	max_range = config.max_shell_range
-	damage = config.ultra_hit_damage
+	penetration = config.ltb_armor_penetration
+	damage = config.ltb_hit_damage
 	shell_speed = config.fast_shell_speed
 
 /datum/ammo/rocket/ltb/on_hit_mob(mob/M, obj/item/projectile/P)

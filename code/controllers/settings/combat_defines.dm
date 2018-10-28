@@ -133,6 +133,8 @@
 	var/mhigh_armor_penetration = 60
 	var/vhigh_armor_penetration = 70
 	var/max_armor_penetration = 80
+	var/aprocket_armor_penetration = 120 //It's an anti-tank weapon
+	var/ltb_armor_penetration = 150 //Can't stop the rock-et
 
 	var/min_proj_extra = 1
 	var/low_proj_extra = 2
@@ -415,6 +417,10 @@
 			vhigh_armor_penetration = value
 		if("max_armor_penetration")
 			max_armor_penetration = value
+		if("aprocket_armor_penetration")
+			aprocket_armor_penetration = value
+		if("ltb_armor_penetration")
+			ltb_armor_penetration = value
 
 		if("min_proj_extra")
 			min_proj_extra = value

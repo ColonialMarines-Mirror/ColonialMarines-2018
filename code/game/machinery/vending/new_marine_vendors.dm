@@ -279,10 +279,9 @@
 
 
 /obj/machinery/marine_selector/clothes
-	name = "ColMarTech Automated Closet"
-	desc = "An automated closet hooked up to a colossal storage of standard-issue uniform and armor."
-	icon_state = "uniform_marine"
-
+	name = "GHMME Automated Closet"
+	desc = "An automated closet hooked up to a colossal storage unit of standard-issue uniform and armor."
+	icon_state = "marineuniform"
 	vendor_role = "Squad Marine"
 
 	listed_products = list(
@@ -635,9 +634,6 @@
 
 
 
-
-
-
 /obj/machinery/marine_selector/clothes/leader
 	req_access = list(ACCESS_MARINE_LEADER)
 	vendor_role = "Squad Leader"
@@ -679,7 +675,6 @@
 							list("Pistol pouch", 0, /obj/item/storage/pouch/pistol, (MARINE_CAN_BUY_R_POUCH|MARINE_CAN_BUY_L_POUCH), "black"),
 							list("MASKS", 0, null, null, null),
 							list("Gas mask", 0, /obj/item/clothing/mask/gas, MARINE_CAN_BUY_MASK, "black"),
-
 							)
 
 
@@ -710,15 +705,14 @@
 
 
 
-
 ////////////////////// Gear ////////////////////////////////////////////////////////
 
 
 
 /obj/machinery/marine_selector/gear
-	name = "ColMarTech Automated Equipment Rack"
-	desc = "An automated equipment rack hooked up to a colossal storage of standard-issue equipments."
-	icon_state = "sec"
+	name = "NEXUS Automated Equipment Rack"
+	desc = "An automated equipment rack hooked up to a colossal storage unit."
+	icon_state = "marinearmory"
 	use_points = TRUE
 	listed_products = list(
 		list("GUN ATTACHMENTS (Choose 1)", 0, null, null, null),
@@ -745,11 +739,13 @@
 	req_access = list(ACCESS_MARINE_DELTA)
 
 /obj/machinery/marine_selector/gear/medic
+	name = "NEXUS Automated Medic Equipment Rack"
+	desc = "An automated medic equipment rack hooked up to a colossal storage unit."
+	icon_state = "medic"
 	vendor_role = "Squad Medic"
 	req_access = list(ACCESS_MARINE_MEDPREP)
 
 	listed_products = list(
-
 							list("MEDICAL SET (Mandatory)", 0, null, null, null),
 							list("Essential Medic Set", 0, /obj/effect/essentials_set/medic, MARINE_CAN_BUY_ESSENTIALS, "white"),
 
@@ -762,7 +758,7 @@
 							list("Advanced firstaid kit", 8, /obj/item/storage/firstaid/adv, null, "orange"),
 							list("Stasis bag", 4, /obj/item/bodybag/cryobag, null, "orange"),
 							list("Pillbottle (Hypervene)", 4, /obj/item/storage/pill_bottle/hypervene, null, "black"),
-							list("Pillbottle (QuickClot)", 4, /obj/item/storage/pill_bottle/quickclot, null, "black"),
+							list("Pillbottle (Quick-Clot)", 4, /obj/item/storage/pill_bottle/quickclot, null, "black"),
 							list("Pillbottle (Bicaridine)", 4, /obj/item/storage/pill_bottle/bicaridine, null, "orange"),
 							list("Pillbottle (Kelotane)", 4, /obj/item/storage/pill_bottle/kelotane, null, "orange"),
 							list("Pillbottle (Dylovene)", 4, /obj/item/storage/pill_bottle/antitox, null, "black"),
@@ -772,14 +768,15 @@
 							list("Pillbottle (Peridaxon)", 4, /obj/item/storage/pill_bottle/peridaxon, null, "black"),
 							list("Pillbottle (Spaceacillin)", 4, /obj/item/storage/pill_bottle/spaceacillin, null, "black"),
 							list("Injector (Inaprovaline)", 1, /obj/item/reagent_container/hypospray/autoinjector/inaprovaline, null, "black"),
-							list("Injector (Bicaridine)", 1, /obj/item/reagent_container/hypospray/autoinjector/Bicard, null, "black"),
-							list("Injector (Kelotane)", 1, /obj/item/reagent_container/hypospray/autoinjector/Kelo, null, "black"),
-							list("Injector (Dylovene)", 1, /obj/item/reagent_container/hypospray/autoinjector/Dylovene, null, "black"),
-							list("Injector (Dexalin+)", 1, /obj/item/reagent_container/hypospray/autoinjector/dexP, null, "black"),
-							list("Injector (QuickClot)", 1, /obj/item/reagent_container/hypospray/autoinjector/quickclot, null, "black"),
-							list("Injector (Oxycodone)", 1, /obj/item/reagent_container/hypospray/autoinjector/Oxycodone, null, "black"),
+							list("Injector (Bicaridine)", 1, /obj/item/reagent_container/hypospray/autoinjector/bicaridine, null, "black"),
+							list("Injector (Kelotane)", 1, /obj/item/reagent_container/hypospray/autoinjector/kelotane, null, "black"),
+							list("Injector (Dylovene)", 1, /obj/item/reagent_container/hypospray/autoinjector/dylovene, null, "black"),
+							list("Injector (Dexalin+)", 1, /obj/item/reagent_container/hypospray/autoinjector/dexalinplus, null, "black"),
+							list("Injector (Quick-Clot)", 1, /obj/item/reagent_container/hypospray/autoinjector/quickclot, null, "black"),
+							list("Injector (Oxycodone)", 1, /obj/item/reagent_container/hypospray/autoinjector/oxycodone, null, "black"),
 							list("Injector (Tricord)", 1, /obj/item/reagent_container/hypospray/autoinjector/tricordrazine, null, "black"),
 							list("Injector (Hypervene)", 1, /obj/item/reagent_container/hypospray/autoinjector/hypervene, null, "black"),
+							list("Advanced hypospray", 2, /obj/item/reagent_container/hypospray/advanced, null, "black"),
 							list("Health analyzer", 2, /obj/item/device/healthanalyzer, null, "black"),
 							list("Medical HUD glasses", 2, /obj/item/clothing/glasses/hud/health, null, "black"),
 
@@ -811,6 +808,9 @@
 
 
 /obj/machinery/marine_selector/gear/engi
+	name = "NEXUS Automated Engineer Equipment Rack"
+	desc = "An automated engineer equipment rack hooked up to a colossal storage unit."
+	icon_state = "engineer"
 	vendor_role = "Squad Engineer"
 	req_access = list(ACCESS_MARINE_ENGPREP)
 
@@ -858,19 +858,18 @@
 							list("M41A skeleton stock", 0, /obj/item/attachable/stock/rifle, (MARINE_CAN_BUY_ATTACHMENT|MARINE_CAN_BUY_ATTACHMENT2), "black"),
 							list("Shotgun stock", 0, /obj/item/attachable/stock/shotgun, (MARINE_CAN_BUY_ATTACHMENT|MARINE_CAN_BUY_ATTACHMENT2), "black"),
 							list("Submachinegun stock", 0, /obj/item/attachable/stock/smg, (MARINE_CAN_BUY_ATTACHMENT|MARINE_CAN_BUY_ATTACHMENT2), "black"),
-
  							)
 
 
 
-
-
 /obj/machinery/marine_selector/gear/smartgun
+	name = "NEXUS Automated Smartgunner Equipment Rack"
+	desc = "An automated smartgunner equipment rack hooked up to a colossal storage unit."
+	icon_state = "smartgunner"
 	vendor_role = "Squad Smartgunner"
 	req_access = list(ACCESS_MARINE_SMARTPREP)
 
 	listed_products = list(
-
 							list("SMARTGUN SET (Mandatory)", 0, null, null, null),
 							list("Essential Smartgunner Set", 0, /obj/item/storage/box/m56_system, MARINE_CAN_BUY_ESSENTIALS, "white"),
 
@@ -901,10 +900,7 @@
 							list("M41A skeleton stock", 0, /obj/item/attachable/stock/rifle, (MARINE_CAN_BUY_ATTACHMENT|MARINE_CAN_BUY_ATTACHMENT2), "black"),
 							list("Shotgun stock", 0, /obj/item/attachable/stock/shotgun, (MARINE_CAN_BUY_ATTACHMENT|MARINE_CAN_BUY_ATTACHMENT2), "black"),
 							list("Submachinegun stock", 0, /obj/item/attachable/stock/smg, (MARINE_CAN_BUY_ATTACHMENT|MARINE_CAN_BUY_ATTACHMENT2), "black"),
-
 							)
-
-
 
 
 
@@ -913,11 +909,13 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 
 
 /obj/machinery/marine_selector/gear/spec
+	name = "NEXUS Automated Specialist Equipment Rack"
+	desc = "An automated specialist equipment rack hooked up to a colossal storage unit."
+	icon_state = "specialist"
 	vendor_role = "Squad Specialist"
 	req_access = list(ACCESS_MARINE_SPECPREP)
 
 	listed_products = list(
-
 							list("SPECIALIST SETS (Choose one)", 0, null, null, null),
 							list("Scout Set", 0, /obj/item/storage/box/spec/scout, MARINE_CAN_BUY_ESSENTIALS, "white"),
 							list("Sniper Set", 0, /obj/item/storage/box/spec/sniper, MARINE_CAN_BUY_ESSENTIALS, "white"),
@@ -957,16 +955,14 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 
 
 
-
-
-
-
 /obj/machinery/marine_selector/gear/leader
+	name = "NEXUS Automated Squad Leader Equipment Rack"
+	desc = "An automated squad leader equipment rack hooked up to a colossal storage unit."
+	icon_state = "squadleader"
 	vendor_role = "Squad Leader"
 	req_access = list(ACCESS_MARINE_LEADER)
 
 	listed_products = list(
-
 							list("SQUAD LEADER SET (Mandatory)", 0, null, null, null),
 							list("Essential SL Set", 0, /obj/effect/essentials_set/leader, MARINE_CAN_BUY_ESSENTIALS, "white"),
 
@@ -979,7 +975,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 							list("Smoke grenade", 2, /obj/item/explosive/grenade/smokebomb, null, "black"),
 							list("Cloak grenade", 3, /obj/item/explosive/grenade/cloakbomb, null, "black"),
 							list("M40 HIDP incendiary grenade", 4, /obj/item/explosive/grenade/incendiary, null, "black"),
-							list("M40 HEDP grenade", 4, /obj/item/explosive/grenade/incendiary, null, "black"),
+							list("M40 HEDP grenade", 4, /obj/item/explosive/grenade/frag, null, "black"),
 							list("M41AE2 heavy pulse rifle", 12, /obj/item/weapon/gun/rifle/lmg, null, "orange"),
 							list("M41AE2 ammo box (10x24mm)", 4, /obj/item/ammo_magazine/rifle/lmg, null, "black"),
 							list("Flamethrower", 12, /obj/item/weapon/gun/flamer, null, "orange"),
@@ -1019,15 +1015,6 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 							)
 
 
-
-
-
-
-
-
-
-
-
 /obj/effect/essentials_set
 	var/list/spawned_gear_list
 
@@ -1050,7 +1037,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/device/healthanalyzer,
 						/obj/item/roller/medevac,
 						/obj/item/roller,
-						/obj/item/reagent_container/hypospray,
+						/obj/item/reagent_container/hypospray/advanced/oxycodone,
 						/obj/item/reagent_container/syringe
 						)
 
@@ -1081,8 +1068,6 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/device/binoculars/tactical,
 						/obj/item/clothing/glasses/hud/health,
 						)
-
-
 
 
 

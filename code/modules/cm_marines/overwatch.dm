@@ -108,12 +108,45 @@
 					dat += "<br>"
 					dat += "<A href='?src=\ref[src];operation=insubordination'>Report a marine for insubordination</a><BR>"
 					dat += "<A href='?src=\ref[src];operation=squad_transfer'>Transfer a marine to another squad</a><BR><BR>"
-
-					dat += "<A href='?src=\ref[src];operation=supplies'>Supply Drop Control</a><BR>"
-					dat += "<A href='?src=\ref[src];operation=monitor'>Squad Monitor</a><BR>"
-					dat += "<BR><BR>----------------------<BR></Body>"
-					dat += "<BR><BR><A href='?src=\ref[src];operation=refresh'>{Refresh}</a></Body>"
-
+					dat += "<a href='?src=\ref[src];operation=supplies'>Supply Drop Control</a><br>"
+					dat += "<a href='?src=\ref[src];operation=monitor'>Squad Monitor</a><br>"
+					dat += "----------------------<br></body>"
+					dat += "<b>Rail Gun Control</b><br>"
+					dat += "<b>Current Rail Gun Status:</b> "
+					var/cooldown_left = (almayer_rail_gun.last_firing + 600) - world.time // 60 seconds between shots
+					if(cooldown_left > 0)
+						dat += "Rail Gun on cooldown ([round(cooldown_left/10)] seconds)<br>"
+					else if(!almayer_rail_gun.rail_gun_ammo?.ammo_count)
+						dat += "<font color='red'>Ammo depleted.</font><br>"
+					else
+						dat += "<font color='green'>Ready!</font><br>"
+					dat += "<B>[current_squad.name] Laser Targets:</b><br>"
+					if(active_laser_targets.len)
+						for(var/obj/effect/overlay/temp/laser_target/LT in current_squad.squad_laser_targets)
+							if(!istype(LT))
+								continue
+							dat += "<a href='?src=\ref[src];operation=use_cam;cam_target=\ref[LT];selected_target=\ref[LT]'>[LT.name]</a><br>"
+					else
+						dat += "<span class='warning'>None</span><br>"
+					dat += "<B>[current_squad.name] Beacon Targets:</b><br>"
+					if(active_orbital_beacons.len)
+						for(var/obj/item/device/squad_beacon/bomb/OB in current_squad.squad_orbital_beacons)
+							if(!istype(OB))
+								continue
+							dat += "<a href='?src=\ref[src];operation=use_cam;cam_target=\ref[OB];selected_target=\ref[OB]'>[OB.name]</a><br>"
+					else
+						dat += "<span class='warning'>None transmitting</span><br>"
+					dat += "<b>Selected Target:</b><br>"
+					if(!selected_target) // Clean the targets if nothing is selected
+						dat += "<span class='warning'>None</span><br>"
+					else if(!(selected_target in active_laser_targets) && !(selected_target in active_orbital_beacons)) // Or available
+						dat += "<span class='warning'>None</span><br>"
+						selected_target = null
+					else
+						dat += "<font color='green'>[selected_target.name]</font><br>"		
+					dat += "<A href='?src=\ref[src];operation=shootrailgun'>\[FIRE!\]</a><br>"
+					dat += "----------------------<br></body>"
+					dat += "<br><br><a href='?src=\ref[src];operation=refresh'>{Refresh}</a></body>"
 			if(OW_MONITOR)//Info screen.
 				dat += get_squad_info()
 			if(OW_SUPPLIES)
@@ -330,6 +363,13 @@
 				to_chat(usr, "\icon[src] <span class='warning'>Orbital bombardment not yet available!</span>")
 			else
 				handle_bombard()
+		if("shootrailgun")
+			if((almayer_rail_gun.last_firing + 600) > world.time)
+				to_chat(usr, "\icon[src] <span class='warning'>The Rail Gun hasn't cooled down yet!</span>")
+			else if(!selected_target)
+				to_chat(usr, "\icon[src] <span class='warning'>No target detected!</span>")
+			else
+				almayer_rail_gun.fire_rail_gun(get_turf(selected_target),usr)
 		if("back")
 			state = OW_MAIN
 		if("use_cam")
@@ -535,7 +575,6 @@
 			target.ceiling_debris_check(5)
 			spawn(2)
 				almayer_orbital_cannon.fire_ob_cannon(target, usr)
-
 
 /obj/machinery/computer/overwatch/proc/change_lead()
 	if(!usr || usr != operator)
@@ -828,10 +867,13 @@
 	if(squad)
 		if(squad.sbeacon == src)
 			squad.sbeacon = null
+		if(src in squad.squad_orbital_beacons)
+			squad.squad_orbital_beacons -= src
 		squad = null
 	if(beacon_cam)
 		cdel(beacon_cam)
 		beacon_cam = null
+	SetLuminosity(0)
 	return ..()
 
 /obj/item/device/squad_beacon/attack_self(mob/user)
@@ -927,6 +969,7 @@
 		if(H.assigned_squad)
 			squad = H.assigned_squad
 			name += " ([squad.name])"
+			squad.squad_orbital_beacons += src
 		var/n = active_orbital_beacons.Find(src)
 		cam_name += " [n]"
 		var/obj/machinery/camera/beacon_cam/BC = new(src, cam_name)
@@ -937,6 +980,7 @@
 		w_class = 10
 		layer = ABOVE_FLY_LAYER
 		icon_state = "[icon_activated]"
+		SetLuminosity(2)
 		playsound(src, 'sound/machines/twobeep.ogg', 15, 1)
 		H.visible_message("[H] activates [src]",
 		"You activate [src]")
@@ -950,6 +994,7 @@
 	if(do_after(H, delay, TRUE, 5, BUSY_ICON_HOSTILE))
 		message_admins("[H] [key_name(usr)] removed an orbital strike beacon. (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>)")
 		if(squad)
+			squad.squad_orbital_beacons -= src
 			squad = null
 		if(src in active_orbital_beacons)
 			active_orbital_beacons -= src
@@ -961,6 +1006,7 @@
 		layer = initial(layer)
 		name = initial(name)
 		icon_state = initial(icon_state)
+		SetLuminosity(0)
 		playsound(src, 'sound/machines/twobeep.ogg', 15, 1)
 		H.visible_message("[H] deactivates [src]",
 		"You deactivate [src]")

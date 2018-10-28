@@ -351,7 +351,7 @@
 "agM" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 8; frequency = 1443; id = "waste_upper"; name = "Waste Air Injector"; on = 1},/turf/open/floor/engine,/area/almayer/engineering/starboard_atmos)
 "agN" = (/turf/open/floor/almayer_hull,/area/almayer/engineering/starboard_atmos)
 "agO" = (/obj/machinery/door/firedoor/border_only/almayer,/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/almayer/living/officer_study)
-"agP" = (/obj/structure/prop/almayer/anti_air_cannon,/turf/open/floor/plating/almayer,/area/almayer/shipboard/weapon_room)
+"agP" = (/obj/structure/ship_rail_gun,/turf/open/floor/plating/almayer,/area/almayer/shipboard/weapon_room)
 "agQ" = (/obj/machinery/door/airlock/multi_tile/almayer/generic{name = "\improper Basketball Court"},/obj/machinery/door/firedoor/border_only/almayer{tag = "icon-door_open"; icon_state = "door_open"; dir = 2},/turf/open/floor/almayer{icon_state = "plate"; tag = "icon-sterile"},/area/almayer/living/offices)
 "agR" = (/turf/closed/wall/almayer/outer,/area/almayer/shipboard/weapon_room)
 "agS" = (/turf/closed/wall/almayer/outer,/area/almayer/shipboard/starboard_point_defense)

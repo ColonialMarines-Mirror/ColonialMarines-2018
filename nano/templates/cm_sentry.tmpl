@@ -61,10 +61,10 @@
     <br><br>
         
     <div class="itemLabel">
-        Weapon Safety: (Target only Xenos)
+        Weapon Safety:
     </div>
     <div class="itemContent">
-        Safety is currently <b>{{:data.safety_toggle ? '<span class="good">ON</span>' : '<span class="bad">OFF</span>'}}</b>
+        Safety is currently <b>{{:data.safety_toggle ? '<span class="good">ON</span> (Only Xenos will be targeted.)' : '<span class="bad">OFF</span> (Non-Xenos without IFF clearance will be targeted.'}}</b>
         <br>
         {{:helper.link(data.safety_toggle ? 'Turn off the safety' : 'Turn on the safety', data.safety_toggle ? 'close' : 'check', { '?src' : data.self_ref, 'op' : 'safety'}, data.is_on ? null : 'disabled')}}
     </div>

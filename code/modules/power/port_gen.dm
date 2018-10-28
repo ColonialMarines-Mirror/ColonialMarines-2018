@@ -111,7 +111,7 @@ display round(lastgen) and phorontank amount
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 60
 	var/heat = 0
-	power_gen = 10000
+	power_gen = 20000
 	drag_delay = 1 //They got them rollers
 
 /obj/machinery/power/port_gen/pacman/initialize()
@@ -343,7 +343,7 @@ display round(lastgen) and phorontank amount
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
-	power_gen = 20000
+	power_gen = 40000
 	time_per_sheet = 120
 	board_path = "/obj/item/circuitboard/machine/pacman/super"
 	overheat()
@@ -353,7 +353,7 @@ display round(lastgen) and phorontank amount
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
-	power_gen = 40000
+	power_gen = 80000
 	time_per_sheet = 240
 	board_path = "/obj/item/circuitboard/machine/pacman/mrs"
 	overheat()

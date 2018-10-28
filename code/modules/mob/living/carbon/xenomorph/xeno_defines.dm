@@ -123,8 +123,8 @@
 	var/used_punch = 0
 	var/used_toggle_agility = 0
 
-	var/lunge_cooldown = 40
-	var/fling_cooldown = 40
+	var/lunge_cooldown = 120
+	var/fling_cooldown = 60
 	var/punch_cooldown = 40
 	var/toggle_agility_cooldown = 5
 
@@ -139,9 +139,8 @@
 
 	var/headbutt_cooldown = 40
 	var/tail_sweep_cooldown = 120
-	var/crest_defense_cooldown = 150
-	var/fortify_cooldown = 200
-	var/fortify_timer = 60
+	var/crest_defense_cooldown = 20
+	var/fortify_cooldown = 20
 
 	//Praetorian vars
 	var/acid_spray_range = 4
@@ -162,6 +161,10 @@
 	var/savage = FALSE
 	var/savage_used = FALSE
 	var/savage_cooldown = 300
+
+	//Notification spam controls
+	var/recent_notice = 0
+	var/notice_delay = 20 //2 second between notices
 
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL

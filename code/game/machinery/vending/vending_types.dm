@@ -93,22 +93,6 @@
 	prices = list()
 
 
-/obj/machinery/vending/hatvendor
-	name = "Marine Clothing & Attire Vendor"
-	desc = "Everything a snowflake needs to stand out from their peers. Actual protection not included."
-	icon_state = "MagiVend"
-	products = list(/obj/item/clothing/head/boonie = 3,
-					/obj/item/clothing/head/cmberet = 12,
-					/obj/item/clothing/head/cmbandana = 12,
-					/obj/item/clothing/head/beanie = 12,
-					/obj/item/clothing/head/headband = 12,
-					/obj/item/clothing/head/headset = 12,
-					/obj/item/clothing/head/cmcap = 12,
-					/obj/item/clothing/glasses/sunglasses = 5,
-					/obj/item/clothing/glasses/sunglasses/big = 3,
-					/obj/item/clothing/glasses/mgoggles = 12,
-					/obj/item/clothing/glasses/mbcg = 20)
-	premium = list(/obj/item/clothing/head/rabbitears = 1) //:3
 
 /obj/machinery/vending/cola
 	name = "Souto Softdrinks"

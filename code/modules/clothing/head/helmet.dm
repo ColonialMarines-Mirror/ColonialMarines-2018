@@ -473,7 +473,9 @@
 	sprite_sheet_id = 1
 	icon_state = "spec"
 	armor = list(melee = 35, bullet = 35, laser = 35, energy = 15, bomb = 10, bio = 0, rad = 0)
-	flags_inventory = BLOCKSHARPOBJ //removed hideears and hidetophair, they're unneeded
+	flags_inventory = BLOCKSHARPOBJ
+	flags_inv_hide = HIDEEARS|HIDETOPHAIR
+
 /obj/item/clothing/head/helmet/specrag/New()
 	select_gamemode_skin(type)
 	..()
@@ -485,7 +487,8 @@
 	sprite_sheet_id = 1
 	icon_state = "durag"
 	armor = list(melee = 35, bullet = 35, laser = 35, energy = 15, bomb = 10, bio = 0, rad = 0)
-	flags_inventory = BLOCKSHARPOBJ //removed hideears and hidetophair, they're unneeded
+	flags_inventory = BLOCKSHARPOBJ
+	flags_inv_hide = HIDEEARS|HIDETOPHAIR
 
 /obj/item/clothing/head/helmet/durag/jungle
 	name = "\improper M8 marksman cowl"

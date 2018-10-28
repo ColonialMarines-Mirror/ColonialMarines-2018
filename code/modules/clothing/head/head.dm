@@ -18,7 +18,8 @@
 	desc = "Typically worn by heavy-weapon operators, mercenaries and scouts, the bandana serves as a lightweight and comfortable hat. Comes in two stylish colors."
 	icon = 'icons/obj/clothing/cm_hats.dmi'
 	sprite_sheet_id = 1
-	icon_state = "band" //removed hidetophair, just looks bad
+	icon_state = "band"
+	flags_inv_hide = HIDETOPHAIR
 
 /obj/item/clothing/head/cmbandana/New()
 	select_gamemode_skin(type, list(MAP_ICE_COLONY = "s_band") )
@@ -33,7 +34,8 @@
 	desc = "A standard military beanie, often worn by non-combat military personnel and support crews, though the occasional one finds its way to the front line. Popular due to being comfortable and snug."
 	icon = 'icons/obj/clothing/cm_hats.dmi'
 	sprite_sheet_id = 1
-	icon_state = "beanie_cargo" //removed hair hiding, it's just ugly.
+	icon_state = "beanie_cargo"
+	flags_inv_hide = HIDETOPHAIR
 
 
 /obj/item/clothing/head/cmberet

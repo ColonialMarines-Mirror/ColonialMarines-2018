@@ -2,8 +2,6 @@
 	. = ..()
 
 	if(stat != DEAD)
-		if(no_stun)//anti-chainstun flag
-			no_stun = FALSE
 
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
@@ -13,6 +11,9 @@
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
+	if(no_stun)//anti-chainstun flag for alien tackles
+		no_stun = max(0,no_stun - 1) //decrement by 1.
+
 	if(confused)
 		confused = max(0, confused - 1)
 
@@ -29,14 +30,14 @@
 	if(stunned)
 		AdjustStunned(-1)
 		if(!stunned && !no_stun) //anti chain stun
-			no_stun = TRUE
+			no_stun = 2 //2 tick reprieve
 	return stunned
 
 /mob/living/proc/handle_knocked_down()
 	if(knocked_down && client)
 		AdjustKnockeddown(-1)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 		if(!knocked_down && !no_stun) //anti chain stun
-			no_stun = TRUE
+			no_stun = 2 //2 tick reprieve
 	return knocked_down
 
 /mob/living/proc/handle_stuttering()

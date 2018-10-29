@@ -806,6 +806,14 @@
 	damage = config.med_hit_damage
 	penetration= config.mhigh_armor_penetration
 
+/datum/ammo/bullet/turret/mini
+
+/datum/ammo/bullet/turret/mini/New()
+	. = ..()
+	damage = config.llow_hit_damage //20
+	penetration= config.hmed_armor_penetration //40
+
+
 /datum/ammo/bullet/machinegun //Adding this for the MG Nests (~Art)
 	name = "machinegun bullet"
 	icon_state 	= "bullet" // Keeping it bog standard with the turret but allows it to be changed. Had to remove IFF so you have to watch out.

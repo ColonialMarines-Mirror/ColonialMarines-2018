@@ -19,7 +19,14 @@
 	icon_state = "sentry_case"
 	w_class = 5
 	storage_slots = 6
-	can_hold = list() //Nada. Once you take the stuff out it doesn't fit back in.
+	can_hold = list(
+					/obj/item/stack/sheet/plasteel/sentry_stack,
+					/obj/item/stack/sheet/metal/small_stack,
+					/obj/item/device/turret_top,
+					/obj/item/device/turret_sensor,
+					/obj/item/cell,
+					/obj/item/ammo_magazine/sentry,
+					)
 
 /obj/item/storage/box/sentry/New()
 	. = ..()
@@ -274,6 +281,8 @@
 	var/rounds = 500
 	var/rounds_max = 500
 	var/burst_size = 5
+	var/max_burst = 6
+	var/min_burst = 2
 	var/locked = FALSE
 	var/atom/target = null
 	var/manual_override = FALSE
@@ -300,6 +309,9 @@
 	var/last_damage_alert = 0
 	var/list/obj/alert_list = list()
 	var/radial_mode = FALSE
+	var/knockdown_threshold = 100
+	var/work_time = 40 //Defines how long it takes to do most maintenance actions
+	var/magazine_type = /obj/item/ammo_magazine/sentry
 
 /obj/machinery/marine_turret/New()
 	spark_system = new /datum/effect_system/spark_spread
@@ -394,7 +406,10 @@
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cm_sentry.tmpl", "[src.name] UI", 625, 525)
+		if(!istype(src, /obj/machinery/marine_turret/mini)) //Check for mini-sentry
+			ui = new(user, src, ui_key, "cm_sentry.tmpl", "[src.name] UI", 625, 525)
+		else
+			ui = new(user, src, ui_key, "dmca_minisentry.tmpl", "[src.name] UI", 625, 525)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -432,7 +447,7 @@
 			if(!cell || cell.charge <= 0 || !anchored || immobile || !on || stat)
 				return
 
-			burst_size = CLAMP(burst_size + 1,2,6)
+			burst_size = CLAMP(burst_size + 1, min_burst, max_burst)
 			user.visible_message("<span class='notice'>[user] increments the [src]'s burst count.</span>",
 			"<span class='notice'>You increment [src]'s burst fire count.</span>")
 
@@ -440,7 +455,7 @@
 			if(!cell || cell.charge <= 0 || !anchored || immobile || !on || stat)
 				return
 
-			burst_size = CLAMP(burst_size - 1,2,6)
+			burst_size = CLAMP(burst_size - 1, min_burst, max_burst)
 			user.visible_message("<span class='notice'>[user] decrements the [src]'s burst count.</span>",
 			"<span class='notice'>You decrement [src]'s burst fire count.</span>")
 
@@ -460,29 +475,35 @@
 				visible_message("\icon[src] <span class='notice'>A red light on [src] blinks rapidly.</span>")
 
 		if("manual") //Alright so to clean this up, fuck that manual control pop up. Its a good idea but its not working out in practice.
-			if(user.interactee != src) //Make sure if we're using a machine we can't use another one (ironically now impossible due to handle_click())
-				to_chat(user, "<span class='warning'>You can't multitask like this!</span>")
-				return
-			if(operator != user && operator) //Don't question this. If it has operator != user it wont fucken work. Like for some reason this does it proper.
-				to_chat(user, "<span class='warning'>Someone is already controlling [src].</span>")
-				return
-			if(!operator) //Make sure we can use it.
-				operator = user
-				user.visible_message("<span class='notice'>[user] takes manual control of [src]</span>",
-				"<span class='notice'>You take manual control of [src]</span>")
-				visible_message("\icon[src] <span class='warning'>The [name] buzzes: <B>WARNING!</B> MANUAL OVERRIDE INITIATED.</span>")
-				user.set_interaction(src)
-				manual_override = TRUE
-			else
-				if(user.interactee)
-					user.visible_message("<span class='notice'>[user] lets go of [src]</span>",
-					"<span class='notice'>You let go of [src]</span>")
-					visible_message("\icon[src] <span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
-					user.unset_interaction()
+			if(!manual_override)
+				if(user.interactee != src) //Make sure if we're using a machine we can't use another one (ironically now impossible due to handle_click())
+					to_chat(user, "<span class='warning'>You can't multitask like this!</span>")
+					return
+				if(operator != user && operator) //Don't question this. If it has operator != user it wont fucken work. Like for some reason this does it proper.
+					to_chat(user, "<span class='warning'>Someone is already controlling [src].</span>")
+					return
+				if(!operator) //Make sure we can use it.
+					operator = user
+					user.visible_message("<span class='notice'>[user] takes manual control of [src]</span>",
+					"<span class='notice'>You take manual control of [src]</span>")
+					visible_message("\icon[src] <span class='warning'>The [name] buzzes: <B>WARNING!</B> MANUAL OVERRIDE INITIATED.</span>")
+					user.set_interaction(src)
+					manual_override = TRUE
 				else
-					to_chat(user, "<span class='warning'>You are not currently overriding this turret.</span>")
-			if(stat == 2)
-				stat = 0 //Weird bug goin on here
+					if(user.interactee)
+						user.visible_message("<span class='notice'>[user] lets go of [src]</span>",
+						"<span class='notice'>You let go of [src]</span>")
+						visible_message("\icon[src] <span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
+						user.unset_interaction()
+					else
+						to_chat(user, "<span class='warning'>You are not currently overriding this turret.</span>")
+				if(stat == 2)
+					stat = 0 //Weird bug goin on here
+			else //Seems to be a bug where the manual override isn't properly deactivated; this toggle should fix that.
+				visible_message("\icon[src] <span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
+				manual_override = FALSE
+				operator = null
+				user.unset_interaction()
 
 		if("power")
 			if(!on)
@@ -582,13 +603,14 @@
 		//Unsecure
 		if(anchored)
 			if(on)
-				to_chat(user, "<span class='warning'>[src] is currently active. The motors will prevent you from unanchoring it safely.</span>")
-				return
+				on = FALSE
+				to_chat(user, "<span class='warning'>You depower [src] to unanchor it safely.</span>")
+				update_icon()
 
 			user.visible_message("<span class='notice'>[user] begins unanchoring [src] from the ground.</span>",
 			"<span class='notice'>You begin unanchoring [src] from the ground.</span>")
 
-			if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
+			if(do_after(user, work_time, TRUE, 5, BUSY_ICON_BUILD))
 				user.visible_message("<span class='notice'>[user] unanchors [src] from the ground.</span>",
 				"<span class='notice'>You unanchor [src] from the ground.</span>")
 				anchored = 0
@@ -600,7 +622,7 @@
 			user.visible_message("<span class='notice'>[user] begins securing [src] to the ground.</span>",
 			"<span class='notice'>You begin securing [src] to the ground.</span>")
 
-			if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
+			if(do_after(user, work_time, TRUE, 5, BUSY_ICON_BUILD))
 				user.visible_message("<span class='notice'>[user] secures [src] to the ground.</span>",
 				"<span class='notice'>You secure [src] to the ground.</span>")
 				anchored = 1
@@ -616,8 +638,9 @@
 			return
 
 		if(on)
-			to_chat(user, "<span class='warning'>[src] is currently active. The motors will prevent you from rotating it safely.</span>")
-			return
+			to_chat(user, "<span class='warning'>You deactivate [src] to prevent its motors from interfering with your rotation.</span>")
+			on = FALSE
+			update_icon()
 
 		playsound(loc, 'sound/items/Screwdriver.ogg', 25, 1)
 		user.visible_message("<span class='notice'>[user] rotates [src].</span>",
@@ -659,13 +682,14 @@
 		if(anchored || immobile)
 			if(cell)
 				if(on)
-					to_chat(user, "<span class='warning'>Turn off [src] before attempting to remove the battery!</span>")
-					return
+					on = FALSE
+					to_chat(user, "<span class='warning'>You depower [src] to safely remove the battery.</span>")
+					update_icon()
 
 				user.visible_message("<span class='notice'>[user] begins removing [src]'s [cell.name].</span>",
 				"<span class='notice'>You begin removing [src]'s [cell.name].</span>")
 
-				if(do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
+				if(do_after(user, work_time, TRUE, 5, BUSY_ICON_BUILD))
 					user.visible_message("<span class='notice'>[user] removes [src]'s [cell.name].</span>",
 					"<span class='notice'>You remove [src]'s [cell.name].</span>")
 					playsound(loc, 'sound/items/Crowbar.ogg', 25, 1)
@@ -681,7 +705,7 @@
 
 		user.visible_message("<span class='notice'>[user] begins installing \a [O.name] into [src].</span>",
 		"<span class='notice'>You begin installing \a [O.name] into [src].</span>")
-		if(do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
+		if(do_after(user, work_time, TRUE, 5, BUSY_ICON_BUILD))
 			user.drop_inv_item_to_loc(O, src)
 			user.visible_message("<span class='notice'>[user] installs \a [O.name] into [src].</span>",
 			"<span class='notice'>You install \a [O.name] into [src].</span>")
@@ -690,16 +714,16 @@
 		return
 
 
-	if(istype(O, /obj/item/ammo_magazine/sentry))
-		var/obj/item/ammo_magazine/sentry/M = O
+	if(istype(O, magazine_type))
+		var/obj/item/ammo_magazine/M = O
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.heavy_weapons < SKILL_HEAVY_WEAPONS_TRAINED)
-			if(rounds)
-				to_chat(user, "<span class='warning'>You only know how to swap the box magazine when it's empty.</span>")
-				return
+			//if(rounds)
+			//	to_chat(user, "<span class='warning'>You only know how to swap the box magazine when it's empty.</span>")
+			//	return
 			user.visible_message("<span class='notice'>[user] begins swapping a new [O.name] into [src].</span>",
 			"<span class='notice'>You begin swapping a new [O.name] into [src].</span>")
 			if(user.action_busy) return
-			if(!do_after(user, 70, TRUE, 5, BUSY_ICON_FRIENDLY))
+			if(!do_after(user, work_time, TRUE, 5, BUSY_ICON_FRIENDLY))
 				return
 
 		playsound(loc, 'sound/weapons/unload.ogg', 25, 1)
@@ -709,9 +733,9 @@
 		update_icon()
 
 		if(rounds)
-			var/obj/item/ammo_magazine/sentry/S = new(user.loc)
+			var/obj/item/ammo_magazine/S = new magazine_type(user.loc)
 			S.current_rounds = rounds
-		rounds = min(rounds + M.current_rounds, rounds_max)
+		rounds = min(M.current_rounds, rounds_max)
 		cdel(O)
 		return
 
@@ -777,7 +801,7 @@
 	if(!stat && damage > 0 && !immobile)
 		if(prob(10))
 			spark_system.start()
-		if(damage > 100) //Knockdown is certain if we deal this much in one hit; no more RNG nonsense, the fucking thing is bolted.
+		if(damage > knockdown_threshold) //Knockdown is certain if we deal this much in one hit; no more RNG nonsense, the fucking thing is bolted.
 			visible_message("\icon[src] <span class='danger'>The [name] is knocked over!</span>")
 			stat = 1
 			if(alerts_on && on)
@@ -1236,7 +1260,7 @@
 		if(SENTRY_ALERT_AMMO)
 			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)].</b>"
 		if(SENTRY_ALERT_HOSTILE)
-			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)].</b>"
+			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)] Coordinates: (X: [M.x], Y: [M.x]).</b>"
 		if(SENTRY_ALERT_FALLEN)
 			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)].</b>"
 		if(SENTRY_ALERT_DAMAGE)
@@ -1249,3 +1273,164 @@
 	AI.SetName("Sentry Alert System")
 	AI.aiRadio.talk_into(AI,"[notice]","Almayer","announces")
 	cdel(AI)
+
+/obj/machinery/marine_turret/mini
+	name = "\improper UA-580 Point Defense Sentry"
+	desc = "A deployable, automated turret with AI targeting capabilities. This is a lightweight portable model meant for rapid deployment and point defense. Armed with an light, high velocity machine gun and a 500-round drum magazine."
+	icon = 'icons/Marine/miniturret.dmi'
+	icon_state = "minisentry_on"
+	cell = /obj/item/cell/high
+	on = FALSE
+	anchored = FALSE
+	burst_fire = TRUE
+	burst_size = 3
+	min_burst = 2
+	max_burst = 4
+	health = 150
+	health_max = 150
+	rounds = 500
+	rounds_max = 500
+	knockdown_threshold = 70 //lighter, not as well secured.
+	work_time = 20 //significantly faster than the big sentry
+	ammo = /datum/ammo/bullet/turret/mini //Similar to M39 AP rounds.
+	magazine_type = /obj/item/ammo_magazine/minisentry
+
+/obj/item/storage/box/sentry/New()
+	..()
+	update_icon()
+
+/obj/machinery/marine_turret/mini/MouseDrop(over_object, src_location, over_location) //Drag the tripod onto you to fold it.
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/user = usr //this is us
+	if(over_object == user && in_range(src, user))
+		if(anchored)
+			to_chat(user, "<span class='warning'>You must unanchor [src] to retrieve it!</span>")
+			return
+		if(on)
+			to_chat(user, "<span class='warning'>You depower [src] to facilitate its retrieval.</span>")
+			on = FALSE
+			update_icon()
+
+		user.visible_message("<span class='notice'>[user] begins to fold up and retrieve [src].</span>",
+		"<span class='notice'>You begin to fold up and retrieve [src].</span>")
+		if(do_after(user, work_time * 2, TRUE, 5, BUSY_ICON_BUILD))
+			if(!src || on || anchored)//Check if we got exploded
+				return
+			to_chat(user, "<span class='notice'>You fold up and retrieve [src].</span>")
+			var/obj/item/device/marine_turret/mini/P = new(loc)
+			user.put_in_hands(P)
+			P.health = health //track the health
+			cdel(src)
+
+/obj/machinery/marine_turret/mini/update_icon()
+	if(stat && health > 0) //Knocked over
+		on = FALSE
+		density = FALSE
+		icon_state = "minisentry_fallen"
+		return
+	else
+		density = initial(density)
+
+	if(!cell)
+		on = FALSE
+		icon_state = "minisentry_nobat"
+		return
+
+	if(cell.charge <= 0)
+		on = FALSE
+		icon_state = "minisentry_nobat"
+		return
+
+	if(!rounds)
+		icon_state = "minisentry_noammo"
+		return
+
+	if(on)
+		start_processing()
+		if(!radial_mode)
+			icon_state = "minisentry_on"
+		else
+			icon_state = "minisentry_on_radial"
+	else
+		icon_state = "minisentry_off"
+		stop_processing()
+
+
+/obj/item/device/marine_turret/mini
+	name = "\improper UA-580 Point Defense Sentry (Folded)"
+	desc = "A deployable, automated turret with AI targeting capabilities. This is a lightweight portable model meant for rapid deployment and point defense. Armed with an light, high velocity machine gun and a 500-round drum magazine. It is currently folded up."
+	icon = 'icons/Marine/miniturret.dmi'
+	icon_state = "minisentry_packed"
+	item_state = "minisentry_packed"
+	w_class = 4
+	health = 150 //We keep track of this when folding up the sentry.
+	flags_equip_slot = SLOT_BACK
+
+/obj/item/device/marine_turret/mini/attack_self(mob/user) //click the sentry to deploy it.
+	if(!ishuman(usr))
+		return
+	var/turf/target = get_step(user.loc,user.dir)
+	if(!target)
+		return
+	var/blocked
+	if(target.density)
+		blocked = TRUE
+	if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks placement
+		if(locate(/obj/machinery) in target)
+			var/obj/machinery/MA
+			for(MA in target)
+				if(MA.density)
+					blocked = TRUE
+
+	if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks placement
+		if(locate(/obj/structure) in target)
+			var/obj/structure/S
+			for(S in target)
+				if(S.density)
+					blocked = TRUE
+	if(blocked)
+		to_chat(user, "<span class='warning'>Insufficient room to deploy [src]!</span>")
+		return
+	if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
+		if(!src) //Make sure the sentry still exists
+			return
+		var/obj/machinery/marine_turret/mini/M = new /obj/machinery/marine_turret/mini(target)
+		M.dir = user.dir
+		user.visible_message("<span class='notice'>[user] deploys [M].</span>",
+		"<span class='notice'>You deploy [M].</span>")
+		playsound(target, 'sound/weapons/mine_armed.ogg', 25, FALSE)
+		M.health = health
+		M.update_icon()
+		cdel(src)
+
+/obj/item/ammo_magazine/minisentry
+	name = "M30 box magazine (10x28mm Caseless)"
+	desc = "A box of 500 10x20mm caseless rounds for the UA-580 Point Defense Sentry. Just feed it into the sentry gun's ammo port when its ammo is depleted."
+	w_class = 3
+	icon_state = "ua580"
+	flags_magazine = NOFLAGS //can't be refilled or emptied by hand
+	caliber = "10x28mm"
+	max_rounds = 500
+	default_ammo = /datum/ammo/bullet/turret/mini
+	gun_type = null
+
+/obj/item/storage/box/minisentry
+	name = "\improper UA-580 point defense sentry crate"
+	desc = "A large case containing all you need to set up an UA-580 point defense sentry."
+	icon = 'icons/Marine/marine-weapons.dmi'
+	icon_state = "sentry_case"
+	w_class = 5
+	storage_slots = 4
+	can_hold = list(/obj/item/device/marine_turret/mini, //gun itself
+					/obj/item/tool/wrench, //wrench to hold it down into the ground
+					/obj/item/tool/screwdriver, //screw the gun onto the post.
+					/obj/item/ammo_magazine/minisentry)
+
+/obj/item/storage/box/minisentry/New()
+	..()
+	spawn(1)
+		new /obj/item/device/marine_turret/mini(src) //gun itself
+		new /obj/item/tool/wrench(src) //wrench to hold it down into the ground
+		new /obj/item/tool/screwdriver(src) //screw the gun onto the post.
+		new /obj/item/ammo_magazine/minisentry(src)

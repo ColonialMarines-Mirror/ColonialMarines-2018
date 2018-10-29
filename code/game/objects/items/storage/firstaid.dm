@@ -236,7 +236,7 @@
 /obj/item/storage/pill_bottle/antitox
 	name = "dylovene pill bottle"
 	icon_state = "pill_canister6"
-	pill_type_to_fill = /obj/item/reagent_container/pill/antitox
+	pill_type_to_fill = /obj/item/reagent_container/pill/dylovene
 
 /obj/item/storage/pill_bottle/inaprovaline
 	name = "inaprovaline pill bottle"

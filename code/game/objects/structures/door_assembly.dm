@@ -163,7 +163,7 @@ obj/structure/door_assembly
 				if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
 					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue You welded the glass panel out!")
-					new /obj/item/stack/sheet/glass/reinforced(src.loc)
+					new /obj/item/stack/sheet/rglass(src.loc)
 					glass = 0
 			else if(!anchored)
 				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
@@ -243,7 +243,7 @@ obj/structure/door_assembly
 		var/obj/item/stack/sheet/S = W
 		if (S)
 			if (S.get_amount() >= 1)
-				if(istype(S, /obj/item/stack/sheet/glass/reinforced))
+				if(istype(S, /obj/item/stack/sheet/rglass))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 25, 1)
 					user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
 					if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD) && !glass)

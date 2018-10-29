@@ -74,7 +74,7 @@ obj/structure/windoor_assembly/Dispose()
 					if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
 						if(!src || !WT.isOn()) return
 						to_chat(user, "\blue You dissasembled the windoor assembly!")
-						new /obj/item/stack/sheet/glass/reinforced(get_turf(src), 5)
+						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
 						if(secure)
 							new /obj/item/stack/rods(get_turf(src), 4)
 						cdel(src)

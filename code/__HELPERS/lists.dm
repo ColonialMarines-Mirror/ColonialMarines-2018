@@ -9,6 +9,19 @@
  * Misc
  */
 
+#define LAZYINITLIST(L) if (!L) L = list()
+#define UNSETEMPTY(L) if (L && !length(L)) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+#define reverseList(L) reverseRange(L.Copy())
+
 //Returns a list in plain english as a string
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
@@ -31,8 +44,8 @@
 		return "[output][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
-proc/listgetindex(var/list/L,index)
-	if(istype(L))
+/proc/listgetindex(list/L, index)
+	if(LAZYLEN(L))
 		if(isnum(index) && ISINTEGER(index))
 			if(ISINRANGE(index,1,L.len))
 				return L[index]
@@ -40,49 +53,123 @@ proc/listgetindex(var/list/L,index)
 			return L[index]
 	return
 
-proc/islist(list/list)
+/proc/islist(list/list)
 	if(istype(list))
 		return 1
 	return 0
 
 //Return either pick(list) or null if list is not of type /list or is empty
-proc/safepick(list/list)
-	if(!islist(list) || !list.len)
-		return
-	return pick(list)
+/proc/safepick(list/L)
+	if(LAZYLEN(L))
+		return pick(L)
 
 //Checks if the list is empty
-proc/isemptylist(list/list)
-	if(!list.len)
-		return 1
-	return 0
+/proc/isemptylist(list/L)
+	if(!L.len)
+		return TRUE
+	return FALSE
+
 
 //Checks for specific types in a list
-/proc/is_type_in_list(var/atom/A, var/list/L)
+/proc/is_type_in_list(atom/A, list/L)
+	if(!LAZYLEN(L) || !A)
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
+
+//Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
+#define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
+
+//Checks for a string in a list
+/proc/is_string_in_list(string, list/L)
+	if(!LAZYLEN(L) || !string)
+		return
+	for(var/V in L)
+		if(string == V)
+			return TRUE
+	return
+
+//Removes a string from a list
+/proc/remove_strings_from_list(string, list/L)
+	if(!LAZYLEN(L) || !string)
+		return
+	for(var/V in L)
+		if(V == string)
+			L -= V //No return here so that it removes all strings of that type
+	return
+
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
+/proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(typecache_include[A.type] && !typecache_exclude[A.type])
+			. += A
+
+//Like typesof() or subtypesof(), but returns a typecache instead of a list
+/proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
+	if(ispath(path))
+		var/list/types = list()
+		if(only_root_path)
+			types = list(path)
+		else
+			types = ignore_root_path ? subtypesof(path) : typesof(path)
+		var/list/L = list()
+		for(var/T in types)
+			L[T] = TRUE
+		return L
+	else if(islist(path))
+		var/list/pathlist = path
+		var/list/L = list()
+		if(ignore_root_path)
+			for(var/P in pathlist)
+				for(var/T in subtypesof(P))
+					L[T] = TRUE
+		else
+			for(var/P in pathlist)
+				if(only_root_path)
+					L[P] = TRUE
+				else
+					for(var/T in typesof(P))
+						L[T] = TRUE
+		return L
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
-proc/clearlist(list/list)
+/proc/clearlist(list/list)
 	if(istype(list))
 		list.len = 0
 	return
 
 //Removes any null entries from the list
-proc/listclearnulls(list/list)
-	if(istype(list))
-		while(null in list)
-			list -= null
-	return
+//Returns TRUE if the list had nulls, FALSE otherwise
+/proc/listclearnulls(list/L)
+	var/start_len = L.len
+	var/list/N = new(start_len)
+	L -= N
+	return L.len < start_len
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
  * If skiprep = 1, repeated elements are treated as one.
  * If either of arguments is not a list, returns null
  */
-/proc/difflist(var/list/first, var/list/second, var/skiprep=0)
+/proc/difflist(list/first, list/second, skiprep=0)
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -99,7 +186,7 @@ proc/listclearnulls(list/list)
  * If skipref = 1, repeated elements are treated as one.
  * If either of arguments is not a list, returns null
  */
-/proc/uniquemergelist(var/list/first, var/list/second, var/skiprep=0)
+/proc/uniquemergelist(list/first, list/second, skiprep=0)
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -109,7 +196,11 @@ proc/listclearnulls(list/list)
 		result = first ^ second
 	return result
 
-//Pretends to pick an element based on its weight but really just seems to pick a random element.
+//Picks a random element from a list based on a weighting system:
+//1. Adds up the total of weights for each element
+//2. Gets a number between 1 and that total
+//3. For each element in the list, subtracts its weighting from that number
+//4. If that makes the number 0 or less, return that element.
 /proc/pickweight(list/L)
 	var/total = 0
 	var/item
@@ -126,13 +217,28 @@ proc/listclearnulls(list/list)
 
 	return null
 
-//Pick a random element from the list and remove it from the list.
-/proc/pick_n_take(list/listfrom)
-	if (listfrom.len > 0)
-		var/picked = pick(listfrom)
-		listfrom -= picked
-		return picked
+/proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
+	var/total = 0
+	var/item
+	for (item in L)
+		if (!L[item])
+			L[item] = 0
+		total += L[item]
+
+	total = rand(0, total)
+	for (item in L)
+		total -=L [item]
+		if (total <= 0 && L[item])
+			return item
+
 	return null
+
+//Pick a random element from the list and remove it from the list.
+/proc/pick_n_take(list/L)
+	if(L.len)
+		var/picked = rand(1,L.len)
+		. = L[picked]
+		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
@@ -145,28 +251,38 @@ proc/listclearnulls(list/list)
 		. = L[1]
 		L.Cut(1,2)
 
-//Returns the next element in parameter list after first appearance of parameter element. If it is the last element of the list or not present in list, returns first element.
-/proc/next_in_list(element, list/L)
-	for(var/i=1, i<L.len, i++)
-		if(L[i] == element)
-			return L[i+1]
-	return L[1]
+/proc/sorted_insert(list/L, thing, comparator)
+	var/pos = L.len
+	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
+		pos--
+	L.Insert(pos+1, thing)
+
+// Returns the next item in a list
+/proc/next_list_item(item, list/L)
+	var/i
+	i = L.Find(item)
+	if(i == L.len)
+		i = 1
+	else
+		i++
+	return L[i]
+
+// Returns the previous item in a list
+/proc/previous_list_item(item, list/L)
+	var/i
+	i = L.Find(item)
+	if(i == 1)
+		i = L.len
+	else
+		i--
+	return L[i]
 
 /*
  * Sorting
  */
-/*
-//Reverses the order of items in the list
-/proc/reverselist(list/L)
-	var/list/output = list()
-	if(L)
-		for(var/i = L.len; i >= 1; i--)
-			output += L[i]
-	return output
-*/
 
 //Randomize: Return the list in a random order
-/proc/shuffle(list/L, ref) //Reference override for indexed lists.
+/proc/shuffle(list/L)
 	if(!L)
 		return
 	L = L.Copy()
@@ -176,13 +292,29 @@ proc/listclearnulls(list/list)
 
 	return L
 
+//same, but returns nothing and acts on list in place
+/proc/shuffle_inplace(list/L)
+	if(!L)
+		return
+
+	for(var/i=1, i<L.len, ++i)
+		L.Swap(i,rand(i,L.len))
+
 //Return a list with no duplicate entries
-/proc/uniquelist(var/list/L)
-	var/list/K = list()
-	for(var/item in L)
-		if(!(item in K))
-			K += item
-	return K
+/proc/uniqueList(list/L)
+	. = list()
+	for(var/i in L)
+		. |= i
+
+//same, but returns nothing and acts on list in place (also handles associated values properly)
+/proc/uniqueList_inplace(list/L)
+	var/temp = L.Copy()
+	L.len = 0
+	for(var/key in temp)
+		if (isnum(key))
+			L |= key
+		else
+			L[key] = temp[key]
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order = 1)
@@ -221,15 +353,9 @@ proc/listclearnulls(list/list)
 	return r
 
 // Returns the key based on the index
-/proc/get_key_by_index(var/list/L, var/index)
-	var/i = 1
-	for(var/key in L)
-		if(index == i)
-			return key
-		i++
-	return null
+#define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
-/proc/count_by_type(var/list/L, type)
+/proc/count_by_type(list/L, type)
 	var/i = 0
 	for(var/T in L)
 		if(istype(T, type))
@@ -305,6 +431,81 @@ proc/listclearnulls(list/list)
 
 		for(var/i=0, i<len, ++i)
 			L.Swap(fromIndex++, toIndex++)
+
+//replaces reverseList ~Carnie
+/proc/reverseRange(list/L, start=1, end=0)
+	if(L.len)
+		start = start % L.len
+		end = end % (L.len+1)
+		if(start <= 0)
+			start += L.len
+		if(end <= 0)
+			end += L.len + 1
+
+		--end
+		while(start < end)
+			L.Swap(start++,end--)
+
+	return L
+
+//return first thing in L which has var/varname == value
+//this is typecaste as list/L, but you could actually feed it an atom instead.
+//completely safe to use
+/proc/getElementByVar(list/L, varname, value)
+	varname = "[varname]"
+	for(var/datum/D in L)
+		if(D.vars.Find(varname))
+			if(D.vars[varname] == value)
+				return D
+
+//remove all nulls from a list
+/proc/removeNullsFromList(list/L)
+	while(L.Remove(null))
+		continue
+	return L
+
+//Copies a list, and all lists inside it recusively
+//Does not copy any other reference type
+/proc/deepCopyList(list/l)
+	if(!islist(l))
+		return l
+	. = l.Copy()
+	for(var/i = 1 to l.len)
+		if(islist(.[i]))
+			.[i] = .(.[i])
+
+//takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
+//use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
+/proc/avoid_assoc_duplicate_keys(input_key, list/used_key_list)
+	if(!input_key || !istype(used_key_list))
+		return
+	if(used_key_list[input_key])
+		used_key_list[input_key]++
+		input_key = "[input_key] ([used_key_list[input_key]])"
+	else
+		used_key_list[input_key] = 1
+	return input_key
+
+#if DM_VERSION > 512
+#error Remie said that lummox was adding a way to get a lists
+#error contents via list.values, if that is true remove this
+#error otherwise, update the version and bug lummox
+#endif
+//Flattens a keyed list into a list of it's contents
+/proc/flatten_list(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key_list[key]
+
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
+//Picks from the list, with some safeties, and returns the "default" arg if it fails
+#define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 
 //Don't use this on lists larger than half a dozen or so
 /proc/insertion_sort_numeric_list_ascending(var/list/L)
@@ -458,21 +659,6 @@ datum/proc/dd_SortValue()
 /obj/machinery/dd_SortValue()
 	return "[sanitize(name)]"
 
-//replaces reverseList ~Carnie
-/proc/reverseRange(list/L, start=1, end=0)
-	if(L.len)
-		start = start % L.len
-		end = end % (L.len+1)
-		if(start <= 0)
-			start += L.len
-		if(end <= 0)
-			end += L.len + 1
-
-		--end
-		while(start < end)
-			L.Swap(start++,end--)
-
-	return L
 
 /* Definining a counter as a series of key -> numeric value entries
 

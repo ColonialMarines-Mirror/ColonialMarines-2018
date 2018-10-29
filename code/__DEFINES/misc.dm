@@ -23,6 +23,14 @@
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+var/global/list/glass_sheet_types = typecacheof(list(
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/rglass,
+	/obj/item/stack/sheet/phoronglass,
+	/obj/item/stack/sheet/phoronrglass))
+
+#define is_glass_sheet(O) (is_type_in_typecache(O, glass_sheet_types))
+
 //Gets the turf this atom inhabits
 #define get_turf(A) get_step(A, 0)
 

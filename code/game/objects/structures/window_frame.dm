@@ -8,7 +8,7 @@
 	throwpass = TRUE
 	climbable = 1 //Small enough to vault over, but you do need to vault over it
 	climb_delay = 15 //One second and a half, gotta vault fast
-	var/obj/item/stack/sheet/sheet_type = /obj/item/stack/sheet/glass/reinforced
+	var/obj/item/stack/sheet/sheet_type = /obj/item/stack/sheet/rglass
 	var/obj/structure/window/framed/almayer/window_type = /obj/structure/window/framed/almayer
 	var/basestate = "window"
 	var/junction = 0

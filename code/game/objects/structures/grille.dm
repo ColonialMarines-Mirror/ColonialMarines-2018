@@ -8,13 +8,13 @@
 	flags_atom = CONDUCT
 	layer = OBJ_LAYER
 	explosion_resistance = 5
-	var/health = 10
+	var/health = 50
 	var/destroyed = FALSE
 
 
 /obj/structure/grille/fence
 	var/width = 3
-	health = 50
+	health = 250
 
 /obj/structure/grille/fence/New()
 
@@ -34,7 +34,7 @@
 	//height=42
 	icon='icons/obj/structures/fence_ew.dmi'
 	icon_state = "fence-ew"
-	dir = 4
+	dir = EAST
 
 /obj/structure/grille/fence/north_south
 	//width=80
@@ -63,7 +63,7 @@
 /obj/structure/grille/attack_alien(mob/living/carbon/Xenomorph/M)
 	M.animation_attack_on(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 25, 1)
-	var/damage_dealt = 5
+	var/damage_dealt = 25
 	M.visible_message("<span class='danger'>\The [M] mangles [src]!</span>", \
 	"<span class='danger'>You mangle [src]!</span>", \
 	"<span class='danger'>You hear twisting metal!</span>", 5)
@@ -136,7 +136,7 @@
 	if(Proj.ammo.damage_type == HALLOSS)
 		return FALSE
 
-	health -= round(Proj.damage*0.3)
+	health -= round(Proj.damage*0.5)
 	healthcheck()
 	return TRUE
 
@@ -155,7 +155,7 @@
 			return
 
 //window placing begin
-	else if(istype(W,/obj/item/stack/sheet/glass))
+	else if(is_glass_sheet(W))
 		if(destroyed)
 			return
 		if(!anchored)
@@ -166,19 +166,23 @@
 			to_chat(user, "<span class='warning'>You need at least four sheets of glass for that!</span>")
 			return
 		for(var/obj/structure/window/WINDOW in loc)
-			to_chat(user, "<span class='notice'>There is already a window there.</span>")
+			to_chat(user, "<span class='warning'>There is already a window there!</span>")
 			return
-		to_chat(user, "<span class='notice'>You start placing the window.</span>")
+		to_chat(user, "<span class='notice'>You start placing the window...</span>")
 		if(do_after(user,20, TRUE, 5, BUSY_ICON_BUILD))
-			if(loc || !anchored) //Grille destroyed or unanchored while waiting
+			if(!loc || !anchored) //Grille destroyed or unanchored while waiting
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 				return
-			var/wtype = ST.created_window
 			if (ST.use(4))
-				var/obj/structure/window/WD = new wtype(loc)
-				to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
+				if(istype(W, /obj/item/stack/sheet/phoronrglass))
+					new/obj/structure/window/base/phoron/reinforced/fulltile/unanchored(loc) //reinforced plasma window
+				else if(istype(W, /obj/item/stack/sheet/phoronglass))
+					new/obj/structure/window/base/phoron/fulltile/unanchored(loc) //plasma window
+				else if(istype(W, /obj/item/stack/sheet/rglass))
+					new/obj/structure/window/base/reinforced/fulltile/unanchored(loc) //reinforced window
+				else
+					new/obj/structure/window/base/fulltile/unanchored(loc) //normal window
 		return
 //window placing end
 

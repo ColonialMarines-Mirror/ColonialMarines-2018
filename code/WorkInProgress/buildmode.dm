@@ -217,21 +217,17 @@
 			else if(istype(object,/turf) && mods["alt"] && mods["left"])
 				new/obj/machinery/door/airlock(get_turf(object))
 			else if(istype(object,/turf) && mods["ctrl"] && mods["left"])
+				var/obj/structure/window/base/reinforced/WIN = new/obj/structure/window/base/reinforced(get_turf(object))
 				switch(holder.builddir.dir)
 					if(NORTH)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = NORTH
 					if(SOUTH)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = SOUTH
 					if(EAST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = EAST
 					if(WEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = WEST
 					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = NORTHWEST
 		if(2)
 			if(mods["left"])

@@ -174,7 +174,7 @@
 	stacktypes = list(
 		/obj/item/stack/sheet/metal = 50,
 		/obj/item/stack/sheet/glass = 50,
-		/obj/item/stack/sheet/glass/reinforced = 50,
+		/obj/item/stack/sheet/rglass = 50,
 		/obj/item/stack/cable_coil = 50,
 		/obj/item/stack/rods = 50,
 		/obj/item/stack/tile/plasteel = 20
@@ -334,7 +334,7 @@
 	stacktypes = list(
 		/obj/item/stack/sheet/wood = 1,
 		/obj/item/stack/sheet/mineral/plastic = 1,
-		/obj/item/stack/sheet/glass/reinforced = 5,
+		/obj/item/stack/sheet/rglass = 5,
 		/obj/item/stack/tile/wood = 5,
 		/obj/item/stack/rods = 15,
 		/obj/item/stack/tile/plasteel = 15,

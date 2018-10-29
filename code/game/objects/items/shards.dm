@@ -100,7 +100,7 @@
 	force = 8
 	throwforce = 15
 	icon_state = "phoron"
-	source_sheet_type = /obj/item/stack/sheet/glass/phoron
+	source_sheet_type = /obj/item/stack/sheet/phoronglass
 
 
 

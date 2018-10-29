@@ -89,7 +89,7 @@
 
 /datum/autolathe/recipe/rglass
 	name = "reinforced glass sheets"
-	path = /obj/item/stack/sheet/glass/reinforced
+	path = /obj/item/stack/sheet/rglass
 	category = "General"
 	is_stack = 1
 

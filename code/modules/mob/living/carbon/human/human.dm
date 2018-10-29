@@ -124,11 +124,6 @@
 	ethnicity = random_ethnicity()
 	body_type = random_body_type()
 
-	//Skin colour
-	//r_skin = rand(0,255)
-	//g_skin = rand(0,255)
-	//b_skin = rand(0,255)
-
 	age = rand(17,55)
 
 	var/datum/reagents/R = new/datum/reagents(1000)

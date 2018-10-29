@@ -272,8 +272,7 @@ should be alright.
 
 /obj/item/weapon/gun/attack_self(mob/user)
 	..()
-	if (target)
-		lower_aim()
+	if(target)
 		return
 
 	//There are only two ways to interact here.

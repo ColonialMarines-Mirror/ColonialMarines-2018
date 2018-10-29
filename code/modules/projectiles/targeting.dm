@@ -149,7 +149,6 @@
 		if(T.client)
 			T.update_gun_icons()
 		else
-			I.lower_aim()
 			return
 //		if(m_intent == MOVE_INTENT_RUN && T.client.target_can_move == 1 && T.client.target_can_run == 0)
 //			to_chat(src, "\red Your move intent is now set to walk, as your targeter permits it.")

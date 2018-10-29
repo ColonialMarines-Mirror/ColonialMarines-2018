@@ -1,22 +1,3 @@
-/obj/item/weapon/gun/verb/toggle_firerate()
-	set name = "Toggle Firerate"
-	set category = "Object"
-
-	firerate = !firerate
-
-	if (firerate)
-		to_chat(loc, "You will now continue firing when your target moves.")
-	else
-		to_chat(loc, "You will now only fire once, then lower your aim, when your target moves.")
-
-/obj/item/weapon/gun/verb/lower_aim()
-	set name = "Lower Aim"
-	set category = "Object"
-	if(target)
-		stop_aim()
-		usr.visible_message("\blue \The [usr] lowers \the [src]...")
-
-
 //Removes lock fro mall targets
 /obj/item/weapon/gun/proc/stop_aim()
 	if(target)

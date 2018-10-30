@@ -952,7 +952,7 @@
 	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
 		cdel(F)
 	playsound(T, 'sound/weapons/gun_flamethrower2.ogg', 50, 1, 4)
-	flame_radius(radius, 35, 35, 35, 35)
+	flame_radius(radius, 25, 25, 25, 15)
 
 
 /datum/ammo/rocket/wp/on_hit_mob(mob/M,obj/item/projectile/P)

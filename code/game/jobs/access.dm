@@ -10,7 +10,7 @@
 	//check if it doesn't require any access at all
 	if(check_access())
 		return TRUE
-	if(istype(M, /mob/living/silicon))
+	if(issilicon(M))
 		return TRUE //Silicons can access whatever they want
 
 	var/obj/item/card/id/I = M.get_idcard() //if they are holding or wearing a card that has access, that works.

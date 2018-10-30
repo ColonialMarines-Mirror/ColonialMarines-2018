@@ -216,16 +216,17 @@
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		if(remove_from_storage(I,user))
-			if(user.put_in_inactive_hand(I))
-				to_chat(user, "<span class='notice'>You take a pill out of \the [src].</span>")
-				if(iscarbon(user))
-					var/mob/living/carbon/C = user
-					C.swap_hand()
-			else
-				user.drop_inv_item_on_ground(I)
-				to_chat(user, "<span class='notice'>You fumble around with \the [src] and drop a pill on the floor.</span>")
+		if(!remove_from_storage(I,user))
 			return
+		if(user.put_in_inactive_hand(I))
+			to_chat(user, "<span class='notice'>You take a pill out of \the [src].</span>")
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.swap_hand()
+		else
+			user.drop_inv_item_on_ground(I)
+			to_chat(user, "<span class='notice'>You fumble around with \the [src] and drop a pill on the floor.</span>")
+		return
 	else
 		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
@@ -307,6 +308,7 @@
 	icon_state = "pill_canister9"
 	pill_type_to_fill = /obj/item/reagent_container/pill/tricordrazine
 
+
 /obj/item/storage/pill_bottle/happy
 	name = "\improper Happy pill bottle"
 	desc = "Contains highly illegal drugs. When you want to see the rainbow."
@@ -319,7 +321,7 @@
 	max_storage_space = 7
 	pill_type_to_fill = /obj/item/reagent_container/pill/zoom
 
-//Pill bottles with ID locks.
+//Pill bottles with identification locks.
 
 /obj/item/storage/pill_bottle/restricted
 	var/req_id_role
@@ -372,14 +374,12 @@
 	return TRUE
 
 /obj/item/storage/pill_bottle/restricted/attack_self(mob/living/user)
-	if(!scan(user))
-		return
-	..()
+	if(scan(user))
+		return ..()
 
 /obj/item/storage/pill_bottle/restricted/open(mob/user)
-	if(!scan(user))
-		return
-	..()
+	if(scan(user))
+		return ..()
 
 /obj/item/storage/pill_bottle/restricted/proc/input_dna(mob/living/M)
 	if(M.dna?.unique_enzymes)

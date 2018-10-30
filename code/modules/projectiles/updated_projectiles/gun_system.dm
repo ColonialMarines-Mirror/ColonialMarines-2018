@@ -167,10 +167,6 @@
 		O.emp_act(severity)
 
 /obj/item/weapon/gun/equipped(mob/user, slot)
-	if(slot != WEAR_L_HAND && slot != WEAR_R_HAND)
-		stop_aim()
-		if (user.client)
-			user.update_gun_icons()
 
 	unwield(user)
 
@@ -456,10 +452,7 @@ User can be passed as null, (a gun reloading itself for instance), so we need to
 			flags_gun_features &= ~GUN_BURST_FIRING
 		return
 
-	if(user && user.client && user.gun_mode && !(A in target))
-		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
-	else
-		Fire(A,user,params) //Otherwise, fire normally.
+	Fire(A,user,params) //Otherwise, fire normally.
 
 /*
 load_into_chamber(), reload_into_chamber(), and clear_jam() do all of the heavy lifting.

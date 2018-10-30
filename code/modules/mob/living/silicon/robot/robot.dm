@@ -782,14 +782,6 @@ var/list/robot_verbs_default = list(
 		else
 			overlays += "ov-openpanel -c"
 
-//Call when target overlay should be added/removed
-/mob/living/silicon/robot/update_targeted()
-	if(!targeted_by && target_locked)
-		cdel(target_locked)
-		target_locked = null
-	update_icons()
-	if (targeted_by && target_locked)
-		overlays += target_locked
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)

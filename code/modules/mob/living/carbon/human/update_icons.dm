@@ -420,24 +420,6 @@ var/global/list/damage_icon_parts = list()
 	update_hair(0)
 	apply_overlay(MUTANTRACE_LAYER)
 
-//Call when target overlay should be added/removed
-/mob/living/carbon/human/update_targeted()
-	remove_overlay(TARGETED_LAYER)
-	var/image/I
-	if (targeted_by && target_locked)
-		I = image("icon" = target_locked, "layer" =-TARGETED_LAYER)
-	else if (!targeted_by && target_locked)
-		cdel(target_locked)
-		target_locked = null
-	if(holo_card_color)
-		if(I)
-			I.overlays += image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "holo_card_[holo_card_color]")
-		else
-			I = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "holo_card_[holo_card_color]", "layer" =-TARGETED_LAYER)
-	if(I)
-		overlays_standing[TARGETED_LAYER] = I
-	apply_overlay(TARGETED_LAYER)
-
 
 /* --------------------------------------- */
 //For legacy support.

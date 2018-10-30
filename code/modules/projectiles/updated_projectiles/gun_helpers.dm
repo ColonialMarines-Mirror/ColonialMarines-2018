@@ -143,10 +143,6 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
 
-	stop_aim()
-	if (user && user.client)
-		user.update_gun_icons()
-
 	turn_off_light(user)
 
 	unwield(user)

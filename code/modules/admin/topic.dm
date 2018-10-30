@@ -2633,9 +2633,11 @@
 		distress_cancel = 0
 		message_admins("[key_name_admin(usr)] has opted to SEND a distress beacon! Launching in 10 seconds... (<A HREF='?_src_=holder;distresscancel=\ref[usr]'>CANCEL</A>)")
 		spawn(100)
-			if(distress_cancel) return
+			if(distress_cancel) 
+				return
 			var/mob/ref_person = locate(href_list["distress"])
 			ticker.mode.activate_distress()
+			distress_cancel = 1
 			log_game("[key_name_admin(usr)] has sent a randomized distress beacon, requested by [key_name_admin(ref_person)]")
 			message_admins("[key_name_admin(usr)] has sent a randomized distress beacon, requested by [key_name_admin(ref_person)]", 1)
 		//unanswered_distress -= ref_person

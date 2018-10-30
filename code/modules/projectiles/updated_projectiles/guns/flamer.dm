@@ -380,7 +380,7 @@
 		hydrocannon(target,src,user) //Fire it.
 		last_fired = world.time
 		return
-	..()
+	return ..()
 
 /obj/item/weapon/gun/flamer/M240T/proc/hydrocannon(atom/target, obj/item/weapon/gun/gun, mob/user)
 

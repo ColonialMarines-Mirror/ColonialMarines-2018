@@ -219,9 +219,14 @@
 	fire_sound = 'sound/weapons/smg_heavy.ogg'
 	current_mag = /obj/item/ammo_magazine/smg/ppsh
 	attachable_allowed = list(
-						/obj/item/attachable/flashlight)
-
+						/obj/item/attachable/flashlight,
+						/obj/item/attachable/gyro,
+						/obj/item/attachable/lasersight,
+						/obj/item/attachable/bayonet, //obligatory
+						/obj/item/attachable/suppressor
+						)
 	flags_gun_features = GUN_CAN_POINTBLANK
+	starting_attachment_types = list(/obj/item/attachable/bayonet)
 
 	New()
 		..()

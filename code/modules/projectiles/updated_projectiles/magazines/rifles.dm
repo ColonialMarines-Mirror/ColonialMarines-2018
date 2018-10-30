@@ -23,15 +23,23 @@
 
 /obj/item/ammo_magazine/rifle/incendiary
 	name = "\improper M41A incendiary magazine (10x24mm)"
-	desc = "A 10mm assault rifle magazine."
+	desc = "A 10mm assault incendiary rifle magazine. Currently not allowed for usage against any human combatants per the Space Geneva Convention."
 	icon_state = "m41a_incendiary"
 	default_ammo = /datum/ammo/bullet/rifle/incendiary
 
 /obj/item/ammo_magazine/rifle/ap
 	name = "\improper M41A AP magazine (10x24mm)"
-	desc = "A 10mm armor piercing magazine."
+	desc = "A 10mm assault armor piercing magazine. Penetrates further into heavy targets, but deals less damage."
 	icon_state = "m41a_AP"
 	default_ammo = /datum/ammo/bullet/rifle/ap
+
+/obj/item/ammo_magazine/rifle/extended_ap //good for events? maybe give some to the PMC leader and deathsquad once the rework's done
+	name = "\improper M41A extended AP magazine (10x24mm)"
+	desc = "A 10mm assault extended armor piercing magazine, with more AP bullets than you'll ever need."
+	icon_state = "m41a_AP_ext"
+	max_rounds = 60
+	default_ammo = /datum/ammo/bullet/rifle/ap
+
 
 
 //-------------------------------------------------------

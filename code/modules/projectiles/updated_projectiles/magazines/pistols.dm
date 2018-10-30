@@ -118,7 +118,7 @@
 	desc = "A surprisingly small magazine, holding .22 bullets. No Kolibri, but it's getting there."
 	default_ammo = /datum/ammo/bullet/pistol/tiny
 	caliber = ".22"
-	icon_state = "m4a3" //PLACEHOLDER
+	icon_state = "holdout" //PLACEHOLDER
 	max_rounds = 5
 	w_class = 1
 	gun_type = /obj/item/weapon/gun/pistol/holdout
@@ -131,7 +131,7 @@
 	name = "\improper Highpower magazine (9mm)"
 	default_ammo = /datum/ammo/bullet/pistol/ap
 	caliber = "9mm"
-	icon_state = "m4a3" //PLACEHOLDER
+	icon_state = "m4a3_old" //PLACEHOLDER
 	max_rounds = 13
 	gun_type = /obj/item/weapon/gun/pistol/highpower
 

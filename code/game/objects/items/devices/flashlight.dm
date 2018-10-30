@@ -11,7 +11,7 @@
 	actions_types = list(/datum/action/item_action)
 	var/on = FALSE
 	var/brightness_on = 5 //luminosity when on
-	var/raillight_compatible = TRUE //Can this be turned into a rail light ?
+	var/raillight_compatible = TRUE
 
 /obj/item/device/flashlight/initialize()
 	..()
@@ -145,6 +145,16 @@
 	flags_atom = CONDUCT
 	brightness_on = 2
 	w_class = 1
+	raillight_compatible = FALSE
+
+/obj/item/device/flashlight/combat //as bright as rail lights, don't see why you need them to be mounted on a gun to be brighter
+	name = "combat flashlight"
+	desc = "A hand-held flashlight, with increased light for military usage."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flashlight_combat"
+	w_class = 2
+	on = FALSE
+	brightness_on = 7
 	raillight_compatible = FALSE
 
 /obj/item/device/flashlight/drone

@@ -1971,7 +1971,7 @@ MEDICAL
 					/obj/item/storage/box/autoinjectors,
 					/obj/item/storage/box/syringes,
 					/obj/item/reagent_container/glass/bottle/inaprovaline,
-					/obj/item/reagent_container/glass/bottle/antitoxin,
+					/obj/item/reagent_container/glass/bottle/dylovene,
 					/obj/item/reagent_container/glass/bottle/bicaridine,
 					/obj/item/reagent_container/glass/bottle/dexalin,
 					/obj/item/reagent_container/glass/bottle/spaceacillin,
@@ -2076,6 +2076,21 @@ MEDICAL
 	cost = RO_PRICE_VERY_CHEAP
 	containertype = /obj/structure/closet/crate/medical
 	containername = "\improper sterile equipment crate"
+	group = "Medical"
+
+/datum/supply_packs/hypospray
+	name = "hypospray crate (x5 hyposprays)"
+	contains = list(
+					/obj/item/reagent_container/hypospray/advanced,
+					/obj/item/reagent_container/hypospray/advanced,
+					/obj/item/reagent_container/hypospray/advanced,
+					/obj/item/reagent_container/hypospray/advanced,
+					/obj/item/reagent_container/hypospray/advanced,
+					)
+	cost = RO_PRICE_CHEAP
+	containertype = /obj/structure/closet/crate/secure/surgery
+	containername = "\improper hypospray crate"
+	access = ACCESS_MARINE_MEDBAY
 	group = "Medical"
 
 

@@ -7,7 +7,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	idtype = /obj/item/card/id/silver
 	total_positions = 1
 	spawn_positions = 1
-	minimal_player_age = 7
+	flags_startup_parameters = ROLE_ADD_TO_DEFAULT
 
 //Commander
 /datum/job/command/commander
@@ -18,7 +18,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	supervisors = "USCM high command"
 	selection_color = "#ccccff"
 	idtype = /obj/item/card/id/gold
-	minimal_player_age = 14
+	minimal_player_age = 7
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
 	flags_whitelist = WHITELIST_COMMANDER
 	skills_type = /datum/skills/commander

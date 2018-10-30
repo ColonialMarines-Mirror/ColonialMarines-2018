@@ -1,7 +1,7 @@
 //Chief Medical Officer
 /datum/job/civilian
 	department_flag = ROLEGROUP_MARINE_MED_SCIENCE
-	minimal_player_age = 7
+	flags_startup_parameters = ROLE_ADD_TO_DEFAULT
 
 /datum/job/civilian/colonist
 	title = "Colonist"

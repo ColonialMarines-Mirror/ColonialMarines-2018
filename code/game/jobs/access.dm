@@ -271,7 +271,17 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("O7") . = size ? "ADM " : "Admiral"
 		if("O8") . = size ? "FADM " : "Fleet Admiral"
 		if("O9") . = size ? "SMR " : "Sky Marshal"
-		if("WO") . = size ? "WO " : "Warrant Officer"
+		if("UPP1") . = size ? "UPVT " : "UPP Private"
+		if("UPP2") . = size ? "UPFC " : "UPP Private First Class"
+		if("UPP3") . = size ? "UCPL " : "UPP Corporal"
+		if("UPP4") . = size ? "ULCPL " : "UPP Lance Corporal"
+		if("UPP5") . = size ? "USGT " : "UPP Sergeant"
+		if("UPP6") . = size ? "USSGT " : "UPP Staff Sergeant"
+		if("UPP7") . = size ? "UENS " : "UPP Ensign"
+		if("UPP8") . = size ? "ULT " : "UPP Lieutenant"
+		if("UPP9") . = size ? "ULCDR " : "UPP Lieutenant Commander"
+		if("UPP10") . = size ? "UCDR " : "UPP Commander"
+		if("UPP11") . = size ? "UADM " : "UPP Admiral"
 		else . = paygrade + " " //custom paygrade
 
 #define PAYGRADES_MARINE list("C","E1","E2","E3","E4","E5","E6","E6E","E7","E8","E8E","E9","E9E","O1","O2","O3","O4", "WO")

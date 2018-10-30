@@ -7,9 +7,9 @@
 	selection_color = "#ffeeee"
 	total_positions = 8
 	spawn_positions = 8
-	minimal_player_age = 3
 	skills_type = /datum/skills/pfc
 	idtype = /obj/item/card/id/dogtag
+	flags_startup_parameters = ROLE_ADD_TO_DEFAULT
 
 /datum/job/marine
 
@@ -31,7 +31,6 @@
 	supervisors = "the acting commander"
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP, ACCESS_MARINE_LEADER, ACCESS_MARINE_DROPSHIP)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP, ACCESS_MARINE_LEADER, ACCESS_MARINE_DROPSHIP)
-	minimal_player_age = 7
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/SL
 
@@ -120,7 +119,6 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 	spawn_positions = 4
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP, ACCESS_MARINE_SPECPREP)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP, ACCESS_MARINE_SPECPREP)
-	minimal_player_age = 7
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/specialist
 
@@ -149,7 +147,6 @@ You can serve a variety of roles, so choose carefully."}
 	spawn_positions = 4
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP, ACCESS_MARINE_SMARTPREP)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP, ACCESS_MARINE_SMARTPREP)
-	minimal_player_age = 7
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/smartgunner
 
@@ -177,7 +174,6 @@ You can serve a variety of roles, so choose carefully."}
 	spawn_positions = -1
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP)
-	minimal_player_age = 0
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 
 	generate_wearable_equipment()

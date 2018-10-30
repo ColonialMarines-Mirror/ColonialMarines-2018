@@ -363,7 +363,7 @@
 	return reagents.get_reagent_amount("water")
 
 /obj/item/weapon/gun/flamer/M240T/New()
-	..()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(max_water)
 	reagents = R
 	R.my_atom = src

@@ -21,7 +21,6 @@
 		if((R_ADMIN & usr.client.holder.rights) || (R_MOD & usr.client.holder.rights))
 			for(var/CID in unansweredAhelps)
 				body += "[unansweredAhelps[CID]]" //If I have done these correctly, it should have the options bar as well a mark and noresponse
-		else
 			body += "<br><br></body></html>"
 			src << browse(body, "window=ahelps;size=800x300")
 			return

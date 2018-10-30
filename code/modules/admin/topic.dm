@@ -2485,8 +2485,10 @@
 
 		to_chat(ref_person, msgplayer)
 
+		unansweredMhelps.Remove(ref_person.computer_id)
 		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
-		src.viewUnheardAhelps() //This SHOULD refresh the page
+		src.viewUnheardMhelps() //This SHOULD refresh the page
+		src.viewUnheardAhelps()
 
 		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
@@ -2508,8 +2510,10 @@
 		to_chat(ref_person, msgplayer)
 		ref_person << sound('sound/effects/adminhelp-error.ogg')
 
+		unansweredMhelps.Remove(ref_person.computer_id)
 		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
-		src.viewUnheardAhelps() //This SHOULD refresh the page
+		src.viewUnheardMhelps() //This SHOULD refresh the page
+		src.viewUnheardAhelps()
 
 		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
@@ -2531,8 +2535,11 @@
 		to_chat(ref_person, msgplayer)
 		ref_person << sound('sound/effects/adminhelp-error.ogg')
 
+
+		unansweredMhelps.Remove(ref_person.computer_id)
 		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
-		src.viewUnheardAhelps() //This SHOULD refresh the page
+		src.viewUnheardMhelps() //This SHOULD refresh the page
+		src.viewUnheardAhelps()
 
 		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm

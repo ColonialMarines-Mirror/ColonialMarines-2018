@@ -163,7 +163,7 @@ obj/structure/door_assembly
 				if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
 					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue You welded the glass panel out!")
-					new /obj/item/stack/sheet/rglass(src.loc)
+					new /obj/item/stack/sheet/rglass(loc)
 					glass = 0
 			else if(!anchored)
 				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")

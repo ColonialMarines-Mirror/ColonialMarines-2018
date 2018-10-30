@@ -356,11 +356,8 @@
 
 /obj/item/weapon/gun/flamer/M240T/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Its hydro cannon contains [get_water()]/[max_water] units of water!</span>")
+	to_chat(user, "<span class='notice'>Its hydro cannon contains [M240T_WATER_AMOUNT]/[max_water] units of water!</span>")
 
-//Returns the amount of water in the M240T
-/obj/item/weapon/gun/flamer/M240T/proc/get_water()
-	return reagents.get_reagent_amount("water")
 
 /obj/item/weapon/gun/flamer/M240T/New()
 	. = ..()
@@ -376,112 +373,12 @@
 	G.icon_state = initial(G.icon_state)
 
 /obj/item/weapon/gun/flamer/M240T/Fire(atom/target, mob/living/user, params, reflex)
-	if(active_attachable && istype(active_attachable, /obj/item/attachable/hydro_cannon))
-		hydrocannon(target,src,user) //Fire it.
+	if(active_attachable && istype(active_attachable, /obj/item/attachable/hydro_cannon) && (world.time > last_use + 10))
+		extinguish(target,user) //Fire it.
 		last_fired = world.time
+		last_use = world.time
 		return
 	return ..()
-
-/obj/item/weapon/gun/flamer/M240T/proc/hydrocannon(atom/target, obj/item/weapon/gun/gun, mob/user)
-
-	if (reagents.total_volume < 1)
-		to_chat(user, "\red \The [src]'s hydro cannon is empty.")
-		return
-
-	if (world.time < last_use + 20)
-		return
-
-	user.visible_message("<span class='danger'>[user] fires the [src]'s hydro cannon!</span>", \
-	"<span class='warning'>You fire the [src]'s hydro cannon.</span>",)
-
-	last_use = world.time
-
-	playsound(user.loc, 'sound/effects/extinguish.ogg', 52, 1, 7)
-
-	var/direction = get_dir(user,target)
-
-	if(user.buckled && isobj(user.buckled) && !user.buckled.anchored )
-		spawn(0)
-			var/obj/structure/bed/chair/C = null
-			if(istype(user.buckled, /obj/structure/bed/chair))
-				C = user.buckled
-			var/obj/B = user.buckled
-			var/movementdirection = turn(direction,180)
-			if(C)	C.propelled = 4
-			B.Move(get_step(user,movementdirection), movementdirection)
-			sleep(1)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			if(C)	C.propelled = 3
-			sleep(1)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			sleep(1)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			if(C)	C.propelled = 2
-			sleep(2)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			if(C)	C.propelled = 1
-			sleep(2)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			if(C)	C.propelled = 0
-			sleep(3)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			sleep(3)
-			B.Move(get_step(user,movementdirection), movementdirection)
-			sleep(3)
-			B.Move(get_step(user,movementdirection), movementdirection)
-
-	var/turf/T = get_turf(target)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
-
-	var/list/the_targets = list(T,T1,T2)
-
-	for(var/a=0, a<7, a++)
-		spawn(0)
-			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water( get_turf(user) )
-			var/turf/my_target = pick(the_targets)
-			var/datum/reagents/R = new/datum/reagents(5)
-			if(!W)
-				return
-			W.reagents = R
-			R.my_atom = W
-			if(!W || !src)
-				return
-			src.reagents.trans_to(W,1)
-			for(var/b=0, b<7, b++)
-				step_towards(W,my_target)
-				if(!W || !W.reagents)
-					return
-				W.reagents.reaction(get_turf(W))
-				for(var/atom/atm in get_turf(W))
-					if(!W)
-						return
-					if(!W.reagents)
-						break
-					W.reagents.reaction(atm)
-					if(istype(atm, /obj/flamer_fire))
-						var/obj/flamer_fire/FF = atm
-						if(FF.firelevel > 20)
-							FF.firelevel -= 20
-							FF.updateicon()
-						else
-							cdel(atm)
-						continue
-					if(isliving(atm)) //For extinguishing mobs on fire
-						var/mob/living/M = atm
-						M.ExtinguishMob()
-						for(var/obj/item/clothing/mask/cigarette/C in M.contents)
-							if(C.item_state == C.icon_on)
-								C.die()
-				if(W.loc == my_target)
-					break
-				sleep(2)
-			cdel(W)
-
-	if((istype(user.loc, /turf/open/space)) || (user.lastarea.has_gravity == 0))
-		user.inertia_dir = get_dir(target, user)
-		step(user, user.inertia_dir)
-	return
 
 /obj/item/weapon/gun/flamer/M240T/afterattack(atom/target, mob/user)
 	. = ..()

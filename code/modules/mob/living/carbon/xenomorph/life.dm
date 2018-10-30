@@ -175,7 +175,6 @@
 	//Basically, we use a special tally var so we don't reset the actual aura value before making sure they're not affected
 	if(on_fire) //Burning Xenos can't emit pheromones; they get burnt up! Null it baby! Disco inferno
 		current_aura = null
-		return
 	if(current_aura && plasma_stored > 5)
 		if(caste == "Queen" && anchored) //stationary queen's pheromone apply around the observed xeno.
 			var/mob/living/carbon/Xenomorph/Queen/Q = src

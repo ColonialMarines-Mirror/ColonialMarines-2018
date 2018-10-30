@@ -388,7 +388,7 @@
 		to_chat(user, "\red \The [src]'s hydro cannon is empty.")
 		return
 
-	if (world.time < src.last_use + 20)
+	if (world.time < last_use + 20)
 		return
 
 	user.visible_message("<span class='danger'>[user] fires the [src]'s hydro cannon!</span>", \

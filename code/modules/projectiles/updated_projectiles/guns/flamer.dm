@@ -384,7 +384,7 @@
 
 /obj/item/weapon/gun/flamer/M240T/proc/hydrocannon(atom/target, obj/item/weapon/gun/gun, mob/user)
 
-	if (src.reagents.total_volume < 1)
+	if (reagents.total_volume < 1)
 		to_chat(user, "\red \The [src]'s hydro cannon is empty.")
 		return
 

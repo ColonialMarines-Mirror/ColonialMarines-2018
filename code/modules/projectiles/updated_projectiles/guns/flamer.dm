@@ -484,7 +484,7 @@
 	return
 
 /obj/item/weapon/gun/flamer/M240T/afterattack(atom/target, mob/user)
-	..()
+	. = ..()
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(user,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, max_water)

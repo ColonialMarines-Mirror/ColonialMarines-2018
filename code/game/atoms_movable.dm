@@ -19,15 +19,14 @@
 //===========================================================================
 /atom/movable/Dispose()
 	for(var/atom/movable/I in contents)
-		if(istype(I,/obj/item/device/radio/detpack)) //Exception for detpacks that shouldn't be deleted, such as from when a roller bed folds
-			var/obj/item/device/radio/detpack/D = I
-			if(D.plant_target == src)
-				D.loc = get_turf(src)
-				D.nullvars()
-			else
-				cdel(I)
-		else
+		if(!istype(I,/obj/item/device/radio/detpack)) //Exception for detpacks that shouldn't be deleted, such as from when a roller bed folds
 			cdel(I)
+			continue
+		var/obj/item/device/radio/detpack/D = I
+		if(D.plant_target == src)
+			D.loc = get_turf(src)
+			D.nullvars()
+
 	if(pulledby) pulledby.stop_pulling()
 	if(throw_source) throw_source = null
 
@@ -93,9 +92,6 @@
 		last_move_dir = get_dir(oldloc, loc)
 	if(.)
 		Moved(oldloc,direct)
-		//var/obj/item/device/radio/detpack/D = locate() in oldloc //Performance friendly way of having the detpack follow the moveable
-		//if(D.plant_target == src)
-		//	D.forceMove(NewLoc)
 
 
 /atom/movable/Bump(atom/A, yes) //yes arg is to distinguish our calls of this proc from the calls native from byond.

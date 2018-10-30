@@ -20,16 +20,18 @@
 
 /obj/item/device/radio/detpack/examine(mob/user)
 	. = ..()
-	var/details
+	var/list/details = list()
+	if(on)
+		details +=("It's turned on.")
 	if(timer)
-		details += "Its timer has [timer] seconds left."
+		details +=("Its timer has [timer] seconds left.")
 	if(det_mode)
-		details += " It appears set to demolition mode."
+		details +=("It appears set to demolition mode.")
 	else
-		details += " It appears set to breaching mode."
+		details +=("It appears set to breaching mode.")
 	if(armed)
-		details += " <b>It is armed!</b>"
-	to_chat(user, "<span class='warning'>[details]</span>")
+		details +=("<b>It is armed!</b>")
+	to_chat(user, "<span class='warning'>[details.Join(" ")]</span>")
 
 
 /obj/item/device/radio/detpack/Dispose()
@@ -40,20 +42,12 @@
 	. = ..()
 
 /obj/item/device/radio/detpack/update_icon()
-	if(!plant_target)
-		if(on)
-			icon_state = "detpack_on"
-			if(armed)
-				icon_state = "detpack_armed"
-		else
-			icon_state = "detpack_off"
+	icon_state = "detpack_[plant_target ? "set_" : ""]"
+	if(on)
+		icon_state = "[icon_state][armed ? "armed" : "on"]"
 	else
-		if(on)
-			icon_state = "detpack_set_on"
-			if(armed)
-				icon_state = "detpack_set_armed"
-		else
-			icon_state = "detpack_set_off"
+		icon_state = "[icon_state]off"
+
 
 /obj/item/device/radio/detpack/attackby(obj/item/W as obj, mob/user as mob)
 	. = ..()
@@ -119,7 +113,7 @@
 		//to_chat(world, "<font color='red'>DEBUG: Detpack Disarmed: [loc]</font>")
 		update_icon()
 
-	if(master && wires & 1)
+	if(master && wires & WIRE_RECEIVE)
 		master.receive_signal()
 	return
 
@@ -168,8 +162,7 @@
 						attack_self(M)
 	else
 		usr << browse(null, "window=radio")
-		return
-	return
+
 
 /obj/item/device/radio/detpack/attack_self(mob/user as mob, flag1)
 
@@ -294,30 +287,28 @@
 		processing_timers.Remove(src)
 		update_icon()
 		return
-	if(timer)
+	if(timer) //Timer is still counting down to armaggedon...
 		timer--
 		if(timer < 11)
 			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 160 + (timer-timer*2)*10, FALSE) //Gets louder as we count down to armaggedon
 		else
 			playsound(src.loc, 'sound/weapons/mine_tripped.ogg', 50, FALSE)
-		//to_chat(world, "<font color='red'>DEBUG: Detpack Timer: [timer]</font>")
 		return
-	else
-		playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
-		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonated: [timer]</font>")
-		if(det_mode == TRUE) //If we're on demolition mode, big boom.
-			explosion(get_turf(plant_target), 2, 4, 5, 6)
-		else //if we're not, focused boom.
-			explosion(get_turf(plant_target), 1, 1, 2, 3)
-		if(plant_target)
-			plant_target.ex_act(1)
-			if(isobj(plant_target))
-				plant_target = null
+	//Time to go boom
+	playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
+	if(det_mode == TRUE) //If we're on demolition mode, big boom.
+		explosion(get_turf(plant_target), 2, 4, 5, 6)
+	else //if we're not, focused boom.
+		explosion(get_turf(plant_target), 1, 1, 2, 3)
+	if(plant_target)
+		plant_target.ex_act(1)
+		if(isobj(plant_target))
+			plant_target = null
+			if(!istype(plant_target,/obj/vehicle/multitile/root/cm_armored))
 				cdel(plant_target)
-		cdel(src)
-		processing_timers.Remove(src)
-	return
+	cdel(src)
+	processing_timers.Remove(src)
+
 
 /obj/item/device/radio/detpack/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
-

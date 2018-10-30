@@ -1,15 +1,10 @@
-datum/controller/process/timers
+/datum/controller/process/timers
 
-datum/controller/process/timers/setup()
+/datum/controller/process/timers/setup()
 	name = "Timers"
 	schedule_interval = 10 //1 second
 
-/*	to_chat(world, "\red \b Initializing objects")
-	sleep(-1)
-	for(var/atom/movable/object in world)
-		object.initialize()*/
-
-datum/controller/process/timers/doWork()
+/datum/controller/process/timers/doWork()
 
 	var/i = 1
 	while(i<=processing_timers.len)

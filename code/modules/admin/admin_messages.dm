@@ -24,6 +24,10 @@
 			body += "<br><br></body></html>"
 			src << browse(body, "window=ahelps;size=800x300")
 			return
+		else
+			body += "<br><br></body></html>"
+			src << browse(body, "window=ahelps;size=800x300")
+			return
 	else
 		for(var/CID in unansweredAhelps)
 			body += "[unansweredAhelps[CID]]" //If I have done these correctly, it should have the options bar as well a mark and noresponse

@@ -2476,11 +2476,11 @@
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
 		if(ref_person && ref_person.adminhelp_marked)
-			to_chat(usr, "<b>This Adminhelp is already being handled.</b>")
+			to_chat(usr, "<b>This Mentor/Adminhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
 
-		message_staff("[usr.key] has used 'Mark' on the Adminhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
+		message_staff("[usr.key] has used 'Mark' on the Mentor/Adminhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
 		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has marked your request and is preparing to respond...</b>"
 
 		to_chat(ref_person, msgplayer)
@@ -2500,11 +2500,11 @@
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
 		if(ref_person && ref_person.adminhelp_marked)
-			to_chat(usr, "<b>This Adminhelp is already being handled.</b>")
+			to_chat(usr, "<b>This Mentor/Adminhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
 
-		message_staff("[usr.key] has used 'No Response' on the Adminhelp from [key_name_admin(ref_person)]. The player has been notified that their issue 'is being handled, it's fixed, or it's nonsensical'.", 1)
+		message_staff("[usr.key] has used 'No Response' on the Mentor/Adminhelp from [key_name_admin(ref_person)]. The player has been notified that their issue 'is being handled, it's fixed, or it's nonsensical'.", 1)
 		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has received your Adminhelp and marked it as 'No response necessary'. Either your Adminhelp is being handled, it's fixed, or it's nonsensical.</font></b>"
 
 		to_chat(ref_person, msgplayer)
@@ -2525,12 +2525,12 @@
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
 		if(ref_person && ref_person.adminhelp_marked)
-			to_chat(usr, "<b>This Adminhelp is already being handled.</b>")
+			to_chat(usr, "<b>This Mentor/Adminhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
 
-		message_staff("[usr.key] has used 'Warn' on the Adminhelp from [key_name_admin(ref_person)]. The player has been warned for abusing the Adminhelp system.", 1)
-		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has given you a <font color=red>warning</font>. Adminhelps are for serious inquiries only. Please do not abuse this system.</b>"
+		message_staff("[usr.key] has used 'Warn' on the Mentor/Adminhelp from [key_name_admin(ref_person)]. The player has been warned for abusing the Adminhelp system.", 1)
+		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has given you a <font color=red>warning</font>. Mentor/Adminhelps are for serious inquiries only. Please do not abuse this system.</b>"
 
 		to_chat(ref_person, msgplayer)
 		ref_person << sound('sound/effects/adminhelp-error.ogg')

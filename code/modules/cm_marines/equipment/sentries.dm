@@ -313,6 +313,28 @@
 	var/work_time = 40 //Defines how long it takes to do most maintenance actions
 	var/magazine_type = /obj/item/ammo_magazine/sentry
 
+/obj/machinery/marine_turret/examine(mob/user)
+	. = ..()
+	var/list/details = list()
+	if(on)
+		details +=("It's turned on.</br>")
+
+	if(!safety_off)
+		details +=("Its safeties are on.</br>")
+
+	if(manual_override)
+		details +=("Its manual override is active..</br>")
+	else if(radial_mode)
+		details +=("It's set to 360 mode.</br>")
+	else
+		details +=("It's set to directional targeting mode.</br>")
+
+	if(alerts_on)
+		details +=("Its alert mode is active.</br>")
+
+	to_chat(user, "<span class='warning'>[details.Join(" ")]</span>")
+
+
 /obj/machinery/marine_turret/New()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
@@ -1258,17 +1280,17 @@
 	var/notice
 	switch(alert_code)
 		if(SENTRY_ALERT_AMMO)
-			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)].</b>"
+			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.x]).</b>"
 		if(SENTRY_ALERT_HOSTILE)
-			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)] Coordinates: (X: [M.x], Y: [M.x]).</b>"
+			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)]. Coordinates: (X: [M.x], Y: [M.x]).</b>"
 		if(SENTRY_ALERT_FALLEN)
-			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)].</b>"
+			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.x]).</b>"
 		if(SENTRY_ALERT_DAMAGE)
 			var/percent = max(0,(health / max(1,health_max))*100)
 			if(percent)
-				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Remaining Structural Integrity: [percent]%</b>"
+				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Coordinates: (X: [src.x], Y: [src.x]). Remaining Structural Integrity: [percent]%</b>"
 			else
-				notice = "<b>ALERT! [src] at: [get_area(src)] has been destroyed.</b>"
+				notice = "<b>ALERT! [src] at: [get_area(src)], Coordinates: (X: [src.x], Y: [src.x]) has been destroyed.</b>"
 	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 	AI.SetName("Sentry Alert System")
 	AI.aiRadio.talk_into(AI,"[notice]","Almayer","announces")

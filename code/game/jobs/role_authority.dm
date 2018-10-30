@@ -32,14 +32,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 
 	//Whenever the controller is created, we want to set up the basic role lists.
 /datum/authority/branch/role/New()
-	var/list/roles_all = subtypesof(/datum/job) - list(
-							/datum/job/pmc,
-							/datum/job/command,
-							/datum/job/civilian,
-							/datum/job/logistics,
-							/datum/job/logistics/tech,
-							/datum/job/marine,
-							/datum/job/pmc/elite_responder)
+	var/list/roles_all = subtypesof(/datum/job)
 	var/list/squads_all = subtypesof(/datum/squad)
 
 	if(!roles_all.len)
@@ -73,7 +66,9 @@ var/global/datum/authority/branch/role/RoleAuthority
 		roles_by_path[J.type] = J
 		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT)
 			roles_by_name[J.title] = J
-		if(J.flags_startup_parameters & ROLE_ADD_TO_MODE)
+		else
+			log_admin("[J]")
+		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT)
 			roles_for_mode[J.title] = J
 
 	//	if(J.faction == FACTION_TO_JOIN)  //TODO Initialize non-faction jobs? //TODO Do we really need this?

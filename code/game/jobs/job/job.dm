@@ -62,7 +62,7 @@
 		//Document syntax cannot have tabs for proper formatting.
 		var/t = {"
 <span class='role_body'>|______________________|</span>
-<span class='role_header'>You are \a [title_given]![flags_startup_parameters & ROLE_ADMIN_NOTIFY? "\nYou are playing a job that is important for game progression. If you have to disconnect, please notify the admins via adminhelp." : ""]</span>
+<span class='role_header'>You are \a [title_given]![flags_startup_parameters & ROLE_ADMIN_NOTIFY? "\nYou are playing a job that is important for game progression. If you have to disconnect, please head to cryo or notify the admins via adminhelp if you can't make it there." : ""]</span>
 
 <span class='role_body'>[generate_entry_message(H)]</span>
 

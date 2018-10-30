@@ -3,7 +3,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	idtype = /obj/item/card/id/silver
-	minimal_player_age = 7
+	flags_startup_parameters = ROLE_ADD_TO_DEFAULT
 
 //Chief Engineer
 /datum/job/logistics/engineering

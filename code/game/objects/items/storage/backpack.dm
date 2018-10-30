@@ -292,13 +292,6 @@
 /obj/item/storage/backpack/marine/standard
 	name = "\improper lightweight IMP backpack"
 	desc = "The standard-issue pack of the USCM forces. Designed to slug gear into the battlefield."
-	bypass_w_limit = list("/obj/item/device/m56d_gun",
-					"/obj/item/ammo_magazine/m56d",
-					"/obj/item/device/m56d_post",
-					"/obj/item/device/turret_top",
-					"/obj/item/device/turret_sensor",
-					"/obj/item/ammo_magazine/sentry",
-					)
 
 /obj/item/storage/backpack/marine/medic
 	name = "\improper USCM medic backpack"
@@ -386,8 +379,9 @@
 					"/obj/item/ammo_magazine/m56d",
 					"/obj/item/device/m56d_post",
 					"/obj/item/device/turret_top",
-					"/obj/item/device/turret_sensor",
 					"/obj/item/ammo_magazine/sentry",
+					"/obj/item/ammo_magazine/sentry",
+					"/obj/item/stack/sandbags"
 					)
 
 /obj/item/storage/backpack/marine/satchel

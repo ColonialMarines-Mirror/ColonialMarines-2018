@@ -28,9 +28,6 @@
 			use(dirt_transfer)
 			var/obj/item/stack/sandbags/new_bags = new(user.loc)
 			new_bags.add(max(0,dirt_transfer-1))
-			//while(dirt_transfer > 0)
-			//	new_bags = new(user.loc)
-			//	dirt_transfer -= 1
 			new_bags.add_to_stacks(user)
 			var/obj/item/stack/sandbags_empty/E = src
 			var/replace = (user.get_inactive_hand() == E)

@@ -355,7 +355,7 @@
 			return
 
 /obj/item/weapon/gun/flamer/M240T/examine(mob/user)
-	..()
+	. = ..()
 	to_chat(user, "<span class='notice'>Its hydro cannon contains [get_water()]/[max_water] units of water!</span>")
 
 //Returns the amount of water in the M240T

@@ -2480,7 +2480,7 @@
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
 
-		message_staff("[usr.key] has used 'Mark' on the Mentor/Adminhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
+		message_staff("[usr.key] has used 'Mark' on the Pray/Mentor/Adminhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
 		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has marked your request and is preparing to respond...</b>"
 
 		to_chat(ref_person, msgplayer)

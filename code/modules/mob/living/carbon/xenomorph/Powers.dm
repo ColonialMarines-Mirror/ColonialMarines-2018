@@ -1528,7 +1528,8 @@
 				M.KnockDown(1)
 
 /mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 150, acid_delay = src.acid_delay)
-	if(!T) return
+	if(!T)
+		return
 
 	if(!check_state())
 		return

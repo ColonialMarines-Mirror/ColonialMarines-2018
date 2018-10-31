@@ -465,7 +465,7 @@
 		apply_effects(arglist(P.ammo.debilitate))
 
 	if(P.list_reagents && stat != DEAD && (ishuman() || ismonkey()))
-			reagents.add_reagent_list(P.list_reagents)
+		reagents.add_reagent_list(P.list_reagents)
 
 	if(damage)
 		bullet_message(P)

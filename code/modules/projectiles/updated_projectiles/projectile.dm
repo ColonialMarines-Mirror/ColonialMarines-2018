@@ -401,7 +401,7 @@
 	. = max(5, .) //default hit chance is at least 5%.
 	if(lying && stat) . += 15 //Bonus hit against unconscious people.
 
-	if(istype(P.firer, /mob/living/carbon))
+	if(iscarbon(P.firer))
 		var/mob/living/carbon/shooter_living = P.firer
 		if( !can_see(shooter_living,src) ) . -= 15 //Can't see the target (Opaque thing between shooter and target)
 		. -= round(shooter_living.traumatic_shock * 0.25) //Less chance to hit when in pain.

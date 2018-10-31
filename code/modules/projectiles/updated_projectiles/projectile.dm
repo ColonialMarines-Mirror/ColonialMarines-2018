@@ -290,7 +290,7 @@
 	if(src && ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)
 		ammo.on_hit_turf(T,src)
 
-		if(T && T.loc)
+		if(T?.loc)
 			T.bullet_act(src)
 
 		return TRUE

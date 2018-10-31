@@ -52,7 +52,7 @@
 	var/duration = 100
 
 /obj/effect/xenomorph/spray/New(loc, duration = 100) //Self-deletes
-	..()
+	. = ..()
 	processing_objects.Add(src)
 	spawn(duration + rand(0, 20))
 		processing_objects.Remove(src)

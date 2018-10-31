@@ -348,6 +348,9 @@ This function restores all limbs.
 	if(blocked >= 1) //Complete negation
 		return 0
 
+	if(blocked)
+		damage *= CLAMP01(1-blocked) //Percentage reduction
+
 	if(!damage) //Complete negation
 		return 0
 
@@ -373,9 +376,6 @@ This function restores all limbs.
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_limb(check_zone(def_zone))
 	if(!organ)	return 0
-
-	if(blocked)
-		damage *= CLAMP01(1-blocked) //Percentage reduction
 
 	switch(damagetype)
 		if(BRUTE)

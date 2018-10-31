@@ -1517,7 +1517,8 @@
 		cdel(S)
 	new /obj/effect/xenomorph/spray(target)
 	for(var/mob/living/carbon/M in target)
-		if(ishuman(M) || ismonkey(M))
+		if(!(ishuman(M) || ismonkey(M)) || (M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))
+			continue
 			if((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))
 				continue //nested infected hosts are not hurt by acid spray
 			M.adjustFireLoss(rand(25, 38) + 4 * upgrade)

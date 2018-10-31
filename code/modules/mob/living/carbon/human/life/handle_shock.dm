@@ -3,6 +3,7 @@
 /mob/living/carbon/human/handle_shock()
 	..()
 	if(status_flags & GODMODE || analgesic || (species && species.flags & NO_PAIN) || stat == DEAD)
+		shock_stage = null
 		return //Godmode or some other pain reducers. //Analgesic avoids all traumatic shock temporarily
 
 	switch(CLAMP(traumatic_shock,0,400))
@@ -81,6 +82,9 @@
 
 
 /mob/living/carbon/human/halloss_recovery()
+	if(status_flags & GODMODE || analgesic || (species && species.flags & NO_PAIN) || stat == DEAD)
+		setHalLoss(0)
+		return
 	var/rate = BASE_HALLOSS_RECOVERY_RATE
 
 	if(lying || last_move_intent < world.time - 20) //If we're standing still or knocked down we benefit from the downed halloss rate

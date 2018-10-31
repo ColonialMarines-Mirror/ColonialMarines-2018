@@ -30,14 +30,14 @@
 	if(stunned)
 		AdjustStunned(-1)
 		if(!stunned && !no_stun) //anti chain stun
-			no_stun = 2 //2 tick reprieve
+			no_stun = ANTI_CHAINSTUN_TICKS //1 tick reprieve
 	return stunned
 
 /mob/living/proc/handle_knocked_down()
 	if(knocked_down && client)
 		AdjustKnockeddown(-1)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 		if(!knocked_down && !no_stun) //anti chain stun
-			no_stun = 2 //2 tick reprieve
+			no_stun = ANTI_CHAINSTUN_TICKS //1 tick reprieve
 	return knocked_down
 
 /mob/living/proc/handle_stuttering()

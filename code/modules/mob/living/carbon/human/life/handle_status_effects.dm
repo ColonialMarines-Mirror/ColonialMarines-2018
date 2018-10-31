@@ -54,8 +54,10 @@
 	return 1
 
 /mob/living/carbon/human/handle_knocked_down()
-	if(knocked_down && client)
+	if(knocked_down) //&& client
 		AdjustKnockeddown(-species.knock_down_reduction)
+		if(!knocked_down && !no_stun) //anti chain stun
+			no_stun = ANTI_CHAINSTUN_TICKS //1 tick reprieve
 	return knocked_down
 
 /mob/living/carbon/human/handle_knocked_out()
@@ -66,4 +68,6 @@
 /mob/living/carbon/human/handle_stunned()
 	if(stunned)
 		AdjustStunned(-species.stun_reduction)
+		if(!stunned && !no_stun) //anti chain stun
+			no_stun = ANTI_CHAINSTUN_TICKS //1 tick reprieve
 	return stunned

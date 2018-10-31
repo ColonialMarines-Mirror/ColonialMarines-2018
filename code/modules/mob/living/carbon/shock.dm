@@ -78,7 +78,7 @@
 			if(O.germ_level >= INFECTION_LEVEL_ONE) 				traumatic_shock += O.germ_level * 0.05
 
 		if(M.protection_aura)
-			traumatic_shock -= M.protection_aura * 20
+			traumatic_shock -= 20 + M.protection_aura * 20 //-40 pain for SLs, -80 for Commanders
 
 	traumatic_shock = max(0, traumatic_shock)	//stuff below this has the potential to mask damage
 
@@ -91,6 +91,9 @@
 	updateshock()
 
 /mob/living/carbon/proc/halloss_recovery()
+	if(stat == DEAD)
+		setHalLoss(0)
+		return
 	var/rate = BASE_HALLOSS_RECOVERY_RATE
 
 	if(lying || last_move_intent < world.time - 20) //If we're standing still or knocked down we benefit from the downed halloss rate

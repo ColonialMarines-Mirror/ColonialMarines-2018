@@ -844,7 +844,7 @@
 /datum/ammo/rocket/New()
 	..()
 	smoke = new()
-	accuracy = config.low_hit_accuracy
+	accuracy = config.max_hit_accuracy
 	accurate_range = config.norm_shell_range
 	max_range = config.long_shell_range
 	damage = config.min_hit_damage
@@ -882,30 +882,28 @@
 
 /datum/ammo/rocket/ap/New()
 	..()
-	accuracy = -config.min_hit_accuracy
-	accuracy_var_low = config.med_proj_variance
 	accurate_range = config.short_shell_range
-	max_range = config.norm_shell_range
 	penetration = config.aprocket_armor_penetration
-	damage = config.aprocket_hit_damage //lmao tons of hit damage but it's never processed due to the below proc redefinitions
+	damage = config.aprocket_hit_damage
+	shell_speed = config.mslow_shell_speed
 
 /datum/ammo/rocket/ap/on_hit_mob(mob/M, obj/item/projectile/P)
-	explosion(get_turf(M), -1, 1, 2, 5)
+	explosion(get_turf(M), -1, -1, 2, 5)
 	smoke.set_up(1, get_turf(M))
 	smoke.start()
 
 /datum/ammo/rocket/ap/on_hit_obj(obj/O, obj/item/projectile/P)
-	explosion(get_turf(O), -1, 1, 2, 5)
+	explosion(get_turf(O), -1, -1, 2, 5)
 	smoke.set_up(1, get_turf(O))
 	smoke.start()
 
 /datum/ammo/rocket/ap/on_hit_turf(turf/T, obj/item/projectile/P)
-	explosion(T,  -1, 1, 2, 5)
+	explosion(T, -1, -1, 2, 5)
 	smoke.set_up(1, T)
 	smoke.start()
 
 /datum/ammo/rocket/ap/do_at_max_range(obj/item/projectile/P)
-	explosion(get_turf(P),  -1, 1, 2, 5)
+	explosion(get_turf(P),  -1, -1, 2, 5)
 	smoke.set_up(1, get_turf(P))
 	smoke.start()
 
@@ -916,8 +914,8 @@
 
 /datum/ammo/rocket/ltb/New()
 	..()
-	accuracy = config.med_hit_accuracy
-	accurate_range = config.long_shell_range
+	accuracy = config.max_hit_accuracy
+	accurate_range = config.short_shell_range
 	max_range = config.max_shell_range
 	penetration = config.ltb_armor_penetration
 	damage = config.ltb_hit_damage

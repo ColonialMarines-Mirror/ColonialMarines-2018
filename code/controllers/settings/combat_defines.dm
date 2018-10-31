@@ -117,6 +117,8 @@
 	var/mlong_shell_range = 35
 	var/max_shell_range = 40
 
+	var/min_shell_speed = 0.5
+	var/mslow_shell_speed = 0.75
 	var/slow_shell_speed = 1
 	var/reg_shell_speed = 2
 	var/fast_shell_speed = 3
@@ -146,8 +148,8 @@
 	var/max_proj_extra = 8
 
 	var/min_proj_variance = 1
-	var/low_proj_variance = 3
-	var/mlow_proj_variance = 5
+	var/mlow_proj_variance = 3
+	var/low_proj_variance = 5
 	var/med_proj_variance = 7
 	var/hmed_proj_variance = 8
 	var/high_proj_variance = 9
@@ -386,6 +388,10 @@
 		if("max_shell_range")
 			max_shell_range = value
 
+		if("min_shell_speed")
+			min_shell_speed = value
+		if("mslow_shell_speed")
+			mslow_shell_speed = value
 		if("slow_shell_speed")
 			slow_shell_speed = value
 		if("reg_shell_speed")

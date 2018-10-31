@@ -70,6 +70,11 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				M.forceMove(loc)
 	return TRUE
 
+/mob/living/carbon/Xenomorph/Defender/update_stat()
+	. = ..()
+	if(stat != CONSCIOUS && fortify == TRUE)
+		fortify_off() //Fortify prevents dragging due to the anchor component.
+
 /mob/living/carbon/Xenomorph/Runner/update_stat()
 	. = ..()
 	if(stat != CONSCIOUS && layer != initial(layer))

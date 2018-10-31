@@ -1155,7 +1155,7 @@
 	flags_ammo_behavior = AMMO_XENO_TOX|AMMO_IGNORE_RESIST
 	spit_cost = 50
 
-/datum/ammo/xeno/toxin/on_hit_mob(mob/M, obj/item/projectile/P)
+/datum/ammo/xeno/toxin/on_hit_mob(mob/living/carbon/C, obj/item/projectile/P)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.status_flags & XENO_HOST && istype(C.buckled, /obj/structure/bed/nest) || C.stat == DEAD)

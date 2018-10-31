@@ -66,7 +66,7 @@
 		if(do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
 			user.visible_message("<span class='notice'>[user] disarms [src].</span>",
 			"<span class='notice'>You disarm [src].</span>")
-			armed = 0
+			armed = FALSE
 			update_icon()
 
 /obj/item/device/radio/detpack/attack_hand(mob/user as mob)
@@ -87,7 +87,6 @@
 /obj/item/device/radio/detpack/proc/nullvars()
 	if(istype(plant_target, /atom/movable) && plant_target.loc)
 		var/atom/movable/T = plant_target
-		//to_chat(world, "<font color='red'>DEBUG: Drag delay reset. Target drag delay: [T.drag_delay], Stored drag delay: [target_drag_delay]</font>")
 		if(T.drag_delay == 3)
 			T.drag_delay = target_drag_delay //reset the drag delay of whatever we attached the detpack to
 		T.vis_contents -= src
@@ -144,8 +143,7 @@
 				if(href_list["timer"])
 					timer += text2num(href_list["timer"])
 					timer = round(timer)
-					timer = min(300, timer)
-					timer = max(10, timer)
+					timer = CLAMP(timer,DETPACK_TIMER_MIN,300)
 		if(!( master ))
 			if(istype(loc, /mob))
 				attack_self(loc)
@@ -269,20 +267,20 @@
 	if(plant_target == null || !plant_target.loc) //need a target to be attached to
 		//to_chat(world, "<font color='red'>DEBUG: Location mismatch.</font>")
 		processing_timers.Remove(src)
-		if(timer < 10) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
-			timer = 10
+		if(timer < DETPACK_TIMER_MIN) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
+			timer = DETPACK_TIMER_MIN
 		nullvars()
 		return
 	if(!on) //need to be active and armed.
 		processing_timers.Remove(src)
 		armed = FALSE
-		if(timer < 10) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
-			timer = 10
+		if(timer < DETPACK_TIMER_MIN) //reset to minimum 5 seconds; no 'cooking' with aborted detonations.
+			timer = DETPACK_TIMER_MIN
 		update_icon()
 		return
 	if(!armed)
-		if(timer < 10) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
-			timer = 10
+		if(timer < DETPACK_TIMER_MIN) //reset to minimum 5 seconds; no 'cooking' with aborted detonations.
+			timer = DETPACK_TIMER_MIN
 		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonation Aborted.</font>")
 		processing_timers.Remove(src)
 		update_icon()

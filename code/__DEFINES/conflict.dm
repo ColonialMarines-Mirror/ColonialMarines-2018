@@ -73,3 +73,5 @@
 #define WIELD_DELAY_VERY_SLOW		16
 #define WIELD_DELAY_HORRIBLE		20
 //=================================================
+
+#define DETPACK_TIMER_MIN			5

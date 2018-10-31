@@ -2488,7 +2488,7 @@
 		unansweredMhelps.Remove(ref_person.computer_id)
 		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
 		src.viewUnheardMhelps() //This SHOULD refresh the page
-		src.viewUnheardAhelps()
+		viewUnheardAhelps()
 
 		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm

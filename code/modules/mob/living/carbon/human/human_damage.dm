@@ -17,10 +17,10 @@
 
 	health = species.total_health - oxy_l - tox_l - clone_l - total_burn - total_brute
 
-#if HUSKING_ON
-	if(((species.total_health - total_burn) < config.health_threshold_dead * 1.5))
-		ChangeToHusk()
-#endif
+	if(config.husking_on)
+		if(((species.total_health - total_burn) < config.health_threshold_dead * 1.5))
+			ChangeToHusk()
+
 
 	update_stat()
 	med_hud_set_health()

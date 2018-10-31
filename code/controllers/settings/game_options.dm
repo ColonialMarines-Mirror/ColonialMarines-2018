@@ -3,6 +3,7 @@
 	var/health_threshold_softcrit = 0
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
+	var/husking_on = FALSE
 
 	var/organ_health_multiplier = 1
 	var/organ_regeneration_multiplier = 1

@@ -464,7 +464,7 @@
 	if(P.ammo.debilitate && stat != DEAD && ( damage || (P.ammo.flags_ammo_behavior & AMMO_IGNORE_RESIST) ) )
 		apply_effects(arglist(P.ammo.debilitate))
 
-	if(P.list_reagents && stat != DEAD)
+	if(P.list_reagents && stat != DEAD && (ishuman() || ismonkey()))
 		if(ishuman() || ismonkey())
 			reagents.add_reagent_list(P.list_reagents)
 

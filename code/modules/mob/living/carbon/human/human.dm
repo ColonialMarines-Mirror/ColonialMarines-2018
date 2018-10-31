@@ -22,18 +22,18 @@
 		else
 			set_species()
 
-	switch(pick(50;"female", 50;"male"))
+	switch(pick("female", "male"))
 		if("female")
 			gender = FEMALE
 			name = pick(first_names_female) + " " + pick(last_names)
-			real_name = pick(first_names_female) + " " + pick(last_names)
-			voice_name = pick(first_names_female) + " " + pick(last_names)
+			real_name = name
+			voice_name = name
 
 		if("male")
 			gender = MALE
 			name = pick(first_names_male) + " " + pick(last_names)
-			real_name = pick(first_names_male) + " " + pick(last_names)
-			voice_name = pick(first_names_male) + " " + pick(last_names)
+			real_name = name
+			voice_name = name
 
 
 	switch(pick(15;"black", 15;"grey", 15;"brown", 15;"lightbrown", 10;"white", 15;"blonde", 15;"red"))
@@ -89,7 +89,7 @@
 
 	h_style = random_hair_style(gender)
 
-	switch(pick(50;"none", 50;"some"))
+	switch(pick("none", "some"))
 		if("none")
 			f_style = "Shaved"
 		if("some")

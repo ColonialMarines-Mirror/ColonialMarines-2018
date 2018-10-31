@@ -847,7 +847,7 @@
 	accuracy = config.max_hit_accuracy
 	accurate_range = config.norm_shell_range
 	max_range = config.long_shell_range
-	damage = config.min_hit_damage
+	damage = config.med_hit_damage
 	penetration= config.max_armor_penetration
 	shell_speed = config.slow_shell_speed
 
@@ -857,22 +857,22 @@
 	. = ..()
 
 /datum/ammo/rocket/on_hit_mob(mob/M, obj/item/projectile/P)
-	explosion(get_turf(M), -1, 1, 4, 5)
+	explosion(get_turf(M), -1, 2, 4, 5)
 	smoke.set_up(1, get_turf(M))
 	smoke.start()
 
 /datum/ammo/rocket/on_hit_obj(obj/O, obj/item/projectile/P)
-	explosion(get_turf(O), -1, 1, 4, 5)
+	explosion(get_turf(O), -1, 2, 4, 5)
 	smoke.set_up(1, get_turf(O))
 	smoke.start()
 
 /datum/ammo/rocket/on_hit_turf(turf/T, obj/item/projectile/P)
-	explosion(T,  -1, 1, 4, 5)
+	explosion(T,  -1, 2, 4, 5)
 	smoke.set_up(1, T)
 	smoke.start()
 
 /datum/ammo/rocket/do_at_max_range(obj/item/projectile/P)
-	explosion(get_turf(P),  -1, 1, 4, 5)
+	explosion(get_turf(P),  -1, 2, 4, 5)
 	smoke.set_up(1, get_turf(P))
 	smoke.start()
 
@@ -885,7 +885,6 @@
 	accurate_range = config.short_shell_range
 	penetration = config.aprocket_armor_penetration
 	damage = config.aprocket_hit_damage
-	shell_speed = config.mslow_shell_speed
 
 /datum/ammo/rocket/ap/on_hit_mob(mob/M, obj/item/projectile/P)
 	explosion(get_turf(M), -1, -1, 2, 5)

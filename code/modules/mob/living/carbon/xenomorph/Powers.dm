@@ -1577,7 +1577,7 @@
 		var/turflist = getline(src, target)
 		spray_turfs(turflist)
 		spawn(acid_delay)
-			acid_cooldown = 0
+			acid_cooldown = FALSE
 			playsound(src.loc, 'sound/voice/alien_drool1.ogg', 50, 1)
 			to_chat(src, "<span class='warning'>You feel your acid glands refill. You can spray <B>acid</b> again.</span>")
 			for(var/X in actions)

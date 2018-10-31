@@ -1160,7 +1160,7 @@
 		var/mob/living/carbon/C = M
 		if(C.status_flags & XENO_HOST && istype(C.buckled, /obj/structure/bed/nest) || C.stat == DEAD)
 			return
-	..()
+	return ..()
 
 /datum/ammo/xeno/toxin/upgrade1
 	name = "neurotoxic spit"

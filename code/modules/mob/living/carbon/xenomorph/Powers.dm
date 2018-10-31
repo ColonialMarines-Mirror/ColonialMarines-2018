@@ -1569,7 +1569,7 @@
 		if(!target)
 			return
 
-		acid_cooldown = 1
+		acid_cooldown = TRUE
 		use_plasma(plasmacost)
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1)
 		visible_message("<span class='xenowarning'>\The [src] spews forth a virulent spray of acid!</span>", \

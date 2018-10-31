@@ -1156,7 +1156,8 @@
 	spit_cost = 50
 
 /datum/ammo/xeno/toxin/on_hit_mob(mob/living/carbon/C, obj/item/projectile/P)
-	if(iscarbon(M))
+	if(!istype(C))
+		return ..()
 		var/mob/living/carbon/C = M
 		if(C.status_flags & XENO_HOST && istype(C.buckled, /obj/structure/bed/nest) || C.stat == DEAD)
 			return

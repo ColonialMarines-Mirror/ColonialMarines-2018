@@ -168,3 +168,5 @@
 
 	var/accuracy_modifier = 0 //Applies a penalty or bonus to projectile accuracy in projectile.dm
 	var/scatter_modifier = 0 //Applies a penalty or bonus to scatter probability in gun_system.dm
+
+	var/list/fullscreens = list()

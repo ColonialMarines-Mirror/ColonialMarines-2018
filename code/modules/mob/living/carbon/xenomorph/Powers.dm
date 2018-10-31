@@ -1527,7 +1527,7 @@
 				M.emote("scream")
 				M.KnockDown(1)
 
-/mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 150, acid_delay = src.acid_delay)
+/mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 200, acid_d = acid_delay)
 	if(!T)
 		return
 
@@ -1537,18 +1537,15 @@
 	if(acid_cooldown)
 		return
 
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
+		return
+
 	if(!isturf(loc) || istype(loc, /turf/open/space))
 		to_chat(src, "<span class='warning'>You can't do that from there.</span>")
 		return
 
 	if(!check_plasma(plasmacost))
-		return
-
-	if(!do_after(src, 5, TRUE, 5, BUSY_ICON_HOSTILE))
-		return
-		
-	if(stagger)
-		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
 		return
 
 	if(T)
@@ -1576,7 +1573,7 @@
 		"<span class='xenowarning'>You spew forth a spray of acid!</span>", null, 5)
 		var/turflist = getline(src, target)
 		spray_turfs(turflist)
-		spawn(acid_delay)
+		spawn(acid_d)
 			acid_cooldown = FALSE
 			playsound(loc, 'sound/voice/alien_drool1.ogg', 50, 1)
 			to_chat(src, "<span class='warning'>You feel your acid glands refill. You can spray <B>acid</b> again.</span>")

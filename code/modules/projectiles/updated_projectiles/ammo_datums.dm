@@ -1140,7 +1140,7 @@
 	var/spit_cost
 
 /datum/ammo/xeno/New()
-	..()
+	. = ..()
 	accuracy = config.max_hit_accuracy
 	accurate_range = config.short_shell_range
 	shell_speed = config.reg_shell_speed

@@ -323,11 +323,9 @@
 		details +=("Its safeties are on.</br>")
 
 	if(manual_override)
-		details +=("Its manual override is active..</br>")
-	else if(radial_mode)
-		details +=("It's set to 360 mode.</br>")
+		details +=("Its manual override is active.</br>")
 	else
-		details +=("It's set to directional targeting mode.</br>")
+		details += ("It's set to [radial_mode ? "360" : "directional targeting"] mode.</br>")
 
 	if(alerts_on)
 		details +=("Its alert mode is active.</br>")
@@ -564,20 +562,12 @@
 				update_icon()
 
 		if("toggle_radial")
-			if(!radial_mode)
-				user.visible_message("<span class='notice'>[user] activates [src]'s radial mode.</span>",
-				"<span class='notice'>You activate [src]'s radial mode.</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Radial mode initiated'.</span>'")
-				radial_mode = TRUE
-				range = 3 //360 coverage, but detection range reduced to 3 tiles.
-				update_icon()
-			else
-				radial_mode = FALSE
-				user.visible_message("<span class='notice'>[user] deactivates [src]'s radial mode.</span>",
-				"<span class='notice'>You deactivate [src]'s radial mode.</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Radial mode deactivated'.</span>'")
-				range = 7
-				update_icon()
+			radial_mode = !radial_mode
+			var/rad_msg = rad_mode ? "activate" : "deactivate"
+			user.visible_message("<span class='notice'>[user] [rad_msg]s [src]'s radial mode.</span>", "<span class='notice'>You [rad_msg] [src]'s radial mode.</span>")
+			state("The [name] buzzes in a monotone voice: 'Radial mode [rad_msg]d'.'")
+			range = radial_mode ? 3 : 7
+			update_icon()
 
 	attack_hand(user)
 
@@ -790,10 +780,7 @@
 
 	if(on)
 		start_processing()
-		if(!radial_mode)
-			icon_state = "sentry_on"
-		else
-			icon_state = "sentry_on_radial"
+		icon_state = "sentry_on_[radial mode ? "radial" : null]"
 	else
 		icon_state = "sentry_off"
 		stop_processing()

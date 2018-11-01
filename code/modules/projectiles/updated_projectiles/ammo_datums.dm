@@ -848,7 +848,7 @@
 	accurate_range = config.norm_shell_range
 	max_range = config.long_shell_range
 	damage = config.med_hit_damage
-	penetration= config.max_armor_penetration
+	penetration = config.max_armor_penetration
 	shell_speed = config.slow_shell_speed
 
 /datum/ammo/rocket/Dispose()

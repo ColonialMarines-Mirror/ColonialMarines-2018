@@ -34,7 +34,7 @@
 	new /obj/item/stack/sheet/metal/small_stack(src)
 	new /obj/item/device/turret_top(src)
 	new /obj/item/device/turret_sensor(src)
-	new /obj/item/cell(src)
+	new /obj/item/cell/high(src)
 	new /obj/item/ammo_magazine/sentry(src)
 
 /obj/machinery/marine_turret_frame
@@ -330,6 +330,12 @@
 	if(alerts_on)
 		details +=("Its alert mode is active.</br>")
 
+	if(!ammo)
+		details +=("<span class='danger'>It has no ammo!</br></span>")
+
+	if(!cell || cell.charge == 0)
+		details +=("<span class='danger'>It is unpowered!</br></span>")
+
 	to_chat(user, "<span class='warning'>[details.Join(" ")]</span>")
 
 
@@ -337,7 +343,7 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	cell = new (src)
+	cell = new /obj/item/cell/high(src)
 	camera = new (src)
 	camera.network = list("military")
 	camera.c_tag = "[name] ([rand(0, 1000)])"
@@ -563,7 +569,7 @@
 
 		if("toggle_radial")
 			radial_mode = !radial_mode
-			var/rad_msg = rad_mode ? "activate" : "deactivate"
+			var/rad_msg = radial_mode ? "activate" : "deactivate"
 			user.visible_message("<span class='notice'>[user] [rad_msg]s [src]'s radial mode.</span>", "<span class='notice'>You [rad_msg] [src]'s radial mode.</span>")
 			state("The [name] buzzes in a monotone voice: 'Radial mode [rad_msg]d'.'")
 			range = radial_mode ? 3 : 7
@@ -729,9 +735,6 @@
 	if(istype(O, magazine_type))
 		var/obj/item/ammo_magazine/M = O
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.heavy_weapons < SKILL_HEAVY_WEAPONS_TRAINED)
-			//if(rounds)
-			//	to_chat(user, "<span class='warning'>You only know how to swap the box magazine when it's empty.</span>")
-			//	return
 			user.visible_message("<span class='notice'>[user] begins swapping a new [O.name] into [src].</span>",
 			"<span class='notice'>You begin swapping a new [O.name] into [src].</span>")
 			if(user.action_busy) return
@@ -780,15 +783,15 @@
 
 	if(on)
 		start_processing()
-		icon_state = "sentry_on_[radial mode ? "radial" : null]"
+		icon_state = "sentry_on[radial_mode ? "_radial" : null]"
 	else
 		icon_state = "sentry_off"
 		stop_processing()
 
 /obj/machinery/marine_turret/proc/update_health(var/damage) //Negative damage restores health.
 	health -= damage
-	if(on && damage && alerts_on && (world.time > (last_damage_alert + SENTRY_ALERT_DELAY) || health <= 0) ) //Alert friendlies
-		sentry_alert(SENTRY_ALERT_DAMAGE, null)
+	if(on && damage && alerts_on && (world.time > (last_damage_alert + SENTRY_DAMAGE_ALERT_DELAY) || health <= 0) ) //Alert friendlies
+		sentry_alert(SENTRY_ALERT_DAMAGE)
 		last_damage_alert = world.time
 	if(health <= 0 && stat != 2)
 		stat = 2
@@ -829,8 +832,9 @@
 
 	if(cell.charge - power <= 0)
 		cell.charge = 0
+		sentry_alert(SENTRY_ALERT_BATTERY)
 		visible_message("\icon[src] <span class='warning'>[src] emits a low power warning and immediately shuts down!</span>")
-		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 25, 1)
+		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 50, 1)
 		SetLuminosity(0)
 		update_icon()
 		return FALSE
@@ -978,7 +982,7 @@
 	//if( ( target_dir & turn(dir, 180) ) && !radial_mode)
 	//	return
 
-	if(radial_mode)
+	if(radial_mode && !manual_override)
 		dir = target_dir
 
 
@@ -1278,6 +1282,8 @@
 				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Coordinates: (X: [src.x], Y: [src.x]). Remaining Structural Integrity: [percent]%</b>"
 			else
 				notice = "<b>ALERT! [src] at: [get_area(src)], Coordinates: (X: [src.x], Y: [src.x]) has been destroyed.</b>"
+		if(SENTRY_ALERT_BATTERY)
+			notice = "<b>ALERT! [src]'s battery depleted at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.x]).</b>"
 	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 	AI.SetName("Sentry Alert System")
 	AI.aiRadio.talk_into(AI,"[notice]","Almayer","announces")
@@ -1295,8 +1301,8 @@
 	burst_size = 3
 	min_burst = 2
 	max_burst = 4
-	health = 150
-	health_max = 150
+	health = 155
+	health_max = 155
 	rounds = 500
 	rounds_max = 500
 	knockdown_threshold = 70 //lighter, not as well secured.
@@ -1323,7 +1329,7 @@
 
 		user.visible_message("<span class='notice'>[user] begins to fold up and retrieve [src].</span>",
 		"<span class='notice'>You begin to fold up and retrieve [src].</span>")
-		if(do_after(user, work_time * 2, TRUE, 5, BUSY_ICON_BUILD))
+		if(do_after(user, work_time * 1.5, TRUE, 5, BUSY_ICON_BUILD))
 			if(!src || on || anchored)//Check if we got exploded
 				return
 			to_chat(user, "<span class='notice'>You fold up and retrieve [src].</span>")
@@ -1401,14 +1407,14 @@
 	if(blocked)
 		to_chat(user, "<span class='warning'>Insufficient room to deploy [src]!</span>")
 		return
-	if(do_after(user, 40, TRUE, 5, BUSY_ICON_BUILD))
+	if(do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
 		if(!src) //Make sure the sentry still exists
 			return
 		var/obj/machinery/marine_turret/mini/M = new /obj/machinery/marine_turret/mini(target)
 		M.dir = user.dir
 		user.visible_message("<span class='notice'>[user] deploys [M].</span>",
 		"<span class='notice'>You deploy [M].</span>")
-		playsound(target, 'sound/weapons/mine_armed.ogg', 25, FALSE)
+		playsound(target, 'sound/weapons/mine_armed.ogg', 25)
 		M.health = health
 		M.update_icon()
 		cdel(src)

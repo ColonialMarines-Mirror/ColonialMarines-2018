@@ -148,8 +148,10 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TOKEN_ALL				15
 
 //Sentry defines
-#define SENTRY_ALERT_AMMO			1
-#define SENTRY_ALERT_HOSTILE		2
-#define SENTRY_ALERT_FALLEN			3
-#define SENTRY_ALERT_DAMAGE			4
-#define SENTRY_ALERT_DELAY			200 //20 seconds
+#define SENTRY_ALERT_AMMO				1
+#define SENTRY_ALERT_HOSTILE			2
+#define SENTRY_ALERT_FALLEN				3
+#define SENTRY_ALERT_DAMAGE				4
+#define SENTRY_ALERT_BATTERY			5
+#define SENTRY_ALERT_DELAY				200 //20 seconds
+#define SENTRY_DAMAGE_ALERT_DELAY		50 //5 seconds

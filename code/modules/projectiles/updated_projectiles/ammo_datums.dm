@@ -794,6 +794,7 @@
 	accuracy_var_high = config.low_proj_variance
 	damage = config.lmed_hit_damage
 	penetration= config.low_armor_penetration
+	damage_falloff *= 0.5 //forgot to add this
 
 /datum/ammo/bullet/turret/dumb
 	icon_state 	= "bullet"

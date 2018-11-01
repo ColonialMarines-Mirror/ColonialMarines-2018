@@ -232,7 +232,7 @@
 	var/obj/item/clothing/worn_helmet = owner.head
 	if(body_part == HEAD && istype(worn_helmet, /obj/item/clothing/head/helmet) && !(owner.species.flags & IS_SYNTHETIC) ) //Early return if the body part is a head but target is wearing a helmet and is not a synth
 		owner.updatehealth()
-		return
+		return update_icon()
 	if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 		var/cut_prob = brute/max_damage * 10
 		if(prob(cut_prob))

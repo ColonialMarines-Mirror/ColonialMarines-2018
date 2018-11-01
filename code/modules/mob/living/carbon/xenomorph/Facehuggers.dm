@@ -2,7 +2,7 @@
 
 //TODO: Make these simple_animals
 
-#define FACEHUGGER_KNOCKOUT 20
+#define FACEHUGGER_KNOCKOUT 10
 
 #define MIN_IMPREGNATION_TIME 100 //Time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150

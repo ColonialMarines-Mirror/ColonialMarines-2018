@@ -92,14 +92,11 @@
 	return FALSE // Else you can't pick.
 
 /obj/item/clothing/mask/facehugger/attack(mob/M, mob/user)
-	if(!isXeno(user)) //Xenos only.
-		return
 	user.visible_message("<span class='warning'>\ [user] attempts to plant [src] on [M]'s face!</span>", \
 	"<span class='warning'>You attempt to plant [src] on [M]'s face!</span>")
-	if(!do_after(user, 5, TRUE, 5, BUSY_ICON_HOSTILE))
-		return
-	if(!M.Adjacent(user) || !src)
-		return
+	if(ishuman(M)) //Delay for humans only, not monkeys and shit
+		if(!do_after(user, 5, TRUE, 5, BUSY_ICON_HOSTILE))
+			return
 	if(CanHug(M))
 		Attach(M)
 		user.update_icons()

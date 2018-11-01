@@ -36,6 +36,7 @@
 	var/armor_bonus = 0 //Extra chance of deflecting projectiles due to temporary effects
 	var/armor_pheromone_bonus = 0 //
 	var/fire_immune = 0 //Boolean
+	var/fire_resist = 1 //0 to 1; lower is better as it is a multiplier.
 	var/obj/structure/tunnel/start_dig = null
 	var/tunnel_delay = 0
 	var/datum/ammo/xeno/ammo = null //The ammo datum for our spit projectiles. We're born with this, it changes sometimes.
@@ -158,6 +159,16 @@
 	var/savage = FALSE
 	var/savage_used = FALSE
 	var/savage_cooldown = 300
+
+	//Ravager vars
+	var/rage = 0
+	var/rage_resist = 1.00
+	var/ravage_used = FALSE
+	var/ravage_delay = null
+	var/charge_delay = null
+	var/second_wind_used = FALSE
+	var/second_wind_delay = null
+	var/last_rage = null
 
 	//Notification spam controls
 	var/recent_notice = 0

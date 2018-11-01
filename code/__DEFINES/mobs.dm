@@ -418,7 +418,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define DEFENDER_FORTIFY_ARMOR 60
 #define WARRIOR_AGILITY_ARMOR 30
 #define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
-
+#define RAVAGER_MAX_RAGE 50
 
 // halloss defines
 
@@ -458,3 +458,13 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define MOTH_WINGS_BEHIND_LAYER	1
 
 #define TOTAL_UNDERLAYS			1
+
+
+//Ravager defines:
+#define CHARGESPEED					3
+#define CHARGESTRENGTH				3
+#define CHARGEDISTANCE				5
+#define CHARGECOOLDOWN				300
+#define RAV_CHARGE_TYPE				3
+#define RAV_SECOND_WIND_COOLDOWN	600
+#define RAV_RAVAGE_COOLDOWN			100

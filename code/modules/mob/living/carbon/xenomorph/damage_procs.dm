@@ -106,6 +106,11 @@
 		if(BURN)
 			adjustFireLoss(damage)
 
+	if(damage && istype(src,/mob/living/carbon/Xenomorph/Ravager))
+		rage += round(damage * 0.3) //Gain Rage stacks equal to 30% of damage received.
+		last_rage = world.time //We incremented rage, so bookmark this.
+		damage *= rage_resist //reduce damage by rage resist %
+
 	updatehealth()
 	return TRUE
 

@@ -206,18 +206,22 @@
 		if (S.slayer > 0)
 			S.slayer -= 1
 			S.update_icon(1, 0)
-	
+
 	for(var/obj/structure/jungle/vines/V in T)
 		cdel(V)
-		
+
+	var/fire_mod
 	for(var/mob/living/M in T) //Deal bonus damage if someone's caught directly in initial stream
 		if(M.stat == DEAD)
 			continue
+
+		fire_mod = 1
 
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
 			if(X.fire_immune)
 				continue
+			fire_mod = X.fire_resist
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M //fixed :s
 
@@ -229,12 +233,12 @@
 					log_combat(user, H, "shot", src)
 					msg_admin_attack("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) shot [key_name(H)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[H.x];Y=[H.y];Z=[H.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[H]'>FLW</a>) with \a [name] in [get_area(user)]")
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro))) 
+			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro)))
 				continue
 
 		M.adjust_fire_stacks(rand(5,burn*2))
 		M.IgniteMob()
-		M.adjustFireLoss(rand(burn,(burn*2))) // Make it so its the amount of heat or twice it for the initial blast.
+		M.adjustFireLoss(rand(burn,(burn*2))* fire_mod)  // Make it so its the amount of heat or twice it for the initial blast.
 		to_chat(M, "[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]Augh! You are roasted by the flames!")
 
 /obj/item/weapon/gun/flamer/proc/triangular_flame(var/atom/target, var/mob/living/user, var/burntime, var/burnlevel)
@@ -405,6 +409,7 @@
 
 /obj/flamer_fire/Crossed(mob/living/M) //Only way to get it to reliable do it when you walk into it.
 	if(istype(M))
+		var/fire_mod = 1
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(isXeno(H.pulledby))
@@ -420,11 +425,12 @@
 			var/mob/living/carbon/Xenomorph/X = M
 			if(X.fire_immune)
 				return
+			fire_mod = X.fire_resist
 		M.adjust_fire_stacks(burnlevel) //Make it possible to light them on fire later.
 		if (prob(firelevel + 2*M.fire_stacks)) //the more soaked in fire you are, the likelier to be ignited
 			M.IgniteMob()
 
-		M.adjustFireLoss(round(burnlevel*0.5)) //This makes fire stronk.
+		M.adjustFireLoss(round(burnlevel*0.5)* fire_mod) //This makes fire stronk.
 		to_chat(M, "<span class='danger'>You are burned!</span>")
 		if(isXeno(M))
 			M.updatehealth()

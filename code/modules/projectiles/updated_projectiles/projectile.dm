@@ -287,7 +287,7 @@
 		ammo.on_hit_turf(T,src)
 		if(T?.loc)
 			T.bullet_act(src)
-		return 1
+		return TRUE
 
 //----------------------------------------------------------
 		    	//				    	\\

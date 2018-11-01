@@ -842,7 +842,7 @@
 	var/datum/effect_system/smoke_spread/smoke
 
 /datum/ammo/rocket/New()
-	..()
+	. = ..()
 	smoke = new()
 	accuracy = config.max_hit_accuracy
 	accurate_range = config.norm_shell_range

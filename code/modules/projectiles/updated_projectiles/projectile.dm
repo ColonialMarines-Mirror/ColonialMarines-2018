@@ -223,7 +223,7 @@
 
 	// Empty turf, keep moving
 	if(!T.contents.len)
-		return 0
+		return FALSE
 
 	for(var/atom/movable/A in T)
 		// If we've already handled this atom, don't do it again

@@ -321,15 +321,20 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(A.assigned_role == "MODE")
 			possible_queens -= A
 
-	var/datum/mind/new_queen
 	if(possible_queens.len) //We still have candidates
-		new_queen = pick(possible_queens)
-		if(!new_queen) 
-			return
-		new_queen.assigned_role = "MODE"
-		new_queen.special_role = "Xenomorph"
-		xenomorphs -= new_queen
-		queen += new_queen
+		for(var/datum/mind/new_queen in possible_queens)
+			if(!jobban_isbanned(new_queen.current))
+				new_queen.assigned_role = "MODE"
+				new_queen.special_role = "Xenomorph"
+				if(new_queen in xenomorphs)
+					message_admins("DEBUG: Queen also had xeno pref on, removing them from xeno list")
+					xenomorphs -= new_queen
+				queen = new_queen
+				message_admins("DEBUG: Queen candidate picked properly")
+				break
+	else
+		message_admins("DEBUG: No possible queen candidates found")
+		return
 
 	return TRUE
 
@@ -339,6 +344,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	
 datum/game_mode/proc/initialize_post_queen_list()
 	if (!queen)
+		message_admins("DEBUG: No possible queen to transform detected")
 		return
 	transform_queen(queen)
 
@@ -488,7 +494,9 @@ datum/game_mode/proc/initialize_post_queen_list()
 	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 	if(!hive.living_xeno_queen && original && original.client && original.client.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
 		new_queen = new /mob/living/carbon/Xenomorph/Queen (pick(xeno_spawn))
+		message_admins("DEBUG:Queen rolled correctly and mob created")
 	else
+		message_admins("DEBUG:Queen rolled correctly but failed conditions")
 		return
 	ghost_mind.transfer_to(new_queen)
 	ghost_mind.name = ghost_mind.current.name
@@ -498,7 +506,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 	to_chat(new_queen, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the hive!')")
 
 	new_queen.update_icons()
-
+	message_admins("DEBUG:Queen mind transfered, messages shown, basically all good.")
 	if(original) 
 		cdel(original) //Just to be sure.
 

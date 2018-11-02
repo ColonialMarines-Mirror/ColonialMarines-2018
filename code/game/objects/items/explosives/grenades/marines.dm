@@ -128,7 +128,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	dur_var = CLAMP(int_var, 0.1,0.5)
 	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
 		cdel(F)
-	new /obj/flamer_fire(T, rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5-int_var)) + rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5-int_var)), rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)) + rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)), colour, radius) //Gaussian.
+	new /obj/flamer_fire(T, rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)) + rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)), rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)) + rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)), colour, radius) //Gaussian.
 	for(var/mob/living/carbon/M in range(radius, T))
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M

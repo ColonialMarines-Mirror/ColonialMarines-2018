@@ -42,6 +42,7 @@ Additional game mode variables.
 	var/datum/mind/xenomorphs[] = list() //These are our basic lists to keep track of who is in the game.
 	var/datum/mind/survivors[] = list()
 	var/datum/mind/predators[] = list()
+	var/datum/mind/queen
 	var/datum/mind/hellhounds[] = list() //Hellhound spawning is not supported at round start.
 	var/pred_keys[] = list() //People who are playing predators, we can later reference who was a predator during the round.
 
@@ -312,20 +313,34 @@ datum/game_mode/proc/initialize_special_clamps()
 
 	return TRUE
 
+/datum/game_mode/proc/initialize_starting_queen_list()
+	var/list/datum/mind/possible_queens = get_players_for_role(BE_QUEEN)
+
+	//Minds are not transferred at this point, so we have to clean out those who may be already picked to play.
+	for(var/datum/mind/A in possible_queens)
+		if(A.assigned_role == "MODE")
+			possible_queens -= A
+
+	var/datum/mind/new_queen
+	if(possible_queens.len) //We still have candidates
+		new_queen = pick(possible_queens)
+		if(!new_queen) 
+			return
+		new_queen.assigned_role = "MODE"
+		new_queen.special_role = "Xenomorph"
+		xenomorphs -= new_queen
+		queen += new_queen
+
+	return TRUE
+
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
 		transform_xeno(new_xeno)
-	for(var/mob/new_player/player in player_list)
-		if(player.client && player.ready && player.client.prefs && (player.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(player, "Queen"))
-			if(player.mind in predators)
-				predators -= player
-			if(player.mind in xenomorphs)
-				xenomorphs -= player
-			if(player.mind in survivors)
-				survivors -= player
-			var/datum/mind/new_queen = player.mind
-			if(!(new_queen in xenomorphs))
-				transform_queen(new_queen)
+	
+datum/game_mode/proc/initialize_post_queen_list()
+	if (!queen)
+		return
+	transform_queen(queen)
 
 /datum/game_mode/proc/check_xeno_late_join(mob/xeno_candidate)
 	if(jobban_isbanned(xeno_candidate, "Alien")) // User is jobbanned
@@ -453,28 +468,19 @@ datum/game_mode/proc/initialize_special_clamps()
 /datum/game_mode/proc/transform_xeno(datum/mind/ghost_mind)
 	var/mob/original = ghost_mind.current
 	var/mob/living/carbon/Xenomorph/new_xeno
-	var/is_queen = FALSE
-	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
-	if(!hive.living_xeno_queen && original && original.client && original.client.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
-		new_xeno = new /mob/living/carbon/Xenomorph/Queen (pick(xeno_spawn))
-		is_queen = TRUE
-	else
-		new_xeno = new /mob/living/carbon/Xenomorph/Larva(pick(xeno_spawn))
+
+	new_xeno = new /mob/living/carbon/Xenomorph/Larva(pick(xeno_spawn))
 	ghost_mind.transfer_to(new_xeno) //The mind is fine, since we already labeled them as a xeno. Away they go.
 	ghost_mind.name = ghost_mind.current.name
 
-	if(is_queen)
-		to_chat(new_xeno, "<B>You are now the alien queen!</B>")
-		to_chat(new_xeno, "<B>Your job is to spread the hive.</B>")
-		to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the hive!')")
-	else
-		to_chat(new_xeno, "<B>You are now an alien!</B>")
-		to_chat(new_xeno, "<B>Your job is to spread the hive and protect the Queen. If there's no Queen, you can become the Queen yourself by evolving into a drone.</B>")
-		to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the queen!')")
+	to_chat(new_xeno, "<B>You are now an alien!</B>")
+	to_chat(new_xeno, "<B>Your job is to spread the hive and protect the Queen. If there's no Queen, you can become the Queen yourself by evolving into a drone.</B>")
+	to_chat(new_xeno, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the queen!')")
 
 	new_xeno.update_icons()
 
-	if(original) cdel(original) //Just to be sure.
+	if(original) 
+		cdel(original) //Just to be sure.
 
 /datum/game_mode/proc/transform_queen(datum/mind/ghost_mind)
 	var/mob/original = ghost_mind.current
@@ -493,7 +499,9 @@ datum/game_mode/proc/initialize_special_clamps()
 
 	new_queen.update_icons()
 
-	if(original) cdel(original) //Just to be sure.
+	if(original) 
+		cdel(original) //Just to be sure.
+
 
 //===================================================\\
 

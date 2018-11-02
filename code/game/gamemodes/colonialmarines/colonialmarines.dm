@@ -11,12 +11,12 @@
 
 /* Pre-pre-startup */
 /datum/game_mode/colonialmarines/can_start()
+	. = TRUE
 	initialize_special_clamps()
 	initialize_starting_predator_list()
-	if(!initialize_starting_xenomorph_list())
-		return
+	if(!initialize_starting_queen_list() || !initialize_starting_xenomorph_list())
+		. = FALSE
 	initialize_starting_survivor_list()
-	return 1
 
 /datum/game_mode/colonialmarines/announce()
 	to_chat(world, "<span class='round_header'>The current map is - [map_tag]!</span>")
@@ -128,6 +128,7 @@
 //Xenos and survivors should not spawn anywhere until we transform them.
 /datum/game_mode/colonialmarines/post_setup()
 	initialize_post_predator_list()
+	initialize_post_queen_list()
 	initialize_post_xenomorph_list()
 	initialize_post_survivor_list()
 	initialize_post_marine_gear_list()

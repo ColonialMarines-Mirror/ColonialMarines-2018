@@ -102,7 +102,8 @@
 			adjustBruteLoss(-warding_aura*0.5) //Warding pheromones provides 0.25 HP per second per step, up to 2.5 HP per tick.
 
 /mob/living/carbon/Xenomorph/handle_fire()
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(fire_immune)
 		return

@@ -340,10 +340,13 @@ datum/game_mode/proc/initialize_special_clamps()
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
-		transform_xeno(new_xeno)
-	
+		if(new_xeno != queen)
+			transform_xeno(new_xeno)
+		else
+			message_admins("DEBUG: Player had both xeno and queen on and got rolled for queen, ignoring xeno roll.")
+
 datum/game_mode/proc/initialize_post_queen_list()
-	if (!queen)
+	if(!queen)
 		message_admins("DEBUG: No possible queen to transform detected")
 		return
 	transform_queen(queen)

@@ -14,7 +14,7 @@
 	. = TRUE
 	initialize_special_clamps()
 	initialize_starting_predator_list()
-	if(!initialize_starting_queen_list() || !initialize_starting_xenomorph_list())
+	if(!initialize_starting_xenomorph_list() || !initialize_starting_queen_list())
 		. = FALSE
 	initialize_starting_survivor_list()
 

@@ -1300,7 +1300,7 @@
 	burst_fire = TRUE
 	burst_size = 3
 	min_burst = 2
-	max_burst = 4
+	max_burst = 5
 	health = 155
 	health_max = 155
 	rounds = 500

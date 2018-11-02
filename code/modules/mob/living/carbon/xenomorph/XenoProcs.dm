@@ -279,7 +279,7 @@
 		return TRUE
 	if(charge_type == RAV_CHARGE_TYPE) //Hit or miss, after we apply bonuses from charge, rage is 0ed out.
 		rage = 0
-	..() //Do the parent otherwise, for turfs.
+	return ..() //Do the parent otherwise, for turfs.
 
 //Bleuugh
 /mob/living/carbon/Xenomorph/proc/empty_gut()

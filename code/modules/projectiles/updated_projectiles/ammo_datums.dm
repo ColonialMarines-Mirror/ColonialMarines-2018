@@ -912,7 +912,7 @@
 	flags_ammo_behavior = AMMO_EXPLOSIVE|AMMO_ROCKET
 
 /datum/ammo/rocket/ltb/New()
-	..()
+	. = ..()
 	accuracy = config.max_hit_accuracy
 	accurate_range = config.short_shell_range
 	max_range = config.max_shell_range

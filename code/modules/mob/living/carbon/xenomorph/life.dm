@@ -40,7 +40,7 @@
 		rage_resist = CLAMP(1-round(rage * 0.012,0.01),0.4,1) //+1.2% damage resist per point of rage
 		fire_resist = initial(fire_resist) - round(rage * 0.01,0.01) //+1% fire resistance per stack of rage, max +50%; initial resist is 50%
 		attack_delay = initial(attack_delay) - round(rage * 0.05,0.01) //-0.05 attack delay to a maximum reduction of -2.5
-	. = ..()
+	return ..()
 
 /mob/living/carbon/Xenomorph/update_stat()
 

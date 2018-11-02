@@ -70,7 +70,7 @@
 	charge_delay = world.time + CHARGECOOLDOWN
 
 	spawn(CHARGECOOLDOWN)
-		usedPounce = 0
+		usedPounce = FALSE
 		to_chat(src, "<span class='notice'><b>Your exoskeleton quivers as you get ready to use Eviscerating Charge again.</b></span>")
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()

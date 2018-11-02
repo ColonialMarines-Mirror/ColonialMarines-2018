@@ -315,6 +315,17 @@ datum/game_mode/proc/initialize_special_clamps()
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
 		transform_xeno(new_xeno)
+	for(var/mob/new_player/player in player_list)
+		if(player.client && player.ready && player.client.prefs && (player.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(player, "Queen"))
+			if(player.mind in predators)
+				predators -= player
+			if(player.mind in xenomorphs)
+				xenomorphs -= player
+			if(player.mind in survivors)
+				survivors -= player
+			var/datum/mind/new_queen = player.mind
+			if(!(new_queen in xenomorphs))
+				transform_queen(new_queen)
 
 /datum/game_mode/proc/check_xeno_late_join(mob/xeno_candidate)
 	if(jobban_isbanned(xeno_candidate, "Alien")) // User is jobbanned
@@ -465,6 +476,24 @@ datum/game_mode/proc/initialize_special_clamps()
 
 	if(original) cdel(original) //Just to be sure.
 
+/datum/game_mode/proc/transform_queen(datum/mind/ghost_mind)
+	var/mob/original = ghost_mind.current
+	var/mob/living/carbon/Xenomorph/new_queen
+	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
+	if(!hive.living_xeno_queen && original && original.client && original.client.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
+		new_queen = new /mob/living/carbon/Xenomorph/Queen (pick(xeno_spawn))
+	else
+		return
+	ghost_mind.transfer_to(new_queen)
+	ghost_mind.name = ghost_mind.current.name
+
+	to_chat(new_queen, "<B>You are now the alien queen!</B>")
+	to_chat(new_queen, "<B>Your job is to spread the hive.</B>")
+	to_chat(new_queen, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the hive!')")
+
+	new_queen.update_icons()
+
+	if(original) cdel(original) //Just to be sure.
 
 //===================================================\\
 

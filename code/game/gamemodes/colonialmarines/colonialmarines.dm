@@ -3,7 +3,7 @@
 	config_tag = "Distress Signal"
 	required_players = 1 //Need at least one player, but really we need 2.
 	xeno_required_num = 1 //Need at least one xeno.
-	monkey_amount = 25
+	monkey_amount = 5
 	flags_round_type = MODE_INFESTATION|MODE_FOG_ACTIVATED
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -82,6 +82,12 @@
 			if(MAP_PRISON_STATION) new /obj/item/map/FOP_map(T)
 
 	if(monkey_amount)
+		var/playerC = 0
+		for(var/mob/new_player/player in player_list)
+			if((player.client)&&(player.ready))
+				playerC++
+		var/scale = max(playerC / MARINE_GEAR_SCALING_NORMAL, 1)
+		monkey_amount = round(scale * monkey_amount)
 		//var/debug_tally = 0
 		switch(map_tag)
 			if(MAP_LV_624) monkey_types = list(/mob/living/carbon/monkey, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/carbon/monkey/skrell)

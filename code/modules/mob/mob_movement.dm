@@ -178,6 +178,7 @@
 		return O.relaymove(mob, direct)
 
 	if(isturf(mob.loc))
+		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
 			if(MOVE_INTENT_RUN)
 				move_delay = 2 + config.run_speed

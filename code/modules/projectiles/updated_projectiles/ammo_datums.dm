@@ -881,7 +881,7 @@
 	damage_falloff = 0
 
 /datum/ammo/rocket/ap/New()
-	..()
+	. = ..()
 	accurate_range = config.short_shell_range
 	penetration = config.aprocket_armor_penetration
 	damage = config.aprocket_hit_damage

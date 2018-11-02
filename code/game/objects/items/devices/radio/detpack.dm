@@ -81,7 +81,6 @@
 		user.visible_message("<span class='notice'>[user] unsecures [src] from [plant_target].</span>",
 		"<span class='notice'>You unsecure [src] from [plant_target].</span>")
 		nullvars()
-		update_icon()
 	return ..()
 
 /obj/item/device/radio/detpack/proc/nullvars()
@@ -106,10 +105,8 @@
 		//bombtick()
 		processing_timers.Add(src)
 		update_icon()
-		//to_chat(world, "<font color='red'>DEBUG: Detpack Triggered: [loc]</font>")
 	else
 		armed = FALSE
-		//to_chat(world, "<font color='red'>DEBUG: Detpack Disarmed: [loc]</font>")
 		update_icon()
 
 	if(master && wires & WIRE_RECEIVE)
@@ -265,7 +262,6 @@
 /obj/item/device/radio/detpack/process()
 	//to_chat(world, "<font color='red'>DEBUG: Detpack Process.</font>")
 	if(plant_target == null || !plant_target.loc) //need a target to be attached to
-		//to_chat(world, "<font color='red'>DEBUG: Location mismatch.</font>")
 		processing_timers.Remove(src)
 		if(timer < DETPACK_TIMER_MIN) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
 			timer = DETPACK_TIMER_MIN
@@ -281,7 +277,6 @@
 	if(!armed)
 		if(timer < DETPACK_TIMER_MIN) //reset to minimum 5 seconds; no 'cooking' with aborted detonations.
 			timer = DETPACK_TIMER_MIN
-		//to_chat(world, "<font color='red'>DEBUG: Detpack Detonation Aborted.</font>")
 		processing_timers.Remove(src)
 		update_icon()
 		return
@@ -299,13 +294,11 @@
 	else //if we're not, focused boom.
 		explosion(get_turf(plant_target), 1, 1, 2, 3)
 	if(plant_target)
-		plant_target.ex_act(1)
 		if(isobj(plant_target))
 			plant_target = null
 			if(!istype(plant_target,/obj/vehicle/multitile/root/cm_armored))
 				cdel(plant_target)
 	cdel(src)
-	processing_timers.Remove(src)
 
 
 /obj/item/device/radio/detpack/attack(mob/M as mob, mob/user as mob, def_zone)

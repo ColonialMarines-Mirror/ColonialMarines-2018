@@ -31,7 +31,7 @@
 	upgrade = 0
 	pixel_x = -16
 	old_x = -16
-	var/usedcharge = 0 //What's the deal with the all caps?? They're not constants :|
+	var/usedcharge = FALSE //What's the deal with the all caps?? They're not constants :|
 
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,

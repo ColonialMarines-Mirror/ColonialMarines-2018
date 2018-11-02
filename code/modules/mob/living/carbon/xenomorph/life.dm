@@ -99,7 +99,10 @@
 		updatehealth() //Update health-related stats, like health itself (using brute and fireloss), health HUD and status.
 		return
 	var/turf/T = loc
-	if(!T || !istype(T) || hardcore || on_fire) //Can't regenerate while on fire
+	if(!T || !istype(T) || hardcore) 
+		return
+	if(on_fire) //Can't regenerate while on fire
+		updatehealth()
 		return
 	if(innate_healing) //Larvas regenerate fast anywhere as long as not in crit.
 		if(!(locate(/obj/effect/alien/weeds) in T) && health <= 0)

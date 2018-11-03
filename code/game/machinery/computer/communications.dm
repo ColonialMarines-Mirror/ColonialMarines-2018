@@ -201,8 +201,8 @@
 				//Comment block to test
 				var/L[] = ticker.mode.count_humans_and_xenos()
 				if(L[2] < round(L[1] * 0.8))
-					log_game("[key_name(usr)] has attemped to call a distress beacon, but it was denied due to lack of threat on the ship.")
-					to_chat(usr, "<span class='warning'>The sensors aren't picking up enough of a threat on the ship to warrant a distress beacon.</span>")
+					log_game("[key_name(usr)] has attemped to call a distress beacon, but it was denied due to lack of threat.")
+					to_chat(usr, "<span class='warning'>The sensors aren't picking up enough of a threat to warrant a distress beacon.</span>")
 					return FALSE
 
 				for(var/client/C in admins)

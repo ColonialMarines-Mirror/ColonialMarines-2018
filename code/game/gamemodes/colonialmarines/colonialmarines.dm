@@ -14,6 +14,7 @@
 	initialize_special_clamps()
 	initialize_starting_predator_list()
 	if(!initialize_starting_queen_list() && !initialize_starting_xenomorph_list())
+		message_admins("DEBUG:Failed to find anyone with either queen or xeno pref on.")
 		return FALSE
 	initialize_starting_survivor_list()
 	return TRUE

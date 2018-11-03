@@ -329,10 +329,8 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(!jobban_isbanned(new_queen.current))
 			new_queen.assigned_role = "MODE"
 			new_queen.special_role = "Xenomorph"
-			if(new_queen in xenomorphs)
-				xenomorphs -= new_queen
-				message_admins("DEBUG: Player also has xeno preference on, removing from xeno list.")
 			queen = new_queen
+			message_admins("DEBUG:Queen candidate picked.")
 			break
 
 	return TRUE
@@ -342,11 +340,11 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(new_xeno != queen)
 			transform_xeno(new_xeno)
 		else
-			message_admins("Queen wasn't removed from xeno list properly.")
+			message_admins("DEBUG:Queen also had xeno on, not picking them as xeno.")
 
 datum/game_mode/proc/initialize_post_queen_list()
 	if(!queen)
-		message_admins("No queen candidate picked, returning.")
+		message_admins("DEBUG:No queen candidate picked, returning.")
 		return
 	transform_queen(queen)
 

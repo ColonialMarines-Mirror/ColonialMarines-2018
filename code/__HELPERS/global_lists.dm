@@ -2,7 +2,7 @@ var/list/clients = list()								//list of all clients
 var/list/admins = list()								//list of all clients whom are admins
 var/list/directory = list()							//list of all ckeys with associated client
 var/list/unansweredAhelps = list()			//This feels inefficient, but I can't think of a better way. Stores the message indexed by CID
-var/list/unansweredMhelps = list()	
+var/list/unansweredMhelps = list()
 var/list/CLFaxes = list()								//List of all CL faxes sent this round
 var/list/fax_contents = list() 					//List of fax contents to maintain it even if source paper is deleted
 var/list/USCMFaxes = list()							//List of all USCM faxes sent this round
@@ -50,7 +50,7 @@ var/global/list/cargo_guns_vendors = list() //Used by our gamemode code
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
-var/global/list/processing_timers = list()
+var/global/list/processing_second = list()
 
 //used by binoculars for dropship bombardment
 var/list/global/active_laser_targets = list()

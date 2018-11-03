@@ -1,7 +1,7 @@
 /datum/controller/process/second
 
 /datum/controller/process/second/setup()
-	name = "Timers"
+	name = "Second"
 	schedule_interval = 10 //1 second
 
 /datum/controller/process/second/doWork()

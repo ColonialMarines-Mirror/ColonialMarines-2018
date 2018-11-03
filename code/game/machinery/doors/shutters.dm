@@ -14,7 +14,7 @@
 		return
 	else if(!unacidable && istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy)
 		var/obj/item/tool/pickaxe/plasmacutter/P = C
-		if(!P.start_cut(user, src.name, src))
+		if(!P.start_cut(user, name, src))
 			return
 		if(do_after(user, P.calc_delay(user), TRUE, 5, BUSY_ICON_HOSTILE) && P)
 			P.cut_apart(user, src.name, src)

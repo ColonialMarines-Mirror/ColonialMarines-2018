@@ -433,9 +433,9 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		if(!istype(src, /obj/machinery/marine_turret/mini)) //Check for mini-sentry
-			ui = new(user, src, ui_key, "cm_sentry.tmpl", "[src.name] UI", 625, 525)
+			ui = new(user, src, ui_key, "sentry.tmpl", "[src.name] UI", 625, 525)
 		else
-			ui = new(user, src, ui_key, "dmca_minisentry.tmpl", "[src.name] UI", 625, 525)
+			ui = new(user, src, ui_key, "minisentry.tmpl", "[src.name] UI", 625, 525)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)

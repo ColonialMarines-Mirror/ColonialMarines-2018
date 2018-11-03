@@ -1072,6 +1072,12 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	for(var/obj/O in T)
 		if(O.throwpass && O.density && O.dir == user.dir && O.flags_atom & ON_BORDER)
 			return O
+	
+	T = get_step(T, user.dir) 
+	for(var/obj/O in T)
+		if((istype(O, /obj/structure/window_frame)))
+			return O
+	
 	return FALSE
 
 

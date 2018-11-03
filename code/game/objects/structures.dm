@@ -30,7 +30,7 @@
 
 /obj/structure/attackby(obj/item/C as obj, mob/user as mob)
 	. = ..()
-	if(istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && !breakable && !unacidable)
+	if(istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && breakable && !unacidable)
 		var/obj/item/tool/pickaxe/plasmacutter/P = C
 		if(!P.start_cut(user, name, src))
 			return

@@ -121,7 +121,7 @@ Class Procs:
 		if(!P.start_cut(user, name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD))
 			return
 		if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
-			P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD)
+			P.cut_apart(user, name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD)
 			cdel()
 		return
 

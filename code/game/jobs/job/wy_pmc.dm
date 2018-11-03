@@ -222,16 +222,15 @@
 				WEAR_FACE = /obj/item/clothing/mask/gas/PMC,
 				WEAR_HEAD = /obj/item/clothing/head/helmet/marine/veteran/PMC/gunner,
 				WEAR_BACK = /obj/item/smartgun_powerpack/snow,
-				WEAR_EYES = /obj/item/clothing/glasses/night/m56_goggles
+				WEAR_EYES = /obj/item/clothing/glasses/night/m56_goggles,
+				WEAR_R_STORE = /obj/item/storage/pouch/general/medium,
+				WEAR_WAIST = /obj/item/storage/belt/gun/m4a3/vp70,
+				WEAR_ACCESSORY = /obj/item/clothing/tie/storage/webbing
 				)
 
 	generate_stored_equipment()
 		. = list(
-				SLOW_WAIST = /obj/item/weapon/gun/pistol/vp70,
 				WEAR_J_STORE = /obj/item/weapon/gun/smartgun/dirty,
-				WEAR_L_STORE = /obj/item/storage/pouch/magazine/pistol/pmc_vp70,
-				WEAR_IN_BACK = /obj/item/explosive/plastique,
-				WEAR_ACCESSORY = /obj/item/clothing/tie/storage/webbing,
 				WEAR_IN_ACCESSORY = /obj/item/explosive/grenade/phosphorus,
 				WEAR_IN_ACCESSORY = /obj/item/explosive/grenade/smokebomb,
 				WEAR_IN_ACCESSORY = /obj/item/ammo_magazine/pistol/vp70,

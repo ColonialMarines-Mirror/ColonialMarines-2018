@@ -82,7 +82,7 @@
 
 //Have to pass H to both equip procs so that "backbag" shows correctly. Sigh.
 /datum/job/proc/equip(mob/living/carbon/human/H, list/L = generate_wearable_equipment() + generate_stored_equipment())
-	if(!istype(H) || !L.len) 
+	if(!istype(H) || !L.len)
 		return
 	var/i
 	var/item_path
@@ -91,8 +91,9 @@
 	for(i in L)
 		item_path = L[i]
 		I = new item_path(H)
-		if(istype(I)) 
+		if(istype(I))
 			I.amount = 30 //We want to make sure that the amount is actually proper.
+		message_admins("Trying to equip item [I] to slot [i]")
 		H.equip_to_slot_or_del(I, i) //The item loc will be transferred from mob to an item, if needed.
 
 //This should come after equip(), usually only on spawn or late join. Otherwise just use equip.

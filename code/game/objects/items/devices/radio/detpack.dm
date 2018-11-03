@@ -37,7 +37,7 @@
 /obj/item/device/radio/detpack/Dispose()
 	if(plant_target && !plant_target.loc)
 		new /obj/item/device/radio/detpack(get_turf(src)) //in the event we have a target that can prematurely get deleted, like a roller bed that's folded up.
-	processing_timers.Remove(src)
+	processing_second.Remove(src)
 	nullvars()
 	. = ..()
 
@@ -103,7 +103,7 @@
 			return
 		armed = TRUE
 		//bombtick()
-		processing_timers.Add(src)
+		processing_second.Add(src)
 		update_icon()
 	else
 		armed = FALSE
@@ -260,15 +260,14 @@
 
 
 /obj/item/device/radio/detpack/process()
-	//to_chat(world, "<font color='red'>DEBUG: Detpack Process.</font>")
 	if(plant_target == null || !plant_target.loc) //need a target to be attached to
-		processing_timers.Remove(src)
+		processing_second.Remove(src)
 		if(timer < DETPACK_TIMER_MIN) //reset to minimum 10 seconds; no 'cooking' with aborted detonations.
 			timer = DETPACK_TIMER_MIN
 		nullvars()
 		return
 	if(!on) //need to be active and armed.
-		processing_timers.Remove(src)
+		processing_second.Remove(src)
 		armed = FALSE
 		if(timer < DETPACK_TIMER_MIN) //reset to minimum 5 seconds; no 'cooking' with aborted detonations.
 			timer = DETPACK_TIMER_MIN
@@ -277,7 +276,7 @@
 	if(!armed)
 		if(timer < DETPACK_TIMER_MIN) //reset to minimum 5 seconds; no 'cooking' with aborted detonations.
 			timer = DETPACK_TIMER_MIN
-		processing_timers.Remove(src)
+		processing_second.Remove(src)
 		update_icon()
 		return
 	if(timer) //Timer is still counting down to armaggedon...

@@ -64,6 +64,31 @@
 				M.forceMove(loc)
 	return TRUE
 
+/mob/living/carbon/Xenomorph/proc/handle_stealth()
+	if(!stealth)
+		return
+	if(stat != CONSCIOUS || stealth == FALSE || lying || resting) //Can't stealth while unconscious/resting
+		cancel_stealth()
+		return
+	//Initial stealth
+	if(last_stealth > world.time - HUNTER_STEALTH_INITIAL_DELAY) //We don't start out at max invisibility
+		alpha = HUNTER_STEALTH_RUN_ALPHA //50% invisible
+		return
+	//Stationary stealth
+	else if(last_move_intent < world.time - HUNTER_STEALTH_STEALTH_DELAY) //If we're standing still for 4 seconds we become almost completely invisible
+		alpha = HUNTER_STEALTH_STILL_ALPHA //95% invisible
+	//Walking stealth
+	else if(m_intent == MOVE_INTENT_WALK)
+		alpha = HUNTER_STEALTH_WALK_ALPHA //80% invisible
+	//Running stealth
+	else
+		alpha = HUNTER_STEALTH_RUN_ALPHA //50% invisible
+	//If we have 0 plasma after expending stealth's upkeep plasma, end stealth.
+	if(!plasma_stored)
+		to_chat(src, "<span class='xenodanger'>You lack sufficient plasma to remain camouflaged.</span>")
+		cancel_stealth()
+
+
 /mob/living/carbon/Xenomorph/Runner/update_stat()
 	. = ..()
 	if(stat != CONSCIOUS && layer != initial(layer))
@@ -79,6 +104,7 @@
 	handle_stagger() // 1 each time
 	handle_slowdown() // 0.4 each time
 	handle_halloss() // 3 each time
+	handle_stealth()
 
 /mob/living/carbon/Xenomorph/proc/handle_critical_health_updates()
 	var/turf/T = loc
@@ -141,10 +167,15 @@
 		plasma_stored -= 5
 	if(plasma_stored == plasma_max)
 		return
+	var/modifier = 1
+	if(stealth && last_move_intent > world.time - 20) //Stealth halves the rate of plasma recovery on weeds, and eliminates it entirely while moving
+		return
+	else
+		modifier = 0.5
 	if(locate(/obj/effect/alien/weeds) in T)
-		plasma_stored += plasma_gain
+		plasma_stored += plasma_gain * modifier
 		if(recovery_aura)
-			plasma_stored += round(plasma_gain * recovery_aura * 0.25) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
+			plasma_stored += round(plasma_gain * recovery_aura * 0.25 * modifier) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
 	else
 		plasma_stored++
 	if(plasma_stored > plasma_max)

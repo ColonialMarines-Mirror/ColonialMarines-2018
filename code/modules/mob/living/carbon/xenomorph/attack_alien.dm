@@ -32,6 +32,9 @@
 			if(Adjacent(M)) //Logic!
 				M.start_pulling(src)
 
+			if(M.stealth) //Cancel stealth if we have it due to aggro.
+				M.cancel_stealth()
+
 		if("hurt")
 			var/datum/hive_status/hive
 			if(M.hivenumber && M.hivenumber <= hive_datum.len)
@@ -90,12 +93,12 @@
 			M.animation_attack_on(src)
 
 			//Check for a special bite attack
-			if(prob(M.bite_chance) && !no_crit) //Can't crit if we already crit in the past 3 seconds
+			if(prob(M.bite_chance) && !no_crit && !M.stealth) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
 				M.bite_attack(src, damage)
 				return TRUE
 
 			//Check for a special bite attack
-			if(prob(M.tail_chance) && !no_crit) //Can't crit if we already crit in the past 3 seconds
+			if(prob(M.tail_chance) && !no_crit && !M.stealth) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
 				M.tail_attack(src, damage)
 				return TRUE
 
@@ -111,6 +114,8 @@
 			var/datum/limb/affecting
 			if(set_location)
 				affecting = get_limb(set_location)
+			else if(M.stealth && M.can_sneak_attack) //We always get the limb we're aiming for if we're sneak attacking
+				affecting = get_limb(M.zone_selected)
 			else
 				affecting = get_limb(ran_zone(M.zone_selected, 70))
 			if(!affecting || (random_location && !set_location)) //No organ, just get a random one
@@ -158,8 +163,18 @@
 				if (R.delimb(src, affecting))
 					return TRUE
 
+			if(M.stealth) //Cancel stealth if we have it due to aggro.
+				if(M.can_sneak_attack) //Pouncing prevents us from making a sneak attack for 4 seconds
+					damage *= 3 //Massive damage on the sneak attack... hope you have armour.
+					KnockDown(2) //...And we knock them down
+					M.visible_message("<span class='danger'>\The [M] strikes [src] with vicious precision!</span>", \
+					"<span class='danger'>You strike [src] with vicious precision!</span>")
+				M.cancel_stealth()
+
 			apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1, edge = 1) //This should slicey dicey
 			updatehealth()
+
+
 
 		if("disarm")
 			if(M.legcuffed && isYautja(src))
@@ -214,6 +229,9 @@
 				playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
 				M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
 				"<span class='danger'>You try to tackle [src]</span>", null, 5)
+
+			if(M.stealth) //Cancel stealth if we have it due to aggro.
+				M.cancel_stealth()
 	return TRUE
 
 

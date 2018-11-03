@@ -1199,6 +1199,22 @@
 		button.overlays += image('icons/mob/actions.dmi', button, "savage_on")
 
 
+//Hunter abilities
+/datum/action/xeno_action/activable/stealth
+	name = "Toggle Stealth"
+	action_icon_state = "stealth_on"
+	ability_name = "stealth"
+	plasma_cost = 0
+
+/datum/action/xeno_action/activable/stealth/action_activate()
+	var/mob/living/carbon/Xenomorph/X = owner
+	X.Stealth()
+
+/datum/action/xeno_action/activable/stealth/action_cooldown_check()
+	var/mob/living/carbon/Xenomorph/X = owner
+	return !X.used_stealth
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/living/carbon/Xenomorph/proc/add_abilities()

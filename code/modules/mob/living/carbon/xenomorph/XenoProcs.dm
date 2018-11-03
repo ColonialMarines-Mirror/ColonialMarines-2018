@@ -145,6 +145,9 @@
 	if(frenzy_aura)
 		. -= (frenzy_aura * 0.05)
 
+	if(stealth)
+		handle_stealth_movement()
+
 	if(is_charging)
 		if(legcuffed)
 			is_charging = 0
@@ -161,6 +164,26 @@
 					stop_momentum() //This should disallow rapid turn bumps
 				else
 					handle_momentum()
+
+/mob/living/carbon/Xenomorph/proc/handle_stealth_movement()
+	//Initial stealth
+	if(last_stealth > world.time - HUNTER_STEALTH_INITIAL_DELAY) //We don't start out at max invisibility
+		alpha = HUNTER_STEALTH_RUN_ALPHA //50% invisible
+		return
+	//Stationary stealth
+	else if(last_move_intent < world.time - HUNTER_STEALTH_STEALTH_DELAY) //If we're standing still for 3 seconds we become almost completely invisible
+		alpha = HUNTER_STEALTH_STILL_ALPHA //95% invisible
+	//Walking stealth
+	else if(m_intent == MOVE_INTENT_WALK)
+		alpha = HUNTER_STEALTH_WALK_ALPHA //80% invisible
+		use_plasma(HUNTER_STEALTH_WALK_PLASMADRAIN * 0.5)
+	//Running stealth
+	else
+		alpha = HUNTER_STEALTH_RUN_ALPHA //50% invisible
+		use_plasma(HUNTER_STEALTH_RUN_PLASMADRAIN * 0.5)
+	if(!plasma_stored)
+		to_chat(src, "<span class='xenodanger'>You lack sufficient plasma to remain camouflaged.</span>")
+		cancel_stealth()
 
 /mob/living/carbon/Xenomorph/proc/update_progression()
 	if(upgrade != -1 && upgrade != 3) //upgrade possible
@@ -261,6 +284,8 @@
 					spawn(charge_type == 1 ? 5 : 15)
 						frozen = FALSE
 						update_canmove()
+					if(stealth) //If we're stealthed, the stealth ends
+						cancel_stealth()
 
 				if(3) //Ravagers get a free attack if they charge into someone. This will tackle if disarm is set instead.
 					var/extra_dam = min(melee_damage_lower, rand(melee_damage_lower, melee_damage_upper) / (4 - upgrade)) //About 12.5 to 80 extra damage depending on upgrade level.

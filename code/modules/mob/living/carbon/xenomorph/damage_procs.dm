@@ -93,6 +93,8 @@
 
 	if(damage > 12) //Light damage won't splash.
 		check_blood_splash(damage, damagetype, chancemod)
+		if(stealth) //Any significant damage causes us to break stealth
+			cancel_stealth()
 
 	if(stat == DEAD)
 		return FALSE

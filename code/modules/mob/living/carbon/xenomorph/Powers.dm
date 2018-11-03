@@ -47,6 +47,11 @@
 		to_chat(src, "<span class='notice'>You get ready to pounce again.</span>")
 		update_action_button_icons()
 
+	if(stealth && can_sneak_attack) //If we're stealthed and could sneak attack, add a cooldown to sneak attack
+		to_chat(src, "<span class='xenodanger'>Your pounce has left you off-balance; you'll need to wait [HUNTER_POUNCE_SNEAKATTACK_DELAY*0.1] seconds before you can Sneak Attack again.</span>")
+		can_sneak_attack = FALSE
+		sneak_attack_cooldown()
+
 	return TRUE
 
 
@@ -1447,7 +1452,7 @@
 	src.visible_message("<span class='danger'>\ [src] savages [M]!</span>", \
 	"<span class='xenodanger'>You savage [M]!</span>", null, 5)
 	var/extra_dam = min(15, plasma_stored * 0.2)
-	M.attack_alien(src,  extra_dam, FALSE, TRUE, TRUE, TRUE) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
+	M.attack_alien(src,  extra_dam, FALSE, FALSE, TRUE, TRUE, TRUE) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
 	use_plasma(extra_dam * 5) //Expend plasma equal to 4 times the extra damage.
 	savage_used = TRUE
 	do_savage_cooldown()
@@ -1462,3 +1467,63 @@
 		to_chat(src, "<span class='xenowarning'><b>You can now savage your victims again.</b></span>")
 		playsound(src, "xeno_newlarva", 100, 0, 1)
 		update_action_button_icons()
+
+
+// Hunter Stealth
+/mob/living/carbon/Xenomorph/proc/Stealth()
+
+	if(!check_state())
+		return
+
+	if(world.time < stealth_delay)
+		to_chat(src, "<span class='xenodanger'><b>You're not yet ready to Stealth again. You'll be ready in [(stealth_delay - world.time)*0.1] seconds.</span>")
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't enter Stealth with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenodanger'>You're too disoriented from the shock to enter Stealth!</span>")
+		return
+
+	if(!stealth)
+		if (!check_plasma(10))
+			return
+		else
+			use_plasma(10)
+			to_chat(src, "<span class='xenodanger'>You vanish into the shadows...</span>")
+			last_stealth = world.time
+			stealth = TRUE
+			handle_stealth()
+			sneak_attack_cooldown()
+	else
+		cancel_stealth()
+
+/mob/living/carbon/Xenomorph/proc/stealth_cooldown_notice()
+	if(!used_stealth)//sanity check/safeguard
+		return
+	spawn(HUNTER_STEALTH_COOLDOWN)
+		used_stealth = FALSE
+		to_chat(src, "<span class='notice'><b>You're ready to use Stealth again.</b></span>")
+		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
+		update_action_button_icons()
+
+/mob/living/carbon/Xenomorph/proc/cancel_stealth() //This happens if we take damage, attack, pounce, toggle stealth off, and do other such exciting stealth breaking activities.
+	if(!stealth)//sanity check/safeguard
+		return
+	to_chat(src, "<span class='xenodanger'>You emerge from the shadows.</span>")
+	stealth = FALSE
+	used_stealth = TRUE
+	can_sneak_attack = FALSE
+	alpha = 255 //no transparency/translucency
+	stealth_delay = world.time + HUNTER_STEALTH_COOLDOWN
+	stealth_cooldown_notice()
+
+/mob/living/carbon/Xenomorph/proc/sneak_attack_cooldown()
+	if(can_sneak_attack)
+		return
+	spawn(HUNTER_POUNCE_SNEAKATTACK_DELAY)
+		can_sneak_attack = TRUE
+		to_chat(src, "<span class='xenodanger'><b>You're ready to use Sneak Attack while stealthed.</b></span>")
+		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)

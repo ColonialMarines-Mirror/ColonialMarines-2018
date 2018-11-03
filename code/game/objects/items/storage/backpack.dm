@@ -330,7 +330,7 @@
 
 /obj/item/storage/backpack/marine/medic/update_icon()
 	icon_state = initial(icon_state)
-	if(cell && cell.charge)
+	if(cell?.charge)
 		switch(round(cell.charge * 100 / max(1,cell.maxcharge)))
 			if(75 to INFINITY)
 				icon_state += "_100"

@@ -210,4 +210,3 @@ var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons
 #define DEFAULT_SPECIES "Human"
 
 //Husking Switch For Burning
-#define HUSKING_ON 0

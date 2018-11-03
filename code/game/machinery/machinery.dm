@@ -115,7 +115,7 @@ Class Procs:
 	var/machine_processing = 0 // whether the machine is busy and requires process() calls in scheduler.
 
 /obj/machinery/attackby(obj/item/C as obj, mob/user as mob)
-	..()
+	. = ..()
 	if(istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && !unacidable)
 		var/obj/item/tool/pickaxe/plasmacutter/P = C
 		if(!P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD))

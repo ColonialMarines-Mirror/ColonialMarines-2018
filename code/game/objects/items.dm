@@ -706,7 +706,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 				C = user.buckled
 			var/obj/B = user.buckled
 			var/movementdirection = turn(direction,180)
-			if(C)	C.propelled = 4
+			if(C)
+				C.propelled = 4
 			B.Move(get_step(user,movementdirection), movementdirection)
 			sleep(1)
 			B.Move(get_step(user,movementdirection), movementdirection)

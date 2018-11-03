@@ -200,7 +200,8 @@
 				//I think this should instead count human losses, so that a distress beacon is available when a certain number of dead pile up.
 				//Comment block to test
 				var/L[] = ticker.mode.count_humans_and_xenos()
-				if(L[2] < round(L[1] * 0.7))
+				var/M[] = ticker.mode.count_humans_and_xenos(list(MAIN_SHIP_Z_LEVEL))
+				if((L[2] < round(L[1] * 0.8)) || (M[2] < round(M[1] * 0.5)))
 					log_game("[key_name(usr)] has attemped to call a distress beacon, but it was denied due to lack of threat.")
 					to_chat(usr, "<span class='warning'>The sensors aren't picking up enough of a threat to warrant a distress beacon.</span>")
 					return FALSE

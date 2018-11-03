@@ -526,7 +526,7 @@
 	name = "\improper USCM technician welderpack"
 	desc = "A specialized backpack worn by USCM technicians. It carries a fueltank for quick welder refueling and use,"
 	icon_state = "engineerpack"
-	var/max_fuel = 500
+	var/max_fuel = 260
 	storage_slots = null
 	has_gamemode_skin = FALSE //same sprites for all gamemodes
 	max_storage_space = 15

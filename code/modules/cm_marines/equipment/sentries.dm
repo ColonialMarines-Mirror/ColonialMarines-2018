@@ -735,8 +735,8 @@
 	if(istype(O, magazine_type))
 		var/obj/item/ammo_magazine/M = O
 		if(user.mind && user.mind.cm_skills && user.mind.cm_skills.heavy_weapons < SKILL_HEAVY_WEAPONS_TRAINED)
-			user.visible_message("<span class='notice'>[user] begins swapping a new [O.name] into [src].</span>",
-			"<span class='notice'>You begin swapping a new [O.name] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins fumbling about, swapping a new [O.name] into [src].</span>",
+			"<span class='notice'>You begin fumbling about, swapping a new [O.name] into [src].</span>")
 			if(user.action_busy) return
 			if(!do_after(user, work_time, TRUE, 5, BUSY_ICON_FRIENDLY))
 				return

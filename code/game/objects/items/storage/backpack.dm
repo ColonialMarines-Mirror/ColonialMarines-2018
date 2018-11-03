@@ -368,7 +368,7 @@
 			to_chat(user, "<span class='notice'>[replace_install] <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 			playsound(user, 'sound/weapons/gun_rifle_reload.ogg', 25, 1, 5)
 			update_icon()
-	..()
+	return ..()
 
 
 /obj/item/storage/backpack/marine/tech

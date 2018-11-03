@@ -300,7 +300,7 @@
 	var/obj/item/cell/high/cell //Starts with a high capacity energy cell.
 
 /obj/item/storage/backpack/marine/medic/New()
-	..()
+	. = ..()
 	cell = new /obj/item/cell/high(src)
 	update_icon()
 

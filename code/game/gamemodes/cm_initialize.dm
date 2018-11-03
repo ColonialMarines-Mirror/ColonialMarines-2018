@@ -322,7 +322,7 @@ datum/game_mode/proc/initialize_special_clamps()
 			possible_queens -= A
 
 	if(!possible_queens.len) //We still have candidates
-		return
+		return FALSE
 
 	for(var/datum/mind/new_queen in possible_queens)
 		if(!jobban_isbanned(new_queen.current))

@@ -13,7 +13,7 @@
 /datum/game_mode/colonialmarines/can_start()
 	initialize_special_clamps()
 	initialize_starting_predator_list()
-	if(!initialize_starting_xenomorph_list() && !initialize_starting_queen_list())
+	if(!initialize_starting_queen_list() && !initialize_starting_xenomorph_list())
 		return FALSE
 	initialize_starting_survivor_list()
 	return TRUE

@@ -16,7 +16,7 @@
 /datum/emergency_call
 	var/name = "name"
 	var/mob_max = 3
-	var/mob_min = 3
+	var/mob_min = 1
 	var/dispatch_message = "An encrypted signal has been received from a nearby vessel. Stand by." //Msg to display when starting
 	var/arrival_message = "" //Msg to display about when the shuttle arrives
 	var/objectives //Txt of objectives to display to joined. Todo: make this into objective notes

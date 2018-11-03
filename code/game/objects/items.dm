@@ -746,7 +746,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			R.my_atom = W
 			if(!W || !src)
 				return
-			src.reagents.trans_to(W,1)
+			reagents.trans_to(W,1)
 			for(var/b=0, b<7, b++)
 				step_towards(W,my_target)
 				if(!W || !W.reagents)

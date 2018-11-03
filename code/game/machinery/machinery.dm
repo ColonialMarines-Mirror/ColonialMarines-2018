@@ -118,7 +118,7 @@ Class Procs:
 	. = ..()
 	if(istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && !unacidable)
 		var/obj/item/tool/pickaxe/plasmacutter/P = C
-		if(!P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD))
+		if(!P.start_cut(user, name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD))
 			return
 		if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
 			P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD)

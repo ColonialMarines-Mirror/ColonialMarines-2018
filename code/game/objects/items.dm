@@ -725,7 +725,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 				C.propelled = 1
 			sleep(2)
 			B.Move(get_step(user,movementdirection), movementdirection)
-			if(C)	C.propelled = 0
+			if(C)
+				C.propelled = 0
 			sleep(3)
 			B.Move(get_step(user,movementdirection), movementdirection)
 			sleep(3)

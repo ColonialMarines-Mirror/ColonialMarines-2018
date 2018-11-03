@@ -322,7 +322,7 @@
 	return ..()
 
 /obj/item/storage/backpack/marine/medic/examine(mob/user)
-	..()
+	. = ..()
 	if(cell)
 		to_chat(user, "<span class='notice'>Its defibrillator recharge unit has a loaded power cell and its readout counter is active. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 	else

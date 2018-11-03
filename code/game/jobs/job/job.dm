@@ -40,15 +40,20 @@
 		. = M.client.prefs.GetPlayerAltTitle(src)
 		if(. && lowercase) . = lowertext(.)
 
-/datum/job/proc/set_spawn_positions(var/count) return spawn_positions
+/datum/job/proc/set_spawn_positions(var/count) 
+	return spawn_positions
 
-/datum/job/proc/generate_wearable_equipment() return list() //This should ONLY be used to list things that the character can wear, or show on their sprite.
+/datum/job/proc/generate_wearable_equipment() 
+	return list() //This should ONLY be used to list things that the character can wear, or show on their sprite.
 
-/datum/job/proc/generate_stored_equipment() return list() //This is the list of everything else. Combine the two.
+/datum/job/proc/generate_stored_equipment() 
+	return list() //This is the list of everything else. Combine the two.
 
-/datum/job/proc/get_wearable_equipment() return generate_wearable_equipment() //Use and override this proc to get things for character select dressup.
+/datum/job/proc/get_wearable_equipment() 
+	return generate_wearable_equipment() //Use and override this proc to get things for character select dressup.
 
-/datum/job/proc/generate_entry_message() return //The job description that characters get, along with anything else that may be appropriate.
+/datum/job/proc/generate_entry_message() 
+	return //The job description that characters get, along with anything else that may be appropriate.
 
 /datum/job/proc/announce_entry_message(mob/living/carbon/human/H, datum/money_account/M) //The actual message that is displayed to the mob when they enter the game as a new player.
 	set waitfor = 0
@@ -72,11 +77,13 @@
 
 		to_chat(H, t)
 
-/datum/job/proc/generate_entry_conditions(mob/living/M) return //Anything special that should happen to the mob upon entering the world.
+/datum/job/proc/generate_entry_conditions(mob/living/M)
+	return //Anything special that should happen to the mob upon entering the world.
 
 //Have to pass H to both equip procs so that "backbag" shows correctly. Sigh.
 /datum/job/proc/equip(mob/living/carbon/human/H, list/L = generate_wearable_equipment() + generate_stored_equipment())
-	if(!istype(H) || !L.len) return
+	if(!istype(H) || !L.len) 
+		return
 	var/i
 	var/item_path
 	var/obj/item/stack/sheet/I //Just to make this shorter.
@@ -84,14 +91,16 @@
 	for(i in L)
 		item_path = L[i]
 		I = new item_path(H)
-		if(istype(I)) I.amount = 30 //We want to make sure that the amount is actually proper.
+		if(istype(I)) 
+			I.amount = 30 //We want to make sure that the amount is actually proper.
 		H.equip_to_slot_or_del(I, i) //The item loc will be transferred from mob to an item, if needed.
 
 //This should come after equip(), usually only on spawn or late join. Otherwise just use equip.
 /datum/job/proc/equip_preference_gear(mob/living/carbon/human/H)
 	 //TODO Adjust this based on mob and latejoin.
 	 //TODO Adjust the actual spawns, so they all have a slot, instead of spawning in the pack when they don't have a slot.
-	if(!H.client || !H.client.prefs || !H.client.prefs.gear) return//We want to equip them with custom stuff second, after they are equipped with everything else.
+	if(!H.client || !H.client.prefs || !H.client.prefs.gear) 
+		return//We want to equip them with custom stuff second, after they are equipped with everything else.
 	var/datum/gear/G
 	var/i
 	for(i in H.client.prefs.gear)

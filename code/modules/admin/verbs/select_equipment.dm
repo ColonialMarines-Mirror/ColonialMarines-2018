@@ -4,7 +4,7 @@
 	set category = null
 	set name = "Select Rank"
 	if(!istype(H))
-		alert("Invalid mob")
+		alert("Invalid mob.")
 		return
 
 	var/rank_list = list("Custom") + RoleAuthority.roles_by_name
@@ -73,58 +73,21 @@
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
-	//log_admin("[key_name(src)] has alienized [M.key].")
-	var/list/dresspacks = list(
-		"strip",
-		"USCM Cryo",
-		"USCM Private",
-		"USCM Specialist (Smartgunner)",
-		"USCM Specialist (Armor)",
-		"USCM Tank Crewman",
-		"USCM Second-Lieutenant (SO)",
-		"USCM First-Lieutenant (XO)",
-		"USCM Captain (CO)",
-		"USCM Officer (USCM Command)",
-		"USCM Admiral (USCM Command)",
-		"USCM Combat Synth (Smartgunner)",
-		"Weyland-Yutani PMC (Standard)",
-		"Weyland-Yutani PMC (Leader)",
-		"Weyland-Yutani PMC (Gunner)",
-		"Weyland-Yutani PMC (Sniper)",
-		"UPP Soldier (Standard)",
-		"UPP Soldier (Medic)",
-		"UPP Soldier (Heavy)",
-		"UPP Soldier (Leader)",
-		"UPP Commando (Standard)",
-		"UPP Commando (Medic)",
-		"UPP Commando (Leader)",
-		"CLF Fighter (Standard)",
-		"CLF Fighter (Medic)",
-		"CLF Fighter (Leader)",
-		"Freelancer (Standard)",
-		"Freelancer (Medic)",
-		"Freelancer (Leader)",
-		"Mercenary (Heavy)",
-		"Mercenary (Miner)",
-		"Mercenary (Engineer)",
-		"Weyland-Yutani Deathsquad",
-		"Business Person",
-		"UPP Spy",
-		"Mk50 Compression Suit",
-		"Fleet Admiral",
-		"Yautja Warrior",
-		"Yautja Elder"
-		)
 
-	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
+	var/list/dresspacks = list("Strip") + RoleAuthority.roles_by_name
+	var/list/paths = list("Strip") + RoleAuthority.roles_by_name_paths
+
+	var/dresscode = input("Choose equipment for [M]", "Select Equipment") as null|anything in dresspacks
 	if (isnull(dresscode))
 		return
+	var/path = paths[dresspacks.Find(dresscode)]
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
 		if (istype(I, /obj/item/implant))
 			continue
 		cdel(I)
-	M.arm_equipment(M, dresscode)
+	var/datum/job/J = new path
+	J.equip(M)
 	M.regenerate_icons()
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
 	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].", 1)

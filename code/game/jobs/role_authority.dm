@@ -22,6 +22,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 
 	var/list/roles_by_path //Master list generated when role aithority is created, listing every role by path, including variable roles. Great for manually equipping with.
 	var/list/roles_by_name //Master list generated when role authority is created, listing every default role by name, including those that may not be regularly selected.
+	var/list/roles_by_name_paths
 	var/list/roles_for_mode //Derived list of roles only for the game mode, generated when the round starts.
 	var/list/roles_whitelist //Associated list of lists, by ckey. Checks to see if a person is whitelisted for a specific role.
 
@@ -45,11 +46,12 @@ var/global/datum/authority/branch/role/RoleAuthority
 		log_debug("Error setting up squads, no squad datums found.")
 		return
 
-	roles_by_path 	= new
-	roles_by_name 	= new
-	roles_for_mode  = new
-	roles_whitelist = new
-	squads 			= new
+	roles_by_path 	    = new
+	roles_by_name 	    = new
+	roles_by_name_paths = new
+	roles_for_mode      = new
+	roles_whitelist     = new
+	squads 			    = new
 
 	var/list/L = new
 	var/datum/job/J
@@ -66,6 +68,8 @@ var/global/datum/authority/branch/role/RoleAuthority
 		roles_by_path[J.type] = J
 		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT)
 			roles_by_name[J.title] = J
+			if(J.title)
+				roles_by_name_paths[J.type] = J
 		else
 			log_admin("[J]")
 		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT)

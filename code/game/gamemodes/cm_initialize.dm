@@ -495,7 +495,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 	var/mob/original = ghost_mind.current
 	var/mob/living/carbon/Xenomorph/new_queen
 	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
-	if(!hive.living_xeno_queen && original && original.client && original.client.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
+	if(!hive.living_xeno_queen && original?.client?.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
 		new_queen = new /mob/living/carbon/Xenomorph/Queen (pick(xeno_spawn))
 		message_admins("DEBUG:Queen rolled correctly and mob created")
 	else

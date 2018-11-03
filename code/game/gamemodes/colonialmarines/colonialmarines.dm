@@ -11,12 +11,12 @@
 
 /* Pre-pre-startup */
 /datum/game_mode/colonialmarines/can_start()
-	. = TRUE
 	initialize_special_clamps()
 	initialize_starting_predator_list()
-	if(!initialize_starting_xenomorph_list() || !initialize_starting_queen_list())
-		. = FALSE
+	if(!initialize_starting_xenomorph_list() && !initialize_starting_queen_list())
+		return FALSE
 	initialize_starting_survivor_list()
+	return TRUE
 
 /datum/game_mode/colonialmarines/announce()
 	to_chat(world, "<span class='round_header'>The current map is - [map_tag]!</span>")
@@ -84,7 +84,7 @@
 	if(monkey_amount)
 		var/playerC = 0
 		for(var/mob/new_player/player in player_list)
-			if((player.client)&&(player.ready))
+			if(player.client && player.ready)
 				playerC++
 		var/scale = max(playerC / MARINE_GEAR_SCALING_NORMAL, 1)
 		monkey_amount = round(scale * monkey_amount)

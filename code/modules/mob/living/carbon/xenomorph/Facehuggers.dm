@@ -94,7 +94,7 @@
 /obj/item/clothing/mask/facehugger/attack(mob/M, mob/user)
 	if(!CanHug(M))
 		to_chat(user, "<span class='warning'>The facehugger refuses to attach.</span>")
-		..()
+		return ..()
 	user.visible_message("<span class='warning'>\ [user] attempts to plant [src] on [M]'s face!</span>", \
 	"<span class='warning'>You attempt to plant [src] on [M]'s face!</span>")
 	if(M.client && M.stat) //Delay for conscious cliented mobs, who should be resisting.

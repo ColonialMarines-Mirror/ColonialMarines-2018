@@ -17,7 +17,7 @@
 
 	health = species.total_health - oxy_l - tox_l - clone_l - total_burn - total_brute
 
-	if(config.husking_on)
+	if(config.husking_on && ((species.total_health - total_burn) < config.health_threshold_dead * 1.5))
 		if(((species.total_health - total_burn) < config.health_threshold_dead * 1.5))
 			ChangeToHusk()
 

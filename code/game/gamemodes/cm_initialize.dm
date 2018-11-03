@@ -322,6 +322,7 @@ datum/game_mode/proc/initialize_special_clamps()
 			possible_queens -= A
 
 	if(!possible_queens.len) //We still have candidates
+		message_admins("DEBUG: Noone had queen preference on.")
 		return FALSE
 
 	for(var/datum/mind/new_queen in possible_queens)
@@ -330,6 +331,7 @@ datum/game_mode/proc/initialize_special_clamps()
 			new_queen.special_role = "Xenomorph"
 			if(new_queen in xenomorphs)
 				xenomorphs -= new_queen
+				message_admins("DEBUG: Player also has xeno preference on, removing from xeno list.")
 			queen = new_queen
 			break
 
@@ -339,9 +341,12 @@ datum/game_mode/proc/initialize_special_clamps()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
 		if(new_xeno != queen)
 			transform_xeno(new_xeno)
+		else
+			message_admins("Queen wasn't removed from xeno list properly.")
 
 datum/game_mode/proc/initialize_post_queen_list()
 	if(!queen)
+		message_admins("No queen candidate picked, returning.")
 		return
 	transform_queen(queen)
 
@@ -491,7 +496,9 @@ datum/game_mode/proc/initialize_post_queen_list()
 	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 	if(!hive.living_xeno_queen && original?.client?.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
 		new_queen = new /mob/living/carbon/Xenomorph/Queen (pick(xeno_spawn))
+		message_admins("DEBUG:Queen created.")
 	else
+		message_admins("DEBUG:Could not create Queen.")
 		return
 	ghost_mind.transfer_to(new_queen)
 	ghost_mind.name = ghost_mind.current.name
@@ -501,9 +508,10 @@ datum/game_mode/proc/initialize_post_queen_list()
 	to_chat(new_queen, "Talk in Hivemind using <strong>;</strong> (e.g. ';My life for the hive!')")
 
 	new_queen.update_icons()
+
 	if(original) 
 		cdel(original) //Just to be sure.
-
+	message_admins("DEBUG:Queen mind transfered properly, all good.")
 
 //===================================================\\
 

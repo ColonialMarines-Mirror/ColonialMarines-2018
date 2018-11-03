@@ -754,7 +754,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			reagents.trans_to(W,1)
 			for(var/b=0, b<7, b++)
 				step_towards(W,my_target)
-				if(!W || !W.reagents)
+				if(!(W?.reagents))
 					return
 				W.reagents.reaction(get_turf(W))
 				for(var/atom/atm in get_turf(W))

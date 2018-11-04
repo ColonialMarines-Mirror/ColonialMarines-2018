@@ -223,7 +223,7 @@
 
 	// Firer's turf, keep moving
 	if(firer && T == firer.loc)
-		return 0
+		return FALSE
 
 	// Empty turf, keep moving
 	if(!T.contents.len)

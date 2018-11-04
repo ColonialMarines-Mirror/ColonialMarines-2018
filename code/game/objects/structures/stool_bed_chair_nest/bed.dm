@@ -575,7 +575,7 @@ var/global/list/activated_medevac_stretchers = list()
 
 
 /obj/item/device/medevac_beacon/proc/check_power()
-	var/area/A = src.loc.loc
+	var/area/A = loc?.loc
 	if(!A || !isarea(A) || !A.master)
 		return FALSE
 	return(A.master.powered(1))

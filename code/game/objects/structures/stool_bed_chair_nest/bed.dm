@@ -408,7 +408,7 @@ var/global/list/activated_medevac_stretchers = list()
 	spawn(MEDEVAC_TELE_DELAY) //Activate after 5 second delay.
 		if(!linked_beacon || !linked_beacon.check_power() || !linked_beacon.planted) //Beacon has to be planted in a powered area.
 			playsound(loc,'sound/machines/buzz-two.ogg', 25, FALSE)
-			src.visible_message("<span class='warning'>[src]'s safties kick in before displacement as it fails to detect a powered, linked and planted medvac beacon.</span>")
+			visible_message("<span class='warning'>[src]'s safties kick in before displacement as it fails to detect a powered, linked and planted medvac beacon.</span>")
 			return
 		var/mob/living/M
 		if(!buckled_mob && !buckled_bodybag)

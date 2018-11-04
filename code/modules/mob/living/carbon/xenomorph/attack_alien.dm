@@ -177,8 +177,8 @@
 				return FALSE
 			M.flick_attack_overlay(src, "disarm")
 
-			if(!knocked_down && !no_stun)
-				KnockDown(0.3)
+			if(!knocked_down && !no_stun && (traumatic_shock > 100))
+				KnockDown(1)
 				M.visible_message("<span class='danger'>\The [M] slams [src] to the ground!</span>", \
 				"<span class='danger'>You slam [src] to the ground!</span>", null, 5)
 

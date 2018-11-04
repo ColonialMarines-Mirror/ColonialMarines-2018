@@ -563,7 +563,8 @@ var/global/list/activated_medevac_stretchers = list()
 	if(!ishuman(user))
 		return ..()
 
-	if(isnull(O)) return
+	if(isnull(O))
+	 return
 
 	if(istype(O, /obj/item/card/id))
 		if(!allowed(user))

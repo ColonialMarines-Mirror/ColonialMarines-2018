@@ -470,7 +470,7 @@ var/global/list/activated_medevac_stretchers = list()
 	return ..()
 
 /obj/structure/bed/medevac_stretcher/proc/medvac_alert(mob/M)
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
+	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 	AI.SetName("Medevac Notification System")
 	AI.aiRadio.talk_into(AI,"Patient [M] has been tele-vaced to medvac beacon at: [get_area(linked_beacon)]. Coordinates: (X: [linked_beacon.x], Y: [linked_beacon.x])","MedSci","announces")

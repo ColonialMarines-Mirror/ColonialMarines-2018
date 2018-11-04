@@ -1283,7 +1283,7 @@
 	flags_ammo_behavior = AMMO_XENO_ACID|AMMO_EXPLOSIVE
 
 /datum/ammo/xeno/acid/heavy/New()
-	..()
+	. = ..()
 	damage = config.low_hit_damage
 
 /datum/ammo/xeno/acid/heavy/on_hit_mob(mob/M,obj/item/projectile/P)

@@ -293,12 +293,15 @@ datum/game_mode/proc/initialize_special_clamps()
 	while(i > 0) //While we can still pick someone for the role.
 		if(possible_xenomorphs.len) //We still have candidates
 			new_xeno = pick(possible_xenomorphs)
-			if(!new_xeno) break  //Looks like we didn't get anyone. Back out.
+			if(!new_xeno) 
+				break  //Looks like we didn't get anyone. Back out.
 			new_xeno.assigned_role = "MODE"
 			new_xeno.special_role = "Xenomorph"
 			possible_xenomorphs -= new_xeno
 			xenomorphs += new_xeno
+			message_admins("DEBUG: Adding [new_xeno] to Xenomorphs list")
 		else //Out of candidates, spawn in empty larvas directly
+			message_admins("DEBUG: Out of candidates, spawning larvas directly")
 			larvae_spawn = pick(xeno_spawn)
 			new /mob/living/carbon/Xenomorph/Larva(larvae_spawn)
 		i--
@@ -472,6 +475,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 	if(xeno_candidate) xeno_candidate.loc = null
 
 /datum/game_mode/proc/transform_xeno(datum/mind/ghost_mind)
+	message_admins("DEBUG:Transforming Xeno")
 	var/mob/original = ghost_mind.current
 	var/mob/living/carbon/Xenomorph/new_xeno
 

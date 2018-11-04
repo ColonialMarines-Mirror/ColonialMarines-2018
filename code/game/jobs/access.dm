@@ -244,10 +244,10 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("C") . = size ? "" : "Civilian"
 		if("CD") . = size ? "Dr. " : "Doctor"
 		if("CCMO") . = size ? "Prof. " : "Professor"
-		if("PMC1") . = size ? "PMCStd " : "PMC Standard"
-		if("PMC2") . = size ? "PMCGun " : "PMC Gunner"
-		if("PMC3") . = size ? "PMCSni " : "PMC Sniper"
-		if("PMC4") . = size ? "PMCLdr " : "PMC Leader"
+		if("PMC1") . = size ? "PMC " : "PMC Standard"
+		if("PMC2") . = size ? "PMC " : "PMC Gunner"
+		if("PMC3") . = size ? "PMC " : "PMC Sniper"
+		if("PMC4") . = size ? "PMC " : "PMC Leader"
 		if("WY1") . = size ? (gender == "female" ? "Ms. " : "Mr. ") : "Junior Executive"
 		if("E1") . = size ? "PVT " : "Private"
 		if("E2") . = size ? "PFC " : "Private First Class"
@@ -281,6 +281,9 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("UPP9") . = size ? "ULCDR " : "UPP Lieutenant Commander"
 		if("UPP10") . = size ? "UCDR " : "UPP Commander"
 		if("UPP11") . = size ? "UADM " : "UPP Admiral"
+		if("UPPC1") . = size ? "UPPC " : "UPP Commando Standard"
+		if("UPPC2") . = size ? "UPPC " : "UPP Commando Medic"
+		if("UPPC3") . = size ? "UPPC " : "UPP Commando Leader"
 		else . = paygrade + " " //custom paygrade
 
 #define PAYGRADES_MARINE list("C","E1","E2","E3","E4","E5","E6","E6E","E7","E8","E8E","E9","E9E","O1","O2","O3","O4", "WO")

@@ -284,7 +284,7 @@
 					if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
 						ammo.on_hit_turf(A,src)
 					A.bullet_act(src)
-				return 1
+				return TRUE
 
 	// Explosive ammo always explodes on the turf of the clicked target
 	if(src && ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)

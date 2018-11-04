@@ -52,7 +52,7 @@
 	var/list_reagents = null
 
 	New()
-		..()
+		. = ..()
 		path = list()
 		permutated = list()
 

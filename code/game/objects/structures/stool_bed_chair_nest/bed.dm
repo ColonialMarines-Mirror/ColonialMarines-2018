@@ -525,7 +525,7 @@ var/global/list/activated_medevac_stretchers = list()
 		to_chat(user, "<span class='notice'><b>You link the medvac beacon to the medvac stretcher.</b></span>")
 		playsound(loc,'sound/machines/ping.ogg', 25, FALSE)
 		return
-	. = ..()
+	return ..()
 
 /obj/item/device/medevac_beacon
 	name = "medevac beacon"

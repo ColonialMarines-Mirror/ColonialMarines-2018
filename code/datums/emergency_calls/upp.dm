@@ -56,9 +56,9 @@
 	var/mob/living/carbon/human/mob = new /mob/living/carbon/human(spawn_loc)
 	
 	if(mob.gender == MALE)
-		mob.real_name = "UPP [pick(first_names_male_russian)] [pick(last_names_russian)]"
+		mob.real_name = "[pick(first_names_male_russian)] [pick(last_names_russian)]"
 	else
-		mob.real_name = "UPP [pick(first_names_female_russian)] [pick(last_names_russian)]"
+		mob.real_name = "[pick(first_names_female_russian)] [pick(last_names_russian)]"
 
 	mob.key = M.key
 	if(mob.client) 
@@ -68,24 +68,24 @@
 		if(!leader)       //First one spawned is always the leader.
 			leader = mob
 			var/datum/job/J = new /datum/job/upp/leader
-			mob.set_everything(mob, J)
+			mob.set_everything(mob, "UPP Leader")
 			J.generate_equipment(mob)
 			to_chat(mob, "<font size='3'>\red You are an officer of the Union of Progressive People, a powerful socialist state that rivals the United Americas. </B>")
 		else if(medics < max_medics)
 			var/datum/job/J = new /datum/job/upp/medic
-			mob.set_everything(mob, J)
+			mob.set_everything(mob, "UPP Medic")
 			J.generate_equipment(mob)
 			to_chat(mob, "<font size='3'>\red You are a medic of the Union of Progressive People, a powerful socialist state that rivals the United Americas. </B>")
 			medics++
 		else if(heavies < max_heavies)
 			var/datum/job/J = new /datum/job/upp/heavy
-			mob.set_everything(mob, J)
+			mob.set_everything(mob, "UPP Heavy")
 			J.generate_equipment(mob)
 			to_chat(mob, "<font size='3'>\red You are a soldier of the Union of Progressive People, a powerful socialist state that rivals the United Americas. </B>")
 			heavies++
 		else
 			var/datum/job/J = new /datum/job/upp/standard
-			mob.set_everything(mob, J)
+			mob.set_everything(mob, "UPP Standard")
 			J.generate_equipment(mob)
 			to_chat(mob, "<font size='3'>\red You are a soldier of the Union of Progressive People, a powerful socialist state that rivals the United Americas. </B>")
 

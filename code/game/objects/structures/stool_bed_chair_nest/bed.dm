@@ -413,7 +413,7 @@ var/global/list/activated_medevac_stretchers = list()
 		var/mob/living/M
 		if(!buckled_mob && !buckled_bodybag)
 			playsound(loc,'sound/machines/buzz-two.ogg', 25, FALSE)
-			src.visible_message("<span class='warning'>[src]'s bluespace engine aborts displacement, being unable to detect an appropriate evacuee.</span>")
+			visible_message("<span class='warning'>[src]'s bluespace engine aborts displacement, being unable to detect an appropriate evacuee.</span>")
 			return
 		else if(buckled_mob)
 			M = buckled_mob

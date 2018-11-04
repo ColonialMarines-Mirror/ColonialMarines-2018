@@ -3,8 +3,7 @@
 
 //Randomly-equipped mercenaries. May be friendly or hostile to the USCM, hostile to xenos.
 /datum/emergency_call/mercs
-	name = "Freelancers (Squad)"
-	mob_max = 8
+	name = "Freelancers"
 	probability = 25
 
 	New()
@@ -81,12 +80,3 @@
 
 	if(original)
 		cdel(original)
-
-
-
-/datum/emergency_call/mercs/platoon
-	name = "Freelancers (Platoon)"
-	mob_min = 8
-	mob_max = 30
-	probability = 0
-	max_medics = 3

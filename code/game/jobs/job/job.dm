@@ -6,6 +6,7 @@
 	var/disp_title				 //Determined on new(). Usually the same as the title, but doesn't have to be. Set this to override what the player sees in the game as their title.
 	var/comm_title 			= "" //The mini-title to display over comms.
 	var/paygrade 			= 0 //Also displays a ranking when talking over the radio.
+	var/equipment           = FALSE
 
 	//Job access. The use of minimal_access or access is determined by a config setting: config.jobs_have_minimal_access
 	var/list/minimal_access		//Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
@@ -43,14 +44,8 @@
 /datum/job/proc/set_spawn_positions(var/count) 
 	return spawn_positions
 
-/datum/job/proc/generate_wearable_equipment() 
-	return list() //This should ONLY be used to list things that the character can wear, or show on their sprite.
-
-/datum/job/proc/generate_stored_equipment() 
-	return list() //This is the list of everything else. Combine the two.
-
-/datum/job/proc/get_wearable_equipment() 
-	return generate_wearable_equipment() //Use and override this proc to get things for character select dressup.
+/datum/job/proc/generate_equipment(mob/living/carbon/human/H) 
+	return //This should ONLY be used to list things that the character can wear, or show on their sprite.
 
 /datum/job/proc/generate_entry_message() 
 	return //The job description that characters get, along with anything else that may be appropriate.
@@ -80,21 +75,6 @@
 /datum/job/proc/generate_entry_conditions(mob/living/M)
 	return //Anything special that should happen to the mob upon entering the world.
 
-//Have to pass H to both equip procs so that "backbag" shows correctly. Sigh.
-/datum/job/proc/equip(mob/living/carbon/human/H, list/L = generate_wearable_equipment() + generate_stored_equipment())
-	if(!istype(H) || !L.len)
-		return
-	var/i
-	var/item_path
-	var/obj/item/stack/sheet/I //Just to make this shorter.
-
-	for(i in L)
-		item_path = L[i]
-		I = new item_path(H)
-		if(istype(I))
-			I.amount = 30 //We want to make sure that the amount is actually proper.
-		message_admins("Trying to equip item [I] to slot [i]")
-		H.equip_to_slot_or_del(I, i) //The item loc will be transferred from mob to an item, if needed.
 
 //This should come after equip(), usually only on spawn or late join. Otherwise just use equip.
 /datum/job/proc/equip_preference_gear(mob/living/carbon/human/H)
@@ -107,7 +87,8 @@
 	for(i in H.client.prefs.gear)
 		G = gear_datums[i]
 		if(G)
-			if(G.allowed_roles && !(title in G.allowed_roles)) 				continue //Is the role allowed?
+			if(G.allowed_roles && !(title in G.allowed_roles)) 				
+				continue //Is the role allowed?
 			if(G.whitelisted && !is_alien_whitelisted(G.whitelisted))
 				continue //is the role whitelisted? //TODO Remove this.
 			H.equip_to_slot_or_del(new G.path(H), G.slot ? G.slot : WEAR_IN_BACK)
@@ -130,7 +111,8 @@
 		H.equip_to_slot_or_del(P, WEAR_EYES)
 
 /datum/job/proc/equip_identification(mob/living/carbon/human/H)
-	if(!istype(H))	return
+	if(!istype(H))	
+		return
 	var/obj/item/card/id/C
 	var/title_alt
 	title_alt = get_alternative_title(H)
@@ -144,35 +126,28 @@
 	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 
 	//put the player's account number onto the ID
-	if(H.mind && H.mind.initial_account) C.associated_account_number = H.mind.initial_account.account_number
+	if(H.mind && H.mind.initial_account) 
+		C.associated_account_number = H.mind.initial_account.account_number
 	H.equip_to_slot_or_del(C, WEAR_ID)
 	return 1
 
-//This proc removes overlays, then adds new ones.
-/datum/job/proc/display_overlay_equipment(atom/A, list/L = get_wearable_equipment())
-	var/image/reusable/I
-	var/obj/item/P
-	var/i
-	for(i in A.overlays) //Remove the old.
-		A.overlays -= i
-		cdel(i)
-	for(i in L) //Add the new.
-		P = i
-		I = rnew(/image/reusable, list(initial(P.icon),A, initial(P.icon_state)))
-		A.overlays += I
-
 /datum/job/proc/get_access()
-	if(!config)							return minimal_access.Copy() //Need to copy, because we want a new list here. Not the datum's list.
-	if(config.jobs_have_minimal_access) return minimal_access.Copy()
-	return access.Copy()
+	if(!config)							
+		return minimal_access.Copy() //Need to copy, because we want a new list here. Not the datum's list.
+	if(config.jobs_have_minimal_access) 
+		return minimal_access.Copy()
+	return 
+		access.Copy()
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
-	if(available_in_days(C) == 0) return 1	//If available in 0 days, the player is old enough to play. Can be compared to null, but I think this is clearer.
+	if(available_in_days(C) == 0) 
+		return 1	//If available in 0 days, the player is old enough to play. Can be compared to null, but I think this is clearer.
 
 /datum/job/proc/available_in_days(client/C)
 	//Checking the player's age is only possible through a db connection, so if there isn't one, player age will be a text string instead.
-	if(!istype(C) || !config.use_age_restriction_for_jobs || !isnum(C.player_age) || !isnum(minimal_player_age)) return 0 //One of the few times when returning 0 is the proper behavior.
+	if(!istype(C) || !config.use_age_restriction_for_jobs || !isnum(C.player_age) || !isnum(minimal_player_age)) 
+		return 0 //One of the few times when returning 0 is the proper behavior.
 	return max(0, minimal_player_age - C.player_age)
 
 //This lets you scale max jobs at runtime

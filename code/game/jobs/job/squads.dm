@@ -82,16 +82,22 @@
 //This sets their ID, increments the total count, and so on. Everything else is done in job_controller.dm.
 //So it does not check if the squad is too full already, or randomize it, etc.
 /datum/squad/proc/put_marine_in_squad(var/mob/living/carbon/human/M)
-	if(!M || !istype(M,/mob/living/carbon/human)) return 0//Logic
-	if(!src.usable) return 0
-	if(!M.mind) return 0
-	if(!M.mind.assigned_role) return 0//Not yet
-	if(M.assigned_squad) return 0 //already in a squad
+	if(!M || !istype(M,/mob/living/carbon/human)) 
+		return FALSE//Logic
+	if(!src.usable) 
+		return FALSE
+	if(!M.mind) 
+		return FALSE
+	if(!M.mind.assigned_role) 
+		return FALSE//Not yet
+	if(M.assigned_squad) 
+		return FALSE //already in a squad
 
 	var/obj/item/card/id/C = null
 	C = M.wear_id
 	if(!C) C = M.get_active_hand()
-	if(!istype(C)) return 0//Abort, no ID found
+	if(!istype(C)) 
+		return 0//Abort, no ID found
 
 	switch(M.mind.assigned_role)
 		if("Squad Engineer")
@@ -100,8 +106,10 @@
 		if("Squad Medic")
 			num_medics++
 			C.claimedgear = 0
-		if("Squad Specialist") num_specialists++
-		if("Squad Smartgunner") num_smartgun++
+		if("Squad Specialist") 
+			num_specialists++
+		if("Squad Smartgunner") 
+			num_smartgun++
 		if("Squad Leader")
 			if(squad_leader && (!squad_leader.mind || squad_leader.mind.assigned_role != "Squad Leader")) //field promoted SL
 				demote_squad_leader() //replaced by the real one
@@ -121,16 +129,19 @@
 	C.access += src.access //Add their squad access to their ID
 	C.assignment = "[name] [c_oldass]"
 	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-	return 1
+	return TRUE
 
 
 //proc used by the overwatch console to transfer marine to another squad
 /datum/squad/proc/remove_marine_from_squad(mob/living/carbon/human/M)
-	if(!M.mind) return 0
-	if(!M.assigned_squad) return //not assigned to a squad
+	if(!M.mind) 
+		return FALSE
+	if(!M.assigned_squad) 
+		return //not assigned to a squad
 	var/obj/item/card/id/C
 	C = M.wear_id
-	if(!istype(C)) return 0//Abort, no ID found
+	if(!istype(C)) 
+		return FALSE//Abort, no ID found
 
 	C.access -= src.access
 	C.assignment = M.mind.assigned_role
@@ -148,11 +159,16 @@
 	M.assigned_squad = null
 
 	switch(M.mind.assigned_role)
-		if("Squad Engineer") num_engineers--
-		if("Squad Medic") num_medics--
-		if("Squad Specialist") num_specialists--
-		if("Squad Smartgunner") num_smartgun--
-		if("Squad Leader") num_leaders--
+		if("Squad Engineer") 
+			num_engineers--
+		if("Squad Medic") 
+			num_medics--
+		if("Squad Specialist") 
+			num_specialists--
+		if("Squad Smartgunner") 
+			num_smartgun--
+		if("Squad Leader") 
+			num_leaders--
 
 //proc used by human dispose to clean the mob from squad lists
 /datum/squad/proc/clean_marine_from_squad(mob/living/carbon/human/H, wipe = FALSE)

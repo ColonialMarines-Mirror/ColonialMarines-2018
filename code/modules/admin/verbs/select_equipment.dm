@@ -10,17 +10,13 @@
 	var/rank_list = list("Custom") + RoleAuthority.roles_by_name
 
 	var/newrank = input("Select new rank for [H]", "Change the mob's rank and skills") as null|anything in rank_list
-	if (!newrank)
+	if(!newrank)
 		return
 	if(!H || !H.mind)
 		return
 	feedback_add_details("admin_verb","SMRK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(newrank != "Custom")
-		H.reset_comm_title(newrank)
-		H.reset_cm_skills(newrank)
-		H.reset_alt_title(newrank)
-		H.set_ID(newrank)
-		H.update_action_buttons()
+		H.set_everything(H, newrank)
 	else
 		var/newcommtitle = input("Write the custom title appearing on comms chat (e.g. Spc)", "Comms title") as null|text
 		if(!newcommtitle)
@@ -71,23 +67,22 @@
 	set category = null
 	set name = "Select Equipment"
 	if(!ishuman(M))
-		alert("Invalid mob")
 		return
 
-	var/list/dresspacks = list("Strip") + RoleAuthority.roles_by_name
-	var/list/paths = list("Strip") + RoleAuthority.roles_by_name_paths
+	var/list/dresspacks = list("Strip") + RoleAuthority.roles_by_equipment
+	var/list/paths = list("Strip") + RoleAuthority.roles_by_equipment_paths
 
 	var/dresscode = input("Choose equipment for [M]", "Select Equipment") as null|anything in dresspacks
-	if (isnull(dresscode))
+	if(isnull(dresscode))
 		return
 	var/path = paths[dresspacks.Find(dresscode)]
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/implant))
+	for(var/obj/item/I in M)
+		if(istype(I, /obj/item/implant))
 			continue
 		cdel(I)
 	var/datum/job/J = new path
-	J.equip(M)
+	J.generate_equipment(M)
 	M.regenerate_icons()
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
 	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].", 1)

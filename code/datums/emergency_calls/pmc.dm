@@ -2,8 +2,7 @@
 
 //Weyland Yutani commandos. Friendly to USCM, hostile to xenos.
 /datum/emergency_call/pmc
-	name = "Weyland-Yutani PMC (Squad)"
-	mob_max = 6
+	name = "Weyland-Yutani PMC"
 	probability = 25
 	shuttle_id = "Distress_PMC"
 	name_of_spawn = "Distress_PMC"

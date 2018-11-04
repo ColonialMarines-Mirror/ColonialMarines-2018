@@ -3,8 +3,6 @@
 //Blank colonist ERT for admin stuff.
 /datum/emergency_call/colonist
 	name = "Colonists"
-	mob_max = 8
-	mob_min = 1
 	arrival_message = "Incoming Transmission: 'This is the *static*. We are *static*.'"
 	objectives = "Follow the orders given to you."
 	probability = 0
@@ -38,6 +36,5 @@
 	spawn(20)
 		if(H && H.loc)
 			to_chat(H, "<span class='role_header'>You are a colonist!</span>")
-			to_chat(H, "<span class='role_body'>You have been put into the game by a staff member. Please follow all staff instructions.</span>")
 
 	if(original && original.loc) cdel(original)

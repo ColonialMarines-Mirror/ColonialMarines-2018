@@ -34,14 +34,12 @@
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/SL
 
-	generate_wearable_equipment()
-		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
-				)
-
 	generate_entry_message()
 		. = ..() + {"\nYou are responsible for the men and women of your squad. Make sure they are on task, working together, and communicating.
 You are also in charge of communicating with command and letting them know about the situation first hand. Keep out of harm's way."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
 
 /datum/job/marine/leader/equipped
 	flags_startup_parameters = ROLE_ADD_TO_SQUAD
@@ -58,11 +56,6 @@ You are also in charge of communicating with command and letting them know about
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/combat_engineer
 
-	generate_wearable_equipment()
-		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/tech
-				)
-
 	generate_entry_message()
 		. = ..() + {"\nYou have the equipment and skill to build fortifications, reroute power lines, and bunker down.
 Your squaddies will look to you when it comes to construction in the field of battle."}
@@ -74,6 +67,9 @@ Your squaddies will look to you when it comes to construction in the field of ba
 				if(sq)
 					sq.max_engineers = slots
 		return (slots*4)
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/tech(H), WEAR_BACK)
 
 /datum/job/marine/engineer/equipped
 	flags_startup_parameters = ROLE_ADD_TO_SQUAD
@@ -90,11 +86,6 @@ Your squaddies will look to you when it comes to construction in the field of ba
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/combat_medic
 
-	generate_wearable_equipment()
-		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/medic
-				)
-
 	generate_entry_message()
 		. = ..() + {"\nYou must tend the wounds of your squad mates and make sure they are healthy and active.
 You may not be a fully-fledged doctor, but you stand between life and death when it matters."}
@@ -106,6 +97,10 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 				if(sq)
 					sq.max_medics = slots
 		return (slots*4)
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/medic(H), WEAR_BACK)
+
 
 /datum/job/marine/medic/equipped
 	flags_startup_parameters = ROLE_ADD_TO_SQUAD
@@ -122,15 +117,14 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/specialist
 
-	generate_wearable_equipment()
-		. = list(
-				WEAR_HEAD = /obj/item/clothing/head/helmet/specrag,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
-				)
-
 	generate_entry_message()
 		. = ..() + {"\nYou are the very rare and valuable weapon expert, trained to use special equipment.
 You can serve a variety of roles, so choose carefully."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/specrag(H), WEAR_HEAD)
+
 
 /datum/job/marine/specialist/equipped
 	flags_startup_parameters = ROLE_ADD_TO_SQUAD
@@ -150,13 +144,11 @@ You can serve a variety of roles, so choose carefully."}
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 	skills_type = /datum/skills/smartgunner
 
-	generate_wearable_equipment()
-		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
-				)
-
 	generate_entry_message()
 		. = ..() + {"\nYou are the smartgunner. Your job is to provide heavy weapons support."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
 
 
 /datum/job/marine/smartgunner/equipped
@@ -176,14 +168,12 @@ You can serve a variety of roles, so choose carefully."}
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_PREP)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADD_TO_SQUAD
 
-	generate_wearable_equipment()
-		. = list(
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel
-				)
-
 	generate_entry_message()
 		. = ..() + {"\nYou are a rank-and-file soldier of the USCM, and that is your strength.
 What you lack alone, you gain standing shoulder to shoulder with the men and women of the corps. Ooh-rah!"}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
 
 /datum/job/marine/standard/equipped
 	flags_startup_parameters = ROLE_ADD_TO_SQUAD

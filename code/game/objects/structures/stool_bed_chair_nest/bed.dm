@@ -572,7 +572,6 @@ var/global/list/activated_medevac_stretchers = list()
 			"<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s interface.</span>")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
 
 
 /obj/item/device/medevac_beacon/proc/check_power()

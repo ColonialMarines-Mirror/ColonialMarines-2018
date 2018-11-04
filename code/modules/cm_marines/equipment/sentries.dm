@@ -1208,6 +1208,7 @@
 	spawn(2)
 		stat = 0
 	ammo = ammo_list[ammo]
+	update_icon()
 
 /obj/machinery/marine_turret/premade/dumb
 	name = "Modified UA-577 Gauss Turret"
@@ -1254,6 +1255,8 @@
 /obj/machinery/marine_turret/premade/dropship
 	density = FALSE
 	ammo = /datum/ammo/bullet/turret/gauss //This is a gauss cannon; it will be significantly deadlier
+	rounds = 1000000
+	safety_off = TRUE
 	burst_size = 10
 	burst_delay = 15
 	var/obj/structure/dropship_equipment/sentry_holder/deployment_system

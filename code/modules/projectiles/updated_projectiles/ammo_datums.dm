@@ -1273,7 +1273,7 @@
 	name = "acid spatter"
 
 /datum/ammo/xeno/acid/medium/New()
-	..()
+	. = ..()
 	damage = config.mlow_hit_damage
 
 /datum/ammo/xeno/acid/heavy

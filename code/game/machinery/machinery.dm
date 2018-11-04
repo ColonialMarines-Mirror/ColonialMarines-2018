@@ -126,7 +126,7 @@ Class Procs:
 		return
 
 /obj/machinery/New()
-	..()
+	. = ..()
 	machines += src
 	var/area/A = get_area(src)
 	if(A)

@@ -17,25 +17,23 @@
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_BRIDGE, ACCESS_CIVILIAN_ENGINEERING)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/CE
-
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
-				WEAR_BODY = /obj/item/clothing/under/marine/officer/ce,
-				WEAR_FEET = /obj/item/clothing/shoes/marine,
-				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
-				WEAR_WAIST = /obj/item/storage/belt/utility/full,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel/tech,
-				WEAR_R_STORE = /obj/item/storage/pouch/electronics
-				)
-
-	generate_stored_equipment()
-		. = list()
+	equipment = TRUE
 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"Your job is to maintain the ship's engine and keep everything running.
 If you have no idea how to set up the engine, or it's your first time, adminhelp so that a mentor can assist you.
 You are also next in the chain of command, should the bridge crew fall in the line of duty."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/ce(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel/tech(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/electronics(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/welding(H), WEAR_EYES)
+
 
 //Requisitions Officer
 /datum/job/logistics/requisition
@@ -49,24 +47,24 @@ You are also next in the chain of command, should the bridge crew fall in the li
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO, ACCESS_MARINE_RO, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_PREP, ACCESS_MARINE_ALPHA, ACCESS_MARINE_BRAVO, ACCESS_MARINE_CHARLIE, ACCESS_MARINE_DELTA)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/RO
-
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
-				WEAR_BODY = /obj/item/clothing/under/rank/ro_suit,
-				WEAR_FEET = /obj/item/clothing/shoes/marine,
-				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
-				WEAR_WAIST = /obj/item/storage/belt/gun/m44/full,
-				WEAR_HEAD = /obj/item/clothing/head/cmcap/req,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/general/large
-				)
+	equipment = TRUE
 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"Your job is to dispense supplies to the marines, including weapon attachments.
 Your cargo techs can help you out, but you have final say in your department. Make sure they're not goofing off.
 While you may request paperwork for supplies, do not go out of your way to screw with marines, unless you want to get deposed.
 A happy ship is a well-functioning ship."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/ro_suit(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap/req(H), WEAR_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m44/full(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+
 
 /datum/job/logistics/tech
 	idtype = /obj/item/card/id
@@ -89,6 +87,7 @@ A happy ship is a well-functioning ship."}
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_ENGINEERING, ACCESS_CIVILIAN_ENGINEERING)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/MT
+	equipment = TRUE
 
 	set_spawn_positions(var/count)
 		spawn_positions = mt_slot_formula(count)
@@ -96,26 +95,21 @@ A happy ship is a well-functioning ship."}
 	get_total_positions(var/latejoin = 0)
 		return (latejoin ? mt_slot_formula(get_total_marines()) : spawn_positions)
 
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/mt,
-				WEAR_BODY = /obj/item/clothing/under/marine/officer/engi,
-				WEAR_FEET = /obj/item/clothing/shoes/marine,
-				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
-				WEAR_WAIST = /obj/item/storage/belt/utility/full,
-				WEAR_EYES = /obj/item/clothing/glasses/welding,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/general/medium
-				)
-
-	generate_stored_equipment()
-		. = list(
-				WEAR_L_HAND = /obj/item/tool/weldpack
-				)
-
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"Your job is to make sure the ship is clean and the powergrid is operational.
 Start with the ship's engine, and don't forget radiation equipment."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mt(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/engi(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/welding(H), WEAR_EYES)
+		H.equip_to_slot_or_del(new /obj/item/tool/weldpack(H), WEAR_L_HAND)
+
 
 //Cargo Tech. Don't ask why this is in engineering
 /datum/job/logistics/tech/cargo
@@ -133,6 +127,7 @@ Start with the ship's engine, and don't forget radiation equipment."}
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/CT
+	equipment = TRUE
 
 	set_spawn_positions(var/count)
 		spawn_positions = ct_slot_formula(count)
@@ -140,19 +135,17 @@ Start with the ship's engine, and don't forget radiation equipment."}
 	get_total_positions(var/latejoin = 0)
 		return (latejoin ? ct_slot_formula(get_total_marines()) : spawn_positions)
 
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/ct,
-				WEAR_BODY = /obj/item/clothing/under/rank/cargotech,
-				WEAR_FEET = /obj/item/clothing/shoes/marine,
-				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
-				WEAR_WAIST = /obj/item/storage/belt/gun/m4a3/full,
-				WEAR_HEAD = /obj/item/clothing/head/beanie,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/general/medium
-				)
-
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"Your job is to dispense supplies to the marines, including weapon attachments.
 Stay in your department when possible to ensure the marines have full access to the supplies they may require.
 Listen to the radio in case someone requests a supply drop via the overwatch system."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/ct(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/beanie(H), WEAR_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/full(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)

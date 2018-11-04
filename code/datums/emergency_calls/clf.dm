@@ -2,8 +2,7 @@
 
 //Colonial Liberation Front
 /datum/emergency_call/clf
-	name = "Colonial Liberation Front (Squad)"
-	mob_max = 10
+	name = "Colonial Liberation Front"
 	arrival_message = "Incoming Transmission: 'Attention, you are tresspassing on our soverign territory. Expect no forgiveness.'"
 	objectives = "Assault the USCM, and sabotage as much as you can. Ensure any survivors escape in your custody."
 	probability = 20
@@ -83,12 +82,3 @@
 	if(original)
 		cdel(original)
 	return
-
-
-
-/datum/emergency_call/clf/platoon
-	name = "Colonial Liberation Front (Platoon)"
-	mob_min = 8
-	mob_max = 35
-	probability = 0
-	max_medics = 2

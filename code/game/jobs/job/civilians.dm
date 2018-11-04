@@ -31,34 +31,28 @@
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CMO, ACCESS_MARINE_MEDBAY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_CHEMISTRY)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/CMO
-
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/cmo,
-				WEAR_BODY = /obj/item/clothing/under/rank/medical/green,
-				WEAR_FEET = /obj/item/clothing/shoes/white,
-				WEAR_WAIST = /obj/item/storage/belt/medical,
-				WEAR_HANDS = /obj/item/clothing/gloves/latex,
-				WEAR_JACKET = /obj/item/clothing/suit/storage/labcoat,
-				WEAR_EYES = /obj/item/clothing/glasses/hud/health,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/medkit,
-				WEAR_L_STORE = /obj/item/storage/pouch/medical/full,
-				WEAR_HEAD = /obj/item/clothing/head/surgery/green,
-				WEAR_FACE = /obj/item/clothing/mask/surgical
-				//WEAR_HEAD = /obj/item/clothing/head/cmo //2.10.2018 Will want to work on this a bit more, it doesn't quite fit. - Joshuu
-				)
-
-	generate_stored_equipment()
-		. = list(
-				WEAR_J_STORE = /obj/item/device/flashlight/pen,
-				WEAR_L_HAND = /obj/item/storage/firstaid/adv
-				)
+	equipment = TRUE
 
 	generate_entry_message()
 		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You have final authority over the medical department, medications, and treatments.
 Make sure that the doctors and nurses are doing their jobs and keeping the marines healthy and strong."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/cmo(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), WEAR_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), WEAR_JACKET)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), WEAR_J_STORE)
 
 
 //Doctor
@@ -76,6 +70,7 @@ Make sure that the doctors and nurses are doing their jobs and keeping the marin
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/doctor
+	equipment = TRUE
 
 	set_spawn_positions(var/count)
 		spawn_positions = doc_slot_formula(count)
@@ -83,31 +78,25 @@ Make sure that the doctors and nurses are doing their jobs and keeping the marin
 	get_total_positions(var/latejoin = 0)
 		return (latejoin ? doc_slot_formula(get_total_marines()) : spawn_positions)
 
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/doc,
-				WEAR_BODY = /obj/item/clothing/under/rank/medical/green,
-				WEAR_FEET = /obj/item/clothing/shoes/white,
-				WEAR_WAIST = /obj/item/storage/belt/medical,
-				WEAR_HANDS = /obj/item/clothing/gloves/latex,
-				//WEAR_JACKET = /obj/item/clothing/suit/storage/labcoat,
-				WEAR_EYES = /obj/item/clothing/glasses/hud/health,
-				WEAR_HEAD = /obj/item/clothing/head/surgery/green,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/medkit,
-				WEAR_L_STORE = /obj/item/storage/pouch/medical/full,
-				WEAR_FACE = /obj/item/clothing/mask/surgical
-				)
-
-	generate_stored_equipment()
-		. = list(
-				WEAR_L_HAND = /obj/item/storage/firstaid/adv
-				)
-
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You are tasked with keeping the marines healthy and strong, usually in the form of surgery.
 You are also an expert when it comes to medication and treatment. If you do not know what you are doing, adminhelp so a mentor can assist you."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/doc(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), WEAR_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
+
 
 //Researcher
 /datum/job/civilian/researcher
@@ -125,6 +114,7 @@ You are also an expert when it comes to medication and treatment. If you do not 
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_MEDBAY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_CHEMISTRY)
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/doctor
+	equipment = TRUE
 
 	set_spawn_positions(var/count)
 		spawn_positions = rsc_slot_formula(count)
@@ -132,31 +122,26 @@ You are also an expert when it comes to medication and treatment. If you do not 
 	get_total_positions(var/latejoin = 0)
 		return (latejoin ? rsc_slot_formula(get_total_marines()) : spawn_positions)
 
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/doc,
-				WEAR_BODY = /obj/item/clothing/under/marine/officer/researcher,
-				WEAR_FEET = /obj/item/clothing/shoes/laceup,
-				WEAR_WAIST = /obj/item/storage/belt/medical,
-				WEAR_HANDS = /obj/item/clothing/gloves/latex,
-				WEAR_JACKET = /obj/item/clothing/suit/storage/labcoat/researcher,
-				WEAR_EYES = /obj/item/clothing/glasses/hud/health,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/medkit,
-				WEAR_L_STORE = /obj/item/storage/pouch/medical/full,
-				WEAR_FACE = /obj/item/clothing/mask/surgical
-				)
-
-	generate_stored_equipment()
-		. = list(
-				WEAR_J_STORE = /obj/item/device/flashlight/pen,
-				WEAR_L_HAND = /obj/item/storage/firstaid/adv
-				)
-
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You are tasked with researching and developing new medical treatments, helping your fellow doctors, and generally learning new things.
 Your role involves some roleplaying and gimmickry, but you can perform the function of a regular doctor."}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/doc(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/researcher(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/researcher(H), WEAR_JACKET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), WEAR_J_STORE)
+
 
 //Liaison
 /datum/job/civilian/liaison
@@ -174,15 +159,7 @@ Your role involves some roleplaying and gimmickry, but you can perform the funct
 	idtype = /obj/item/card/id/silver
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
 	skills_type = /datum/skills/civilian
-
-	generate_wearable_equipment()
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
-				WEAR_BODY = /obj/item/clothing/under/liaison_suit,
-				WEAR_FEET = /obj/item/clothing/shoes/laceup,
-				WEAR_BACK = /obj/item/storage/backpack/satchel
-				)
-
+	equipment = TRUE
 
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"As a representative of Weyland-Yutani Corporation you are expected to stay professional and loyal to the corporation at all times.
@@ -193,7 +170,14 @@ Use your office fax machine to communicate with corporate headquarters or to acq
 	generate_entry_conditions(mob/living/carbon/human/H)
 		if(ticker && H.mind) ticker.liaison = H.mind //TODO Look into CL tracking in game mode.
 
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/liaison_suit(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
 
+
+//Nightmare event verison
 /datum/job/civilian/liaison/nightmare
 	access = list(ACCESS_IFF_PMC, ACCESS_WY_PMC_GREEN, ACCESS_WY_PMC_ORANGE, ACCESS_WY_PMC_RED, ACCESS_WY_PMC_BLACK, ACCESS_WY_PMC_WHITE, ACCESS_WY_CORPORATE)
 	minimal_access = list(ACCESS_IFF_PMC, ACCESS_WY_PMC_GREEN, ACCESS_WY_PMC_ORANGE, ACCESS_WY_PMC_RED, ACCESS_WY_PMC_BLACK, ACCESS_WY_PMC_WHITE, ACCESS_WY_CORPORATE)
@@ -223,22 +207,10 @@ Best to let the mercs do the killing and the dying, but remind them who pays the
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
 	flags_whitelist = WHITELIST_SYNTHETIC
 	skills_type = /datum/skills/synthetic
+	equipment = TRUE
 
 	get_access()
 		return get_all_accesses()
-
-
-	generate_wearable_equipment()
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
-				WEAR_BODY = /obj/item/clothing/under/rank/synthetic,
-				WEAR_FEET = /obj/item/clothing/shoes/white,
-				WEAR_WAIST = /obj/item/storage/belt/utility/full,
-				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/general/medium,
-				WEAR_L_STORE = /obj/item/storage/pouch/general/medium
-				)
 
 	generate_entry_conditions(mob/living/carbon/human/H)
 		. = ..()
@@ -246,7 +218,8 @@ Best to let the mercs do the killing and the dying, but remind them who pays the
 		if(H.client.prefs.synthetic_type == "Early Synthetic")
 			skills_type = /datum/skills/early_synthetic
 		//Most of the code below is copypasted from transform_predator().
-		if(!H.client.prefs) H.client.prefs = new /datum/preferences(H.client) //Let's give them one.
+		if(!H.client.prefs) 
+			H.client.prefs = new /datum/preferences(H.client) //Let's give them one.
 		//They should have these set, but it's possible they don't have them.
 		H.real_name = H.client.prefs.synthetic_name
 		if(!H.real_name || H.real_name == "Undefined") //In case they don't have a name set or no prefs, there's a name.
@@ -266,3 +239,13 @@ Best to let the mercs do the killing and the dying, but remind them who pays the
 Your primary job is to support and assist all USCM Departments and Personnel on-board.
 In addition, being a Synthetic gives you knowledge in every field and specialization possible on-board the ship.
 As a Synthetic you answer to the acting commander. Special circumstances may change this!"}
+
+	generate_equipment(mob/living/carbon/human/H)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/synthetic(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_L_STORE)

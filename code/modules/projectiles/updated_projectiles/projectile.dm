@@ -272,7 +272,7 @@
 						if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
 							ammo.on_hit_turf(L,src)
 						L.bullet_act(src)
-					return 1
+					return TRUE
 				else if (!L.lying)
 					animatation_displace_reset(L)
 					if(ammo.sound_miss) L.playsound_local(get_turf(L), ammo.sound_miss, 75, 1)

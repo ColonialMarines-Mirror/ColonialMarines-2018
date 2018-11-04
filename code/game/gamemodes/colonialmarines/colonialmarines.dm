@@ -11,10 +11,12 @@
 
 /* Pre-pre-startup */
 /datum/game_mode/colonialmarines/can_start()
+	var/found_queen = initialize_starting_queen_list()
+	var/found_xenos = initialize_starting_xenomorph_list()
 	initialize_special_clamps()
 	initialize_starting_predator_list()
-	if(!(initialize_starting_queen_list() || initialize_starting_xenomorph_list()))
-		message_admins("DEBUG:Failed to find anyone with either queen or xeno pref on.")
+	if(!found_queen && !found_xenos)
+		message_admins("DEBUG: No queen or xeno candidates found.")
 		return FALSE
 	initialize_starting_survivor_list()
 	return TRUE

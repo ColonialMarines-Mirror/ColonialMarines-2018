@@ -277,7 +277,7 @@ datum/game_mode/proc/initialize_special_clamps()
 //If we are selecting xenomorphs, we NEED them to play the round. This is the expected behavior.
 //If this is an optional behavior, just override this proc or make an override here.
 /datum/game_mode/proc/initialize_starting_xenomorph_list()
-	message_admins("DEBUG: Initializing starting xeno list.")
+	message_admins("DEBUG: Initializing starting xenomorph list.")
 	var/list/datum/mind/possible_xenomorphs = get_players_for_role(BE_ALIEN)
 	if(possible_xenomorphs.len < xeno_required_num) //We don't have enough aliens.
 		to_chat(world, "<h2 style=\"color:red\">Not enough players have chosen to be a xenomorph in their character setup. <b>Aborting</b>.</h2>")
@@ -295,7 +295,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(possible_xenomorphs.len) //We still have candidates
 			new_xeno = pick(possible_xenomorphs)
 			if(!new_xeno) 
-				message_admins("DEBUG: No possible candidates?")
+				message_admins("DEBUG: No possible xeno candidates?")
 				break  //Looks like we didn't get anyone. Back out.
 			new_xeno.assigned_role = "MODE"
 			new_xeno.special_role = "Xenomorph"
@@ -343,10 +343,10 @@ datum/game_mode/proc/initialize_special_clamps()
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
-		if(new_xeno != queen)
-			transform_xeno(new_xeno)
-		else
+		if(new_xeno == queen)
 			message_admins("DEBUG:Queen also had xeno on, not picking them as xeno.")
+		else
+			transform_xeno(new_xeno)
 
 datum/game_mode/proc/initialize_post_queen_list()
 	if(!queen)
@@ -494,6 +494,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 
 	if(original) 
 		cdel(original) //Just to be sure.
+	message_admins("DEBUG:Xeno transformed properly")
 
 /datum/game_mode/proc/transform_queen(datum/mind/ghost_mind)
 	var/mob/original = ghost_mind.current

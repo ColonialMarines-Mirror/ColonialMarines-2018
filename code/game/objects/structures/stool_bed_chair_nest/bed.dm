@@ -566,13 +566,12 @@ var/global/list/activated_medevac_stretchers = list()
 	if(isnull(O)) return
 
 	if(istype(O, /obj/item/card/id))
-		if(allowed(user))
-			locked = !locked
-			user.visible_message("<span class='notice'>[user] [locked ? "locks" : "unlocks"] [src]'s interface.</span>",
-			"<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s interface.</span>")
-		else
+		if(!allowed(user))
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-
+			return
+		locked = !locked
+		user.visible_message("<span class='notice'>[user] [locked ? "locks" : "unlocks"] [src]'s interface.</span>",
+		"<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s interface.</span>")
 
 /obj/item/device/medevac_beacon/proc/check_power()
 	var/area/A = loc?.loc

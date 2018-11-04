@@ -2,7 +2,7 @@
 
 //Weyland Yutani commandos. Friendly to USCM, hostile to xenos.
 /datum/emergency_call/pmc
-	name = "Weyland-Yutani PMC"
+	name = "PMCs"
 	probability = 25
 	shuttle_id = "Distress_PMC"
 	name_of_spawn = "Distress_PMC"
@@ -17,58 +17,42 @@
 	var/turf/spawn_loc = get_spawn_point()
 	var/mob/original = M.current
 
-	if(!istype(spawn_loc)) return //Didn't find a useable spawn point.
+	if(!istype(spawn_loc)) 
+		return //Didn't find a useable spawn point.
 
-	var/mob/living/carbon/human/mob = new(spawn_loc)
-	mob.gender = pick(MALE,FEMALE)
-	var/list/first_names_m = list("Owen","Luka","Nelson","Branson", "Tyson", "Leo", "Bryant", "Kobe", "Rohan", "Riley", "Aidan", "Watase","Egawa", "Hisakawa", "Koide", "Remy", "Martial", "Magnus", "Heiko", "Lennard")
-	var/list/first_names_f = list("Madison","Jessica","Anna","Juliet", "Olivia", "Lea", "Diane", "Kaori", "Beatrice", "Riley", "Amy", "Natsue","Yumi", "Aiko", "Fujiko", "Jennifer", "Ashley", "Mary", "Hitomi", "Lisa")
-
-	var/list/last_names_mb = list("Bates","Shaw","Hansen","Black", "Chambers", "Hall", "Gibson", "Weiss", "Waller", "Burton", "Bakin", "Rohan", "Naomichi", "Yakumo", "Yosai", "Gallagher", "Hiles", "Bourdon", "Strassman", "Palau")
-	var/datum/preferences/A = new()
-	A.randomize_appearance_for(mob)
-
+	var/mob/living/carbon/human/mob = new /mob/living/carbon/human(spawn_loc)
+	
 	if(mob.gender == MALE)
-		mob.real_name = "PMC [pick(first_names_m)] [pick(last_names_mb)]"
-		mob.f_style = "5 O'clock Shadow"
+		mob.real_name = "[pick(first_names_male_pmc)] [pick(last_names_pmc)]"
 	else
-		mob.real_name = "PMC [pick(first_names_f)] [pick(last_names_mb)]"
-	mob.name = mob.real_name
-	mob.age = rand(25,35)
-	mob.dna.ready_dna(mob)
-	mob.h_style = "Shaved Head"
-	mob.r_hair = 25
-	mob.g_hair = 25
-	mob.b_hair = 35
+		mob.real_name = "[pick(first_names_female_pmc)] [pick(last_names_pmc)]"
+
 	mob.key = M.key
-	if(mob.client) mob.client.change_view(world.view)
+	if(mob.client) 
+		mob.client.change_view(world.view)
 
-//	M.transfer_to(mob)
-
-
-	mob.mind.assigned_role = "PMC"
-	ticker.mode.traitors += mob.mind
 	spawn(0)
 		if(!leader)       //First one spawned is always the leader.
 			leader = mob
-			mob.mind.set_cm_skills(/datum/skills/SL/pmc)
-			mob.arm_equipment(mob, "Weyland-Yutani PMC (Leader)")
-			mob.mind.special_role = "MODE"
-			mob.mind.assigned_role = "PMC Leader"
+			var/datum/job/J = new /datum/job/pmc/leader
+			mob.set_everything(mob, "PMC Leader")
+			J.generate_equipment(mob)
 		else
-			mob.mind.special_role = "MODE"
 			if(prob(55)) //Randomize the heavy commandos and standard PMCs.
-				mob.mind.set_cm_skills(/datum/skills/pfc/pmc)
-				mob.arm_equipment(mob, "Weyland-Yutani PMC (Standard)")
+				var/datum/job/J = new /datum/job/pmc/standard
+				mob.set_everything(mob, "PMC Standard")
+				J.generate_equipment(mob)
 				to_chat(mob, "<font size='3'>\red You are a Weyland Yutani mercenary!</font>")
 			else
 				if(prob(30))
-					mob.mind.set_cm_skills(/datum/skills/specialist/pmc)
-					mob.arm_equipment(mob, "Weyland-Yutani PMC (Sniper)")
+					var/datum/job/J = new /datum/job/pmc/sniper
+					mob.set_everything(mob, "PMC Sniper")
+					J.generate_equipment(mob)
 					to_chat(mob, "<font size='3'>\red You are a Weyland Yutani sniper!</font>")
 				else
-					mob.mind.set_cm_skills(/datum/skills/smartgunner/pmc)
-					mob.arm_equipment(mob, "Weyland-Yutani PMC (Gunner)")
+					var/datum/job/J = new /datum/job/pmc/gunner
+					mob.set_everything(mob, "PMC Gunner")
+					J.generate_equipment(mob)
 					to_chat(mob, "<font size='3'>\red You are a Weyland Yutani heavy gunner!</font>")
 		print_backstory(mob)
 
@@ -94,74 +78,3 @@
 	to_chat(M, "")
 	to_chat(M, "<B>Ensure no damage is incurred against Weyland Yutani. Make sure the CL is safe.</b>")
 	to_chat(M, "<B>Deny Weyland-Yutani's involvement and do not trust the UA/USCM forces.</b>")
-
-
-
-
-
-
-/datum/emergency_call/pmc/spawn_items()
-	var/turf/drop_spawn
-	var/choice
-
-	for(var/i = 0 to 0) //Spawns up to 3 random things.
-		if(prob(20)) continue
-		choice = (rand(1,8) - round(i/2)) //Decreasing values, rarer stuff goes at the end.
-		if(choice < 0) choice = 0
-		drop_spawn = get_spawn_point(1)
-		if(istype(drop_spawn))
-			switch(choice)
-				if(0)
-					new /obj/item/weapon/gun/smg/m39/elite(drop_spawn)
-					new /obj/item/weapon/gun/smg/m39/elite(drop_spawn)
-					new /obj/item/ammo_magazine/smg/m39/ap
-					new /obj/item/ammo_magazine/smg/m39/ap
-					continue
-				if(1)
-					new /obj/item/weapon/gun/smg/m39/elite(drop_spawn)
-					new /obj/item/weapon/gun/smg/m39/elite(drop_spawn)
-					new /obj/item/ammo_magazine/smg/m39/ap
-					new /obj/item/ammo_magazine/smg/m39/ap
-					continue
-				if(2)
-					new /obj/item/weapon/gun/flamer(drop_spawn)
-					new /obj/item/weapon/gun/flamer(drop_spawn)
-					new /obj/item/weapon/gun/flamer(drop_spawn)
-					continue
-				if(3)
-					new /obj/item/explosive/plastique(drop_spawn)
-					new /obj/item/explosive/plastique(drop_spawn)
-					new /obj/item/explosive/plastique(drop_spawn)
-					continue
-				if(4)
-					new /obj/item/weapon/gun/rifle/m41a/elite(drop_spawn)
-					new /obj/item/weapon/gun/rifle/m41a/elite(drop_spawn)
-					new /obj/item/ammo_magazine/rifle/incendiary
-					new /obj/item/ammo_magazine/rifle/incendiary
-					continue
-				if(5)
-					new /obj/item/weapon/gun/launcher/m92(drop_spawn)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					continue
-				if(6)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					new /obj/item/weapon/gun/flamer(drop_spawn)
-					continue
-				if(7)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					new /obj/item/explosive/grenade/frag/PMC(drop_spawn)
-					new /obj/item/weapon/gun/flamer(drop_spawn)
-					continue
-
-
-
-
-
-/datum/emergency_call/pmc/platoon
-	name = "Weyland-Yutani PMC (Platoon)"
-	mob_min = 8
-	mob_max = 25
-	probability = 0

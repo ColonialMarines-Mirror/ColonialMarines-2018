@@ -208,7 +208,6 @@
 #include "code\datums\emergency_calls\upp.dm"
 #include "code\datums\emergency_calls\upp_commando.dm"
 #include "code\datums\emergency_calls\xenos.dm"
-#include "code\datums\emergency_calls\zombie.dm"
 #include "code\datums\helper_datums\construction_datum.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\global_iterator.dm"

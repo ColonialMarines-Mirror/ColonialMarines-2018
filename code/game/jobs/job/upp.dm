@@ -9,7 +9,6 @@
 
 	generate_entry_conditions(mob/living/carbon/human/H)
 		H.add_language("Russian")
-		H.real_name = "UPP " + H.real_name
 
 
 //UPP Standard

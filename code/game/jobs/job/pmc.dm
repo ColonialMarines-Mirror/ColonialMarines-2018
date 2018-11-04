@@ -15,6 +15,7 @@
 /datum/job/pmc/standard
 	title = "PMC Standard"
 	paygrade = "PMC1"
+	skills_type = /datum/skills/pfc/pmc
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG,
 				ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING,
 				ACCESS_MARINE_MEDBAY, ACCESS_MARINE_PREP, ACCESS_MARINE_MEDPREP, ACCESS_MARINE_ENGPREP,ACCESS_MARINE_SMARTPREP,
@@ -51,7 +52,7 @@
 /datum/job/pmc/gunner
 	title = "PMC Mechanic"
 	paygrade = "PMC2"
-	skills_type = /datum/skills/combat_engineer
+	skills_type = /datum/skills/smartgunner/pmc
 	equipment = TRUE
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG,
 				ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING,
@@ -82,9 +83,9 @@
 
 //PMC Sniper
 /datum/job/pmc/sniper
-	title = "PMC Triage"
+	title = "PMC Sniper"
 	paygrade = "PMC3"
-	skills_type = /datum/skills/combat_engineer
+	skills_type = /datum/skills/specialist/pmc
 	equipment = TRUE
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG,
 				ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING,
@@ -117,7 +118,7 @@
 /datum/job/pmc/leader
 	title = "PMC Leader"
 	paygrade = "PMC4"
-	skills_type = /datum/skills/combat_engineer
+	skills_type = /datum/skills/SL/pmc
 	equipment = TRUE
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG,
 				ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING,

@@ -294,6 +294,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(possible_xenomorphs.len) //We still have candidates
 			new_xeno = pick(possible_xenomorphs)
 			if(!new_xeno) 
+				message_admins("DEBUG: No possible candidates?")
 				break  //Looks like we didn't get anyone. Back out.
 			new_xeno.assigned_role = "MODE"
 			new_xeno.special_role = "Xenomorph"
@@ -533,9 +534,11 @@ datum/game_mode/proc/initialize_post_queen_list()
 			var/i = surv_starting_num
 			var/datum/mind/new_survivor
 			while(i > 0)
-				if(!possible_survivors.len) break  //Ran out of candidates! Can't have a null pick(), so just stick with what we have.
+				if(!possible_survivors.len) 
+					break  //Ran out of candidates! Can't have a null pick(), so just stick with what we have.
 				new_survivor = pick(possible_survivors)
-				if(!new_survivor) break  //We ran out of survivors!
+				if(!new_survivor) 
+					break  //We ran out of survivors!
 				new_survivor.assigned_role = "MODE"
 				new_survivor.special_role = "Survivor"
 				possible_survivors -= new_survivor

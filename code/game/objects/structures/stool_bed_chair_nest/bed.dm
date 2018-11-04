@@ -557,7 +557,7 @@ var/global/list/activated_medevac_stretchers = list()
 		to_chat(user, "<span class='warning'>You retrieve and deactivate [src].</span>")
 		icon_state = "med_beacon0"
 		playsound(loc,'sound/machines/click.ogg', 25, FALSE)
-	. = ..()
+	return ..()
 
 /obj/item/device/medevac_beacon/attackby(var/obj/item/O as obj, mob/user as mob) //Medics can lock their beacons.
 	if(!ishuman(user))

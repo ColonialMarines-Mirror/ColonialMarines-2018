@@ -280,7 +280,7 @@
 
 			else if(isobj(A))
 				ammo.on_hit_obj(A,src)
-				if(A?.loc)
+				if(A && A.loc)
 					if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
 						ammo.on_hit_turf(A,src)
 					A.bullet_act(src)
@@ -289,6 +289,9 @@
 	// Explosive ammo always explodes on the turf of the clicked target
 	if(src && ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)
 		ammo.on_hit_turf(T,src)
+		if(T?.loc)
+			T.bullet_act(src)
+		return TRUE
 
 		if(T?.loc)
 			T.bullet_act(src)

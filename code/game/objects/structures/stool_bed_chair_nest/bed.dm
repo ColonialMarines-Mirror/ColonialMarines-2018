@@ -467,7 +467,7 @@ var/global/list/activated_medevac_stretchers = list()
 		var/obj/item/device/healthanalyzer/J = W
 		J.attack(occupant, user)
 		return
-	. = ..()
+	return ..()
 
 /obj/structure/bed/medevac_stretcher/proc/medvac_alert(mob/M)
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)

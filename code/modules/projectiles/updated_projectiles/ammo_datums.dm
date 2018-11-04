@@ -1254,7 +1254,7 @@
 	spit_cost = 75
 
 /datum/ammo/xeno/acid/New()
-	..()
+	. = ..()
 	damage = config.llow_hit_damage
 	damage_var_low = config.low_proj_variance
 	damage_var_high = config.med_proj_variance

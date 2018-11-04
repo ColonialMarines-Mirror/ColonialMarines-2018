@@ -277,6 +277,7 @@ datum/game_mode/proc/initialize_special_clamps()
 //If we are selecting xenomorphs, we NEED them to play the round. This is the expected behavior.
 //If this is an optional behavior, just override this proc or make an override here.
 /datum/game_mode/proc/initialize_starting_xenomorph_list()
+	message_admins("DEBUG: Initializing starting xeno list.")
 	var/list/datum/mind/possible_xenomorphs = get_players_for_role(BE_ALIEN)
 	if(possible_xenomorphs.len < xeno_required_num) //We don't have enough aliens.
 		to_chat(world, "<h2 style=\"color:red\">Not enough players have chosen to be a xenomorph in their character setup. <b>Aborting</b>.</h2>")
@@ -318,6 +319,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	return TRUE
 
 /datum/game_mode/proc/initialize_starting_queen_list()
+	message_admins("DEBUG: Initializing starting queen list.")
 	var/list/datum/mind/possible_queens = get_players_for_role(BE_QUEEN)
 
 	//Minds are not transferred at this point, so we have to clean out those who may be already picked to play.

@@ -1951,14 +1951,14 @@ MEDICAL
 					/obj/item/storage/box/autoinjectors,
 					/obj/item/storage/box/syringes,
 					/obj/item/reagent_container/glass/bottle/inaprovaline,
-					/obj/item/reagent_container/glass/bottle/antitoxin,
+					/obj/item/reagent_container/glass/bottle/dylovene,
 					/obj/item/reagent_container/glass/bottle/bicaridine,
 					/obj/item/reagent_container/glass/bottle/dexalin,
 					/obj/item/reagent_container/glass/bottle/spaceacillin,
 					/obj/item/reagent_container/glass/bottle/kelotane,
 					/obj/item/reagent_container/glass/bottle/tramadol,
 					/obj/item/storage/pill_bottle/inaprovaline,
-					/obj/item/storage/pill_bottle/antitox,
+					/obj/item/storage/pill_bottle/dylovene,
 					/obj/item/storage/pill_bottle/bicaridine,
 					/obj/item/storage/pill_bottle/dexalin,
 					/obj/item/storage/pill_bottle/spaceacillin,
@@ -2073,6 +2073,17 @@ MEDICAL
 	access = ACCESS_MARINE_MEDBAY
 	group = "Medical"
 
+/datum/supply_packs/medvac
+	name = "medvac system crate (medvac stretcher and beacon)"
+	contains = list(
+					/obj/item/roller/medevac,
+					/obj/item/device/medevac_beacon,
+					)
+	cost = RO_PRICE_VERY_PRICY
+	containertype = /obj/structure/closet/crate/secure/surgery
+	containername = "\improper medvac crate"
+	access = ACCESS_MARINE_MEDBAY
+	group = "Medical"
 
 /*******************************************************************************
 ENGINEERING

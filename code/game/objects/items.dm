@@ -184,25 +184,7 @@ cases. Override_icon_state should be a list.*/
 
 
 /obj/item/attack_paw(mob/user as mob)
-
-	if(anchored)
-		to_chat(user, "[src] is anchored to the ground.")
-		return
-
-	if (istype(src.loc, /obj/item/storage))
-		var/obj/item/storage/S = src.loc
-		S.remove_from_storage(src, user.loc)
-
-	src.throwing = FALSE
-	if (loc == user)
-		if(!user.drop_inv_item_on_ground(src))
-			return
-	else
-		user.next_move = max(user.next_move+2,world.time + 2)
-	if(!disposed) //item may have been cdel'd by the drop above.
-		pickup(user)
-		if(!user.put_in_active_hand(src))
-			dropped(user)
+	return attack_hand(user)
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -699,3 +681,108 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/attack_alien(mob/living/carbon/Xenomorph/M)
 	return FALSE
 
+/obj/item/proc/update_action_button_icons()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.update_button_icon()
+
+/obj/item/proc/extinguish(atom/target, mob/user)
+
+	if (reagents.total_volume < 1)
+		to_chat(user, "\red \The [src]'s water reserves are empty.")
+		return
+
+	user.visible_message("<span class='danger'>[user] sprays water from [src]!</span>", \
+	"<span class='warning'>You spray water from [src].</span>",)
+
+	playsound(user.loc, 'sound/effects/extinguish.ogg', 52, 1, 7)
+
+	var/direction = get_dir(user,target)
+
+	if(user.buckled && isobj(user.buckled) && !user.buckled.anchored )
+		spawn(0)
+			var/obj/structure/bed/chair/C = null
+			if(istype(user.buckled, /obj/structure/bed/chair))
+				C = user.buckled
+			var/obj/B = user.buckled
+			var/movementdirection = turn(direction,180)
+			if(C)
+				C.propelled = 4
+			B.Move(get_step(user,movementdirection), movementdirection)
+			sleep(1)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			if(C)
+				C.propelled = 3
+			sleep(1)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			sleep(1)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			if(C)
+				C.propelled = 2
+			sleep(2)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			if(C)
+				C.propelled = 1
+			sleep(2)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			if(C)
+				C.propelled = 0
+			sleep(3)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			sleep(3)
+			B.Move(get_step(user,movementdirection), movementdirection)
+			sleep(3)
+			B.Move(get_step(user,movementdirection), movementdirection)
+
+	var/turf/T = get_turf(target)
+	var/turf/T1 = get_step(T,turn(direction, 90))
+	var/turf/T2 = get_step(T,turn(direction, -90))
+
+	var/list/the_targets = list(T,T1,T2)
+
+	for(var/a=0, a<7, a++)
+		spawn(0)
+			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water( get_turf(user) )
+			var/turf/my_target = pick(the_targets)
+			var/datum/reagents/R = new/datum/reagents(5)
+			if(!W)
+				return
+			W.reagents = R
+			R.my_atom = W
+			if(!W || !src)
+				return
+			reagents.trans_to(W,1)
+			for(var/b=0, b<7, b++)
+				step_towards(W,my_target)
+				if(!(W?.reagents))
+					return
+				W.reagents.reaction(get_turf(W))
+				for(var/atom/atm in get_turf(W))
+					if(!W)
+						return
+					if(!W.reagents)
+						break
+					W.reagents.reaction(atm)
+					if(istype(atm, /obj/flamer_fire))
+						var/obj/flamer_fire/FF = atm
+						if(FF.firelevel > 20)
+							FF.firelevel -= 20
+							FF.updateicon()
+						else
+							cdel(atm)
+						continue
+					if(isliving(atm)) //For extinguishing mobs on fire
+						var/mob/living/M = atm
+						M.ExtinguishMob()
+						for(var/obj/item/clothing/mask/cigarette/C in M.contents)
+							if(C.item_state == C.icon_on)
+								C.die()
+				if(W.loc == my_target)
+					break
+				sleep(2)
+			cdel(W)
+
+	if((istype(user.loc, /turf/open/space)) || (user.lastarea.has_gravity == 0))
+		user.inertia_dir = get_dir(target, user)
+		step(user, user.inertia_dir)
+	return

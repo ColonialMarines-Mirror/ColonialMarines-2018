@@ -27,6 +27,9 @@
 	pounce_delay = 150
 	tier = 2
 	upgrade = 0
+	var/stealth_delay = null
+	var/last_stealth = null
+	var/used_stealth = FALSE
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/regurgitate,

@@ -35,7 +35,7 @@
 				M.start_pulling(src)
 
 			if(M.stealth) //Cancel stealth if we have it due to aggro.
-				M.cancel_stealth()
+				M.stealth_router(HANDLE_STEALTH_CODE_CANCEL)
 
 		if("hurt")
 			var/datum/hive_status/hive
@@ -171,7 +171,7 @@
 					KnockOut(2) //...And we knock them out
 					M.visible_message("<span class='danger'>\The [M] strikes [src] with vicious precision!</span>", \
 					"<span class='danger'>You strike [src] with vicious precision!</span>")
-				M.cancel_stealth()
+				M.stealth_router(HANDLE_STEALTH_CODE_CANCEL)
 
 			apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1, edge = 1) //This should slicey dicey
 			updatehealth()
@@ -204,7 +204,7 @@
 			if(protection_aura)
 				tackle_pain = tackle_pain * (1 - (0.10 + 0.05 * protection_aura))  //Halloss damage decreased by 10% + 5% per rank of protection aura
 			if(M.stealth)
-				M.cancel_stealth()
+				M.stealth_router(HANDLE_STEALTH_CODE_CANCEL)
 				KnockOut(2)
 				tackle_pain *= 2 //Halloss multiplied by 2.
 				M.visible_message("<span class='danger'>\The [M] strikes [src] with vicious precision!</span>", \
@@ -223,8 +223,6 @@
 			"[throttle_message2]", null, 5)
 			return TRUE
 
-			if(M.stealth) //Cancel stealth if we have it due to aggro.
-				M.cancel_stealth()
 	return TRUE
 
 

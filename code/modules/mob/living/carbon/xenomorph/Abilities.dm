@@ -1220,11 +1220,11 @@
 	plasma_cost = 0
 
 /datum/action/xeno_action/activable/stealth/action_activate()
-	var/mob/living/carbon/Xenomorph/X = owner
+	var/mob/living/carbon/Xenomorph/Hunter/X = owner
 	X.Stealth()
 
 /datum/action/xeno_action/activable/stealth/action_cooldown_check()
-	var/mob/living/carbon/Xenomorph/X = owner
+	var/mob/living/carbon/Xenomorph/Hunter/X = owner
 	return !X.used_stealth
 
 

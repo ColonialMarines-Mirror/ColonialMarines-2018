@@ -478,3 +478,5 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define HUNTER_STEALTH_STEALTH_DELAY	40 //4 seconds before 95% stealth
 #define HUNTER_STEALTH_INITIAL_DELAY	20 //2 seconds before we can increase stealth
 #define HUNTER_POUNCE_SNEAKATTACK_DELAY 40 //4 seconds before we can sneak attack
+#define HANDLE_STEALTH_CHECK			1
+#define HANDLE_STEALTH_CODE_CANCEL		2

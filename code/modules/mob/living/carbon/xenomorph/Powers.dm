@@ -47,6 +47,58 @@
 		to_chat(src, "<span class='notice'>You get ready to pounce again.</span>")
 		update_action_button_icons()
 
+	return TRUE
+
+
+
+/mob/living/carbon/Xenomorph/Hunter/Pounce(atom/T)
+
+	if(!T || !check_state() || !check_plasma(20) || T.layer >= FLY_LAYER) //anything above that shouldn't be pounceable (hud stuff)
+		return
+
+	if(!isturf(loc))
+		to_chat(src, "<span class='xenowarning'>You can't pounce from here!</span>")
+		return
+
+	if(usedPounce)
+		to_chat(src, "<span class='xenowarning'>You must wait before pouncing.</span>")
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't pounce with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake up the shock!</span>")
+		return
+
+	if(layer == XENO_HIDING_LAYER) //Xeno is currently hiding, unhide him
+		layer = MOB_LAYER
+
+	if(m_intent == "walk" && isXenoHunter(src)) //Hunter that is currently using its stealth ability, need to unstealth him
+		m_intent = "run"
+		if(hud_used && hud_used.move_intent)
+			hud_used.move_intent.icon_state = "running"
+		update_icons()
+
+	visible_message("<span class='xenowarning'>\The [src] pounces at [T]!</span>", \
+	"<span class='xenowarning'>You pounce at [T]!</span>")
+	usedPounce = TRUE
+	flags_pass = PASSTABLE
+	use_plasma(20)
+	throw_at(T, 7, 2, src) //Victim, distance, speed
+	spawn(6)
+		if(!hardcore)
+			flags_pass = initial(flags_pass) //Reset the passtable.
+		else
+			flags_pass = 0 //Reset the passtable.
+
+	spawn(pounce_delay)
+		usedPounce = 0
+		to_chat(src, "<span class='xenowarning'><b>You are ready to pounce again.</b></span>")
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		update_action_button_icons()
+
 	if(stealth && can_sneak_attack) //If we're stealthed and could sneak attack, add a cooldown to sneak attack
 		to_chat(src, "<span class='xenodanger'>Your pounce has left you off-balance; you'll need to wait [HUNTER_POUNCE_SNEAKATTACK_DELAY*0.1] seconds before you can Sneak Attack again.</span>")
 		can_sneak_attack = FALSE
@@ -1553,7 +1605,7 @@
 		shake_camera(M, 2, 2)
 		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
 		M.KnockDown(1, 1)
-		
+
 	cresttoss_cooldown()
 	spawn(3) //Revert to our prior icon state.
 		if(m_intent == MOVE_INTENT_RUN)
@@ -1574,7 +1626,7 @@
 
 
 // Hunter Stealth
-/mob/living/carbon/Xenomorph/proc/Stealth()
+/mob/living/carbon/Xenomorph/Hunter/proc/Stealth()
 
 	if(!check_state())
 		return
@@ -1604,7 +1656,7 @@
 	else
 		cancel_stealth()
 
-/mob/living/carbon/Xenomorph/proc/stealth_cooldown_notice()
+/mob/living/carbon/Xenomorph/Hunter/proc/stealth_cooldown_notice()
 	if(!used_stealth)//sanity check/safeguard
 		return
 	spawn(HUNTER_STEALTH_COOLDOWN)
@@ -1613,7 +1665,7 @@
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()
 
-/mob/living/carbon/Xenomorph/proc/cancel_stealth() //This happens if we take damage, attack, pounce, toggle stealth off, and do other such exciting stealth breaking activities.
+/mob/living/carbon/Xenomorph/Hunter/proc/cancel_stealth() //This happens if we take damage, attack, pounce, toggle stealth off, and do other such exciting stealth breaking activities.
 	if(!stealth)//sanity check/safeguard
 		return
 	to_chat(src, "<span class='xenodanger'>You emerge from the shadows.</span>")

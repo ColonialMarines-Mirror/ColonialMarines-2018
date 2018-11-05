@@ -69,7 +69,7 @@
 	if(stat != CONSCIOUS && fortify == TRUE)
 		fortify_off() //Fortify prevents dragging due to the anchor component.
 
-/mob/living/carbon/Xenomorph/proc/handle_stealth()
+/mob/living/carbon/Xenomorph/Hunter/proc/handle_stealth()
 	if(!stealth)
 		return
 	if(stat != CONSCIOUS || stealth == FALSE || lying || resting) //Can't stealth while unconscious/resting
@@ -204,7 +204,7 @@
 		return
 	var/modifier = 1
 	if(stealth && last_move_intent > world.time - 20) //Stealth halves the rate of plasma recovery on weeds, and eliminates it entirely while moving
-		return
+		modifier = 0.0
 	else
 		modifier = 0.5
 	if(locate(/obj/effect/alien/weeds) in T)
@@ -220,6 +220,8 @@
 		if(current_aura)
 			current_aura = null
 			to_chat(src, "<span class='warning'>You have ran out of plasma and stopped emitting pheromones.</span>")
+
+	hud_set_plasma() //update plasma amount on the plasma mob_hud
 
 /mob/living/carbon/Xenomorph/Hivelord/handle_living_plasma_updates()
 	if(speed_activated)

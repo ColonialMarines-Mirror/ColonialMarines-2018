@@ -76,7 +76,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "A fast, powerful front line combatant. It looks a little more dangerous."
 					speed = -1.6
 					armor_deflection = 15
-					attack_delay = -1.5
+					attack_delay = -1.25
 					tackle_damage = 40 // Prior was 35
 					pounce_delay = 125
 				if("Ravager")
@@ -271,7 +271,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "A fast, powerful front line combatant. It looks pretty strong."
 					speed = -1.7
 					armor_deflection = 18
-					attack_delay = -1.8
+					attack_delay = -1.4
 					tackle_damage = 45 // Prior was 40
 					pounce_delay = 110
 				if("Ravager")
@@ -456,18 +456,19 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tacklemax = 5
 					tackle_damage = 40 // Prior was 30
 					pounce_delay = 30
+				if("Hunter")
 					to_chat(src, "<span class='xenoannounce'>You are the epitome of the hunter. Few can stand against you in open combat.</span>")
 					melee_damage_lower = 40
 					melee_damage_upper = 50
 					health = 200
 					maxHealth = 200
-					plasma_gain = 20
-					plasma_max = 300
-					caste_desc = "A completly unmatched hunter. No, not even the Yautja can match you."
-					speed = -1.8
+					plasma_gain = 18
+					plasma_max = 200
+					caste_desc = "A fast, powerful front line combatant. It looks pretty strong."
+					speed = -1.7
 					armor_deflection = 20
-					attack_delay = -2
-					tackle_damage = 50 // Prior was 45
+					attack_delay = -1.5
+					tackle_damage = 50 // Prior was 40
 					pounce_delay = 100
 				if("Ravager")
 					to_chat(src, "<span class='xenoannounce'>You are death incarnate. All will tremble before you.</span>")

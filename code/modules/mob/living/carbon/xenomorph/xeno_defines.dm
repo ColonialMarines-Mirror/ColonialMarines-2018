@@ -168,9 +168,6 @@
 
 	//Hunter vars
 	var/stealth = FALSE
-	var/stealth_delay = null
-	var/last_stealth = null
-	var/used_stealth = FALSE
 	var/can_sneak_attack = FALSE
 
 	//Notification spam controls

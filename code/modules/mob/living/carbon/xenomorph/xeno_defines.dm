@@ -139,8 +139,11 @@
 
 	var/headbutt_cooldown = 40
 	var/tail_sweep_cooldown = 120
-	var/crest_defense_cooldown = 20
-	var/fortify_cooldown = 20
+	var/crest_defense_cooldown = 10
+	var/crest_defense_armor = 35
+	var/fortify_cooldown = 10
+	var/fortify_armor = 70
+
 
 	//Praetorian vars
 	var/acid_spray_range = 3
@@ -162,6 +165,9 @@
 	//Notification spam controls
 	var/recent_notice = 0
 	var/notice_delay = 20 //2 second between notices
+
+	var/cresttoss_used = FALSE
+	var/cresttoss_cooldown = 60
 
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL

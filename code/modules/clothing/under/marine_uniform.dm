@@ -309,6 +309,6 @@
 
 /obj/item/clothing/under/rank/ro_suit
 	name = "requisition officer suit."
-	desc = "A nicely-fitting military suit for a requisition officer.
+	desc = "A nicely-fitting military suit for a requisition officer."
 	icon_state = "RO_jumpsuit"
 	rollable_sleeves = FALSE

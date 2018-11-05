@@ -91,7 +91,7 @@ Additional game mode variables.
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
 	//xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
-	xeno_starting_num = ready_players
+	xeno_starting_num = 10
 	surv_starting_num = CLAMP((ready_players/25), 0, 8)
 	merc_starting_num = max((ready_players/3), 1)
 	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
@@ -294,7 +294,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	for(var/datum/mind/A in possible_xenomorphs)
 		message_admins("Xenomorph possible candidate: [A]")
 
-	var/i = xeno_starting_num
+	var/i = 10
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
 	message_admins("DEBUG: [i] this is i.")

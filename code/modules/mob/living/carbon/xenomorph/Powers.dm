@@ -534,10 +534,6 @@
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
 
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
-		return
-
 	if (!check_state())
 		return
 
@@ -545,7 +541,10 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(20))
+			return
+	else if (!check_plasma(10))
 		return
 
 	if(stagger)
@@ -576,7 +575,10 @@
 	"<span class='xenowarning'>You ram [H] with your armored crest!</span>")
 
 	used_headbutt = 1
-	use_plasma(10)
+	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		use_plasma(20)
+	else
+		use_plasma(10)
 
 	face_atom(H) //Face towards the target so we don't look silly
 
@@ -618,10 +620,6 @@
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
 
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
-		return
-
 	if (!check_state())
 		return
 
@@ -629,7 +627,10 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before tail sweeping.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(30))
+			return
+	else if (!check_plasma(15))
 		return
 
 	if(stagger)
@@ -666,7 +667,10 @@
 		to_chat(H, "<span class='xenowarning'>You are struck by \the [src]'s tail sweep!</span>")
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	used_tail_sweep = TRUE
-	use_plasma(10)
+	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		use_plasma(30)
+	else
+		use_plasma(15)
 
 	spawn(tail_sweep_cooldown)
 		used_tail_sweep = FALSE
@@ -701,7 +705,8 @@
 		else
 			to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
 		round_statistics.defender_crest_lowerings++
-		armor_bonus += DEFENDER_CRESTDEFENSE_ARMOR
+		armor_bonus += crest_defense_armor
+		xeno_explosion_resistance = 2
 		speed_modifier += DEFENDER_CRESTDEFENSE_SLOWDOWN	// This is actually a slowdown but speed is dumb
 		update_icons()
 		do_crest_defense_cooldown()
@@ -709,7 +714,8 @@
 
 	round_statistics.defender_crest_raises++
 	to_chat(src, "<span class='xenowarning'>You raise your crest.</span>")
-	armor_bonus -= DEFENDER_CRESTDEFENSE_ARMOR
+	armor_bonus -= crest_defense_armor
+	xeno_explosion_resistance = 0
 	speed_modifier -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	update_icons()
 	do_crest_defense_cooldown()
@@ -746,7 +752,7 @@
 				return
 		else
 			to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
-		armor_bonus += DEFENDER_FORTIFY_ARMOR
+		armor_bonus += fortify_armor
 		xeno_explosion_resistance = 3
 		frozen = TRUE
 		anchored = TRUE
@@ -761,7 +767,7 @@
 
 /mob/living/carbon/Xenomorph/proc/fortify_off()
 	to_chat(src, "<span class='xenowarning'>You resume your normal stance.</span>")
-	armor_bonus -= DEFENDER_FORTIFY_ARMOR
+	armor_bonus -= fortify_armor
 	xeno_explosion_resistance = 0
 	frozen = FALSE
 	anchored = FALSE

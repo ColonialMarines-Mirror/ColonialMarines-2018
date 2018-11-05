@@ -325,13 +325,17 @@ datum/game_mode/proc/initialize_special_clamps()
 		return FALSE
 
 	for(var/datum/mind/new_queen in possible_queens)
-		if(!jobban_isbanned(new_queen.current))
-			new_queen.assigned_role = "MODE"
-			new_queen.special_role = "Xenomorph"
-			queen = new_queen
-			break
+		if(jobban_isbanned(new_queen.current))
+			continue
+		new_queen.assigned_role = "MODE"
+		new_queen.special_role = "Xenomorph"
+		queen = new_queen
+		break
 
-	return TRUE
+	if(!queen)
+		return FALSE
+	else
+		return TRUE
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.

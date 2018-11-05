@@ -89,7 +89,7 @@
 		for(var/mob/new_player/player in player_list)
 			if(player.client && player.ready)
 				playerC++
-		var/scale = max(playerC / MARINE_GEAR_SCALING_NORMAL, 1)
+		var/scale = max((playerC / MARINE_GEAR_SCALING_NORMAL), 1)
 		monkey_amount = round(scale * monkey_amount)
 		//var/debug_tally = 0
 		switch(map_tag)

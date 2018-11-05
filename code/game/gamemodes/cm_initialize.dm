@@ -294,15 +294,16 @@ datum/game_mode/proc/initialize_special_clamps()
 			possible_xenomorphs -= A
 
 	for(var/datum/mind/A in possible_xenomorphs)
-		message_admins("Xenomorph possible candidate: [A]")
+		message_admins("DEBUG: Xenomorph possible candidate: [A.key]")
 
 	var/i = xeno_starting_num
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
+	message_admins("DEBUG: [xeno_starting_num]")
 	message_admins("DEBUG: [i] this is i.")
 	while(i > 0) //While we can still pick someone for the role.
 		if(possible_xenomorphs.len) //We still have candidates
-			message_admins("We still have candidates, yay.")
+			message_admins("DEBUG: We still have candidates, yay.")
 			new_xeno = pick(possible_xenomorphs)
 			if(!new_xeno) 
 				message_admins("DEBUG: Last candidate gone, aborting.")
@@ -324,7 +325,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	So they may have been removed from the list, oh well.
 	*/
 	for(var/datum/mind/A in xenomorphs)
-		message_admins("Xenomorph picked candidate: [A]")
+		message_admins("Xenomorph picked candidate: [A.key]")
 	if(xenomorphs.len < xeno_required_num)
 		//to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
 		message_admins("Xenomorph list didn't get properly filled.")

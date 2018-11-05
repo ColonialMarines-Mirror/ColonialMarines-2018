@@ -61,8 +61,7 @@
 		mob.real_name = "[pick(first_names_female_russian)] [pick(last_names_russian)]"
 
 	mob.key = M.key
-	if(mob.client) 
-		mob.client.change_view(world.view)
+	mob.client?.change_view(world.view)
 
 	spawn(0)
 		if(!leader)       //First one spawned is always the leader.

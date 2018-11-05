@@ -272,6 +272,7 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("O7") . = size ? "ADM " : "Admiral"
 		if("O8") . = size ? "FADM " : "Fleet Admiral"
 		if("O9") . = size ? "SMR " : "Sky Marshal"
+		if("WO") . = size ? "WO " : "Warrant Officer"
 		if("UPP1") . = size ? "UPVT " : "UPP Private"
 		if("UPP2") . = size ? "UPFC " : "UPP Private First Class"
 		if("UPP3") . = size ? "UCPL " : "UPP Corporal"

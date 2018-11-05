@@ -890,7 +890,7 @@
 		update_health(round(Proj.damage * 0.33))
 	else
 		update_health(round(Proj.damage * 0.1))
-	return 1
+	return TRUE
 
 /obj/machinery/marine_turret/process()
 

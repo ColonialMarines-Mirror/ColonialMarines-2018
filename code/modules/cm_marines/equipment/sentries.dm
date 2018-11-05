@@ -1025,7 +1025,7 @@
 				if(alerts_on)
 					sentry_alert(SENTRY_ALERT_AMMO)
 
-	return 1
+	return TRUE
 
 //Mostly taken from gun code.
 /obj/machinery/marine_turret/proc/muzzle_flash(var/angle)

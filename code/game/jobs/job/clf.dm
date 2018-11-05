@@ -28,27 +28,27 @@
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT
 
 	generate_equipment(mob/living/carbon/human/H)
-		M.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/dutch(M), WEAR_EAR)
-		M.equip_to_slot_or_del(new /obj/item/clothing/under/colonist(M), WEAR_BODY)
-		M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/militia(M), WEAR_JACKET)
-		M.equip_to_slot_or_del(new /obj/item/clothing/head/militia(M), WEAR_HEAD)
-		M.equip_to_slot_or_del(new /obj/item/storage/backpack/lightpack(M), WEAR_BACK)
-		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), WEAR_FEET)
-		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), WEAR_HANDS)
-		M.equip_to_slot_or_del(new /obj/item/device/flashlight(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new /obj/item/explosive/grenade/frag/stick(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new /obj/item/explosive/grenade/incendiary/molotov(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new /obj/item/explosive/grenade/incendiary/molotov(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new obj/item/ammo_magazine/smg/uzi/extended(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new obj/item/ammo_magazine/smg/uzi/extended(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new obj/item/ammo_magazine/smg/uzi/extended(M.back), WEAR_IN_BACK)
-		M.equip_to_slot_or_del(new /obj/item/storage/pouch/general(M), WEAR_R_STORE)
-		M.equip_to_slot_or_del(new /obj/item/weapon/gun/smg/uzi(M), WEAR_L_HAND)
-		M.equip_to_slot_or_del(new /obj/item/weapon/gun/smg/uzi(M), WEAR_R_HAND)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/dutch(H), WEAR_EAR)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/colonist(H), WEAR_BODY)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/militia(H), WEAR_JACKET)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/militia(H), WEAR_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/storage/backpack/lightpack(H), WEAR_BACK)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), WEAR_FEET)
+		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), WEAR_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/device/flashlight(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/explosive/grenade/frag/stick(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/explosive/grenade/incendiary/molotov(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/explosive/grenade/incendiary/molotov(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/ammo_magazine/smg/uzi/extended(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/ammo_magazine/smg/uzi/extended(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/ammo_magazine/smg/uzi/extended(H.back), WEAR_IN_BACK)
+		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general(H), WEAR_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/weapon/gun/smg/uzi(H), WEAR_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/gun/smg/uzi(H), WEAR_R_HAND)
 
 
 //CLF Medic
-/datum/job/upp/medic
+/datum/job/clf/medic
 	title = "CLF Medic"
 	paygrade = "CLF2"
 	equipment = TRUE
@@ -89,7 +89,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
 
 //CLF Leader
-/datum/job/upp/leader
+/datum/job/clf/leader
 	title = "CLF Leader"
 	paygrade = "CLF3"
 	equipment = TRUE

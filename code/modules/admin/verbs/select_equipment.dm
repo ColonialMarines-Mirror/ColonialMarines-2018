@@ -104,9 +104,6 @@
 			M.equip_to_slot_or_del(new /obj/item/explosive/grenade/frag/stick(M.back), WEAR_IN_BACK)
 			M.equip_to_slot_or_del(new /obj/item/storage/pouch/general(M), WEAR_R_STORE)
 
-			spawn_merc_gun(M)
-			spawn_rebel_gun(M,1)
-
 
 			var/obj/item/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
@@ -142,7 +139,6 @@
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(M), WEAR_EYES)
 
-			spawn_merc_gun(M)
 
 			var/obj/item/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
@@ -171,8 +167,6 @@
 			M.equip_to_slot_or_del(new /obj/item/explosive/plastique(M.back), WEAR_IN_BACK)
 			M.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(M), WEAR_R_STORE)
 
-			spawn_merc_gun(M)
-			spawn_merc_gun(M,1)
 
 			var/obj/item/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"

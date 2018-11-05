@@ -187,7 +187,7 @@
 		H.equip_to_slot_or_del(new /obj/item/ammo_magazine/rifle/ap(H.back), WEAR_IN_BACK)
 		H.equip_to_slot_or_del(new /obj/item/weapon/gun/rifle/m41a/elite(H), WEAR_J_STORE)
 
-/datum/job/pmc/deathsquad/standard
+/datum/job/pmc/deathsquad/leader
 	title = "PMC Deathsquad Leader"
 	paygrade = "PMCDSL"
 	skills_type = /datum/skills/SL/pmc

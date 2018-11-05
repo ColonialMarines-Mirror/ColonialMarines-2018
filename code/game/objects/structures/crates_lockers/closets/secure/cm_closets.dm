@@ -474,7 +474,7 @@
 	New()
 		..()
 		new /obj/item/device/radio/headset/almayer/mcom(src)
-		new /obj/item/clothing/under/rank/ro_suit(src)
+		new /obj/item/clothing/under/marine/officer/req(src)
 		new /obj/item/clothing/shoes/marine(src)
 		new /obj/item/storage/belt/marine(src)
 		new /obj/item/clothing/head/cmcap/req(src)

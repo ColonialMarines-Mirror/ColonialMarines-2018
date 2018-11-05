@@ -1064,7 +1064,7 @@
 		*/
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && H.get_target_lock(iff_signal))
-		 continue
+			continue
 
 
 
@@ -1081,30 +1081,24 @@
 			continue
 
 		if(path.len)
-			var/blocked = FALSE //reset blocked
+			var/blocked = FALSE
 			var/current_turf = get_turf(src)
 			for(T in path)
 				if(T == current_turf) //Don't deal with the current turf
 					continue
 				if(T.opacity || T.density)
 					blocked = TRUE
-					continue //don't pass on targets we can't actually fire at.
+					break //LoF Broken; stop checking; we can't proceed further.
 
-				if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks LoS/LoF
-					if(locate(/obj/machinery) in T)
-						var/obj/machinery/MA
-						for(MA in T)
-							if(MA.opacity || MA.density && !(MA.flags_atom & ON_BORDER))
-								blocked = TRUE
-								continue //don't pass on targets we can't actually fire at.
+				for(var/obj/machinery/MA in T)
+					if(MA.opacity || MA.density && !(MA.flags_atom & ON_BORDER) )
+						blocked = TRUE
+						break //LoF Broken; stop checking; we can't proceed further.
 
-				if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks LoS/LoF
-					if(locate(/obj/structure) in T)
-						var/obj/structure/S
-						for(S in T)
-							if(S.opacity || S.density && !(S.flags_atom & ON_BORDER) )
-								blocked = TRUE
-								continue //don't pass on targets we can't actually fire at.
+				for(var/obj/structure/S in T)
+					if(S.opacity || S.density && !(S.flags_atom & ON_BORDER) )
+						blocked = TRUE
+						break //LoF Broken; stop checking; we can't proceed further.
 			if(!blocked)
 				targets += M
 
@@ -1324,25 +1318,28 @@
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr //this is us
-	if(over_object == user && in_range(src, user))
-		if(anchored)
-			to_chat(user, "<span class='warning'>You must unanchor [src] to retrieve it!</span>")
-			return
-		if(on)
-			to_chat(user, "<span class='warning'>You depower [src] to facilitate its retrieval.</span>")
-			on = FALSE
-			update_icon()
+	if(!over_object == user || !in_range(src, user))
+		return
 
-		user.visible_message("<span class='notice'>[user] begins to fold up and retrieve [src].</span>",
-		"<span class='notice'>You begin to fold up and retrieve [src].</span>")
-		if(do_after(user, work_time * 1.5, TRUE, 5, BUSY_ICON_BUILD))
-			if(!src || on || anchored)//Check if we got exploded
-				return
-			to_chat(user, "<span class='notice'>You fold up and retrieve [src].</span>")
-			var/obj/item/device/marine_turret/mini/P = new(loc)
-			user.put_in_hands(P)
-			P.health = health //track the health
-			cdel(src)
+	if(anchored)
+		to_chat(user, "<span class='warning'>You must unanchor [src] to retrieve it!</span>")
+		return
+
+	if(on)
+		to_chat(user, "<span class='warning'>You depower [src] to facilitate its retrieval.</span>")
+		on = FALSE
+		update_icon()
+
+	user.visible_message("<span class='notice'>[user] begins to fold up and retrieve [src].</span>",
+	"<span class='notice'>You begin to fold up and retrieve [src].</span>")
+	if(do_after(user, work_time * 1.5, TRUE, 5, BUSY_ICON_BUILD))
+		if(!src || on || anchored)//Check if we got exploded
+			return
+		to_chat(user, "<span class='notice'>You fold up and retrieve [src].</span>")
+		var/obj/item/device/marine_turret/mini/P = new(loc)
+		user.put_in_hands(P)
+		P.health = health //track the health
+		cdel(src)
 
 /obj/machinery/marine_turret/mini/update_icon()
 	if(stat && health > 0) //Knocked over
@@ -1397,19 +1394,18 @@
 	var/blocked
 	if(target.density)
 		blocked = TRUE
-	if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks placement
-		if(locate(/obj/machinery) in target)
-			var/obj/machinery/MA
-			for(MA in target)
-				if(MA.density)
-					blocked = TRUE
 
 	if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks placement
-		if(locate(/obj/structure) in target)
-			var/obj/structure/S
-			for(S in target)
-				if(S.density)
-					blocked = TRUE
+		for(var/obj/machinery/MA in target)
+			if(MA.density)
+				blocked = TRUE
+				break //LoF Broken; stop checking; we can't proceed further.
+	if(!blocked)
+		for(var/obj/structure/S in target)
+			if(S.density)
+				blocked = TRUE
+				break //LoF Broken; stop checking; we can't proceed further.
+
 	if(blocked)
 		to_chat(user, "<span class='warning'>Insufficient room to deploy [src]!</span>")
 		return

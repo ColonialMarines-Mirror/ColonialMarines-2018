@@ -1,19 +1,9 @@
-/*Heal 1/70th of your max health in brute per tick. 1 as a bonus, to help smaller pools.
-Additionally, recovery pheromones mutiply this base healing, up to 2.5 times faster at level 5
-Modified via m, to multiply the number of wounds healed.
-Heal from fire slower
-Make sure their actual health updates immediately.*/
-
-#define XENO_HEAL_WOUNDS(m) \
-adjustBruteLoss(-((maxHealth / 60) + 0.5 + (maxHealth / 60) * recovery_aura/2)*(m)); \
-adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
-
 #define DEBUG_XENO_LIFE	0
+#define XENO_RESTING_HEAL 1
+#define XENO_STANDING_HEAL 0.2
+#define XENO_CRIT_DAMAGE 5
 
 /mob/living/carbon/Xenomorph/Life()
-
-	set invisibility = 0
-	set background = 1
 
 	if(monkeyizing || !loc)
 		return
@@ -36,16 +26,20 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	handle_aura_receiver()
 	handle_living_health_updates()
 	handle_living_plasma_updates()
+	update_action_button_icons()
 	update_icons()
 
 /mob/living/carbon/Xenomorph/update_stat()
+
+	update_cloak()
+
 	if(status_flags & GODMODE)
 		return
 
 	if(stat == DEAD)
 		return
 
-	if(health < crit_health)
+	if(health <= crit_health)
 		if(prob(gib_chance + 0.5*(crit_health - health)))
 			gib()
 		else
@@ -64,6 +58,11 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	unvore_forced(src)
 
 	return TRUE
+
+/mob/living/carbon/Xenomorph/Defender/update_stat()
+	. = ..()
+	if(stat != CONSCIOUS && fortify == TRUE)
+		fortify_off() //Fortify prevents dragging due to the anchor component.
 
 /mob/living/carbon/Xenomorph/Runner/update_stat()
 	. = ..()
@@ -92,21 +91,46 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 /mob/living/carbon/Xenomorph/handle_fire()
 	if(..())
 		return
-	if(!fire_immune)
+	if(!fire_immune && on_fire) //Sanity check; have to be on fire to actually take the damage.
 		adjustFireLoss(fire_stacks + 3)
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
-	var/turf/T = loc
-	if(!T || !istype(T) || hardcore)
+	if(health >= maxHealth || hardcore) //no damage, don't bother
+		updatehealth() //Update health-related stats, like health itself (using brute and fireloss), health HUD and status.
 		return
-	if(health < maxHealth && (locate(/obj/effect/alien/weeds) in T) || innate_healing)
-		var/datum/hive_status/hive = hive_datum[hivenumber]
-		if(hive.living_xeno_queen.loc.z == loc.z || !hive.living_xeno_queen || innate_healing)
-			if(lying || resting)
-				XENO_HEAL_WOUNDS(1)
-			else
-				XENO_HEAL_WOUNDS(0.33) //Major healing nerf if standing
+	var/turf/T = loc
+	if(!T || !istype(T) || hardcore) 
+		return
+	if(on_fire) //Can't regenerate while on fire
+		updatehealth()
+		return
+	if(innate_healing) //Larvas regenerate fast anywhere as long as not in crit.
+		if(!(locate(/obj/effect/alien/weeds) in T) && health <= 0)
+			adjustBruteLoss(XENO_CRIT_DAMAGE)
+		else
+			heal_wounds(XENO_RESTING_HEAL)
+		updatehealth()
+		return
+	var/datum/hive_status/hive = hive_datum[hivenumber]
+	if(hive.living_xeno_queen && hive.living_xeno_queen.loc.z != loc.z) //if there is a queen, it must be in the same z-level
+		updatehealth()
+		return
+	if(locate(/obj/effect/alien/weeds) in T) //We regenerate on weeds.
+		if(lying || resting)
+			heal_wounds(XENO_RESTING_HEAL)
+		else
+			heal_wounds(XENO_STANDING_HEAL) //Major healing nerf if standing.
+	else if(health <= 0)
+		adjustBruteLoss(XENO_CRIT_DAMAGE) //Crit and no weeds makes us bleed.
 	updatehealth()
+
+/mob/living/carbon/Xenomorph/proc/heal_wounds(multiplier = XENO_RESTING_HEAL)
+	var/amount = (1 + (maxHealth * 0.02) ) // 1 damage + 2% max health
+	if(recovery_aura)
+		amount += recovery_aura * maxHealth * 0.01 // +1% max health per recovery level, up to +5%
+	amount *= multiplier
+	adjustBruteLoss(-amount)
+	adjustFireLoss(-amount)
 
 /mob/living/carbon/Xenomorph/Xenoborg/handle_living_health_updates()
 	updatehealth()
@@ -134,10 +158,6 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 			current_aura = null
 			to_chat(src, "<span class='warning'>You have ran out of plasma and stopped emitting pheromones.</span>")
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
-
 	hud_set_plasma() //update plasma amount on the plasma mob_hud
 
 
@@ -156,6 +176,8 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 	//Rollercoaster of fucking stupid because Xeno life ticks aren't synchronised properly and values reset just after being applied
 	//At least it's more efficient since only Xenos with an aura do this, instead of all Xenos
 	//Basically, we use a special tally var so we don't reset the actual aura value before making sure they're not affected
+	if(on_fire) //Burning Xenos can't emit pheromones; they get burnt up! Null it baby! Disco inferno
+		current_aura = null
 	if(current_aura && plasma_stored > 5)
 		if(caste == "Queen" && anchored) //stationary queen's pheromone apply around the observed xeno.
 			var/mob/living/carbon/Xenomorph/Queen/Q = src
@@ -164,7 +186,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 				phero_center = Q.observed_xeno
 			var/pheromone_range = round(6 + aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, phero_center)) //Goes from 8 for Queen to 16 for Ancient Queen
-				if(Z.stat != DEAD && hivenumber == Z.hivenumber)
+				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(current_aura)
 						if("frenzy")
 							if(aura_strength > Z.frenzy_new)
@@ -178,7 +200,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		else
 			var/pheromone_range = round(6 + aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, src)) //Goes from 7 for Young Drone to 16 for Ancient Queen
-				if(Z.stat != DEAD && hivenumber == Z.hivenumber)
+				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(current_aura)
 						if("frenzy")
 							if(aura_strength > Z.frenzy_new)
@@ -192,7 +214,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		if(leader_current_aura && !stat)
 			var/pheromone_range = round(6 + leader_aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, src)) //Goes from 7 for Young Drone to 16 for Ancient Queen
-				if(Z.stat != DEAD && hivenumber == Z.hivenumber)
+				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(leader_current_aura)
 						if("frenzy")
 							if(leader_aura_strength > Z.frenzy_new)
@@ -209,7 +231,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 		frenzy_aura = frenzy_new
 		warding_aura = warding_new
 		recovery_aura = recovery_new
-		hud_set_pheromone()
+	hud_set_pheromone()
 	frenzy_new = 0
 	warding_new = 0
 	recovery_new = 0
@@ -364,9 +386,7 @@ adjustFireLoss(-(maxHealth / 70 + 0.5 + (maxHealth / 70) * recovery_aura/2)*(m))
 /mob/living/carbon/Xenomorph/updatehealth()
 	if(status_flags & GODMODE)
 		return
-
 	health = maxHealth - getFireLoss() - getBruteLoss() //Xenos can only take brute and fire damage.
-
 	med_hud_set_health()
 	update_stat()
 

@@ -89,6 +89,7 @@ var/list/admin_verbs_sounds = list(
 	)
 var/list/admin_verbs_fun = list(
 	// /client/proc/object_talk,
+	/datum/admins/proc/access_news_network,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_select_mob_rank,
 	/client/proc/cmd_admin_gib_self,
@@ -259,6 +260,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_xeno_report,  //Allows creation of IC reports by the Queen Mother
 	/proc/release,
+	/datum/admins/proc/viewUnheardMhelps,
 	/datum/admins/proc/viewUnheardAhelps, //Why even have it as a client proc anyway?
 	/datum/admins/proc/viewCLFaxes,
 	/datum/admins/proc/viewUSCMFaxes
@@ -274,6 +276,7 @@ var/list/admin_verbs_mentor = list(
 	/client/proc/dsay,
 	/datum/admins/proc/togglesleep,
 	/client/proc/cmd_admin_subtle_message,
+	/datum/admins/proc/viewUnheardMhelps,
 	/datum/admins/proc/viewUnheardAhelps,
 	/datum/admins/proc/viewCLFaxes,
 	/datum/admins/proc/viewUSCMFaxes
@@ -660,8 +663,8 @@ var/list/admin_verbs_mentor = list(
 	set name = "Re-admin Self"
 	set category = "Admin"
 
-	load_admins() //A bit ugly, but hey
 	verbs -= /client/proc/readmin_self
+	readmin()
 	to_chat(src, "<br><br><span class='centerbold'><big>You have ascended back to adminhood. All your verbs should be back where you left them.</big></span><br>")
 	log_admin("[src] readmined themselves.")
 	message_admins("[src] readmined themselves.", 1)

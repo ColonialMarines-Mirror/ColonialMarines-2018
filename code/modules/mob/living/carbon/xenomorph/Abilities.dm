@@ -29,7 +29,6 @@
 		new /obj/effect/alien/weeds/node(X.loc, src, X)
 		playsound(X.loc, "alien_resin_build", 25)
 
-
 // Resting
 /datum/action/xeno_action/xeno_resting
 	name = "Rest"
@@ -355,7 +354,7 @@
 
 /datum/action/xeno_action/emit_pheromones/can_use_action()
 	var/mob/living/carbon/Xenomorph/X = owner
-	if(X && !X.is_mob_incapacitated() && !X.lying && !X.buckled && (!X.current_aura || X.plasma_stored >= plasma_cost) && !X.stagger)
+	if(X && !X.is_mob_incapacitated() && !X.lying && !X.buckled && (!X.current_aura || X.plasma_stored >= plasma_cost) && !X.stagger && !X.on_fire) //Can't emit pheromones while on fire!
 		return TRUE
 
 /datum/action/xeno_action/emit_pheromones/action_activate()
@@ -372,7 +371,7 @@
 			return
 		var/choice = input(X, "Choose a pheromone") in X.aura_allowed + "help" + "cancel"
 		if(choice == "help")
-			to_chat(X, "<span class='notice'><br>Pheromones provide a buff to all Xenos in range at the cost of some stored plasma every second, as follows:<br><B>Frenzy</B> - Increased run speed, damage and tackle chance.<br><B>Warding</B> - Increased armor, reduced incoming damage and critical bleedout.<br><B>Recovery</B> - Increased plasma and health regeneration.<br></span>")
+			to_chat(X, "<span class='notice'><br>Pheromones provide a buff to all Xenos in range at the cost of some stored plasma every second. Burning Xenos can neither emit nor benefit from pheromones. Effects are as follows:<br><B>Frenzy</B> - Increased run speed, damage and tackle chance.<br><B>Warding</B> - Increased armor, reduced incoming damage and critical bleedout.<br><B>Recovery</B> - Increased plasma and health regeneration.<br></span>")
 			return
 		if(choice == "cancel") return
 		if(!X.check_state()) return
@@ -1169,6 +1168,43 @@
 /datum/action/xeno_action/activable/fire_cannon/use_ability(atom/A)
 	var/mob/living/carbon/Xenomorph/Xenoborg/X = owner
 	X.fire_cannon(A)
+
+//Runner abilities
+/datum/action/xeno_action/toggle_savage
+	name = "Toggle Savage"
+	action_icon_state = "savage_on"
+	plasma_cost = 0
+
+/datum/action/xeno_action/toggle_savage/action_activate()
+	var/mob/living/carbon/Xenomorph/X = owner
+
+	if(!X.check_state())
+		return
+
+	if(X.savage)
+		X.savage = FALSE
+		to_chat(X, "<span class='xenowarning'>You untense your muscles, and relax. You will no longer savage when pouncing.</span>")
+		button.overlays.Cut()
+		button.overlays += image('icons/mob/actions.dmi', button, "savage_off")
+	else
+		X.savage = TRUE
+		to_chat(X, "You ready yourself for a killing stroke. You will savage when pouncing.[X.savage_used ? " However, you're not quite yet able to savage again." : ""]")
+		button.overlays.Cut()
+		button.overlays += image('icons/mob/actions.dmi', button, "savage_on")
+
+// Crusher Crest Toss
+/datum/action/xeno_action/activable/cresttoss
+	name = "Crest Toss"
+	action_icon_state = "cresttoss"
+	ability_name = "crest toss"
+
+/datum/action/xeno_action/activable/cresttoss/use_ability(atom/A)
+	var/mob/living/carbon/Xenomorph/X = owner
+	X.cresttoss(A)
+
+/datum/action/xeno_action/activable/cresttoss/action_cooldown_check()
+	var/mob/living/carbon/Xenomorph/X = owner
+	return !X.cresttoss_used
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 

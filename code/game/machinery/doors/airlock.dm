@@ -113,23 +113,28 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	tiles_with = list(
 		/turf/closed/wall)
 
-/obj/machinery/door/airlock/bumpopen(mob/living/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(!issilicon(usr))
-		if(src.isElectrified())
-			if(!src.justzap)
-				if(src.shock(user, 100))
-					src.justzap = 1
-					spawn (openspeed)
-						src.justzap = 0
-					return
-			else /*if(src.justzap)*/
+/obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
+	if(issilicon(user))
+		return ..(user)
+	if(iscarbon(user) && isElectrified())
+		if(!justzap)
+			if(shock(user, 100))
+				justzap = TRUE
+				spawn (openspeed)
+					justzap = FALSE
 				return
-		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			to_chat(user, "\red <B>You feel a powerful shock course through your body!</B>")
-			user.halloss += 10
-			user.stunned += 10
+		else /*if(justzap)*/
 			return
-	..(user)
+	else if(ishuman(user) && user.hallucination > 50 && prob(10) && !operating)
+		var/mob/living/carbon/human/H = user
+		if(H.gloves)
+			to_chat(H, "\red <B>You feel a powerful shock course through your body!</B>")
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.siemens_coefficient)//not insulated
+				H.halloss += 10
+				H.stunned += 10
+				return
+	return ..(user)
 
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user as mob)
 	..(user)
@@ -990,6 +995,31 @@ About the new airlock wires panel:
 			src.locked = 1
 			return
 		return
+	if((istype(C, /obj/item/tool/pickaxe/plasmacutter) && !operating && density && !user.action_busy))
+		var/obj/item/tool/pickaxe/plasmacutter/P = C
+
+		if(not_weldable)
+			to_chat(user, "<span class='warning'>\The [src] would require something a lot stronger than [P] to cut!</span>")
+			return
+
+		if(!src.welded) //Cut apart the airlock if it isn't welded shut.
+			if(!(P.start_cut(user, src.name, src)))
+				return
+			if(do_after(user, P.calc_delay(user), TRUE, 5, BUSY_ICON_HOSTILE) && P)
+				P.cut_apart(user, src.name, src) //Airlocks cost as much as a wall to fully cut apart.
+				P.debris(loc, 1, 1, 0, 3) //Metal sheet, some rods and wires.
+				cdel(src)
+			return
+
+		if(!(P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD)))
+			return
+		if(do_after(user, P.calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+			P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD) //Airlocks require much less power to unweld.
+			src.welded = FALSE
+			src.update_icon()
+		return
+
+
 	if((istype(C, /obj/item/tool/weldingtool) && !operating && density))
 		var/obj/item/tool/weldingtool/W = C
 

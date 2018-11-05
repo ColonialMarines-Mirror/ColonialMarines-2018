@@ -582,7 +582,7 @@
 	desc = "A fake turkey made from tofu."
 	icon_state = "tofurkey"
 	filling_color = "#FFFEE0"
-	list_reagents = list("nutriment" = 12, "stoxin" = 3)
+	list_reagents = list("nutriment" = 12, "sleeptoxin" = 3)
 	bitesize = 3
 	tastes = list("tofu" = 3, "breadcrumbs" = 1)
 
@@ -635,7 +635,7 @@
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
 	filling_color = "#DB0000"
-	list_reagents = list("nutriment" = 12, "stoxin" = 3)
+	list_reagents = list("nutriment" = 12, "sleeptoxin" = 3)
 	tastes = list("meat" = 1, "salmon" = 1)
 	bitesize = 3
 
@@ -2660,16 +2660,20 @@
 	icon_state = "upp_ration"
 	bitesize = 2
 	package = TRUE
-	var/variation = 1
+	list_reagents = list("nutriment" = 4, "sodiumchloride" = 0.5)
+	var/variation = null
 
 /obj/item/reagent_container/food/snacks/upp/New()
-	variation = rand(1,2)
-	if(variation == 1)
-		tastes = list("dried [pick("carp", "shark", "tuna", "fish")]" = 1, "[pick("potatoes", "borsch", "borshch", "bortsch", "hardtack")]" = 1)
-	else
-		tastes = list("[pick("rice", "rye", "starch")]" = 1, "[pick("sawdust", "beans", "chicken")]" = 1)
-	list_reagents = list("nutriment" = 4, "sodiumchloride" = 0.5)
+	if(!variation)
+		variation = pick("fish","rice")
 
+	switch(variation)
+		if("fish")
+			tastes = list("dried [pick("carp", "shark", "tuna", "fish")]" = 1, "[pick("potatoes", "borsch", "borshch", "bortsch", "hardtack")]" = 1)
+		if("rice")
+			tastes = list("[pick("rice", "rye", "starch")]" = 1, "[pick("sawdust", "beans", "chicken")]" = 1)
+
+	return ..()
 
 /obj/item/reagent_container/food/snacks/upp/attack_self(mob/user as mob)
 	if (package)
@@ -2678,15 +2682,20 @@
 		package = FALSE
 		desc = "An extremely dried item of food, with little flavoring or coloration. Looks to be prepped for long term storage, but will expire without the packaging. Best to eat it now to avoid waste. At least things are equal."
 		switch(variation)
-			if(1)
+			if("fish")
 				name = "rationed fish"
 				icon_state = "upp_1"
-			if(2)
+			if("rice")
 				name = "rationed rice"
 				icon_state = "upp_2"
 
-		reagents.add_reagent("nutriment", 4)
-		reagents.add_reagent("sodiumchloride", 0.5)
+/obj/item/reagent_container/food/snacks/upp/fish
+	name = "\improper UPP ration (fish)"
+	variation = "fish"
+
+/obj/item/reagent_container/food/snacks/upp/rice
+	name = "\improper UPP ration (cereal)"
+	variation = "rice"
 
 /obj/item/reagent_container/food/snacks/eat_bar
 	name = "EAT Bar"
@@ -2764,15 +2773,15 @@
 /obj/item/reagent_container/food/snacks/packaged_meal/New(loc, newflavor)
 	tastes = list("[pick(food_adjectives)]" = 1) //idea, list, gimmick
 	determinetype(newflavor)
-	desc = "A packaged [icon_state] from a Meal Ready-to-Eat, property of the US Colonial Marines and prepared for field consumption. <i> On the rear is a lengthy list of [pick("obscure", "arcane", "unknowledgeable", "revolutionary", "sophisticated", "unspellable")] ingredients and addictives.</i>"
+	desc = "A packaged [icon_state] from a Meal Ready-to-Eat, there is a lengthy list of [pick("obscure", "arcane", "unintelligible", "revolutionary", "sophisticated", "unspellable")] ingredients and addictives printed on the back.</i>"
 	..()
 
 /obj/item/reagent_container/food/snacks/packaged_meal/attack_self(mob/user as mob)
 	if (package)
-		to_chat(user, "<span class='notice'>You pull open the package of the meal!</span>")
+		to_chat(user, "<span class='notice'>You pull open the MRE package!</span>")
 		playsound(loc,'sound/effects/pageturn2.ogg', 15, 1)
 		name = "\improper" + flavor
-		desc = "The contents of a USCM Standard issue MRE. This one is " + flavor + "."
+		desc = "The contents of a standard issue MRE. This one is " + flavor + "."
 		icon_state = flavor
 		package = FALSE
 
@@ -2781,15 +2790,15 @@
 	flavor = newflavor
 
 	switch(newflavor)
-		if("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti chunks", "chicken tender")
+		if("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "chicken tenders", "red crayon")
 			icon_state = "entree"
 			list_reagents = list("nutriment" = 5, "sodiumchloride" = 1)
-		if("cracker", "cheese spread", "rice onigiri", "mashed potatoes", "risotto")
+		if("meatballs", "cheese spread", "beef turnover", "mashed potatoes", "yellow crayon" )
 			icon_state = "side"
 			list_reagents = list("nutriment" = 3, "sodiumchloride" = 1)
-		if("biscuit", "meatballs", "pretzels", "peanuts", "sushi")
+		if("biscuit", "pretzels", "peanuts", "cracker", "purple crayon")
 			icon_state = "snack"
 			list_reagents = list("nutriment" = 2, "sodiumchloride" = 1)
-		if("spiced apples", "chocolate brownie", "sugar cookie", "coco bar", "flan", "honey flan")
+		if("spiced apples", "chocolate brownie", "sugar cookie", "choco bar", "blue crayon")
 			icon_state = "dessert"
 			list_reagents = list("nutriment" = 2, "sugar" = 1)

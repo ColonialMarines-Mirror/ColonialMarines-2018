@@ -17,7 +17,7 @@
 #endif
 
 //=======================================================================\\
-//=======================================================================\\
+//=======================================================================
 
 #define ALPHA		1
 #define BRAVO		2
@@ -49,8 +49,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		helmet = image('icons/mob/head_1.dmi',icon_state = "sql-helmet")
 		helmet.color = squad_colors[i]
 		helmetmarkings_sql += helmet
-
-
 
 
 // MARINE STORAGE ARMOR
@@ -104,11 +102,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	new_name[] 			= list(MAP_ICE_COLONY = "\improper M3 pattern marine snow armor"))
 	if(type == /obj/item/clothing/suit/storage/marine)
 		var/armor_variation = rand(1,6)
-		switch(armor_variation)
-			if(2,3)
-				flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS
-				flags_cold_protection = flags_armor_protection
-				flags_heat_protection = flags_armor_protection
 		icon_state = "[armor_variation]"
 
 	select_gamemode_skin(expected_type,,new_name)
@@ -122,7 +115,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	"/obj/item/ammo_magazine/sniper",
 	 )
 	pockets.max_storage_space = 6
-
 
 
 /obj/item/clothing/suit/storage/marine/update_icon(mob/user)
@@ -197,11 +189,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	playsound(src,'sound/machines/click.ogg', 15, 1)
 	update_icon(user)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
-
-
+	update_action_button_icons()
 
 
 /obj/item/clothing/suit/storage/marine/MP
@@ -257,7 +245,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	desc = "A heavy protective vest designed to be worn with the M56 Smartgun System. \nIt has specially designed straps and reinforcement to carry the Smartgun and accessories."
 	icon_state = "8"
 	item_state = "armor"
-	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS
+	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 55, bullet = 75, laser = 35, energy = 35, bomb = 35, bio = 0, rad = 0)
@@ -295,14 +283,14 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		select_gamemode_skin(type)
 		..()
 
-//===========================//SPECIALIST\\================================\\
-//=======================================================================\\
+//===========================SPECIALIST================================
+
 
 /obj/item/clothing/suit/storage/marine/specialist
 	name = "\improper B18 defensive armor"
 	desc = "A heavy, rugged set of armor plates for when you really, really need to not die horribly. Slows you down though.\nComes with two tricord injectors in each arm guard."
 	icon_state = "xarmor"
-	armor = list(melee = 95, bullet = 110, laser = 80, energy = 80, bomb = 75, bio = 20, rad = 20)
+	armor = list(melee = 80, bullet = 110, laser = 80, energy = 65, bomb = 80, bio = 20, rad = 20)
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
@@ -349,7 +337,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	name = "\improper M3-T light armor"
 	desc = "A custom set of M3 armor designed for users of long ranged explosive weaponry."
 	icon_state = "demolitionist"
-	armor = list(melee = 70, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 65, bullet = 50, laser = 40, energy = 25, bomb = 50, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	allowed = list(/obj/item/weapon/gun/launcher/rocket)
 	req_access = list(ACCESS_MARINE_SPECPREP)
@@ -362,7 +350,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	name = "\improper M3-S light armor"
 	desc = "A custom set of M3 armor designed for USCM Scouts."
 	icon_state = "scout_armor"
-	armor = list(melee = 75, bullet = 45, laser = 40, energy = 25, bomb = 55, bio = 0, rad = 0)
+	armor = list(melee = 65, bullet = 80, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	req_access = list(ACCESS_MARINE_SPECPREP)
 
@@ -381,7 +369,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	name = "\improper M35 armor"
 	desc = "A custom set of M35 armor designed for use by USCM Pyrotechnicians. Contains thick kevlar shielding."
 	icon_state = "pyro_armor"
-	armor = list(melee = 85, bullet = 90, laser = 60, energy = 60, bomb = 30, bio = 0, rad = 0)
+	armor = list(melee = 70, bullet = 90, laser = 60, energy = 60, bomb = 30, bio = 0, rad = 0)
 	max_heat_protection_temperature = FIRESUIT_max_heat_protection_temperature
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
@@ -403,7 +391,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	name = "\improper M3 pattern recon armor"
 	desc = "A custom modified set of M3 armor designed for recon missions."
 	icon_state = "marine_sniper"
-	armor = list(melee = 70, bullet = 45, laser = 40, energy = 25, bomb = 30, bio = 0, rad = 0)
+	armor = list(melee = 65, bullet = 70, laser = 40, energy = 25, bomb = 30, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	//uniform_restricted = list(/obj/item/clothing/under/marine/sniper) //TODO : This item exists, but isn't implemented yet. Makes sense otherwise
 
@@ -424,8 +412,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		..(loc,expected_type,,new_name)
 
 
-//=============================//PMCS\\==================================\\
-//=======================================================================\\
+//=============================//PMCS\\==================================
 
 /obj/item/clothing/suit/storage/marine/veteran
 	flags_marine_armor = ARMOR_LAMP_OVERLAY
@@ -485,8 +472,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	unacidable = 1
 	uniform_restricted = list(/obj/item/clothing/under/marine/veteran/PMC/commando)
 
-//===========================//DISTRESS\\================================\\
-//=======================================================================\\
+//===========================//DISTRESS\\================================
 
 /obj/item/clothing/suit/storage/marine/veteran/bear
 	name = "\improper H1 Iron Bears vest"
@@ -509,8 +495,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 
 
-//===========================//U.P.P\\================================\\
-//=====================================================================\\
+//===========================//U.P.P\\================================
 
 /obj/item/clothing/suit/storage/faction
 	icon = 'icons/obj/clothing/cm_suits.dmi'
@@ -612,9 +597,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	playsound(src,'sound/machines/click.ogg', 15, 1)
 	update_icon(user)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
+	update_action_button_icons()
 
 
 
@@ -651,8 +634,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 85, bullet = 85, laser = 50, energy = 60, bomb = 60, bio = 10, rad = 10)
 	uniform_restricted = list(/obj/item/clothing/under/marine/veteran/UPP)
 
-//===========================//FREELANCER\\================================\\
-//=====================================================================\\
+//===========================FREELANCER================================
 
 /obj/item/clothing/suit/storage/faction/freelancer
 	name = "\improper freelancer cuirass"
@@ -702,8 +684,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	blood_overlay_type = "coat"
 	flags_armor_protection = UPPER_TORSO|ARMS
 
-//===========================//HELGHAST - MERCENARY\\================================\\
-//=====================================================================\\
+//===========================//HELGHAST - MERCENARY\\================================
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary
 	name = "\improper K12 ceramic plated armor"

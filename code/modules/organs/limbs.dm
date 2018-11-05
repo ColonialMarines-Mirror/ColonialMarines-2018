@@ -137,7 +137,16 @@
 	else
 		take_damage(damage, 0, 1, 1, used_weapon = "EMP")
 
-/datum/limb/proc/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list(), no_limb_loss)
+/datum/limb/proc/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list(), no_limb_loss, blocked = 0)
+	if(blocked >= 1) //Complete negation
+		return 0
+
+	if(blocked)
+		if(brute)
+			brute *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
+		if(burn)
+			burn *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
+
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
@@ -225,12 +234,19 @@
 	src.update_damages()
 
 	//If limb took enough damage, try to cut or tear it off
-	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO && !no_limb_loss)
-		if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
-			var/cut_prob = brute/max_damage * 10
-			if(prob(cut_prob))
-				droplimb()
-				return
+
+	if(body_part == UPPER_TORSO || body_part == LOWER_TORSO || no_limb_loss)
+		owner.updatehealth()
+		return update_icon()
+	var/obj/item/clothing/worn_helmet = owner.head
+	if(body_part == HEAD && istype(worn_helmet, /obj/item/clothing/head/helmet) && !(owner.species.flags & IS_SYNTHETIC) ) //Early return if the body part is a head but target is wearing a helmet and is not a synth
+		owner.updatehealth()
+		return update_icon()
+	if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
+		var/cut_prob = brute/max_damage * 10
+		if(prob(cut_prob))
+			droplimb()
+			return
 
 	owner.updatehealth()
 

@@ -8,9 +8,7 @@
 	icon_state = "Ravager Walking"
 	melee_damage_lower = 40
 	melee_damage_upper = 60
-	tacklemin = 3
-	tacklemax = 6
-	tackle_chance = 80
+	tackle_damage = 55
 	health = 200
 	maxHealth = 200
 	plasma_stored = 50
@@ -69,9 +67,7 @@
 	spawn(CHARGECOOLDOWN)
 		usedPounce = 0
 		to_chat(src, "<span class='notice'>Your exoskeleton quivers as you get ready to charge again.</span>")
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.update_button_icon()
+		update_action_button_icons()
 
 
 //Chance of insta limb amputation after a melee attack.

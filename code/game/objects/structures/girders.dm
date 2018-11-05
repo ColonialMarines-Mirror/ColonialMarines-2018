@@ -75,12 +75,17 @@
 
 
 		else if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
-			to_chat(user, "\blue Now slicing apart the girder")
-			if(do_after(user,30, TRUE, 5, BUSY_ICON_HOSTILE))
-				if(!src) return
-				to_chat(user, "\blue You slice apart the girder!")
+			var/obj/item/tool/pickaxe/plasmacutter/P = W
+			if(!(P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD)))
+				return
+			if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P) //Girders take half as long
+				P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD) //Girders require half the normal power
+				P.debris(loc, 0, 2) //Generate some rods
+				if(!src)
+					return
 				health = 0
 				update_state()
+
 		else if(istype(W, /obj/item/tool/pickaxe/diamonddrill))
 			to_chat(user, "\blue You drill through the girder!")
 			dismantle()

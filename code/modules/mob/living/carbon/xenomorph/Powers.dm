@@ -45,9 +45,7 @@
 	spawn(pounce_delay)
 		usedPounce = 0
 		to_chat(src, "<span class='notice'>You get ready to pounce again.</span>")
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.update_button_icon()
+		update_action_button_icons()
 
 	return TRUE
 
@@ -297,13 +295,11 @@
 	spawn(fling_cooldown)
 		used_fling = FALSE
 		to_chat(src, "<span class='notice'>You gather enough strength to fling something again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
-/mob/living/carbon/Xenomorph/proc/punch(atom/A)
+/mob/living/carbon/Xenomorph/proc/punch(var/mob/living/M)
 
-	if (!A || !ishuman(A))
+	if (!M)
 		return
 
 	if (!check_state() || agility)
@@ -313,62 +309,75 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before punching.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (!check_plasma(20))
 		return
 
-	if (!Adjacent(A))
+	if (!Adjacent(M))
 		return
 
 	if(stagger)
-		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake up the shock!</span>")
+		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake off the shock!</span>")
 		return
 
-	var/mob/living/carbon/human/H = A
-	if(H.stat == DEAD)
+	if(M.stat == DEAD || ((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))) //Can't bully the dead/nested hosts.
 		return
 	round_statistics.warrior_punches++
-	var/datum/limb/L = H.get_limb(check_zone(zone_selected))
 
-	if (!L || (L.status & LIMB_DESTROYED))
-		return
 
-	visible_message("<span class='xenowarning'>\The [src] hits [H] in the [L.display_name] with a devistatingly powerful punch!</span>", \
-	"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devistatingly powerful punch!</span>")
 	var/S = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-	playsound(H,S, 50, 1)
+	var/target_zone = check_zone(zone_selected)
+	if(!target_zone)
+		target_zone = "chest"
+	var/armor_block = M.run_armor_check(target_zone)
+	var/damage = rand(melee_damage_lower, melee_damage_upper)
 	used_punch = TRUE
-	use_plasma(10)
+	use_plasma(20)
+	playsound(M, S, 50, 1)
 
-	if(L.status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.
-		L.status &= ~LIMB_SPLINTED
-		to_chat(H, "<span class='danger'>The splint on your [L.display_name] comes apart!</span>")
-
-	if(isYautja(H))
-		L.take_damage(rand(8,12))
-	else if(L.status & LIMB_ROBOT)
-		L.take_damage(rand(30,40), 0, 0) // just do more damage
+	if(!ishuman(M))
+		M.apply_damage(damage, BRUTE, target_zone, armor_block) //If we're not a humie, just apply brute.
 	else
-		var/fracture_chance = 100
-		switch(L.body_part)
-			if(HEAD)
-				fracture_chance = 20
-			if(UPPER_TORSO)
-				fracture_chance = 30
-			if(LOWER_TORSO)
-				fracture_chance = 40
+		var/mob/living/carbon/human/H = M
 
-		L.take_damage(rand(15,25), 0, 0)
-		if(prob(fracture_chance))
-			L.fracture()
-	shake_camera(H, 2, 1)
-	step_away(H, src, 2)
+		var/datum/limb/L = H.get_limb(check_zone(zone_selected))
+
+		if (!L || (L.status & LIMB_DESTROYED))
+			return
+
+		visible_message("<span class='xenowarning'>\The [src] hits [H] in the [L.display_name] with a devastatingly powerful punch!</span>", \
+		"<span class='xenowarning'>You hit [H] in the [L.display_name] with a devastatingly powerful punch!</span>")
+
+
+		if(L.status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.
+			L.status &= ~LIMB_SPLINTED
+			to_chat(H, "<span class='danger'>The splint on your [L.display_name] comes apart!</span>")
+
+		if(isYautja(H))
+			L.take_damage(damage, 0, 0, 0, null, null, null, armor_block)
+		else if(L.status & LIMB_ROBOT)
+			L.take_damage(damage * 2, 0, 0, 0, null, null, null, armor_block)
+		else
+			var/fracture_chance = 100
+			switch(L.body_part)
+				if(HEAD)
+					fracture_chance = 50
+				if(UPPER_TORSO)
+					fracture_chance = 50
+				if(LOWER_TORSO)
+					fracture_chance = 50
+			fracture_chance *= max(0,round(1 - armor_block,0.01)) //Reduce the fracture chance by a % equal to the armor.
+
+			L.take_damage(damage, 0, 0, 0, null, null, null, armor_block)
+			if(prob(fracture_chance))
+				L.fracture()
+		H.apply_damage(damage, HALLOSS) //Armor penetrating halloss also applies.
+	shake_camera(M, 2, 1)
+	step_away(M, src, 2)
 
 	spawn(punch_cooldown)
 		used_punch = FALSE
 		to_chat(src, "<span class='notice'>You gather enough strength to punch again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 /mob/living/carbon/Xenomorph/proc/lunge(atom/A)
 
@@ -404,9 +413,7 @@
 	spawn(lunge_cooldown)
 		used_lunge = FALSE
 		to_chat(src, "<span class='notice'>You get ready to lunge again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 	return TRUE
 
@@ -434,14 +441,11 @@
 	var/mob/living/carbon/human/H = M
 	var/datum/limb/L = H.get_limb(check_zone(zone_selected))
 
-	if (!L || L.body_part == UPPER_TORSO || L.body_part == LOWER_TORSO || (L.status & LIMB_DESTROYED)) //Only limbs and head.
+	if (!L || L.body_part == UPPER_TORSO || L.body_part == LOWER_TORSO || (L.status & LIMB_DESTROYED) || L.body_part == HEAD) //Only limbs; no head
 		to_chat(src, "<span class='xenowarning'>You can't rip off that limb.</span>")
 		return FALSE
 	round_statistics.warrior_limb_rips++
 	var/limb_time = rand(40,60)
-
-	if (L.body_part == HEAD)
-		limb_time = rand(90,110)
 
 	visible_message("<span class='xenowarning'>\The [src] begins pulling on [M]'s [L.display_name] with incredible strength!</span>", \
 	"<span class='xenowarning'>You begin to pull on [M]'s [L.display_name] with incredible strength!</span>")
@@ -510,9 +514,7 @@
 	spawn(toggle_agility_cooldown)
 		used_toggle_agility = FALSE
 		to_chat(src, "<span class='notice'>You can [agility ? "raise yourself back up" : "lower yourself back down"] again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 
 // Defender Headbutt
@@ -520,12 +522,11 @@
 	if (!M || !istype(M, /mob/living/carbon/human))
 		return
 
-	if (fortify)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
+	if(M.stat == DEAD || (istype(M.buckled, /obj/structure/bed/nest) && M.status_flags & XENO_HOST) ) //No bullying the dead/secured hosts
 		return
 
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
+	if (fortify)
+		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
 
 	if (!check_state())
@@ -535,7 +536,10 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(20))
+			return
+	else if (!check_plasma(10))
 		return
 
 	if(stagger)
@@ -547,7 +551,12 @@
 	var/distance = get_dist(src, H)
 
 	if (distance > 2)
+		if(world.time > (recent_notice + notice_delay)) //anti-notice spam
+			to_chat(src, "<span class='xenowarning'>Your target is too far away!</span>")
+
+			recent_notice = world.time //anti-notice spam
 		return
+
 
 	if (distance > 1)
 		step_towards(src, H, 1)
@@ -561,11 +570,24 @@
 	"<span class='xenowarning'>You ram [H] with your armored crest!</span>")
 
 	used_headbutt = 1
-	use_plasma(10)
+	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		use_plasma(20)
+	else
+		use_plasma(10)
 
-	if(H.stat != DEAD && (!(H.status_flags & XENO_HOST) || !istype(H.buckled, /obj/structure/bed/nest)) )
-		H.apply_damage(20)
-		shake_camera(H, 2, 1)
+	face_atom(H) //Face towards the target so we don't look silly
+
+	var/damage = rand(melee_damage_lower,melee_damage_upper)
+	if(frenzy_aura > 0)
+		damage += (frenzy_aura * 2)
+	damage *= (1 + distance * 0.25) //More distance = more momentum = stronger Headbutt.
+	var/affecting = H.get_limb(ran_zone(null, 0))
+	if(!affecting) //Still nothing??
+		affecting = H.get_limb("chest") //Gotta have a torso?!
+	var/armor_block = H.run_armor_check(affecting, "melee")
+	H.apply_damage(damage, BRUTE, affecting, armor_block) //We deal crap brute damage after armor...
+	H.apply_damage(damage, HALLOSS) //...But some sweet armour ignoring Halloss
+	shake_camera(H, 2, 1)
 
 	var/facing = get_dir(src, H)
 	var/headbutt_distance = 3
@@ -579,23 +601,18 @@
 		T = temp
 
 	H.throw_at(T, headbutt_distance, 1, src)
+	H.KnockDown(1, 1)
 	playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	spawn(headbutt_cooldown)
 		used_headbutt = 0
 		to_chat(src, "<span class='notice'>You gather enough strength to headbutt again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 
 // Defender Tail Sweep
 /mob/living/carbon/Xenomorph/proc/tail_sweep()
 	if (fortify)
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
-		return
-
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
 		return
 
 	if (!check_state())
@@ -605,7 +622,10 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before tail sweeping.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(30))
+			return
+	else if (!check_plasma(15))
 		return
 
 	if(stagger)
@@ -623,32 +643,38 @@
 
 	for (var/mob/living/carbon/human/H in L)
 		step_away(H, src, sweep_range, 2)
-		H.apply_damage(10)
+		if(H.stat != DEAD && !(istype(H.buckled, /obj/structure/bed/nest) && H.status_flags & XENO_HOST) ) //No bully
+			var/damage = rand(melee_damage_lower,melee_damage_upper)
+			if(frenzy_aura > 0)
+				damage += (frenzy_aura * 2)
+			var/affecting = H.get_limb(ran_zone(null, 0))
+			if(!affecting) //Still nothing??
+				affecting = H.get_limb("chest") //Gotta have a torso?!
+			var/armor_block = H.run_armor_check(affecting, "melee")
+			H.apply_damage(damage, BRUTE, affecting, armor_block) //Crap base damage after armour...
+			H.apply_damage(damage, HALLOSS) //...But some sweet armour ignoring Halloss
+			H.KnockDown(1, 1)
 		round_statistics.defender_tail_sweep_hits++
 		shake_camera(H, 2, 1)
 
-		if (prob(50))
-			H.KnockDown(2, 1)
+
 
 		to_chat(H, "<span class='xenowarning'>You are struck by \the [src]'s tail sweep!</span>")
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	used_tail_sweep = TRUE
-	use_plasma(10)
+	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		use_plasma(30)
+	else
+		use_plasma(15)
 
 	spawn(tail_sweep_cooldown)
 		used_tail_sweep = FALSE
 		to_chat(src, "<span class='notice'>You gather enough strength to tail sweep again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 
 // Defender Crest Defense
 /mob/living/carbon/Xenomorph/proc/toggle_crest_defense()
-
-	if (fortify)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
-		return
 
 	if (!check_state())
 		return
@@ -660,9 +686,22 @@
 	used_crest_defense = TRUE
 
 	if (crest_defense)
+		if(fortify)
+			if(!used_fortify)
+				toggle_crest_defense()
+				to_chat(src, "<span class='xenowarning'>You carefully untuck, keeping your crest lowered.</span>")
+				fortify = FALSE
+				fortify_off()
+			else
+				to_chat(src, "<span class='xenowarning'>You cannot yet untuck yourself!</span>")
+				crest_defense = !crest_defense
+				used_crest_defense = FALSE
+				return
+		else
+			to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
 		round_statistics.defender_crest_lowerings++
-		to_chat(src, "<span class='xenowarning'>You lower your crest.</span>")
-		armor_bonus += DEFENDER_CRESTDEFENSE_ARMOR
+		armor_bonus += crest_defense_armor
+		xeno_explosion_resistance = 2
 		speed_modifier += DEFENDER_CRESTDEFENSE_SLOWDOWN	// This is actually a slowdown but speed is dumb
 		update_icons()
 		do_crest_defense_cooldown()
@@ -670,7 +709,8 @@
 
 	round_statistics.defender_crest_raises++
 	to_chat(src, "<span class='xenowarning'>You raise your crest.</span>")
-	armor_bonus -= DEFENDER_CRESTDEFENSE_ARMOR
+	armor_bonus -= crest_defense_armor
+	xeno_explosion_resistance = 0
 	speed_modifier -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	update_icons()
 	do_crest_defense_cooldown()
@@ -679,17 +719,11 @@
 	spawn(crest_defense_cooldown)
 		used_crest_defense = FALSE
 		to_chat(src, "<span class='notice'>You can [crest_defense ? "raise" : "lower"] your crest.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 
 // Defender Fortify
 /mob/living/carbon/Xenomorph/proc/fortify()
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
-		return
-
 	if (!check_state())
 		return
 
@@ -702,35 +736,34 @@
 	used_fortify = TRUE
 
 	if (fortify)
-		to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
-		armor_bonus += DEFENDER_FORTIFY_ARMOR
-		xeno_explosion_resistance++
+		if (crest_defense)
+			if(!used_crest_defense)
+				toggle_crest_defense()
+				to_chat(src, "<span class='xenowarning'>You tuck your lowered crest into yourself.</span>")
+			else
+				to_chat(src, "<span class='xenowarning'>You cannot yet transition to a defensive stance!</span>")
+				fortify = !fortify
+				used_fortify = FALSE
+				return
+		else
+			to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
+		armor_bonus += fortify_armor
+		xeno_explosion_resistance = 3
 		frozen = TRUE
 		anchored = TRUE
 		update_canmove()
 		update_icons()
 		do_fortify_cooldown()
-		fortify_timer = world.timeofday + 90		// How long we can be fortified
-		process_fortify()
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 30, 1)
 		return
 
 	fortify_off()
 	do_fortify_cooldown()
 
-/mob/living/carbon/Xenomorph/proc/process_fortify()
-	set background = 1
-
-	spawn while (fortify)
-		if (world.timeofday > fortify_timer)
-			fortify = FALSE
-			fortify_off()
-		sleep(10)	// Process every second.
-
 /mob/living/carbon/Xenomorph/proc/fortify_off()
 	to_chat(src, "<span class='xenowarning'>You resume your normal stance.</span>")
-	armor_bonus -= DEFENDER_FORTIFY_ARMOR
-	xeno_explosion_resistance--
+	armor_bonus -= fortify_armor
+	xeno_explosion_resistance = 0
 	frozen = FALSE
 	anchored = FALSE
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 30, 1)
@@ -741,9 +774,7 @@
 	spawn(fortify_cooldown)
 		used_fortify = FALSE
 		to_chat(src, "<span class='notice'>You can [fortify ? "stand up" : "fortify"] again.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 
 /* WIP Burrower stuff
@@ -797,9 +828,7 @@
 	spawn(burrow_cooldown)
 		used_burrow = 0
 		to_chat(src, "<span class='notice'>You can now surface or tunnel.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 
 
 /mob/living/carbon/Xenomorph/proc/tunnel(var/turf/T)
@@ -844,9 +873,7 @@
 	spawn(tunnel_cooldown)
 		used_tunnel = 0
 		to_chat(src, "<span class='notice'>You can now tunnel while burrowed.</span>")
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
+		update_action_button_icons()
 */
 
 // Vent Crawl
@@ -952,9 +979,7 @@
 	switch(message)
 		if("spit")
 			to_chat(src, "<span class='notice'>You feel your neurotoxin glands swell with ichor. You can spit again.</span>")
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
+	update_action_button_icons()
 
 
 
@@ -1402,3 +1427,142 @@
 		to_chat(src, "<span class='notice'>The selected xeno ability will now be activated with shift clicking.</span>")
 	else
 		to_chat(src, "<span class='notice'>The selected xeno ability will now be activated with middle mouse clicking.</span>")
+
+
+// Runner Savage
+/mob/living/carbon/Xenomorph/proc/Savage(var/mob/living/carbon/M)
+
+	if(!check_state())
+		return
+
+	if(savage_used)
+		to_chat(src, "<span class='xenowarning'>You're too tired to savage right now.</span>")
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't savage with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenodanger'>You're too disoriented from the shock to savage!</span>")
+		return
+
+	var/alien_roar = "alien_roar[rand(1,6)]"
+	playsound(src, alien_roar, 50)
+	use_plasma(10) //Base cost of the Savage
+	src.visible_message("<span class='danger'>\ [src] savages [M]!</span>", \
+	"<span class='xenodanger'>You savage [M]!</span>", null, 5)
+	var/extra_dam = min(15, plasma_stored * 0.2)
+	M.attack_alien(src,  extra_dam, FALSE, FALSE, TRUE, TRUE, TRUE) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
+	use_plasma(extra_dam * 5) //Expend plasma equal to 4 times the extra damage.
+	savage_used = TRUE
+	do_savage_cooldown()
+
+	return TRUE
+
+/mob/living/carbon/Xenomorph/proc/do_savage_cooldown()
+	if(!savage_used)//sanity check/safeguard
+		return
+	spawn(savage_cooldown)
+		savage_used = FALSE
+		to_chat(src, "<span class='xenowarning'><b>You can now savage your victims again.</b></span>")
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		for(var/X in actions)
+			var/datum/action/act = X
+			act.update_button_icon()
+
+// Crusher Horn Toss
+/mob/living/carbon/Xenomorph/proc/cresttoss(var/mob/living/carbon/M)
+	if(cresttoss_used)
+		return
+
+	if(!check_plasma(40))
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't maneuver your body properly with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>You try to fling away [M] but are unable as you fail to shake off the shock!</span>")
+		return
+
+	if (!Adjacent(M) || !istype(M, /mob/living)) //Sanity check
+		return
+
+	if(M.stat == DEAD || (M.status_flags & XENO_HOST && istype(M.buckled, /obj/structure/bed/nest) ) ) //no bully
+		return
+
+	if(M.mob_size >= MOB_SIZE_BIG) //We can't fling big aliens/mobs
+		to_chat(src, "<span class='xenowarning'>[M] is too large to fling!</span>")
+		return
+
+	icon_state = "Crusher Charging"  //Momentarily lower the crest for visual effect
+	visible_message("<span class='xenowarning'>\The [src] flings [M] away with its crest!</span>", \
+	"<span class='xenowarning'>You fling [M] away with your crest!</span>")
+
+	cresttoss_used = 1
+	use_plasma(40)
+
+	face_atom(M) //Face towards the target so we don't look silly
+
+	var/facing = get_dir(src, M)
+	var/toss_distance = rand(3,5)
+	var/turf/T = loc
+	var/turf/temp = loc
+	if(a_intent == "hurt") //If we use the ability on hurt intent, we throw them in front; otherwise we throw them behind.
+		for (var/x = 0, x < toss_distance, x++)
+			temp = get_step(T, facing)
+			if (!temp)
+				break
+			T = temp
+	else
+		facing = get_dir(M, src)
+		M.loc = get_step(T, facing) //Move the target behind us before flinging
+		for (var/x = 0, x < toss_distance, x++)
+			temp = get_step(T, facing)
+			if (!temp)
+				break
+			T = temp
+	//The target location deviates up to 1 tile in any direction
+	var/scatter_x = rand(-1,1)
+	var/scatter_y = rand(-1,1)
+	var/turf/new_target = locate(T.x + round(scatter_x),T.y + round(scatter_y),T.z) //Locate an adjacent turf.
+	if(new_target)
+		T = new_target//Looks like we found a turf.
+
+	M.throw_at(T, toss_distance, 1, src)
+
+	//Handle the damage
+	if(!isXeno(M)) //Friendly xenos don't take damage.
+		var/damage = toss_distance * 5
+		if(frenzy_aura)
+			damage *= (1 + round(frenzy_aura * 0.1,0.01)) //+10% damage per level of frenzy
+		var/armor_block = M.run_armor_check("chest", "melee")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
+		else
+			M.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
+		M.apply_damage(damage, HALLOSS) //...But decent armour ignoring Halloss
+		shake_camera(M, 2, 2)
+		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
+		M.KnockDown(1, 1)
+		
+	cresttoss_cooldown()
+	spawn(3) //Revert to our prior icon state.
+		if(m_intent == MOVE_INTENT_RUN)
+			icon_state = "Crusher Running"
+		else
+			icon_state = "Crusher Walking"
+
+/mob/living/carbon/Xenomorph/proc/cresttoss_cooldown()
+	if(!cresttoss_used)//sanity check/safeguard
+		return
+	spawn(cresttoss_cooldown)
+		cresttoss_used = FALSE
+		to_chat(src, "<span class='xenowarning'><b>You can now crest toss again.</b></span>")
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		for(var/X in actions)
+			var/datum/action/act = X
+			act.update_button_icon()

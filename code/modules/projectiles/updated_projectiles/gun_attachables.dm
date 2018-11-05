@@ -19,6 +19,7 @@ Defined in conflicts.dm of the #defines folder.
 #define ATTACH_PROJECTILE	4
 #define ATTACH_RELOADABLE	8
 #define ATTACH_WEAPON		16
+#define ATTACH_UTILITY		32
 */
 
 /obj/item/attachable
@@ -464,11 +465,11 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/quickfire/New()
 	..()
-	accuracy_mod = -config.low_hit_accuracy_mult
+	accuracy_mod = -config.med_hit_accuracy_mult
 	scatter_mod = config.min_scatter_value
 	delay_mod = -config.min_fire_delay
 	burst_mod = -config.min_burst_value
-	accuracy_unwielded_mod = -config.med_hit_accuracy_mult
+	accuracy_unwielded_mod = -config.hmed_hit_accuracy_mult
 	scatter_unwielded_mod = config.med_scatter_value
 
 
@@ -773,7 +774,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 	var/nade_type = loaded_grenades[1]
 	var/obj/item/explosive/grenade/frag/G = new nade_type (get_turf(gun))
 	playsound(user.loc, fire_sound, 50, 1)
-	message_admins("[key_name_admin(user)] fired an underslung grenade launcher (<A HREF='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>)")
+	message_admins("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) fired an underslung grenade launcher")
 	log_game("[key_name_admin(user)] used an underslung grenade launcher.")
 	G.det_time = 15
 	G.throw_range = max_range
@@ -877,10 +878,10 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 			if(user)
 				if(user.mind && !user.mind.special_role && H.mind && !H.mind.special_role)
 					log_combat(user, H, "shot", src)
-					msg_admin_ff("[user] ([user.ckey]) shot [H] ([H.ckey]) with \a [name] in [get_area(user)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) (<a href='?priv_msg=\ref[user.client]'>PM</a>)")
+					msg_admin_ff("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) shot [key_name(H)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[H.x];Y=[H.y];Z=[H.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[H]'>FLW</a>) with \a [name] in [get_area(user)]")
 				else
 					log_combat(user, H, "shot", src)
-					msg_admin_attack("[user] ([user.ckey]) shot [H] ([H.ckey]) with \a [name] in [get_area(user)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					msg_admin_attack("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) shot [key_name(H)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[H.x];Y=[H.y];Z=[H.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[H]'>FLW</a>) with \a [name] in [get_area(user)]")
 
 			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || istype(H.wear_suit,/obj/item/clothing/suit/space/rig/atmos))
 				continue
@@ -1089,10 +1090,40 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/burstfire_assembly/New()
 	..()
-	accuracy_mod = -config.low_hit_accuracy_mult
+	accuracy_mod = -config.med_hit_accuracy_mult
 	burst_mod = config.low_burst_value
 	scatter_mod = config.low_scatter_value
 
-	accuracy_unwielded_mod = -config.med_hit_accuracy_mult
+	accuracy_unwielded_mod = -config.hmed_hit_accuracy_mult
 	scatter_unwielded_mod = config.med_scatter_value
+
+
+/obj/item/attachable/hydro_cannon
+	name = "M240T Hydro Cannon"
+	desc = "An integrated component of the M240T incinerator unit, the hydro cannon fires high pressure sprays of water; mainly to extinguish any wayward allies or unintended collateral damage."
+	icon_state = "hydrocannon"
+	attach_icon = ""
+	slot = "under"
+	flags_attach_features = ATTACH_ACTIVATION|ATTACH_UTILITY
+	attachment_action_type = /datum/action/item_action/toggle
+	var/max_water = 200
+	var/last_use
+
+/obj/item/attachable/hydro_cannon/activate_attachment(obj/item/weapon/gun/G, mob/living/user, turn_off)
+	if(G.active_attachable == src)
+		if(user)
+			to_chat(user, "<span class='notice'>You are no longer using [src].</span>")
+		G.active_attachable = null
+		icon_state = initial(icon_state)
+	else if(!turn_off)
+		if(user)
+			to_chat(user, "<span class='notice'>You are now using [src].</span>")
+		G.active_attachable = src
+		icon_state += "-on"
+
+	for(var/X in G.actions)
+		var/datum/action/A = X
+		A.update_button_icon()
+	return TRUE
+
 

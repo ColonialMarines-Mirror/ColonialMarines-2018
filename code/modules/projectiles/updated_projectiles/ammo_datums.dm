@@ -110,12 +110,23 @@
 		if(!isliving(M))
 			return
 		var/impact_message = ""
+		if(isXeno(M))
+			var/mob/living/carbon/Xenomorph/D = M
+			if(D.fortify) //If we're fortified we don't give a shit about staggerstun.
+				impact_message += "<span class='xenodanger'>Your fortified stance braces you against the impact.</span>"
+				return
+			if(D.crest_defense) //Crest defense halves all effects, and protects us from the stun.
+				impact_message += "<span class='xenodanger'>Your crest protects you against some of the impact.</span>"
+				slowdown *= 0.5
+				stagger *= 0.5
+				stun = 0
 		if(shake)
 			shake_camera(M, shake+2, shake+3)
 			if(isXeno(M))
 				impact_message += "<span class='xenodanger'>You are shaken by the sudden impact!</span>"
 			else
 				impact_message += "<span class='warning'>You are shaken by the sudden impact!</span>"
+
 		//Check for and apply hard CC.
 		if(((isYautja(M) || M.mob_size == MOB_SIZE_BIG) && hard_size_threshold > 2) || (M.mob_size == MOB_SIZE_XENO && hard_size_threshold > 1) || (ishuman(M) && hard_size_threshold > 0))
 			var/mob/living/L = M
@@ -149,14 +160,19 @@
 			#endif
 		to_chat(M, "[impact_message]") //Summarize all the bad shit that happened
 
-	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE)
+	proc/burst(atom/target, obj/item/projectile/P, damage_type = BRUTE, radius = 1, modifier = 0.5, attack_type = "bullet", apply_armor = TRUE)
 		if(!target || !P)
 			return
-		for(var/mob/living/carbon/M in orange(1,target))
+		for(var/mob/living/carbon/M in orange(radius,target))
 			if(P.firer == M)
 				continue
 			M.visible_message("<span class='danger'>[M] is hit by backlash from \a [P.name]!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You are hit by backlash from \a </b>[P.name]</b>!</span>")
-			M.apply_damage(rand(5,P.damage/2),damage_type)
+			if(apply_armor)
+				var/armor_block = M.run_armor_check(M, attack_type)
+				M.apply_damage(rand(P.damage * modifier * 0.1,P.damage * modifier),damage_type, null, armor_block)
+			else
+				M.apply_damage(rand(P.damage * modifier * 0.1,P.damage * modifier),damage_type)
+
 
 	proc/fire_bonus_projectiles(obj/item/projectile/original_P)
 		set waitfor = 0
@@ -332,9 +348,7 @@
 
 /datum/ammo/bullet/revolver/New()
 	..()
-	accuracy = -config.med_hit_accuracy
-	damage = config.lmed_hit_damage
-	penetration= config.min_armor_penetration
+	damage = config.hlow_hit_damage
 
 /datum/ammo/bullet/revolver/on_hit_mob(mob/M,obj/item/projectile/P)
 	staggerstun(M, P, config.close_shell_range, 0, 0, 1, 0.5, 0)
@@ -409,9 +423,8 @@
 
 /datum/ammo/bullet/smg/ap/New()
 	..()
-	scatter = config.min_scatter_value
 	damage = config.llow_hit_damage
-	penetration= config.med_armor_penetration
+	penetration= config.hmed_armor_penetration //40 AP
 
 /datum/ammo/bullet/smg/ppsh
 	name = "submachinegun light bullet"
@@ -442,7 +455,7 @@
 
 /datum/ammo/bullet/rifle/ap/New()
 	..()
-	damage = config.hlow_hit_damage
+	damage = config.low_hit_damage
 	penetration = config.high_armor_penetration
 
 /datum/ammo/bullet/rifle/incendiary
@@ -487,14 +500,14 @@
 
 /datum/ammo/bullet/rifle/m4ra/impact/New()
 	..()
-	damage = config.hmed_hit_damage
+	damage = config.med_hit_damage
 	accuracy = -config.low_hit_accuracy
 	scatter = -config.low_scatter_value
 	penetration= config.low_armor_penetration
 	shell_speed = config.fast_shell_speed
 
 /datum/ammo/bullet/rifle/m4ra/impact/on_hit_mob(mob/M, obj/item/projectile/P)
-	knockback(M, P, config.max_shell_range)
+	staggerstun(M, P, config.max_shell_range, 0, 1, 1)
 
 /datum/ammo/bullet/rifle/mar40
 	name = "heavy rifle bullet"
@@ -523,7 +536,7 @@
 	penetration= config.low_armor_penetration
 
 /datum/ammo/bullet/shotgun/slug/on_hit_mob(mob/M,obj/item/projectile/P)
-	staggerstun(M, P, config.close_shell_range, 0, 1, 4, 4)
+	staggerstun(M, P, config.close_shell_range, 0, 1, 2, 4)
 
 
 /datum/ammo/bullet/shotgun/beanbag
@@ -702,12 +715,9 @@
 
 /datum/ammo/bullet/sniper/flak/New()
 	..()
-	accuracy = -config.low_hit_accuracy
-	max_range = config.norm_shell_range
-	scatter = config.low_scatter_value
-	damage = config.hmed_hit_damage
+	damage = config.max_hit_damage
 	damage_var_high = config.low_proj_variance
-	penetration= -config.min_armor_penetration
+	penetration= -config.mlow_armor_penetration
 
 /datum/ammo/bullet/sniper/flak/on_hit_mob(mob/M,obj/item/projectile/P)
 	burst(get_turf(M),P,damage_type)
@@ -832,12 +842,13 @@
 	var/datum/effect_system/smoke_spread/smoke
 
 /datum/ammo/rocket/New()
-	..()
+	. = ..()
 	smoke = new()
-	accuracy = config.low_hit_accuracy
+	accuracy = config.max_hit_accuracy
 	accurate_range = config.norm_shell_range
 	max_range = config.long_shell_range
-	damage = config.min_hit_damage
+	damage = config.med_hit_damage
+	penetration = config.max_armor_penetration
 	shell_speed = config.slow_shell_speed
 
 /datum/ammo/rocket/Dispose()
@@ -846,22 +857,22 @@
 	. = ..()
 
 /datum/ammo/rocket/on_hit_mob(mob/M, obj/item/projectile/P)
-	explosion(get_turf(M), -1, 1, 4, 5)
+	explosion(get_turf(M), -1, 2, 4, 5)
 	smoke.set_up(1, get_turf(M))
 	smoke.start()
 
 /datum/ammo/rocket/on_hit_obj(obj/O, obj/item/projectile/P)
-	explosion(get_turf(O), -1, 1, 4, 5)
+	explosion(get_turf(O), -1, 2, 4, 5)
 	smoke.set_up(1, get_turf(O))
 	smoke.start()
 
 /datum/ammo/rocket/on_hit_turf(turf/T, obj/item/projectile/P)
-	explosion(T,  -1, 1, 4, 5)
+	explosion(T,  -1, 2, 4, 5)
 	smoke.set_up(1, T)
 	smoke.start()
 
 /datum/ammo/rocket/do_at_max_range(obj/item/projectile/P)
-	explosion(get_turf(P),  -1, 1, 4, 5)
+	explosion(get_turf(P),  -1, 2, 4, 5)
 	smoke.set_up(1, get_turf(P))
 	smoke.start()
 
@@ -870,31 +881,28 @@
 	damage_falloff = 0
 
 /datum/ammo/rocket/ap/New()
-	..()
-	accuracy = -config.min_hit_accuracy
-	accuracy_var_low = config.med_proj_variance
+	. = ..()
 	accurate_range = config.short_shell_range
-	max_range = config.norm_shell_range
-	damage = config.ultra_hit_damage //lmao tons of hit damage but it's never processed due to the below proc redefinitions
-	penetration= config.max_armor_penetration
+	penetration = config.aprocket_armor_penetration
+	damage = config.aprocket_hit_damage
 
 /datum/ammo/rocket/ap/on_hit_mob(mob/M, obj/item/projectile/P)
-	explosion(get_turf(M), -1, 1, 2, 5)
+	explosion(get_turf(M), -1, -1, 2, 5)
 	smoke.set_up(1, get_turf(M))
 	smoke.start()
 
 /datum/ammo/rocket/ap/on_hit_obj(obj/O, obj/item/projectile/P)
-	explosion(get_turf(O), -1, 1, 2, 5)
+	explosion(get_turf(O), -1, -1, 2, 5)
 	smoke.set_up(1, get_turf(O))
 	smoke.start()
 
 /datum/ammo/rocket/ap/on_hit_turf(turf/T, obj/item/projectile/P)
-	explosion(T,  -1, 1, 2, 5)
+	explosion(T, -1, -1, 2, 5)
 	smoke.set_up(1, T)
 	smoke.start()
 
 /datum/ammo/rocket/ap/do_at_max_range(obj/item/projectile/P)
-	explosion(get_turf(P),  -1, 1, 2, 5)
+	explosion(get_turf(P),  -1, -1, 2, 5)
 	smoke.set_up(1, get_turf(P))
 	smoke.start()
 
@@ -904,24 +912,25 @@
 	flags_ammo_behavior = AMMO_EXPLOSIVE|AMMO_ROCKET
 
 /datum/ammo/rocket/ltb/New()
-	..()
-	accuracy = config.med_hit_accuracy
-	accurate_range = config.long_shell_range
+	. = ..()
+	accuracy = config.max_hit_accuracy
+	accurate_range = config.short_shell_range
 	max_range = config.max_shell_range
-	damage = config.low_hit_damage
+	penetration = config.ltb_armor_penetration
+	damage = config.ltb_hit_damage
 	shell_speed = config.fast_shell_speed
 
 /datum/ammo/rocket/ltb/on_hit_mob(mob/M, obj/item/projectile/P)
-	explosion(get_turf(M), 1, 1, 5, 6)
+	explosion(get_turf(M), -1, 3, 5, 6)
 
 /datum/ammo/rocket/ltb/on_hit_obj(obj/O, obj/item/projectile/P)
-	explosion(get_turf(P), 1, 1, 5, 6)
+	explosion(get_turf(P), -1, 3, 5, 6)
 
 /datum/ammo/rocket/ltb/on_hit_turf(turf/T, obj/item/projectile/P)
-	explosion(get_turf(P), 1, 1, 5, 6)
+	explosion(get_turf(P), -1, 3, 5, 6)
 
 /datum/ammo/rocket/ltb/do_at_max_range(obj/item/projectile/P)
-	explosion(get_turf(P), 1, 1, 5, 6)
+	explosion(get_turf(P), -1, 3, 5, 6)
 
 /datum/ammo/rocket/wp
 	name = "white phosphorous rocket"
@@ -934,24 +943,16 @@
 	damage = config.super_hit_damage
 	max_range = config.norm_shell_range
 
-/datum/ammo/rocket/wp/drop_flame(turf/T)
-	if(!istype(T))
+/datum/ammo/rocket/wp/drop_flame(radius = 3, turf/T) //~Art updated fire.
+	if(!T || !isturf(T))
 		return
 	smoke.set_up(1, T)
 	smoke.start()
-	if(locate(/obj/flamer_fire) in T)
-		return
-	new /obj/flamer_fire(T, pick(15, 20, 25, 30))
-	for(var/mob/living/carbon/M in range(3, T))
-		if(isXeno(M))
-			var/mob/living/carbon/Xenomorph/X = M
-			if(X.fire_immune)
-				continue
-		if(M.stat == DEAD)
-			continue
-		M.adjust_fire_stacks(rand(5, 25))
-		M.IgniteMob()
-		M.visible_message("<span class='danger'>[M] bursts into flames!</span>","[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]You burst into flames!</span>")
+	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
+		cdel(F)
+	playsound(T, 'sound/weapons/gun_flamethrower2.ogg', 50, 1, 4)
+	flame_radius(radius, 25, 25, 25, 15)
+
 
 /datum/ammo/rocket/wp/on_hit_mob(mob/M,obj/item/projectile/P)
 	drop_flame(get_turf(M))

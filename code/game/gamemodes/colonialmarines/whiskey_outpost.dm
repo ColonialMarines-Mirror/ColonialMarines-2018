@@ -1180,7 +1180,7 @@
 								/obj/item/storage/pill_bottle/tramadol,
 								/obj/item/storage/pill_bottle/tramadol,
 								/obj/item/storage/pill_bottle/spaceacillin,
-								/obj/item/storage/pill_bottle/antitox,
+								/obj/item/storage/pill_bottle/dylovene,
 								/obj/item/storage/pill_bottle/kelotane,
 								/obj/item/stack/medical/splint,
 								/obj/item/stack/medical/splint,
@@ -1188,9 +1188,9 @@
 								/obj/item/reagent_container/hypospray/autoinjector/tricordrazine,
 								/obj/item/reagent_container/hypospray/autoinjector/tricordrazine,
 								/obj/item/reagent_container/hypospray/autoinjector/quickclot,
-								/obj/item/reagent_container/hypospray/autoinjector/dexP,
-								/obj/item/reagent_container/hypospray/autoinjector/Bicard,
-								/obj/item/reagent_container/hypospray/autoinjector/Kelo)
+								/obj/item/reagent_container/hypospray/autoinjector/dexalinplus,
+								/obj/item/reagent_container/hypospray/autoinjector/bicaridine,
+								/obj/item/reagent_container/hypospray/autoinjector/kelotane)
 
 			if(31 to 40)//Random Attachments Crate 20% because the lord commeth and said let there be attachments.
 				crate = new /obj/structure/closet/crate/secure/weapon(T)
@@ -1463,7 +1463,7 @@
 		return 0
 
 	to_chat(user, "<span class='boldnotice'> You start lasing the target area.</span>")
-	message_admins("ALERT: [user] ([user.key]) IS CURRENTLY LAZING A TARGET: CURRENT MODE [laz_mode], at ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>).") // Alert all the admins to this asshole. Added the jmp command from the explosion code.
+	message_admins("ALERT: [key_name(usr)]  (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) IS CURRENTLY LAZING A TARGET: CURRENT MODE [laz_mode], at ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>).") // Alert all the admins to this asshole. Added the jmp command from the explosion code.
 	var/obj/effect/las_target/lasertarget = new(T.loc)
 	if(laz_mode == 1 && !laz_r) // Heres our IR bomb code.
 		lazing = 1

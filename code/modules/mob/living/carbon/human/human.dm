@@ -22,6 +22,110 @@
 		else
 			set_species()
 
+	switch(pick("female", "male"))
+		if("female")
+			gender = FEMALE
+			name = pick(first_names_female) + " " + pick(last_names)
+			real_name = name
+			voice_name = name
+
+		if("male")
+			gender = MALE
+			name = pick(first_names_male) + " " + pick(last_names)
+			real_name = name
+			voice_name = name
+
+
+	switch(pick(15;"black", 15;"grey", 15;"brown", 15;"lightbrown", 10;"white", 15;"blonde", 15;"red"))
+		if("black")
+			r_hair = 10
+			g_hair = 10
+			b_hair = 10
+			r_facial = 10
+			g_facial = 10
+			b_facial = 10
+		if("grey")
+			r_hair = 50
+			g_hair = 50
+			b_hair = 50
+			r_facial = 50
+			g_facial = 50
+			b_facial = 50
+		if("brown")
+			r_hair = 70
+			g_hair = 35
+			b_hair = 0
+			r_facial = 70
+			g_facial = 35
+			b_facial = 0
+		if("lightbrown")
+			r_hair = 100
+			g_hair = 50
+			b_hair = 0
+			r_facial = 100
+			g_facial = 50
+			b_facial = 0
+		if("white")
+			r_hair = 235
+			g_hair = 235
+			b_hair = 235
+			r_facial = 235
+			g_facial = 235
+			b_facial = 235
+		if("blonde")
+			r_hair = 240
+			g_hair = 240
+			b_hair = 0
+			r_facial = 240
+			g_facial = 240
+			b_facial = 0
+		if("red")
+			r_hair = 128
+			g_hair = 0
+			b_hair = 0
+			r_facial = 128
+			g_facial = 0
+			b_facial = 0
+
+	h_style = random_hair_style(gender)
+
+	switch(pick("none", "some"))
+		if("none")
+			f_style = "Shaved"
+		if("some")
+			f_style = random_facial_hair_style(gender)
+
+	switch(pick(15;"black", 15;"green", 15;"brown", 15;"blue", 15;"lightblue", 5;"red"))
+		if("black")
+			r_eyes = 10
+			g_eyes = 10
+			b_eyes = 10
+		if("green")
+			r_eyes = 200
+			g_eyes = 0
+			b_eyes = 0
+		if("brown")
+			r_eyes = 100
+			g_eyes = 50
+			b_eyes = 0
+		if("blue")
+			r_eyes = 0
+			g_eyes = 0
+			b_eyes = 200
+		if("lightblue")
+			r_eyes = 0
+			g_eyes = 150
+			b_eyes = 255
+		if("red")
+			r_eyes = 220
+			g_eyes = 0
+			b_eyes = 0
+
+	ethnicity = random_ethnicity()
+	body_type = random_body_type()
+
+	age = rand(17,55)
+
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
@@ -52,15 +156,9 @@
 
 
 /mob/living/carbon/human/Dispose()
-	if(assigned_squad)
-		var/n = assigned_squad.marines_list.Find(src)
-		if(n)
-			assigned_squad.marines_list[n] = name //mob reference replaced by name string
-		if(assigned_squad.squad_leader == src)
-			assigned_squad.squad_leader = null
-		assigned_squad = null
+	assigned_squad?.clean_marine_from_squad(src,FALSE)
 	remove_from_all_mob_huds()
-	. = ..()
+	return ..()
 
 /mob/living/carbon/human/Stat()
 	if (!..())
@@ -179,7 +277,8 @@
 		var/datum/limb/affecting = get_limb(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
-		if(armor >= 2)	return
+		if(armor >= 1) //Complete negation
+			return
 
 
 /mob/living/carbon/human/proc/implant_loyalty(mob/living/carbon/human/M, override = FALSE) // Won't override by default.
@@ -331,10 +430,34 @@
 			return I.registered_name
 	return
 
-//gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/proc/get_idcard()
+//Gets ID card from a human. If hand_first is false the one in the id slot is prioritized, otherwise inventory slots go first.
+/mob/living/carbon/human/get_idcard(hand_first = TRUE)
+	//Check hands
+	var/obj/item/card/id/id_card
+	var/obj/item/held_item
+	held_item = get_active_hand()
+	if(held_item) //Check active hand
+		id_card = held_item.GetID()
+	if(!id_card) //If there is no id, check the other hand
+		held_item = get_inactive_hand()
+		if(held_item)
+			id_card = held_item.GetID()
+
+	if(id_card)
+		if(hand_first)
+			return id_card
+		else
+			. = id_card
+
+	//Check inventory slots
 	if(wear_id)
-		return wear_id.GetID()
+		id_card = wear_id.GetID()
+		if(id_card)
+			return id_card
+	else if(belt)
+		id_card = belt.GetID()
+		if(id_card)
+			return id_card
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
@@ -1432,7 +1555,8 @@
 				overlay_fullscreen("glasses_vision", G.fullscreen_vision)
 			else
 				clear_fullscreen("glasses_vision", 0)
-			see_invisible = min(G.see_invisible, see_invisible)
+			if(G.see_invisible)
+				see_invisible = min(G.see_invisible, see_invisible)
 	else
 		clear_fullscreen("glasses_vision", 0)
 

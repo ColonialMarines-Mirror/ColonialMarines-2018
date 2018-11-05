@@ -5,27 +5,6 @@
 #define BORGTHERM 2
 #define BORGXRAY  4
 
-
-/*
-	reagents defines
-*/
-#define REAGENTS_OVERDOSE 30
-#define REAGENTS_OVERDOSE_CRITICAL 50
-
-// How many units of reagent are consumed per tick, by default.
-#define REAGENTS_METABOLISM 0.2
-// By defining the effect multiplier this way, it'll exactly adjust
-// all effects according to how they originally were with the 0.4 metabolism
-#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
-
-#define REM REAGENTS_EFFECT_MULTIPLIER
-// Reagent metabolism defines.
-#define FOOD_METABOLISM 0.4
-#define ALCOHOL_METABOLISM 0.1
-
-// Factor of how fast mob nutrition decreases
-#define HUNGER_FACTOR 0.05
-
 //Pain or shock reduction for different reagents
 #define PAIN_REDUCTION_VERY_LIGHT	-10 //alkysine
 #define PAIN_REDUCTION_LIGHT		-25 //inaprovaline
@@ -440,11 +419,18 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define WARRIOR_AGILITY_ARMOR 30
 #define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
 
+//defender defines
+
+#define DEFENDER_HEADBUTT_COST 20
+#define DEFENDER_TAILSWIPE_COST 30
+
 
 // halloss defines
 
-#define BASE_HALLOSS_RECOVERY_RATE -2
-#define REST_HALLOSS_RECOVERY_RATE -10
+#define BASE_HALLOSS_RECOVERY_RATE -4
+#define WALK_HALLOSS_RECOVERY_RATE -12
+#define DOWNED_HALLOSS_RECOVERY_RATE -16
+#define REST_HALLOSS_RECOVERY_RATE -32
 
 // Human Overlay Indexes
 #define MOTH_WINGS_LAYER		26
@@ -479,3 +465,5 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define MOTH_WINGS_BEHIND_LAYER	1
 
 #define TOTAL_UNDERLAYS			1
+
+#define ANTI_CHAINSTUN_TICKS	2

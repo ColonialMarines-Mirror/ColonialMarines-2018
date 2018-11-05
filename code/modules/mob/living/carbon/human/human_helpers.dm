@@ -194,6 +194,15 @@
 			return 1
 	return 0
 
+/mob/living/carbon/human/has_vision()
+	if(sdisabilities & BLIND)
+		return FALSE
+	if(!species.has_organ["eyes"]) //can see through other means
+		return TRUE
+	if(has_eyes())
+		if(tinttotal < 3)
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/is_mob_restrained(var/check_grab = 1)
 	if(check_grab && pulledby && pulledby.grab_level >= GRAB_NECK)
@@ -239,6 +248,10 @@
 				light_off++
 		for(var/obj/item/tool/weldingtool/W in contents)
 			if(W.isOn())
+				W.toggle()
+				goes_out++
+		for(var/obj/item/tool/pickaxe/plasmacutter/W in contents)
+			if(W.powered)
 				W.toggle()
 				goes_out++
 		for(var/obj/item/tool/match/M in contents)

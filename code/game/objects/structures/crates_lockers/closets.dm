@@ -212,6 +212,15 @@
 				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with [WT].</span>", 3, "You hear welding.", 2)
 			cdel(src)
 			return
+		if(istype(W, /obj/item/tool/pickaxe/plasmacutter))
+			var/obj/item/tool/pickaxe/plasmacutter/P = W
+			if(!P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD, null, null, SFX = FALSE))
+				return
+			P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD) //Window frames require half the normal power
+			P.debris(loc, 1, 0) //Generate some metal
+			cdel(src)
+			return
+
 		if(isrobot(user))
 			return
 		user.drop_inv_item_to_loc(W,loc)

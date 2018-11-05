@@ -12,9 +12,9 @@
 /* Pre-pre-startup */
 /datum/game_mode/colonialmarines/can_start()
 	initialize_special_clamps()
+	initialize_starting_predator_list()
 	var/found_queen = initialize_starting_queen_list()
 	var/found_xenos = initialize_starting_xenomorph_list()
-	initialize_starting_predator_list()
 	if(!found_queen && !found_xenos)
 		return FALSE
 	initialize_starting_survivor_list()

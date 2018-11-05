@@ -1317,7 +1317,7 @@
 	magazine_type = /obj/item/ammo_magazine/minisentry
 
 /obj/item/storage/box/sentry/New()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/machinery/marine_turret/mini/MouseDrop(over_object, src_location, over_location) //Drag the tripod onto you to fold it.

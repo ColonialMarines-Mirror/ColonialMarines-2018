@@ -977,7 +977,8 @@
 	if(!istype(my_loc) || !istype(target))
 		return
 
-	if(!check_power(2)) return
+	if(!check_power(2))
+	 return
 
 	var/target_dir = get_dir(src, targloc)
 	//if( ( target_dir & turn(dir, 180) ) && !radial_mode)

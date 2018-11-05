@@ -250,6 +250,8 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("PMC2") . = size ? "PMC " : "PMC Gunner"
 		if("PMC3") . = size ? "PMC " : "PMC Sniper"
 		if("PMC4") . = size ? "PMC " : "PMC Leader"
+		if("PMCDS") . = size ? "PMCDS " : "PMC Deathsquad"
+		if("PMCDSL") . = size ? "PMCDS " : "PMC Deathsquad Leader"
 		if("WY1") . = size ? (gender == "female" ? "Ms. " : "Mr. ") : "Junior Executive"
 		if("E1") . = size ? "PVT " : "Private"
 		if("E2") . = size ? "PFC " : "Private First Class"
@@ -287,6 +289,9 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("UPPC1") . = size ? "UPPC " : "UPP Commando Standard"
 		if("UPPC2") . = size ? "UPPC " : "UPP Commando Medic"
 		if("UPPC3") . = size ? "UPPC " : "UPP Commando Leader"
+		if("FRE1") . = size ? "FRE " : "Freelancer Standard"
+		if("FRE2") . = size ? "FRE " : "Freelancer Medic"
+		if("FRE3") . = size ? "FRE " : "Freelancer Leader"
 		else . = paygrade + " " //custom paygrade
 
 #define PAYGRADES_MARINE list("C","E1","E2","E3","E4","E5","E6","E6E","E7","E8","E8E","E9","E9E","O1","O2","O3","O4", "WO")

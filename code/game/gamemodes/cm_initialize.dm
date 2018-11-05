@@ -91,7 +91,7 @@ Additional game mode variables.
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
 	//xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
-	xeno_starting_num = 1
+	xeno_starting_num = ready_players
 	surv_starting_num = CLAMP((ready_players/25), 0, 8)
 	merc_starting_num = max((ready_players/3), 1)
 	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
@@ -297,6 +297,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	var/i = xeno_starting_num
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
+	message_admin("DEBUG: [i] this is i.")
 	while(i > 0) //While we can still pick someone for the role.
 		if(possible_xenomorphs.len) //We still have candidates
 			message_admins("We still have candidates, yay.")
@@ -306,14 +307,15 @@ datum/game_mode/proc/initialize_special_clamps()
 				break  //Looks like we didn't get anyone. Back out.
 			new_xeno.assigned_role = "MODE"
 			new_xeno.special_role = "Xenomorph"
-			possible_xenomorphs -= new_xeno
 			xenomorphs += new_xeno
+			possible_xenomorphs -= new_xeno
 			message_admins("DEBUG: Adding [new_xeno] to Xenomorphs list")
 		else //Out of candidates, spawn in empty larvas directly
 			message_admins("DEBUG: Out of candidates, spawning larvas directly")
 			larvae_spawn = pick(xeno_spawn)
 			new /mob/living/carbon/Xenomorph/Larva(larvae_spawn)
 		i--
+	message_admin("DEBUG: Loop done?")
 
 	/*
 	Our list is empty. This can happen if we had someone ready as alien and predator, and predators are picked first.

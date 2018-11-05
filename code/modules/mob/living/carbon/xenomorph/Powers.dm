@@ -1596,7 +1596,6 @@
 			var/obj/machinery/M = locate() in T
 			if(M?.density)
 				break
-				if(M.density)
 					break
 
 			if(prev_turf && LinkBlocked(prev_turf, T))

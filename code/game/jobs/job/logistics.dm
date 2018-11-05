@@ -53,7 +53,7 @@ You are also next in the chain of command, should the bridge crew fall in the li
 	generate_wearable_equipment(mob/living/carbon/human/H)
 		. = list(
 				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
-				WEAR_BODY = /obj/item/clothing/under/rank/ro_suit,
+				WEAR_BODY = /obj/item/clothing/under/marine/officer/req,
 				WEAR_FEET = /obj/item/clothing/shoes/marine,
 				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
 				WEAR_WAIST = /obj/item/storage/belt/gun/m44/full,

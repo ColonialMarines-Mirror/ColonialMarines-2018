@@ -231,7 +231,7 @@ Best to let the mercs do the killing and the dying, but remind them who pays the
 	generate_wearable_equipment()
 		. = list(
 				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
-				WEAR_BODY = /obj/item/clothing/under/rank/synthetic,
+				WEAR_BODY = /obj/item/clothing/under/marine/officer/synthetic,
 				WEAR_FEET = /obj/item/clothing/shoes/white,
 				WEAR_WAIST = /obj/item/storage/belt/utility/full,
 				WEAR_HANDS = /obj/item/clothing/gloves/yellow,

@@ -7,11 +7,11 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 25
 	tackle_damage = 30
-	health = 300
-	maxHealth = 300
+	health = 250
+	maxHealth = 250
 	plasma_stored = 50
-	plasma_gain = 8
-	plasma_max = 100
+	plasma_gain = 10
+	plasma_max = 150
 	evolution_threshold = 100
 	upgrade_threshold = 100
 	caste_desc = "A sturdy front line combatant."

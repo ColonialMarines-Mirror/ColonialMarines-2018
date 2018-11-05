@@ -490,7 +490,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					maxHealth = 300
 					plasma_gain = 15
 					plasma_max = 200
-					upgrade_threshold = 800
 					caste_desc = "An unstoppable force that remains when others would fall."
 					speed = -0.4
 					armor_deflection = 30
@@ -505,7 +504,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					maxHealth = 265
 					plasma_gain = 8
 					plasma_max = 100
-					upgrade_threshold = 1600
 					caste_desc = "An hulking beast capable of effortlessly breaking and tearing through its enemies."
 					speed = -0.5
 					armor_deflection = 55

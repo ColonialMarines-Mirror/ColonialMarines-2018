@@ -801,6 +801,7 @@
 	iff_signal = 0
 
 /datum/ammo/bullet/turret/gauss
+	name = "turret heavy bullet"
 
 /datum/ammo/bullet/turret/gauss/New()
 	. = ..()

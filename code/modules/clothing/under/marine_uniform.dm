@@ -15,7 +15,7 @@
 	override_icon_state[] 	= null
 	)
 	select_gamemode_skin(expected_type,override_icon_state,new_name,new_protection)
-	..()
+	return ..()
 
 /obj/item/clothing/under/marine/set_sensors(mob/user)
 	to_chat(user, "<span class='warning'>The sensors in your uniform can't be modified.</span>")
@@ -111,7 +111,7 @@
 
 /obj/item/clothing/under/marine/officer/pilot/New()
 	select_gamemode_skin(/obj/item/clothing/under/marine/officer/pilot)
-	..()
+	return ..()
 
 /obj/item/clothing/under/marine/officer/tanker
 	name = "tank crewman officer uniform"
@@ -125,7 +125,7 @@
 
 /obj/item/clothing/under/marine/officer/bridge/New()
 	select_gamemode_skin(/obj/item/clothing/under/marine/officer/bridge)
-	..()
+	return ..()
 
 
 /obj/item/clothing/under/marine/officer/exec
@@ -135,7 +135,7 @@
 
 /obj/item/clothing/under/marine/officer/exec/New()
 	select_gamemode_skin(/obj/item/clothing/under/marine/officer/exec)
-	..()
+	return ..()
 
 /obj/item/clothing/under/marine/officer/command
 	name = "commander uniform"
@@ -144,7 +144,7 @@
 
 /obj/item/clothing/under/marine/officer/command/New()
 	select_gamemode_skin(/obj/item/clothing/under/marine/officer/command)
-	..()
+	return ..()
 
 /obj/item/clothing/under/marine/officer/admiral
 	name = "admiral uniform"

@@ -109,7 +109,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		icon_state = "[armor_variation]"
 
 	select_gamemode_skin(expected_type,,new_name)
-	..()
+	return ..()
 	armor_overlays = list("lamp") //Just one for now, can add more later.
 	update_icon()
 	pockets.max_w_class = 2 //Can contain small items AND rifle magazines.
@@ -137,12 +137,12 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	if(flags_marine_armor & ARMOR_LAMP_ON && src.loc != user)
 		user.SetLuminosity(brightness_on)
 		SetLuminosity(0)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/storage/marine/dropped(mob/user)
 	if(loc != user)
 		turn_off_light(user)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/storage/marine/proc/turn_off_light(mob/wearer)
 	if(flags_marine_armor & ARMOR_LAMP_ON)
@@ -223,7 +223,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/smartgunner/New()
 	select_gamemode_skin(/obj/item/clothing/suit/storage/marine/smartgunner)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/storage/marine/leader
 	name = "\improper B12 pattern leader armor"
@@ -244,7 +244,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/tanker/New()
 		select_gamemode_skin(type)
-		..()
+		return ..()
 
 //===========================SPECIALIST================================
 
@@ -296,7 +296,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 	New()
 		select_gamemode_skin(type)
-		..()
+		return ..()
 
 /obj/item/clothing/suit/storage/marine/M3S
 	name = "\improper M3-S light armor"
@@ -307,7 +307,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 	New()
 		select_gamemode_skin(type)
-		..()
+		return ..()
 
 /obj/item/clothing/suit/storage/marine/M35
 	name = "\improper M35 armor"
@@ -321,7 +321,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 	New()
 		select_gamemode_skin(type)
-		..()
+		return ..()
 
 /obj/item/clothing/suit/storage/marine/sniper
 	name = "\improper M3 pattern recon armor"
@@ -372,7 +372,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/MP/RO/New()
 	select_gamemode_skin(/obj/item/clothing/suit/storage/marine/MP/RO)
-	..()
+	return ..()
 
 //=============================//PMCS\\==================================
 

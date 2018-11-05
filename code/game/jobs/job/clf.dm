@@ -10,7 +10,7 @@
 
 //CLF Standard
 /datum/job/clf/standard
-	title = "UPP Standard"
+	title = "CLF Standard"
 	paygrade = "CLF1"
 	equipment = TRUE
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG,

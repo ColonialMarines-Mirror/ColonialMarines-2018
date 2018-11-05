@@ -427,8 +427,10 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 // halloss defines
 
-#define BASE_HALLOSS_RECOVERY_RATE -2
-#define REST_HALLOSS_RECOVERY_RATE -10
+#define BASE_HALLOSS_RECOVERY_RATE -4
+#define WALK_HALLOSS_RECOVERY_RATE -12
+#define DOWNED_HALLOSS_RECOVERY_RATE -16
+#define REST_HALLOSS_RECOVERY_RATE -32
 
 // Human Overlay Indexes
 #define MOTH_WINGS_LAYER		26
@@ -464,6 +466,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 #define TOTAL_UNDERLAYS			1
 
+#define ANTI_CHAINSTUN_TICKS	2
 
 //Hunter Defines
 #define HUNTER_STEALTH_COOLDOWN			50 //5 seconds

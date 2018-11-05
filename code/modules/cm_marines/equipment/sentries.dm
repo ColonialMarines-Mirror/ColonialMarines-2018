@@ -1063,7 +1063,8 @@
 		slow down. It'll serve for now.
 		*/
 		var/mob/living/carbon/human/H = M
-		if(istype(H) && H.get_target_lock(iff_signal)) continue
+		if(istype(H) && H.get_target_lock(iff_signal))
+		 continue
 
 
 

@@ -808,6 +808,7 @@
 	penetration= config.mhigh_armor_penetration
 
 /datum/ammo/bullet/turret/mini
+	name = "turret slimline bullet"
 
 /datum/ammo/bullet/turret/mini/New()
 	. = ..()

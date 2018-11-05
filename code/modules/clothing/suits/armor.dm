@@ -1,4 +1,3 @@
-
 /obj/item/clothing/suit/armor
 	flags_inventory = BLOCKSHARPOBJ
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO
@@ -10,8 +9,6 @@
 	w_class = 5
 	allowed = list(/obj/item/weapon/gun)//Guns only.
 	uniform_restricted = list(/obj/item/clothing/under)
-
-
 
 //armored vest
 
@@ -51,7 +48,7 @@
 		/obj/item/storage/large_holster/machete,
 		/obj/item/storage/belt/gun/m4a3,
 		/obj/item/storage/belt/gun/m44)
-	uniform_restricted = list(/obj/item/clothing/under/marine/officer/pilot)
+
 	New()
 		select_gamemode_skin(/obj/item/clothing/suit/armor/vest/pilot)
 		..()
@@ -77,7 +74,6 @@
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armorsec"
 	item_state = "armor"
-	slowdown = SLOWDOWN_ARMOR_MEDIUM //prevents powergaming marine by swapping armor.
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
@@ -105,8 +101,8 @@
 	armor = list(melee = 20, bullet = 50, laser = 25, energy = 10, bomb = 15, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 	permeability_coefficient = 0.9
-	time_to_unequip = 20
-	time_to_equip = 20
+	time_to_unequip = 10
+	time_to_equip = 10
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -139,7 +135,13 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/handcuffs,/obj/item/tank/emergency_oxygen)
+	allowed = list(
+		/obj/item/weapon/gun,
+		/obj/item/ammo_magazine,
+		/obj/item/ammo_casing,
+		/obj/item/weapon/baton,
+		/obj/item/handcuffs,
+		/obj/item/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 100)
 	flags_inventory = BLOCKSHARPOBJ|NOPRESSUREDMAGE
@@ -147,7 +149,6 @@
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_min_cold_protection_temperature
 	siemens_coefficient = 0.6
-
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -168,7 +169,6 @@
 	blood_overlay_type = "armor"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
@@ -207,13 +207,7 @@
 	src.item_state = "reactiveoff"
 	..()
 
-
-
-
-
-
 //All of the armor below is mostly unused
-
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
@@ -332,11 +326,6 @@
 	name = "emergency response team medical armor"
 	desc = "A set of armor worn by medical members of the NanoTrasen Emergency Response Team. Has red and white highlights."
 	icon_state = "ertarmor_med"
-
-
-
-
-
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"

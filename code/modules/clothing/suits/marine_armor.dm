@@ -59,6 +59,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	icon = 'icons/obj/clothing/cm_suits.dmi'
 	icon_state = "1"
 	item_state = "armor"
+	sprite_sheet_id = 1
 	flags_atom = CONDUCT
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -113,9 +114,9 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	update_icon()
 	pockets.max_w_class = 2 //Can contain small items AND rifle magazines.
 	pockets.bypass_w_limit = list(
-	/obj/item/ammo_magazine/rifle,
-	/obj/item/ammo_magazine/smg,
-	/obj/item/ammo_magazine/sniper,
+	"/obj/item/ammo_magazine/rifle",
+	"/obj/item/ammo_magazine/smg",
+	"/obj/item/ammo_magazine/sniper",
 	 )
 	pockets.max_storage_space = 6
 

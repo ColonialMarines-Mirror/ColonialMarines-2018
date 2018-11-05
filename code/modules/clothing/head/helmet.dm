@@ -155,9 +155,7 @@
 
 
 
-//===========================//MARINES HELMETS\\=================================\\
-//=======================================================================\\
-
+//===========================//MARINES HELMETS\\=================================
 
 /obj/item/clothing/head/helmet/marine
 	name = "\improper M10 pattern marine helmet"
@@ -359,8 +357,7 @@
 		select_gamemode_skin(/obj/item/clothing/head/helmet/marine/tanker)
 		..()
 
-//=============================//PMCS\\==================================\\
-//=======================================================================\\
+//=============================//PMCS\\==================================
 
 /obj/item/clothing/head/helmet/marine/veteran
 
@@ -401,7 +398,7 @@
 
 /obj/item/clothing/head/helmet/marine/veteran/PMC/commando
 	name = "\improper PMC commando helmet"
-	desc = "A fully enclosed, armored helmet made for Weyland Yutani elite commandos."
+	desc = "A fully enclosed, armored helmet made for elite commandos."
 	icon_state = "commando_helmet"
 	flags_armor_protection = HEAD|FACE|EYES
 	armor = list(melee = 90, bullet = 120, laser = 90, energy = 90, bomb = 90, bio = 100, rad = 100)
@@ -410,8 +407,7 @@
 	flags_marine_helmet = HELMET_DAMAGE_OVERLAY
 	unacidable = 1
 
-//==========================//DISTRESS\\=================================\\
-//=======================================================================\\
+//==========================//DISTRESS\\=================================
 
 /obj/item/clothing/head/helmet/marine/veteran/dutch
 	name = "\improper Dutch's Dozen helmet"
@@ -455,14 +451,11 @@
 
 /obj/item/clothing/head/helmet/UPP/heavy
 	name = "\improper UH7 helmet"
-	icon = 'icons/obj/clothing/cm_hats.dmi'
 	sprite_sheet_id = 1
 	icon_state = "upp_helmet_heavy"
 	armor = list(melee = 90, bullet = 85, laser = 60, energy = 65, bomb = 85, bio = 5, rad = 5)
 	unacidable = 1
 	anti_hug = 3
-
-
 
 //head rag
 
@@ -474,7 +467,6 @@
 	icon_state = "spec"
 	armor = list(melee = 35, bullet = 35, laser = 35, energy = 15, bomb = 10, bio = 0, rad = 0)
 	flags_inventory = BLOCKSHARPOBJ
-	flags_inv_hide = HIDEEARS|HIDETOPHAIR
 
 /obj/item/clothing/head/helmet/specrag/New()
 	select_gamemode_skin(type)
@@ -488,7 +480,6 @@
 	icon_state = "durag"
 	armor = list(melee = 35, bullet = 35, laser = 35, energy = 15, bomb = 10, bio = 0, rad = 0)
 	flags_inventory = BLOCKSHARPOBJ
-	flags_inv_hide = HIDEEARS|HIDETOPHAIR
 
 /obj/item/clothing/head/helmet/durag/jungle
 	name = "\improper M8 marksman cowl"
@@ -506,8 +497,7 @@
 			flags_inventory = BLOCKSHARPOBJ
 			flags_inv_hide = HIDEEARS|HIDEALLHAIR
 
-//===========================//HELGHAST - MERCENARY\\================================\\
-//=====================================================================\\
+//===========================//HELGHAST - MERCENARY\\================================
 
 /obj/item/clothing/head/helmet/marine/veteran/mercenary
 	name = "\improper K12 ceramic helmet"

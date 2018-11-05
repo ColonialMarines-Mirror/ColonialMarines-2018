@@ -90,10 +90,10 @@ Additional game mode variables.
 
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
-	xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
+	xeno_starting_num = max((ready_players/7), xeno_required_num)
 	surv_starting_num = CLAMP((ready_players/25), 0, 8)
 	merc_starting_num = max((ready_players/3), 1)
-	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num - 1
+	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
 	for(var/datum/squad/sq in RoleAuthority.squads)
 		if(sq)
 			sq.max_engineers = engi_slot_formula(marine_starting_num)
@@ -102,7 +102,12 @@ datum/game_mode/proc/initialize_special_clamps()
 	for(var/datum/job/J in RoleAuthority.roles_by_name)
 		if(J.scaled)
 			J.set_spawn_positions(marine_starting_num)
-
+	message_admins("DEBUG: ready players [ready_players]")
+	message_admins("DEBUG: xeno_required_num [xeno_required_num]")
+	message_admins("DEBUG: xeno_starting_num [xeno_starting_num]")
+	message_admins("DEBUG: surv_starting_num [surv_starting_num]")
+	message_admins("DEBUG: merc_starting_num [merc_starting_num]")
+	message_admins("DEBUG: marine_starting_num [marine_starting_num]")
 
 //===================================================\\
 

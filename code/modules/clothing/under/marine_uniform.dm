@@ -309,13 +309,6 @@
 
 /obj/item/clothing/under/rank/ro_suit
 	name = "requisition officer suit."
-	desc = "A nicely-fitting military suit for a requisition officer. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	desc = "A nicely-fitting military suit for a requisition officer.
 	icon_state = "RO_jumpsuit"
-	rollable_sleeves = FALSE
-
-/obj/item/clothing/under/rank/synthetic
-	name = "\improper USCM Support Uniform"
-	desc = "A simple uniform made for Synthetic crewmembers."
-	icon_state = "rdalt"
-	rollable_sleeves = FALSE
 	rollable_sleeves = FALSE

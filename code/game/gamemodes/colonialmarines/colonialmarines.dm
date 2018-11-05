@@ -16,7 +16,6 @@
 	var/found_xenos = initialize_starting_xenomorph_list()
 	initialize_starting_predator_list()
 	if(!found_queen && !found_xenos)
-		message_admins("DEBUG: No queen or xeno candidates found.")
 		return FALSE
 	initialize_starting_survivor_list()
 	return TRUE

@@ -102,12 +102,6 @@ datum/game_mode/proc/initialize_special_clamps()
 	for(var/datum/job/J in RoleAuthority.roles_by_name)
 		if(J.scaled)
 			J.set_spawn_positions(marine_starting_num)
-	message_admins("DEBUG: ready players [ready_players]")
-	message_admins("DEBUG: xeno_required_num [xeno_required_num]")
-	message_admins("DEBUG: xeno_starting_num [xeno_starting_num]")
-	message_admins("DEBUG: surv_starting_num [surv_starting_num]")
-	message_admins("DEBUG: merc_starting_num [merc_starting_num]")
-	message_admins("DEBUG: marine_starting_num [marine_starting_num]")
 
 //===================================================\\
 
@@ -282,64 +276,44 @@ datum/game_mode/proc/initialize_special_clamps()
 //If we are selecting xenomorphs, we NEED them to play the round. This is the expected behavior.
 //If this is an optional behavior, just override this proc or make an override here.
 /datum/game_mode/proc/initialize_starting_xenomorph_list()
-	message_admins("DEBUG: Initializing starting xenomorph list.")
 	var/list/datum/mind/possible_xenomorphs = get_players_for_role(BE_ALIEN)
 	if(possible_xenomorphs.len < xeno_required_num) //We don't have enough aliens.
-		message_admins("DEBUG: Noone had xeno preference on apparently, aborting filling the list.")
-		//to_chat(world, "<h2 style=\"color:red\">Not enough players have chosen to be a xenomorph in their character setup. <b>Aborting</b>.</h2>")
+		to_chat(world, "<h2 style=\"color:red\">Not enough players have chosen to be a xenomorph in their character setup. <b>Aborting</b>.</h2>")
 		return
 
 	//Minds are not transferred at this point, so we have to clean out those who may be already picked to play.
 	for(var/datum/mind/A in possible_xenomorphs)
 		if(A.assigned_role == "MODE")
-			message_admins("DEBUG: Assigned role mode?")
 			possible_xenomorphs -= A
-		if(A == queen)
-			message_admins("DEBUG: Queen also has xeno on, removing them..")
-			possible_xenomorphs -= A
-
-	for(var/datum/mind/A in possible_xenomorphs)
-		message_admins("DEBUG: Xenomorph possible candidate: [A.key]")
 
 	var/i = xeno_starting_num
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
-	message_admins("DEBUG: [xeno_starting_num]")
-	message_admins("DEBUG: [i] this is i.")
 	while(i > 0) //While we can still pick someone for the role.
 		if(possible_xenomorphs.len) //We still have candidates
-			message_admins("DEBUG: We still have candidates, yay.")
 			new_xeno = pick(possible_xenomorphs)
 			if(!new_xeno) 
-				message_admins("DEBUG: Last candidate gone, aborting.")
 				break  //Looks like we didn't get anyone. Back out.
 			new_xeno.assigned_role = "MODE"
 			new_xeno.special_role = "Xenomorph"
 			xenomorphs += new_xeno
 			possible_xenomorphs -= new_xeno
-			message_admins("DEBUG: Adding [new_xeno] to Xenomorphs list")
 		else //Out of candidates, spawn in empty larvas directly
-			message_admins("DEBUG: Out of candidates, spawning larvas directly")
 			larvae_spawn = pick(xeno_spawn)
 			new /mob/living/carbon/Xenomorph/Larva(larvae_spawn)
 		i--
-	message_admins("DEBUG: Loop done?")
 
 	/*
 	Our list is empty. This can happen if we had someone ready as alien and predator, and predators are picked first.
 	So they may have been removed from the list, oh well.
 	*/
-	for(var/datum/mind/A in xenomorphs)
-		message_admins("Xenomorph picked candidate: [A.key]")
 	if(xenomorphs.len < xeno_required_num)
-		//to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
-		message_admins("Xenomorph list didn't get properly filled.")
+		to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
 		return
 
 	return TRUE
 
 /datum/game_mode/proc/initialize_starting_queen_list()
-	message_admins("DEBUG: Initializing starting queen list.")
 	var/list/datum/mind/possible_queens = get_players_for_role(BE_QUEEN)
 
 	//Minds are not transferred at this point, so we have to clean out those who may be already picked to play.
@@ -347,8 +321,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(A.assigned_role == "MODE")
 			possible_queens -= A
 
-	if(!possible_queens.len) //We still have candidates
-		message_admins("DEBUG: Noone had queen preference on.")
+	if(!possible_queens.len)
 		return FALSE
 
 	for(var/datum/mind/new_queen in possible_queens)
@@ -356,23 +329,19 @@ datum/game_mode/proc/initialize_special_clamps()
 			new_queen.assigned_role = "MODE"
 			new_queen.special_role = "Xenomorph"
 			queen = new_queen
-			message_admins("DEBUG:Queen candidate picked.")
 			break
 
 	return TRUE
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
-	message_admins("Initializing post xenomorph list.")
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
 		if(new_xeno == queen)
-			message_admins("DEBUG:Queen also had xeno on, not picking them as xeno.")
+			continue
 		else
-			message_admins("DEBUG:Trying to transform xeno?")
 			transform_xeno(new_xeno)
 
 datum/game_mode/proc/initialize_post_queen_list()
 	if(!queen)
-		message_admins("DEBUG:No queen candidate picked, returning.")
 		return
 	transform_queen(queen)
 
@@ -500,7 +469,6 @@ datum/game_mode/proc/initialize_post_queen_list()
 	if(xeno_candidate) xeno_candidate.loc = null
 
 /datum/game_mode/proc/transform_xeno(datum/mind/ghost_mind)
-	message_admins("DEBUG:Transforming Xeno")
 	var/mob/original = ghost_mind.current
 	var/mob/living/carbon/Xenomorph/new_xeno
 
@@ -516,7 +484,6 @@ datum/game_mode/proc/initialize_post_queen_list()
 
 	if(original) 
 		cdel(original) //Just to be sure.
-	message_admins("DEBUG:Xeno transformed properly")
 
 /datum/game_mode/proc/transform_queen(datum/mind/ghost_mind)
 	var/mob/original = ghost_mind.current
@@ -524,9 +491,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 	var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 	if(!hive.living_xeno_queen && original?.client?.prefs && (original.client.prefs.be_special & BE_QUEEN) && !jobban_isbanned(original, "Queen"))
 		new_queen = new /mob/living/carbon/Xenomorph/Queen (pick(xeno_spawn))
-		message_admins("DEBUG:Queen created.")
 	else
-		message_admins("DEBUG:Could not create Queen.")
 		return
 	ghost_mind.transfer_to(new_queen)
 	ghost_mind.name = ghost_mind.current.name
@@ -539,7 +504,6 @@ datum/game_mode/proc/initialize_post_queen_list()
 
 	if(original) 
 		cdel(original) //Just to be sure.
-	message_admins("DEBUG:Queen mind transfered properly, all good.")
 
 //===================================================\\
 

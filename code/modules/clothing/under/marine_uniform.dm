@@ -91,7 +91,7 @@
 	icon_state = "BO_jumpsuit"
 
 /obj/item/clothing/under/marine/officer/req
-	name = "requisition officer suit."
+	name = "requisition officer suit"
 	desc = "A nicely-fitting military suit for a requisition officer."
 	icon_state = "RO_jumpsuit"
 	rollable_sleeves = FALSE

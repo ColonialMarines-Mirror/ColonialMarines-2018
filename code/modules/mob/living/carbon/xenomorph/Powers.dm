@@ -1659,7 +1659,7 @@
 		else
 			target = get_turf(T)
 
-		if(!istype(target)) //Something went horribly wrong. Clicked off edge of map probably
+		if(!target || !istype(target)) //Something went horribly wrong. Clicked off edge of map probably
 			return
 
 		if(target == loc)

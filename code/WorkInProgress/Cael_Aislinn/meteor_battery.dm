@@ -20,11 +20,13 @@
 	spawn(0)
 		if(istype(A,/obj/effect/meteor))
 			del(A)
-		explode()
+			explode("hit meteor")
+		else
+			explode("hit [A.name]")
 	return
 
-/obj/item/projectile/missile/proc/explode()
-	explosion(src.loc, 1, 1, 2, 7, 0)
+/obj/item/projectile/missile/proc/explode(cause)
+	explosion(src.loc, 1, 1, 2, 7, 0, src.name, cause)
 	playsound(src.loc, "explosion", 50, 1)
 	del(src)
 
@@ -35,7 +37,7 @@
 /obj/item/projectile/missile/attackby(obj/item/weapon/W, mob/user)
 	//can't touch this
 	..()
-	explode()
+	explode("hit by [user.name]")
 
 /obj/machinery/meteor_battery
 	name = "meteor battery"

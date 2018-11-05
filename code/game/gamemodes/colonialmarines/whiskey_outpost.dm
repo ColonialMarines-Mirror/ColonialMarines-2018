@@ -1487,13 +1487,13 @@
 		var/turf/target_4 = locate(T.x - (offset_x*2),T.y - (offset_y*2),T.z)
 		sleep(50) //AWW YEAH
 		flame_radius(3,target)
-		explosion(target,  -1, 2, 3, 5)
+		explosion(target,  -1, 2, 3, 5, "[name], napalm", "activated by [user.name]")
 		flame_radius(3,target_2)
-		explosion(target_2,  -1, 2, 3, 5)
+		explosion(target_2,  -1, 2, 3, 5, "[name], napalm", "activated by [user.name]")
 		flame_radius(3,target_3)
-		explosion(target_3,  -1, 2, 3, 5)
+		explosion(target_3,  -1, 2, 3, 5, "[name], napalm", "activated by [user.name]")
 		flame_radius(3,target_4)
-		explosion(target_4,  -1, 2, 3, 5)
+		explosion(target_4,  -1, 2, 3, 5, "[name], napalm", "activated by [user.name]")
 		sleep(1)
 		cdel(lasertarget)
 		lazing = 0
@@ -1524,11 +1524,11 @@
 		var/turf/target_3 = locate(T.x + rand(-2,2),T.y + rand(-2,2),T.z)
 		if(target && istype(target))
 			cdel(lasertarget)
-			explosion(target, -1, HE_power, con_power, con_power) //Kaboom!
+			explosion(target, -1, HE_power, con_power, con_power, "[name], mortar", "activated by [user.name]") //Kaboom!
 			sleep(rand(15,30)) //This is all better done in a for loop, but I am mad lazy
-			explosion(target_2, -1, HE_power, con_power, con_power)
+			explosion(target_2, -1, HE_power, con_power, con_power, "[name], mortar", "activated by [user.name]")
 			sleep(rand(15,30))
-			explosion(target_3, -1, HE_power, con_power, con_power)
+			explosion(target_3, -1, HE_power, con_power, con_power, "[name], mortar", "activated by [user.name]")
 			lazing = 0
 			laz_b = 1
 			sleep(6000)

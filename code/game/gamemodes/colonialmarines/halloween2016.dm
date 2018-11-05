@@ -343,15 +343,15 @@
 /obj/item/device/omega_array/proc/update_health()
 	if(health <= 0)
 		visible_message("<span class='warning'>[src] sparks and begins to violently shake!</span>")
-		destroy()
+		destroy("health depleted")
 
-/obj/item/device/omega_array/proc/destroy()
+/obj/item/device/omega_array/proc/destroy(cause)
 	if(ticker && ticker.mode && ticker.mode.type == /datum/game_mode/colonialmarines_halloween_2016)
 		var/datum/game_mode/colonialmarines_halloween_2016/M = ticker.mode
 		M.mcguffin = null
 	var/detonate_location = get_turf(src)
 	cdel(src)
-	explosion(detonate_location,2,3,4)
+	explosion(detonate_location, 2, 3, 4, name, cause)
 
 /obj/item/device/omega_array/control
 	New()

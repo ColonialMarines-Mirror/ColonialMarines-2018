@@ -297,7 +297,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	var/i = xeno_starting_num
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
-	message_admin("DEBUG: [i] this is i.")
+	message_admins("DEBUG: [i] this is i.")
 	while(i > 0) //While we can still pick someone for the role.
 		if(possible_xenomorphs.len) //We still have candidates
 			message_admins("We still have candidates, yay.")
@@ -315,7 +315,7 @@ datum/game_mode/proc/initialize_special_clamps()
 			larvae_spawn = pick(xeno_spawn)
 			new /mob/living/carbon/Xenomorph/Larva(larvae_spawn)
 		i--
-	message_admin("DEBUG: Loop done?")
+	message_admins("DEBUG: Loop done?")
 
 	/*
 	Our list is empty. This can happen if we had someone ready as alien and predator, and predators are picked first.

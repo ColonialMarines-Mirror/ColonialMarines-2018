@@ -147,6 +147,9 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TOKEN_SPEC				8
 #define TOKEN_ALL				15
 
+//MEDEVAC DEFINES
+#define MEDEVAC_COOLDOWN		3000 //300 seconds or 5 minutes
+#define MEDEVAC_TELE_DELAY		50 //5 seconds
 //Sentry defines
 #define SENTRY_ALERT_AMMO				1
 #define SENTRY_ALERT_HOSTILE			2

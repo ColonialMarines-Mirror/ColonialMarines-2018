@@ -32,14 +32,14 @@
 			J.generate_equipment(mob)
 			to_chat(mob, "<font size='3'>\red You are the Death Squad Leader!</font>")
 			to_chat(mob, "<B> You must clear out any traces of the infestation and its survivors..</b>")
-			to_chat(mob, "<B> Follow any orders directly from Weyland-Yutani!</b>")
+			to_chat(mob, "<B> Follow any orders directly from Nanotrasen!</b>")
 		else
 			var/datum/job/J = new /datum/job/pmc/deathsquad/standard
 			mob.set_everything(mob, "PMC Deathsquad Standard")
 			J.generate_equipment(mob)
 			to_chat(mob, "<font size='3'>\red You are a Death Squad Commando!!</font>")
 			to_chat(mob, "<B> You must clear out any traces of the infestation and its survivors..</b>")
-			to_chat(mob, "<B> Follow any orders directly from Weyland-Yutani!</b>")
+			to_chat(mob, "<B> Follow any orders directly from Nanotrasen!</b>")
 
 	spawn(10)
 		to_chat(M, "<B>Objectives:</b> [objectives]")

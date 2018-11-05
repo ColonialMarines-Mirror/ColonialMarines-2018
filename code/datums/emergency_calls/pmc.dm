@@ -1,4 +1,4 @@
-//Weyland Yutani commandos. Friendly to USCM, hostile to xenos.
+//Nanotrasen commandos. Friendly to USCM, hostile to xenos.
 /datum/emergency_call/pmc
 	name = "PMC"
 	probability = 25
@@ -39,18 +39,18 @@
 				var/datum/job/J = new /datum/job/pmc/standard
 				mob.set_everything(mob, "PMC Standard")
 				J.generate_equipment(mob)
-				to_chat(mob, "<font size='3'>\red You are a Weyland Yutani mercenary!</font>")
+				to_chat(mob, "<font size='3'>\red You are a Nanotrasen mercenary!</font>")
 			else
 				if(prob(30))
 					var/datum/job/J = new /datum/job/pmc/sniper
 					mob.set_everything(mob, "PMC Sniper")
 					J.generate_equipment(mob)
-					to_chat(mob, "<font size='3'>\red You are a Weyland Yutani sniper!</font>")
+					to_chat(mob, "<font size='3'>\red You are a Nanotrasen sniper!</font>")
 				else
 					var/datum/job/J = new /datum/job/pmc/gunner
 					mob.set_everything(mob, "PMC Gunner")
 					J.generate_equipment(mob)
-					to_chat(mob, "<font size='3'>\red You are a Weyland Yutani heavy gunner!</font>")
+					to_chat(mob, "<font size='3'>\red You are a Nanostrasen heavy gunner!</font>")
 		print_backstory(mob)
 
 	spawn(10)
@@ -62,16 +62,16 @@
 
 /datum/emergency_call/pmc/print_backstory(mob/living/carbon/human/M)
 	to_chat(M, "<B>You were born [pick(75;"in Europe", 15;"in Asia", 10;"on Mars")] to a [pick(75;"well-off", 15;"well-established", 10;"average")] family.</b>")
-	to_chat(M, "<B>Joining the ranks of Weyland Yutani has proven to be very profitable for you.</b>")
+	to_chat(M, "<B>Joining the ranks of Nanotrasen has proven to be very profitable for you.</b>")
 	to_chat(M, "<B>While you are officially an employee, much of your work is off the books. You work as a skilled mercenary.</b>")
 	to_chat(M, "<B>You are well-informed of the xenomorph threat.</b>")
 	to_chat(M, "")
 	to_chat(M, "")
-	to_chat(M, "<B>You are part of  Weyland Yutani Task Force Oberon that arrived in 2182 following the UA withdrawl of the Tychon's Rift sector.</b>")
-	to_chat(M, "<B>Task-force Oberon is stationed aboard the USCSS Royce, a powerful Weyland-Yutani cruiser that patrols the outer edges of Tychon's Rift. </b>")
-	to_chat(M, "<B>Under the directive of Weyland-Yutani board member Johan Almric, you act as private security for Weyland Yutani science teams.</b>")
+	to_chat(M, "<B>You are part of  Nanotrasen Task Force Oberon that arrived in 2182 following the UA withdrawl of the Tychon's Rift sector.</b>")
+	to_chat(M, "<B>Task-force Oberon is stationed aboard the USCSS Royce, a powerful Nanotrasen cruiser that patrols the outer edges of Tychon's Rift. </b>")
+	to_chat(M, "<B>Under the directive of Nanotrasen board member Johan Almric, you act as private security for Nanotrasen science teams.</b>")
 	to_chat(M, "<B>The USCSS Royce contains a crew of roughly two hundred PMCs, and one hundred scientists and support personnel.</b>")
 	to_chat(M, "")
 	to_chat(M, "")
-	to_chat(M, "<B>Ensure no damage is incurred against Weyland Yutani. Make sure the CL is safe.</b>")
-	to_chat(M, "<B>Deny Weyland-Yutani's involvement and do not trust the UA/USCM forces.</b>")
+	to_chat(M, "<B>Ensure no damage is incurred against Nanotrasen. Make sure the CL is safe.</b>")
+	to_chat(M, "<B>Deny Nanotrasen's involvement and do not trust the UA/USCM forces.</b>")

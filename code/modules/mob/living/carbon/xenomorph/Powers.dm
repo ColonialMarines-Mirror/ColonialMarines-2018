@@ -1666,7 +1666,6 @@
 			to_chat(src, "<span class='warning'>That's far too close!</span>")
 			return
 
-			return
 
 		acid_cooldown = TRUE
 		use_plasma(plasmacost)

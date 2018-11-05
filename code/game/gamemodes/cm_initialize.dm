@@ -90,7 +90,8 @@ Additional game mode variables.
 
 datum/game_mode/proc/initialize_special_clamps()
 	var/ready_players = num_players() // Get all players that have "Ready" selected
-	xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
+	//xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
+	xeno_starting_num = 1
 	surv_starting_num = CLAMP((ready_players/25), 0, 8)
 	merc_starting_num = max((ready_players/3), 1)
 	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
@@ -280,22 +281,28 @@ datum/game_mode/proc/initialize_special_clamps()
 	message_admins("DEBUG: Initializing starting xenomorph list.")
 	var/list/datum/mind/possible_xenomorphs = get_players_for_role(BE_ALIEN)
 	if(possible_xenomorphs.len < xeno_required_num) //We don't have enough aliens.
-		to_chat(world, "<h2 style=\"color:red\">Not enough players have chosen to be a xenomorph in their character setup. <b>Aborting</b>.</h2>")
+		message_admins("DEBUG: Noone had xeno preference on apparently, aborting filling the list.")
+		//to_chat(world, "<h2 style=\"color:red\">Not enough players have chosen to be a xenomorph in their character setup. <b>Aborting</b>.</h2>")
 		return
 
 	//Minds are not transferred at this point, so we have to clean out those who may be already picked to play.
 	for(var/datum/mind/A in possible_xenomorphs)
 		if(A.assigned_role == "MODE")
+			message_admins("DEBUG: Assigned role mode?")
 			possible_xenomorphs -= A
+
+	for(var/datum/mind/A in possible_xenomorphs)
+		message_admins("Xenomorph possible candidate: [A]")
 
 	var/i = xeno_starting_num
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
 	while(i > 0) //While we can still pick someone for the role.
 		if(possible_xenomorphs.len) //We still have candidates
+			message_admins("We still have candidates, yay.")
 			new_xeno = pick(possible_xenomorphs)
 			if(!new_xeno) 
-				message_admins("DEBUG: No possible xeno candidates?")
+				message_admins("DEBUG: Last candidate gone, aborting.")
 				break  //Looks like we didn't get anyone. Back out.
 			new_xeno.assigned_role = "MODE"
 			new_xeno.special_role = "Xenomorph"
@@ -312,8 +319,11 @@ datum/game_mode/proc/initialize_special_clamps()
 	Our list is empty. This can happen if we had someone ready as alien and predator, and predators are picked first.
 	So they may have been removed from the list, oh well.
 	*/
+	for(var/datum/mind/A in xenomorphs)
+		message_admins("Xenomorph picked candidate: [A]")
 	if(xenomorphs.len < xeno_required_num)
-		to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
+		//to_chat(world, "<h2 style=\"color:red\">Could not find any candidates after initial alien list pass. <b>Aborting</b>.</h2>")
+		message_admins("Xenomorph list didn't get properly filled.")
 		return
 
 	return TRUE
@@ -342,6 +352,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	return TRUE
 
 /datum/game_mode/proc/initialize_post_xenomorph_list()
+	message_admins("Initializing post xenomorph list.")
 	for(var/datum/mind/new_xeno in xenomorphs) //Build and move the xenos.
 		if(new_xeno == queen)
 			message_admins("DEBUG:Queen also had xeno on, not picking them as xeno.")

@@ -93,7 +93,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	xeno_starting_num = max((ready_players/7), xeno_required_num) //(n, minimum, maximum)
 	surv_starting_num = CLAMP((ready_players/25), 0, 8)
 	merc_starting_num = max((ready_players/3), 1)
-	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num
+	marine_starting_num = ready_players - xeno_starting_num - surv_starting_num - merc_starting_num - 1
 	for(var/datum/squad/sq in RoleAuthority.squads)
 		if(sq)
 			sq.max_engineers = engi_slot_formula(marine_starting_num)

@@ -95,14 +95,12 @@
 			M.animation_attack_on(src)
 
 			//Check for a special bite attack
-			if(prob(M.bite_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
-			if(prob(M.bite_chance) && !no_crit && !M.stealth) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
+			if(prob(M.bite_chance) && !M.critical_proc && !no_crit && !M.stealth) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
 				M.bite_attack(src, damage)
 				return TRUE
 
 			//Check for a special bite attack
-			if(prob(M.tail_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
-			if(prob(M.tail_chance) && !no_crit && !M.stealth) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
+			if(prob(M.bite_chance) && !M.critical_proc && !no_crit && !M.stealth) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
 				M.tail_attack(src, damage)
 				return TRUE
 
@@ -170,7 +168,7 @@
 			if(M.stealth) //Cancel stealth if we have it due to aggro.
 				if(M.can_sneak_attack) //Pouncing prevents us from making a sneak attack for 4 seconds
 					damage *= 3 //Massive damage on the sneak attack... hope you have armour.
-					KnockDown(2) //...And we knock them down
+					KnockOut(2) //...And we knock them out
 					M.visible_message("<span class='danger'>\The [M] strikes [src] with vicious precision!</span>", \
 					"<span class='danger'>You strike [src] with vicious precision!</span>")
 				M.cancel_stealth()
@@ -205,6 +203,12 @@
 				tackle_pain = tackle_pain * (1 + (0.05 * M.frenzy_aura))  //Halloss damage increased by 5% per rank of frenzy aura
 			if(protection_aura)
 				tackle_pain = tackle_pain * (1 - (0.10 + 0.05 * protection_aura))  //Halloss damage decreased by 10% + 5% per rank of protection aura
+			if(M.stealth)
+				M.cancel_stealth()
+				KnockOut(2)
+				tackle_pain *= 2 //Halloss multiplied by 2.
+				M.visible_message("<span class='danger'>\The [M] strikes [src] with vicious precision!</span>", \
+				"<span class='danger'>You strike [src] with vicious precision!</span>")
 			if(dam_bonus)
 				tackle_pain += dam_bonus
 			apply_damage(tackle_pain, HALLOSS)

@@ -1449,7 +1449,7 @@
 					/obj/item/ammo_magazine/minisentry)
 
 /obj/item/storage/box/minisentry/New()
-	..()
+	. = ..()
 	spawn(1)
 		new /obj/item/device/marine_turret/mini(src) //gun itself
 		new /obj/item/tool/wrench(src) //wrench to hold it down into the ground

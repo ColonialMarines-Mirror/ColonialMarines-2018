@@ -145,8 +145,8 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					melee_damage_upper = 35
 					health = 220
 					maxHealth = 220
-					plasma_gain = 25
-					plasma_max = 700
+					plasma_gain = 30
+					plasma_max = 1000
 					spit_delay = 10
 					upgrade_threshold = 400
 					caste_desc = "A ranged damage dealer. It looks a little more dangerous."
@@ -344,12 +344,11 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					melee_damage_upper = 35
 					health = 240
 					maxHealth = 240
-					plasma_gain = 30
-					plasma_max = 800
+					plasma_gain = 33
+					plasma_max = 1100
 					spit_delay = 10
 					upgrade_threshold = 800
 					caste_desc = "A ranged damage dealer. It looks pretty strong."
-					spit_types = list(/datum/ammo/xeno/acid/heavy/spitter)
 					armor_deflection = 30
 					tackle_damage = 40 // Prior was 35
 					speed = -0.7
@@ -525,7 +524,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "It always has the right of way."
 					armor_deflection = 100
 				if("Sentinel")
-					to_chat(src, "<span class='xenoannounce'>You are the stun master. Your stunning is legendary and causes massive quantities of salt.</span>")
+					to_chat(src, "<span class='xenoannounce'>You are the neuro master. Your neuro spam is legendary and causes massive quantities of salt.</span>")
 					melee_damage_lower = 25
 					melee_damage_upper = 35
 					health = 195
@@ -539,16 +538,15 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 40	 // Prior was 35
 					speed = -1.1
 				if("Spitter")
-					to_chat(src, "<span class='xenoannounce'>You are a master of ranged stuns and damage. Go fourth and generate salt.</span>")
+					to_chat(src, "<span class='xenoannounce'>You are a master of ranged damage. Go fourth and generate salt.</span>")
 					melee_damage_lower = 30
 					melee_damage_upper = 40
 					health = 250
 					maxHealth = 250
-					plasma_gain = 50
-					plasma_max = 900
+					plasma_gain = 35
+					plasma_max = 1150
 					spit_delay = 10
 					caste_desc = "A ranged destruction machine."
-					spit_types = list(/datum/ammo/xeno/acid/heavy/spitter)
 					armor_deflection = 30
 					tackle_damage = 45	 // Prior was 35
 					speed = -0.8

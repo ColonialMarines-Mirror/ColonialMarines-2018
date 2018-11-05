@@ -1549,7 +1549,7 @@
 		shake_camera(M, 2, 2)
 		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
 		M.KnockDown(1, 1)
-		
+
 	cresttoss_cooldown()
 	spawn(3) //Revert to our prior icon state.
 		if(m_intent == MOVE_INTENT_RUN)
@@ -1621,15 +1621,15 @@
 		cdel(S)
 	new /obj/effect/xenomorph/spray(target)
 	for(var/mob/living/carbon/M in target)
-		if(!(ishuman(M) || ismonkey(M)) || (M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))
+		if( isXeno(M) ) //Xenos immune to acid
 			continue
-			if((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest))
-				continue //nested infected hosts are not hurt by acid spray
-			M.adjustFireLoss(rand(25, 38) + 4 * upgrade)
-			to_chat(M, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
-			if(!isYautja(M))
-				M.emote("scream")
-				M.KnockDown(1)
+		if((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest)) //nested infected hosts are not hurt by acid spray
+			continue
+		M.adjustFireLoss(rand(25, 38) + 4 * upgrade)
+		to_chat(M, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
+		if(!isYautja(M))
+			M.emote("scream")
+			M.KnockDown(1)
 
 /mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 200, acid_d = acid_delay)
 	if(!T)

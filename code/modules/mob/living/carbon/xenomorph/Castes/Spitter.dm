@@ -12,12 +12,12 @@
 	health = 180
 	maxHealth = 180
 	plasma_stored = 150
-	plasma_gain = 20
-	plasma_max = 600
+	plasma_gain = 25
+	plasma_max = 800
 	spit_delay = 10
 	evolution_threshold = 200
 	upgrade_threshold = 200
-	spit_types = list(/datum/ammo/xeno/acid/heavy/spitter) //Gotta give them their own version of heavy acid; kludgy but necessary as 100 plasma is way too costly.
+	spit_types = list(/datum/ammo/xeno/acid/heavy) //Gotta give them their own version of heavy acid; kludgy but necessary as 100 plasma is way too costly.
 	speed = -0.5
 	caste_desc = "Ptui!"
 	pixel_x = 0
@@ -27,7 +27,7 @@
 	tier = 2
 	upgrade = 0
 	acid_cooldown = 0
-	acid_delay = 300 //30 seconds delay on acid. Reduced by -2 per upgrade.
+	acid_delay = 300 //30 second delay on acid spray. Reduced by -3/-2/-1 per upgrade.
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/regurgitate,

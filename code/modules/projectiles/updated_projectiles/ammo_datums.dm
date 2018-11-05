@@ -1294,10 +1294,6 @@
 		return
 	new /obj/effect/xenomorph/spray(T, 10)
 
-/datum/ammo/xeno/acid/heavy/spitter
-	spit_cost = 75
-
-
 /datum/ammo/xeno/boiler_gas
 	name = "glob of gas"
 	icon_state = "boiler_gas2"

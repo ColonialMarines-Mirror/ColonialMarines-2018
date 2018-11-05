@@ -76,8 +76,8 @@
 			config.use_loyalty_implants = 1
 		if("remove_gun_restrictions")
 			config.remove_gun_restrictions = 1
+		if("husking_on")
+			config.husking_on = value
 		else
 			log_misc("Unknown setting in game options: '[name]'")
 
-		if("husking_on")
-			config.husking_on = value

@@ -156,25 +156,9 @@
 
 
 /mob/living/carbon/human/Dispose()
-	clean_from_squad(FALSE)
+	assigned_squad?.clean_marine_from_squad(src,FALSE)
 	remove_from_all_mob_huds()
 	return ..()
-
-/mob/living/carbon/human/proc/clean_from_squad(wipe = FALSE)
-	if(!assigned_squad)
-		return FALSE
-	var/n = assigned_squad.marines_list.Find(src)
-	if(n)
-		assigned_squad.marines_list -= assigned_squad.marines_list[n] //they were never here
-		if(!wipe) //preserve their memories
-			var/role = "unknown"
-			if(mind?.assigned_role)
-				role = mind.assigned_role
-			assigned_squad.gibbed_marines_list[name] = role
-	if(assigned_squad.squad_leader == src)
-		assigned_squad.squad_leader = null
-	assigned_squad = null
-	return TRUE
 
 /mob/living/carbon/human/Stat()
 	if (!..())

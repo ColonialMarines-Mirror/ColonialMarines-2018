@@ -154,9 +154,20 @@
 		if("Squad Smartgunner") num_smartgun--
 		if("Squad Leader") num_leaders--
 
-
-
-
+//proc used by human dispose to clean the mob from squad lists
+/datum/squad/proc/clean_marine_from_squad(mob/living/carbon/human/H, wipe = FALSE)
+	if(!H.assigned_squad || !(H in marines_list))
+		return FALSE
+	marines_list -= src //they were never here
+	if(!wipe) //preserve their memories
+		var/role = "unknown"
+		if(H.mind?.assigned_role)
+			role = H.mind.assigned_role
+		gibbed_marines_list[H.name] = role
+	if(squad_leader == src)
+		squad_leader = null
+	H.assigned_squad = null
+	return TRUE
 
 /datum/squad/proc/demote_squad_leader(leader_killed)
 	var/mob/living/carbon/human/old_lead = squad_leader

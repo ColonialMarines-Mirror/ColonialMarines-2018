@@ -1594,7 +1594,8 @@
 				break //Nope.avi
 
 			var/obj/machinery/M = locate() in T
-			if(M)
+			if(M?.density)
+				break
 				if(M.density)
 					break
 

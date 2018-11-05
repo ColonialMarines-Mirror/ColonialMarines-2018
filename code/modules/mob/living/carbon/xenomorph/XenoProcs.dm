@@ -145,9 +145,6 @@
 	if(frenzy_aura)
 		. -= (frenzy_aura * 0.05)
 
-	if(stealth)
-		handle_stealth_movement()
-
 	if(is_charging)
 		if(legcuffed)
 			is_charging = 0
@@ -164,6 +161,14 @@
 					stop_momentum() //This should disallow rapid turn bumps
 				else
 					handle_momentum()
+
+//Stealth handling
+/mob/living/carbon/Xenomorph/Hunter/movement_delay()
+	. = ..()
+	if(stealth)
+		handle_stealth_movement()
+
+
 
 /mob/living/carbon/Xenomorph/proc/handle_stealth_movement()
 	//Initial stealth

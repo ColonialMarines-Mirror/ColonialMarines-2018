@@ -93,8 +93,6 @@
 
 	if(damage > 12) //Light damage won't splash.
 		check_blood_splash(damage, damagetype, chancemod)
-		if(stealth) //Any significant damage causes us to break stealth
-			cancel_stealth()
 
 	if(stat == DEAD)
 		return FALSE
@@ -107,6 +105,11 @@
 
 	updatehealth()
 	return TRUE
+
+/mob/living/carbon/Xenomorph/Hunter/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, used_weapon = null, sharp = 0, edge = 0)
+	. = ..()
+	if(damage > 15 && stealth) //Any significant damage causes us to break stealth
+		cancel_stealth()
 
 /mob/living/carbon/Xenomorph/adjustBruteLoss(amount)
 	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth - crit_health)

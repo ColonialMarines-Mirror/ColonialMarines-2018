@@ -109,6 +109,9 @@
 	handle_stagger() // 1 each time
 	handle_slowdown() // 0.4 each time
 	handle_halloss() // 3 each time
+
+/mob/living/carbon/Xenomorph/Hunter/handle_status_effects()
+	. = ..()
 	handle_stealth()
 
 /mob/living/carbon/Xenomorph/proc/handle_critical_health_updates()
@@ -130,7 +133,7 @@
 		updatehealth() //Update health-related stats, like health itself (using brute and fireloss), health HUD and status.
 		return
 	var/turf/T = loc
-	if(!T || !istype(T) || hardcore) 
+	if(!T || !istype(T) || hardcore)
 		return
 	if(on_fire) //Can't regenerate while on fire
 		updatehealth()
@@ -175,6 +178,30 @@
 		plasma_stored -= 5
 	if(plasma_stored == plasma_max)
 		return
+	if(locate(/obj/effect/alien/weeds) in T)
+		plasma_stored += plasma_gain
+		if(recovery_aura)
+			plasma_stored += round(plasma_gain * recovery_aura * 0.25) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
+	else
+		plasma_stored++
+	if(plasma_stored > plasma_max)
+		plasma_stored = plasma_max
+	else if(plasma_stored < 0)
+		plasma_stored = 0
+		if(current_aura)
+			current_aura = null
+			to_chat(src, "<span class='warning'>You have run out of plasma and stopped emitting pheromones.</span>")
+
+	hud_set_plasma() //update plasma amount on the plasma mob_hud
+
+/mob/living/carbon/Xenomorph/Hunter/handle_living_plasma_updates()
+	var/turf/T = loc
+	if(!T || !istype(T))
+		return
+	if(current_aura)
+		plasma_stored -= 5
+	if(plasma_stored == plasma_max)
+		return
 	var/modifier = 1
 	if(stealth && last_move_intent > world.time - 20) //Stealth halves the rate of plasma recovery on weeds, and eliminates it entirely while moving
 		return
@@ -193,9 +220,6 @@
 		if(current_aura)
 			current_aura = null
 			to_chat(src, "<span class='warning'>You have ran out of plasma and stopped emitting pheromones.</span>")
-
-	hud_set_plasma() //update plasma amount on the plasma mob_hud
-
 
 /mob/living/carbon/Xenomorph/Hivelord/handle_living_plasma_updates()
 	if(speed_activated)

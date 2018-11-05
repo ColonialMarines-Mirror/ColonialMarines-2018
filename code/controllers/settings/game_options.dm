@@ -78,3 +78,6 @@
 			config.remove_gun_restrictions = 1
 		else
 			log_misc("Unknown setting in game options: '[name]'")
+
+		if("husking_on")
+			config.husking_on = value

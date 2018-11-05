@@ -107,7 +107,7 @@
 	desc = "A bodysuit worn by pilot officers of the USCM, and is meant for survival in inhospitable conditions. Fly the marines onwards to glory."
 	icon_state = "pilot_flightsuit"
 	flags_cold_protection = ICE_PLANET_min_cold_protection_temperature
-	suit_restricted = list(/obj/item/clothing/suit/armor/vest/pilot)
+
 
 /obj/item/clothing/under/marine/officer/pilot/New()
 	select_gamemode_skin(/obj/item/clothing/under/marine/officer/pilot)
@@ -117,7 +117,6 @@
 	name = "tank crewman officer uniform"
 	desc = "A uniform worn by commissioned officers of the USCM. Do the corps proud."
 	icon_state = "marine_tanker"
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/tanker)
 
 /obj/item/clothing/under/marine/officer/bridge
 	name = "staff officer uniform"
@@ -183,7 +182,6 @@
 	icon_state = "pmc_jumpsuit"
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 	armor = list(melee = 10, bullet = 10, laser = 5, energy = 5, bomb = 10, bio = 1, rad = 1)
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/veteran/PMC, /obj/item/clothing/suit/storage/marine/smartgunner/veteran/PMC)
 	has_sensor = TRUE
 
 /obj/item/clothing/under/marine/veteran/PMC/leader
@@ -204,16 +202,11 @@
 	icon_state = "bear_jumpsuit"
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/veteran/bear)
-
-
 /obj/item/clothing/under/marine/veteran/UPP
 	name = "\improper UPP fatigues"
 	desc = "A set of UPP fatigues, mass produced for the armed-forces of the Union of Progressive Peoples."
 	icon_state = "upp_uniform"
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
-
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/UPP, /obj/item/clothing/suit/storage/marine/smartgunner/UPP)
 
 /obj/item/clothing/under/marine/veteran/UPP/medic
 	name = "\improper UPP medic fatigues"
@@ -225,8 +218,6 @@
 	icon_state = "freelancer_uniform"
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/freelancer)
-
 /obj/item/clothing/under/marine/veteran/dutch
 	name = "\improper Dutch's Dozen uniform"
 	desc = "A comfortable uniform worn by the Dutch's Dozen mercenaries. It's seen some definite wear and tear, but is still in good condition."
@@ -234,7 +225,6 @@
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS
 	icon_state = "dutch_jumpsuit"
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/veteran/dutch, /obj/item/clothing/suit/armor/vest/dutch)
 
 /obj/item/clothing/under/marine/veteran/dutch/ranger
 	icon_state = "dutch_jumpsuit2"
@@ -247,7 +237,6 @@
 	icon_state = "mercenary_heavy_uniform"
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 	armor = list(melee = 10, bullet = 10, laser = 5, energy = 5, bomb = 10, bio = 1, rad = 1)
-	suit_restricted = list(/obj/item/clothing/suit/storage/marine/veteran/mercenary)
 
 /obj/item/clothing/under/marine/veteran/mercenary/miner
 	name = "\improper Mercenary miner fatigues"

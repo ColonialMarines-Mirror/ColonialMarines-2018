@@ -346,6 +346,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(new_xeno == queen)
 			message_admins("DEBUG:Queen also had xeno on, not picking them as xeno.")
 		else
+			message_admins("DEBUG:Trying to transform xeno?")
 			transform_xeno(new_xeno)
 
 datum/game_mode/proc/initialize_post_queen_list()

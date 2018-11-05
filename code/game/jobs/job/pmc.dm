@@ -44,9 +44,9 @@
 		H.equip_to_slot_or_del(new /obj/item/ammo_magazine/smg/m39/ap(H.back), WEAR_IN_BACK)
 		H.equip_to_slot_or_del(new /obj/item/ammo_magazine/smg/m39/ap(H.back), WEAR_IN_BACK)
 
-//PMC support engineer.
+//PMC Gunner
 /datum/job/pmc/gunner
-	title = "PMC Mechanic"
+	title = "PMC Gunner"
 	paygrade = "PMC2"
 	skills_type = /datum/skills/smartgunner/pmc
 	equipment = TRUE

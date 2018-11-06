@@ -8,7 +8,9 @@
 	icon_state = "Ravager Walking"
 	melee_damage_lower = 40
 	melee_damage_upper = 60
-	tackle_damage = 55
+	tacklemin = 3
+	tacklemax = 6
+	tackle_chance = 80
 	health = 200
 	maxHealth = 200
 	plasma_stored = 50

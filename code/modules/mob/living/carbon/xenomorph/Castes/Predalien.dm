@@ -14,8 +14,9 @@
 	max_grown = 200
 	plasma_gain = 25
 	evolution_allowed = FALSE
-	tackle_damage = 50
-
+	tacklemin = 6
+	tacklemax = 10
+	tackle_chance = 80
 
 	wall_smash = TRUE
 	is_intelligent = TRUE

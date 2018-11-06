@@ -8,7 +8,6 @@
 	icon_state = "Hunter Walking"
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	tackle_damage = 35
 	health = 175
 	maxHealth = 175
 	plasma_stored = 50

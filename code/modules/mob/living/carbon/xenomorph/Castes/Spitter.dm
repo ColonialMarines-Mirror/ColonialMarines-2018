@@ -8,7 +8,6 @@
 	icon_state = "Spitter Walking"
 	melee_damage_lower = 15
 	melee_damage_upper = 25
-	tackle_damage = 30
 	health = 180
 	maxHealth = 180
 	plasma_stored = 150

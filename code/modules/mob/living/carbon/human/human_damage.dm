@@ -347,13 +347,17 @@ This function restores all limbs.
 
 <<<<<<< HEAD
 	if(blocked)
+<<<<<<< HEAD
 		damage *= CLAMP01(1-blocked) //Percentage reduction
 =======
 	if(blocked >= 1) //Complete negation
 		return 0
 >>>>>>> parent of 6fabcbf... Crusher Rework (#550)
+=======
+		damage *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
+>>>>>>> parent of 99b0138... Tackle Rework for Xenos (#360)
 
-	if(!damage) //Complete negation
+	if(!damage) //no damage
 		return 0
 
 	if(protection_aura)
@@ -362,7 +366,7 @@ This function restores all limbs.
 	//Handle other types of damage
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		if(damagetype == HALLOSS && !(species && (species.flags & NO_PAIN)))
-			if ((damage > 25 && prob(20)) || (damage > 50 && prob(40)))
+			if ((damage > 25 && prob(20)) || (damage > 50 && prob(60)))
 				emote("pain")
 
 		..(damage, damagetype, def_zone, blocked)
@@ -378,6 +382,9 @@ This function restores all limbs.
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_limb(check_zone(def_zone))
 	if(!organ)	return 0
+
+	if(blocked)
+		damage *= CLAMP01(1-blocked) //Percentage reduction
 
 	switch(damagetype)
 		if(BRUTE)

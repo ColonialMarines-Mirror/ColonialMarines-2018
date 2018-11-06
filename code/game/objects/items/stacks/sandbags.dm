@@ -20,18 +20,15 @@
 	if (istype(W, /obj/item/tool/shovel))
 		var/obj/item/tool/shovel/ET = W
 		if(ET.dirt_amt)
-			var/dirt_transfer = min(ET.dirt_amt,get_amount())
-			if(!dirt_transfer)
-				return
-			ET.dirt_amt -= dirt_transfer
+			ET.dirt_amt -= 1
 			ET.update_icon()
-			use(dirt_transfer)
 			var/obj/item/stack/sandbags/new_bags = new(user.loc)
-			new_bags.add(max(0,dirt_transfer-1))
 			new_bags.add_to_stacks(user)
 			var/obj/item/stack/sandbags_empty/E = src
+			src = null
 			var/replace = (user.get_inactive_hand() == E)
 			playsound(user.loc, "rustle", 30, 1, 6)
+			E.use(1)
 			if(!E && replace)
 				user.put_in_hands(new_bags)
 

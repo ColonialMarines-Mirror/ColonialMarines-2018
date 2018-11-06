@@ -169,6 +169,9 @@
 	var/savage_used = FALSE
 	var/savage_cooldown = 300
 
+	//Acid spray
+	var/last_spray_used
+
 	//Notification spam controls
 	var/recent_notice = 0
 	var/notice_delay = 20 //2 second between notices

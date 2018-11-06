@@ -1624,7 +1624,8 @@
 			continue
 		if((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest)) //nested infected hosts are not hurt by acid spray
 			continue
-		M.adjustFireLoss(rand(25, 38) + 4 * upgrade)
+		var/armor_block = M.run_armor_check("chest")
+		M.apply_damage(rand(30, 40) + 5 * upgrade, BURN, "chest", armor_block)
 		to_chat(M, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
 		if(!isYautja(M))
 			M.emote("scream")
@@ -1632,54 +1633,55 @@
 
 /mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 200, acid_d = acid_delay)
 	if(!T)
+		to_chat(src, "<span class='warning'>You see nothing to spit at!</span>")
 		return
 
 	if(!check_state())
-		return
-
-	if(acid_cooldown)
-		return
-
-	if(stagger)
-		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
 		return
 
 	if(!isturf(loc) || istype(loc, /turf/open/space))
 		to_chat(src, "<span class='warning'>You can't do that from there.</span>")
 		return
 
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>The shock disrupts you!</span>")
+		return
+
 	if(!check_plasma(plasmacost))
 		return
 
-	if(T)
-		var/turf/target
+	if(acid_cooldown)
+		to_chat(src, "<span class='xenowarning'>You're not yet ready to spray again! You can do so in [( (last_spray_used + acid_d) - world.time) * 0.1] seconds.</span>")
+		return
 
-		if(isturf(T))
-			target = T
-		else
-			target = get_turf(T)
+	var/turf/target
 
-		if(!target || !istype(target)) //Something went horribly wrong. Clicked off edge of map probably
-			return
-
-		if(target == loc)
-			to_chat(src, "<span class='warning'>That's far too close!</span>")
-			return
-
-
-		acid_cooldown = TRUE
-		use_plasma(plasmacost)
-		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
-		visible_message("<span class='xenowarning'>\The [src] spews forth a virulent spray of acid!</span>", \
-		"<span class='xenowarning'>You spew forth a spray of acid!</span>", null, 5)
-		var/turflist = getline(src, target)
-		spray_turfs(turflist)
-		spawn(acid_d)
-			acid_cooldown = FALSE
-			playsound(loc, 'sound/voice/alien_drool1.ogg', 50, 1)
-			to_chat(src, "<span class='warning'>You feel your acid glands refill. You can spray <B>acid</b> again.</span>")
-			for(var/X in actions)
-				var/datum/action/A = X
-				A.update_button_icon()
+	if(isturf(T))
+		target = T
 	else
-		to_chat(src, "<span class='warning'>You see nothing to spit at!</span>")
+		target = get_turf(T)
+
+	if(!target || !istype(target)) //Something went horribly wrong. Clicked off edge of map probably
+		return
+
+	if(target == loc)
+		to_chat(src, "<span class='warning'>That's far too close!</span>")
+		return
+
+
+	acid_cooldown = TRUE
+	last_spray_used = world.time
+	use_plasma(plasmacost)
+	playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+	visible_message("<span class='xenowarning'>\The [src] spews forth a virulent spray of acid!</span>", \
+	"<span class='xenowarning'>You spew forth a spray of acid!</span>", null, 5)
+	var/turflist = getline(src, target)
+	spray_turfs(turflist)
+
+	spawn(acid_d)
+		acid_cooldown = FALSE
+		playsound(loc, 'sound/voice/alien_drool1.ogg', 50, 1)
+		to_chat(src, "<span class='xenodanger'>You feel your acid glands refill. You can spray acid again.</span>")
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.update_button_icon()

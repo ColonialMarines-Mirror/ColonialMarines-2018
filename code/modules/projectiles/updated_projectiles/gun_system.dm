@@ -922,8 +922,6 @@ and you're good to go.
 		projectile_to_fire.firer = user
 		if(iscarbon(user))
 			projectile_to_fire.def_zone = user.zone_selected
-			var/mob/living/carbon/max_paine = user
-			gun_scatter += max_paine.traumatic_shock * 0.25//Pain increases scatter
 
 		//firing from an attachment
 		if(active_attachable && active_attachable.flags_attach_features & ATTACH_PROJECTILE)

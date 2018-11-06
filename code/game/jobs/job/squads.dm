@@ -171,9 +171,12 @@
 			num_leaders--
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> parent of b2ec67d... Merge branch 'admin2' of https://github.com/DominikPanic/ColonialMarines-2018 into admin2
+=======
+>>>>>>> parent of 1d03271... Update code/game/jobs/job/squads.dm
 //proc used by human dispose to clean the mob from squad lists
 /datum/squad/proc/clean_marine_from_squad(mob/living/carbon/human/H, wipe = FALSE)
 	if(!H.assigned_squad || !(H in marines_list))
@@ -188,6 +191,11 @@
 		squad_leader = null
 	H.assigned_squad = null
 	return TRUE
+=======
+
+
+
+>>>>>>> abfcc502cb7794a1b25b321ccb222ee32ee9fa65
 
 /datum/squad/proc/demote_squad_leader(leader_killed)
 	var/mob/living/carbon/human/old_lead = squad_leader

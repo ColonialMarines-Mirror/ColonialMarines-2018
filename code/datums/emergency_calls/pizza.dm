@@ -3,7 +3,6 @@
 /datum/emergency_call/pizza
 	name = "Pizza Delivery"
 	mob_max = 1
-	mob_min = 1
 	arrival_message = "Incoming Transmission: 'That'll be.. sixteen orders of cheesy fries, eight large double topping pizzas, nine bottles of Four Loko.. hello? Is anyone on this ship? Your pizzas are getting cold.'"
 	objectives = "Make sure you get a tip!"
 	probability = 5

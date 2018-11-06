@@ -450,6 +450,14 @@ datum/mind
 	if(new_job)
 		mind.assigned_role = J.title
 
+/mob/living/proc/set_everything(var/mob/living/carbon/human/H, var/new_role)
+	H.reset_cm_skills(new_role)
+	H.reset_special_role(new_role)
+	H.reset_comm_title(new_role)
+	H.reset_alt_title(new_role)
+	H.reset_role(new_role)
+	H.set_ID(new_role)
+	H.update_action_buttons()
 
 //Initialisation procs
 /mob/proc/mind_initialize()

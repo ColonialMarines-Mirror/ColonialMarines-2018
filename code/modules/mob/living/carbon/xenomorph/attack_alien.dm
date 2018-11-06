@@ -12,6 +12,8 @@
 	if (M.fortify)
 		return FALSE
 
+	var/intent = force_intent ? force_intent : M.a_intent
+
 	//Reviewing the four primary intents
 	if(!intent) //if intent is not set, it is the alien's current intent
 		intent = M.a_intent
@@ -103,6 +105,7 @@
 				attack_message1 = "<span class='danger'>\The [M] is viciously shredded by \the [src]'s sharp teeth!</span>"
 				attack_message2 = "<span class='danger'>You viciously rend \the [M] with your teeth!</span>"
 				log = "bit"
+			if(prob(M.bite_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				return TRUE
 
 			//Check for a special bite attack
@@ -180,55 +183,41 @@
 			if(M.legcuffed && isYautja(src))
 				to_chat(M, "<span class='xenodanger'>You don't have the dexterity to tackle the headhunter with that thing on your leg!</span>")
 				return FALSE
+			if((status_flags & XENO_HOST) && istype(buckled, /obj/structure/bed/nest)) //No more memeing nested and infected hosts
+				to_chat(M, "<span class='xenodanger'>You reconsider your mean-spirited bullying of the pregnant, secured host.</span>")
+				return FALSE
 			M.animation_attack_on(src)
 			if(check_shields(0, M.name) && prob(66)) //Bit of a bonus
 				M.visible_message("<span class='danger'>\The [M]'s tackle is blocked by [src]'s shield!</span>", \
 				"<span class='danger'>Your tackle is blocked by [src]'s shield!</span>", null, 5)
 				return FALSE
 			M.flick_attack_overlay(src, "disarm")
-			if(knocked_down)
-				if(isYautja(src))
-					if(prob(95))
-						M.visible_message("<span class='danger'>[src] avoids \the [M]'s tackle!</span>", \
-						"<span class='danger'>[src] avoids your attempt to tackle them!</span>", null, 5)
-						playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-						return TRUE
-				else if(prob(80))
-					playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-					M.visible_message("<span class='danger'>\The [M] tries to tackle [src], but they are already down!</span>", \
-					"<span class='danger'>You try to tackle [src], but they are already down!</span>", null, 5)
-					return TRUE
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1)
-				KnockDown(rand(M.tacklemin, M.tacklemax)) //Min and max tackle strenght. They are located in individual caste files.
-				M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
-				"<span class='danger'>You tackle down [src]!</span>", null, 5)
 
-			else
-				var/tackle_bonus = 0
-				if(M.frenzy_aura > 0)
-					tackle_bonus = M.frenzy_aura * 3
-				if(isYautja(src))
-					if(prob((M.tackle_chance + tackle_bonus)*0.2))
-						playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
-						KnockDown(rand(M.tacklemin, M.tacklemax))
-						M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
-						"<span class='danger'>You tackle down [src]!</span>", null, 5)
-						return TRUE
-					else
-						playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-						M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
-						"<span class='danger'>You try to tackle [src]</span>", null, 5)
-						return TRUE
-				else if(prob(M.tackle_chance + tackle_bonus)) //Tackle_chance is now a special var for each caste.
-					playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
-					KnockDown(rand(M.tacklemin, M.tacklemax))
-					M.visible_message("<span class='danger'>\The [M] tackles down [src]!</span>", \
-					"<span class='danger'>You tackle down [src]!</span>", null, 5)
-					return TRUE
+			if(!knocked_down && !no_stun && (traumatic_shock > 100))
+				KnockDown(1)
+				M.visible_message("<span class='danger'>\The [M] slams [src] to the ground!</span>", \
+				"<span class='danger'>You slam [src] to the ground!</span>", null, 5)
 
-				playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, 1)
-				M.visible_message("<span class='danger'>\The [M] tries to tackle [src]</span>", \
-				"<span class='danger'>You try to tackle [src]</span>", null, 5)
+			playsound(loc, 'sound/weapons/alien_knockdown.ogg', 25, 1)
+			var/tackle_pain = (rand(M.tackle_damage * 0.10, M.tackle_damage * 0.40) + rand(M.tackle_damage * 0.10, M.tackle_damage * 0.40))
+			if(M.frenzy_aura)
+				tackle_pain = tackle_pain * (1 + (0.05 * M.frenzy_aura))  //Halloss damage increased by 5% per rank of frenzy aura
+			if(protection_aura)
+				tackle_pain = tackle_pain * (1 - (0.10 + 0.05 * protection_aura))  //Halloss damage decreased by 10% + 5% per rank of protection aura
+			if(dam_bonus)
+				tackle_pain += dam_bonus
+			apply_damage(tackle_pain, HALLOSS)
+			updatehealth()
+			updateshock()
+			var/throttle_message = "<span class='danger'>The [M] throttles [src]!</span>"
+			var/throttle_message2 = "<span class='danger'>You throttle [src]!</span>"
+			if(tackle_pain > 40)
+				throttle_message = "<span class='danger'>\The [M] badly throttles [src]!</span>"
+				throttle_message2 = "<span class='danger'>You badly throttle [src]!</span>"
+			M.visible_message("[throttle_message]", \
+			"[throttle_message2]", null, 5)
+			return TRUE
+
 	return TRUE
 
 

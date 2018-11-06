@@ -420,10 +420,18 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
 #define RAVAGER_MAX_RAGE 50
 
+//defender defines
+
+#define DEFENDER_HEADBUTT_COST 20
+#define DEFENDER_TAILSWIPE_COST 30
+
+
 // halloss defines
 
-#define BASE_HALLOSS_RECOVERY_RATE -2
-#define REST_HALLOSS_RECOVERY_RATE -10
+#define BASE_HALLOSS_RECOVERY_RATE -4
+#define WALK_HALLOSS_RECOVERY_RATE -12
+#define DOWNED_HALLOSS_RECOVERY_RATE -16
+#define REST_HALLOSS_RECOVERY_RATE -32
 
 // Human Overlay Indexes
 #define MOTH_WINGS_LAYER		26
@@ -459,12 +467,4 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 #define TOTAL_UNDERLAYS			1
 
-
-//Ravager defines:
-#define CHARGESPEED					3
-#define CHARGESTRENGTH				3
-#define CHARGEDISTANCE				5
-#define CHARGECOOLDOWN				300
-#define RAV_CHARGE_TYPE				3
-#define RAV_SECOND_WIND_COOLDOWN	600
-#define RAV_RAVAGE_COOLDOWN			100
+#define ANTI_CHAINSTUN_TICKS	2

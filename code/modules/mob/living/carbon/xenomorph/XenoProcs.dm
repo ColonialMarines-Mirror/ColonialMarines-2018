@@ -248,7 +248,7 @@
 
 					visible_message("<span class='danger'>[src] pounces on [M]!</span>",
 									"<span class='xenodanger'>You pounce on [M]!</span>", null, 5)
-					M.KnockDown(charge_type == 1 ? 1 : 3)
+					M.KnockDown(1)
 					step_to(src, M)
 					canmove = FALSE
 					if(savage) //If Runner Savage is toggled on, attempt to use it.
@@ -260,6 +260,8 @@
 						else
 							to_chat(src, "<span class='xenodanger'>You attempt to savage your victim, but you aren't yet ready.</span>")
 					frozen = TRUE
+					if(charge_type == 2)
+						M.attack_alien(src, null, "disarm") //Hunters get a free throttle in exchange for lower initial stun.
 					if(!is_robotic) playsound(loc, rand(0, 100) < 95 ? 'sound/voice/alien_pounce.ogg' : 'sound/voice/alien_pounce2.ogg', 25, 1)
 					spawn(charge_type == 1 ? 5 : 15)
 						frozen = FALSE
@@ -483,3 +485,14 @@
 		leader_aura_strength = Q.aura_strength
 		leader_current_aura = Q.current_aura
 		to_chat(src, "<span class='xenowarning'>Your pheromones have changed. The Queen has new plans for the Hive.</span>")
+
+
+/mob/living/carbon/Xenomorph/proc/update_spits()
+	if(!ammo || !spit_types.len) //Only update xenos with ammo and spit types.
+		return
+	for(var/i in 1 to spit_types.len)
+		if(ammo.icon_state == ammo_list[spit_types[i]].icon_state)
+			ammo = ammo_list[spit_types[i]]
+			return
+	ammo = ammo_list[spit_types[1]] //No matching projectile time; default to first spit type
+	return

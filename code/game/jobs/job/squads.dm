@@ -170,7 +170,10 @@
 		if("Squad Leader") 
 			num_leaders--
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of b2ec67d... Merge branch 'admin2' of https://github.com/DominikPanic/ColonialMarines-2018 into admin2
 //proc used by human dispose to clean the mob from squad lists
 /datum/squad/proc/clean_marine_from_squad(mob/living/carbon/human/H, wipe = FALSE)
 	if(!H.assigned_squad || !(H in marines_list))

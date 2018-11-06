@@ -156,9 +156,15 @@
 
 
 /mob/living/carbon/human/Dispose()
-	assigned_squad?.clean_marine_from_squad(src,FALSE)
+	if(assigned_squad)
+		var/n = assigned_squad.marines_list.Find(src)
+		if(n)
+			assigned_squad.marines_list[n] = name //mob reference replaced by name string
+		if(assigned_squad.squad_leader == src)
+			assigned_squad.squad_leader = null
+		assigned_squad = null
 	remove_from_all_mob_huds()
-	return ..()
+	. = ..()
 
 /mob/living/carbon/human/Stat()
 	if (!..())

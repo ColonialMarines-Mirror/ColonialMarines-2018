@@ -290,7 +290,7 @@ datum/game_mode/proc/initialize_special_clamps()
 	var/datum/mind/new_xeno
 	var/turf/larvae_spawn
 	while(i > 0) //While we can still pick someone for the role.
-		if(possible_xenomorphs.len) //We still have candidates
+		if(length(possible_xenomorphs)) //We still have candidates
 			new_xeno = pick(possible_xenomorphs)
 			if(!new_xeno) 
 				break  //Looks like we didn't get anyone. Back out.
@@ -321,7 +321,7 @@ datum/game_mode/proc/initialize_special_clamps()
 		if(A.assigned_role == "MODE")
 			possible_queens -= A
 
-	if(!possible_queens.len)
+	if(!length(possible_queens))
 		return FALSE
 
 	for(var/datum/mind/new_queen in possible_queens)
@@ -527,7 +527,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 			var/i = surv_starting_num
 			var/datum/mind/new_survivor
 			while(i > 0)
-				if(!possible_survivors.len) 
+				if(!length(possible_survivors)) 
 					break  //Ran out of candidates! Can't have a null pick(), so just stick with what we have.
 				new_survivor = pick(possible_survivors)
 				if(!new_survivor) 

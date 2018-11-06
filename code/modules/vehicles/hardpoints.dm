@@ -627,7 +627,7 @@ Currently only has the tank hardpoints
 
 /obj/item/hardpoint/armor/ballistic
 	name = "Ballistic Armor"
-	desc = "Protects the vehicle from high-penetration weapons. Provides some protection against slashing and high impact attacks."
+	desc = "Protects the vehicle from high-penetration weapons"
 
 	maxhealth = 1000
 	health = 1000
@@ -639,20 +639,18 @@ Currently only has the tank hardpoints
 	disp_icon_state = "ballistic_armor"
 
 	apply_buff()
-		owner.dmg_multipliers["bullet"] = 0.5
-		owner.dmg_multipliers["slash"] = 0.75
-		owner.dmg_multipliers["blunt"] = 0.75
+		owner.dmg_multipliers["bullet"] = 0.67
+		owner.dmg_multipliers["slash"] = 0.67
 		owner.dmg_multipliers["all"] = 0.9
 
 	remove_buff()
 		owner.dmg_multipliers["bullet"] = 1.0
 		owner.dmg_multipliers["slash"] = 1.0
-		owner.dmg_multipliers["blunt"] = 1.0
 		owner.dmg_multipliers["all"] = 1.0
 
 /obj/item/hardpoint/armor/caustic
 	name = "Caustic Armor"
-	desc = "Protects vehicles from most types of acid. Provides some protection against slashing and high impact attacks."
+	desc = "Protects vehicles from most types of acid"
 
 	maxhealth = 1000
 	health = 1000
@@ -664,20 +662,16 @@ Currently only has the tank hardpoints
 	disp_icon_state = "caustic_armor"
 
 	apply_buff()
-		owner.dmg_multipliers["acid"] = 0.5
-		owner.dmg_multipliers["slash"] = 0.75
-		owner.dmg_multipliers["blunt"] = 0.75
+		owner.dmg_multipliers["acid"] = 0.67
 		owner.dmg_multipliers["all"] = 0.9
 
 	remove_buff()
 		owner.dmg_multipliers["acid"] = 1.0
-		owner.dmg_multipliers["slash"] = 1.0
-		owner.dmg_multipliers["blunt"] = 1.0
 		owner.dmg_multipliers["all"] = 1.0
 
 /obj/item/hardpoint/armor/concussive
 	name = "Concussive Armor"
-	desc = "Protects the vehicle from high-impact weapons. Provides some protection against ballistic and explosive attacks."
+	desc = "Protects the vehicle from high-impact weapons"
 
 	maxhealth = 1000
 	health = 1000
@@ -689,20 +683,16 @@ Currently only has the tank hardpoints
 	disp_icon_state = "concussive_armor"
 
 	apply_buff()
-		owner.dmg_multipliers["blunt"] = 0.5
-		owner.dmg_multipliers["explosive"] = 0.75
-		owner.dmg_multipliers["ballistic"] = 0.75
+		owner.dmg_multipliers["blunt"] = 0.67
 		owner.dmg_multipliers["all"] = 0.9
 
 	remove_buff()
 		owner.dmg_multipliers["blunt"] = 1.0
-		owner.dmg_multipliers["explosive"] = 1.0
-		owner.dmg_multipliers["ballistic"] = 1.0
 		owner.dmg_multipliers["all"] = 1.0
 
 /obj/item/hardpoint/armor/paladin
 	name = "Paladin Armor"
-	desc = "Protects the vehicle from large incoming explosive projectiles. Provides some protection against slashing and high impact attacks."
+	desc = "Protects the vehicle from large incoming explosive projectiles"
 
 	maxhealth = 1000
 	health = 1000
@@ -714,15 +704,11 @@ Currently only has the tank hardpoints
 	disp_icon_state = "paladin_armor"
 
 	apply_buff()
-		owner.dmg_multipliers["explosive"] = 0.5
-		owner.dmg_multipliers["blunt"] = 0.75
-		owner.dmg_multipliers["slash"] = 0.75
+		owner.dmg_multipliers["explosive"] = 0.67
 		owner.dmg_multipliers["all"] = 0.9
 
 	remove_buff()
 		owner.dmg_multipliers["explosive"] = 1.0
-		owner.dmg_multipliers["blunt"] = 1.0
-		owner.dmg_multipliers["slash"] = 1.0
 		owner.dmg_multipliers["all"] = 1.0
 
 /obj/item/hardpoint/armor/snowplow

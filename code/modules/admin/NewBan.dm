@@ -191,15 +191,14 @@ var/savefile/Banlist
 			perma_links = "<A href='?src=[ref];unbanf=[key][id]'>(L)</A>"
 		else
 			perma_links = "<A href='?src=[ref];unbanupgradeperma=[key][id]'>(P)</A>"
-		if(!check_rights(R_BAN))
+		if(!ishost(usr))
 			perma_links = ""
 
 		dat += "<tr><td>[unban_link][perma_links] Key: <B>[key]</B></td><td>ComputerID: <B>[id]</B></td><td>IP: <B>[ip]</B></td><td> [expiry]</td><td>(By: [by])</td><td>(Reason: [reason])</td></tr>"
 
 	dat += "</table>"
 	var/dat_header = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban"
-	if(!check_rights(R_BAN))
-		dat_header += ", (P) = Upgrade to Perma, (L) = Lift Permaban"
+	if(ishost(usr))	dat_header += ", (P) = Upgrade to Perma, (L) = Lift Permaban"
 	dat_header += "</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
 	usr << browse(dat_header, "window=unbanp;size=875x400")
 

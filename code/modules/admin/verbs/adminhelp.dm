@@ -126,6 +126,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	for(var/client/X in admins)
 		if((R_MENTOR & X.holder.rights) && !((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights))) // we don't want to count admins twice. This list should be JUST mentors
 			mentorholders += X
+			if(X.is_afk())
+				admin_number_afk++
 		if((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights)) // just admins here please
 			adminholders += X
 			if(X.is_afk())
@@ -144,7 +146,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 						X << 'sound/effects/adminhelp_new.ogg'
 					to_chat(X, msg)
 		if("Adminhelp")
-			if(adminholders.len && (admin_number_afk != adminholders.len))
+			if(adminholders.len)
 				for(var/client/X in adminholders) // Admins get the full monty
 					if(X.prefs.toggles_sound & SOUND_ADMINHELP)
 						X << 'sound/effects/adminhelp_new.ogg'
@@ -175,11 +177,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 //		send2adminirc("[selected_upper] from [key_name(src)]: [html_decode(original_msg)]")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	switch(selected_type)
-		if("Mentorhelp")
-			unansweredMhelps["[src.computer_id]"] = mentor_msg
-		if("Adminhelp")
-			unansweredAhelps["[src.computer_id]"] = msg
+	unansweredAhelps["[src.computer_id]"] = msg //We are gonna do it by CID, since any other way really gets fucked over by ghosting etc
 
 	return
 

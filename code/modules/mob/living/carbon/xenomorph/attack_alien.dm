@@ -175,9 +175,7 @@
 			apply_damage(damage, BRUTE, affecting, armor_block, sharp = 1, edge = 1) //This should slicey dicey
 			updatehealth()
 
-			if(istype(M, /mob/living/carbon/Xenomorph/Ravager))
-				M.rage += 5 //Increase Rage by 5 for each harm attack
-				M.last_rage = world.time //We incremented rage, so bookmark this.
+			M.process_rage_attack() //Process Ravager rage gains on attack
 
 		if("disarm")
 			if(M.legcuffed && isYautja(src))
@@ -219,6 +217,14 @@
 			return TRUE
 
 	return TRUE
+
+
+/mob/living/carbon/Xenomorph/proc/process_rage_attack()
+	if(!istype(src,/mob/living/carbon/Xenomorph/Ravager))
+		return
+	var/mob/living/carbon/Xenomorph/Ravager/R = src
+	R.rage += 5 //Gain 5 rage stacks for the attack.
+	R.last_rage = world.time //We incremented rage, so bookmark this.
 
 
 //Every other type of nonhuman mob

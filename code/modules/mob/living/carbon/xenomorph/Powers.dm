@@ -1549,7 +1549,7 @@
 		shake_camera(M, 2, 2)
 		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
 		M.KnockDown(1, 1)
-		
+
 	cresttoss_cooldown()
 	spawn(3) //Revert to our prior icon state.
 		if(m_intent == MOVE_INTENT_RUN)
@@ -1569,7 +1569,7 @@
 			act.update_button_icon()
 
 
-/mob/living/carbon/Xenomorph/proc/Ravage(atom/A)
+/mob/living/carbon/Xenomorph/Ravager/proc/Ravage(atom/A)
 	if (!check_state())
 		return
 
@@ -1634,7 +1634,7 @@
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()
 
-/mob/living/carbon/Xenomorph/proc/Second_Wind()
+/mob/living/carbon/Xenomorph/Ravager/proc/Second_Wind()
 	if (!check_state())
 		return
 

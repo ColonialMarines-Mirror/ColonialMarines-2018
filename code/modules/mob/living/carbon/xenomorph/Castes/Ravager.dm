@@ -29,6 +29,15 @@
 	upgrade = 0
 	pixel_x = -16
 	old_x = -16
+	//Ravager vars
+	var/rage = 0
+	var/rage_resist = 1.00
+	var/ravage_used = FALSE
+	var/ravage_delay = null
+	var/charge_delay = null
+	var/second_wind_used = FALSE
+	var/second_wind_delay = null
+	var/last_rage = null
 	var/usedcharge = FALSE //What's the deal with the all caps?? They're not constants :|
 
 	actions = list(

@@ -145,9 +145,6 @@
 	if(frenzy_aura)
 		. -= (frenzy_aura * 0.05)
 
-	if(rage)
-		. -=round(rage * 0.025,0.01) //Ravagers gain 0.025 units of speed per unit of rage; min -0.025, max -1.25
-
 	if(is_charging)
 		if(legcuffed)
 			is_charging = 0
@@ -164,6 +161,13 @@
 					stop_momentum() //This should disallow rapid turn bumps
 				else
 					handle_momentum()
+
+/mob/living/carbon/Xenomorph/Ravager/movement_delay()
+	. = ..()
+
+	if(rage)
+		. -=round(rage * 0.025,0.01) //Ravagers gain 0.025 units of speed per unit of rage; min -0.025, max -1.25
+
 
 /mob/living/carbon/Xenomorph/proc/update_progression()
 	if(upgrade != -1 && upgrade != 3) //upgrade possible
@@ -267,21 +271,31 @@
 						frozen = FALSE
 						update_canmove()
 
-				if(RAV_CHARGE_TYPE) //Ravagers get a free attack if they charge into someone. This will tackle if disarm is set instead.
-					var/extra_dam = rand(melee_damage_lower, melee_damage_upper) * (1 + round(rage * 0.04) ) //+4% bonus damage per point of Rage.relative to base melee damage.
-					M.attack_alien(src,  extra_dam, FALSE, TRUE, FALSE, TRUE, "hurt") //Location is always random, cannot crit, harm only
-					var/target_turf = get_step_away(src,M,rand(1,3)) //This is where we blast our target
-					target_turf =  get_step_rand(target_turf) //Scatter
-					throw_at(get_turf(target_turf), RAV_CHARGEDISTANCE, RAV_CHARGESPEED, M)
-					M.KnockDown(1)
+				if(RAV_CHARGE_TYPE) //Ravagers get a free attack if they charge into someone.
+					process_ravager_charge(TRUE, M)
+
 				if(4) //Predalien.
 					M.attack_alien(src) //Free hit/grab/tackle. Does not weaken, and it's just a regular slash if they choose to do that.
 
 		throwing = FALSE //Resert throwing since something was hit.
 		return TRUE
-	if(charge_type == RAV_CHARGE_TYPE) //Hit or miss, after we apply bonuses from charge, rage is 0ed out.
-		rage = 0
+	process_ravager_charge(FALSE)
 	return ..() //Do the parent otherwise, for turfs.
+
+/mob/living/carbon/Xenomorph/proc/process_ravager_charge(hit = TRUE, mob/living/carbon/M = null)
+	if(!istype(src,/mob/living/carbon/Xenomorph/Ravager))
+		return
+	var/mob/living/carbon/Xenomorph/Ravager/R = src
+	if(hit)
+		var/extra_dam = rand(melee_damage_lower, melee_damage_upper) * (1 + round(R.rage * 0.04) ) //+4% bonus damage per point of Rage.relative to base melee damage.
+		M.attack_alien(src,  extra_dam, FALSE, TRUE, FALSE, TRUE, "hurt") //Location is always random, cannot crit, harm only
+		var/target_turf = get_step_away(src,M,rand(1,3)) //This is where we blast our target
+		target_turf =  get_step_rand(target_turf) //Scatter
+		throw_at(get_turf(target_turf), RAV_CHARGEDISTANCE, RAV_CHARGESPEED, M)
+		M.KnockDown(1)
+		R.rage = 0
+	else
+		R.rage *= 0.5 //Halve rage instead of 0ing it out if we miss.
 
 //Bleuugh
 /mob/living/carbon/Xenomorph/proc/empty_gut()

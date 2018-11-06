@@ -167,16 +167,6 @@
 	var/savage_used = FALSE
 	var/savage_cooldown = 300
 
-	//Ravager vars
-	var/rage = 0
-	var/rage_resist = 1.00
-	var/ravage_used = FALSE
-	var/ravage_delay = null
-	var/charge_delay = null
-	var/second_wind_used = FALSE
-	var/second_wind_delay = null
-	var/last_rage = null
-
 	//Notification spam controls
 	var/recent_notice = 0
 	var/notice_delay = 20 //2 second between notices

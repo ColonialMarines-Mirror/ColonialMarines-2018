@@ -2,6 +2,7 @@
 	. = ..()
 
 	if(stat != DEAD)
+
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 		handle_regular_hud_updates()
@@ -10,6 +11,9 @@
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
+	if(no_stun)//anti-chainstun flag for alien tackles
+		no_stun = max(0,no_stun - 1) //decrement by 1.
+
 	if(confused)
 		confused = max(0, confused - 1)
 
@@ -25,11 +29,15 @@
 /mob/living/proc/handle_stunned()
 	if(stunned)
 		AdjustStunned(-1)
+		if(!stunned && !no_stun) //anti chain stun
+			no_stun = ANTI_CHAINSTUN_TICKS //1 tick reprieve
 	return stunned
 
 /mob/living/proc/handle_knocked_down()
 	if(knocked_down && client)
 		AdjustKnockeddown(-1)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+		if(!knocked_down && !no_stun) //anti chain stun
+			no_stun = ANTI_CHAINSTUN_TICKS //1 tick reprieve
 	return knocked_down
 
 /mob/living/proc/handle_stuttering()
@@ -312,16 +320,6 @@
 
 /mob/living/carbon/human/ignore_pull_delay()
 	return has_species(src,"Yautja") //Predators aren't slowed when pulling their prey.
-
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(pulledby)
-		pulledby.stop_pulling()
-	if(buckled)
-		buckled.unbuckle()
-	. = ..()
-	if(.)
-		reset_view(destination)
 
 /mob/living/proc/can_inject()
 	return TRUE

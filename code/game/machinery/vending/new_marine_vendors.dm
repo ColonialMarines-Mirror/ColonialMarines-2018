@@ -761,7 +761,7 @@
 							list("Pillbottle (Quick-Clot)", 4, /obj/item/storage/pill_bottle/quickclot, null, "black"),
 							list("Pillbottle (Bicaridine)", 4, /obj/item/storage/pill_bottle/bicaridine, null, "orange"),
 							list("Pillbottle (Kelotane)", 4, /obj/item/storage/pill_bottle/kelotane, null, "orange"),
-							list("Pillbottle (Dylovene)", 4, /obj/item/storage/pill_bottle/antitox, null, "black"),
+							list("Pillbottle (Dylovene)", 4, /obj/item/storage/pill_bottle/dylovene, null, "black"),
 							list("Pillbottle (Dexalin)", 4, /obj/item/storage/pill_bottle/dexalin, null, "black"),
 							list("Pillbottle (Tramadol)", 4, /obj/item/storage/pill_bottle/tramadol, null, "orange"),
 							list("Pillbottle (Inaprovaline)", 4, /obj/item/storage/pill_bottle/inaprovaline, null, "black"),
@@ -1036,6 +1036,7 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/storage/firstaid/adv,
 						/obj/item/device/healthanalyzer,
 						/obj/item/roller/medevac,
+						/obj/item/device/medevac_beacon,
 						/obj/item/roller,
 						/obj/item/reagent_container/hypospray/advanced/oxycodone,
 						/obj/item/reagent_container/syringe

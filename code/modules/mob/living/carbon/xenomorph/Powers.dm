@@ -1589,7 +1589,7 @@
 	playsound(src, 'sound/voice/alien_drool2.ogg', 50, 0, 1)
 	huggers_cur = min(huggers_max, huggers_cur + 1) //Add it to our cache
 	last_spawn_facehugger = world.time
-	used_spawn_facehugger = 1
+	used_spawn_facehugger = TRUE
 	use_plasma(CARRIER_SPAWN_HUGGER_COST)
 	hugger_spawn_cooldown()
 

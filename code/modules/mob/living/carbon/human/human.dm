@@ -436,34 +436,10 @@
 			return I.registered_name
 	return
 
-//Gets ID card from a human. If hand_first is false the one in the id slot is prioritized, otherwise inventory slots go first.
-/mob/living/carbon/human/get_idcard(hand_first = TRUE)
-	//Check hands
-	var/obj/item/card/id/id_card
-	var/obj/item/held_item
-	held_item = get_active_hand()
-	if(held_item) //Check active hand
-		id_card = held_item.GetID()
-	if(!id_card) //If there is no id, check the other hand
-		held_item = get_inactive_hand()
-		if(held_item)
-			id_card = held_item.GetID()
-
-	if(id_card)
-		if(hand_first)
-			return id_card
-		else
-			. = id_card
-
-	//Check inventory slots
+//gets ID card object from special clothes slot or null.
+/mob/living/carbon/human/proc/get_idcard()
 	if(wear_id)
-		id_card = wear_id.GetID()
-		if(id_card)
-			return id_card
-	else if(belt)
-		id_card = belt.GetID()
-		if(id_card)
-			return id_card
+		return wear_id.GetID()
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default

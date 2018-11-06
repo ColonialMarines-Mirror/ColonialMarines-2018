@@ -634,9 +634,6 @@ mob/proc/yank_out_object()
 /mob/proc/update_stat()
 	return
 
-/mob/proc/get_idcard(hand_first)
-	return
-
 /mob/proc/update_health_hud()
 	return
 

@@ -53,9 +53,6 @@
 	attack_sound = null
 	friendly = "nuzzles" //If the mob does no damage with it's attack
 
-	//simple_animal access
-	var/obj/item/card/id/access_card = null	//innate access uses an internal ID card
-
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -413,6 +410,3 @@
 	message = capitalize(trim_left(message))
 
 	..(message, null, verb)
-
-/mob/living/simple_animal/get_idcard(hand_first)
-	return access_card

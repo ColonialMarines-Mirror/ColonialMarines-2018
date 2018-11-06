@@ -76,7 +76,6 @@
 	var/max_burst_value = 6
 
 	var/min_fire_delay = 1
-	var/vlow_fire_delay = 1.5
 	var/mlow_fire_delay = 2
 	var/low_fire_delay = 3
 	var/med_fire_delay = 4
@@ -305,8 +304,6 @@
 
 		if("min_fire_delay")
 			min_fire_delay = value
-		if("vlow_fire_delay")
-			vlow_fire_delay = value
 		if("mlow_fire_delay")
 			mlow_fire_delay = value
 		if("low_fire_delay")

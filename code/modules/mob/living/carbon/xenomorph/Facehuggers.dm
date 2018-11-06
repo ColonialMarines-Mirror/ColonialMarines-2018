@@ -2,7 +2,7 @@
 
 //TODO: Make these simple_animals
 
-#define FACEHUGGER_KNOCKOUT 10
+#define FACEHUGGER_KNOCKOUT 30
 
 #define MIN_IMPREGNATION_TIME 100 //Time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150
@@ -92,8 +92,12 @@
 	return FALSE // Else you can't pick.
 
 /obj/item/clothing/mask/facehugger/attack(mob/M, mob/user)
-	if(!CanHug(M))
+	if(CanHug(M))
+		Attach(M)
+		user.update_icons()
+	else
 		to_chat(user, "<span class='warning'>The facehugger refuses to attach.</span>")
+<<<<<<< HEAD
 		return ..()
 	user.visible_message("<span class='warning'>\ [user] attempts to plant [src] on [M]'s face!</span>", \
 	"<span class='warning'>You attempt to plant [src] on [M]'s face!</span>")
@@ -102,6 +106,9 @@
 			return
 	Attach(M)
 	user.update_icons()
+=======
+		..()
+>>>>>>> parent of e48b8dc... Facehugger/Carrier Tweak (#572)
 
 /obj/item/clothing/mask/facehugger/attack_self(mob/user)
 	if(isXenoCarrier(user))
@@ -184,7 +191,7 @@
 				icon_state = "[initial(icon_state)]_inactive"
 				step(src, turn(dir, 180)) //We want the hugger to bounce off if it hits a mob.
 				throwing = FALSE
-				sleep(5) //0.5 seconds.
+				sleep(15) //1.5 seconds.
 				if(loc && stat != DEAD)
 					stat = CONSCIOUS
 					icon_state = "[initial(icon_state)]"
@@ -272,8 +279,11 @@
 			var/obj/item/clothing/head/D = H.head
 			if(istype(D))
 				if(D.anti_hug > 1)
+					H.visible_message("<span class='danger'>[src] smashes against [H]'s [D.name]!")
 					cannot_infect = 1
 				else
+					H.visible_message("<span class='danger'>[src] smashes against [H]'s [D.name] and rips it off!")
+					H.drop_inv_item_on_ground(D)
 					if(istype(D, /obj/item/clothing/head/helmet/marine)) //Marine helmets now get a fancy overlay.
 						var/obj/item/clothing/head/helmet/marine/m_helmet = D
 						m_helmet.add_hugger_damage()
@@ -281,7 +291,6 @@
 
 				if(D.anti_hug && prob(15)) //15% chance the hugger will go idle after ripping off a helmet. Otherwise it will keep going.
 					D.anti_hug = max(0, --D.anti_hug)
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [D.name], damaging it!")
 					GoIdle()
 					return
 				D.anti_hug = max(0, --D.anti_hug)
@@ -326,15 +335,6 @@
 			if(!sterile)
 				if(!H || !H.species || !(H.species.flags & IS_SYNTHETIC)) //synthetics aren't paralyzed
 					target.KnockOut(FACEHUGGER_KNOCKOUT) //THIS MIGHT NEED TWEAKS
-
-					if(luminosity > 0) //Knock out the lights so the victim can't be cam tracked/spotted as easily
-						H.visible_message("<span class='danger'>[H]'s lights flicker and short out in a struggle!")
-						var/datum/effect_system/spark_spread/spark_system2
-						spark_system2 = new /datum/effect_system/spark_spread()
-						spark_system2.set_up(5, 0, src)
-						spark_system2.attach(src)
-						spark_system2.start(src)
-						H.disable_lights()
 
 	GoIdle()
 

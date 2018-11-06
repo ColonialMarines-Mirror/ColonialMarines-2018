@@ -804,7 +804,6 @@
 		spawn(10)
 			if(src && loc)
 				explosion(loc, -1, -1, 2, 0)
-				new /obj/machinery/marine_turret_frame(loc)
 				if(!disposed)
 					cdel(src)
 		return

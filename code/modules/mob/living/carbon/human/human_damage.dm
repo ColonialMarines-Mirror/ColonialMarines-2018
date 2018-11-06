@@ -346,6 +346,7 @@ This function restores all limbs.
 	//visible_message("Hit debug. [damage]|[damagetype]|[def_zone]|[blocked]|[sharp]|[used_weapon]")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if(blocked)
 <<<<<<< HEAD
 		damage *= CLAMP01(1-blocked) //Percentage reduction
@@ -356,8 +357,12 @@ This function restores all limbs.
 =======
 		damage *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
 >>>>>>> parent of 99b0138... Tackle Rework for Xenos (#360)
+=======
+	if(blocked >= 1) //Complete negation
+		return 0
+>>>>>>> parent of 6fabcbf... Crusher Rework (#550)
 
-	if(!damage) //no damage
+	if(!damage) //Complete negation
 		return 0
 
 	if(protection_aura)

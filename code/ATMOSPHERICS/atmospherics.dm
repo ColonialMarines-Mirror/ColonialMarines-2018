@@ -189,7 +189,7 @@ obj/machinery/atmospherics/proc/check_connect_types_construction(obj/machinery/a
 				pick(playsound(src, 'sound/effects/alien_ventcrawl1.ogg', 25, 1), playsound(src, 'sound/effects/alien_ventcrawl2.ogg', 25, 1))
 	else
 		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-			if(ventcrawl_message_busy > world.time) //Hunters silently enter/exit/move through vents.
+			if(ventcrawl_message_busy > world.time)
 				return
 			ventcrawl_message_busy = world.time + 20
 			if(!istype(user,/mob/living/carbon/Xenomorph/Hunter) )

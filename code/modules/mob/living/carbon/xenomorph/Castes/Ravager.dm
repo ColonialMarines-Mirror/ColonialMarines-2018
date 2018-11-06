@@ -63,11 +63,11 @@
 	usedPounce = 1 //This has to come before throw_at, which checks impact. So we don't do end-charge specials when thrown
 	use_plasma(80)
 
-	throw_at(T, CHARGEDISTANCE, CHARGESPEED, src)
+	throw_at(T, RAV_CHARGEDISTANCE, RAV_CHARGESPEED, src)
 
-	charge_delay = world.time + CHARGECOOLDOWN
+	charge_delay = world.time + RAV_CHARGECOOLDOWN
 
-	spawn(CHARGECOOLDOWN)
+	spawn(RAV_CHARGECOOLDOWN)
 		usedPounce = FALSE
 		to_chat(src, "<span class='notice'><b>Your exoskeleton quivers as you get ready to use Eviscerating Charge again.</b></span>")
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)

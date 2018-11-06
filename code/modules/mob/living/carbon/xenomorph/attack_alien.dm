@@ -8,15 +8,12 @@
  */
 
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, set_location = FALSE, random_location = FALSE, no_head = FALSE, no_crit = FALSE, intent = null)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/Xenomorph/M, dam_bonus, set_location = FALSE, random_location = FALSE, no_head = FALSE, no_crit = FALSE, force_intent = null)
 	if (M.fortify)
 		return FALSE
 
 	var/intent = force_intent ? force_intent : M.a_intent
 
-	//Reviewing the four primary intents
-	if(!intent) //if intent is not set, it is the alien's current intent
-		intent = M.a_intent
 	switch(intent)
 
 		if("help")
@@ -99,24 +96,27 @@
 			var/attack_message2 = "<span class='danger'>You slash [src]!</span>"
 			var/log = "slashed"
 			//Check for a special bite attack
-			if(prob(M.bite_chance) && !no_crit) //Can't crit if we already crit in the past 3 seconds
+			if(prob(M.bite_chance)  && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				damage *= 1.5
 				attack_sound = "alien_bite"
 				attack_message1 = "<span class='danger'>\The [M] is viciously shredded by \the [src]'s sharp teeth!</span>"
 				attack_message2 = "<span class='danger'>You viciously rend \the [M] with your teeth!</span>"
 				log = "bit"
-			if(prob(M.bite_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
-				return TRUE
+				M.critical_proc = TRUE
+				spawn(CRITICAL_HIT_DELAY)
+					M.critical_proc = FALSE
 
 			//Check for a special bite attack
-			if(prob(M.tail_chance) && !no_crit) //Can't crit if we already crit in the past 3 seconds
+			if(prob(M.tail_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				damage *= 1.25
 				attack_flick = "tail"
 				attack_sound = 'sound/weapons/alien_tail_attack.ogg'
 				attack_message1 = "<span class='danger'>\The [M] is suddenly impaled by \the [src]'s sharp tail!</span>"
 				attack_message2 = "<span class='danger'>You violently impale \the [M] with your tail!</span>"
 				log = "tail-stabbed"
-				return TRUE
+				M.critical_proc = TRUE
+				spawn(CRITICAL_HIT_DELAY)
+					M.critical_proc = FALSE
 
 			//Somehow we will deal no damage on this attack
 			if(!damage)

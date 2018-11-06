@@ -272,7 +272,7 @@
 					M.attack_alien(src,  extra_dam, FALSE, TRUE, FALSE, TRUE, "hurt") //Location is always random, cannot crit, harm only
 					var/target_turf = get_step_away(src,M,rand(1,3)) //This is where we blast our target
 					target_turf =  get_step_rand(target_turf) //Scatter
-					throw_at(get_turf(target_turf), CHARGEDISTANCE, CHARGESPEED, M)
+					throw_at(get_turf(target_turf), RAV_CHARGEDISTANCE, RAV_CHARGESPEED, M)
 					M.KnockDown(1)
 				if(4) //Predalien.
 					M.attack_alien(src) //Free hit/grab/tackle. Does not weaken, and it's just a regular slash if they choose to do that.

@@ -418,7 +418,19 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define DEFENDER_FORTIFY_ARMOR 60
 #define WARRIOR_AGILITY_ARMOR 30
 #define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
+
+
+#define CRITICAL_HIT_DELAY 25
+
+//Ravager defines:
 #define RAVAGER_MAX_RAGE 50
+#define RAV_CHARGESPEED					3
+#define RAV_CHARGESTRENGTH				3
+#define RAV_CHARGEDISTANCE				7
+#define RAV_CHARGECOOLDOWN				300
+#define RAV_CHARGE_TYPE					3
+#define RAV_SECOND_WIND_COOLDOWN		600
+#define RAV_RAVAGE_COOLDOWN				100
 
 //defender defines
 

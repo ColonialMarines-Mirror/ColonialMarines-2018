@@ -111,14 +111,14 @@
 	if(.)
 		return
 	if(!fire_immune && on_fire) //Sanity check; have to be on fire to actually take the damage.
-	adjustFireLoss((fire_stacks + 3) * fire_resist)
+		adjustFireLoss((fire_stacks + 3) * fire_resist)
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
 	if(health >= maxHealth || hardcore) //no damage, don't bother
 		updatehealth() //Update health-related stats, like health itself (using brute and fireloss), health HUD and status.
 		return
 	var/turf/T = loc
-	if(!T || !istype(T) || hardcore) 
+	if(!T || !istype(T) || hardcore)
 		return
 	if(on_fire) //Can't regenerate while on fire
 		updatehealth()

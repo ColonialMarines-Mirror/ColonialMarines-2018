@@ -286,27 +286,8 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 	if(update)	UpdateDamageIcon()
 
 // damage MANY limbs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0, var/used_weapon = null, var/blocked = 0)
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0, var/used_weapon = null)
 	if(status_flags & GODMODE)	return	//godmode
-
-	if(blocked >= 1) //Complete negation
-		return FALSE
-
-	if(blocked)
-		if(brute)
-			brute *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
-		if(burn)
-			burn *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
-
-	if(!brute && !burn) //Complete negation
-		return FALSE
-
-	if(protection_aura)
-		if(brute)
-			brute = round(brute * ((15 - protection_aura) / 15))
-		if(burn)
-			burn = round(burn * ((15 - protection_aura) / 15))
-
 	var/list/datum/limb/parts = get_damageable_limbs()
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
@@ -362,11 +343,15 @@ This function restores all limbs.
 
 /mob/living/carbon/human/apply_damage(var/damage = 0, var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/edge = 0, var/obj/used_weapon = null)
 
-	if(blocked >= 1) //total negation
-		return 0
+	//visible_message("Hit debug. [damage]|[damagetype]|[def_zone]|[blocked]|[sharp]|[used_weapon]")
 
+<<<<<<< HEAD
 	if(blocked)
 		damage *= CLAMP01(1-blocked) //Percentage reduction
+=======
+	if(blocked >= 1) //Complete negation
+		return 0
+>>>>>>> parent of 6fabcbf... Crusher Rework (#550)
 
 	if(!damage) //Complete negation
 		return 0

@@ -1,3 +1,8 @@
+
+
+/mob
+	var/list/fullscreens = list()
+
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/obj/screen/fullscreen/FS
 	if(fullscreens[category])

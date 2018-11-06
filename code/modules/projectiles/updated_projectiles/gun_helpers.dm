@@ -271,8 +271,9 @@ should be alright.
 			user.update_inv_s_store()
 
 /obj/item/weapon/gun/attack_self(mob/user)
-	. = ..()
-	if(target)
+	..()
+	if (target)
+		lower_aim()
 		return
 
 	//There are only two ways to interact here.

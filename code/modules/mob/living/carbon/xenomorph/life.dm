@@ -70,7 +70,7 @@
 		fortify_off() //Fortify prevents dragging due to the anchor component.
 
 /mob/living/carbon/Xenomorph/Hunter/proc/handle_stealth()
-	if(!stealth)
+	if(!stealth_router(HANDLE_STEALTH_CHECK))
 		return
 	if(stat != CONSCIOUS || stealth == FALSE || lying || resting) //Can't stealth while unconscious/resting
 		cancel_stealth()

@@ -1676,7 +1676,7 @@
 	stealth_delay = world.time + HUNTER_STEALTH_COOLDOWN
 	stealth_cooldown_notice()
 
-/mob/living/carbon/Xenomorph/proc/sneak_attack_cooldown()
+/mob/living/carbon/Xenomorph/Hunter/proc/sneak_attack_cooldown()
 	if(can_sneak_attack)
 		return
 	spawn(HUNTER_POUNCE_SNEAKATTACK_DELAY)

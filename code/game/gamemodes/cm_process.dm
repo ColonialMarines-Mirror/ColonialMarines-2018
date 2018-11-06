@@ -258,7 +258,7 @@ Only checks living mobs with a client attached.
 					num_humans++
 			else if(isXeno(M))
 				var/mob/living/carbon/Xenomorph/X = M
-				if(!X.stealth) //We don't count stealthed Beanos due to delay potential
+				if(!X.stealth_router(HANDLE_STEALTH_CHECK)) //We don't count stealthed Beanos due to delay potential
 					num_xenos++
 			else if(iszombie(M)) num_xenos++
 

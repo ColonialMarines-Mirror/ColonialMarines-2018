@@ -166,10 +166,6 @@
 	var/savage_used = FALSE
 	var/savage_cooldown = 300
 
-	//Hunter vars
-	var/stealth = FALSE
-	var/can_sneak_attack = FALSE
-
 	//Notification spam controls
 	var/recent_notice = 0
 	var/notice_delay = 20 //2 second between notices

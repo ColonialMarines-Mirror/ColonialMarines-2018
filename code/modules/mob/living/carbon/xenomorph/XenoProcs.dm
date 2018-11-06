@@ -578,14 +578,19 @@
 	return
 
 /mob/living/carbon/Xenomorph/proc/stealth_router(code = 0)
-	if(!istype(src,/mob/living/carbon/Xenomorph/Hunter))
-		return 0
-	var/mob/living/carbon/Xenomorph/Hunter/H = src
+	return FALSE
+
+/mob/living/carbon/Xenomorph/Hunter/stealth_router(code = 0)
 	switch(code)
 		if(HANDLE_STEALTH_CHECK)
 			if(stealth)
-				return 1
+				return TRUE
 			else
-				return 0
+				return FALSE
 		if(HANDLE_STEALTH_CODE_CANCEL)
-			H.cancel_stealth()
+			cancel_stealth()
+		if(HANDLE_SNEAK_ATTACK_CHECK)
+			if(can_sneak_attack)
+				return TRUE
+			else
+				return FALSE

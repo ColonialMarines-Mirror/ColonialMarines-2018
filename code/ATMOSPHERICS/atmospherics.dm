@@ -192,7 +192,7 @@ obj/machinery/atmospherics/proc/check_connect_types_construction(obj/machinery/a
 			if(ventcrawl_message_busy > world.time)
 				return
 			ventcrawl_message_busy = world.time + 20
-			if(!istype(user,/mob/living/carbon/Xenomorph/Hunter) )
+			if(!istype(user,/mob/living/carbon/Xenomorph/Hunter) ) //Hunters silently enter/exit/move through vents.
 				visible_message("<span class='warning'>You hear something squeezing through the ducts.</span>")
 			to_chat(user, "<span class='notice'>You begin to climb out of [src]</span>")
 			if(do_after(user, 20, FALSE))

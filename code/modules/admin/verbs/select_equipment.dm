@@ -85,8 +85,7 @@
 	return
 
 
-/mob/living/proc/set_ID(new_job)
-	return
+/mob/living/proc/set_ID(new_job) return
 
 /mob/living/carbon/human/set_ID(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]

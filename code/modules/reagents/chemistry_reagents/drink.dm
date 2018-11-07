@@ -15,18 +15,15 @@
 	var/adj_dizzy = 0
 	var/adj_drowsy = 0
 	var/adj_sleepy = 0
-	var/adj_temp = 0
 
 /datum/reagent/consumable/drink/on_mob_life(mob/living/M)
-	if(adj_dizzy)
+	if(adj_dizzy != 0)
 		M.Dizzy(adj_dizzy)
-	if(adj_drowsy)
+	if(adj_drowsy != 0)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
-	if(adj_sleepy)
+	if(adj_sleepy != 0)
 		M.AdjustSleeping(adj_sleepy)
-	if(adj_temp)
-		if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-			M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	return ..()
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"

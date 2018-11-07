@@ -801,7 +801,7 @@
 	iff_signal = 0
 
 /datum/ammo/bullet/turret/gauss
-	name = "turret heavy bullet"
+	name = "gauss turret heavy slug"
 
 /datum/ammo/bullet/turret/gauss/New()
 	. = ..()
@@ -809,11 +809,11 @@
 	penetration= config.mhigh_armor_penetration
 
 /datum/ammo/bullet/turret/mini
-	name = "turret slimline bullet"
+	name = "UA-580 10x20mm armor piercing bullet"
 
 /datum/ammo/bullet/turret/mini/New()
 	. = ..()
-	damage = config.llow_hit_damage //20
+	damage = config.mlow_hit_damage //25
 	penetration= config.hmed_armor_penetration //40
 
 

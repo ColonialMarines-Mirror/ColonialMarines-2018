@@ -1426,7 +1426,7 @@
 	w_class = 3
 	icon_state = "ua580"
 	flags_magazine = NOFLAGS //can't be refilled or emptied by hand
-	caliber = "10x28mm"
+	caliber = "10x20mm"
 	max_rounds = 500
 	default_ammo = /datum/ammo/bullet/turret/mini
 	gun_type = null

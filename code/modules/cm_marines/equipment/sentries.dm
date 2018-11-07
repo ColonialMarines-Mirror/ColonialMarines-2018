@@ -798,6 +798,9 @@
 			sentry_alert(SENTRY_ALERT_DAMAGE)
 			last_damage_alert = world.time
 
+	if(health > health_max) //Sanity
+		health = health_max
+
 	if(health <= 0 && stat != 2)
 		stat = 2
 		visible_message("\icon[src] <span class='warning'>The [name] starts spitting out sparks and smoke!")
@@ -811,9 +814,6 @@
 				if(!disposed)
 					cdel(src)
 		return
-
-	if(health > health_max) //Sanity
-		health = health_max
 
 	if(!stat && damage > 0 && !immobile)
 		if(prob(10))

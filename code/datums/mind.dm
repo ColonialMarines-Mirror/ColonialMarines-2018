@@ -432,22 +432,22 @@ datum/mind
 
 /mob/living/proc/reset_comm_title(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
-	if(J)
+	if(J && mind)
 		mind?.role_comm_title = J.comm_title
 
 /mob/living/proc/reset_alt_title(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
-	if(J)
+	if(J && mind)
 		mind?.role_alt_title = J.get_alternative_title(src)
 
 /mob/living/proc/reset_special_role(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
-	if(J)
+	if(J && mind)
 		mind?.role_alt_title = J.special_role
 
 /mob/living/proc/reset_role(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
-	if(J)
+	if(J && mind)
 		mind?.assigned_role = J.title
 
 

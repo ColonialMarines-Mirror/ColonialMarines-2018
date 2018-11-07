@@ -99,10 +99,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		pick(playsound(src, 'sound/effects/alien_ventpass1.ogg', 35, 1), playsound(src, 'sound/effects/alien_ventpass2.ogg', 35, 1))
 	forceMove(vent_found)
 	add_ventcrawl(vent_found)
-	if(istype(src,/mob/living/carbon/Xenomorph/Hunter)) //automatically cancel stealth when we enter the vent
-		var/mob/living/carbon/Xenomorph/Hunter/H = src
-		H.cancel_stealth()
 	return
+
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
 	is_ventcrawling = TRUE
@@ -119,7 +117,9 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			if(client)
 				client.images += A.pipe_vision_img
 
-
+/mob/living/carbon/Xenomorph/Hunter/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+	. = ..()
+	cancel_stealth()
 
 /mob/living/proc/remove_ventcrawl()
 	is_ventcrawling = 0

@@ -461,14 +461,14 @@
 
 			if(burst_fire)
 				burst_fire = 0
-				visible_message("\icon[src] A green light on [src] blinks slowly.")
+				state("A green light on [src] blinks slowly.")
 				to_chat(usr, "\blue You deactivate the burst fire mode.")
 			else
 				burst_fire = 1
 				fire_delay = burst_delay
 				user.visible_message("<span class='notice'>[user] activates [src]'s burst fire mode.</span>",
 				"<span class='notice'>You activate [src]'s burst fire mode.</span>")
-				visible_message("\icon[src] <span class='notice'>A green light on [src] blinks rapidly.</span>")
+				state("<span class='notice'>A green light on [src] blinks rapidly.</span>")
 
 		if("burstup")
 			if(!cell || cell.charge <= 0 || !anchored || immobile || !on || stat)
@@ -494,12 +494,12 @@
 				safety_off = 1
 				user.visible_message("<span class='warning'>[user] deactivates [src]'s safety lock.</span>",
 				"<span class='warning'>You deactivate [src]'s safety lock.</span>")
-				visible_message("\icon[src] <span class='warning'>A red light on [src] blinks brightly!")
+				state("<span class='warning'>A red light on [src] blinks brightly!")
 			else
 				safety_off = 0
 				user.visible_message("<span class='notice'>[user] activates [src]'s safety lock.</span>",
 				"<span class='notice'>You activate [src]'s safety lock.</span>")
-				visible_message("\icon[src] <span class='notice'>A red light on [src] blinks rapidly.</span>")
+				state("<span class='notice'>A red light on [src] blinks rapidly.</span>")
 
 		if("manual") //Alright so to clean this up, fuck that manual control pop up. Its a good idea but its not working out in practice.
 			if(!manual_override)
@@ -513,21 +513,21 @@
 					operator = user
 					user.visible_message("<span class='notice'>[user] takes manual control of [src]</span>",
 					"<span class='notice'>You take manual control of [src]</span>")
-					visible_message("\icon[src] <span class='warning'>The [name] buzzes: <B>WARNING!</B> MANUAL OVERRIDE INITIATED.</span>")
+					state("<span class='warning'>The [name] buzzes: <B>WARNING!</B> MANUAL OVERRIDE INITIATED.</span>")
 					user.set_interaction(src)
 					manual_override = TRUE
 				else
 					if(user.interactee)
 						user.visible_message("<span class='notice'>[user] lets go of [src]</span>",
 						"<span class='notice'>You let go of [src]</span>")
-						visible_message("\icon[src] <span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
+						state("<span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
 						user.unset_interaction()
 					else
 						to_chat(user, "<span class='warning'>You are not currently overriding this turret.</span>")
 				if(stat == 2)
 					stat = 0 //Weird bug goin on here
 			else //Seems to be a bug where the manual override isn't properly deactivated; this toggle should fix that.
-				visible_message("\icon[src] <span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
+				state("<span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
 				manual_override = FALSE
 				operator = null
 				user.unset_interaction()
@@ -536,8 +536,8 @@
 			if(!on)
 				user.visible_message("<span class='notice'>[user] activates [src].</span>",
 				"<span class='notice'>You activate [src].</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] hums to life and emits several beeps.</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Default systems initiated'.</span>'")
+				state("<span class='notice'>The [name] hums to life and emits several beeps.</span>")
+				state("<span class='notice'>The [name] buzzes in a monotone voice: 'Default systems initiated'.</span>'")
 				target = null
 				on = TRUE
 				SetLuminosity(7)
@@ -550,7 +550,7 @@
 				on = FALSE
 				user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
 				"<span class='notice'>You deactivate [src].</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] powers down and goes silent.</span>")
+				state("<span class='notice'>The [name] powers down and goes silent.</span>")
 				processing_objects.Remove(src)
 				update_icon()
 
@@ -558,14 +558,14 @@
 			if(!alerts_on)
 				user.visible_message("<span class='notice'>[user] activates [src]'s alert notifications.</span>",
 				"<span class='notice'>You activate [src]'s alert notifications.</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Alert notification system initiated'.</span>'")
+				state("<span class='notice'>The [name] buzzes in a monotone voice: 'Alert notification system initiated'.</span>'")
 				alerts_on = TRUE
 				update_icon()
 			else
 				alerts_on = FALSE
 				user.visible_message("<span class='notice'>[user] deactivates [src]'s alert notifications.</span>",
 				"<span class='notice'>You deactivate [src]'s alert notifications.</span>")
-				visible_message("\icon[src] <span class='notice'>The [name] buzzes in a monotone voice: 'Alert notification system deactivated'.</span>'")
+				state("<span class='notice'>The [name] buzzes in a monotone voice: 'Alert notification system deactivated'.</span>'")
 				update_icon()
 
 		if("toggle_radial")
@@ -804,7 +804,7 @@
 
 	if(health <= 0 && stat != 2)
 		stat = 2
-		visible_message("\icon[src] <span class='warning'>The [name] starts spitting out sparks and smoke!")
+		state("<span class='warning'>The [name] starts spitting out sparks and smoke!")
 		playsound(loc, 'sound/mecha/critdestrsyndi.ogg', 25, 1)
 		for(var/i = 1 to 6)
 			dir = pick(1, 2, 3, 4)
@@ -820,7 +820,7 @@
 		if(prob(10))
 			spark_system.start()
 		if(damage > knockdown_threshold) //Knockdown is certain if we deal this much in one hit; no more RNG nonsense, the fucking thing is bolted.
-			visible_message("\icon[src] <span class='danger'>The [name] is knocked over!</span>")
+			state("<span class='danger'>The [name] is knocked over!</span>")
 			stat = 1
 			if(alerts_on && on)
 				sentry_alert(SENTRY_ALERT_FALLEN)
@@ -835,7 +835,7 @@
 	if(cell.charge - power <= 0)
 		cell.charge = 0
 		sentry_alert(SENTRY_ALERT_BATTERY)
-		visible_message("\icon[src] <span class='warning'>[src] emits a low power warning and immediately shuts down!</span>")
+		state("<span class='warning'>[src] emits a low power warning and immediately shuts down!</span>")
 		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 50, 1)
 		SetLuminosity(0)
 		update_icon()
@@ -849,7 +849,7 @@
 		check_power(-(rand(100, 500)))
 	if(on)
 		if(prob(50))
-			visible_message("\icon[src] <span class='danger'>[src] beeps and buzzes wildly, flashing odd symbols on its screen before shutting down!</span>")
+			state("<span class='danger'>[src] beeps and buzzes wildly, flashing odd symbols on its screen before shutting down!</span>")
 			playsound(loc, 'sound/mecha/critdestrsyndi.ogg', 25, 1)
 			for(var/i = 1 to 6)
 				dir = pick(1, 2, 3, 4)
@@ -1021,7 +1021,7 @@
 			in_chamber = null
 			rounds--
 			if(rounds == 0)
-				visible_message("\icon[src] <span class='warning'>The [name] beeps steadily and its ammo light blinks red.</span>")
+				state("<span class='warning'>The [name] beeps steadily and its ammo light blinks red.</span>")
 				playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 50, FALSE)
 				if(alerts_on)
 					sentry_alert(SENTRY_ALERT_AMMO)
@@ -1118,7 +1118,7 @@
 	if(get_dist(user, src) > 1 || user.is_mob_incapacitated())
 		user.visible_message("<span class='notice'>[user] lets go of [src]</span>",
 		"<span class='notice'>You let go of [src]</span>")
-		visible_message("\icon[src] <span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
+		state("<span class='notice'>The [name] buzzes: AI targeting re-initialized.</span>")
 		user.unset_interaction()
 		return FALSE
 	if(user.get_active_hand() != null)
@@ -1231,7 +1231,7 @@
 	if(!on)
 		to_chat(user, "You turn on the [src].")
 		visible_message("\blue [src] hums to life and emits several beeps.")
-		visible_message("\icon[src] [src] buzzes in a monotone: 'Default systems initiated.'")
+		state("[src] buzzes in a monotone: 'Default systems initiated.'")
 		target = null
 		on = TRUE
 		SetLuminosity(7)
@@ -1244,7 +1244,7 @@
 		on = FALSE
 		user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
 		"<span class='notice'>You deactivate [src].</span>")
-		visible_message("\icon[src] <span class='notice'>The [name] powers down and goes silent.</span>")
+		state("<span class='notice'>The [name] powers down and goes silent.</span>")
 		update_icon()
 
 //the turret inside the sentry deployment system

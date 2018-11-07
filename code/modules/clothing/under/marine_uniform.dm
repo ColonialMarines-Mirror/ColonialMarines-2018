@@ -270,7 +270,6 @@
 	armor = list(melee = 15, bullet = 15, laser = 15,energy = 5, bomb = 5, bio = 5, rad = 5)
 	has_sensor = 0
 
-
 /obj/item/clothing/under/liaison_suit
 	name = "liaison's tan suit"
 	desc = "A stiff, stylish tan suit commonly worn by businessmen from Nanotrasen. Expertly crafted to make you look like a prick."
@@ -294,10 +293,4 @@
 /obj/item/clothing/under/rank/chef/exec
 	name = "\improper Nanotransen suit"
 	desc = "A formal white undersuit."
-	rollable_sleeves = FALSE
-
-/obj/item/clothing/under/rank/ro_suit
-	name = "requisition officer suit."
-	desc = "A nicely-fitting military suit for a requisition officer."
-	icon_state = "RO_jumpsuit"
 	rollable_sleeves = FALSE

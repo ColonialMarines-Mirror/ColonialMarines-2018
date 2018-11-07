@@ -1858,7 +1858,7 @@ CLOTHING
 
 /datum/supply_packs/officer_outfits
 	contains = list(
-					/obj/item/clothing/under/rank/ro_suit,
+					/obj/item/clothing/under/marine/officer/req,
 					/obj/item/clothing/under/marine/officer/bridge,
 					/obj/item/clothing/under/marine/officer/bridge,
 					/obj/item/clothing/under/marine/officer/exec,

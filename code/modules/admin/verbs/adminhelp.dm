@@ -91,8 +91,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	
 		return
 
-	var/mentor_msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
-	msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	var/mentor_msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar_a(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar_a(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0
 	var/mentor_number_afk = 0
@@ -177,8 +177,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	
 		return
 
-	var/mentor_msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 4, 0, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
-	msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	var/mentor_msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar_m(mob, 4, 0, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar_m(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0
 	var/mentor_number_afk = 0
@@ -231,7 +231,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 
 
-/proc/get_options_bar(whom, detail = 2, name = 0, link = 1, highlight_special = 1)
+/proc/get_options_bar_a(whom, detail = 2, name = 1, link = 1, highlight_special = 1)
 	if(!whom)
 		return "<b>(*null*)</b>"
 
@@ -256,10 +256,10 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>)</b>"
 		if(2)
 			return "<b>[key_name(C, link, name, highlight_special)] \
-			(<A HREF='?_src_=holder;mark=[ref_mob]'>Mark</A>) \
-			(<A HREF='?_src_=holder;noresponse=[ref_mob]'>NR</A>) \
-			(<A HREF='?_src_=holder;warning=[ref_mob]'>Warn</A>) \
-			(<A HREF='?_src_=holder;autoresponse=[ref_mob]'>AutoResponse...</A>) \
+			(<A HREF='?_src_=holder;amark=[ref_mob]'>Mark</A>) \
+			(<A HREF='?_src_=holder;anoresponse=[ref_mob]'>NR</A>) \
+			(<A HREF='?_src_=holder;awarning=[ref_mob]'>Warn</A>) \
+			(<A HREF='?_src_=holder;aautoresponse=[ref_mob]'>AutoResponse...</A>) \
 			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
 			(<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) \
 			(<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) \
@@ -274,9 +274,59 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
 		if(4)
 			return "<b>[key_name(C, link, name, highlight_special)] \
-			(<A HREF='?_src_=holder;mark=[ref_mob]'>Mark</A>) \
-			(<A HREF='?_src_=holder;noresponse=[ref_mob]'>NR</A>) \
-			(<A HREF='?_src_=holder;autoresponse=[ref_mob]'>AutoResponse...</A>) \
+			(<A HREF='?_src_=holder;amark=[ref_mob]'>Mark</A>) \
+			(<A HREF='?_src_=holder;anoresponse=[ref_mob]'>NR</A>) \
+			(<A HREF='?_src_=holder;aautoresponse=[ref_mob]'>AutoResponse...</A>) \
+			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
+			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
+
+/proc/get_options_bar_m(whom, detail = 0, name = 0, link = 1, highlight_special = 0)
+	if(!whom)
+		return "<b>(*null*)</b>"
+
+	var/mob/M
+	var/client/C
+
+	if(istype(whom, /client))
+		C = whom
+		M = C.mob
+	else if(istype(whom, /mob))
+		M = whom
+		C = M.client
+	else
+		return "<b>(*not a mob*)</b>"
+
+	var/ref_mob = "\ref[M]"
+	switch(detail)
+		if(0)
+			return "<b>[key_name(C, link, name, highlight_special)]</b>"
+		if(1)
+			return "<b>[key_name(C, link, name, highlight_special)] \
+			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>)</b>"
+		if(2)
+			return "<b>[key_name(C, link, name, highlight_special)] \
+			(<A HREF='?_src_=holder;mmark=[ref_mob]'>Mark</A>) \
+			(<A HREF='?_src_=holder;mnoresponse=[ref_mob]'>NR</A>) \
+			(<A HREF='?_src_=holder;mwarning=[ref_mob]'>Warn</A>) \
+			(<A HREF='?_src_=holder;mautoresponse=[ref_mob]'>AutoResponse...</A>) \
+			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
+			(<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) \
+			(<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) \
+			(<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) \
+			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>) \
+			(<A HREF='?_src_=holder;check_antagonist=1'>CA</A>)</b>"
+		if(3)
+			return "<b>[key_name(C, link, name, highlight_special)] \
+			(<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) \
+			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
+		if(4)
+			return "<b>[key_name(C, link, name, highlight_special)] \
+			(<A HREF='?_src_=holder;mmark=[ref_mob]'>Mark</A>) \
+			(<A HREF='?_src_=holder;mnoresponse=[ref_mob]'>NR</A>) \
+			(<A HREF='?_src_=holder;mutoresponse=[ref_mob]'>AutoResponse...</A>) \
 			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
 			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"

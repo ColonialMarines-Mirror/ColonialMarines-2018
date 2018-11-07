@@ -66,7 +66,7 @@
 	feedback_add_details("admin_verb","MPM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-//takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
+//takes input from cmd_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_mentor_pm(var/client/C, var/msg = null)
 	if(prefs.muted & MUTE_ADMINHELP)
@@ -82,7 +82,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0)]") as message|null
+		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
 
 		if(!msg)	
 			return
@@ -142,9 +142,9 @@
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
-	recieve_message = "<br><br><font color='[recieve_color]'><b>[recieve_pm_type] PM from [get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>"
+	recieve_message = "<br><br><font color='[recieve_color]'><b>[recieve_pm_type] PM from [get_options_bar_m(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>"
 	to_chat(C, recieve_message)
-	to_chat(src, "<br><br><font color='#009900'><b>[send_pm_type]PM to [get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>")
+	to_chat(src, "<br><br><font color='#009900'><b>[send_pm_type]PM to [get_options_bar_m(C, holder ? 1 : 0, holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>")
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
@@ -231,14 +231,14 @@
 				var/reply = input(C, msg,"[recieve_pm_type] PM from-[sendername]", "") as text|null		//show message and await a reply
 				if(C && reply)
 					if(sender)
-						C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
+						C.cmd_admin_pm(sender, reply)										//sender is still about, let's reply to them
 					else
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
-	recieve_message = "<br><br><font color='[recieve_color]'><b>[recieve_pm_type] PM from [get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>"
+	recieve_message = "<br><br><font color='[recieve_color]'><b>[recieve_pm_type] PM from [get_options_bar_a(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>"
 	to_chat(C, recieve_message)
-	to_chat(src, "<br><br><font color='#009900'><b>[send_pm_type]PM to [get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>")
+	to_chat(src, "<br><br><font color='#009900'><b>[send_pm_type]PM to [get_options_bar_a(C, holder ? 1 : 0, holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>")
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this

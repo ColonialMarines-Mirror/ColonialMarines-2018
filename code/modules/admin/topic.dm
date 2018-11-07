@@ -2472,7 +2472,7 @@
 		return
 
 	if(href_list["mmark"])
-		var/mob/ref_person = locate(href_list["mark"])
+		var/mob/ref_person = locate(href_list["mmark"])
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
@@ -2514,6 +2514,29 @@
 		ref_person.client.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1200) //This should be <= the Adminhelp cooldown in adminhelp.dm
 			if(ref_person)	ref_person.client.adminhelp_marked = 0
+
+
+	if(href_list["pmark"])
+		var/mob/ref_person = locate(href_list["pmark"])
+		if(!istype(ref_person))
+			to_chat(usr, "\blue Looks like that person stopped existing!")
+			return
+		if(ref_person && ref_person.client.pray_marked)
+			to_chat(usr, "<b>This Prayer is already being handled.</b>")
+			usr << sound('sound/effects/adminhelp-error.ogg')
+			return
+
+		message_admins("[usr.key] has used 'Mark' on the Prayer from [key_name_admin(ref_person)] and is preparing to respond...", 1)
+		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has marked your request and is preparing to respond...</b>"
+
+		to_chat(ref_person, msgplayer)
+
+		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
+		viewUnheardAhelps()//This SHOULD refresh the page
+
+		ref_person.client.pray_marked = 1 //Timer to prevent multiple clicks
+		spawn(200) //This should be <= the Adminhelp cooldown in adminhelp.dm
+			if(ref_person)	ref_person.client.pray_marked = 0
 
 	if(href_list["noresponse"])
 		var/mob/ref_person = locate(href_list["noresponse"])

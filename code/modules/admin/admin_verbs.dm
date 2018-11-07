@@ -1,11 +1,9 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
-	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
-	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	// /client/proc/cmd_mentor_check_new_players
 	)
 var/list/admin_verbs_admin = list(
@@ -43,6 +41,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
+	/client/proc/debug_variables,
 	// /client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
@@ -77,7 +76,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/check_round_statistics,
 	/client/proc/award_medal,
 	/client/proc/force_shuttle,
-	/client/proc/remove_players_from_vic
+	/client/proc/remove_players_from_vic,
+	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
@@ -271,9 +271,7 @@ var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_mentor_pm_panel,
 	/client/proc/admin_ghost,
 	/client/proc/cmd_mod_say,
-	/client/proc/cmd_admin_subtle_message,
 	/datum/admins/proc/viewUnheardMhelps,
-	/datum/admins/proc/viewUnheardAhelps,
 	/datum/admins/proc/viewCLFaxes
 )
 

@@ -10,7 +10,8 @@ client
 			to_chat(usr, "\red You need to be a moderator or higher to access this.")
 			return
 
-		if(!D)	return
+		if(!D)	
+			return
 
 		var/title = ""
 		var/body = ""

@@ -1,1 +1,2 @@
 Admin +EVERYTHING
+Mentor +MENTOR +COLOR

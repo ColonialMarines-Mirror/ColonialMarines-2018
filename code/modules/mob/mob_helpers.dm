@@ -102,7 +102,7 @@ proc/isdeaf(A)
 	if(isliving(A))
 		var/mob/living/M = A
 		return M.ear_deaf
-	return 0
+	return FALSE
 
 proc/is_blind(A)
 	if(isliving(A))

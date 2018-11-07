@@ -79,7 +79,13 @@
 
 
 /mob/living/carbon/Xenomorph/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, used_weapon = null, sharp = 0, edge = 0)
-	if(damage <= 0)
+	if(blocked >= 1) //total negation
+		return FALSE
+
+	if(blocked)
+		damage *= CLAMP(1-blocked,0.00,1.00) //Percentage reduction
+
+	if(!damage) //no damage
 		return FALSE
 
 	//We still want to check for blood splash before we get to the damage application.
@@ -93,6 +99,8 @@
 
 	if(damage > 12) //Light damage won't splash.
 		check_blood_splash(damage, damagetype, chancemod)
+		if(damage > 15 && stealth_router(HANDLE_STEALTH_CHECK)) //Any significant damage causes us to break stealth
+			stealth_router(HANDLE_STEALTH_CODE_CANCEL)
 
 	if(stat == DEAD)
 		return FALSE
@@ -105,6 +113,7 @@
 
 	updatehealth()
 	return TRUE
+
 
 /mob/living/carbon/Xenomorph/adjustBruteLoss(amount)
 	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth - crit_health)

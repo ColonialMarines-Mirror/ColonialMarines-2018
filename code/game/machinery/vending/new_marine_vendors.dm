@@ -294,7 +294,7 @@
 							list("Headset", 0, /obj/item/device/radio/headset/almayer/marine, MARINE_CAN_BUY_EAR, "white"),//maybe an arg for empty line next?
 							list("BACKPACK (choose 1)", 0, null, null, null),
 							list("Satchel", 0, /obj/item/storage/backpack/marine/satchel, MARINE_CAN_BUY_BACKPACK, "orange"),
-							list("Backpack", 0, /obj/item/storage/backpack/marine, MARINE_CAN_BUY_BACKPACK, "black"),
+							list("Backpack", 0, /obj/item/storage/backpack/marine/standard, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("Shotgun scabbard", 0, /obj/item/storage/large_holster/m37, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("WEBBING (choose 1)", 0, null, null, null),
 							list("Tactical Vest", 0, /obj/item/clothing/tie/storage/brown_vest, MARINE_CAN_BUY_WEBBING, "orange"),
@@ -582,7 +582,7 @@
 							list("Headset", 0, /obj/item/device/radio/headset/almayer/marine, MARINE_CAN_BUY_EAR, "white"),//maybe an arg for empty line next?
 							list("BACKPACK (choose 1)", 0, null, null, null),
 							list("Satchel", 0, /obj/item/storage/backpack/marine/satchel, MARINE_CAN_BUY_BACKPACK, "black"),
-							list("Backpack", 0, /obj/item/storage/backpack/marine, MARINE_CAN_BUY_BACKPACK, "black"),
+							list("Backpack", 0, /obj/item/storage/backpack/marine/standard, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("Shotgun scabbard", 0, /obj/item/storage/large_holster/m37, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("WEBBING (choose 1)", 0, null, null, null),
 							list("Tactical Vest", 0, /obj/item/clothing/tie/storage/brown_vest, MARINE_CAN_BUY_WEBBING, "black"),
@@ -650,7 +650,7 @@
 							list("Headset", 0, /obj/item/device/radio/headset/almayer/marine, MARINE_CAN_BUY_EAR, "white"),//maybe an arg for empty line next?
 							list("BACKPACK (choose 1)", 0, null, null, null),
 							list("Satchel", 0, /obj/item/storage/backpack/marine/satchel, MARINE_CAN_BUY_BACKPACK, "black"),
-							list("Backpack", 0, /obj/item/storage/backpack/marine, MARINE_CAN_BUY_BACKPACK, "black"),
+							list("Backpack", 0, /obj/item/storage/backpack/marine/standard, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("Shotgun scabbard", 0, /obj/item/storage/large_holster/m37, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("Machete scabbard", 0, /obj/item/storage/large_holster/machete/full, MARINE_CAN_BUY_BACKPACK, "black"),
 							list("WEBBING (choose 1)", 0, null, null, null),
@@ -824,6 +824,7 @@
 							list("Plasteel x10", 7, /obj/item/stack/sheet/plasteel/small_stack, null, "orange"),
 							list("Sandbags x25", 10, /obj/item/stack/sandbags_empty/half, null, "orange"),
 							list("Plasma cutter", 20, /obj/item/tool/pickaxe/plasmacutter, null, "black"),
+							list("UA-580 point defense sentry kit", 26, /obj/item/storage/box/minisentry, null, "black"),
 							list("Plastique explosive", 3, /obj/item/explosive/plastique, null, "black"),
 							list("Detonation pack", 5, /obj/item/device/radio/detpack, null, "black"),
 							list("Entrenching tool", 1, /obj/item/tool/shovel/etool, null, "black"),

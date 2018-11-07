@@ -419,11 +419,21 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define WARRIOR_AGILITY_ARMOR 30
 #define XENO_DEADHUMAN_DRAG_SLOWDOWN 2
 
+//defender defines
+
+#define DEFENDER_HEADBUTT_COST 20
+#define DEFENDER_TAILSWIPE_COST 30
+
+//carrier defines
+
+#define CARRIER_SPAWN_HUGGER_COST 100
 
 // halloss defines
 
-#define BASE_HALLOSS_RECOVERY_RATE -2
-#define REST_HALLOSS_RECOVERY_RATE -10
+#define BASE_HALLOSS_RECOVERY_RATE -4
+#define WALK_HALLOSS_RECOVERY_RATE -12
+#define DOWNED_HALLOSS_RECOVERY_RATE -16
+#define REST_HALLOSS_RECOVERY_RATE -32
 
 // Human Overlay Indexes
 #define MOTH_WINGS_LAYER		26
@@ -458,3 +468,19 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define MOTH_WINGS_BEHIND_LAYER	1
 
 #define TOTAL_UNDERLAYS			1
+
+#define ANTI_CHAINSTUN_TICKS	2
+
+//Hunter Defines
+#define HUNTER_STEALTH_COOLDOWN					50 //5 seconds
+#define HUNTER_STEALTH_WALK_PLASMADRAIN			2
+#define HUNTER_STEALTH_RUN_PLASMADRAIN			5
+#define HUNTER_STEALTH_STILL_ALPHA				13 //95% transparency
+#define HUNTER_STEALTH_WALK_ALPHA				51 //80% transparency
+#define HUNTER_STEALTH_RUN_ALPHA				128 //50% transparency
+#define HUNTER_STEALTH_STEALTH_DELAY			40 //4 seconds before 95% stealth
+#define HUNTER_STEALTH_INITIAL_DELAY			20 //2 seconds before we can increase stealth
+#define HUNTER_POUNCE_SNEAKATTACK_DELAY 		40 //4 seconds before we can sneak attack
+#define HANDLE_STEALTH_CHECK				1
+#define HANDLE_STEALTH_CODE_CANCEL		2
+#define HANDLE_SNEAK_ATTACK_CHECK		3

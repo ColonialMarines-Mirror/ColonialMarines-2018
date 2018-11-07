@@ -50,6 +50,63 @@
 	return TRUE
 
 
+
+/mob/living/carbon/Xenomorph/Hunter/Pounce(atom/T)
+
+	if(!T || !check_state() || !check_plasma(20) || T.layer >= FLY_LAYER) //anything above that shouldn't be pounceable (hud stuff)
+		return
+
+	if(!isturf(loc))
+		to_chat(src, "<span class='xenowarning'>You can't pounce from here!</span>")
+		return
+
+	if(usedPounce)
+		to_chat(src, "<span class='xenowarning'>You must wait before pouncing.</span>")
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't pounce with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>Your limbs fail to respond as you try to shake up the shock!</span>")
+		return
+
+	if(layer == XENO_HIDING_LAYER) //Xeno is currently hiding, unhide him
+		layer = MOB_LAYER
+
+	if(m_intent == "walk") //Hunter that is currently using its stealth ability, need to unstealth him
+		m_intent = "run"
+		if(hud_used && hud_used.move_intent)
+			hud_used.move_intent.icon_state = "running"
+		update_icons()
+
+	visible_message("<span class='xenowarning'>\The [src] pounces at [T]!</span>", \
+	"<span class='xenowarning'>You pounce at [T]!</span>")
+	usedPounce = TRUE
+	flags_pass = PASSTABLE
+	use_plasma(20)
+	throw_at(T, 7, 2, src) //Victim, distance, speed
+	spawn(6)
+		if(!hardcore)
+			flags_pass = initial(flags_pass) //Reset the passtable.
+		else
+			flags_pass = 0 //Reset the passtable.
+
+	spawn(pounce_delay)
+		usedPounce = 0
+		to_chat(src, "<span class='xenowarning'><b>You are ready to pounce again.</b></span>")
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		update_action_button_icons()
+
+	if(stealth && can_sneak_attack) //If we're stealthed and could sneak attack, add a cooldown to sneak attack
+		to_chat(src, "<span class='xenodanger'>Your pounce has left you off-balance; you'll need to wait [HUNTER_POUNCE_SNEAKATTACK_DELAY*0.1] seconds before you can Sneak Attack again.</span>")
+		can_sneak_attack = FALSE
+		sneak_attack_cooldown()
+
+	return TRUE
+
+
 // Praetorian acid spray
 /mob/living/carbon/Xenomorph/proc/acid_spray_cone(atom/A)
 
@@ -529,10 +586,6 @@
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
 
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
-		return
-
 	if (!check_state())
 		return
 
@@ -540,7 +593,10 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before headbutting.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(20))
+			return
+	else if (!check_plasma(10))
 		return
 
 	if(stagger)
@@ -571,7 +627,10 @@
 	"<span class='xenowarning'>You ram [H] with your armored crest!</span>")
 
 	used_headbutt = 1
-	use_plasma(10)
+	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		use_plasma(20)
+	else
+		use_plasma(10)
 
 	face_atom(H) //Face towards the target so we don't look silly
 
@@ -613,10 +672,6 @@
 		to_chat(src, "<span class='xenowarning'>You cannot use abilities while fortified.</span>")
 		return
 
-	if (crest_defense)
-		to_chat(src, "<span class='xenowarning'>You cannot use abilities with your crest lowered.</span>")
-		return
-
 	if (!check_state())
 		return
 
@@ -624,7 +679,10 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before tail sweeping.</span>")
 		return
 
-	if (!check_plasma(10))
+	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		if (!check_plasma(30))
+			return
+	else if (!check_plasma(15))
 		return
 
 	if(stagger)
@@ -661,7 +719,10 @@
 		to_chat(H, "<span class='xenowarning'>You are struck by \the [src]'s tail sweep!</span>")
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	used_tail_sweep = TRUE
-	use_plasma(10)
+	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
+		use_plasma(30)
+	else
+		use_plasma(15)
 
 	spawn(tail_sweep_cooldown)
 		used_tail_sweep = FALSE
@@ -696,7 +757,8 @@
 		else
 			to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
 		round_statistics.defender_crest_lowerings++
-		armor_bonus += DEFENDER_CRESTDEFENSE_ARMOR
+		armor_bonus += crest_defense_armor
+		xeno_explosion_resistance = 2
 		speed_modifier += DEFENDER_CRESTDEFENSE_SLOWDOWN	// This is actually a slowdown but speed is dumb
 		update_icons()
 		do_crest_defense_cooldown()
@@ -704,7 +766,8 @@
 
 	round_statistics.defender_crest_raises++
 	to_chat(src, "<span class='xenowarning'>You raise your crest.</span>")
-	armor_bonus -= DEFENDER_CRESTDEFENSE_ARMOR
+	armor_bonus -= crest_defense_armor
+	xeno_explosion_resistance = 0
 	speed_modifier -= DEFENDER_CRESTDEFENSE_SLOWDOWN
 	update_icons()
 	do_crest_defense_cooldown()
@@ -741,7 +804,7 @@
 				return
 		else
 			to_chat(src, "<span class='xenowarning'>You tuck yourself into a defensive stance.</span>")
-		armor_bonus += DEFENDER_FORTIFY_ARMOR
+		armor_bonus += fortify_armor
 		xeno_explosion_resistance = 3
 		frozen = TRUE
 		anchored = TRUE
@@ -756,7 +819,7 @@
 
 /mob/living/carbon/Xenomorph/proc/fortify_off()
 	to_chat(src, "<span class='xenowarning'>You resume your normal stance.</span>")
-	armor_bonus -= DEFENDER_FORTIFY_ARMOR
+	armor_bonus -= fortify_armor
 	xeno_explosion_resistance = 0
 	frozen = FALSE
 	anchored = FALSE
@@ -1447,7 +1510,7 @@
 	src.visible_message("<span class='danger'>\ [src] savages [M]!</span>", \
 	"<span class='xenodanger'>You savage [M]!</span>", null, 5)
 	var/extra_dam = min(15, plasma_stored * 0.2)
-	M.attack_alien(src,  extra_dam, FALSE, TRUE, TRUE, TRUE) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
+	M.attack_alien(src,  extra_dam, FALSE, FALSE, TRUE, TRUE, TRUE) //Inflict a free attack on pounce that deals +1 extra damage per 4 plasma stored, up to 35 or twice the max damage of an Ancient Runner attack.
 	use_plasma(extra_dam * 5) //Expend plasma equal to 4 times the extra damage.
 	savage_used = TRUE
 	do_savage_cooldown()
@@ -1460,5 +1523,201 @@
 	spawn(savage_cooldown)
 		savage_used = FALSE
 		to_chat(src, "<span class='xenowarning'><b>You can now savage your victims again.</b></span>")
-		playsound(src, "xeno_newlarva", 100, 0, 1)
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		for(var/X in actions)
+			var/datum/action/act = X
+			act.update_button_icon()
+
+// Crusher Horn Toss
+/mob/living/carbon/Xenomorph/proc/cresttoss(var/mob/living/carbon/M)
+	if(cresttoss_used)
+		return
+
+	if(!check_plasma(40))
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't maneuver your body properly with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>You try to fling away [M] but are unable as you fail to shake off the shock!</span>")
+		return
+
+	if (!Adjacent(M) || !istype(M, /mob/living)) //Sanity check
+		return
+
+	if(M.stat == DEAD || (M.status_flags & XENO_HOST && istype(M.buckled, /obj/structure/bed/nest) ) ) //no bully
+		return
+
+	if(M.mob_size >= MOB_SIZE_BIG) //We can't fling big aliens/mobs
+		to_chat(src, "<span class='xenowarning'>[M] is too large to fling!</span>")
+		return
+
+	icon_state = "Crusher Charging"  //Momentarily lower the crest for visual effect
+	visible_message("<span class='xenowarning'>\The [src] flings [M] away with its crest!</span>", \
+	"<span class='xenowarning'>You fling [M] away with your crest!</span>")
+
+	cresttoss_used = 1
+	use_plasma(40)
+
+	face_atom(M) //Face towards the target so we don't look silly
+
+	var/facing = get_dir(src, M)
+	var/toss_distance = rand(3,5)
+	var/turf/T = loc
+	var/turf/temp = loc
+	if(a_intent == "hurt") //If we use the ability on hurt intent, we throw them in front; otherwise we throw them behind.
+		for (var/x = 0, x < toss_distance, x++)
+			temp = get_step(T, facing)
+			if (!temp)
+				break
+			T = temp
+	else
+		facing = get_dir(M, src)
+		M.loc = get_step(T, facing) //Move the target behind us before flinging
+		for (var/x = 0, x < toss_distance, x++)
+			temp = get_step(T, facing)
+			if (!temp)
+				break
+			T = temp
+	//The target location deviates up to 1 tile in any direction
+	var/scatter_x = rand(-1,1)
+	var/scatter_y = rand(-1,1)
+	var/turf/new_target = locate(T.x + round(scatter_x),T.y + round(scatter_y),T.z) //Locate an adjacent turf.
+	if(new_target)
+		T = new_target//Looks like we found a turf.
+
+	M.throw_at(T, toss_distance, 1, src)
+
+	//Handle the damage
+	if(!isXeno(M)) //Friendly xenos don't take damage.
+		var/damage = toss_distance * 5
+		if(frenzy_aura)
+			damage *= (1 + round(frenzy_aura * 0.1,0.01)) //+10% damage per level of frenzy
+		var/armor_block = M.run_armor_check("chest", "melee")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
+		else
+			M.take_overall_damage(rand(damage * 0.75,damage * 1.25) * 0.5, armor_block) //Armour functions against this.
+		M.apply_damage(damage, HALLOSS) //...But decent armour ignoring Halloss
+		shake_camera(M, 2, 2)
+		playsound(M,pick('sound/weapons/alien_claw_block.ogg','sound/weapons/alien_bite2.ogg'), 50, 1)
+		M.KnockDown(1, 1)
+
+	cresttoss_cooldown()
+	spawn(3) //Revert to our prior icon state.
+		if(m_intent == MOVE_INTENT_RUN)
+			icon_state = "Crusher Running"
+		else
+			icon_state = "Crusher Walking"
+
+/mob/living/carbon/Xenomorph/proc/cresttoss_cooldown()
+	if(!cresttoss_used)//sanity check/safeguard
+		return
+	spawn(cresttoss_cooldown)
+		cresttoss_used = FALSE
+		to_chat(src, "<span class='xenowarning'><b>You can now crest toss again.</b></span>")
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		for(var/X in actions)
+			var/datum/action/act = X
+			act.update_button_icon()
+
+
+// Carrier Spawn Hugger
+/mob/living/carbon/Xenomorph/Carrier/proc/Spawn_Hugger(var/mob/living/carbon/M)
+	if(stagger)
+		to_chat(src, "<span class='xenowarning'>You try to spawn a young one but are unable to shake off the shock!</span>")
+		return
+
+	if(used_spawn_facehugger)
+		to_chat(src, "<span class='xenowarning'>You're not yet ready to spawn another young one; you must wait [(last_spawn_facehugger + cooldown_spawn_facehugger - world.time) * 0.1] more seconds.</span>")
+		return
+
+	if(!check_plasma(CARRIER_SPAWN_HUGGER_COST))
+		return
+
+	if(huggers_cur >= huggers_max)
+		to_chat(src, "<span class='xenowarning'>You can't host any more young ones!</span>")
+		return
+
+	to_chat(src, "<span class='xenowarning'>You spawn a young one via the miracle of asexual internal reproduction, adding it to your stores.</span>")
+	playsound(src, 'sound/voice/alien_drool2.ogg', 50, 0, 1)
+	huggers_cur = min(huggers_max, huggers_cur + 1) //Add it to our cache
+	last_spawn_facehugger = world.time
+	used_spawn_facehugger = TRUE
+	use_plasma(CARRIER_SPAWN_HUGGER_COST)
+	hugger_spawn_cooldown()
+
+/mob/living/carbon/Xenomorph/Carrier/proc/hugger_spawn_cooldown()
+	if(!used_spawn_facehugger)//sanity check/safeguard
+		return
+	spawn(cooldown_spawn_facehugger)
+		used_spawn_facehugger = FALSE
+		to_chat(src, "<span class='xenowarning'><b>You can now spawn another young one.</b></span>")
+		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
+		for(var/X in actions)
+			var/datum/action/act = X
+			act.update_button_icon()
+
+
+
+// Hunter Stealth
+/mob/living/carbon/Xenomorph/Hunter/proc/Stealth()
+
+	if(!check_state())
+		return
+
+	if(world.time < stealth_delay)
+		to_chat(src, "<span class='xenodanger'><b>You're not yet ready to Stealth again. You'll be ready in [(stealth_delay - world.time)*0.1] seconds.</span>")
+		return
+
+	if(legcuffed)
+		to_chat(src, "<span class='xenodanger'>You can't enter Stealth with that thing on your leg!</span>")
+		return
+
+	if(stagger)
+		to_chat(src, "<span class='xenodanger'>You're too disoriented from the shock to enter Stealth!</span>")
+		return
+
+	if(!stealth)
+		if (!check_plasma(10))
+			return
+		else
+			use_plasma(10)
+			to_chat(src, "<span class='xenodanger'>You vanish into the shadows...</span>")
+			last_stealth = world.time
+			stealth = TRUE
+			handle_stealth()
+			sneak_attack_cooldown()
+	else
+		cancel_stealth()
+
+/mob/living/carbon/Xenomorph/Hunter/proc/stealth_cooldown_notice()
+	if(!used_stealth)//sanity check/safeguard
+		return
+	spawn(HUNTER_STEALTH_COOLDOWN)
+		used_stealth = FALSE
+		to_chat(src, "<span class='notice'><b>You're ready to use Stealth again.</b></span>")
+		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()
+
+/mob/living/carbon/Xenomorph/Hunter/proc/cancel_stealth() //This happens if we take damage, attack, pounce, toggle stealth off, and do other such exciting stealth breaking activities.
+	if(!stealth)//sanity check/safeguard
+		return
+	to_chat(src, "<span class='xenodanger'>You emerge from the shadows.</span>")
+	stealth = FALSE
+	used_stealth = TRUE
+	can_sneak_attack = FALSE
+	alpha = 255 //no transparency/translucency
+	stealth_delay = world.time + HUNTER_STEALTH_COOLDOWN
+	stealth_cooldown_notice()
+
+/mob/living/carbon/Xenomorph/Hunter/proc/sneak_attack_cooldown()
+	if(can_sneak_attack)
+		return
+	spawn(HUNTER_POUNCE_SNEAKATTACK_DELAY)
+		can_sneak_attack = TRUE
+		to_chat(src, "<span class='xenodanger'><b>You're ready to use Sneak Attack while stealthed.</b></span>")
+		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)

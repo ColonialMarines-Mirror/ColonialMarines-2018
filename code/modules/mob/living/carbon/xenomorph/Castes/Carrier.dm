@@ -8,9 +8,7 @@
 	icon_state = "Carrier Walking"
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	tacklemin = 2
-	tacklemax = 3
-	tackle_chance = 60
+	tackle_damage = 30
 	health = 200
 	maxHealth = 200
 	plasma_stored = 50
@@ -31,6 +29,9 @@
 	var/hugger_delay = 25
 	var/eggs_cur = 0
 	var/eggs_max = 3
+	var/used_spawn_facehugger = FALSE
+	var/last_spawn_facehugger
+	var/cooldown_spawn_facehugger = 100 //10 seconds; keeping this as a var for now as I may have it adjust with upgrade level
 	tier = 2
 	upgrade = 0
 	pixel_x = -16 //Needed for 2x2

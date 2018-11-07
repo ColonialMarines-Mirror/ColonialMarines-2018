@@ -219,20 +219,11 @@
 
 	// Firer's turf, keep moving
 	if(firer && T == firer.loc)
-		return 0
-
-	// Explosive ammo always explodes on the turf of the clicked target
-	if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)
-		ammo.on_hit_turf(T,src)
-
-		if(T && T.loc)
-			T.bullet_act(src)
-
-		return 1
+		return FALSE
 
 	// Empty turf, keep moving
 	if(!T.contents.len)
-		return 0
+		return FALSE
 
 	for(var/atom/movable/A in T)
 		// If we've already handled this atom, don't do it again
@@ -273,9 +264,11 @@
 								break
 				if(mob_is_hit)
 					ammo.on_hit_mob(L,src)
-					if(L && L.loc)
+					if(L?.loc)
+						if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
+							ammo.on_hit_turf(L,src)
 						L.bullet_act(src)
-					return 1
+					return TRUE
 				else if (!L.lying)
 					animatation_displace_reset(L)
 					if(ammo.sound_miss) L.playsound_local(get_turf(L), ammo.sound_miss, 75, 1)
@@ -284,9 +277,17 @@
 			else if(isobj(A))
 				ammo.on_hit_obj(A,src)
 				if(A && A.loc)
+					if(ammo.flags_ammo_behavior & AMMO_EXPLOSIVE) //If we're explosive, we go off.
+						ammo.on_hit_turf(A,src)
 					A.bullet_act(src)
-				return 1
+				return TRUE
 
+	// Explosive ammo always explodes on the turf of the clicked target
+	if(src && ammo.flags_ammo_behavior & AMMO_EXPLOSIVE && T == target_turf)
+		ammo.on_hit_turf(T,src)
+		if(T?.loc)
+			T.bullet_act(src)
+		return TRUE
 
 //----------------------------------------------------------
 		    	//				    	\\
@@ -329,7 +330,7 @@
 
 	if(!( P.dir & reverse_direction(dir) || P.dir & dir))
 		return FALSE //no effect if bullet direction is perpendicular to barricade
-		
+
 	var/distance = P.distance_travelled - 1
 	if(distance < P.ammo.barricade_clear_distance)
 		return FALSE
@@ -396,11 +397,16 @@
 
 	if(isliving(P.firer))
 		var/mob/living/shooter_living = P.firer
-		if( !can_see(shooter_living,src) ) . -= 15 //Can't see the target (Opaque thing between shooter and target)
-		. -= round((shooter_living.maxHealth - shooter_living.health) / 4) //Less chance to hit when injured.
+		if( !can_see(shooter_living,src) )
+			. -= 15 //Can't see the target (Opaque thing between shooter and target)
+		if(shooter_living.last_move_intent < world.time - 20) //We get a nice accuracy bonus for standing still.
+			. += 15
+		else if(shooter_living.m_intent == MOVE_INTENT_WALK) //We get a decent accuracy bonus for walking
+			. += 10
 
 	if(ishuman(P.firer))
 		var/mob/living/carbon/human/shooter_human = P.firer
+		. -= round(max(30,(shooter_human.traumatic_shock) * 0.2)) //Chance to hit declines with pain, being reduced by 0.2% per point of pain.
 		if(shooter_human.marskman_aura)
 			. += shooter_human.marskman_aura * 1.5 //Flat buff of 3 % accuracy per aura level
 			. += P.distance_travelled * 0.35 * shooter_human.marskman_aura //Flat buff to accuracy per tile travelled
@@ -613,7 +619,11 @@ Normal range for a defender's bullet resist should be something around 30-50. ~N
 			#if DEBUG_CREST_DEFENSE
 			world << "<span class='debuginfo'>Projectile direction is: <b>[P.dir]</b> and crest direction is: <b>[charger.dir]</b></span>"
 			#endif
-			if(P.dir == charger.dir) armor = max(0, armor - (armor_deflection * config.xeno_armor_resist_low)) //Both facing same way -- ie. shooting from behind.
+			if(P.dir == charger.dir)
+				if(isXenoQueen(src))
+					armor = max(0, armor - (armor_deflection * config.xeno_armor_resist_low)) //Both facing same way -- ie. shooting from behind; armour reduced by 50% of base.
+				else
+					armor = max(0, armor - (armor_deflection * config.xeno_armor_resist_lmed)) //Both facing same way -- ie. shooting from behind; armour reduced by 75% of base.
 			else if(P.dir == reverse_direction(charger.dir)) armor += round(armor_deflection * config.xeno_armor_resist_low) //We are facing the bullet.
 			//Otherwise use the standard armor deflection for crushers.
 			#if DEBUG_XENO_DEFENSE

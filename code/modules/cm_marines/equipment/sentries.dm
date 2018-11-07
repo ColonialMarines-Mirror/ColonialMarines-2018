@@ -28,6 +28,7 @@
 					/obj/item/ammo_magazine/sentry,
 					)
 
+
 /obj/item/storage/box/sentry/New()
 	. = ..()
 	new /obj/item/stack/sheet/plasteel/sentry_stack(src)

@@ -177,10 +177,19 @@
 	icon_state = "sciencecoat_open"
 	item_state = "sciencecoat_open"
 
+/obj/item/clothing/suit/storage/CMB
+	name = "\improper CMB jacket"
+	desc = "A green jacket worn by Colonial Marshals."
+	icon_state = "CMB_jacket"
+	blood_overlay_type = "coat"
+	flags_armor_protection = UPPER_TORSO|ARMS
 
-
-
-
+/obj/item/clothing/suit/storage/RO
+	name = "\improper RO jacket"
+	desc = "A green jacket worn by USCM personnel."
+	icon_state = "RO_jacket"
+	blood_overlay_type = "coat"
+	flags_armor_protection = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/snow_suit
 	name = "snow suit"

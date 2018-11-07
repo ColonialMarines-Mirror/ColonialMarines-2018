@@ -16,7 +16,6 @@
 	to_chat(src, "<span class='debuginfo'>The overall armor score is: <b>[counter]</b>.</span>")
 #endif
 
-//=======================================================================\\
 //=======================================================================
 
 #define ALPHA		1
@@ -49,7 +48,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		helmet = image('icons/mob/head_1.dmi',icon_state = "sql-helmet")
 		helmet.color = squad_colors[i]
 		helmetmarkings_sql += helmet
-
 
 // MARINE STORAGE ARMOR
 
@@ -499,25 +497,12 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_min_cold_protection_temperature
 
-/obj/item/clothing/suit/storage/CMB
-	name = "\improper CMB jacket"
-	desc = "A green jacket worn by Colonial Marshals."
-	icon_state = "CMB_jacket"
-	blood_overlay_type = "coat"
-	flags_armor_protection = UPPER_TORSO|ARMS
-
-/obj/item/clothing/suit/storage/RO
-	name = "\improper RO jacket"
-	desc = "A green jacket worn by USCM personnel."
-	icon_state = "RO_jacket"
-	blood_overlay_type = "coat"
-	flags_armor_protection = UPPER_TORSO|ARMS
 
 //===========================//HELGHAST - MERCENARY\\================================
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary
 	name = "\improper K12 ceramic plated armor"
-	desc = "A set of grey, heavy ceramic armor with dark blue highlights. It is the standard uniform of a unknown mercenary group working in the sector"
+	desc = "A set of grey, heavy ceramic armor with dark blue highlights. It is the standard uniform of a unknown mercenary group"
 	icon_state = "mercenary_heavy_armor"
 	armor = list(melee = 75, bullet = 62, laser = 42, energy = 38, bomb = 40, bio = 15, rad = 15)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
@@ -525,13 +510,13 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary/miner
 	name = "\improper Y8 armored miner vest"
-	desc = "A set of beige, light armor built for protection while mining. It is a specialized uniform of a unknown mercenary group working in the sector"
+	desc = "A set of beige, light armor built for protection while mining. It is a specialized uniform of a unknown mercenary group"
 	icon_state = "mercenary_miner_armor"
 	armor = list(melee = 50, bullet = 42, laser = 42, energy = 38, bomb = 25, bio = 15, rad = 15)
 
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary/engineer
 	name = "\improper Z7 armored engineer vest"
-	desc = "A set of blue armor with yellow highlights built for protection while building in highly dangerous environments. It is a specialized uniform of a unknown mercenary group working in the sector"
+	desc = "A set of blue armor with yellow highlights built for protection while building in highly dangerous environments. It is a specialized uniform of a unknown mercenary group"
 	icon_state = "mercenary_engineer_armor"
 	armor = list(melee = 55, bullet = 52, laser = 42, energy = 38, bomb = 30, bio = 15, rad = 15)

@@ -85,13 +85,9 @@
 	return
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 /mob/living/proc/set_ID(new_job) return
 =======
-=======
-
->>>>>>> parent of 3632a26... Merge branch 'master' into datum
 /mob/living/proc/set_ID(new_job)
 	return
 >>>>>>> 3632a266c9d2d04abbc9d3c53f29d9aacf260767

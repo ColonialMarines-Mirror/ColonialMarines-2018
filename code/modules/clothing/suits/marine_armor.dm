@@ -53,7 +53,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 
 /obj/item/clothing/suit/storage/marine
 	name = "\improper M3 pattern marine armor"
-	desc = "A standard Colonial Marines M3 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. It has a small leather pouch strapped to it for limited storage."
+	desc = "A standard M3 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. It has a small leather pouch strapped to it for limited storage."
 	icon = 'icons/obj/clothing/cm_suits.dmi'
 	icon_state = "1"
 	item_state = "armor"
@@ -89,6 +89,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		/obj/item/device/hailer,
 		/obj/item/device/healthanalyzer)
 
+
 	var/brightness_on = 5 //Average attachable pocket light
 	var/flashlight_cooldown = 0 //Cooldown for toggling the light
 	var/locate_cooldown = 0 //Cooldown for SL locator
@@ -107,7 +108,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		icon_state = "[armor_variation]"
 
 	select_gamemode_skin(expected_type,,new_name)
-	return ..()
+	..()
 	armor_overlays = list("lamp") //Just one for now, can add more later.
 	update_icon()
 	pockets.max_w_class = 2 //Can contain small items AND rifle magazines.
@@ -135,12 +136,12 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	if(flags_marine_armor & ARMOR_LAMP_ON && src.loc != user)
 		user.SetLuminosity(brightness_on)
 		SetLuminosity(0)
-	return ..()
+	..()
 
 /obj/item/clothing/suit/storage/marine/dropped(mob/user)
 	if(loc != user)
 		turn_off_light(user)
-	return ..()
+	..()
 
 /obj/item/clothing/suit/storage/marine/proc/turn_off_light(mob/wearer)
 	if(flags_marine_armor & ARMOR_LAMP_ON)

@@ -1662,42 +1662,6 @@
 			act.update_button_icon()
 
 
-// Carrier Spawn Hugger
-/mob/living/carbon/Xenomorph/Carrier/proc/Spawn_Hugger(var/mob/living/carbon/M)
-	if(stagger)
-		to_chat(src, "<span class='xenowarning'>You try to spawn a young one but are unable to shake off the shock!</span>")
-		return
-
-	if(used_spawn_facehugger)
-		to_chat(src, "<span class='xenowarning'>You're not yet ready to spawn another young one; you must wait [(last_spawn_facehugger + cooldown_spawn_facehugger - world.time) * 0.1] more seconds.</span>")
-		return
-
-	if(!check_plasma(CARRIER_SPAWN_HUGGER_COST))
-		return
-
-	if(huggers_cur >= huggers_max)
-		to_chat(src, "<span class='xenowarning'>You can't host any more young ones!</span>")
-		return
-
-	to_chat(src, "<span class='xenowarning'>You spawn a young one via the miracle of asexual internal reproduction, adding it to your stores.</span>")
-	playsound(src, 'sound/voice/alien_drool2.ogg', 50, 0, 1)
-	huggers_cur = min(huggers_max, huggers_cur + 1) //Add it to our cache
-	last_spawn_facehugger = world.time
-	used_spawn_facehugger = TRUE
-	use_plasma(CARRIER_SPAWN_HUGGER_COST)
-	hugger_spawn_cooldown()
-
-/mob/living/carbon/Xenomorph/Carrier/proc/hugger_spawn_cooldown()
-	if(!used_spawn_facehugger)//sanity check/safeguard
-		return
-	spawn(cooldown_spawn_facehugger)
-		used_spawn_facehugger = FALSE
-		to_chat(src, "<span class='xenowarning'><b>You can now spawn another young one.</b></span>")
-		playsound(src, 'sound/effects/xeno_newlarva.ogg', 50, 0, 1)
-		for(var/X in actions)
-			var/datum/action/act = X
-			act.update_button_icon()
-
 
 // Hunter Stealth
 /mob/living/carbon/Xenomorph/Hunter/proc/Stealth()

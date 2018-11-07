@@ -1213,6 +1213,7 @@
 	return !X.cresttoss_used
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 //Carrier abilities
 /datum/action/xeno_action/activable/stealth
@@ -1230,6 +1231,8 @@
 	return !X.used_spawn_facehugger
 
 >>>>>>> parent of 8f8b4f6... Hunter Rework: Stealthy Boi (#621)
+=======
+>>>>>>> parent of d7adcac... New Carrier Ability: Spawn Hugger (#631)
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/living/carbon/Xenomorph/proc/add_abilities()

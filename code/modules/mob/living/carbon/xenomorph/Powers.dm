@@ -1567,6 +1567,7 @@
 			var/datum/action/act = X
 			act.update_button_icon()
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
@@ -1606,3 +1607,5 @@
 			var/datum/action/act = X
 			act.update_button_icon()
 >>>>>>> parent of 8f8b4f6... Hunter Rework: Stealthy Boi (#621)
+=======
+>>>>>>> parent of d7adcac... New Carrier Ability: Spawn Hugger (#631)

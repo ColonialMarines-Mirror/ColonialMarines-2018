@@ -84,7 +84,6 @@
 	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].", 1)
 	return
 
-
 /mob/living/proc/set_ID(new_job)
 	return
 

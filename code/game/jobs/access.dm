@@ -1,27 +1,25 @@
 /obj/var/list/req_access = null
-/obj/var/list/req_one_access = null
-
-//Don't directly use these two, please. No: magic numbers, Yes: defines.
-/obj/var/req_one_access_txt = "0"
 /obj/var/req_access_txt = "0"
+/obj/var/list/req_one_access = null
+/obj/var/req_one_access_txt = "0"
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
-	if(check_access())
-		return TRUE
-	if(issilicon(M))
-		return TRUE //Silicons can access whatever they want
+	if(check_access()) return 1
+	if(istype(M, /mob/living/silicon)) return 1 //AI can do whatever he wants
 
-	var/obj/item/card/id/I = M.get_idcard() //if they are holding or wearing a card that has access, that works.
-	if(check_access(I))
-		return TRUE
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		//if they are holding or wearing a card that has access, that works
+		if(check_access(H.get_active_hand()) || check_access(H.wear_id)) return 1
+	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/Xenomorph))
+		var/mob/living/carbon/C = M
+		if(check_access(C.get_active_hand())) return 1
 
-/obj/item/proc/GetAccess()
-	return list()
+/obj/item/proc/GetAccess() return list()
 
-/obj/item/proc/GetID()
-	return
+/obj/item/proc/GetID() return
 
 /obj/proc/check_access(obj/item/I)
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
@@ -246,11 +244,12 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("C") . = size ? "" : "Civilian"
 		if("CD") . = size ? "Dr. " : "Doctor"
 		if("CCMO") . = size ? "Prof. " : "Professor"
-		if("PMC1") . = size ? "SCE " : "Security Expert"
-		if("PMC2S") . = size ? "SPS " : "Support Specialist"
-		if("PMC2M") . = size ? "SPM " : "Medical Specialist"
-		if("PMC3") . = size ? "ELR " : "Elite Responder"
-		if("PMC4") . = size ? "TML " : "Team Leader"
+		if("PMC1") . = size ? "PMC " : "PMC Standard"
+		if("PMC2") . = size ? "PMC " : "PMC Gunner"
+		if("PMC3") . = size ? "PMC " : "PMC Sniper"
+		if("PMC4") . = size ? "PMC " : "PMC Leader"
+		if("PMCDS") . = size ? "PMCDS " : "PMC Deathsquad"
+		if("PMCDSL") . = size ? "PMCDS " : "PMC Deathsquad Leader"
 		if("WY1") . = size ? (gender == "female" ? "Ms. " : "Mr. ") : "Junior Executive"
 		if("E1") . = size ? "PVT " : "Private"
 		if("E2") . = size ? "PFC " : "Private First Class"
@@ -274,6 +273,23 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("O8") . = size ? "FADM " : "Fleet Admiral"
 		if("O9") . = size ? "SMR " : "Sky Marshal"
 		if("WO") . = size ? "WO " : "Warrant Officer"
+		if("UPP1") . = size ? "UPVT " : "UPP Private"
+		if("UPP2") . = size ? "UPFC " : "UPP Private First Class"
+		if("UPP3") . = size ? "UCPL " : "UPP Corporal"
+		if("UPP4") . = size ? "ULCPL " : "UPP Lance Corporal"
+		if("UPP5") . = size ? "USGT " : "UPP Sergeant"
+		if("UPP6") . = size ? "USSGT " : "UPP Staff Sergeant"
+		if("UPP7") . = size ? "UENS " : "UPP Ensign"
+		if("UPP8") . = size ? "ULT " : "UPP Lieutenant"
+		if("UPP9") . = size ? "ULCDR " : "UPP Lieutenant Commander"
+		if("UPP10") . = size ? "UCDR " : "UPP Commander"
+		if("UPP11") . = size ? "UADM " : "UPP Admiral"
+		if("UPPC1") . = size ? "UPPC " : "UPP Commando Standard"
+		if("UPPC2") . = size ? "UPPC " : "UPP Commando Medic"
+		if("UPPC3") . = size ? "UPPC " : "UPP Commando Leader"
+		if("FRE1") . = size ? "FRE " : "Freelancer Standard"
+		if("FRE2") . = size ? "FRE " : "Freelancer Medic"
+		if("FRE3") . = size ? "FRE " : "Freelancer Leader"
 		else . = paygrade + " " //custom paygrade
 
 #define PAYGRADES_MARINE list("C","E1","E2","E3","E4","E5","E6","E6E","E7","E8","E8E","E9","E9E","O1","O2","O3","O4", "WO")

@@ -84,13 +84,8 @@
 	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].", 1)
 	return
 
-<<<<<<< HEAD
 
 /mob/living/proc/set_ID(new_job) return
-=======
-/mob/living/proc/set_ID(new_job)
-	return
->>>>>>> 3632a266c9d2d04abbc9d3c53f29d9aacf260767
 
 /mob/living/carbon/human/set_ID(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]

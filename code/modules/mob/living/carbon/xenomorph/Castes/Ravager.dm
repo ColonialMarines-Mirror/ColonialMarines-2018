@@ -38,7 +38,7 @@
 	var/second_wind_used = FALSE
 	var/second_wind_delay = null
 	var/last_rage = null
-	var/usedcharge = FALSE //What's the deal with the all caps?? They're not constants :|
+	var/usedcharge = FALSE
 
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,

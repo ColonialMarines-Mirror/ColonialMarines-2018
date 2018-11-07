@@ -213,11 +213,6 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return
 
-/obj/item/storage/fancy/cigar/remove_from_storage(obj/item/W as obj, atom/new_location)
-	var/obj/item/clothing/mask/cigarette/cigar/C = W
-	if(istype(C))
-		return ..()
-
 /obj/item/storage/fancy/cigar/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return

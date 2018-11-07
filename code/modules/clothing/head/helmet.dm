@@ -152,9 +152,6 @@
 	icon_state = "erthelmet_med"
 
 
-
-
-
 //===========================//MARINES HELMETS\\=================================
 
 /obj/item/clothing/head/helmet/marine
@@ -266,7 +263,6 @@
 		flags_marine_helmet |= HELMET_IS_DAMAGED
 		update_icon()
 		desc += "\n<b>This helmet seems to be scratched up and damaged, particularly around the face area...</b>"
-
 
 
 /obj/item/clothing/head/helmet/marine/tech
@@ -451,7 +447,6 @@
 
 /obj/item/clothing/head/helmet/UPP/heavy
 	name = "\improper UH7 helmet"
-	sprite_sheet_id = 1
 	icon_state = "upp_helmet_heavy"
 	armor = list(melee = 90, bullet = 85, laser = 60, energy = 65, bomb = 85, bio = 5, rad = 5)
 	unacidable = 1

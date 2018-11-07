@@ -87,7 +87,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 /mob/living/proc/set_ID(new_job) return
 =======
@@ -100,10 +99,6 @@
 /mob/living/proc/set_ID(new_job)
 	return
 >>>>>>> 3632a266c9d2d04abbc9d3c53f29d9aacf260767
-=======
-
-/mob/living/proc/set_ID(new_job) return
->>>>>>> parent of a9e5d0e... Merge branch 'datum' of https://github.com/DominikPanic/ColonialMarines-2018 into datum
 
 /mob/living/carbon/human/set_ID(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]

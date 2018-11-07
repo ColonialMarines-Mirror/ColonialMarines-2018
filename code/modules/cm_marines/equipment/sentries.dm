@@ -790,10 +790,14 @@
 		stop_processing()
 
 /obj/machinery/marine_turret/proc/update_health(var/damage) //Negative damage restores health.
-	health -= damage
-	if(on && damage && alerts_on && (world.time > (last_damage_alert + SENTRY_DAMAGE_ALERT_DELAY) || health <= 0) ) //Alert friendlies
-		sentry_alert(SENTRY_ALERT_DAMAGE)
-		last_damage_alert = world.time
+
+	health = CLAMP(health - damage, 0, health_max) //Sanity; health can't go below 0 or above max
+
+	if(damage > 0) //We don't report repairs.
+		if(on && alerts_on && (world.time > (last_damage_alert + SENTRY_DAMAGE_ALERT_DELAY) || health <= 0) ) //Alert friendlies
+			sentry_alert(SENTRY_ALERT_DAMAGE)
+			last_damage_alert = world.time
+
 	if(health <= 0 && stat != 2)
 		stat = 2
 		visible_message("\icon[src] <span class='warning'>The [name] starts spitting out sparks and smoke!")
@@ -808,8 +812,9 @@
 					cdel(src)
 		return
 
-	if(health > health_max)
+	if(health > health_max) //Sanity
 		health = health_max
+
 	if(!stat && damage > 0 && !immobile)
 		if(prob(10))
 			spark_system.start()

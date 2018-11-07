@@ -1,5 +1,3 @@
-
-
 //This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
 
@@ -20,45 +18,22 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
 	var/msg
-	var/list/type = list ("Mentorhelp", "Adminhelp", "Suggestion / Bug Report")
-	var/selected_type = input("Pick a category.", "Admin Help", null, null) as null|anything in type
-	switch(selected_type)
-		if("Mentorhelp")
-			msg = input("Please enter your message:", "Admin Help", null, null) as message|null
-		if("Adminhelp")
-			msg = input("Please enter your message:", "Admin Help", null, null) as message|null
-		if("Suggestion / Bug Report")
-			switch(alert("Adminhelps are not for suggestions or bug reports - issues should be posted on our GitHub or on our Discord in #coding, and suggestions on our Discord in #suggestions. If you want something done, feel free to code it yourself.",,"Go to GitHub","Go to Discord","Go to Forums","Cancel"))
-				if("Go to Discord")
-					if(config.chaturl)
-						src << link(config.chaturl)
-					else
-						to_chat(src, "<span class='warning'>The chat URL is not set in the server configuration.</span>")
-				if("Go to GitHub")
-					if(config.bugtrackerurl)
-						src << link(config.bugtrackerurl)
-					else
-						to_chat(src, "<span class='warning'>The bug tracker URL is not set in the server configuration.</span>")
-				if("Go to Forums")
-					if(config.forumurl)
-						src << link(config.forumurl)
-					else
-						to_chat(src, "<span class='warning'>The forum URL is not set in the server configuration.</span>")
+	msg = input("Please enter your message:", "Admin Help", null, null) as message|null
 
-			
-	var/selected_upper = uppertext(selected_type)
 
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 
 	//clean the input msg
-	if(!msg)	return
+	if(!msg)	
+		return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
+
+	if(!msg)	
+		return
+
 	var/original_msg = msg
-
-
 
 	//explode the input msg into a list
 	var/list/msglist = text2list(msg, " ")
@@ -116,56 +91,49 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	
 		return
 
-	var/mentor_msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
-	msg = "<br><br><font color='#009900'><b>[selected_upper]: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	var/mentor_msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0
+	var/mentor_number_afk = 0
 
 	var/list/mentorholders = list()
 	var/list/adminholders = list()
 	for(var/client/X in admins)
 		if((R_MENTOR & X.holder.rights) && !((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights))) // we don't want to count admins twice. This list should be JUST mentors
 			mentorholders += X
+			if(X.is_afk())
+				mentor_number_afk++
 		if((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights)) // just admins here please
 			adminholders += X
 			if(X.is_afk())
 				admin_number_afk++
 
-	switch(selected_type)
-		if("Mentorhelp")
-			if(mentorholders.len)
-				for(var/client/X in mentorholders) // Mentors get a reduced message
-					if(X.prefs.toggles_sound & SOUND_ADMINHELP)
-						X << 'sound/effects/adminhelp_new.ogg'
-					to_chat(X, mentor_msg)
-			if(adminholders.len)
-				for(var/client/X in adminholders) // Admins get the full monty
-					if(X.prefs.toggles_sound & SOUND_ADMINHELP)
-						X << 'sound/effects/adminhelp_new.ogg'
-					to_chat(X, msg)
-		if("Adminhelp")
-			if(adminholders.len && (admin_number_afk != adminholders.len))
-				for(var/client/X in adminholders) // Admins get the full monty
-					if(X.prefs.toggles_sound & SOUND_ADMINHELP)
-						X << 'sound/effects/adminhelp_new.ogg'
-					to_chat(X, msg)
-			else
-				if(mentorholders.len)
-					for(var/client/X in mentorholders) // Mentors get a reduced message
-						if(X.prefs.toggles_sound & SOUND_ADMINHELP)
-							X << 'sound/effects/adminhelp_new.ogg'
-						to_chat(X, mentor_msg)
+	if(adminholders.len && (admin_number_afk != adminholders.len))
+		for(var/client/X in adminholders) // Admins get the full monty
+			if(X.prefs.toggles_sound & SOUND_ADMINHELP)
+				X << 'sound/effects/adminhelp_new.ogg'
+			to_chat(X, msg)
+	else
+		if(mentorholders.len)
+			for(var/client/X in mentorholders) // Mentors get a reduced message
+				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
+					X << 'sound/effects/adminhelp_new.ogg'
+				to_chat(X, mentor_msg)
 
 	//show it to the person adminhelping too
-	to_chat(src, "<br><font color='#009900'><b>PM to Staff ([selected_type]): <font color='#DA6200'>[original_msg]</b></font><br>")
+	to_chat(src, "<br><font color='#009900'><b>Adminhelp to Staff: <font color='#DA6200'>[original_msg]</b></font><br>")
 
 	// Adminhelp cooldown
 	verbs -= /client/verb/adminhelp
 	spawn(1200)
 		verbs += /client/verb/adminhelp
 
-	var/admin_number_present = admins.len - admin_number_afk
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	var/admin_number_present = length(adminholders) - admin_number_afk
+	var/mentor_number_present = length(mentorholders) - mentor_number_afk
+	log_admin("ADMINHELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins and [mentor_number_present] non-AFK mentors.")
+
+	unansweredAhelps["[src.computer_id]"] = msg
 //	if(admin_number_present <= 0)
 //		if(!admin_number_afk)
 //			send2adminirc("[selected_upper] from [key_name(src)]: [html_decode(original_msg)] - !!No admins online!!")
@@ -174,20 +142,102 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 //	else
 //		send2adminirc("[selected_upper] from [key_name(src)]: [html_decode(original_msg)]")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-	switch(selected_type)
-		if("Mentorhelp")
-			unansweredMhelps["[src.computer_id]"] = mentor_msg
-		if("Adminhelp")
-			unansweredAhelps["[src.computer_id]"] = msg
-
 	return
+
+/client/verb/mentorhelp()
+	set category = "Admin"
+	set name = "Mentorhelp"
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "\red Speech is currently admin-disabled.")
+		return
+
+	//handle muting and automuting
+	if(prefs.muted & MUTE_ADMINHELP)
+		to_chat(src, "<font color='red'>Error: You cannot send mentorhelps. (Muted)</font>")
+		return
+
+	mentorhelped = 1 //Determines if they get the message to reply by clicking the name.
+
+	var/msg = input("Please enter your message:", "Mentor Help", null, null) as message|null
+
+	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+		return
+
+	//clean the input msg
+	if(!msg)	
+		return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	
+	if(!msg)	
+		return
+
+	var/original_msg = msg
+
+	if(!mob)	
+		return
+
+	var/mentor_msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+
+	var/admin_number_afk = 0
+	var/mentor_number_afk = 0
+
+	var/list/mentorholders = list()
+	var/list/adminholders = list()
+	for(var/client/X in admins)
+		if((R_MENTOR & X.holder.rights) && !((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights))) // we don't want to count admins twice. This list should be JUST mentors
+			mentorholders += X
+			if(X.is_afk())
+				mentor_number_afk++
+		if((R_ADMIN & X.holder.rights) || (R_MOD & X.holder.rights)) // just admins here please
+			adminholders += X
+			if(X.is_afk())
+				admin_number_afk++
+
+	if(mentorholders.len)
+		for(var/client/X in mentorholders) // Mentors get a reduced message
+			if(X.prefs.toggles_sound & SOUND_ADMINHELP)
+				X << 'sound/effects/adminhelp_new.ogg'
+			to_chat(X, mentor_msg)
+
+	if(adminholders.len)
+		for(var/client/X in adminholders) // Admins get the full monty
+			if(X.prefs.toggles_sound & SOUND_ADMINHELP)
+				X << 'sound/effects/adminhelp_new.ogg'
+			to_chat(X, msg)
+
+	//show it to the person mentorhelping too
+	to_chat(src, "<br><font color='#009900'><b>Mentorhelp to Staff: <font color='#DA6200'>[original_msg]</b></font><br>")
+
+	//Mentorhelp cooldown
+	verbs -= /client/verb/mentorhelp
+	spawn(600)
+		verbs += /client/verb/mentorhelp
+
+	var/admin_number_present = length(adminholders) - admin_number_afk
+	var/mentor_number_present = length(mentorholders) - mentor_number_afk
+	log_admin("MENTORHELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins and [mentor_number_present] non-AFK mentors.")
+	unansweredMhelps["[src.computer_id]"] = mentor_msg
+//	if(admin_number_present <= 0)
+//		if(!admin_number_afk)
+//			send2adminirc("[selected_upper] from [key_name(src)]: [html_decode(original_msg)] - !!No admins online!!")
+//		else
+//			send2adminirc("[selected_upper] from [key_name(src)]: [html_decode(original_msg)] - !!All admins AFK ([admin_number_afk])!!")
+//	else
+//		send2adminirc("[selected_upper] from [key_name(src)]: [html_decode(original_msg)]")
+	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+
 
 /proc/get_options_bar(whom, detail = 2, name = 0, link = 1, highlight_special = 1)
 	if(!whom)
 		return "<b>(*null*)</b>"
+
 	var/mob/M
 	var/client/C
+
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob

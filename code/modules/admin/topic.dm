@@ -80,7 +80,8 @@
 		var/task = href_list["editrights"]
 		if(task == "add")
 			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
-			if(!new_ckey)	return
+			if(!new_ckey)	
+				return
 			if(new_ckey in admin_datums)
 				to_chat(usr, "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>")
 				return
@@ -2470,7 +2471,29 @@
 		player_notes_copy(key)
 		return
 
-	if(href_list["mark"])
+	if(href_list["mmark"])
+		var/mob/ref_person = locate(href_list["mark"])
+		if(!istype(ref_person))
+			to_chat(usr, "\blue Looks like that person stopped existing!")
+			return
+		if(ref_person && ref_person.adminhelp_marked)
+			to_chat(usr, "<b>This Pray/Mentorhelp/Adminhelp is already being handled.</b>")
+			usr << sound('sound/effects/adminhelp-error.ogg')
+			return
+
+		message_staff("[usr.key] has used 'Mark' on the Mentorhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
+		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has marked your request and is preparing to respond...</b>"
+
+		to_chat(ref_person, msgplayer)
+
+		unansweredMhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
+		viewUnheardMhelps() //This SHOULD refresh the page
+
+		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
+		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
+			if(ref_person)	ref_person.adminhelp_marked = 0
+
+	if(href_list["amark"])
 		var/mob/ref_person = locate(href_list["mark"])
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")

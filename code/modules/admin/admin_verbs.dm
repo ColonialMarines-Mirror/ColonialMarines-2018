@@ -18,7 +18,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/client/proc/getserverlogs,		/*for accessing server logs*/
 	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
-	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
@@ -233,7 +233,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/remove_players_from_vic
 	)
 var/list/admin_verbs_mod = list(
-	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
 	/client/proc/toggledebuglogs,
@@ -267,19 +267,14 @@ var/list/admin_verbs_mod = list(
 )
 
 var/list/admin_verbs_mentor = list(
-	/client/proc/cmd_admin_pm_context,
-	/client/proc/cmd_admin_pm_panel,
-	/datum/admins/proc/player_notes_list,
-	/datum/admins/proc/player_notes_show,
+	/client/proc/cmd_pm_context,
+	/client/proc/cmd_mentor_pm_panel,
 	/client/proc/admin_ghost,
 	/client/proc/cmd_mod_say,
-	/client/proc/dsay,
-	/datum/admins/proc/togglesleep,
 	/client/proc/cmd_admin_subtle_message,
 	/datum/admins/proc/viewUnheardMhelps,
 	/datum/admins/proc/viewUnheardAhelps,
-	/datum/admins/proc/viewCLFaxes,
-	/datum/admins/proc/viewUSCMFaxes
+	/datum/admins/proc/viewCLFaxes
 )
 
 /client/proc/add_admin_verbs()

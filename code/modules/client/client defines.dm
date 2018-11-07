@@ -5,6 +5,9 @@
 	var/datum/admins/holder = null
 	var/buildmode		= 0
 
+	var/adminhelp_marked = 0
+	var/mentorhelp_marked = 0 
+
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 		/////////
@@ -20,6 +23,7 @@
 
 	var/donator = 0
 	var/adminhelped = 0
+	var/mentorhelped = 0
 
 	var/obj/screen/click_catcher/void
 

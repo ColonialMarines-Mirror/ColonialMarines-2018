@@ -456,6 +456,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tacklemax = 5
 					tackle_damage = 40 // Prior was 30
 					pounce_delay = 30
+				if("Hunter")
 					to_chat(src, "<span class='xenoannounce'>You are the epitome of the hunter. Few can stand against you in open combat.</span>")
 					melee_damage_lower = 40
 					melee_damage_upper = 50

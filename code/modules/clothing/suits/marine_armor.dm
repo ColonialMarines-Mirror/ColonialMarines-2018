@@ -136,12 +136,12 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	if(flags_marine_armor & ARMOR_LAMP_ON && src.loc != user)
 		user.SetLuminosity(brightness_on)
 		SetLuminosity(0)
-	..()
+	. = ..()
 
 /obj/item/clothing/suit/storage/marine/dropped(mob/user)
 	if(loc != user)
 		turn_off_light(user)
-	..()
+	. = ..()
 
 /obj/item/clothing/suit/storage/marine/proc/turn_off_light(mob/wearer)
 	if(flags_marine_armor & ARMOR_LAMP_ON)
@@ -259,7 +259,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	var/injections = 4
 	unacidable = TRUE
 
-	New(loc,expected_type 	= type,
+/obj/item/clothing/suit/storage/marine/specialist/New(loc,expected_type 	= type,
 		new_name[] 		= list(MAP_ICE_COLONY = "\improper B18 defensive snow armor"))
 		..(loc,expected_type,new_name)
 
@@ -293,7 +293,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 65, bullet = 50, laser = 40, energy = 25, bomb = 50, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 
-	New()
+/obj/item/clothing/suit/storage/marine/M3T/New()
 		select_gamemode_skin(type)
 		return ..()
 
@@ -304,7 +304,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 65, bullet = 80, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 
-	New()
+/obj/item/clothing/suit/storage/marine/M3S/New()
 		select_gamemode_skin(type)
 		return ..()
 
@@ -318,7 +318,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|FEET
 
-	New()
+/obj/item/clothing/suit/storage/marine/M35/New()
 		select_gamemode_skin(type)
 		return ..()
 
@@ -329,7 +329,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 65, bullet = 70, laser = 40, energy = 25, bomb = 30, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 
-	New(loc,expected_type 	= type,
+/obj/item/clothing/suit/storage/marine/sniper/New(loc,expected_type 	= type,
 		new_name[] 		= list(MAP_ICE_COLONY = "\improper M3 pattern sniper snow armor"))
 		..(loc,expected_type,,new_name)
 
@@ -337,12 +337,12 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	name = "\improper M3 pattern marksman armor"
 	icon_state = "marine_sniperm"
 
-	New(loc,expected_type 	= type,
+/obj/item/clothing/suit/storage/marine/sniper/jungle/New(loc,expected_type 	= type,
 		new_name[] 		= list(MAP_ICE_COLONY = "\improper M3 pattern marksman snow armor"))
 		..(loc,expected_type,,new_name)
 
 
-//=============================//MP & OFFICER\\==================================
+//=============================MP & OFFICER==================================
 
 /obj/item/clothing/suit/storage/marine/MP
 	name = "\improper M2 pattern MP armor"
@@ -373,7 +373,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	select_gamemode_skin(/obj/item/clothing/suit/storage/marine/MP/RO)
 	return ..()
 
-//=============================//PMCS\\==================================
+//=============================PMCS==================================
 
 /obj/item/clothing/suit/storage/marine/veteran
 	flags_marine_armor = ARMOR_LAMP_OVERLAY
@@ -413,7 +413,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 90, bullet = 120, laser = 100, energy = 90, bomb = 90, bio = 100, rad = 100)
 	unacidable = TRUE
 
-//===========================//DISTRESS\\================================
+//===========================DISTRESS================================
 
 /obj/item/clothing/suit/storage/marine/veteran/bear
 	name = "\improper H1 Iron Bears vest"
@@ -431,9 +431,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 70, bullet = 85, laser = 55,energy = 65, bomb = 70, bio = 10, rad = 10)
 	slowdown = SLOWDOWN_ARMOR_VERY_LIGHT
 
-
-//===========================//UPP\\================================
-
+//===========================UPP================================
 
 /obj/item/clothing/suit/storage/marine/UPP
 	name = "\improper UM5 personal armor"
@@ -498,8 +496,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_min_cold_protection_temperature
 
-
-//===========================//HELGHAST - MERCENARY\\================================
+//===========================HELGHAST - MERCENARY================================
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary
 	name = "\improper K12 ceramic plated armor"
@@ -508,13 +505,11 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	armor = list(melee = 75, bullet = 62, laser = 42, energy = 38, bomb = 40, bio = 15, rad = 15)
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 
-
 /obj/item/clothing/suit/storage/marine/veteran/mercenary/miner
 	name = "\improper Y8 armored miner vest"
 	desc = "A set of beige, light armor built for protection while mining. It is a specialized uniform of a unknown mercenary group"
 	icon_state = "mercenary_miner_armor"
 	armor = list(melee = 50, bullet = 42, laser = 42, energy = 38, bomb = 25, bio = 15, rad = 15)
-
 
 /obj/item/clothing/suit/storage/marine/veteran/mercenary/engineer
 	name = "\improper Z7 armored engineer vest"

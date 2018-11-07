@@ -100,7 +100,6 @@
 			var/log = "slashed"
 			//Check for a special bite attack
 			if(prob(M.bite_chance) && !M.critical_proc && !no_crit && !M.stealth_router(HANDLE_STEALTH_CHECK)) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
-			if(prob(M.bite_chance)  && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				damage *= 1.5
 				attack_sound = "alien_bite"
 				attack_message1 = "<span class='danger'>\The [M] is viciously shredded by \the [src]'s sharp teeth!</span>"
@@ -112,7 +111,6 @@
 
 			//Check for a special bite attack
 			if(prob(M.bite_chance) && !M.critical_proc && !no_crit && !M.stealth_router(HANDLE_STEALTH_CHECK)) //Can't crit if we already crit in the past 3 seconds; stealthed ironically can't crit because weeoo das a lotta damage
-			if(prob(M.tail_chance) && !M.critical_proc && !no_crit) //Can't crit if we already crit in the past 3 seconds
 				damage *= 1.25
 				attack_flick = "tail"
 				attack_sound = 'sound/weapons/alien_tail_attack.ogg'
@@ -241,13 +239,12 @@
 
 	return TRUE
 
-
 /mob/living/carbon/Xenomorph/proc/process_rage_attack()
-	if(!istype(src,/mob/living/carbon/Xenomorph/Ravager))
-		return
-	var/mob/living/carbon/Xenomorph/Ravager/R = src
-	R.rage += 5 //Gain 5 rage stacks for the attack.
-	R.last_rage = world.time //We incremented rage, so bookmark this.
+	return FALSE
+
+/mob/living/carbon/Xenomorph/Ravager/process_rage_attack()
+	rage += 5 //Gain 5 rage stacks for the attack.
+	last_rage = world.time //We incremented rage, so bookmark this.
 
 
 //Every other type of nonhuman mob

@@ -124,12 +124,14 @@
 	fireloss = CLAMP(fireloss + amount, 0, maxHealth - crit_health)
 
 /mob/living/carbon/Xenomorph/proc/process_rage_damage(damage)
-	if(!damage || !istype(src,/mob/living/carbon/Xenomorph/Ravager))
+	return damage
+
+/mob/living/carbon/Xenomorph/Ravager/process_rage_damage(damage)
+	if(!damage)
 		return damage
-	var/mob/living/carbon/Xenomorph/Ravager/R = src
-	R.rage += round(damage * 0.3) //Gain Rage stacks equal to 30% of damage received.
-	R.last_rage = world.time //We incremented rage, so bookmark this.
-	damage *= R.rage_resist //reduce damage by rage resist %
+	rage += round(damage * 0.3) //Gain Rage stacks equal to 30% of damage received.
+	last_rage = world.time //We incremented rage, so bookmark this.
+	damage *= rage_resist //reduce damage by rage resist %
 	return damage
 
 /mob/living/carbon/Xenomorph/proc/check_blood_splash(damage = 0, damtype = BRUTE, chancemod = 0, radius = 1)

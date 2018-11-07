@@ -311,21 +311,6 @@
 	process_ravager_charge(FALSE)
 	return ..() //Do the parent otherwise, for turfs.
 
-/mob/living/carbon/Xenomorph/proc/process_ravager_charge(hit = TRUE, mob/living/carbon/M = null)
-	if(!istype(src,/mob/living/carbon/Xenomorph/Ravager))
-		return
-	var/mob/living/carbon/Xenomorph/Ravager/R = src
-	if(hit)
-		var/extra_dam = rand(melee_damage_lower, melee_damage_upper) * (1 + round(R.rage * 0.04) ) //+4% bonus damage per point of Rage.relative to base melee damage.
-		M.attack_alien(src,  extra_dam, FALSE, TRUE, FALSE, TRUE, "hurt") //Location is always random, cannot crit, harm only
-		var/target_turf = get_step_away(src,M,rand(1,3)) //This is where we blast our target
-		target_turf =  get_step_rand(target_turf) //Scatter
-		throw_at(get_turf(target_turf), RAV_CHARGEDISTANCE, RAV_CHARGESPEED, M)
-		M.KnockDown(1)
-		R.rage = 0
-	else
-		R.rage *= 0.5 //Halve rage instead of 0ing it out if we miss.
-
 //Bleuugh
 /mob/living/carbon/Xenomorph/proc/empty_gut()
 	if(stomach_contents.len)
@@ -557,3 +542,18 @@
 				return TRUE
 			else
 				return FALSE
+
+/mob/living/carbon/Xenomorph/proc/process_ravager_charge(hit = TRUE, mob/living/carbon/M = null)
+	return FALSE
+
+/mob/living/carbon/Xenomorph/Ravager/process_ravager_charge(hit = TRUE, mob/living/carbon/M = null)
+	if(hit)
+		var/extra_dam = rand(melee_damage_lower, melee_damage_upper) * (1 + round(rage * 0.04) ) //+4% bonus damage per point of Rage.relative to base melee damage.
+		M.attack_alien(src,  extra_dam, FALSE, TRUE, FALSE, TRUE, "hurt") //Location is always random, cannot crit, harm only
+		var/target_turf = get_step_away(src,M,rand(1,3)) //This is where we blast our target
+		target_turf =  get_step_rand(target_turf) //Scatter
+		throw_at(get_turf(target_turf), RAV_CHARGEDISTANCE, RAV_CHARGESPEED, M)
+		M.KnockDown(1)
+		rage = 0
+	else
+		rage *= 0.5 //Halve rage instead of 0ing it out if we miss.

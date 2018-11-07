@@ -7,7 +7,9 @@
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)	return
+
+	if(!msg)	
+		return
 
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_PRAY)
@@ -22,12 +24,12 @@
 			liaison = 1
 
 	if(liaison)
-		msg = "\blue <b><font color=purple>LIAISON PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;ccmark=\ref[src]'>Mark</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[src]'>FLW</a>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
+		msg = "\blue <b><font color=purple>LIAISON PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;pmark=\ref[src]'>Mark</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[src]'>FLW</a>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
 	else
-		msg = "\blue <b><font color=purple>PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;mark=\ref[src]'>Mark</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[src]'>FLW</a>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
+		msg = "\blue <b><font color=purple>PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;pmark=\ref[src]'>Mark</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[src]'>FLW</a>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
 
 	for(var/client/C in admins)
-		if(C.prefs.toggles_chat & CHAT_PRAYER)
+		if((C.prefs.toggles_chat & CHAT_PRAYER) && ((R_ADMIN|R_MOD) & C.holder.rights))
 			to_chat(C, msg)
 	if(liaison)
 		to_chat(usr, "Your corporate overlords at Weyland-Yutani have received your message.")
@@ -49,5 +51,6 @@
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;mark=\ref[Sender]'>Mark</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[Sender]'>FLW</a>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
 	for(var/client/C in admins)
-		if(R_ADMIN & C.holder.rights)
+		if((R_ADMIN|R_MOD) & C.holder.rights)
 			to_chat(C, msg)
+			C << 'sound/effects/sos-morse-code.ogg'

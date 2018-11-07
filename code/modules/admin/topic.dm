@@ -2476,8 +2476,8 @@
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
-		if(ref_person && ref_person.adminhelp_marked)
-			to_chat(usr, "<b>This Pray/Mentorhelp/Adminhelp is already being handled.</b>")
+		if(ref_person && ref_person.client.mentorhelp_marked)
+			to_chat(usr, "<b>This Mentorhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
 
@@ -2489,40 +2489,38 @@
 		unansweredMhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
 		viewUnheardMhelps() //This SHOULD refresh the page
 
-		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
-		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
-			if(ref_person)	ref_person.adminhelp_marked = 0
+		ref_person.client.mentorhelp_marked = 1 //Timer to prevent multiple clicks
+		spawn(600) //This should be <= the Adminhelp cooldown in adminhelp.dm
+			if(ref_person)	ref_person.client.mentorhelp_marked = 0
 
 	if(href_list["amark"])
-		var/mob/ref_person = locate(href_list["mark"])
+		var/mob/ref_person = locate(href_list["amark"])
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
-		if(ref_person && ref_person.adminhelp_marked)
-			to_chat(usr, "<b>This Pray/Mentorhelp/Adminhelp is already being handled.</b>")
+		if(ref_person && ref_person.client.adminhelp_marked)
+			to_chat(usr, "<b>This Adminhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
 
-		message_staff("[usr.key] has used 'Mark' on the Pray/Mentorhelp/Adminhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
+		message_admins("[usr.key] has used 'Mark' on the Adminhelp from [key_name_admin(ref_person)] and is preparing to respond...", 1)
 		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has marked your request and is preparing to respond...</b>"
 
 		to_chat(ref_person, msgplayer)
 
-		unansweredMhelps.Remove(ref_person.computer_id)
 		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
-		viewUnheardMhelps() //This SHOULD refresh the page
-		viewUnheardAhelps()
+		viewUnheardAhelps()//This SHOULD refresh the page
 
-		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
-		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
-			if(ref_person)	ref_person.adminhelp_marked = 0
+		ref_person.client.adminhelp_marked = 1 //Timer to prevent multiple clicks
+		spawn(1200) //This should be <= the Adminhelp cooldown in adminhelp.dm
+			if(ref_person)	ref_person.client.adminhelp_marked = 0
 
 	if(href_list["noresponse"])
 		var/mob/ref_person = locate(href_list["noresponse"])
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
-		if(ref_person && ref_person.adminhelp_marked)
+		if(ref_person && ref_person.client.adminhelp_marked)
 			to_chat(usr, "<b>This Pray/Mentorhelp/Adminhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
@@ -2538,16 +2536,16 @@
 		viewUnheardMhelps() //This SHOULD refresh the page
 		viewUnheardAhelps()
 
-		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
+		ref_person.client.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
-			if(ref_person)	ref_person.adminhelp_marked = 0
+			if(ref_person)	ref_person.client.adminhelp_marked = 0
 
 	if(href_list["warning"])
 		var/mob/ref_person = locate(href_list["warning"])
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
-		if(ref_person && ref_person.adminhelp_marked)
+		if(ref_person && ref_person.client.adminhelp_marked)
 			to_chat(usr, "<b>This Pray/Mentorhelp/Adminhelp is already being handled.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			return
@@ -2564,16 +2562,16 @@
 		src.viewUnheardMhelps() //This SHOULD refresh the page
 		src.viewUnheardAhelps()
 
-		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
+		ref_person.client.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
-			if(ref_person)	ref_person.adminhelp_marked = 0
+			if(ref_person)	ref_person.client.adminhelp_marked = 0
 
 	if(href_list["autoresponse"]) // new verb on the Ahelp.  Will tell the person their message was received, and they probably won't get a response
 		var/mob/ref_person = locate(href_list["autoresponse"])
 		if(!istype(ref_person))
 			to_chat(usr, "\blue Looks like that person stopped existing!")
 			return
-		if(ref_person && ref_person.adminhelp_marked)
+		if(ref_person && ref_person.client.adminhelp_marked)
 			to_chat(usr, "<b>This Mentorhelp/Adminhelp is already being handled, but continue if you wish.</b>")
 			usr << sound('sound/effects/adminhelp-error.ogg')
 			if(alert(usr, "Are you sure you want to autoreply to this marked Mentorhelp/Adminhelp?", "Confirmation", "Yes", "No") != "Yes")
@@ -2623,9 +2621,9 @@
 		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
 		src.viewUnheardAhelps() //This SHOULD refresh the page
 
-		ref_person.adminhelp_marked = 1 //Timer to prevent multiple clicks
+		ref_person.client.adminhelp_marked = 1 //Timer to prevent multiple clicks
 		spawn(1000) //This should be <= the Adminhelp cooldown in adminhelp.dm
-			if(ref_person)	ref_person.adminhelp_marked = 0
+			if(ref_person)	ref_person.client.adminhelp_marked = 0
 
 
 	if(href_list["ccmark"]) // CentComm-mark. We want to let all Admins know that something is "Marked", but not let the player know because it's not very RP-friendly.

@@ -161,13 +161,13 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 	var/msg = input("Please enter your message:", "Mentor Help", null, null) as message|null
 
-	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(src.handle_spam_prevention(msg, MUTE_ADMINHELP))
 		return
 
 	//clean the input msg
 	if(!msg)	
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 	
 	if(!msg)	
 		return
@@ -177,7 +177,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	
 		return
 
-	var/mentor_msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	var/mentor_msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 4, 0, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 	msg = "<br><br><font color='#009900'><b>MENTORHELP: [get_options_bar(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0

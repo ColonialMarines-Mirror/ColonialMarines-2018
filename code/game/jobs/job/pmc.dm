@@ -15,6 +15,7 @@
 	title = "PMC Standard"
 	paygrade = "PMC1"
 	skills_type = /datum/skills/pfc/pmc
+	equipment = TRUE
 
 /datum/job/pmc/standard/generate_equipment(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/distress/PMC(H), WEAR_EAR)

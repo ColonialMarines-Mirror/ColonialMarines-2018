@@ -443,7 +443,7 @@ datum/mind
 /mob/living/proc/reset_special_role(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]
 	if(new_job)
-		mind.role_alt_title = J.special_role
+		mind.special_role = J.special_role
 
 /mob/living/proc/reset_role(new_job)
 	var/datum/job/J = RoleAuthority.roles_by_name[new_job]

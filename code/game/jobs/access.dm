@@ -181,37 +181,47 @@
 	return all_jobs_titles
 
 
-/proc/get_all_centcom_jobs() return list()
+/proc/get_all_centcom_jobs() 
+	return list()
 
 
 //gets the actual job rank (ignoring alt titles)
 //this is used solely for sechuds
 /obj/proc/GetJobRealName()
-	if (!istype(src,/obj/item/card/id)) return
+	if (!istype(src,/obj/item/card/id)) 
+		return
 	var/obj/item/card/id/I = src
-	if(I.rank in joblist) return I.rank
-	if(I.assignment in joblist) return I.assignment
+	if(I.rank in joblist) 
+		return I.rank
+	if(I.assignment in joblist) 
+		return I.assignment
 	return "Unknown"
 
 proc/FindNameFromID(mob/living/carbon/human/H)
 	ASSERT(istype(H))
 	var/obj/item/card/id/I = H.wear_id
-	if(istype(I)) return I.registered_name
+	if(istype(I)) 
+		return I.registered_name
 	I = H.get_active_hand()
-	if(istype(I)) return I.registered_name
+	if(istype(I)) 
+		return I.registered_name
 
-proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD icons
+proc/get_all_job_icons() 
+	return joblist + list("Prisoner")//For all existing HUD icons
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/card/id/I = src
 	if(istype(I))
 		var/job_icons = get_all_job_icons()
 		var/centcom = get_all_centcom_jobs()
-
-		if(I.assignment	in job_icons) 	return I.assignment//Check if the job has a hud icon
-		if(I.rank in job_icons) 		return I.rank
-		if(I.assignment	in centcom) 	return "Centcom"//Return with the NT logo if it is a Centcom job
-		if(I.rank in centcom) 			return "Centcom"
+		if(I.assignment	in job_icons) 	
+			return I.assignment//Check if the job has a hud icon
+		if(I.rank in job_icons) 		
+			return I.rank
+		if(I.assignment	in centcom) 	
+			return "Centcom"//Return with the NT logo if it is a Centcom job
+		if(I.rank in centcom) 			
+			return "Centcom"
 	return "Unknown" //Return unknown if none of the above apply
 
 
@@ -241,7 +251,8 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 				)
 
 /proc/get_paygrades(paygrade, size, gender)
-	if(!paygrade) return
+	if(!paygrade) 
+		return
 	switch(paygrade)
 		if("C") . = size ? "" : "Civilian"
 		if("CD") . = size ? "Dr. " : "Doctor"
@@ -297,3 +308,12 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 #define PAYGRADES_MARINE list("C","E1","E2","E3","E4","E5","E6","E6E","E7","E8","E8E","E9","E9E","O1","O2","O3","O4", "WO")
 #define PAYGRADES_OFFICER list("O1","O2","O3","O4", "WO")
 #define PAYGRADES_ENLISTED list("C","E1","E2","E3","E4","E5","E6","E7","E8","E9")
+
+//Just marines
+#define ALL_MARINE_ACCESS list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG, ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_MEDBAY, ACCESS_MARINE_PREP, ACCESS_MARINE_MEDPREP, ACCESS_MARINE_ENGPREP,ACCESS_MARINE_SMARTPREP, ACCESS_MARINE_LEADER, ACCESS_MARINE_SPECPREP, ACCESS_MARINE_ALPHA, ACCESS_MARINE_BRAVO, ACCESS_MARINE_CHARLIE, ACCESS_MARINE_DELTA, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_CARGO, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_PILOT, ACCESS_MARINE_TANK)
+
+//Literally everything
+#define ALL_ACCESS list(ACCESS_IFF_MARINE, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG, ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_MEDBAY, ACCESS_MARINE_PREP, ACCESS_MARINE_MEDPREP, ACCESS_MARINE_ENGPREP,ACCESS_MARINE_SMARTPREP, ACCESS_MARINE_LEADER, ACCESS_MARINE_SPECPREP, ACCESS_MARINE_ALPHA, ACCESS_MARINE_BRAVO, ACCESS_MARINE_CHARLIE, ACCESS_MARINE_DELTA, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_CARGO, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_PILOT, ACCESS_MARINE_TANK, ACCESS_CIVILIAN_PUBLIC, ACCESS_CIVILIAN_RESEARCH, ACCESS_CIVILIAN_ENGINEERING, ACCESS_CIVILIAN_LOGISTICS, ACCESS_WY_PMC_GREEN, ACCESS_WY_PMC_ORANGE, ACCESS_WY_PMC_RED, ACCESS_WY_PMC_BLACK, ACCESS_WY_PMC_WHITE, ACCESS_WY_CORPORATE, ACCESS_ILLEGAL_PIRATE, ACCESS_IFF_PMC)
+
+//Removes PMC and Marine IFF
+#define ALL_ANTAGONIST_ACCESS list(ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_BRIG, ACCESS_MARINE_ARMORY, ACCESS_MARINE_WO, ACCESS_MARINE_CMO, ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_MEDBAY, ACCESS_MARINE_PREP, ACCESS_MARINE_MEDPREP, ACCESS_MARINE_ENGPREP,ACCESS_MARINE_SMARTPREP, ACCESS_MARINE_LEADER, ACCESS_MARINE_SPECPREP, ACCESS_MARINE_ALPHA, ACCESS_MARINE_BRAVO, ACCESS_MARINE_CHARLIE, ACCESS_MARINE_DELTA, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_CARGO, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_PILOT, ACCESS_MARINE_TANK, ACCESS_CIVILIAN_PUBLIC, ACCESS_CIVILIAN_RESEARCH, ACCESS_CIVILIAN_ENGINEERING, ACCESS_CIVILIAN_LOGISTICS, ACCESS_WY_PMC_GREEN, ACCESS_WY_PMC_ORANGE, ACCESS_WY_PMC_RED, ACCESS_WY_PMC_BLACK, ACCESS_WY_PMC_WHITE, ACCESS_WY_CORPORATE, ACCESS_ILLEGAL_PIRATE)

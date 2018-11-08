@@ -126,28 +126,25 @@
 	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 
 	//put the player's account number onto the ID
-	if(H.mind && H.mind.initial_account) 
+	if(H.mind?.initial_account) 
 		C.associated_account_number = H.mind.initial_account.account_number
 	H.equip_to_slot_or_del(C, WEAR_ID)
-	return 1
+	return TRUE
 
 /datum/job/proc/get_access()
-	if(!config)							
+	if(!config || config.jobs_have_minimal_access)							
 		return minimal_access.Copy() //Need to copy, because we want a new list here. Not the datum's list.
-	if(config.jobs_have_minimal_access) 
-		return minimal_access.Copy()
-	return 
-		access.Copy()
-
+	return access.Copy() 
+		
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0) 
-		return 1	//If available in 0 days, the player is old enough to play. Can be compared to null, but I think this is clearer.
+		return TRUE	//If available in 0 days, the player is old enough to play. Can be compared to null, but I think this is clearer.
 
 /datum/job/proc/available_in_days(client/C)
 	//Checking the player's age is only possible through a db connection, so if there isn't one, player age will be a text string instead.
 	if(!istype(C) || !config.use_age_restriction_for_jobs || !isnum(C.player_age) || !isnum(minimal_player_age)) 
-		return 0 //One of the few times when returning 0 is the proper behavior.
+		return FALSE //One of the few times when returning 0 is the proper behavior.
 	return max(0, minimal_player_age - C.player_age)
 
 //This lets you scale max jobs at runtime

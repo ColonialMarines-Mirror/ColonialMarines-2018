@@ -26,7 +26,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	equipment = TRUE
 
 	generate_entry_message()
-		. = {"As the commander of the USS Almayer you are held by higher standard and are expected to act competently.
+		return {"As the commander of the USS Almayer you are held by higher standard and are expected to act competently.
 While you may support Weyland-Yutani, you report to the USCM High Command, not the corporate office.
 Your primary task is the safety of the ship and her crew, and ensuring the survival and success of the marines.
 Your first order of business should be briefing the marines on the mission they are about to undertake.
@@ -34,9 +34,10 @@ If you require any help, use adminhelp to ask mentors about what you're supposed
 Godspeed, commander! And remember, you are not above the law."}
 
 	announce_entry_message(mob/living/carbon/human/H)
-		..()
+		. = ..()
 		sleep(15)
-		if(H && H.loc && flags_startup_parameters & ROLE_ADD_TO_MODE) captain_announcement.Announce("All hands, Commander [H.real_name] on deck!")
+		if(H?.loc && flags_startup_parameters & ROLE_ADD_TO_MODE) 
+			captain_announcement.Announce("All hands, Commander [H.real_name] on deck!")
 
 	get_access() 
 		return get_all_marine_access()

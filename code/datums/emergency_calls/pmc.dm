@@ -21,9 +21,13 @@
 	var/mob/living/carbon/human/mob = new /mob/living/carbon/human(spawn_loc)
 	
 	if(mob.gender == MALE)
-		mob.real_name = "[pick(first_names_male_pmc)] [pick(last_names_pmc)]"
+		mob.name = pick(first_names_male_pmc) + " " + pick(last_names_pmc)
+		mob.real_name = name
+		mob.voice_name = name
 	else
-		mob.real_name = "[pick(first_names_female_pmc)] [pick(last_names_pmc)]"
+		mob.name = pick(first_names_female_pmc) + " " + pick(last_names_pmc)
+		mob.real_name = name
+		mob.voice_name = name
 
 	mob.key = M.key
 	mob.client?.change_view(world.view)

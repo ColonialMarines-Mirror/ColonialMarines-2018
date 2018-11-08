@@ -1,6 +1,4 @@
-
-
-//Blank colonist ERT for admin stuff.
+//Colonist ERT for admin stuff.
 /datum/emergency_call/colonist
 	name = "Colonists"
 	arrival_message = "Incoming Transmission: 'This is the *static*. We are *static*.'"
@@ -9,32 +7,22 @@
 
 
 /datum/emergency_call/colonist/create_member(datum/mind/M) //Blank ERT with only basic items.
-	var/turf/T = get_spawn_point()
+	var/turf/spawn_loc = get_spawn_point()
 	var/mob/original = M.current
 
-	if(!istype(T)) return FALSE
+	if(!istype(spawn_loc)) 
+		return //Didn't find a useable spawn point.
 
-	var/mob/living/carbon/human/H = new(T)
-	H.gender = pick(MALE, FEMALE)
-	var/datum/preferences/A = new
-	A.randomize_appearance_for(H)
-	H.real_name = capitalize(pick(H.gender == MALE ? first_names_male : first_names_female)) + " " + capitalize(pick(last_names))
-	H.name = H.real_name
-	H.age = rand(21,45)
-	H.dna.ready_dna(H)
-	H.key = M.key
-	if(H.client) H.client.change_view(world.view)
-	H.mind.assigned_role = "Colonist"
-	H.mind.special_role = "MODE"
-	ticker.mode.traitors += H.mind
-	H.mind.cm_skills = null //no restriction
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/colonist(H), WEAR_BODY)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-	H.equip_to_slot(new /obj/item/weapon/combat_knife(H), WEAR_L_STORE)
-	H.equip_to_slot(new /obj/item/device/flashlight(H), WEAR_R_STORE)
+	var/mob/living/carbon/human/mob = new /mob/living/carbon/human(spawn_loc)
 
-	spawn(20)
-		if(H && H.loc)
-			to_chat(H, "<span class='role_header'>You are a colonist!</span>")
+	mob.key = M.key
+	mob.client?.change_view(world.view)
+	spawn(0)
+		var/datum/job/J = new /datum/job/other/colonist
+		mob.set_everything(mob, "Colonist")
+		J.generate_equipment(mob)
+		to_chat(mob, "<span class='role_header'>You are a colonist!</span>")
 
-	if(original && original.loc) cdel(original)
+	if(original)
+		cdel(original)
+	return

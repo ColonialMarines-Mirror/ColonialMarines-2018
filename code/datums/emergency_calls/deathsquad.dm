@@ -20,7 +20,9 @@
 
 	var/mob/living/carbon/human/mob = new /mob/living/carbon/human(spawn_loc)
 	
-	mob.real_name = "[pick(names)]"
+	mob.name = pick(names)
+	mob.real_name = name
+	mob.voice_name = name
 
 	mob.key = M.key
 	mob.client?.change_view(world.view)

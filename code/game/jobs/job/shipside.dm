@@ -20,12 +20,25 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	selection_color = "#ccccff"
 	idtype = /obj/item/card/id/gold
 	minimal_player_age = 7
-	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
-	flags_whitelist = WHITELIST_COMMANDER
 	skills_type = /datum/skills/commander
 	equipment = TRUE
+	access = ALL_MARINE_ACCESS
+	minimal_access = ALL_MARINE_ACCESS
+	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
+	flags_whitelist = WHITELIST_COMMANDER
 
-	generate_entry_message()
+/datum/job/command/commander/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/command(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/marine/techofficer/commander(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/cmberet/tan(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marinechief/commander(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/mateba/cmateba/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/device/binoculars(H), WEAR_L_HAND)
+
+/datum/job/command/commander/generate_entry_message()
 		return {"As the commander of the USS Almayer you are held by higher standard and are expected to act competently.
 While you may support Weyland-Yutani, you report to the USCM High Command, not the corporate office.
 Your primary task is the safety of the ship and her crew, and ensuring the survival and success of the marines.
@@ -33,32 +46,18 @@ Your first order of business should be briefing the marines on the mission they 
 If you require any help, use adminhelp to ask mentors about what you're supposed to do.
 Godspeed, commander! And remember, you are not above the law."}
 
-	announce_entry_message(mob/living/carbon/human/H)
-		. = ..()
-		sleep(15)
-		if(H?.loc && flags_startup_parameters & ROLE_ADD_TO_MODE) 
-			captain_announcement.Announce("All hands, Commander [H.real_name] on deck!")
-
-	get_access() 
-		return get_all_marine_access()
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/command(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/marine/techofficer/commander(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmberet/tan(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marinechief/commander(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/mateba/cmateba/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/device/binoculars(H), WEAR_L_HAND)
+/datum/job/command/announce_entry_message(mob/living/carbon/human/H)
+	. = ..()
+	sleep(15)
+	if(H?.loc && flags_startup_parameters & ROLE_ADD_TO_MODE) 
+		captain_announcement.Announce("All hands, Commander [H.real_name] on deck!")
 
 
 //Event version
 /datum/job/command/commander/nightmare
 	flags_startup_parameters = ROLE_ADMIN_NOTIFY|ROLE_WHITELISTED
 
-	generate_entry_message()
+/datum/job/command/commander/nightmare/generate_entry_message()
 		. = {"What the hell did you do to get assigned on this mission? Maybe someone is looking to bump you off for a promotion. Regardless...
 The marines need a leader to inspire them and lead them to victory. You'll settle for telling them which side of the gun the bullets come from.
 You are a vet, a real badass in your day, but now you're in the thick of it with the grunts. You're plenty sure they are going to die in droves.
@@ -73,25 +72,24 @@ Come hell or high water, you are going to be there for them."}
 	flag = ROLE_EXECUTIVE_OFFICER
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
 	skills_type = /datum/skills/XO
+	access = ALL_MARINE_ACCESS
+	minimal_access = ALL_MARINE_ACCESS
 	equipment = TRUE
 
-	generate_entry_message(mob/living/carbon/human/H)
+/datum/job/command/executive/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/exec(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/vp70(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/device/binoculars(H), WEAR_L_HAND)
+
+/datum/job/command/executive/generate_entry_message(mob/living/carbon/human/H)
 		. = {"You are second in command aboard the ship, and are in next in the chain of command after the commander.
 You may need to fill in for other duties if areas are understaffed, and you are given access to do so.
 Make the USCM proud!"}
-
-	get_access() 
-		return get_all_marine_access()
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/exec(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/vp70(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/device/binoculars(H), WEAR_L_HAND)
 
 
 //Staff Officer
@@ -110,25 +108,25 @@ Make the USCM proud!"}
 	skills_type = /datum/skills/SO
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = so_slot_formula(count)
+/datum/job/command/bridge/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/bridge(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap/ro(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/commander(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/device/binoculars(H), WEAR_L_HAND)
 
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? so_slot_formula(get_total_marines()) : spawn_positions)
+/datum/job/command/bridge/set_spawn_positions(var/count)
+	spawn_positions = so_slot_formula(count)
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to monitor the marines, man the CIC, and listen to your superior officers.
+/datum/job/command/bridge/get_total_positions(var/latejoin = 0)
+	return (latejoin ? so_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/command/bridge/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to monitor the marines, man the CIC, and listen to your superior officers.
 You are in charge of logistics and the overwatch system. You are also in line to take command after the executive officer."}
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/bridge(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap/ro(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/commander(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/device/binoculars(H), WEAR_L_HAND)
 
 
 //Pilot Officer
@@ -146,33 +144,31 @@ You are in charge of logistics and the overwatch system. You are also in line to
 	skills_type = /datum/skills/pilot
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = po_slot_formula(count)
+/datum/job/command/pilot/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/pilot(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/pilot(H), WEAR_JACKET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/vp70(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), WEAR_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/marine/pilot(H), WEAR_R_HAND)
 
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? po_slot_formula(get_total_marines()) : spawn_positions)
+/datum/job/command/pilot/set_spawn_positions(var/count)
+	spawn_positions = po_slot_formula(count)
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to fly, protect, and maintain the ship's dropship.
+/datum/job/command/pilot/get_total_positions(var/latejoin = 0)
+	return (latejoin ? po_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/command/pilot/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to fly, protect, and maintain the ship's dropship.
 While you are an officer, your authority is limited to the dropship, where you have authority over the enlisted personnel.
 If you are not piloting, there is an autopilot fallback for command, but don't leave the dropship without reason."}
 
 
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/pilot(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/pilot(H), WEAR_JACKET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/vp70(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), WEAR_L_HAND)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/marine/pilot(H), WEAR_R_HAND)
-
-
-
-//Tank Crewmen //For now, straight up copied from the pilot officers until their role is more solidified
+//Tank Crewmen
 /datum/job/command/tank_crew
 	title = "Tank Crewman"
 	comm_title = "TC"
@@ -187,21 +183,20 @@ If you are not piloting, there is an autopilot fallback for command, but don't l
 	idtype = /obj/item/card/id/dogtag
 	equipment = TRUE
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to operate and maintain thee ship's armored vehicles.
+/datum/job/command/tank_crew/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/tanker(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/tanker(H), WEAR_JACKET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/vp70(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/marine/tanker(H), WEAR_R_HAND)
+
+/datum/job/command/tank_crew/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to operate and maintain thee ship's armored vehicles.
 While you are an officer, your authority is limited to your own vehicle, where you have authority over the enlisted personnel. You will need MTs to repair and replace hardpoints."}
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/tanker(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/tanker(H), WEAR_JACKET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/vp70(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/marine/tanker(H), WEAR_R_HAND)
-
 
 
 //Military Police
@@ -221,29 +216,29 @@ While you are an officer, your authority is limited to your own vehicle, where y
 	skills_type = /datum/skills/MP
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = mp_slot_formula(count)
+/datum/job/command/police/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mmpo(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/cmberet/red(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/mp(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/MP(H), WEAR_JACKET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/sec(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/security/MP/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), WEAR_EYES)
 
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? mp_slot_formula(get_total_marines()) : spawn_positions)
+/datum/job/command/police/set_spawn_positions(var/count)
+	spawn_positions = mp_slot_formula(count)
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"You are held by a higher standard and are required to not abuse your position to severely hinder the progress of the round.
+/datum/job/command/police/get_total_positions(var/latejoin = 0)
+	return (latejoin ? mp_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/command/police/generate_entry_message(mob/living/carbon/human/H)
+	return {"You are held by a higher standard and are required to not abuse your position to severely hinder the progress of the round.
 Failure to do so may result in a job ban.
 Your primary job is to uphold the <a href='https://tgstation13.org/wiki/Space_Law'>Space Law</a>, and peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
 In addition, you are tasked with the security of high-ranking personnel, including the command staff. Keep them safe!"}
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mmpo(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmberet/red(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/mp(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/MP(H), WEAR_JACKET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/sec(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/security/MP/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), WEAR_EYES)
 
 
 //Chief MP
@@ -259,26 +254,26 @@ In addition, you are tasked with the security of high-ranking personnel, includi
 	skills_type = /datum/skills/CMP
 	equipment = TRUE
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"You are held by a higher standard and are required to not abuse your position to severely hinder the progress of the round.
+/datum/job/command/warrant/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/cmpcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/cmberet/wo(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/warrant(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/MP/WO(H), WEAR_JACKET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/security(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/security/MP/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), WEAR_EYES)
+
+/datum/job/command/warrant/generate_entry_message(mob/living/carbon/human/H)
+	return {"You are held by a higher standard and are required to not abuse your position to severely hinder the progress of the round.
 Failure to do so may result in a job ban.
 You lead the Military Police, ensure your officers uphold the <a href='https://tgstation13.org/wiki/Space_Law'>Space Law</a>, and maintain peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
 In addition, you are tasked with the security of high-ranking personnel, including the command staff. Keep them safe!"}
 
 
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/cmpcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmberet/wo(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/warrant(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine/MP/WO(H), WEAR_JACKET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/security(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/security/MP/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), WEAR_EYES)
-
-
+//The logistics branch
 /datum/job/logistics
 	supervisors = "the acting commander"
 	total_positions = 1
@@ -300,20 +295,20 @@ In addition, you are tasked with the security of high-ranking personnel, includi
 	skills_type = /datum/skills/CE
 	equipment = TRUE
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to maintain the ship's engine and keep everything running.
+/datum/job/logistics/engineering/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to maintain the ship's engine and keep everything running.
 If you have no idea how to set up the engine, or it's your first time, adminhelp so that a mentor can assist you.
 You are also next in the chain of command, should the bridge crew fall in the line of duty."}
 
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/ce(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel/tech(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/electronics(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/welding(H), WEAR_EYES)
+/datum/job/logistics/engineering/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/ce(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel/tech(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/electronics(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/welding(H), WEAR_EYES)
 
 
 //Requisitions Officer
@@ -330,26 +325,26 @@ You are also next in the chain of command, should the bridge crew fall in the li
 	skills_type = /datum/skills/RO
 	equipment = TRUE
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to dispense supplies to the marines, including weapon attachments.
+/datum/job/logistics/requisition/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/ro_suit(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap/req(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m44/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
+
+/datum/job/logistics/requisition/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to dispense supplies to the marines, including weapon attachments.
 Your cargo techs can help you out, but you have final say in your department. Make sure they're not goofing off.
 While you may request paperwork for supplies, do not go out of your way to screw with marines, unless you want to get deposed.
 A happy ship is a well-functioning ship."}
 
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/ro_suit(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/cmcap/req(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m44/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/large(H), WEAR_R_STORE)
-
 
 /datum/job/logistics/tech
 	idtype = /obj/item/card/id
-	minimal_player_age = 3
+
 
 //Maintenance Tech
 /datum/job/logistics/tech/maint
@@ -370,29 +365,29 @@ A happy ship is a well-functioning ship."}
 	skills_type = /datum/skills/MT
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = mt_slot_formula(count)
+/datum/job/logistics/tech/maint/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mt(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/engi(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/welding(H), WEAR_EYES)
+	H.equip_to_slot_or_del(new /obj/item/tool/weldpack(H), WEAR_L_HAND)
 
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? mt_slot_formula(get_total_marines()) : spawn_positions)
+/datum/job/logistics/tech/maint/set_spawn_positions(var/count)
+	spawn_positions = mt_slot_formula(count)
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to make sure the ship is clean and the powergrid is operational.
+/datum/job/logistics/tech/maint/get_total_positions(var/latejoin = 0)
+	return (latejoin ? mt_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/logistics/tech/maint/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to make sure the ship is clean and the powergrid is operational.
 Start with the ship's engine, and don't forget radiation equipment."}
 
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mt(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/engi(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/welding(H), WEAR_EYES)
-		H.equip_to_slot_or_del(new /obj/item/tool/weldpack(H), WEAR_L_HAND)
 
-
-//Cargo Tech. Don't ask why this is in engineering
+//Cargo Tech
 /datum/job/logistics/tech/cargo
 	title = "Cargo Technician"
 	comm_title = "CT"
@@ -410,26 +405,26 @@ Start with the ship's engine, and don't forget radiation equipment."}
 	skills_type = /datum/skills/CT
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = ct_slot_formula(count)
+/datum/job/logistics/tech/cargo/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/ct(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beanie(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/full(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
 
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? ct_slot_formula(get_total_marines()) : spawn_positions)
+/datum/job/logistics/tech/cargo/set_spawn_positions(var/count)
+	spawn_positions = ct_slot_formula(count)
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to dispense supplies to the marines, including weapon attachments.
+/datum/job/logistics/tech/cargo/get_total_positions(var/latejoin = 0)
+	return (latejoin ? ct_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/logistics/tech/cargo/generate_entry_message(mob/living/carbon/human/H)
+	return {"Your job is to dispense supplies to the marines, including weapon attachments.
 Stay in your department when possible to ensure the marines have full access to the supplies they may require.
 Listen to the radio in case someone requests a supply drop via the overwatch system."}
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/ct(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/beanie(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/gun/m4a3/full(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
 
 
 /datum/job/civilian/professor
@@ -448,26 +443,27 @@ Listen to the radio in case someone requests a supply drop via the overwatch sys
 	skills_type = /datum/skills/CMO
 	equipment = TRUE
 
-	generate_entry_message()
-		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
+/datum/job/civilian/professor/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/cmo(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), WEAR_JACKET)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), WEAR_J_STORE)
+
+
+/datum/job/civilian/professor/generate_entry_message()
+	return {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You have final authority over the medical department, medications, and treatments.
 Make sure that the doctors and nurses are doing their jobs and keeping the marines healthy and strong."}
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/cmo(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), WEAR_JACKET)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
-		H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
-		H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), WEAR_J_STORE)
 
 
 //Doctor
@@ -487,30 +483,30 @@ Make sure that the doctors and nurses are doing their jobs and keeping the marin
 	skills_type = /datum/skills/doctor
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = doc_slot_formula(count)
+/datum/job/civilian/doctor/generate_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/doc(H), WEAR_EAR)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), WEAR_BODY)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), WEAR_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
 
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? doc_slot_formula(get_total_marines()) : spawn_positions)
+/datum/job/civilian/doctor/set_spawn_positions(var/count)
+	spawn_positions = doc_slot_formula(count)
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
+/datum/job/civilian/doctor/get_total_positions(var/latejoin = 0)
+	return (latejoin ? doc_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/civilian/doctor/generate_entry_message(mob/living/carbon/human/H)
+	return {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
 You are tasked with keeping the marines healthy and strong, usually in the form of surgery.
 You are also an expert when it comes to medication and treatment. If you do not know what you are doing, adminhelp so a mentor can assist you."}
-
-	generate_equipment(mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/doc(H), WEAR_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), WEAR_BODY)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
-		H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), WEAR_FACE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), WEAR_HEAD)
-		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
-		H.equip_to_slot_or_del(new /obj/item/storage/belt/medical(H), WEAR_WAIST)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medkit(H), WEAR_R_STORE)
-		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
-		H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
 
 
 //Researcher
@@ -531,18 +527,7 @@ You are also an expert when it comes to medication and treatment. If you do not 
 	skills_type = /datum/skills/doctor
 	equipment = TRUE
 
-	set_spawn_positions(var/count)
-		spawn_positions = rsc_slot_formula(count)
-
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? rsc_slot_formula(get_total_marines()) : spawn_positions)
-
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
-You are tasked with researching and developing new medical treatments, helping your fellow doctors, and generally learning new things.
-Your role involves some roleplaying and gimmickry, but you can perform the function of a regular doctor."}
-
-	generate_equipment(mob/living/carbon/human/H)
+/datum/job/civilian/researcher/generate_equipment(mob/living/carbon/human/H)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/doc(H), WEAR_EAR)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/officer/researcher(H), WEAR_BODY)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(H), WEAR_HANDS)
@@ -556,6 +541,17 @@ Your role involves some roleplaying and gimmickry, but you can perform the funct
 		H.equip_to_slot_or_del(new /obj/item/storage/pouch/medical/full(H), WEAR_L_STORE)
 		H.equip_to_slot_or_del(new /obj/item/storage/firstaid/adv(H), WEAR_L_HAND)
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), WEAR_J_STORE)
+
+/datum/job/civilian/researcher/set_spawn_positions(var/count)
+	spawn_positions = rsc_slot_formula(count)
+
+/datum/job/civilian/researcher/get_total_positions(var/latejoin = 0)
+	return (latejoin ? rsc_slot_formula(get_total_marines()) : spawn_positions)
+
+/datum/job/civilian/researcher/generate_entry_message(mob/living/carbon/human/H)
+	return {"You are a civilian, and are not subject to follow military chain of command, but you do work for the USCM.
+You are tasked with researching and developing new medical treatments, helping your fellow doctors, and generally learning new things.
+Your role involves some roleplaying and gimmickry, but you can perform the function of a regular doctor."}
 
 
 //Liaison
@@ -576,20 +572,20 @@ Your role involves some roleplaying and gimmickry, but you can perform the funct
 	skills_type = /datum/skills/civilian
 	equipment = TRUE
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"As a representative of Weyland-Yutani Corporation you are expected to stay professional and loyal to the corporation at all times.
-You are not required to follow military orders; however, you cannot give military orders.
-Your primary job is to observe and report back your findings to Weyland-Yutani. Follow regular game rules unless told otherwise by your superiors.
-Use your office fax machine to communicate with corporate headquarters or to acquire new directives. You may not receive anything back (especially if the game staff is absent or otherwise busy), and this is normal."}
-
-	generate_entry_conditions(mob/living/carbon/human/H)
+/datum/job/civilian/liaison/generate_entry_conditions(mob/living/carbon/human/H)
 		if(ticker && H.mind) ticker.liaison = H.mind //TODO Look into CL tracking in game mode.
 
-	generate_equipment(mob/living/carbon/human/H)
+/datum/job/civilian/liaison/generate_equipment(mob/living/carbon/human/H)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/liaison_suit(H), WEAR_BODY)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), WEAR_FEET)
 		H.equip_to_slot_or_del(new /obj/item/storage/backpack/marine/satchel(H), WEAR_BACK)
+
+/datum/job/civilian/liaison/generate_entry_message(mob/living/carbon/human/H)
+		return {"As a representative of Weyland-Yutani Corporation you are expected to stay professional and loyal to the corporation at all times.
+You are not required to follow military orders; however, you cannot give military orders.
+Your primary job is to observe and report back your findings to Weyland-Yutani. Follow regular game rules unless told otherwise by your superiors.
+Use your office fax machine to communicate with corporate headquarters or to acquire new directives. You may not receive anything back (especially if the game staff is absent or otherwise busy), and this is normal."}
 
 
 //Nightmare event verison
@@ -598,14 +594,11 @@ Use your office fax machine to communicate with corporate headquarters or to acq
 	minimal_access = list(ACCESS_IFF_PMC, ACCESS_WY_PMC_GREEN, ACCESS_WY_PMC_ORANGE, ACCESS_WY_PMC_RED, ACCESS_WY_PMC_BLACK, ACCESS_WY_PMC_WHITE, ACCESS_WY_CORPORATE)
 	flags_startup_parameters = NOFLAGS
 
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"It was just a regular day in the office when the higher up decided to send you in to this hot mess. If only you called in sick that day...
+/datum/job/civilian/liaison/nightmare/generate_entry_message(mob/living/carbon/human/H)
+		return {"It was just a regular day in the office when the higher up decided to send you in to this hot mess. If only you called in sick that day...
 The W-Y mercs were hired to protect some important science experiment, and W-Y expects you to keep them in line.
 These are hardened killers, and you write on paper for a living. It won't be easy, that's for damn sure.
 Best to let the mercs do the killing and the dying, but remind them who pays the bills."}
-
-
-
 
 
 /datum/job/civilian/synthetic
@@ -622,40 +615,33 @@ Best to let the mercs do the killing and the dying, but remind them who pays the
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
 	flags_whitelist = WHITELIST_SYNTHETIC
 	skills_type = /datum/skills/synthetic
+	access = ALL_ACCESS
+	minimal_access = ALL_ACCESS
 	equipment = TRUE
 
-	get_access()
-		return get_all_accesses()
+/datum/job/civilian/synthetic/generate_entry_conditions(mob/living/carbon/human/H)
+	. = ..()
+	H.set_species(H.client.prefs.synthetic_type)
+	if(H.client.prefs.synthetic_type == "Early Synthetic")
+		skills_type = /datum/skills/early_synthetic
+	//Most of the code below is copypasted from transform_predator().
+	if(!H.client.prefs) 
+		H.client.prefs = new /datum/preferences(H.client) //Let's give them one.
+	//They should have these set, but it's possible they don't have them.
+	H.real_name = H.client.prefs.synthetic_name
+	if(!H.real_name || H.real_name == "Undefined") //In case they don't have a name set or no prefs, there's a name.
+		H.real_name = "David"
+		spawn(9)
+			to_chat(H, "<span class='warning'>You forgot to set your name in your preferences. Please do so next time.</span>")
+	H.mind.name = H.real_name
+	//update id with new name
+	if(H.wear_id)
+		var/obj/item/card/id/I = H.wear_id
+		I.registered_name = H.real_name
+		I.name = "[I.registered_name]'s ID Card ([I.assignment])"
+	H.name = H.get_visible_name()
 
-	generate_entry_conditions(mob/living/carbon/human/H)
-		. = ..()
-		H.set_species(H.client.prefs.synthetic_type)
-		if(H.client.prefs.synthetic_type == "Early Synthetic")
-			skills_type = /datum/skills/early_synthetic
-		//Most of the code below is copypasted from transform_predator().
-		if(!H.client.prefs) 
-			H.client.prefs = new /datum/preferences(H.client) //Let's give them one.
-		//They should have these set, but it's possible they don't have them.
-		H.real_name = H.client.prefs.synthetic_name
-		if(!H.real_name || H.real_name == "Undefined") //In case they don't have a name set or no prefs, there's a name.
-			H.real_name = "David"
-			spawn(9)
-				to_chat(H, "<span class='warning'>You forgot to set your name in your preferences. Please do so next time.</span>")
-		H.mind.name = H.real_name
-		//update id with new name
-		if(H.wear_id)
-			var/obj/item/card/id/I = H.wear_id
-			I.registered_name = H.real_name
-			I.name = "[I.registered_name]'s ID Card ([I.assignment])"
-		H.name = H.get_visible_name()
-
-	generate_entry_message()
-		. = {"You are a Synthetic!
-Your primary job is to support and assist all USCM Departments and Personnel on-board.
-In addition, being a Synthetic gives you knowledge in every field and specialization possible on-board the ship.
-As a Synthetic you answer to the acting commander. Special circumstances may change this!"}
-
-	generate_equipment(mob/living/carbon/human/H)
+/datum/job/civilian/synthetic/generate_equipment(mob/living/carbon/human/H)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/mcom(H), WEAR_EAR)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/synthetic(H), WEAR_BODY)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), WEAR_HANDS)
@@ -664,3 +650,9 @@ As a Synthetic you answer to the acting commander. Special circumstances may cha
 		H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), WEAR_WAIST)
 		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_R_STORE)
 		H.equip_to_slot_or_del(new /obj/item/storage/pouch/general/medium(H), WEAR_L_STORE)
+
+/datum/job/civilian/synthetic/generate_entry_message()
+		return {"You are a Synthetic!
+Your primary job is to support and assist all USCM Departments and Personnel on-board.
+In addition, being a Synthetic gives you knowledge in every field and specialization possible on-board the ship.
+As a Synthetic you answer to the acting commander. Special circumstances may change this!"}

@@ -65,6 +65,7 @@
 	H.equip_to_slot_or_del(new /obj/item/storage/pouch/bayonet/upp(H), WEAR_L_STORE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(H), WEAR_EYES)
 
+
 //CLF Leader
 /datum/job/clf/leader
 	title = "CLF Leader"

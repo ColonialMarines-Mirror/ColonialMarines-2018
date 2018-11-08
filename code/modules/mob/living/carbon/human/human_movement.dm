@@ -78,7 +78,32 @@
 	if(mRun in mutations)
 		. = 0
 
+	Process_Cloaking()
+
 	. += config.human_delay
+
+
+/mob/living/carbon/human/proc/Process_Cloaking()
+	if(!istype(back, /obj/item/storage/backpack/marine/satchel/scout_cloak) )
+		return
+	var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = back
+	if(!S.camo_active)
+		return
+	if(S.camo_last_stealth > world.time - SCOUT_CLOAK_STEALTH_DELAY) //We don't start out at max invisibility
+		alpha = HUNTER_STEALTH_RUN_ALPHA //50% invisible
+		return
+	//Stationary stealth
+	else if(last_move_intent < world.time - SCOUT_CLOAK_STEALTH_DELAY) //If we're standing still for 3 seconds we become almost completely invisible
+		alpha = SCOUT_CLOAK_STILL_ALPHA //95% invisible
+	//Walking stealth
+	else if(m_intent == MOVE_INTENT_WALK)
+		alpha = SCOUT_CLOAK_WALK_ALPHA //80% invisible
+		S.camo_adjust_energy(src, SCOUT_CLOAK_WALK_DRAIN)
+	//Running stealth
+	else
+		alpha = SCOUT_CLOAK_RUN_ALPHA //50% invisible
+		S.camo_adjust_energy(src, SCOUT_CLOAK_RUN_DRAIN)
+
 
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)

@@ -409,8 +409,18 @@
 	icon_state = "smock"
 	worn_accessible = TRUE
 
+#define SCOUT_CLOAK_ENERGY	100
+#define SCOUT_CLOAK_STEALTH_DELAY 3
+#define SCOUT_CLOAK_RUN_DRAIN	5
+#define SCOUT_CLOAK_WALK_DRAIN	1
+#define SCOUT_CLOAK_ACTIVE_RECOVERY -5
+#define SCOUT_CLOAK_INACTIVE_RECOVERY -10
 #define SCOUT_CLOAK_COOLDOWN 100
 #define SCOUT_CLOAK_TIMER 50
+#define SCOUT_CLOAK_RUN_ALPHA 128
+#define SCOUT_CLOAK_WALK_ALPHA 205
+#define SCOUT_CLOAK_STILL_ALPHA 243
+#define SCOUT_CLOAK_MAX_ENERGY 100
 // Scout Cloak
 /obj/item/storage/backpack/marine/satchel/scout_cloak
 	name = "\improper M68 Thermal Cloak"
@@ -420,8 +430,18 @@
 	has_gamemode_skin = FALSE //same sprite for all gamemode.
 	var/camo_active = 0
 	var/camo_active_timer = 0
-	var/camo_cooldown_timer = 0
-	var/camo_ready = 1
+	var/camo_cooldown_timer = null
+	var/camo_last_stealth = null
+	var/camo_energy = 100
+
+/obj/item/storage/backpack/marine/satchel/scout_cloak/Dispose()
+	processing_objects.Remove(src)
+	. = ..()
+
+/obj/item/storage/backpack/marine/satchel/scout_cloak/dropped(mob/user)
+	camo_off(user)
+	processing_objects.Remove(src)
+	. = ..()
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/verb/camouflage()
 	set name = "Toggle M68 Thermal Camouflage"
@@ -446,16 +466,16 @@
 		camo_off(usr)
 		return
 
-	if (!camo_ready)
-		to_chat(M, "<span class='warning'>Your thermal dampeners are still recharging!")
+	if (camo_cooldown_timer)
+		to_chat(M, "<span class='warning'>Your thermal cloak is still recalibrating! It will be ready in [(camo_cooldown_timer - world.time) * 0.1] seconds.")
 		return
 
-	camo_ready = 0
 	camo_active = 1
+	camo_last_stealth = world.time
 	to_chat(M, "<span class='notice'>You activate your cloak's camouflage.</span>")
 
 	for (var/mob/O in oviewers(M))
-		O.show_message("[M] vanishes into thin air!", 1)
+		O.show_message("[M] fades into thin air!", 1)
 	playsound(M.loc,'sound/effects/cloak_scout_on.ogg', 15, 1)
 
 	M.alpha = 10
@@ -471,8 +491,8 @@
 	spawn(1)
 		anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
 
-	camo_active_timer = world.timeofday + SCOUT_CLOAK_TIMER
-	process_active_camo(usr)
+	processing_objects.Add(src)
+
 	return 1
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/proc/camo_off(var/mob/user)
@@ -495,29 +515,42 @@
 	spawn(1)
 		anim(user.loc,user,'icons/mob/mob.dmi',,"uncloak",,user.dir)
 
-	camo_cooldown_timer = world.timeofday + SCOUT_CLOAK_COOLDOWN
-	process_camo_cooldown(user)
+	var/cooldown = round(camo_energy / max(1,SCOUT_CLOAK_INACTIVE_RECOVERY))
+	camo_cooldown_timer = world.time + cooldown //recalibration and recharge time scales inversely with charge remaining
+	to_chat(user, "<span class='warning'>Your thermal cloak is recalibrating! It will be ready in [(camo_cooldown_timer - world.time) * 0.1] seconds.")
+	process_camo_cooldown(user, cooldown)
+	processing_objects.Remove(src)
 
-/obj/item/storage/backpack/marine/satchel/scout_cloak/proc/process_camo_cooldown(var/mob/user)
-	set background = 1
+/obj/item/storage/backpack/marine/satchel/scout_cloak/proc/process_camo_cooldown(mob/user, cooldown)
+	spawn(cooldown)
+		camo_cooldown_timer = null
+		to_chat(src, "<span class='danger'>Your thermal cloak has recalibrated and is ready to cloak again.</span>")
 
-	spawn while (!camo_ready && !camo_active)
-		if (world.timeofday > camo_cooldown_timer)
-			to_chat(user, "<span class='notice'>Your cloak's thermal dampeners have recharged!")
-			camo_ready = 1
+/obj/item/storage/backpack/marine/satchel/scout_cloak/proc/camo_adjust_energy(mob/user, drain = SCOUT_CLOAK_WALK_DRAIN)
+	camo_energy = CLAMP(camo_energy - drain,0,SCOUT_CLOAK_MAX_ENERGY)
 
-		sleep(10)	// Process every second.
+	if(!camo_energy) //Turn off the camo if we run out of energy.
+		to_chat(src, "<span class='danger'>Your thermal cloak lacks sufficient energy to remain camouflaged.</span>")
+		camo_off(user)
 
-/obj/item/storage/backpack/marine/satchel/scout_cloak/proc/process_active_camo(var/mob/user)
-	set background = 1
+/obj/item/storage/backpack/marine/satchel/scout_cloak/process(mob/user)
+	//if(!camo_active) //Recharge if the cloak is off and not at full charge
+	//	if(camo_energy < SCOUT_CLOAK_MAX_ENERGY )
+	//		camo_adjust_energy(src, SCOUT_CLOAK_INACTIVE_RECOVERY)
+	//		if(camo_energy >= SCOUT_CLOAK_MAX_ENERGY)
+	//			to_chat(user, "<span class='danger'>Your thermal cloak is fully recharged.</span>")
+	//		return
+	if(camo_last_stealth > world.time - SCOUT_CLOAK_STEALTH_DELAY) //We don't start out at max invisibility
+		alpha = HUNTER_STEALTH_RUN_ALPHA //50% invisible
+		return
+	//Stationary stealth
+	else if(user.last_move_intent < world.time - SCOUT_CLOAK_STEALTH_DELAY) //If we're standing still for 3 seconds we become almost completely invisible
+		alpha = SCOUT_CLOAK_STILL_ALPHA //95% invisible
+		camo_adjust_energy(src, SCOUT_CLOAK_ACTIVE_RECOVERY)
 
-	spawn while (camo_active)
-		if (world.timeofday > camo_active_timer)
-			camo_active = 0
-			camo_off(user)
-
-		sleep(10)	// Process every second.
-
+	if(!camo_energy) //Turn off the camo if we run out of energy.
+		to_chat(user, "<span class='danger'>Your thermal cloak lacks sufficient energy to remain camouflaged.</span>")
+		camo_off(user)
 
 
 // Welder Backpacks //

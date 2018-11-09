@@ -46,7 +46,7 @@ Your first order of business should be briefing the marines on the mission they 
 If you require any help, use adminhelp to ask mentors about what you're supposed to do.
 Godspeed, commander! And remember, you are not above the law."}
 
-/datum/job/command/announce_entry_message(mob/living/carbon/human/H)
+/datum/job/command/commander/announce_entry_message(mob/living/carbon/human/H)
 	. = ..()
 	sleep(15)
 	if(H?.loc && flags_startup_parameters & ROLE_ADD_TO_MODE) 

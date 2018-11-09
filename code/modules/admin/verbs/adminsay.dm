@@ -46,4 +46,4 @@
 		if((R_ADMIN|R_MOD) & C.holder.rights)
 			to_chat(C, "<span class='[color]'><span class='prefix'>[channel]</span> <EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminmoreinfo=\ref[mob]'>?</A>) (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>) (<A HREF='?src=\ref[C.holder];adminplayerfollow=\ref[mob]'>FLW</a>): <span class='message'>[msg]</span></span>")
 		else			// Mentors get same message without fancy coloring of name if special_role.
-			to_chat(C, "<span class='[color]'><span class='prefix'>[channel]</span> <EM>[key_name(src,1,1,0)]</EM> (<A HREF='?src=\ref[C.holder];adminmoreinfo=\ref[mob]'>?</A>) (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>) (<A HREF='?src=\ref[C.holder];adminplayerfollow=\ref[mob]'>FLW</a>): <span class='message'>[msg]</span></span>")
+			to_chat(C, "<span class='[color]'><span class='prefix'>[channel]</span> <EM>[key_name(src,1,0)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>) (<A HREF='?src=\ref[C.holder];adminplayerfollow=\ref[mob]'>FLW</a>): <span class='message'>[msg]</span></span>")

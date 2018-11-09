@@ -3,11 +3,11 @@
 	set name = "Dsay" //Gave this shit a shorter name so you only have to time out "dsay" rather than "dead say" to use it --NeoFite
 	set hidden = 1
 
-	if(src.holder.rights & (R_ADMIN|R_MOD))
-		to_chat(src, "Only administrators may use this command.")
+	if(!src.mob)
 		return
 
-	if(!src.mob)
+	if(!(src.holder.rights & (R_ADMIN|R_MOD)) && !(src.mob.stat == DEAD))
+		to_chat(src, "You must be an observer to use dsay.")
 		return
 
 	if(prefs.muted & MUTE_DEADCHAT)
@@ -37,7 +37,7 @@
 		if(istype(M, /mob/new_player))
 			continue
 
-		if(M.client && M.client.holder && (M.client.prefs.toggles_chat & CHAT_DEAD)) // show the message to admins who have deadchat toggled on
+		else if((src.holder.rights & (R_ADMIN|R_MOD)) && (M.client.prefs.toggles_chat & CHAT_DEAD))
 			M.show_message(rendered, 2)
 
 		else if(M.stat == DEAD && (M.client.prefs.toggles_chat & CHAT_DEAD)) // show the message to regular ghosts who have deadchat toggled on

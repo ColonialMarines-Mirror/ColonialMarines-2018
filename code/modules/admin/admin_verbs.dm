@@ -2,8 +2,6 @@
 var/list/admin_verbs_default = list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
-	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	// /client/proc/cmd_mentor_check_new_players
 	)
 var/list/admin_verbs_admin = list(
@@ -78,6 +76,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/force_shuttle,
 	/client/proc/remove_players_from_vic,
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
+	/client/proc/hide_verbs,			/*hides all our adminverbs*/
+	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
@@ -269,8 +269,10 @@ var/list/admin_verbs_mod = list(
 var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_pm_context,
 	/client/proc/cmd_mentor_pm_panel,
+	/client/proc/cmd_admin_subtle_message,
 	/client/proc/admin_ghost,
 	/client/proc/cmd_mod_say,
+	/client/proc/dsay,
 	/datum/admins/proc/viewUnheardMhelps,
 	/datum/admins/proc/viewCLFaxes
 )
@@ -374,6 +376,8 @@ var/list/admin_verbs_mentor = list(
 	else
 		//ghostize
 		log_admin("[key_name(usr)] admin ghosted.")
+		if(!(holder.rights & (R_ADMIN|R_MOD)))
+			message_admins("[key_name(usr)] admin ghosted.")
 		var/mob/body = mob
 		body.ghostize(1)
 		if(body && !body.key)

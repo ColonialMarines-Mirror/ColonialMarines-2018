@@ -11,7 +11,7 @@
 		to_chat(src, "<font color='red'>Error: Mob has no client.</font>")
 		return
 
-	if(holder.rights & R_ADMIN)
+	if(holder.rights & (R_ADMIN|R_MOD))
 		cmd_admin_pm(M.client, null)
 	else
 		cmd_mentor_pm(M.client, null)
@@ -62,7 +62,7 @@
 	var/list/sorted = sortList(targets)
 	var/target = input(src,"Who do you want to PM?","Mentor PM",null) in sorted|null
 
-	cmd_admin_pm(targets[target],null)
+	cmd_mentor_pm(targets[target],null)
 	feedback_add_details("admin_verb","MPM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -82,7 +82,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
+		msg = input(src,"Message:", "Mentor private message to [C]") as message|null
 
 		if(!msg)	
 			return
@@ -125,9 +125,9 @@
 
 	if(holder && !C.holder)
 		recieve_message = "<font color='[recieve_color]'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
-		if(C.adminhelped)
+		if(C.mentorhelped)
 			to_chat(C, recieve_message)
-			C.adminhelped = 0
+			C.mentorhelped = 0
 
 		//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 		if(config.popup_admin_pm)
@@ -158,7 +158,7 @@
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue
-		if(X.key!=key && X.key!=C.key && (X.holder.rights & R_ADMIN) || (X.holder.rights & (R_MOD|R_MENTOR)) )
+		if(X.key != key && X.key != C.key && (X.holder.rights & (R_MOD|R_MENTOR)))
 			to_chat(X, "<B><font color='blue'>Mentor PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")
 
 
@@ -176,7 +176,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0)]") as message|null
+		msg = input(src,"Message:", "Admin private message to [key_name(C, 0, holder ? 1 : 0)]") as message|null
 
 		if(!msg)	
 			return
@@ -236,9 +236,12 @@
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
-	recieve_message = "<br><br><font color='[recieve_color]'><b>[recieve_pm_type] PM from [get_options_bar_a(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>"
+	var/rights = C.holder.rights & (R_ADMIN|R_MOD)
+	var/rightss = holder.rights & (R_ADMIN|R_MOD)
+
+	recieve_message = "<br><br><font color='[recieve_color]'><b>[recieve_pm_type] PM from [get_options_bar_a(src, rights ? 1 : 0, rights ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>"
 	to_chat(C, recieve_message)
-	to_chat(src, "<br><br><font color='#009900'><b>[send_pm_type]PM to [get_options_bar_a(C, holder ? 1 : 0, holder ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>")
+	to_chat(src, "<br><br><font color='#009900'><b>[send_pm_type]PM to [get_options_bar_a(C, rightss ? 1 : 0, rightss ? 1 : 0, 1)]: <font color='#DA6200'>[msg]</b></font><br>")
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
@@ -252,5 +255,5 @@
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue
-		if(X.key!=key && X.key!=C.key && (X.holder.rights & R_ADMIN))
+		if(X.key != key && X.key != C.key && (X.holder.rights & R_ADMIN))
 			to_chat(X, "<B><font color='blue'>Admin PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")

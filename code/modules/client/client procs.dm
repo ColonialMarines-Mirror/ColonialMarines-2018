@@ -37,12 +37,17 @@
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
-		if(!C) return //Outdated links to logged players generate runtimes
+		if(!C) 
+			return //Outdated links to logged players generate runtimes
 		if(unansweredMhelps[C.computer_id]) 
 			unansweredMhelps.Remove(C.computer_id)
 		if(unansweredAhelps[C.computer_id]) 
 			unansweredAhelps.Remove(C.computer_id)
-		cmd_admin_pm(C,null)
+		if(!(C?.holder?.rights & (R_ADMIN|R_MOD)) && (C?.holder?.rights & R_MENTOR))
+			cmd_mentor_pm(C,null)
+		else
+			
+			cmd_admin_pm(C,null)
 		return
 
 	//Logs all hrefs

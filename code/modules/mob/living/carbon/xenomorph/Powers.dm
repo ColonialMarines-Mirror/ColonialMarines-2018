@@ -1811,6 +1811,8 @@
 	to_chat(src, "<span class='notice'><b>You recoup your health, your tapped rage restoring your body, flesh and chitin reknitting themselves.</b></span>")
 	health += CLAMP( (maxHealth - health) * (0.25 + current_rage * 0.015), 0, maxHealth - health) //Restore HP equal to 25% + 1.5% of the difference between min and max health per rage
 	plasma_stored += CLAMP( (plasma_max - plasma_stored) * (0.25 + current_rage * 0.015), 0, plasma_max - plasma_stored) //Restore Plasma equal to 25% + 1.5% of the difference between min and max health per rage
+	updatehealth()
+	hud_set_plasma()
 
 	round_statistics.ravager_second_winds++
 

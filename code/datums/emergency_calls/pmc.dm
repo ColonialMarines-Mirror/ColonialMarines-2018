@@ -22,12 +22,12 @@
 	
 	if(mob.gender == MALE)
 		mob.name = pick(first_names_male_pmc) + " " + pick(last_names_pmc)
-		mob.real_name = name
-		mob.voice_name = name
+		mob.real_name = mob.name
+		mob.voice_name = mob.name
 	else
 		mob.name = pick(first_names_female_pmc) + " " + pick(last_names_pmc)
-		mob.real_name = name
-		mob.voice_name = name
+		mob.real_name = mob.name
+		mob.voice_name = mob.name
 
 	mob.key = M.key
 	mob.client?.change_view(world.view)

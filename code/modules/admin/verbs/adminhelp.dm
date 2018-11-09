@@ -91,7 +91,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	
 		return
 
-	var/mentor_msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar_a(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
+	//var/mentor_msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar_a(mob, 4, 1, 1, 0)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 	msg = "<br><br><font color='#009900'><b>ADMINHELP: [get_options_bar_a(mob, 2, 1, 1, 1)]:</b></font> <br><font color='#DA6200'><b>[msg]</font></b><br>"
 
 	var/admin_number_afk = 0
@@ -119,7 +119,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			for(var/client/X in mentorholders) // Mentors get a reduced message
 				if(X.prefs.toggles_sound & SOUND_ADMINHELP)
 					X << 'sound/effects/adminhelp_new.ogg'
-				to_chat(X, mentor_msg)
+				to_chat(X, "<br><font color='#009900'><b>There is a new adminhelp! <font color='#DA6200'>Please notify an Administrator on Discord!</b></font><br>")
 
 	//show it to the person adminhelping too
 	to_chat(src, "<br><font color='#009900'><b>Adminhelp to Staff: <font color='#DA6200'>[original_msg]</b></font><br>")
@@ -266,7 +266,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			(<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
 			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>) \
-			(<A HREF='?_src_=holder;check_antagonist=1'>CA</A>)</b>"
+			(<A HREF='?_src_=holder;check_antagonist=1'>CA</A>) \
+			(<A HREF='?_src_=holder;adowngrade=[ref_mob]'>Downgrade</A>)</b>"
 		if(3)
 			return "<b>[key_name(C, link, name, highlight_special)] \
 			(<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) \
@@ -279,7 +280,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			(<A HREF='?_src_=holder;aautoresponse=[ref_mob]'>AutoResponse...</A>) \
 			(<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
-			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>) \
+			(<A HREF='?_src_=holder;adowngrade=[ref_mob]'>Downgrade</A>)</b>"
 
 /proc/get_options_bar_m(whom, detail = 0, name = 0, link = 1, highlight_special = 0)
 	if(!whom)
@@ -310,9 +312,9 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			(<A HREF='?_src_=holder;mmark=[ref_mob]'>Mark</A>) \
 			(<A HREF='?_src_=holder;mnoresponse=[ref_mob]'>NR</A>) \
 			(<A HREF='?_src_=holder;mautoresponse=[ref_mob]'>AutoResponse...</A>) \
-			(<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
-			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>) \
+			(<A HREF='?_src_=holder;mupgrade=[ref_mob]'>Upgrade</A>)</b>"
 		if(3)
 			return "<b>[key_name(C, link, name, highlight_special)] \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
@@ -323,4 +325,5 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			(<A HREF='?_src_=holder;mnoresponse=[ref_mob]'>NR</A>) \
 			(<A HREF='?_src_=holder;mautoresponse=[ref_mob]'>AutoResponse...</A>) \
 			(<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) \
-			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>)</b>"
+			(<A HREF='?_src_=holder;adminplayerfollow=[ref_mob]'>FLW</a>) \
+			(<A HREF='?_src_=holder;mupgrade=[ref_mob]'>Upgrade</A>)</b>"

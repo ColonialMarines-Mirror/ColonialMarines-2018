@@ -5,6 +5,7 @@ var/list/admin_verbs_default = list(
 	// /client/proc/cmd_mentor_check_new_players
 	)
 var/list/admin_verbs_admin = list(
+	/client/proc/cmd_mentor_pm_panel,
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 	/datum/admins/proc/togglejoin,		/*toggles whether people can join the current game*/
@@ -70,6 +71,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
 	/datum/admins/proc/viewCLFaxes,
 	/datum/admins/proc/viewUSCMFaxes,
+	/datum/admins/proc/viewUnheardMhelps,
+	/datum/admins/proc/viewUnheardAhelps,
 	/datum/admins/proc/force_predator_round, //Force spawns a predator round.
 	/client/proc/check_round_statistics,
 	/client/proc/award_medal,
@@ -233,6 +236,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/remove_players_from_vic
 	)
 var/list/admin_verbs_mod = list(
+	/client/proc/cmd_mentor_pm_panel,
 	/client/proc/cmd_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/

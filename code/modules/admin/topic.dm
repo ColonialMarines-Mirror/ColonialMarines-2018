@@ -2751,7 +2751,47 @@
 			if((R_ADMIN|R_MOD) & X.holder.rights)
 				to_chat(X, msg)
 
-		//unanswered_distress -= ref_person
+	if(href_list["adowngrade"])
+		var/mob/ref_person = locate(href_list["adowngrade"])
+		if(!istype(ref_person))
+			to_chat(usr, "\blue Looks like that person stopped existing!")
+			return
+		if(ref_person && ref_person.client.adminhelp_marked)
+			ref_person.client.adminhelp_marked = 0
+
+		message_admins("[usr.key] has used 'Downgrade' on the Adminhelp from [key_name_admin(ref_person)].", 1)
+		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has downgraded your Adminhelp to a Mentorhelp.</b>"
+
+		to_chat(ref_person, msgplayer)
+
+		var/msg = unansweredAhelps[ref_person.computer_id]
+
+		unansweredAhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
+		viewUnheardAhelps()//This SHOULD refresh the page
+
+		unansweredMhelps[ref_person.computer_id] = msg
+		viewUnheardMhelps()
+
+	if(href_list["mupgrade"])
+		var/mob/ref_person = locate(href_list["mupgrade"])
+		if(!istype(ref_person))
+			to_chat(usr, "\blue Looks like that person stopped existing!")
+			return
+		if(ref_person && ref_person.client.adminhelp_marked)
+			ref_person.client.adminhelp_marked = 0
+
+		message_staff("[usr.key] has used 'Upgrade' on the Mentorhelp from [key_name_admin(ref_person)].", 1)
+		var/msgplayer = "\blue <b>NOTICE: <font color=red>[usr.key]</font> has ugpraded your Mentorhelp to an Adminhelp.</b>"
+
+		to_chat(ref_person, msgplayer)
+
+		var/msg = unansweredMhelps[ref_person.computer_id]
+
+		unansweredMhelps.Remove(ref_person.computer_id) //It has been answered so take it off of the unanswered list
+		viewUnheardMhelps()//This SHOULD refresh the page
+
+		unansweredAhelps[ref_person.computer_id] = msg
+		viewUnheardAhelps()
 
 	if(href_list["ccdeny"]) // CentComm-deny. The distress call is denied, without any further conditions
 		var/mob/ref_person = locate(href_list["ccdeny"])

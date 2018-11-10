@@ -245,6 +245,7 @@
 					"/obj/item/explosive/mine",
 					"/obj/item/explosive/grenade",
 					"/obj/item/storage/box/explosive_mines",
+					"/obj/item/ammo_magazine/rocket",
 					"/obj/item/device/radio/detpack",
 					"/obj/item/device/assembly/signaler",
 					)

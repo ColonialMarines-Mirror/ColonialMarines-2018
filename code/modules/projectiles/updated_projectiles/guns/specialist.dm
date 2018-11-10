@@ -184,8 +184,8 @@
 
 /obj/item/weapon/gun/rifle/m4ra/set_gun_config_values()
 	fire_delay = config.high_fire_delay
-	burst_amount = config.med_burst_value
-	burst_delay = config.vlow_fire_delay
+	burst_amount = config.low_burst_value
+	burst_delay = config.min_fire_delay
 	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.max_hit_accuracy_mult
 	scatter_unwielded = config.max_scatter_value

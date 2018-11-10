@@ -300,7 +300,7 @@
 	return
 
 /mob/living/carbon/human/camo_off_process(code = 0, damage = 0)
-	if(!src)
+	if(!camo_active)
 		return
 	if(!code)
 		return

@@ -408,7 +408,7 @@ var/global/list/frozen_items = list("Alpha"=list(),"Bravo"=list(),"Charlie"=list
 	//Delete the mob.
 	var/mob/new_player/NP = new()
 	NP.ckey = occupant.ckey
-	if(NP.client) NP.client.change_view(world.view)
+	NP.client?.change_view(world.view)
 	cdel(occupant)
 	occupant = null
 	stop_processing()

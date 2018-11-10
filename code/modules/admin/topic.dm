@@ -1441,7 +1441,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		if(!client.holder.rights & (R_ADMIN|R_MOD))
+		if(!usr.client.holder.rights & (R_ADMIN|R_MOD))
 			return
 
 		var/location_description = ""

@@ -36,7 +36,7 @@
 
 	var/list/Lines = list()
 
-	if((holder?.rights & (R_ADMIN|R_MOD)) || ((C?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
+	if((holder?.rights & (R_ADMIN|R_MOD)) || ((src?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
 		for(var/client/C in clients)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
@@ -82,7 +82,7 @@
 	for(var/line in sortList(Lines))
 		msg += "[line]\n"
 
-	if((holder?.rights & (R_ADMIN|R_MOD)) || ((C?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
+	if((holder?.rights & (R_ADMIN|R_MOD)) || ((src?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
 		var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 		msg += "<b>Total Players: [length(Lines)]</b>"
 		msg += "<br><b style='color:#777'>Observers: [count_observers] (Non-Admin: [count_nonadmin_observers])</b>"
@@ -103,7 +103,7 @@
 	var/num_mods_online = 0
 	var/num_admins_online = 0
 	var/num_mentors_online = 0
-	if((holder?.rights & (R_ADMIN|R_MOD)) || ((C?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
+	if((holder?.rights & (R_ADMIN|R_MOD)) || ((src?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))	//Used to determine who shows up in admin rows
 

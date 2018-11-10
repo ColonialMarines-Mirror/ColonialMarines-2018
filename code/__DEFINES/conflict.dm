@@ -77,6 +77,7 @@
 
 //Define detpack
 #define DETPACK_TIMER_MIN			5
+#define DETPACK_TIMER_MAX			300
 
 //Define flamer
 #define M240T_WATER_AMOUNT 			reagents.get_reagent_amount("water")

@@ -19,13 +19,8 @@
 //===========================================================================
 /atom/movable/Dispose()
 	for(var/atom/movable/I in contents)
-		if(!istype(I,/obj/item/device/radio/detpack)) //Exception for detpacks that shouldn't be deleted, such as from when a roller bed folds
-			cdel(I)
-			continue
-		var/obj/item/device/radio/detpack/D = I
-		if(D.plant_target == src)
-			D.loc = get_turf(src)
-			D.nullvars()
+		cdel(I)
+		continue
 
 	if(pulledby) pulledby.stop_pulling()
 	if(throw_source) throw_source = null

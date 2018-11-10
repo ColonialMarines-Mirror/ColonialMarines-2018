@@ -12,11 +12,13 @@
 	on = FALSE
 	layer = MOB_LAYER - 0.1
 	var/armed = FALSE
-	var/timer = 10.0
+	var/timer = 5.0
 	var/code = 2
 	var/det_mode = FALSE //FALSE for breach, TRUE for demolition.
 	var/atom/plant_target = null //which atom the detpack is planted on
 	var/target_drag_delay = null //store this for restoration later
+	var/boom = null //confirms whether we actually detted.
+
 
 /obj/item/device/radio/detpack/examine(mob/user)
 	. = ..()
@@ -35,11 +37,13 @@
 
 
 /obj/item/device/radio/detpack/Dispose()
-	if(plant_target && !plant_target.loc)
-		new /obj/item/device/radio/detpack(get_turf(src)) //in the event we have a target that can prematurely get deleted, like a roller bed that's folded up.
 	processing_second.Remove(src)
-	nullvars()
-	. = ..()
+	if(plant_target && !boom) //whatever name you give it
+		loc = get_turf(src)
+		nullvars()
+	else
+		nullvars()
+		..()
 
 /obj/item/device/radio/detpack/update_icon()
 	icon_state = "detpack_[plant_target ? "set_" : ""]"
@@ -92,6 +96,7 @@
 	plant_target = null //null everything out now
 	target_drag_delay = null
 	armed = FALSE
+	boom = FALSE
 	update_icon()
 
 /obj/item/device/radio/detpack/receive_signal(datum/signal/signal)
@@ -140,7 +145,7 @@
 				if(href_list["timer"])
 					timer += text2num(href_list["timer"])
 					timer = round(timer)
-					timer = CLAMP(timer,DETPACK_TIMER_MIN,300)
+					timer = CLAMP(timer,DETPACK_TIMER_MIN,DETPACK_TIMER_MAX)
 		if(!( master ))
 			if(istype(loc, /mob))
 				attack_self(loc)
@@ -288,6 +293,7 @@
 		return
 	//Time to go boom
 	playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
+	boom = TRUE
 	if(det_mode == TRUE) //If we're on demolition mode, big boom.
 		explosion(get_turf(plant_target), 2, 4, 5, 6)
 	else //if we're not, focused boom.

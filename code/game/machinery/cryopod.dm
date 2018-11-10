@@ -487,7 +487,7 @@ var/global/list/frozen_items = list("Alpha"=list(),"Bravo"=list(),"Charlie"=list
 		message_admins("\blue [usr.mind.assigned_role] [key_name(usr)] returned to the lobby using a cryopod.")
 		var/mob/new_player/NP = new()
 		NP.ckey = occupant.ckey
-		if(NP.client) NP.client.change_view(world.view)
+		NP.client?.change_view(world.view)
 		cdel(occupant)
 		cleanup()
 

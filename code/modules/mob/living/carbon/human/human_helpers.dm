@@ -300,7 +300,6 @@
 	return
 
 /mob/living/carbon/human/camo_off_process(code = 0, damage = 0)
-	to_chat(src, "<span class='danger'>CAMO OFF PROCESS DEBUG: Code: [code] Damage: [damage] User: [src]</span>")
 	if(!src)
 		return
 	if(!code)

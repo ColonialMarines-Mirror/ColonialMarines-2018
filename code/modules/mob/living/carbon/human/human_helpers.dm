@@ -291,3 +291,30 @@
 			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
+
+/mob/living/carbon/human/throw_at(atom/target, range, speed, thrower)
+	. = ..()
+	camo_off_process(SCOUT_CLOAK_OFF_ATTACK)
+
+/mob/living/proc/camo_off_process(code = 0, damage = 0)
+	return
+
+/mob/living/carbon/human/camo_off_process(code = 0, damage = 0)
+	to_chat(src, "<span class='danger'>CAMO OFF PROCESS DEBUG: Code: [code] Damage: [damage] User: [src]</span>")
+	if(!src)
+		return
+	if(!code)
+		return
+	if(!istype(back, /obj/item/storage/backpack/marine/satchel/scout_cloak) )
+		return
+	var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = back
+	switch(code)
+		if(SCOUT_CLOAK_OFF_ATTACK)
+			to_chat(src, "<span class='danger'>Your cloak shimmers from your actions!</span>")
+			S.camo_last_shimmer = world.time //Reduces transparency to 50%
+			alpha = SCOUT_CLOAK_RUN_ALPHA
+		if(SCOUT_CLOAK_OFF_DAMAGE)
+			if(damage >= 15)
+				to_chat(src, "<span class='danger'>Your cloak shimmers from the damage!</span>")
+				S.camo_last_shimmer = world.time //Reduces transparency to 50%
+				alpha = SCOUT_CLOAK_RUN_ALPHA

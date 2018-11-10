@@ -267,6 +267,10 @@
 		src.thrower = null
 		src.throw_source = null
 
+	if(ishuman(thrower)) //Human specific procs
+		var/mob/living/carbon/human/H = thrower
+		H.camo_off_process(SCOUT_CLOAK_OFF_ATTACK)
+
 
 //Overlays
 /atom/movable/overlay

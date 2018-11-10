@@ -153,11 +153,17 @@
 	current_mag = /obj/item/ammo_magazine/rifle/m4ra
 	force = 16
 	attachable_allowed = list(
+						/obj/item/attachable/heavy_barrel,
+						/obj/item/attachable/extended_barrel,
 						/obj/item/attachable/suppressor,
 						/obj/item/attachable/verticalgrip,
 						/obj/item/attachable/angledgrip,
 						/obj/item/attachable/bipod,
-						/obj/item/attachable/compensator)
+						/obj/item/attachable/compensator,
+						/obj/item/attachable/lasersight,
+						/obj/item/attachable/attached_gun/grenade,
+						/obj/item/attachable/attached_gun/shotgun,
+						)
 
 	flags_gun_features = GUN_AUTO_EJECTOR|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_SPEC
@@ -179,11 +185,14 @@
 /obj/item/weapon/gun/rifle/m4ra/set_gun_config_values()
 	fire_delay = config.high_fire_delay
 	burst_amount = config.med_burst_value
-	burst_delay = config.mlow_fire_delay
-	accuracy_mult = config.base_hit_accuracy_mult
-	scatter = config.low_scatter_value
+	burst_delay = config.vlow_fire_delay
+	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
+	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.max_hit_accuracy_mult
+	scatter_unwielded = config.max_scatter_value
 	damage_mult = config.base_hit_damage_mult
 	recoil = config.min_recoil_value
+	recoil_unwielded = config.high_recoil_value
+	damage_falloff_mult = config.low_damage_falloff_mult
 
 //-------------------------------------------------------
 //SMARTGUN

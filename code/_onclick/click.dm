@@ -84,7 +84,7 @@
 		return
 
 	// Don't allow doing anything else if inside a container of some sort, like a locker.
-	if (!isturf(loc) && !istype(A,/obj/item/device/radio/detpack)) //Exception for detpacks.
+	if (!isturf(loc))
 		return
 
 	if (world.time <= next_move)	// Attack click cooldown check
@@ -93,7 +93,7 @@
 
 	next_move = world.time
 	// If standing next to the atom clicked.
-	if (A.Adjacent(src) || A.loc.Adjacent(src) && istype(A,/obj/item/device/radio/detpack))
+	if (A.Adjacent(src) || A.loc.Adjacent(src))
 		if (W)
 			if (W.attack_speed)
 				next_move += W.attack_speed

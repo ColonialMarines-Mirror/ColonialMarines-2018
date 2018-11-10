@@ -6,7 +6,7 @@
 	if(!src.mob)
 		return
 
-	if(!(src.holder.rights & (R_ADMIN|R_MOD)) && !(src.mob.stat == DEAD))
+	if(!(holder.rights & (R_ADMIN|R_MOD)) && !(src.mob.stat == DEAD))
 		to_chat(src, "You must be an observer to use dsay.")
 		return
 
@@ -18,7 +18,7 @@
 		to_chat(src, "\red You have deadchat muted.")
 		return
 
-	if(src.handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if(handle_spam_prevention(msg, MUTE_DEADCHAT))
 		return
 
 	var/stafftype = null

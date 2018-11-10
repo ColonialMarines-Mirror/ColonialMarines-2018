@@ -36,7 +36,7 @@
 
 	var/list/Lines = list()
 
-	if((holder?.rights & (R_ADMIN|R_MOD)) || ((src?.mob?.stat == DEAD) && (holder?.rights & (R_MENTOR))))
+	if((holder.rights & (R_ADMIN|R_MOD)) || ((src.mob.stat == DEAD) && (holder.rights & (R_MENTOR))))
 		for(var/client/C in clients)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)

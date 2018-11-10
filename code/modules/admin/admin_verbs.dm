@@ -78,6 +78,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
+	/datum/admins/proc/viewUnheardMhelps,
+	/datum/admins/proc/viewUnheardAhelps,
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel

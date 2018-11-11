@@ -1278,7 +1278,7 @@
 		if(SENTRY_ALERT_DAMAGE)
 			var/percent = max(0,(health / max(1,health_max))*100)
 			if(percent)
-				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Coordinates: (X: [src.x], Y: [src.y]). Remaining Structural Integrity: [percent]%</b>"
+				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Coordinates: (X: [x], Y: [y]). Remaining Structural Integrity: [percent]%</b>"
 			else
 				notice = "<b>ALERT! [src] at: [get_area(src)], Coordinates: (X: [src.x], Y: [src.y]) has been destroyed.</b>"
 		if(SENTRY_ALERT_BATTERY)

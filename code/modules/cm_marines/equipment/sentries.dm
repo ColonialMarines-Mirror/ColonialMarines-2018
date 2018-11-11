@@ -1282,7 +1282,7 @@
 			else
 				notice = "<b>ALERT! [src] at: [get_area(src)], Coordinates: (X: [x], Y: [y]) has been destroyed.</b>"
 		if(SENTRY_ALERT_BATTERY)
-			notice = "<b>ALERT! [src]'s battery depleted at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.y]).</b>"
+			notice = "<b>ALERT! [src]'s battery depleted at: [get_area(src)]. Coordinates: (X: [x], Y: [y]).</b>"
 	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 	AI.SetName("Sentry Alert System")
 	AI.aiRadio.talk_into(AI,"[notice]","Almayer","announces")

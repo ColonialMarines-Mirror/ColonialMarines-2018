@@ -93,7 +93,7 @@
 
 	next_move = world.time
 	// If standing next to the atom clicked.
-	if (A.Adjacent(src) || A.loc.Adjacent(src))
+	if (A.Adjacent(src))
 		if (W)
 			if (W.attack_speed)
 				next_move += W.attack_speed

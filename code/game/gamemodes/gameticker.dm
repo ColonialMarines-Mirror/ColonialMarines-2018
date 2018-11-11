@@ -220,7 +220,7 @@ var/global/datum/controller/gameticker/ticker
 					to_chat(M, "Marine commander position not forced on anyone.")
 
 
-	proc/process()
+	process()
 		if(current_state != GAME_STATE_PLAYING)
 			return 0
 

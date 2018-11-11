@@ -20,7 +20,6 @@
 /atom/movable/Dispose()
 	for(var/atom/movable/I in contents)
 		cdel(I)
-		continue
 
 	if(pulledby) pulledby.stop_pulling()
 	if(throw_source) throw_source = null

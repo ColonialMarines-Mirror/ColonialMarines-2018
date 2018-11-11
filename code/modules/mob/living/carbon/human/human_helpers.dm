@@ -300,13 +300,13 @@
 	return
 
 /mob/living/carbon/human/camo_off_process(code = 0, damage = 0)
-	if(!camo_active)
-		return
 	if(!code)
 		return
 	if(!istype(back, /obj/item/storage/backpack/marine/satchel/scout_cloak) )
 		return
 	var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = back
+	if(!S.camo_active)
+		return
 	switch(code)
 		if(SCOUT_CLOAK_OFF_ATTACK)
 			to_chat(src, "<span class='danger'>Your cloak shimmers from your actions!</span>")

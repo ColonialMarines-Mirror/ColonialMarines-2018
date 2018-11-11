@@ -8,6 +8,8 @@ var/list/fax_contents = list() 					//List of fax contents to maintain it even i
 var/list/USCMFaxes = list()							//List of all USCM faxes sent this round
 var/list/active_tracking_beacons = list()			//List of all active squad tracking beacons
 
+var/global/world_qdel_log
+
 //Names of maps that can be compiled on
 var/list/DEFAULT_NEXT_MAP_CANDIDATES = list("LV-624", "Ice Colony", "Big-Red", "Prison Station")
 var/list/NEXT_MAP_CANDIDATES = DEFAULT_NEXT_MAP_CANDIDATES.Copy()
@@ -200,6 +202,3 @@ var/global/list/moth_wings_list = list()
 	for(var/path in subtypesof(prototype))
 		L += new path()
 	return L
-
-GLOBAL_VAR(world_qdel_log)
-GLOBAL_PROTECT(world_qdel_log)

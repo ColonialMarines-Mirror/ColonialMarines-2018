@@ -1048,5 +1048,4 @@ and you're good to go.
 		rotate.Translate(x,y)
 		rotate.Turn(angle)
 		I.transform = rotate
-
-		I.flick_overlay(user, 3)
+		flick_overlay_view(I, user, 3)

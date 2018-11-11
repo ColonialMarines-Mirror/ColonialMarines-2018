@@ -101,7 +101,7 @@ They're all essentially identical when it comes to getting the job done.
 /obj/item/ammo_magazine/proc/create_handful(mob/user, transfer_amount)
 	var/R
 	if (current_rounds > 0)
-		var/obj/item/ammo_magazine/handful/new_handful = rnew(/obj/item/ammo_magazine/handful)
+		var/obj/item/ammo_magazine/handful/new_handful = new /obj/item/ammo_magazine/handful()
 		var/MR = caliber == "12g" ? 5 : 8
 		R = transfer_amount ? min(current_rounds, transfer_amount) : min(current_rounds, MR)
 		new_handful.generate_handful(default_ammo, caliber, MR, R, gun_type)

@@ -1019,7 +1019,7 @@
 	var/sound_to_play = pick(1, 2) == 1 ? 'sound/voice/alien_spitacid.ogg' : 'sound/voice/alien_spitacid2.ogg'
 	playsound(src.loc, sound_to_play, 25, 1)
 
-	var/obj/item/projectile/A = rnew(/obj/item/projectile, current_turf)
+	var/obj/item/projectile/A = new /obj/item/projectile(current_turf)
 	A.generate_bullet(ammo)
 	A.permutated += src
 	A.def_zone = get_limbzone_target()

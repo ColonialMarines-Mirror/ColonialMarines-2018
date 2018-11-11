@@ -411,7 +411,7 @@ User can be passed as null, (a gun reloading itself for instance), so we need to
 					H.update_icon()
 					break
 			if(!found_handful)
-				var/obj/item/ammo_magazine/handful/new_handful = rnew(/obj/item/ammo_magazine/handful)
+				var/obj/item/ammo_magazine/handful/new_handful = new /obj/item/ammo_magazine/handful()
 				new_handful.generate_handful(current_mag.default_ammo, current_mag.caliber, 8, 1, type)
 				new_handful.loc = get_turf(src)
 		else
@@ -498,7 +498,7 @@ and you're good to go.
 		log_debug("ERROR CODE I2: null ammo while create_bullet(). User: <b>[usr]</b>")
 		chambered = ammo_list[/datum/ammo/bullet] //Slap on a default bullet if somehow ammo wasn't passed.
 
-	var/obj/item/projectile/P = rnew(/obj/item/projectile, src)
+	var/obj/item/projectile/P = new /obj/item/projectile(src)
 	P.generate_bullet(chambered)
 	return P
 
@@ -767,7 +767,7 @@ and you're good to go.
 						if(projectile_to_fire.ammo.bonus_projectiles_amount)
 							var/obj/item/projectile/BP
 							for(var/i = 1 to projectile_to_fire.ammo.bonus_projectiles_amount)
-								BP = rnew(/obj/item/projectile, M.loc)
+								BP = new /obj/item/projectile(M.loc)
 								BP.generate_bullet(ammo_list[projectile_to_fire.ammo.bonus_projectiles_type])
 								BP.dir = get_dir(user, M)
 								BP.distance_travelled = get_dist(user, M)

@@ -17,7 +17,7 @@
 	var/det_mode = FALSE //FALSE for breach, TRUE for demolition.
 	var/atom/plant_target = null //which atom the detpack is planted on
 	var/target_drag_delay = null //store this for restoration later
-	var/boom = null //confirms whether we actually detted.
+	var/boom = FALSE //confirms whether we actually detted.
 
 
 /obj/item/device/radio/detpack/examine(mob/user)

@@ -73,6 +73,12 @@
 					entry += " - <b><font color='red'>Antagonist</font></b>"
 				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 				Lines += entry
+		else
+			for(var/client/C in clients)
+				if(C.holder && C.holder.fakekey)
+					Lines += C.holder.fakekey
+				else
+					Lines += C.key
 	else
 		for(var/client/C in clients)
 			if(C.holder && C.holder.fakekey)
@@ -158,7 +164,18 @@
 						mentmsg += " (AFK)"
 					mentmsg += "\n"
 					num_mentors_online++
-
+		else
+			for(var/client/C in admins)
+				if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))
+					if(!C.holder.fakekey)
+						msg += "\t[C] is a [C.holder.rank]\n"
+						num_admins_online++
+				else if (R_MOD & C.holder.rights)
+					modmsg += "\t[C] is a [C.holder.rank]\n"
+					num_mods_online++
+				else if (R_MENTOR & C.holder.rights)
+					mentmsg += "\t[C] is a [C.holder.rank]\n"
+					num_mentors_online++
 	else
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))

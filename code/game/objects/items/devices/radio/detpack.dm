@@ -43,7 +43,7 @@
 		nullvars()
 	else
 		nullvars()
-		..()
+		return ..()
 
 /obj/item/device/radio/detpack/update_icon()
 	icon_state = "detpack_[plant_target ? "set_" : ""]"

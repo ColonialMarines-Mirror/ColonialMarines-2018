@@ -1274,7 +1274,7 @@
 		if(SENTRY_ALERT_HOSTILE)
 			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)]. Coordinates: (X: [M.x], Y: [M.y]).</b>"
 		if(SENTRY_ALERT_FALLEN)
-			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.y]).</b>"
+			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)]. Coordinates: (X: [x], Y: [y]).</b>"
 		if(SENTRY_ALERT_DAMAGE)
 			var/percent = max(0,(health / max(1,health_max))*100)
 			if(percent)

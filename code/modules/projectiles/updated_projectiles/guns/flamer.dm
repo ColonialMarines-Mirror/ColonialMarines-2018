@@ -439,7 +439,7 @@
 				new /obj/flamer_fire(T, fire_lvl, burn_lvl, f_color, new_spread_amt)
 
 
-/obj/flamer_fire/Dispose()
+/obj/flamer_fire/Destroy()
 	SetLuminosity(0)
 	processing_objects.Remove(src)
 	return ..()

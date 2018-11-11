@@ -148,7 +148,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		return 1
 	return 0
 
-/obj/item/clothing/suit/storage/marine/Dispose()
+/obj/item/clothing/suit/storage/marine/Destroy()
 	if(ismob(src.loc))
 		src.loc.SetLuminosity(-brightness_on)
 	else
@@ -556,7 +556,7 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		toggle_armor_light() //turn the light off
 	..()
 
-/obj/item/clothing/suit/storage/faction/Dispose()
+/obj/item/clothing/suit/storage/faction/Destroy()
 	if(ismob(src.loc))
 		src.loc.SetLuminosity(-brightness_on)
 	else

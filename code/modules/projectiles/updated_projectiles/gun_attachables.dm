@@ -687,7 +687,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 		ammo = ammo_list[ammo]
 
 
-/obj/item/attachable/attached_gun/Dispose()
+/obj/item/attachable/attached_gun/Destroy()
 	ammo = null
 	return ..()
 

@@ -258,7 +258,7 @@
 
 		round_statistics.total_xenos_created-- //so an evolved xeno doesn't count as two.
 
-		if(queen_chosen_lead && castepick != "Queen") // xeno leader is removed by Dispose()
+		if(queen_chosen_lead && castepick != "Queen") // xeno leader is removed by Destroy()
 			new_xeno.queen_chosen_lead = TRUE
 			hive.xeno_leader_list += new_xeno
 			new_xeno.hud_set_queen_overwatch()

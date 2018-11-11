@@ -12,12 +12,12 @@
 /obj/item/explosive/grenade/frag/prime()
 	spawn(0)
 		explosion(loc, -1, -1, 3)
-		cdel(src)
+		qdel(src)
 	return
 
 /obj/item/explosive/grenade/frag/flamer_fire_act()
 	var/turf/T = loc
-	cdel(src)
+	qdel(src)
 	explosion(T, -1, -1, 3)
 
 
@@ -54,7 +54,7 @@
 	prime()
 		spawn(0)
 			explosion(loc, -1, -1, 4)
-			cdel(src)
+			qdel(src)
 		return
 
 /obj/item/explosive/grenade/frag/m15
@@ -67,7 +67,7 @@
 	prime()
 		spawn(0)
 			explosion(loc, -1, -1, 4)
-			cdel(src)
+			qdel(src)
 		return
 
 /obj/item/explosive/grenade/frag/stick
@@ -117,7 +117,7 @@
 		spawn(0)
 			flame_radius(2, get_turf(src))
 			playsound(src.loc, 'sound/weapons/gun_flamethrower2.ogg', 35, 1, 4)
-			cdel(src)
+			qdel(src)
 		return
 
 proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, burn_damage = 25, fire_stacks = 15, int_var = 0.5, dur_var = 0.5, colour = "red") //~Art updated fire.
@@ -127,7 +127,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	int_var = CLAMP(int_var, 0.1,0.5)
 	dur_var = CLAMP(int_var, 0.1,0.5)
 	for(var/obj/flamer_fire/F in range(radius,T)) // No stacking flames!
-		cdel(F)
+		qdel(F)
 	new /obj/flamer_fire(T, rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)) + rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)), rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)) + rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)), colour, radius) //Gaussian.
 	for(var/mob/living/carbon/M in range(radius, T))
 		if(isXeno(M))
@@ -158,7 +158,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 35, 1, 4)
 			flame_radius(2, get_turf(src))
 			playsound(src.loc, 'sound/weapons/gun_flamethrower2.ogg', 30, 1, 4)
-			cdel(src)
+			qdel(src)
 		return
 
 
@@ -180,7 +180,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 		playsound(src.loc, 'sound/effects/smoke.ogg', 25, 1, 4)
 		smoke.set_up(3, 0, usr.loc, null, 6)
 		smoke.start()
-		cdel(src)
+		qdel(src)
 
 /obj/item/explosive/grenade/cloakbomb
 	name = "\improper M40-2 SCDP smoke grenade"
@@ -200,7 +200,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 		playsound(src.loc, 'sound/effects/smoke.ogg', 25, 1, 4)
 		smoke.set_up(3, 0, usr.loc, null, 7)
 		smoke.start()
-		cdel(src)
+		qdel(src)
 
 /obj/item/explosive/grenade/phosphorus
 	name = "\improper M40 HPDP grenade"
@@ -221,7 +221,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 		playsound(src.loc, 'sound/effects/smoke.ogg', 25, 1, 4)
 		smoke.set_up(3, 0, usr.loc)
 		smoke.start()
-		cdel(src)
+		qdel(src)
 
 /obj/item/explosive/grenade/phosphorus/upp
 	name = "\improper Type 8 WP grenade"

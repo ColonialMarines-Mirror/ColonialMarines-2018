@@ -40,4 +40,4 @@
 			to_chat(H, "<span class='role_header'>You are a colonist!</span>")
 			to_chat(H, "<span class='role_body'>You have been put into the game by a staff member. Please follow all staff instructions.</span>")
 
-	if(original && original.loc) cdel(original)
+	if(original && original.loc) qdel(original)

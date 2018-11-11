@@ -40,7 +40,7 @@
 		to_chat(M, "<B>Objectives:</b> [objectives]")
 
 	if(original)
-		cdel(original)
+		qdel(original)
 	return
 
 /datum/emergency_call/pizza/proc/spawn_pizza(var/mob/M)

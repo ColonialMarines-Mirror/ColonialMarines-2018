@@ -123,7 +123,7 @@
 	for (var/obj/item/I in M)
 		if (istype(I, /obj/item/implant))
 			continue
-		cdel(I)
+		qdel(I)
 	M.arm_equipment(M, dresscode)
 	M.regenerate_icons()
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")

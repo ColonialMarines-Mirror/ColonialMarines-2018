@@ -401,10 +401,10 @@
 
 /obj/item/storage/belt/gun/Dispose()
 	if(gun_underlay)
-		cdel(gun_underlay)
+		qdel(gun_underlay)
 		gun_underlay = null
 	if(current_gun)
-		cdel(current_gun)
+		qdel(current_gun)
 		current_gun = null
 	. = ..()
 
@@ -436,7 +436,7 @@
 		underlays -= gun_underlay
 		icon_state = copytext(icon_state,1,-2)
 		item_state = icon_state
-		cdel(gun_underlay)
+		qdel(gun_underlay)
 		gun_underlay = null
 	if(istype(user)) user.update_inv_belt()
 	if(istype(user)) user.update_inv_s_store()

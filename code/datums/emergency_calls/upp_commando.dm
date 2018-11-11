@@ -101,6 +101,6 @@
 	mob.add_language("Russian")
 
 	if(original)
-		cdel(original)
+		qdel(original)
 
 

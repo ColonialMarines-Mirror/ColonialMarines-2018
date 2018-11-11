@@ -145,7 +145,7 @@
 	var/i
 	for(i in A.overlays) //Remove the old.
 		A.overlays -= i
-		cdel(i)
+		qdel(i)
 	for(i in L) //Add the new.
 		P = i
 		I = rnew(/image/reusable, list(initial(P.icon),A, initial(P.icon_state)))

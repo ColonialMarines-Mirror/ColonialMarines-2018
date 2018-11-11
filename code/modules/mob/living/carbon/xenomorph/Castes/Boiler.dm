@@ -57,7 +57,7 @@
 /mob/living/carbon/Xenomorph/Boiler/Dispose()
 	SetLuminosity(0)
 	if(smoke)
-		cdel(smoke)
+		qdel(smoke)
 		smoke = null
 	return ..()
 
@@ -246,7 +246,7 @@
 		return
 
 	for(var/obj/effect/xenomorph/spray/S in target) //No stacking spray!
-		cdel(S)
+		qdel(S)
 	new /obj/effect/xenomorph/spray(target)
 	for(var/mob/living/carbon/M in target)
 		if(ishuman(M) || ismonkey(M))

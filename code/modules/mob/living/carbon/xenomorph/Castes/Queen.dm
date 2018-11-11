@@ -164,7 +164,7 @@
 								visible_message("<span class='xenodanger'>[L] quickly burrows into the ground.</span>")
 								ticker.mode.stored_larva++
 								round_statistics.total_xenos_created-- // keep stats sane
-								cdel(L)
+								qdel(L)
 
 
 //Custom bump for crushers. This overwrites normal bumpcode from carbon.dm
@@ -438,7 +438,7 @@
 	ovipositor = TRUE
 
 	for(var/datum/action/A in actions)
-		cdel(A)
+		qdel(A)
 
 	var/list/immobile_abilities = list(\
 		/datum/action/xeno_action/regurgitate,\
@@ -493,7 +493,7 @@
 		zoom_out()
 
 		for(var/datum/action/A in actions)
-			cdel(A)
+			qdel(A)
 
 		var/list/mobile_abilities = list(
 			/datum/action/xeno_action/xeno_resting,

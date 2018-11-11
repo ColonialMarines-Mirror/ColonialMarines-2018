@@ -80,7 +80,7 @@
 		to_chat(M, "<B>Objectives:</b> [objectives]")
 
 	if(original)
-		cdel(original)
+		qdel(original)
 
 
 

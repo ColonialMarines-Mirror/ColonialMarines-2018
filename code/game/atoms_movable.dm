@@ -18,7 +18,7 @@
 
 //===========================================================================
 /atom/movable/Dispose()
-	for(var/atom/movable/I in contents) cdel(I)
+	for(var/atom/movable/I in contents) qdel(I)
 	if(pulledby) pulledby.stop_pulling()
 	if(throw_source) throw_source = null
 

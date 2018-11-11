@@ -40,4 +40,4 @@
 			to_chat(H, "<span class='role_body'>Spread... Consume... Infect...</span>")
 
 	if(original && original.loc)
-		cdel(original)
+		qdel(original)

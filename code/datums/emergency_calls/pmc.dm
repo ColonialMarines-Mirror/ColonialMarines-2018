@@ -77,7 +77,7 @@
 		to_chat(M, "<B>Objectives:</b> [objectives]")
 
 	if(original)
-		cdel(original)
+		qdel(original)
 
 
 /datum/emergency_call/pmc/print_backstory(mob/living/carbon/human/M)

@@ -303,8 +303,8 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(deathtime < 3000 && ( !O.client.holder || !(O.client.holder.rights & R_ADMIN)) )
 			continue
 
-		// Admins and AFK players cannot be drafted
-		if (O.client.inactivity / 600 > ALIEN_SELECT_AFK_BUFFER + 5 || istype(O.client.holder, /datum/admins))
+		//AFK players cannot be drafted
+		if(O.client.inactivity / 600 > ALIEN_SELECT_AFK_BUFFER + 5)
 			continue
 
 		candidates += O.key

@@ -430,7 +430,7 @@
 	camo_off()
 	wearer = null
 	processing_objects.Remove(src)
-	. = ..()
+	return ..()
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/dropped(mob/user)
 	camo_off(user)

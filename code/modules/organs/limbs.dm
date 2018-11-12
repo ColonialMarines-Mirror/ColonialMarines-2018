@@ -1035,7 +1035,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"[text1]",
 		"[text2]")
 		status |= LIMB_SPLINTED
-		. = TRUE
+		return TRUE
 
 
 //called when limb is removed or robotized, any ongoing surgery and related vars are reset

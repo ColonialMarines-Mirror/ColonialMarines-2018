@@ -1027,13 +1027,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 		text1 = "<span class='warning'>[user] successfully applies [S] to their [display_name].</span>"
 		text2 = "<span class='notice'>You successfully apply [S] to your [display_name].</span>"
 
-	if(do_mob(user, target, delay, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
-		if(!(status & LIMB_DESTROYED) && !(status & LIMB_SPLINTED))
-			user.visible_message(
-			"[text1]",
-			"[text2]")
-			status |= LIMB_SPLINTED
-			. = 1
+	if(!do_mob(user, target, delay, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
+		return
+
+	if(!(status & LIMB_DESTROYED) && !(status & LIMB_SPLINTED))
+		user.visible_message(
+		"[text1]",
+		"[text2]")
+		status |= LIMB_SPLINTED
+		. = TRUE
 
 
 //called when limb is removed or robotized, any ongoing surgery and related vars are reset

@@ -436,7 +436,7 @@
 	camo_off(user)
 	wearer = null
 	processing_objects.Remove(src)
-	. = ..()
+	return ..()
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/verb/use_camouflage()
 	set name = "Toggle M68 Thermal Camouflage"

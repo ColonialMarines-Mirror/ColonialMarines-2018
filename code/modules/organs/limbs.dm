@@ -1013,7 +1013,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(status & LIMB_SPLINTED)
 		to_chat(user, "<span class='warning'>This limb is already splinted!</span>")
-		return
+		return FALSE
 
 	var/delay = SKILL_TASK_AVERAGE
 	var/text1 = "<span class='warning'>[user] finishes applying [S] to [target]'s [display_name].</span>"

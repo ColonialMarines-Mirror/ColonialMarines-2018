@@ -33,9 +33,9 @@
 		mentor_msg = "\blue <b><font color=purple>PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;mark=\ref[src]'>Mark</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[src]'>FLW</a>):</b> [mentor_msg]"
 
 	for(var/client/C in admins)
-		if((C.prefs?.toggles_chat & CHAT_PRAYER) && (C.holder?.rights & (R_ADMIN|R_MOD)))
+		if((C.prefs.toggles_chat & CHAT_PRAYER) && (C.holder.rights & (R_ADMIN|R_MOD)))
 			to_chat(C, msg)
-		else if((C.prefs?.toggles_chat & CHAT_PRAYER) && (C.mob?.stat == DEAD))
+		else if((C.prefs.toggles_chat & CHAT_PRAYER) && (C.mob.stat == DEAD))
 			to_chat(C, mentor_msg)
 
 	if(liaison)

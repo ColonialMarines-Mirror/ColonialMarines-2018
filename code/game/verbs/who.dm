@@ -40,7 +40,7 @@
 		if(holder.rights & (R_ADMIN|R_MOD))
 			for(var/client/C in clients)
 				var/entry = "\t[C.key]"
-				if(C.holder && C.holder.fakekey)
+				if(C.holder?.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
 				entry += " - Playing as [C.mob.real_name]"
 				switch(C.mob.stat)
@@ -75,13 +75,13 @@
 				Lines += entry
 		else
 			for(var/client/C in clients)
-				if(C.holder && C.holder.fakekey)
+				if(C.holder?.fakekey)
 					Lines += C.holder.fakekey
 				else
 					Lines += C.key
 	else
 		for(var/client/C in clients)
-			if(C.holder && C.holder.fakekey)
+			if(C.holder?.fakekey)
 				Lines += C.holder.fakekey
 			else
 				Lines += C.key
@@ -90,7 +90,7 @@
 		msg += "[line]\n"
 
 	if(holder)
-		if((holder.rights & (R_ADMIN|R_MOD)) || ((mob.stat == DEAD) && (holder.rights & (R_MENTOR))))
+		if(holder.rights & (R_ADMIN|R_MOD) || ((mob.stat == DEAD) && holder.rights & (R_MENTOR)))
 			var/datum/hive_status/hive = hive_datum[XENO_HIVE_NORMAL]
 			msg += "<b>Total Players: [length(Lines)]</b>"
 			msg += "<br><b style='color:#777'>Observers: [count_observers] (Non-Admin: [count_nonadmin_observers])</b>"

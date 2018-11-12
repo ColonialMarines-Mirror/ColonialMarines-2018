@@ -1028,7 +1028,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		text2 = "<span class='notice'>You successfully apply [S] to your [display_name].</span>"
 
 	if(!do_mob(user, target, delay, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
-		return
+		return FALSE
 
 	if(!(status & LIMB_DESTROYED) && !(status & LIMB_SPLINTED))
 		user.visible_message(

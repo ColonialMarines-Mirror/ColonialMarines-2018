@@ -701,7 +701,7 @@
 "ny" = (/turf/open/floor/vault,/area/centcom)
 "nz" = (/obj/structure/prop/almayer/ship_memorial{desc = "A memorial to all that have contributed to DMCA code"; name = "slab of remembrance"},/turf/open/floor/carpet,/area/centcom)
 "nA" = (/obj/structure/prop/almayer/ship_memorial{desc = "A memorial to all who helped run the server, from admins to mentors"; name = "slab of remembrance"},/turf/open/floor/carpet,/area/centcom)
-"nB" = (/obj/structure/flora/ausbushes/leafybush,/obj/structure/prop/almayer/arc,/turf/open/floor/grass,/area/centcom)
+"nB" = (/obj/machinery/hologram/holopad,/obj/structure/prop/almayer/arc,/turf/open/floor/carpet,/area/centcom)
 "nC" = (/obj/structure/closet/crate/delta,/turf/open/floor/almayer{tag = "icon-test_floor5"; icon_state = "test_floor5"},/area/centcom/suppy)
 "nD" = (/obj/structure/flora/ausbushes,/turf/open/floor/grass,/area/centcom)
 "nE" = (/obj/structure/table/reinforced,/turf/open/floor/almayer,/area/centcom)
@@ -779,7 +779,6 @@
 "oY" = (/obj/machinery/door/poddoor/shutters/almayer/open{dir = 4; id = "CC_BigshuttleHallway"; name = "\improper Hangar Shutters"},/turf/open/floor/almayer{tag = "icon-orangecorner"; icon_state = "orangecorner"},/area/centcom)
 "oZ" = (/obj/machinery/door/poddoor/shutters/almayer/open{dir = 4; id = "CC_BigshuttleHallway"; name = "\improper Hangar Shutters"},/turf/open/floor/almayer{tag = "icon-orangecorner (EAST)"; icon_state = "orangecorner"; dir = 4},/area/centcom)
 "pa" = (/obj/machinery/door_control{id = "CC_BigshuttleHallway"; name = "Big Shuttle Lockdown"; pixel_y = -32},/turf/open/floor/almayer,/area/centcom)
-"pb" = (/obj/machinery/hologram/holopad,/obj/structure/prop/almayer/valmoric,/turf/open/floor/carpet,/area/centcom)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -811,7 +810,7 @@ aaaaaaaaaaaaaafxfCfCfCfCfCiUkNkOkPkQiUiWkRkRiWiUkSkKkTkUiUkVkWkXkYiWfCfCfCfCfCfC
 aaaaaaaaaaaaaafxfCfCfCiUiWiUiUiUkZiUiUlajvktlbiUiUlciUiUiUldlekXlfiUiUiWiUiUfCfCfCgfgjgWgWgWgjgqgpgpgjirininivininirgjgjntnVnNnYnLgweogvdXgmeogmdXgweonZeokdiViVkjdXgigxgimRkpmTmSmUkpmTmSmVgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCiUiUlglhiUliljlklllmjvktlilllkljlklniUlolpkXlqiUlrlsltiUiUfCfCgfgjgjgjgjgjgjgjgjgjinejejejejejingjgjntnNnYoLnLgweogvdXdXmWdXdXgwmXmZmYgvdXdXdXdXgigxginbnandncnenandncnfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCiWlulvlwiUlwlxlylylylzlAlylylylBlClDiUiUiUlEiUiUlFlGlHlIiWfCfCgfgjngngnggjgqgpgpgjinejelejelejingjgjntnYoMoNnLgweonkgngneonldXgwmXnmmYgvdXnonndXgigiginbnenenenenenenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaafxfCfCiUlJlKlLlMlLktlklklkjvktlklklklNlkjvlOlPlQlRlSlOlLlTlUlViWfCfCgfgjgjgjgjgjgjgjgjgjnpejejejejejnqgjgjntoNnBnVnLgwnZeoeoeoeoeonueomXnvmYeonwnyoOdXgigiginbnenznepbnAnenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaafxfCfCiUlJlKlLlMlLktlklklkjvktlklklklNlkjvlOlPlQlRlSlOlLlTlUlViWfCfCgfgjgjgjgjgjgjgjgjgjnpejejejejejnqgjgjntoNnMnVnLgwnZeoeoeoeoeonueomXnvmYeonwnyoOdXgigiginbnenznenBnAnenenfgigigigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCiWlWlXlYiUlYlZlylylylzlAlylylymalymbiUiUiWmciWiUmdmemfmgiWfCfCgfgjnCnCnCgjgqgpgpgjinejelejelejingjgjntoNoPoMnLgweokdiViVeonldXgwmXnEmYgvdXnonFdXgigxginbnenenenenenenenfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCiUiUmhmiiUmjljlkmklijvktlimklkljlklniUmlmmmnmoiUmpmqmriUiUfCfCgfgjgjgjgjgjgjgjgjgjinejejejejejingjgjntnVoQnMnLgweogvdXdXnGdXdXgwmXnHmYgvdXdXdXdXgigxginbnandncnenandncnfgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaafxfCfCfCiUiWiUiUiUmsiUiUlajvktlbiUiUmtiUiUiUmumvmwmxiUiUiWiUiUfCfCfCgfgjnInInIgjgqgpgpgjnJininnKininirgjgjntnNnNoPnLgweogvdXnOeonOdXgweonZeonkgngngldXgigxginQnPnSnRnTnPnSnRnUgigxgigyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -933,3 +932,4 @@ hphphphphphphphphphphphphphphpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 hphphphphphphphphphphphphphphpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 kxhphphphphphphphphphphphphphpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

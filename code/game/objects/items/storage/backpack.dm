@@ -468,7 +468,7 @@
 		to_chat(M, "<span class='warning'>Your thermal cloak is still recalibrating! It will be ready in [(camo_cooldown_timer - world.time) * 0.1] seconds.")
 		return
 
-	camo_active = 1
+	camo_active = TRUE
 	camo_last_stealth = world.time
 	to_chat(M, "<span class='notice'>You activate your cloak's camouflage.</span>")
 	wearer = M

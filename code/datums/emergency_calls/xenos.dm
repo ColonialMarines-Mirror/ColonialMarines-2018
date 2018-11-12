@@ -1,7 +1,8 @@
 
 //Xenomorphs, hostile to everyone.
 /datum/emergency_call/xenos
-	name = "Xenomorphs"
+	name = "Xenomorphs (Squad)"
+	mob_max = 7
 	probability = 10
 	role_needed = BE_ALIEN
 	auto_shuttle_launch = TRUE //because xenos can't use the shuttle console.
@@ -37,3 +38,11 @@
 
 	if(original) //Just to be sure.
 		cdel(original)
+
+
+
+/datum/emergency_call/xenos/platoon
+	name = "Xenomorphs (Platoon)"
+	mob_min = 8
+	mob_max = 30
+	probability = 0

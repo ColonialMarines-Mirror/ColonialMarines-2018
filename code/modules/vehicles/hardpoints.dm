@@ -171,15 +171,16 @@ Currently only has the tank hardpoints
 			to_chat(usr, "<span class='warning'>This module does not have any ammo.</span>")
 			return
 
-		if(do_after(usr, 5, FALSE, 5, BUSY_ICON_HOSTILE))
-			next_use = world.time + owner.cooldowns["primary"] * owner.misc_ratios["prim_cool"]
-			if(!prob(owner.accuracies["primary"] * 100 * owner.misc_ratios["prim_acc"]))
-				T = get_step(T, pick(cardinal))
-			var/obj/item/projectile/P = new
-			P.generate_bullet(new ammo.default_ammo)
-			P.fire_at(T, owner, src, P.ammo.max_range, P.ammo.shell_speed)
-			playsound(get_turf(src), pick('sound/weapons/tank_cannon_fire1.ogg', 'sound/weapons/tank_cannon_fire2.ogg'), 60, 1)
-			ammo.current_rounds--
+		if(!do_after(usr, 5, FALSE, 5, BUSY_ICON_HOSTILE))
+			return
+		next_use = world.time + owner.cooldowns["primary"] * owner.misc_ratios["prim_cool"]
+		if(!prob(owner.accuracies["primary"] * 100 * owner.misc_ratios["prim_acc"]))
+			T = get_step(T, pick(cardinal))
+		var/obj/item/projectile/P = new
+		P.generate_bullet(new ammo.default_ammo)
+		P.fire_at(T, owner, src, P.ammo.max_range, P.ammo.shell_speed)
+		playsound(get_turf(src), pick('sound/weapons/tank_cannon_fire1.ogg', 'sound/weapons/tank_cannon_fire2.ogg'), 60, 1)
+		ammo.current_rounds--
 
 /obj/item/hardpoint/primary/minigun
 	name = "LTAA-AP Minigun"

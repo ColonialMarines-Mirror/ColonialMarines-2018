@@ -244,8 +244,7 @@
 					"/obj/item/explosive/plastique",
 					"/obj/item/explosive/mine",
 					"/obj/item/explosive/grenade",
-					"/obj/item/storage/box/explosive_mines",
-					"/obj/item/ammo_magazine/rocket",
+					"/obj/item/storage/box/explosive_mines"
 					)
 
 /obj/item/storage/pouch/explosive/full/New()

@@ -172,7 +172,7 @@
 /obj/item/weapon/gun/rifle/m4ra/New()
 	..()
 	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 19,"rail_x" = 12, "rail_y" = 23, "under_x" = 23, "under_y" = 13, "stock_x" = 24, "stock_y" = 13)
-	var/obj/item/attachable/scope/S = new(src)
+	var/obj/item/attachable/scope/m4ra/S = new(src)
 	S.icon_state = null // the gun's sprite already shows a scope
 	S.attach_icon = null
 	S.flags_attach_features &= ~ATTACH_REMOVABLE //Don't want it coming off.
@@ -183,9 +183,9 @@
 
 
 /obj/item/weapon/gun/rifle/m4ra/set_gun_config_values()
-	fire_delay = config.high_fire_delay
+	fire_delay = config.mhigh_fire_delay
 	burst_amount = config.low_burst_value
-	burst_delay = config.min_fire_delay
+	burst_delay = config.vlow_fire_delay
 	accuracy_mult = config.base_hit_accuracy_mult + config.low_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.max_hit_accuracy_mult
 	scatter_unwielded = config.max_scatter_value

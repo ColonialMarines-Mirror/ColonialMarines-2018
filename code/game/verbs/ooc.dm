@@ -67,6 +67,10 @@ var/global/normal_ooc_colour = "#002eb8"
 				display_colour = "#000000"	//black
 			if("Maintainer")
 				display_colour = "#0064ff"	//different light blue
+			if("Artist")
+				display_colour = "#0046dc"	//very slightly different than regular OOC
+			if("Contributor")
+				display_colour = "#0046dc" //very slightly different than regular OOC
 			else
 				display_colour = "#643200"	//brown
 		//else if(holder.rights & R_COLOR)

@@ -504,7 +504,7 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 /obj/item/attachable/scope/activate_attachment(obj/item/weapon/gun/G, mob/living/carbon/user, turn_off)
 	if(turn_off)
 		if(G.zoom)
-			accuracy_mod = -config.high_hit_accuracy_mult
+			accuracy_mod = null
 			G.zoom(user, zoom_offset, zoom_viewsize)
 		return TRUE
 
@@ -550,6 +550,8 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 /obj/item/attachable/scope/m4ra
 	name = "m4ra rail scope"
+	icon_state = "sniperscope"
+	attach_icon = "sniperscope_a"
 	desc = "A rail mounted zoom sight scope specialized for the M4RA Battle Rifle . Allows zoom by activating the attachment. Use F12 if your HUD doesn't come back."
 
 /obj/item/attachable/scope/m4ra/New()

@@ -83,7 +83,7 @@
 	. += config.human_delay
 
 
-/mob/living/proc/Process_Cloaking(mob/living/carbon/human/user)
+/mob/living/carbon/human/proc/Process_Cloaking(mob/living/carbon/human/user)
 	if(!istype(back, /obj/item/storage/backpack/marine/satchel/scout_cloak) )
 		return
 	var/obj/item/storage/backpack/marine/satchel/scout_cloak/S = back

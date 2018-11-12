@@ -423,7 +423,7 @@
 	var/camo_last_stealth = null
 	var/camo_last_shimmer = null
 	var/camo_energy = 100
-	var/mob/living/wearer = null
+	var/mob/living/carbon/human/wearer = null
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/Dispose()
@@ -521,9 +521,12 @@
 	processing_objects.Remove(src)
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/proc/process_camo_cooldown(mob/living/user, cooldown)
+	if(!camo_cooldown_timer)
+		return
 	spawn(cooldown)
 		camo_cooldown_timer = null
 		camo_energy = SCOUT_CLOAK_MAX_ENERGY
+		playsound(user.loc,'sound/effects/EMPulse.ogg', 25, 0, 1)
 		to_chat(user, "<span class='danger'>Your thermal cloak has recalibrated and is ready to cloak again.</span>")
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/examine(mob/user)
@@ -543,7 +546,7 @@
 		return FALSE
 	if(slot != WEAR_BACK)
 		return FALSE
-	return TRUE //only give action button when armor is worn.
+	return TRUE
 
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/attack_self(mob/user)

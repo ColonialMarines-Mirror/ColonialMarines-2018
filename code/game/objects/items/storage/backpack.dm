@@ -492,7 +492,7 @@
 
 	processing_objects.Add(src)
 
-	return 1
+	return TRUE
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/proc/camo_off(var/mob/user)
 	if (!user)

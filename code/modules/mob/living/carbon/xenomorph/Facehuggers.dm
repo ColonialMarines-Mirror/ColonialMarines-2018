@@ -175,22 +175,19 @@
 	set waitfor = 0
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"
-	if(stat == DEAD)
-		return
-	if(ismob(hit_atom))
+	if(ismob(hit_atom) && stat != DEAD)
 		if(stat == CONSCIOUS)
-			if(leaping && CanHug(hit_atom)) //Standard leaping behaviour, not attributable to being _thrown_ such as by a Carrier.
+			if(leaping && CanHug(hit_atom))
 				Attach(hit_atom)
-			else if(hit_atom.density) //We hit something, cool.
+			else if(hit_atom.density)
 				stat = UNCONSCIOUS //Giving it some brief downtime before jumping on someone via movement.
 				icon_state = "[initial(icon_state)]_inactive"
 				step(src, turn(dir, 180)) //We want the hugger to bounce off if it hits a mob.
 				throwing = FALSE
-				if(CanHug(hit_atom)) //We hit a host! Even cooler.
-					spawn(5)
-						if(loc && stat != DEAD)
-							GoActive(5) //Up and at them! 0.5 second delay.
-							icon_state = "[initial(icon_state)]"
+				sleep(5) //0.5 seconds.
+				if(loc && stat != DEAD)
+					stat = CONSCIOUS
+					icon_state = "[initial(icon_state)]"
 				return
 		throwing = FALSE
 		return

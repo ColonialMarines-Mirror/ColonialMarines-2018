@@ -277,7 +277,7 @@ var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_subtle_message,
 	/datum/admins/proc/viewUnheardMhelps,
 	/datum/admins/proc/viewUnheardAhelps,
-	/datum/admins/proc/viewCLFaxes,
+	/datum/admins/proc/viewCLFaxes
 )
 
 /client/proc/add_admin_verbs()
@@ -796,7 +796,7 @@ var/list/admin_verbs_mentor = list(
 		to_chat(usr, "<span class='boldnotice'>You will now get friendly fire attack log messages.</span>")
 	else
 		to_chat(usr, "<span class='boldnotice'>You will no longer get friendly fire attack log messages.</span>")
-		
+
 /client/proc/toggleendofroundattacklogs()
 	set name = "Toggle End-Of-Round Attack Log Messages"
 	set category = "Preferences"

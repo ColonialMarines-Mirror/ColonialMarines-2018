@@ -307,6 +307,14 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(O.client.inactivity / 600 > ALIEN_SELECT_AFK_BUFFER + 5)
 			continue
 
+		if(O.client.holder)
+			switch(alert("You have been drafted for xenomorph, do you wish to proceed?",,"Yes","No"))
+				if("Yes")
+					candidates += O.key
+					continue
+				if("No")
+					continue
+
 		candidates += O.key
 
 	return candidates

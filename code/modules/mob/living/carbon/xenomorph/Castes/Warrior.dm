@@ -20,6 +20,7 @@
 	old_x = -16
 	evolves_to = list("Praetorian", "Crusher")
 	armor_deflection = 40
+	mob_size = MOB_SIZE_BIG
 	tier = 2
 	upgrade = 0
 	actions = list(

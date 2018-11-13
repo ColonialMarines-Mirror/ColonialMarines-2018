@@ -21,6 +21,7 @@
 	evolves_to = list("Warrior")
 	charge_type = 2 //Pounce - Hunter
 	armor_deflection = 20
+	mob_size = MOB_SIZE_BIG
 	tier = 1
 	upgrade = 0
 	pull_speed = -2

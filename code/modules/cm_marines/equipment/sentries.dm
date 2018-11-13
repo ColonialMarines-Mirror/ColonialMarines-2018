@@ -350,7 +350,6 @@
 	camera.c_tag = "[name] ([rand(0, 1000)])"
 	spawn(2)
 		stat = 0
-	//processing_objects.Add(src)
 	ammo = ammo_list[ammo]
 
 
@@ -551,7 +550,7 @@
 				user.visible_message("<span class='notice'>[user] deactivates [src].</span>",
 				"<span class='notice'>You deactivate [src].</span>")
 				state("<span class='notice'>The [name] powers down and goes silent.</span>")
-				processing_objects.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 				update_icon()
 
 		if("toggle_alert")

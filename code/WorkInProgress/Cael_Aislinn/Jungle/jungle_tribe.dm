@@ -13,7 +13,7 @@
 	var/tribe_type = 1
 
 /obj/effect/jungle_tribe_spawn/New()
-	processing_objects.Add(src)
+	START_PROCESSING(SSobj, src)
 	tribe_type = rand(1,5)
 
 	var/num_tribesmen = rand(3,6)
@@ -25,7 +25,7 @@
 		tribesmen += T
 
 /obj/effect/jungle_tribe_spawn/Destroy()
-	processing_objects.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/effect/jungle_tribe_spawn/process()

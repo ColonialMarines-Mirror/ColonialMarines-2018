@@ -51,9 +51,9 @@
 
 /obj/effect/xenomorph/spray/New() //Self-deletes
 	..()
-	processing_objects.Add(src)
+	START_PROCESSING(SSobj, src)
 	spawn(100 + rand(0, 20))
-		processing_objects.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 		return
 
@@ -79,7 +79,7 @@
 /obj/effect/xenomorph/spray/process()
 	var/turf/T = loc
 	if(!istype(T))
-		processing_objects.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 		return
 

@@ -64,7 +64,7 @@
 
 
 /obj/item/device/motiondetector/Destroy()
-	processing_objects.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	for(var/obj/X in blip_pool)
 		qdel(X)
 	blip_pool = list()
@@ -80,7 +80,7 @@
 /obj/item/device/motiondetector/process()
 	if(!active)
 		update_icon()
-		processing_objects.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	var/mob/living/carbon/human/human_user
@@ -89,7 +89,7 @@
 	else
 		active = FALSE
 		update_icon()
-		processing_objects.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	recycletime--
@@ -228,11 +228,11 @@
 			if(active)
 				icon_state = "detector_on_[detector_mode]"
 				to_chat(usr, "<span class='notice'>You activate [src].</span>")
-				processing_objects.Add(src)
+				START_PROCESSING(SSobj, src)
 			else
 				icon_state = "detector_off"
 				to_chat(usr, "<span class='notice'>You deactivate [src].</span>")
-				processing_objects.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 
 		else if(href_list["detector_mode"])
 			detector_mode = !detector_mode

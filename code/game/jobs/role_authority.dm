@@ -166,10 +166,11 @@ var/global/datum/authority/branch/role/RoleAuthority
 				J = roles_by_path[i]
 				roles_for_mode -= J.title
 
-	var/roles_command[] = roles_for_mode & ROLES_COMMAND //If we have a special mode list, we only want that which is on the list.
-	var/roles_regular[] = roles_for_mode - roles_command //Two different lists, since we always want to check command first when we loop.
-	if(roles_command.len) roles_command = shuffle(roles_command, 1) //Shuffle our job lists for when we begin the loop.
-	if(roles_regular.len) roles_regular = shuffle(roles_regular, 1) //Should always have some, but who knows.
+	var/roles[] = roles_for_mode
+
+	if(roles.len) 
+		roles = shuffle(roles, 1) //Shuffle our job lists for when we begin the loop.
+
 	//In the future, any regular role that has infinite spawn slots should be removed as well.
 
 	/*===============================================================*/
@@ -177,24 +178,14 @@ var/global/datum/authority/branch/role/RoleAuthority
 	//===============================================================\\
 	//PART II: Setting up our player variables and lists, to see if we have anyone to destribute.
 
-	unassigned_players  = new
+	var/list/unassigned_players
 	var/mob/new_player/M
-
-
-	var/good_age_min = 20//Best command candidates are in the 25 to 40 range.
-	var/good_age_max = 50
 
 	for(var/i in player_list) //Get all players who are ready.
 		M = i
 		if(istype(M) && M.ready && M.mind && !M.mind.assigned_role)
 			//TODO, check if mobs are already spawned as human before this triggers.
-			switch(M.client.prefs.age) //We need a weighted list for command positions.
-				if(good_age_min - 5 to good_age_min - 1)	unassigned_players[M] = 35 //Too young.
-				if(good_age_min     to good_age_min + 4)	unassigned_players[M] = 65 //Acceptable.
-				if(good_age_min + 5 to good_age_max - 10) 	unassigned_players[M] = 100 //Perfect match.
-				if(good_age_max - 9 to good_age_max + 5) 	unassigned_players[M] = 65 //Acceptable.
-				if(good_age_max + 6 to good_age_max + 10) 	unassigned_players[M] = 35 //Too old.
-				else 										unassigned_players[M] = 15 //Least chance.
+			unassigned_players += M
 
 	if(!unassigned_players.len) //If we don't have any players, the round can't start.
 		unassigned_players = null
@@ -245,14 +236,13 @@ var/global/datum/authority/branch/role/RoleAuthority
 	var/l = 0 //levels
 
 	while(++l < 4) //Three macro loops, from high to low.
-		assign_initial_roles(l, roles_command, 1) //Do command positions first.
-		roles_regular = assign_initial_roles(l, roles_regular) //The regular positions. We keep our unassigned pool between calls.
+		assign_initial_roles(l, roles, 1) //Do command positions first.
 
 	for(var/i in unassigned_players)
 		M = i
 		switch(M.client.prefs.alternate_option)
 			if(GET_RANDOM_JOB)
-				roles_regular = assign_random_role(M, roles_regular) //We want to keep the list between assignments.
+				roles = assign_random_role(M, roles) //We want to keep the list between assignments.
 			if(BE_ASSISTANT)
 				assign_role(M, roles_for_mode["Squad Marine"]) //Should always be available, in all game modes, as a candidate. Even if it may not be a marine.
 			if(RETURN_TO_LOBBY)
@@ -274,6 +264,8 @@ wants to play a command position, but their character doesn't fit the guidelines
 candidates should have a better shot at it first. Should that fail, they can still late join.
 More or less the point of this system, and it will safeguard new players from getting command
 roles willy nilly.
+
+^ Preserving this comment so code historians can laugh at it.
 */
 
 /datum/authority/branch/role/proc/assign_initial_roles(l, list/roles_to_iterate, weighted)

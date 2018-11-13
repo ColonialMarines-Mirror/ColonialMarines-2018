@@ -822,9 +822,6 @@ and you're good to go.
 		if( (flags_gun_features & GUN_WY_RESTRICTED) && !wy_allowed_check(user) )
 			return
 
-		if( (flags_gun_features & GUN_SPECIALIST) && !spec_allowed_check(user) )
-			return
-
 		if( (flags_gun_features & GUN_POLICE) && !police_allowed_check(user) )
 			return
 

@@ -312,7 +312,7 @@
 	name = "\improper M240-T incinerator unit"
 	desc = "An improved version of the M240A1 incinerator unit, the M240-T model is capable of dispersing a larger variety of fuel types."
 	current_mag = /obj/item/ammo_magazine/flamer_tank/large
-	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY|GUN_SPECIALIST
+	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY
 	req_access = list(ACCESS_MARINE_SPECPREP)
 	var/max_water = 200
 	var/last_use

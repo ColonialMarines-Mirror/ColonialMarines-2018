@@ -23,8 +23,7 @@
 	zoomdevicename = "scope"
 	attachable_allowed = list(/obj/item/attachable/bipod)
 
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
-	req_access = list(ACCESS_MARINE_SPECPREP)
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WIELDED_FIRING_ONLY
 
 	New()
 		select_gamemode_skin(type, list(MAP_ICE_COLONY = "s_m42a") )
@@ -66,7 +65,7 @@
 	force = 17
 	zoomdevicename = "scope"
 	attachable_allowed = list()
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WY_RESTRICTED|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WY_RESTRICTED|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/rifle/sniper/elite/New()
 	..()
@@ -117,7 +116,7 @@
 						/obj/item/attachable/magnetic_harness,
 						/obj/item/attachable/scope/slavic)
 
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/rifle/sniper/svd/New()
 	..()
@@ -159,9 +158,8 @@
 						/obj/item/attachable/bipod,
 						/obj/item/attachable/compensator)
 
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_SPEC
-	req_access = list(ACCESS_MARINE_SPECPREP)
 
 /obj/item/weapon/gun/rifle/m4ra/New()
 	..()
@@ -214,7 +212,7 @@
 						/obj/item/attachable/burstfire_assembly,
 						/obj/item/attachable/bipod)
 
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER
 	starting_attachment_types = list(/obj/item/attachable/flashlight)
 
 /obj/item/weapon/gun/smartgun/New()
@@ -289,7 +287,7 @@
 	current_mag = /obj/item/ammo_magazine/internal/smartgun/dirty
 	ammo_secondary = /datum/ammo/bullet/smartgun/lethal
 	attachable_allowed = list() //Cannot be upgraded.
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_WY_RESTRICTED|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_WY_RESTRICTED|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/smartgun/dirty/set_gun_config_values()
 	fire_delay = config.low_fire_delay
@@ -323,9 +321,8 @@
 	attachable_allowed = list(
 						/obj/item/attachable/magnetic_harness)
 
-	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_SPEC
-	req_access = list(ACCESS_MARINE_SPECPREP)
 	var/datum/effect_system/smoke_spread/smoke
 
 /obj/item/weapon/gun/launcher/m92/New()
@@ -433,8 +430,7 @@
 	cocked_sound = 'sound/weapons/gun_m92_cocked.ogg'
 	aim_slowdown = SLOWDOWN_ADS_SPECIALIST
 	gun_skill_category = GUN_SKILL_SPEC
-	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
-	req_access = list(ACCESS_MARINE_SPECPREP)
+	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY
 	attachable_allowed = list()
 	var/grenade
 	var/grenade_type_allowed = /obj/item/explosive/grenade
@@ -559,9 +555,8 @@
 						/obj/item/attachable/magnetic_harness,
 						/obj/item/attachable/scope/mini)
 
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = GUN_SKILL_SPEC
-	req_access = list(ACCESS_MARINE_SPECPREP)
 	var/datum/effect_system/smoke_spread/smoke
 
 /obj/item/weapon/gun/launcher/rocket/New()
@@ -673,7 +668,7 @@
 	current_mag = /obj/item/ammo_magazine/internal/launcher/rocket/m57a4
 	aim_slowdown = SLOWDOWN_ADS_SUPERWEAPON
 	attachable_allowed = list()
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_WY_RESTRICTED|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_WY_RESTRICTED|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/launcher/rocket/m57a4/set_gun_config_values()
 	fire_delay = config.mhigh_fire_delay

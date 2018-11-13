@@ -631,7 +631,7 @@ and you're good to go.
 		var/scatter_chance_mod = 0
 		var/burst_scatter_chance_mod = 0
 		//They decrease scatter chance and increase accuracy a tad. Can also increase damage.
-		if(flags_item & WIELDED && user && under && under.bipod_deployed) //Let's get to work on the bipod. I'm not really concerned if they are the same person as the previous user. It doesn't matter.
+		if(flags_item & WIELDED && user && under?.bipod_deployed) //Let's get to work on the bipod. I'm not really concerned if they are the same person as the previous user. It doesn't matter.
 			if(under.check_bipod_support(src, user))
 				//Passive accuracy and recoil buff, but only when firing in position.
 				projectile_to_fire.accuracy *= config.base_hit_accuracy_mult + config.hmed_hit_accuracy_mult //More accuracy.

@@ -52,16 +52,14 @@ var/global/Holiday = null
 
 		if(4)	//Apr
 			switch(DD)
-				if(1)
-												Holiday = "April Fool's Day"
+				if(1)							Holiday = "April Fool's Day"
 				if(4)
 					if(YY == 21)				Holiday = "Easter"
 				if(12)
 					if(YY == 20)				Holiday = "Easter"
 				if(17)
 					if(YY == 22)				Holiday = "Easter"
-				if(20)
-												Holiday = "Four-Twenty"
+				if(20)							Holiday = "Four-Twenty"
 				if(21)
 					if(YY == 19)				Holiday = "Easter"
 				if(22)							Holiday = "Earth Day"

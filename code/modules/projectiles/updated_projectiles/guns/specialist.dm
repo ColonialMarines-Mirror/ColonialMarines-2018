@@ -171,7 +171,7 @@
 
 /obj/item/weapon/gun/rifle/m4ra/New()
 	..()
-	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 19,"rail_x" = 12, "rail_y" = 23, "under_x" = 23, "under_y" = 13, "stock_x" = 24, "stock_y" = 13)
+	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 17,"rail_x" = 12, "rail_y" = 23, "under_x" = 23, "under_y" = 13, "stock_x" = 24, "stock_y" = 13)
 	var/obj/item/attachable/scope/m4ra/S = new(src)
 	S.icon_state = null // the gun's sprite already shows a scope
 	S.attach_icon = null

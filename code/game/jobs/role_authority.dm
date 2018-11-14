@@ -168,7 +168,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 
 	var/roles[] = roles_for_mode
 
-	if(roles.len) 
+	if(length(roles))
 		roles = shuffle(roles, 1) //Shuffle our job lists for when we begin the loop.
 
 	//In the future, any regular role that has infinite spawn slots should be removed as well.

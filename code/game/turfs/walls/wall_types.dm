@@ -67,7 +67,7 @@
 	icon_state = "containment_wall_divide"
 
 /turf/closed/wall/almayer/research/containment/wall/south
-	icon_state = "containment_wall_south"
+	icon_state = "containment_wall_s"
 
 /turf/closed/wall/almayer/research/containment/wall/west
 	icon_state = "containment_wall_w"

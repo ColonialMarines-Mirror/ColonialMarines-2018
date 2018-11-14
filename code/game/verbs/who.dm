@@ -40,7 +40,7 @@
 		if(holder.rights & (R_ADMIN|R_MOD))
 			for(var/client/C in clients)
 				var/entry = "\t[C.key]"
-				if(C.holder && C.holder.fakekey)
+				if(C.holder?.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
 				entry += " - Playing as [C.mob.real_name]"
 				switch(C.mob.stat)
@@ -75,13 +75,13 @@
 				Lines += entry
 		else
 			for(var/client/C in clients)
-				if(C.holder && C.holder.fakekey)
+				if(C.holder?.fakekey)
 					Lines += C.holder.fakekey
 				else
 					Lines += C.key
 	else
 		for(var/client/C in clients)
-			if(C.holder && C.holder.fakekey)
+			if(C.holder?.fakekey)
 				Lines += C.holder.fakekey
 			else
 				Lines += C.key
@@ -116,7 +116,7 @@
 			for(var/client/C in admins)
 				if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))	//Used to determine who shows up in admin rows
 
-					if(C.holder.fakekey && (!R_ADMIN & holder.rights && !R_MOD & holder.rights))		//Mentors can't see stealthmins
+					if(C.holder.fakekey && !(holder.rights & (R_ADMIN|R_MOD)))		//Mentors can't see stealthmins
 						continue
 
 					msg += "\t[C] is a [C.holder.rank]"
@@ -166,7 +166,7 @@
 					num_mentors_online++
 		else
 			for(var/client/C in admins)
-				if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))
+				if(C.holder.rights & R_ADMIN || !(C.holder.rights & (R_MOD|R_MENTOR)))
 					if(!C.holder.fakekey)
 						msg += "\t[C] is a [C.holder.rank]\n"
 						num_admins_online++

@@ -27,9 +27,11 @@
 */
 /turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null)
 	var/turf/T0 = get_turf(neighbor)
+	if(!T0 || !loc) //Unlikely, but one of us is in nullspace or a null input was passed. Abort.
+		return
 	if(T0 == src)
 		return TRUE
-	if(!T0 || get_dist(src,T0) > 1 || z != T0.z) //too far
+	if(get_dist(src,T0) > 1 || z != T0.z) //too far
 		return FALSE
 	// Non diagonal case
 	if(T0.x == x || T0.y == y)
@@ -74,13 +76,9 @@ Quick adjacency (to turf):
 	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(atom/neighbor)
-	if(!neighbor)
-		return FALSE
-	var/turf/source_loc
 	for(var/S in locs) // To account for multi-tiles
-		if(!(source_loc = get_turf(S))) // Check if not in nullspace
-			continue
-		if(source_loc.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
+		var/turf/source_loc = get_turf(S) // They could be inside containers
+		if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
 			return TRUE
 	return FALSE
 /*

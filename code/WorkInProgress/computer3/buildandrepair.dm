@@ -156,7 +156,8 @@
 					if(do_after(user, 20, TRUE, 5, BUSY_ICON_BUILD))
 						if(P)
 							P:amount -= 5
-							if(!P:amount) qdel(P)
+							if(!P:amount) 
+								qdel(P)
 							to_chat(user, "\blue You add cables to the frame.")
 							src.state = 3
 							src.icon_state = "3"

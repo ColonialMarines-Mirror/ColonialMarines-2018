@@ -82,12 +82,12 @@
 /obj/item/device/encryptionkey/cmpcom
 	name = "\improper Marine Chief MP radio encryption key"
 	icon_state = "cap_cypherkey"
-	channels = list("Command" = 1, "MP" = 1, "Alpha" = 0, "Bravo" = 0, "Charlie" = 0, "Delta" = 0, "Engi" = 1, "MedSci" = 1, "Req" = 1 )
+	channels = list("Command" = 1, "MP" = 1, "Alpha" = 1, "Bravo" = 1, "Charlie" = 1, "Delta" = 1, "Engi" = 1, "MedSci" = 1, "Req" = 1 )
 
 /obj/item/device/encryptionkey/mcom
 	name = "\improper Marine Command radio encryption key"
 	icon_state = "cap_cypherkey"
-	channels = list("Command" = 1, "Alpha" = 0, "Bravo" = 0, "Charlie" = 0, "Delta" = 0, "Engi" = 1, "MedSci" = 1, "Req" = 1 )
+	channels = list("Command" = 1, "MP" = 1, "Alpha" = 1, "Bravo" = 1, "Charlie" = 1, "Delta" = 1, "Engi" = 1, "MedSci" = 1, "Req" = 1 )
 
 /obj/item/device/encryptionkey/mcom/ai //AI only.
 	channels = list("Command" = 1, "MP" = 1, "Alpha" = 1, "Bravo" = 1, "Charlie" = 1, "Delta" = 1, "Engi" = 1, "MedSci" = 1, "Req" = 1 )

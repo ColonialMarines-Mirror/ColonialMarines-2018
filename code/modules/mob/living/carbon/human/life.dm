@@ -59,9 +59,15 @@
 			species.handle_unique_behavior(src)
 
 		else //Dead
-			if(!undefibbable)
-				if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > revive_grace_period))	//We are dead beyond revival, or we're junk mobs spawned like the clowns on the clown shuttle
+			if(!undefibbable && timeofdeath && life_tick > 5 && life_tick % 2 == 0)
+				if(timeofdeath < 5 || world.time - timeofdeath > revive_grace_period)	//We are dead beyond revival, or we're junk mobs spawned like the clowns on the clown shuttle
 					undefibbable = TRUE
+					med_hud_set_status()
+				else if((world.time - timeofdeath) > (revive_grace_period / 4))
+					med_hud_set_status()
+				else if((world.time - timeofdeath) > ((revive_grace_period / 4) * 2))
+					med_hud_set_status()
+				else if((world.time - timeofdeath) > ((revive_grace_period / 4) * 3))
 					med_hud_set_status()
 
 	else

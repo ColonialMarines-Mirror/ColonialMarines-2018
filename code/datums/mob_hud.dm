@@ -277,14 +277,14 @@ var/datum/mob_hud/huds = list(
 			var/mob/dead/observer/G = get_ghost()
 			if(!istype(G))
 				revive_enabled = 0
-		else
-			if(world.time - timeofdeath > revive_grace_period / 4)
-				stage = 2
-			else if(world.time - timeofdeath > (revive_grace_period / 4) * 2)
-				stage = 3
-			else if(world.time - timeofdeath > (revive_grace_period / 4) * 3)
-				stage = 4
 
+		if(stat == DEAD || !undefibbable)
+			if((world.time - timeofdeath) > revive_grace_period / 4)
+				stage = 2
+			else if((world.time - timeofdeath) > ((revive_grace_period / 4) * 2))
+				stage = 3
+			else if((world.time - timeofdeath) > ((revive_grace_period / 4) * 3))
+				stage = 4
 
 		var/holder2_set = 0
 		if(status_flags & XENO_HOST)

@@ -260,6 +260,8 @@
 					skill_value = user.mind.cm_skills.heavy_weapons
 				if(GUN_SKILL_SMARTGUN)
 					skill_value = user.mind.cm_skills.smartgun
+				if(GUN_SKILL_SPEC)
+					skill_value = user.mind.cm_skills.spec_weapons
 			if(skill_value)
 				wield_time -= 2*skill_value
 	do_wield(user, wield_time)
@@ -819,10 +821,7 @@ and you're good to go.
 			to_chat(user, "<span class='warning'>You need a more secure grip to fire this weapon!")
 			return
 
-		if( (flags_gun_features & GUN_WY_RESTRICTED) && !wy_allowed_check(user) )
-			return
-
-		if( (flags_gun_features & GUN_POLICE) && !police_allowed_check(user) )
+		if((flags_gun_features & GUN_POLICE) && !police_allowed_check(user))
 			return
 
 		//Has to be on the bottom of the stack to prevent delay when failing to fire the weapon for the first time.
@@ -904,6 +903,8 @@ and you're good to go.
 					skill_accuracy = user.mind.cm_skills.heavy_weapons
 				if(GUN_SKILL_SMARTGUN)
 					skill_accuracy = user.mind.cm_skills.smartgun
+				if(GUN_SKILL_SPEC)
+					skill_accuracy = user.mind.cm_skills.spec_weapons
 		if(skill_accuracy)
 			gun_accuracy_mult += skill_accuracy * config.low_hit_accuracy_mult // Accuracy mult increase/decrease per level is equal to attaching/removing a red dot sight
 
@@ -979,6 +980,8 @@ and you're good to go.
 						scatter_tweak = user.mind.cm_skills.heavy_weapons
 					if(GUN_SKILL_SMARTGUN)
 						scatter_tweak = user.mind.cm_skills.smartgun
+					if(GUN_SKILL_SPEC)
+						scatter_tweak = user.mind.cm_skills.spec_weapons
 				if(scatter_tweak)
 					total_scatter_chance -= scatter_tweak*config.low_scatter_value
 
@@ -1020,7 +1023,8 @@ and you're good to go.
 					recoil_tweak = user.mind.cm_skills.heavy_weapons
 				if(GUN_SKILL_SMARTGUN)
 					recoil_tweak = user.mind.cm_skills.smartgun
-
+				if(GUN_SKILL_SPEC)
+					recoil_tweak = user.mind.cm_skills.spec_weapons
 			if(recoil_tweak)
 				total_recoil -= recoil_tweak*config.min_recoil_value
 	if(total_recoil > 0 && ishuman(user))

@@ -19,7 +19,6 @@ DEFINES in setup.dm, referenced here.
 #define GUN_BURST_ON			256
 #define GUN_BURST_FIRING		512
 #define GUN_FLASHLIGHT_ON		1024
-#define GUN_WY_RESTRICTED		2048
 
 	NOTES
 

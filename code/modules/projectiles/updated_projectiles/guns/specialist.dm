@@ -65,7 +65,7 @@
 	force = 17
 	zoomdevicename = "scope"
 	attachable_allowed = list()
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WY_RESTRICTED|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/rifle/sniper/elite/New()
 	..()
@@ -287,7 +287,7 @@
 	current_mag = /obj/item/ammo_magazine/internal/smartgun/dirty
 	ammo_secondary = /datum/ammo/bullet/smartgun/lethal
 	attachable_allowed = list() //Cannot be upgraded.
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_WY_RESTRICTED|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/smartgun/dirty/set_gun_config_values()
 	fire_delay = config.low_fire_delay
@@ -668,7 +668,7 @@
 	current_mag = /obj/item/ammo_magazine/internal/launcher/rocket/m57a4
 	aim_slowdown = SLOWDOWN_ADS_SUPERWEAPON
 	attachable_allowed = list()
-	flags_gun_features = GUN_INTERNAL_MAG|GUN_WY_RESTRICTED|GUN_WIELDED_FIRING_ONLY
+	flags_gun_features = GUN_INTERNAL_MAG|GUN_WIELDED_FIRING_ONLY
 
 /obj/item/weapon/gun/launcher/rocket/m57a4/set_gun_config_values()
 	fire_delay = config.mhigh_fire_delay

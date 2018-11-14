@@ -75,12 +75,52 @@ Quick adjacency (to turf):
 	Note: Multiple-tile objects are created when the bound_width and bound_height are creater than the tile size.
 	This is not used in stock /tg/station currently.
 */
+var/static/Adjacent_swap = TRUE
+
 /atom/movable/Adjacent(atom/neighbor)
+	Adjacent_swap = !Adjacent_swap
+	if(Adjacent_swap)
+		return Adjacent_new(neighbor)
+	else
+		return Adjacent_old(neighbor)
+
+/atom/movable/proc/Adjacent_new(atom/neighbor)
 	for(var/S in locs) // To account for multi-tiles
 		var/turf/source_loc = get_turf(S) // They could be inside containers
 		if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
 			return TRUE
 	return FALSE
+
+/atom/proc/Adjacent_old(var/atom/neighbor) // basic inheritance, unused
+	return 0
+
+/atom/movable/Adjacent_old(atom/neighbor)
+	if(neighbor == loc)
+		return 1
+	if(!isturf(loc))
+		return 0
+	for(var/turf/T in locs)
+		if(isnull(T))
+			continue
+		if(T.Adjacent(neighbor,src))
+			return 1
+	return 0
+
+/obj/item/Adjacent(atom/neighbor)
+	Adjacent_swap = !Adjacent_swap
+	if(Adjacent_swap)
+		return Adjacent_new(neighbor)
+	else
+		return Adjacent_old(neighbor)
+
+/obj/item/Adjacent_old(atom/neighbor, recurse = 1)
+	if(neighbor == loc)
+		return 1
+	if(istype(loc,/obj/item))
+		if(recurse > 0)
+			return loc.Adjacent_old(neighbor,recurse - 1)
+		return 0
+	return ..()
 /*
 	Special case: This allows you to reach a door when it is visally on top of,
 	but technically behind, a fire door

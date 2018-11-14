@@ -18,7 +18,7 @@ var/global/Holiday = null
 
 //sets up the Holiday global variable. Shouldbe called on game configuration or something.
 /proc/Get_Holiday()
-	if(!Holiday)	
+	if(!Holiday)
 		return		// Holiday stuff was not enabled in the config!
 
 	Holiday = null				// reset our switch now so we can recycle it as our Holiday name
@@ -123,7 +123,7 @@ var/global/Holiday = null
 	set name = ".Set Holiday"
 	set category = "Fun"
 	set desc = "Force-set the Holiday variable to make the game think it's a certain day."
-	if(!check_rights(R_SERVER))	
+	if(!check_rights(R_SERVER))
 		return
 
 	Holiday = T
@@ -177,12 +177,8 @@ var/global/Holiday = null
 				containers += S
 
 			message_admins("\blue DEBUG: Event: Egg spawned at [Egg.loc] ([Egg.x],[Egg.y],[Egg.z])")*/
-		if("End of the World")
-			return
-			//if(prob(eventchance))	
-			//	GameOver()
 
 		if("Christmas","Christmas Eve")
 			return
-			//if(prob(eventchance))	
+			//if(prob(eventchance))
 			//	ChristmasEvent()

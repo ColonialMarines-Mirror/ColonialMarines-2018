@@ -12,6 +12,7 @@
 	var/time_of_birth
 	var/plasma_gain = 5
 	var/devour_timer = 0
+	var/tackle_damage = 20 //How much HALLOSS damage a xeno deals when tackling
 
 	var/evolution_allowed = 1 //Are they allowed to evolve (and have their evolution progress group)
 	var/evolution_stored = 0 //How much evolution they have stored
@@ -22,9 +23,12 @@
 	var/upgrade_threshold = 0
 
 	var/list/evolves_to = list() //This is where you add castes to evolve into. "Seperated", "by", "commas"
-	var/tacklemin = 2
-	var/tacklemax = 4
-	var/tackle_chance = 50
+	var/tacklemin = 1
+	var/tacklemax = 1
+	var/tackle_chance = 100
+	var/critical_proc = 0
+	var/critical_delay = 25
+
 	var/is_intelligent = 0 //If they can use consoles, etc. Set on Queen
 	var/caste_desc = null
 	var/has_spat = 0
@@ -36,6 +40,7 @@
 	var/armor_bonus = 0 //Extra chance of deflecting projectiles due to temporary effects
 	var/armor_pheromone_bonus = 0 //
 	var/fire_immune = 0 //Boolean
+	var/fire_resist = 1 //0 to 1; lower is better as it is a multiplier.
 	var/obj/structure/tunnel/start_dig = null
 	var/tunnel_delay = 0
 	var/datum/ammo/xeno/ammo = null //The ammo datum for our spit projectiles. We're born with this, it changes sometimes.
@@ -123,8 +128,8 @@
 	var/used_punch = 0
 	var/used_toggle_agility = 0
 
-	var/lunge_cooldown = 40
-	var/fling_cooldown = 40
+	var/lunge_cooldown = 120
+	var/fling_cooldown = 60
 	var/punch_cooldown = 40
 	var/toggle_agility_cooldown = 5
 
@@ -139,9 +144,11 @@
 
 	var/headbutt_cooldown = 40
 	var/tail_sweep_cooldown = 120
-	var/crest_defense_cooldown = 150
-	var/fortify_cooldown = 200
-	var/fortify_timer = 60
+	var/crest_defense_cooldown = 10
+	var/crest_defense_armor = 35
+	var/fortify_cooldown = 10
+	var/fortify_armor = 70
+
 
 	//Praetorian vars
 	var/acid_spray_range = 3
@@ -154,6 +161,18 @@
 	//Leader vars
 	var/leader_aura_strength = 0 //Pheromone strength inherited from Queen
 	var/leader_current_aura = "" //Pheromone type inherited from Queen
+
+	//Runner vars
+	var/savage = FALSE
+	var/savage_used = FALSE
+	var/savage_cooldown = 300
+
+	//Notification spam controls
+	var/recent_notice = 0
+	var/notice_delay = 20 //2 second between notices
+
+	var/cresttoss_used = FALSE
+	var/cresttoss_cooldown = 60
 
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL

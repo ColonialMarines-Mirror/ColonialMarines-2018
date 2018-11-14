@@ -1,14 +1,11 @@
-//MARINE VENDING - APOPHIS775 - LAST UPDATE - 25JAN2015
-
-
 ///******MARINE VENDOR******///
 
 /obj/machinery/vending/marine
 	name = "ColMarTech Automated Weapons rack"
 	desc = "A automated weapon rack hooked up to a colossal storage of standard-issue weapons."
-	icon_state = "armory"
-	icon_vend = "armory-vend"
-	icon_deny = "armory"
+	icon_state = "marinearmory"
+	icon_vend = "marinearmory-vend"
+	icon_deny = "marinearmory"
 	req_access = null
 	req_access_txt = "0"
 	req_one_access = null
@@ -82,10 +79,9 @@
 /obj/machinery/vending/marine/cargo_guns
 	name = "\improper ColMarTech automated armaments vendor"
 	desc = "A automated rack hooked up to a small supply of various firearms and explosives."
-	hacking_safety = 1
 	wrenchable = FALSE
 	products = list(
-					/obj/item/storage/backpack/marine = 15,
+					/obj/item/storage/backpack/marine/standard = 15,
 					/obj/item/storage/belt/marine = 15,
 					/obj/item/storage/belt/shotgun = 10,
 					/obj/item/clothing/tie/storage/webbing = 3,
@@ -106,6 +102,7 @@
 					/obj/item/storage/pouch/firstaid/full = 5,
 					/obj/item/storage/pouch/pistol = 10,
 					/obj/item/storage/pouch/magazine/pistol/large = 5,
+					/obj/item/storage/pouch/shotgun = 10,
 					/obj/item/weapon/gun/pistol/m4a3 = 20,
 					/obj/item/weapon/gun/pistol/m1911 = 2,
 					/obj/item/weapon/gun/revolver/m44 = 10,
@@ -168,10 +165,9 @@
 /obj/machinery/vending/marine/cargo_ammo
 	name = "\improper ColMarTech automated munition vendor"
 	desc = "A automated rack hooked up to a small supply of ammo magazines."
-	icon_state = "cargo-armory"
-	icon_vend = "cargo-armory-vend"
-	icon_deny = "cargo-armory"
-	hacking_safety = 1
+	icon_state = "marinerequisitions"
+	icon_vend = "marinerequisitions-vend"
+	icon_deny = "marinerequisitions"
 	wrenchable = FALSE
 	products = list(
 					/obj/item/storage/large_holster/machete/full = 10,
@@ -191,7 +187,7 @@
 					/obj/item/ammobox = 3,
 					/obj/item/ammo_magazine/rifle = 15,
 					/obj/item/ammobox/ext = 1,
-					/obj/item/ammo_magazine/rifle/extended = 5,				
+					/obj/item/ammo_magazine/rifle/extended = 5,
 					/obj/item/ammobox/ap = 1,
 					/obj/item/ammo_magazine/rifle/ap = 5,
 					/obj/item/ammo_magazine/shotgunbox = 3,
@@ -240,9 +236,6 @@
 	cargo_ammo_vendors.Remove(src)
 
 
-
-
-//MARINE FOOD VENDOR APOPHIS775 23DEC2017
 /obj/machinery/vending/marineFood
 	name = "\improper Marine Food and Drinks Vendor"
 	desc = "Standard Issue Food and Drinks Vendor, containing standard military food and drinks."
@@ -255,6 +248,7 @@
 					/obj/item/reagent_container/food/snacks/mre_pack/meal4 = 15,
 					/obj/item/reagent_container/food/snacks/mre_pack/meal5 = 15,
 					/obj/item/reagent_container/food/snacks/mre_pack/meal6 = 15,
+					/obj/item/storage/box/MRE = 10,
 					/obj/item/reagent_container/food/drinks/flask = 5)
 //Christmas inventory
 /*
@@ -268,27 +262,26 @@
 	req_access_txt = ""
 
 
-//MARINE MEDICAL VENDOR -APOPHIS775 31JAN2017
 /obj/machinery/vending/MarineMed
 	name = "\improper MarineMed"
 	desc = "Marine Medical Drug Dispenser - Provided by Weyland-Yutani Pharmaceuticals Division(TM)"
 	icon_state = "marinemed"
 	icon_deny = "marinemed-deny"
-	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	req_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY) //only doctors and researchers can access these
+	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;All natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
+	req_one_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_MEDPREP) //Medics, doctors and researchers can access
 	wrenchable = FALSE
 	products = list(/obj/item/reagent_container/hypospray/autoinjector/quickclot = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/Bicard = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/dexP = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/Dylovene = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/Inaprovaline = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/Kelo = 6,
-					/obj/item/reagent_container/hypospray/autoinjector/Oxycodone = 4,
-					/obj/item/reagent_container/hypospray/autoinjector/tricord = 8,
+					/obj/item/reagent_container/hypospray/autoinjector/bicaridine = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/dexalinplus = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/dylovene = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/inaprovaline = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/kelotane = 6,
+					/obj/item/reagent_container/hypospray/autoinjector/oxycodone = 4,
+					/obj/item/reagent_container/hypospray/autoinjector/tricordrazine = 8,
 					/obj/item/reagent_container/hypospray/autoinjector/hypervene = 4,
 					/obj/item/storage/pill_bottle/bicaridine = 3,
 					/obj/item/storage/pill_bottle/dexalin = 3,
-					/obj/item/storage/pill_bottle/antitox = 3,
+					/obj/item/storage/pill_bottle/dylovene = 3,
 					/obj/item/storage/pill_bottle/kelotane = 3,
 					/obj/item/storage/pill_bottle/spaceacillin = 3,
 					/obj/item/storage/pill_bottle/inaprovaline = 3,
@@ -305,11 +298,10 @@
 					/obj/item/device/healthanalyzer = 3,
 					/obj/item/bodybag/cryobag = 2)
 
-	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/chloralhydrate =3)
+	contraband = list(/obj/item/reagent_container/hypospray/autoinjector/sleeptoxin =3)
 
 
 
-//NEW BLOOD VENDOR CODE - APOPHIS775 22JAN2015
 /obj/machinery/vending/MarineMed/Blood
 	name = "\improper MM Blood Dispenser"
 	desc = "Marine Med brand Blood Pack Dispensery"
@@ -370,11 +362,10 @@
 /obj/machinery/vending/marine_special
 	name = "\improper ColMarTech Specialist Vendor"
 	desc = "A marine specialist equipment vendor"
-	hacking_safety = 1
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	req_access = list(ACCESS_MARINE_SPECPREP)
-	icon_state = "boozeomat"
-	icon_deny = "boozeomat-deny"
+	icon_state = "specialist"
+	icon_deny = "specialist-deny"
 	wrenchable = FALSE
 	tokensupport = TOKEN_SPEC
 
@@ -384,13 +375,10 @@
 						/obj/item/explosive/plastique = 2,
 						/obj/item/explosive/grenade/frag = 2,
 						/obj/item/explosive/grenade/incendiary = 2,
-//						/obj/item/weapon/gun/flamer = 1,
-//						/obj/item/tank/phoron/m240 = 3,
-						///obj/item/weapon/shield/riot = 1,
 						/obj/item/storage/pouch/magazine/large = 1,
 						/obj/item/storage/pouch/general/medium = 1,
 						/obj/item/clothing/mask/gas = 1
-			)
+					)
 	contraband = list()
 	premium = list(
 					/obj/item/storage/box/spec/demolitionist = 1,
@@ -398,26 +386,25 @@
 					/obj/item/storage/box/m42c_system = 1,
 					/obj/item/storage/box/m42c_system_Jungle = 1,
 					/obj/item/storage/box/spec/pyro = 1
-			)
+					)
 	prices = list()
 
 
 /obj/machinery/vending/shared_vending/marine_special
 	name = "\improper ColMarTech Specialist Vendor"
 	desc = "A marine specialist equipment vendor"
-	hacking_safety = 1
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	req_access = list(ACCESS_MARINE_SPECPREP)
-	icon_state = "boozeomat"
-	icon_deny = "boozeomat-deny"
+	icon_state = "specialist"
+	icon_deny = "specialist-deny"
 	wrenchable = FALSE
 	tokensupport = TOKEN_SPEC
 
 	products = list(
 						/obj/item/coin/marine/specialist = 1,
-			)
+					)
 	contraband = list()
-	//premium = list(/obj/item/weapon/shield/riot = 1)	//NOTE: This needs to be re-worked so we don't have to have a riot shield in here at all. ~Bmc777
+	premium = list()
 	shared = list(
 					/obj/item/storage/box/spec/demolitionist = 1,
 					/obj/item/storage/box/spec/heavy_grenadier = 1,
@@ -475,8 +462,8 @@
 	hacking_safety = 1
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	req_access = list(ACCESS_MARINE_SMARTPREP)
-	icon_state = "boozeomat"
-	icon_deny = "boozeomat-deny"
+	icon_state = "smartgunner"
+	icon_deny = "smartgunner-deny"
 	wrenchable = FALSE
 
 	products = list(
@@ -496,10 +483,9 @@
 	hacking_safety = 1
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	req_access = list(ACCESS_MARINE_LEADER)
-	icon_state = "tool"
-	icon_deny = "tool-deny"
+	icon_state = "squadleader"
+	icon_deny = "squadleader-deny"
 	wrenchable = FALSE
-	tokensupport = "marine"
 
 	products = list(
 						/obj/item/clothing/suit/storage/marine/leader = 1,
@@ -548,7 +534,6 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	wrenchable = FALSE
-	tokensupport = "marine"
 
 	products = list(
 						/obj/item/attachable/suppressor = 8,
@@ -594,9 +579,9 @@
 /obj/machinery/vending/uniform_supply
 	name = "\improper ColMarTech surplus uniform vendor"
 	desc = "A automated weapon rack hooked up to a colossal storage of uniforms"
-	icon_state = "uniform_marine"
-	icon_vend = "uniform_marine_vend"
-	icon_deny = "uniform_marine"
+	icon_state = "marineuniform"
+	icon_vend = "marineuniform_vend"
+	icon_deny = "marineuniform"
 	req_access = null
 	req_access_txt = "0"
 	req_one_access = null
@@ -605,7 +590,7 @@
 
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
-					/obj/item/storage/backpack/marine = 10,
+					/obj/item/storage/backpack/marine/standard = 10,
 					/obj/item/storage/backpack/marine/satchel = 10,
 					/obj/item/storage/belt/marine = 10,
 					/obj/item/storage/belt/shotgun = 10,

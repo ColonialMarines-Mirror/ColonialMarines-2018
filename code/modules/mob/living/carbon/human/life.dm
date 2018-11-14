@@ -2,9 +2,6 @@
 
 /mob/living/carbon/human/Life()
 
-	set invisibility = 0
-	set background = 1
-
 	if(monkeyizing)
 		return
 	if(!loc) //Fixing a null error that occurs when the mob isn't found in the world -- TLE
@@ -12,13 +9,8 @@
 
 	..()
 
-	blinded = null
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
 
 	//TODO: seperate this out
 	//update the current life tick, can be used to e.g. only do something every 4 ticks
@@ -26,7 +18,7 @@
 
 	voice = GetVoice()
 	if(stat == DEAD && species.name == "Zombie" && regenZ)
-		handle_chemicals_in_body()
+		handle_organs()
 		return
 	//No need to update all of these procs if the guy is dead.
 	if(!in_stasis)
@@ -47,14 +39,7 @@
 			//Mutations and radiation
 			handle_mutations_and_radiation()
 
-			//Chemicals in the body
-			handle_chemicals_in_body()
-
-			//Disabilities
-			handle_disabilities()
-
-			//Organs and blood
-			handle_organs()
+			//blood
 			handle_blood()
 
 			//Random events (vomiting etc)
@@ -88,17 +73,8 @@
 	//Handle temperature/pressure differences between body and environment
 	handle_environment() //Optimized a good bit.
 
-	//Status updates, death etc.
-	handle_regular_status_updates() //Optimized a bit
-
-	updatehealth()
-
-	update_canmove()
-
 	//Update our name based on whether our face is obscured/disfigured
 	//name = get_visible_name() //moved out to the relevant places to be updated on demand.
-
-	handle_regular_hud_updates()
 
 	pulse = handle_pulse()
 

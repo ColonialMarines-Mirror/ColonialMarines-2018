@@ -226,7 +226,7 @@
 		if(user.get_inactive_hand()) //Failsafe; if there's somehow still something in the off-hand (undroppable), bail.
 			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 			return
-			
+
 	if(ishuman(user))
 		var/check_hand = user.r_hand == src ? "l_hand" : "r_hand"
 		var/mob/living/carbon/human/wielder = user
@@ -238,7 +238,7 @@
 	flags_item 	   ^= WIELDED
 	name 	   += " (Wielded)"
 	item_state += "_w"
-	slowdown = initial(slowdown) + aim_slowdown
+	update_slowdown()
 	place_offhand(user, initial(name))
 	wield_time = world.time + wield_delay
 	//slower or faster wield delay depending on skill.
@@ -274,9 +274,16 @@
 	flags_item ^= WIELDED
 	name 	    = copytext(name, 1, -10)
 	item_state  = copytext(item_state, 1, -2)
-	slowdown = initial(slowdown)
+	update_slowdown()
 	remove_offhand(user)
 	return TRUE
+	
+/obj/item/weapon/gun/proc/update_slowdown()
+	if(flags_item & WIELDED)
+		slowdown = initial(slowdown) + aim_slowdown
+	else
+		slowdown = initial(slowdown)
+	
 
 //----------------------------------------------------------
 			//							        \\
@@ -624,7 +631,7 @@ and you're good to go.
 		var/scatter_chance_mod = 0
 		var/burst_scatter_chance_mod = 0
 		//They decrease scatter chance and increase accuracy a tad. Can also increase damage.
-		if(user && under && under.bipod_deployed) //Let's get to work on the bipod. I'm not really concerned if they are the same person as the previous user. It doesn't matter.
+		if(flags_item & WIELDED && user && under?.bipod_deployed) //Let's get to work on the bipod. I'm not really concerned if they are the same person as the previous user. It doesn't matter.
 			if(under.check_bipod_support(src, user))
 				//Passive accuracy and recoil buff, but only when firing in position.
 				projectile_to_fire.accuracy *= config.base_hit_accuracy_mult + config.hmed_hit_accuracy_mult //More accuracy.
@@ -635,10 +642,6 @@ and you're good to go.
 					projectile_to_fire.damage *= config.base_hit_damage_mult + config.low_hit_damage_mult//Lower chance of a damage buff.
 				if(i == 1)
 					to_chat(user, "<span class='notice'>Your bipod keeps [src] steady!</span>")
-			else
-				under.activate_attachment(src, user, TRUE) //If there is no support, retract it to warn the user.
-				to_chat(user, "<span class='notice'>Your bipod retracts due to lack of support.</span>")
-				playsound(user, 'sound/machines/click.ogg', 15, 1)
 		//End of bipods.
 
 		target = original_target ? original_target : targloc
@@ -693,6 +696,9 @@ and you're good to go.
 			if(able_to_fire(user))
 				flags_gun_features ^= GUN_CAN_POINTBLANK //If they try to click again, they're going to hit themselves.
 				M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger.</span>")
+				log_game("[key_name(user)] is trying to commit suicide.")
+				var/u = "[key_name(user)] is trying to commit suicide."
+				user.log_message(u, LOG_ATTACK, "red")
 				if(do_after(user, 40, TRUE, 5, BUSY_ICON_HOSTILE))
 					if(active_attachable && !(active_attachable.flags_attach_features & ATTACH_PROJECTILE))
 						active_attachable.activate_attachment(src, null, TRUE)//We're not firing off a nade into our mouth.
@@ -705,6 +711,8 @@ and you're good to go.
 						simulate_recoil(2, user)
 						var/obj/item/weapon/gun/revolver/current_revolver = src
 						var/t = "[key_name(user)] committed suicide with [key_name(src)]" //Log it.
+						message_admins("[user.name] ([user.ckey]) committed suicide with [key_name(src)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[user.name]'>FLW</A>)", 1)
+						log_game("[user.name] ([user.ckey]) committed suicide with [key_name(src)].")
 						if(istype(current_revolver) && current_revolver.russian_roulette) //If it's a revolver set to Russian Roulette.
 							t += " after playing Russian Roulette"
 							user.apply_damage(projectile_to_fire.damage * 3, projectile_to_fire.ammo.damage_type, "head", used_weapon = "An unlucky pull of the trigger during Russian Roulette!", sharp = 1)
@@ -931,7 +939,7 @@ and you're good to go.
 				playsound(user, actual_sound, 60)
 				if(bullets_fired == 1)
 					user.visible_message(
-					"<span class='danger'>[user] [src][reflex ? " by reflex":""]!</span>", \
+					"<span class='danger'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
 					"<span class='warning'>You fire [src][reflex ? "by reflex":""]! [flags_gun_features & GUN_AMMO_COUNTER && current_mag ? "<B>[current_mag.current_rounds-1]</b>/[current_mag.max_rounds]" : ""]</span>", \
 					"<span class='warning'>You hear a [istype(projectile_to_fire.ammo, /datum/ammo/bullet) ? "gunshot" : "blast"]!</span>", 4
 					)

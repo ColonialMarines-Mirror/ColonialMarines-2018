@@ -122,8 +122,6 @@
 //For some goddamn reason robots have this hardcoded. Redefining it for our fragile friends here.
 /mob/living/silicon/robot/drone/updatehealth()
 	if(status_flags & GODMODE)
-		health = 35
-		stat = CONSCIOUS
 		return
 	health = 35 - (getBruteLoss() + getFireLoss())
 	return
@@ -131,14 +129,11 @@
 //Easiest to check this here, then check again in the robot proc.
 //Standard robots use config for crit, which is somewhat excessive for these guys.
 //Drones killed by damage will gib.
-/mob/living/silicon/robot/drone/handle_regular_status_updates()
-
-	if(health <= -35 && src.stat != 2)
-		timeofdeath = world.time
-		death() //Possibly redundant, having trouble making death() cooperate.
+/mob/living/silicon/robot/drone/update_stat()
+	if(health <= -maxHealth)
 		gib()
 		return
-	..()
+	return ..()
 
 //DRONE MOVEMENT.
 /mob/living/silicon/robot/drone/Process_Spaceslipping(var/prob_slip)

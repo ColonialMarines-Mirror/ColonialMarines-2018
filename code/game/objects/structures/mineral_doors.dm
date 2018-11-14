@@ -1,5 +1,5 @@
-#define CLOSED 0
-#define OPEN 1
+#define D_CLOSED 0
+#define D_OPEN 1
 
 //NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
 //machineryness
@@ -14,7 +14,7 @@
 	icon_state = "metal"
 
 	var/mineralType = "metal"
-	var/state = CLOSED
+	var/state = D_CLOSED
 	var/isSwitchingStates = FALSE
 	var/hardness = 1
 	var/oreAmount = 7
@@ -77,7 +77,7 @@
 	sleep(10)
 	density = FALSE
 	opacity = FALSE
-	state = OPEN
+	state = D_OPEN
 	update_icon()
 	isSwitchingStates = FALSE
 
@@ -89,7 +89,7 @@
 	sleep(10)
 	density = TRUE
 	opacity = TRUE
-	state = CLOSED
+	state = D_CLOSED
 	update_icon()
 	isSwitchingStates = FALSE
 
@@ -101,16 +101,24 @@
 		icon_state = mineralType
 
 /obj/structure/mineral_door/attackby(obj/item/W, mob/living/user)
-	if(istype(W,/obj/item/tool/pickaxe))
-		var/obj/item/tool/pickaxe/digTool = W
-		to_chat(user, "You start digging the [name].")
-		if(do_after(user,digTool.digspeed*hardness, TRUE, 5, BUSY_ICON_GENERIC) && src)
-			to_chat(user, "You finished digging.")
-			Dismantle()
-	else if(!(W.flags_item & NOBLUDGEON) && W.force)
+	var/is_resin = istype(src, /obj/structure/mineral_door/resin)
+	if(!(W.flags_item & NOBLUDGEON) && W.force)
+		var/multiplier = 1
+		var/obj/item/tool/pickaxe/plasmacutter/P
+		if(istype(W, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy)
+			P = W
+			if(P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD))
+				if(is_resin)
+					multiplier += PLASMACUTTER_RESIN_MULTIPLIER //Plasma cutters are particularly good at destroying resin structures.
+				else
+					multiplier += PLASMACUTTER_RESIN_MULTIPLIER * 0.5 //Plasma cutters are particularly good at destroying resin structures.
+				P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD) //Minimal energy cost.
+		if(W.damtype == "fire" && is_resin) //Burn damage deals extra vs resin structures (mostly welders).
+			multiplier += 1
 		user.animation_attack_on(src)
-		hardness -= W.force/100
-		to_chat(user, "You hit the [name] with your [W.name]!")
+		hardness -= W.force * multiplier * 0.01
+		if(!P)
+			to_chat(user, "You hit the [name] with your [W.name]!")
 		CheckHardness()
 	else
 		attack_hand(user)
@@ -219,7 +227,7 @@
 	sleep(10)
 	density = FALSE
 	opacity = FALSE
-	state = OPEN
+	state = D_OPEN
 	update_icon()
 	isSwitchingStates = FALSE
 
@@ -230,7 +238,7 @@
 	sleep(10)
 	density = TRUE
 	opacity = TRUE
-	state = CLOSED
+	state = D_CLOSED
 	update_icon()
 	isSwitchingStates = FALSE
 
@@ -244,8 +252,8 @@
 /obj/structure/mineral_door/wood/open
 	density = FALSE
 	opacity = FALSE
-	state = OPEN
+	state = D_OPEN
 	icon_state = "woodopen"
 
-#undef CLOSED
-#undef OPEN
+#undef D_CLOSED
+#undef D_OPEN

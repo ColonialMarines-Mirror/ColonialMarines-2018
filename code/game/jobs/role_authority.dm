@@ -178,7 +178,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 	//===============================================================\\
 	//PART II: Setting up our player variables and lists, to see if we have anyone to destribute.
 
-	var/list/unassigned_players
+	var/list/unassigned_players[0]
 	var/mob/new_player/M
 
 	for(var/i in player_list) //Get all players who are ready.
@@ -190,6 +190,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 	if(!unassigned_players.len) //If we don't have any players, the round can't start.
 		unassigned_players = null
 		return
+
 	unassigned_players = shuffle(unassigned_players, 1) //Shuffle the players.
 
 	/*===============================================================*/
@@ -236,7 +237,8 @@ var/global/datum/authority/branch/role/RoleAuthority
 	var/l = 0 //levels
 
 	while(++l < 4) //Three macro loops, from high to low.
-		assign_initial_roles(l, roles, 1) //Do command positions first.
+		//roles = assign_initial_roles(l, roles)
+		assign_initial_roles(l, roles)
 
 	for(var/i in unassigned_players)
 		M = i

@@ -345,13 +345,15 @@
 	. = ..()
 	if(ishuman(user) && fallen_names && fallen_names.len)
 		if(fallen_names.len == 1)
-			to_chat(user, "<span class='notice'>It reads \"[fallen_names[1]] - [fallen_assignements]\"</span>")
+			to_chat(user, "<span class='notice'>It reads: \"[fallen_names[1]] - [fallen_assignements[1]]\".</span>")
 		else
 			var/msg = "<span class='notice'> It reads: "
-			for(x to length(fallen_names))
-				msg += "[fallen_names[x]] - [fallen_assignements[x]], "
-
-			msg = msg[0:msg.len-2]
+			for(var/x = 1 to length(fallen_names))
+				if (x == length(fallen_names)):
+					msg += "\"[fallen_names[x]] - [fallen_assignements[x]]\""
+				else
+					msg += "\"[fallen_names[x]] - [fallen_assignements[x]]\", "
+			 
 			msg += ".</span>"
 
 			to_chat(user, msg)

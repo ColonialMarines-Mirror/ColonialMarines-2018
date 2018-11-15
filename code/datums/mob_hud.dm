@@ -296,9 +296,9 @@ var/datum/mob_hud/huds = list(
 
 		if(stat == DEAD)
 			if(revive_enabled)
-				holder.icon_state = "huddeaddefib" + num2text(stage)
+				holder.icon_state = "huddeaddefib[stage]"
 				if(!holder2_set)
-					holder2.icon_state = "huddeaddefib" + num2text(stage)
+					holder2.icon_state = "huddeaddefib[stage]"
 					holder3.icon_state = "huddead"
 					holder2_set = 1
 			else

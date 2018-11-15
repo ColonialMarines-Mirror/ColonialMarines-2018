@@ -278,7 +278,7 @@ var/datum/mob_hud/huds = list(
 			if(!istype(G))
 				revive_enabled = 0
 
-		if(stat == DEAD || !undefibbable)
+		if(stat == DEAD && !undefibbable)
 			if((world.time - timeofdeath) > ((revive_grace_period / 4) * 2))
 				stage = 2
 			else if((world.time - timeofdeath) > ((revive_grace_period / 4) * 3))

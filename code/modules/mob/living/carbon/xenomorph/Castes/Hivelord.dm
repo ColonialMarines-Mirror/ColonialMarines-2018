@@ -40,7 +40,13 @@
 		/datum/action/xeno_action/toggle_speed,
 		)
 
-
+/mob/living/carbon/Xenomorph/Hivelord/handle_living_plasma_updates()
+	if(speed_activated)
+		plasma_stored -= 30
+		if(plasma_stored < 0)
+			speed_activated = FALSE
+			to_chat(src, "<span class='warning'>You feel dizzy as the world slows down.</span>")
+	return ..()
 
 /mob/living/carbon/Xenomorph/Hivelord/movement_delay()
 	. = ..()

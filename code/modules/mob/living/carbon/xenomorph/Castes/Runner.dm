@@ -38,3 +38,8 @@
 	inherent_verbs = list(
 		/mob/living/carbon/Xenomorph/proc/vent_crawl,
 		)
+
+/mob/living/carbon/Xenomorph/Runner/update_stat()
+	. = ..()
+	if(stat != CONSCIOUS && layer != initial(layer))
+		layer = MOB_LAYER

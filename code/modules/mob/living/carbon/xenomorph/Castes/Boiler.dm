@@ -54,6 +54,11 @@
 	see_in_dark = 20
 	ammo = ammo_list[/datum/ammo/xeno/boiler_gas]
 
+/mob/living/carbon/Xenomorph/Boiler/update_stat()
+	. = ..()
+	if(stat == CONSCIOUS)
+		see_in_dark = 20
+
 /mob/living/carbon/Xenomorph/Boiler/Dispose()
 	SetLuminosity(0)
 	if(smoke)

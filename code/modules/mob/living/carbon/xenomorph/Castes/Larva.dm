@@ -117,3 +117,7 @@
 
 /mob/living/carbon/Xenomorph/Larva/pull_response(mob/puller)
 	return TRUE
+
+/mob/living/carbon/Xenomorph/Larva/handle_decay()
+	return //worth nothing anyway.
+

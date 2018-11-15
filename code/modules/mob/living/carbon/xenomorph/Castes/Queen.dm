@@ -192,6 +192,10 @@
 	lastturf = null //Reset this so we can properly continue with momentum.
 	return TRUE
 
+/mob/living/carbon/Xenomorph/Queen/handle_decay()
+	if(prob(20+abs(3*upgrade)) && plasma_stored)
+		use_plasma(min(rand(1,2), plasma_stored))
+
 //Chance of insta limb amputation after a melee attack.
 /mob/living/carbon/Xenomorph/Queen/proc/delimb(var/mob/living/carbon/human/H, var/datum/limb/O)
 	if (prob(20))

@@ -36,12 +36,21 @@
 		/mob/living/carbon/Xenomorph/proc/vent_crawl,
 		)
 
-	New()
-		..()
-		add_language("English")
-		add_language("Xenomorph") //xenocommon
-		add_language("Hivemind") //hivemind
+/mob/living/carbon/Xenomorph/Xenoborg/New()
+	. = ..()
+	add_language("English")
+	add_language("Xenomorph") //xenocommon
+	add_language("Hivemind") //hivemind
 
+/mob/living/carbon/Xenomorph/Xenoborg/handle_living_health_updates()
+	updatehealth()
+	return
+
+/mob/living/carbon/Xenomorph/Xenoborg/handle_living_plasma_updates()
+	return
+
+/mob/living/carbon/Xenomorph/Xenoborg/handle_decay()
+	return
 
 /mob/living/carbon/Xenomorph/Xenoborg/proc/fire_cannon(atom/T)
 	if(!T)

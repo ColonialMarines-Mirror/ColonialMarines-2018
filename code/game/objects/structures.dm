@@ -22,7 +22,7 @@
 	cdel(src)
 
 /obj/structure/proc/handle_barrier_chance(mob/living/M)
-	return 0
+	return FALSE
 
 /obj/structure/attack_hand(mob/user)
 	..()

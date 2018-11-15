@@ -154,9 +154,7 @@ Quick adjacency (to turf):
 			if(S.flags_barrier & HANDLE_BARRIER_CHANCE)
 				if(S.handle_barrier_chance(M))
 					return S // blocked
-				else
-					return src // not blocked
-	return src
+	return src // not blocked
 
 /turf/handle_barriers(mob/living/M)
 	return src

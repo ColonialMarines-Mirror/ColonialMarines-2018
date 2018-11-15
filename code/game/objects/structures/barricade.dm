@@ -655,7 +655,7 @@
 	if(closed)
 		return ..()
 	else
-		return 0
+		return FALSE
 
 /obj/structure/barricade/plasteel/examine(mob/user)
 	..()

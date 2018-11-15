@@ -1555,13 +1555,6 @@
 		to_chat(src, "<span class='xenowarning'>[M] is too large to fling!</span>")
 		return
 
-	icon_state = "Crusher Charging"  //Momentarily lower the crest for visual effect
-	visible_message("<span class='xenowarning'>\The [src] flings [M] away with its crest!</span>", \
-	"<span class='xenowarning'>You fling [M] away with your crest!</span>")
-
-	cresttoss_used = 1
-	use_plasma(40)
-
 	face_atom(M) //Face towards the target so we don't look silly
 
 	var/facing = get_dir(src, M)
@@ -1576,18 +1569,32 @@
 			T = temp
 	else
 		facing = get_dir(M, src)
-		M.loc = get_step(T, facing) //Move the target behind us before flinging
-		for (var/x = 0, x < toss_distance, x++)
-			temp = get_step(T, facing)
-			if (!temp)
-				break
-			T = temp
+		if(check_blocked_turf(get_step(T, facing) ) ) //Make sure we can actually go to the target turf
+			M.loc = get_step(T, facing) //Move the target behind us before flinging
+			for (var/x = 0, x < toss_distance, x++)
+				temp = get_step(T, facing)
+				if (!temp)
+					break
+				T = temp
+		else
+			to_chat(src, "<span class='xenowarning'>You try to fling [M] behind you, but there's no room!</span>")
+			return
+
 	//The target location deviates up to 1 tile in any direction
 	var/scatter_x = rand(-1,1)
 	var/scatter_y = rand(-1,1)
 	var/turf/new_target = locate(T.x + round(scatter_x),T.y + round(scatter_y),T.z) //Locate an adjacent turf.
 	if(new_target)
 		T = new_target//Looks like we found a turf.
+
+	icon_state = "Crusher Charging"  //Momentarily lower the crest for visual effect
+
+	visible_message("<span class='xenowarning'>\The [src] flings [M] away with its crest!</span>", \
+	"<span class='xenowarning'>You fling [M] away with your crest!</span>")
+
+	cresttoss_used = 1
+	use_plasma(40)
+
 
 	M.throw_at(T, toss_distance, 1, src)
 
@@ -1643,9 +1650,9 @@
 		to_chat(src, "<span class='xenowarning'>You can't host any more young ones!</span>")
 		return
 
-	to_chat(src, "<span class='xenowarning'>You spawn a young one via the miracle of asexual internal reproduction, adding it to your stores.</span>")
-	playsound(src, 'sound/voice/alien_drool2.ogg', 50, 0, 1)
 	huggers_cur = min(huggers_max, huggers_cur + 1) //Add it to our cache
+	to_chat(src, "<span class='xenowarning'>You spawn a young one via the miracle of asexual internal reproduction, adding it to your stores. Now sheltering: [huggers_cur] / [huggers_max].</span>")
+	playsound(src, 'sound/voice/alien_drool2.ogg', 50, 0, 1)
 	last_spawn_facehugger = world.time
 	used_spawn_facehugger = TRUE
 	use_plasma(CARRIER_SPAWN_HUGGER_COST)
@@ -1720,7 +1727,7 @@
 		return
 	spawn(HUNTER_POUNCE_SNEAKATTACK_DELAY)
 		can_sneak_attack = TRUE
-		to_chat(src, "<span class='xenodanger'><b>You're ready to use Sneak Attack while stealthed.</b></span>")
+		to_chat(src, "<span class='xenodanger'>You're ready to use Sneak Attack while stealthed.</span>")
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 
 
@@ -1785,7 +1792,7 @@
 
 	spawn(CLAMP(RAV_RAVAGE_COOLDOWN - (victims * 30),10,100)) //10 second cooldown base, minus 2 per victim
 		ravage_used = FALSE
-		to_chat(src, "<span class='notice'><b>You gather enough strength to Ravage again.</b></span>")
+		to_chat(src, "<span class='xenodanger'>You gather enough strength to Ravage again.</span>")
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()
 
@@ -1801,26 +1808,30 @@
 		to_chat(src, "<span class='xenowarning'>You must gather your strength before using Second Wind. Second Wind can be used in [(second_wind_delay - world.time) * 0.1] seconds.</span>")
 		return
 
-	to_chat(src, "<span class='notice'><b>You attempt to martial your fury, tapping an inner reserve of strength.</b></span>")
-	var/current_rage = rage //lock in the value at the time we use it.
+	to_chat(src, "<span class='xenodanger'>Your coursing adrenaline stimulates tissues into a spat of rapid regeneration...</span>")
+	var/current_rage = CLAMP(rage,0,RAVAGER_MAX_RAGE) //lock in the value at the time we use it; min 0, max 50.
 	do_jitter_animation(1000)
 	if(!do_after(src, 50, TRUE, 5, BUSY_ICON_FRIENDLY))
 		return
 	do_jitter_animation(1000)
 	playsound(src, "sound/effects/alien_drool2.ogg", 50, 0)
-	to_chat(src, "<span class='notice'><b>You recoup your health, your tapped rage restoring your body, flesh and chitin reknitting themselves.</b></span>")
-	health += CLAMP( (maxHealth - health) * (0.25 + current_rage * 0.015), 0, maxHealth - health) //Restore HP equal to 25% + 1.5% of the difference between min and max health per rage
+	to_chat(src, "<span class='xenodanger'>You recoup your health, your tapped rage restoring your body, flesh and chitin reknitting themselves...</span>")
+	adjustFireLoss(-CLAMP( (getFireLoss()) * (0.25 + current_rage * 0.015), 0, getFireLoss()) )//Restore HP equal to 25% + 1.5% of the difference between min and max health per rage
+	adjustBruteLoss(-CLAMP( (getBruteLoss()) * (0.25 + current_rage * 0.015), 0, getBruteLoss()) )//Restore HP equal to 25% + 1.5% of the difference between min and max health per rage
 	plasma_stored += CLAMP( (plasma_max - plasma_stored) * (0.25 + current_rage * 0.015), 0, plasma_max - plasma_stored) //Restore Plasma equal to 25% + 1.5% of the difference between min and max health per rage
+	updatehealth()
+	hud_set_plasma()
 
 	round_statistics.ravager_second_winds++
 
-	rage = 0
 	second_wind_used = TRUE
 
-	second_wind_delay = world.time + (RAV_SECOND_WIND_COOLDOWN * round(1 - rage * 0.01) )
+	second_wind_delay = world.time + (RAV_SECOND_WIND_COOLDOWN * round(1 - current_rage * 0.01) )
 
-	spawn(RAV_SECOND_WIND_COOLDOWN * round(1 - rage * 0.01) ) //2 minute cooldown, minus 0.5 seconds per rage to minimum 30 seconds.
+	spawn(RAV_SECOND_WIND_COOLDOWN * round(1 - current_rage * 0.01) ) //1 minute cooldown, minus 0.5 seconds per rage to minimum 30 seconds.
 		second_wind_used = FALSE
-		to_chat(src, "<span class='notice'><b>You gather enough strength to use Second Wind again.</b></span>")
+		to_chat(src, "<span class='xenodanger'>You gather enough strength to use Second Wind again.</span>")
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()
+
+	rage = 0

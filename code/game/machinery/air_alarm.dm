@@ -134,7 +134,6 @@
 		if(WEST) pixel_x = -25
 
 	first_run()
-	start_processing()
 
 
 /obj/machinery/alarm/proc/first_run()

@@ -63,7 +63,6 @@
 		if(istype(A) && !(A in areas_added))
 			A.all_doors.Add(src)
 			areas_added += A
-	start_processing()
 
 /obj/machinery/door/firedoor/Dispose()
 	for(var/area/A in areas_added)

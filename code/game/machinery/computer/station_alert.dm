@@ -6,6 +6,9 @@
 	circuit = "/obj/item/circuitboard/computer/stationalert"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
+/obj/machinery/computer/station_alert/initialize()
+	..()
+	start_processing()
 
 /obj/machinery/computer/station_alert/attack_ai(mob/user)
 	add_fingerprint(user)

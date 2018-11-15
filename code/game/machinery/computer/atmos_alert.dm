@@ -15,6 +15,7 @@
 /obj/machinery/computer/atmos_alert/initialize()
 	..()
 	set_frequency(receive_frequency)
+	start_processing()
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return

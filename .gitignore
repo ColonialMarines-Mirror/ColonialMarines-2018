@@ -8,6 +8,8 @@ Thumbs.db
 *.backup
 data/
 cfg/
+config/config.txt
+config/admins.txt
 tools/Runtime Condenser/Input.txt
 tools/Runtime Condenser/Output.txt
 tools/MapDaemon/logs/*.txt

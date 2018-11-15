@@ -65,8 +65,6 @@ var/global/datum/authority/branch/role/RoleAuthority
 		J = new i
 
 		if(!J.title) //In case you forget to subtract one of those variable holder jobs
-			to_chat(world, "<span class='debug'>Error setting up jobs, blank title job: [J.type].</span>")
-			log_debug("Error setting up jobs, blank title job: [J.type].")
 			continue
 
 		roles_by_path[J.type] = J
@@ -78,7 +76,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 				roles_by_equipment[J.title] = J
 				roles_by_equipment_paths[J.type] = J
 		else
-			log_admin("[J]")
+			continue
 		if(J.flags_startup_parameters & ROLE_ADD_TO_DEFAULT)
 			roles_for_mode[J.title] = J
 
@@ -170,7 +168,6 @@ var/global/datum/authority/branch/role/RoleAuthority
 
 
 	if(length(roles))
-		message_admins("DEBUG: RA: Roles length [roles.len]")
 		roles = shuffle(roles, 1) //Shuffle our job lists for when we begin the loop.
 
 	//In the future, any regular role that has infinite spawn slots should be removed as well.
@@ -180,7 +177,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 	//===============================================================\\
 	//PART II: Setting up our player variables and lists, to see if we have anyone to destribute.
 
-	var/unassigned_players[0]
+	unassigned_players = new
 	var/mob/new_player/M
 
 	for(var/i in player_list) //Get all players who are ready.
@@ -188,10 +185,8 @@ var/global/datum/authority/branch/role/RoleAuthority
 		if(istype(M) && M.ready && M.mind && !M.mind.assigned_role)
 			//TODO, check if mobs are already spawned as human before this triggers.
 			unassigned_players += M
-			message_admins("DEBUG: RA: Adding to unassigned players: [M], current length [unassigned_players.len]")
 
 	if(!unassigned_players.len) //If we don't have any players, the round can't start.
-		message_admins("DEBUG: RA: Not enough players?")
 		unassigned_players = null
 		return
 
@@ -241,14 +236,9 @@ var/global/datum/authority/branch/role/RoleAuthority
 	var/l = 0 //levels
 
 	while(++l < 4) //Three macro loops, from high to low.
-		//roles = assign_initial_roles(l, roles)
-		//assign_initial_roles(l, roles)
-		message_admins("DEBUG: RA: Current macro loop [l]")
-		message_admins("DEBUG: RA: Roles length [roles.len]")
 		roles = assign_initial_roles(l, roles)
 
 	for(var/i in unassigned_players)
-		message_admins("DEBUG: RA: Handling people who didn't get their roll")
 		M = i
 		switch(M.client.prefs.alternate_option)
 			if(GET_RANDOM_JOB)
@@ -279,11 +269,8 @@ roles willy nilly.
 */
 
 /datum/authority/branch/role/proc/assign_initial_roles(l, list/roles_to_iterate)
-	message_admins("DEBUG: RA: Assign Initial Roles called")
 	. = roles_to_iterate
-	message_admins("DEBUG: RA: Roles to iterate len [roles_to_iterate.len], [unassigned_players.len] unassigned players len")
 	if(roles_to_iterate.len && unassigned_players.len)
-		message_admins("DEBUG: RA: Beginning job rolls")
 		var/j
 		var/m
 		var/datum/job/J
@@ -300,21 +287,14 @@ roles willy nilly.
 			for(m in unassigned_players)
 				M = m
 				if(!(M.client.prefs.GetJobDepartment(J, l) & J.flag)) 
-					message_admins("DEBUG: RA: Player doesn't want the job. Priority [l], Job [J], Flag [J.flag]")
 					continue //If they don't want the job. //TODO Change the name of the prefs proc?
 				if(assign_role(M, J))
-					message_admins("DEBUG: RA: Role assigned successfully [l] level, [M] mind, [J] job")
 					unassigned_players -= M
 					if(J.current_positions >= J.spawn_positions)
 						roles_to_iterate -= j //Remove the position, since we no longer need it.
-						message_admins("DEBUG: RA: Spawn positions limit reached [J] Job, [J.spawn_positions] Spawn positions")
 						break //Maximum position is reached?
 			if(!unassigned_players.len) 
-				message_admins("DEBUG: RA: Ran out of players.")
 				break //No players left to assign? Break.
-	else
-		message_admins("DEBUG: RA: Something went VERY wrong")
-
 
 /datum/authority/branch/role/proc/assign_random_role(mob/new_player/M, list/roles_to_iterate) //In case we want to pass on a list.
 	. = roles_to_iterate
@@ -344,7 +324,6 @@ roles willy nilly.
 /datum/authority/branch/role/proc/assign_role(mob/new_player/M, datum/job/J, latejoin=0)
 	if(ismob(M) && M.mind && istype(J))
 		if(check_role_entry(M, J, latejoin))
-			message_admins("DEBUG: RA: Assigning role to [M], job [J]")
 			M.mind.assigned_role 		= J.title
 			M.mind.set_cm_skills(J.skills_type)
 			M.mind.special_role 		= J.special_role
@@ -358,13 +337,10 @@ roles willy nilly.
 	if(jobban_isbanned(M, J.title)) 
 		return //TODO standardize this
 	if(!J.player_old_enough(M.client)) 
-		message_admins("DEBUG: RA: Player not old enough")
 		return
 	if(J.flags_startup_parameters & ROLE_WHITELISTED && !(roles_whitelist[M.ckey] & J.flags_whitelist)) 
-		message_admins("DEBUG: RA: Whitelist fucked")
 		return
 	if(J.total_positions != -1 && J.get_total_positions(latejoin) <= J.current_positions) 
-		message_admins("DEBUG: RA: Spawn fucked?")
 		return
 	return TRUE
 
@@ -462,17 +438,6 @@ roles willy nilly.
 			H.mind.store_memory(remembered_info)
 			H.mind.initial_account = A
 
-			// If they're head, give them the account info for their department
-			if(J.head_position)
-				remembered_info = ""
-				var/datum/money_account/department_account = department_accounts[J.department]
-
-				if(department_account)
-					remembered_info += "<b>Your department's account number is:</b> #[department_account.account_number]<br>"
-					remembered_info += "<b>Your department's account pin is:</b> [department_account.remote_access_pin]<br>"
-					remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
-
-				H.mind.store_memory(remembered_info)
 
 		/*var/alt_title
 		if(H.mind)

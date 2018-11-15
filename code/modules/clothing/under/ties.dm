@@ -435,6 +435,26 @@
 		"/obj/item/ammo_magazine/sniper",
 		 )
 
+/obj/item/clothing/tie/storage/webbing_white
+	name = "webbing"
+	desc = "A sturdy mess of synthcotton belts and buckles, ready to share your burden."
+	icon_state = "webbing_white"
+	slots = 3
+
+/obj/item/clothing/tie/storage/webbing_white/New()
+	..()
+	hold.bypass_w_limit = list(
+		"/obj/item/ammo_magazine/rifle",
+		"/obj/item/ammo_magazine/smg",
+		"/obj/item/ammo_magazine/sniper",
+		 )
+
+/obj/item/clothing/tie/storage/white_vest
+	name = "white webbing vest"
+	desc = "Todo."
+	icon_state = "vest_white"
+	slots = 5
+
 /obj/item/clothing/tie/storage/black_vest
 	name = "black webbing vest"
 	desc = "Robust black synthcotton vest with lots of pockets to hold whatever you need, but cannot hold in hands."

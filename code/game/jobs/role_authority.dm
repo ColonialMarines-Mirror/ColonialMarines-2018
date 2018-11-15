@@ -168,7 +168,9 @@ var/global/datum/authority/branch/role/RoleAuthority
 
 	var/roles[] = roles_for_mode
 
+
 	if(length(roles))
+		message_admins("DEBUG: RA: Roles length [roles.len]")
 		roles = shuffle(roles, 1) //Shuffle our job lists for when we begin the loop.
 
 	//In the future, any regular role that has infinite spawn slots should be removed as well.
@@ -186,8 +188,10 @@ var/global/datum/authority/branch/role/RoleAuthority
 		if(istype(M) && M.ready && M.mind && !M.mind.assigned_role)
 			//TODO, check if mobs are already spawned as human before this triggers.
 			unassigned_players += M
+			message_admins("DEBUG: RA: Adding to unassigned players: [M], current length [unassigned_players.len]")
 
 	if(!unassigned_players.len) //If we don't have any players, the round can't start.
+		message_admins("DEBUG: RA: Not enough players?")
 		unassigned_players = null
 		return
 
@@ -239,9 +243,12 @@ var/global/datum/authority/branch/role/RoleAuthority
 	while(++l < 4) //Three macro loops, from high to low.
 		//roles = assign_initial_roles(l, roles)
 		//assign_initial_roles(l, roles)
+		message_admins("DEBUG: RA: Current macro loop [l]")
+		message_admins("DEBUG: RA: Roles length [roles.len]")
 		roles = assign_initial_roles(l, roles)
 
 	for(var/i in unassigned_players)
+		message_admins("DEBUG: RA: Handling people who didn't get their roll")
 		M = i
 		switch(M.client.prefs.alternate_option)
 			if(GET_RANDOM_JOB)
@@ -271,9 +278,12 @@ roles willy nilly.
 ^ Preserving this comment so code historians can laugh at it.
 */
 
-/datum/authority/branch/role/proc/assign_initial_roles(l, list/roles_to_iterate, weighted)
+/datum/authority/branch/role/proc/assign_initial_roles(l, list/roles_to_iterate)
+	message_admins("DEBUG: RA: Assign Initial Roles called")
 	. = roles_to_iterate
+	message_admins("DEBUG: RA: Roles to iterate len [roles_to_iterate.len], [unassigned_players.len] unassigned players len")
 	if(roles_to_iterate.len && unassigned_players.len)
+		message_admins("DEBUG: RA: Beginning job rolls")
 		var/j
 		var/m
 		var/datum/job/J
@@ -292,8 +302,6 @@ roles willy nilly.
 				if(!(M.client.prefs.GetJobDepartment(J, l) & J.flag)) 
 					message_admins("DEBUG: RA: Player doesn't want the job. Priority [l], Job [J], Flag [J.flag]")
 					continue //If they don't want the job. //TODO Change the name of the prefs proc?
-				//P = weighted && !(J.flags_startup_parameters & ROLE_WHITELISTED) ? unassigned_players[M] : 100 //Whitelists have no age requirement.
-				//if(prob(P) && assign_role(M, J))
 				if(assign_role(M, J))
 					message_admins("DEBUG: RA: Role assigned successfully [l] level, [M] mind, [J] job")
 					unassigned_players -= M
@@ -304,6 +312,8 @@ roles willy nilly.
 			if(!unassigned_players.len) 
 				message_admins("DEBUG: RA: Ran out of players.")
 				break //No players left to assign? Break.
+	else
+		message_admins("DEBUG: RA: Something went VERY wrong")
 
 
 /datum/authority/branch/role/proc/assign_random_role(mob/new_player/M, list/roles_to_iterate) //In case we want to pass on a list.

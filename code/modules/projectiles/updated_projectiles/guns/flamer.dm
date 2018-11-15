@@ -429,8 +429,6 @@
 		burnlevel = burn_lvl
 	processing_objects.Add(src)
 
-	to_chat(world, "DEBUG: Flamer Fire: fire_stacks: [fire_stacks], fire_damage: [fire_damage]")
-
 	if(fire_spread_amount > 0)
 		var/turf/T
 		for(var/dirn in cardinal)

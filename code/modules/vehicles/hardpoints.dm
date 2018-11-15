@@ -171,9 +171,10 @@ Currently only has the tank hardpoints
 			to_chat(usr, "<span class='warning'>This module does not have any ammo.</span>")
 			return
 
+		next_use = world.time + owner.cooldowns["primary"] * owner.misc_ratios["prim_cool"]
+
 		if(!do_after(usr, 5, FALSE, 5, BUSY_ICON_HOSTILE))
 			return
-		next_use = world.time + owner.cooldowns["primary"] * owner.misc_ratios["prim_cool"]
 		if(!prob(owner.accuracies["primary"] * 100 * owner.misc_ratios["prim_acc"]))
 			T = get_step(T, pick(cardinal))
 		var/obj/item/projectile/P = new

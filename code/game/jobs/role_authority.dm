@@ -178,7 +178,7 @@ var/global/datum/authority/branch/role/RoleAuthority
 	//===============================================================\\
 	//PART II: Setting up our player variables and lists, to see if we have anyone to destribute.
 
-	var/list/unassigned_players[0]
+	var/unassigned_players[0]
 	var/mob/new_player/M
 
 	for(var/i in player_list) //Get all players who are ready.

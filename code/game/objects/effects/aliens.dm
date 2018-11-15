@@ -63,19 +63,23 @@
 	..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
+		var/armor_block
 		if(!H.lying)
 			to_chat(H, "<span class='danger'>Your feet scald and burn! Argh!</span>")
 			H.emote("pain")
 			H.next_move_slowdown += slow_amt
 			var/datum/limb/affecting = H.get_limb("l_foot")
-			if(istype(affecting) && affecting.take_damage(0, rand(10, 20)))
+			armor_block = H.run_armor_check(affecting, "energy")
+			if(istype(affecting) && affecting.take_damage(null, rand(14, 18), null, null, null, null, null, armor_block))
 				H.UpdateDamageIcon()
 			affecting = H.get_limb("r_foot")
-			if(istype(affecting) && affecting.take_damage(0, rand(10, 20)))
+			armor_block = H.run_armor_check(affecting, "energy")
+			if(istype(affecting) && affecting.take_damage(null, rand(14, 18), null, null, null, null, null, armor_block))
 				H.UpdateDamageIcon()
 			H.updatehealth()
 		else
-			H.adjustFireLoss(rand(5, 10)) //This is ticking damage!
+			armor_block = H.run_armor_check("chest", "energy")
+			H.take_overall_damage(null, rand(12, 14), null, null, null, armor_block) //This is ticking damage!
 			to_chat(H, "<span class='danger'>You are scalded by the burning acid!</span>")
 
 /obj/effect/xenomorph/spray/process()
@@ -87,6 +91,9 @@
 
 	for(var/mob/living/carbon/M in loc)
 		if(isXeno(M))
+			continue
+		if(M.no_acidprocess_flag)
+			M.no_acidprocess_flag = 0 //Enjoy your very temporary reprieve
 			continue
 		Crossed(M)
 

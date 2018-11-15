@@ -179,6 +179,10 @@
 					var/obj/structure/barricade/B = O
 					B.health -= rand(40,60) + 8 * upgrade
 					B.update_health(1)
+				else if(istype(O, /obj/vehicle/multitile/root/cm_armored) )
+					var/obj/vehicle/multitile/root/cm_armored/A = O
+					A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+					A.healthcheck()
 				return
 
 		T = next_T
@@ -192,6 +196,10 @@
 					var/obj/structure/barricade/B = O
 					B.health -= rand(40,60) + 8 * upgrade
 					B.update_health(1)
+				else if(istype(O, /obj/vehicle/multitile/root/cm_armored) )
+					var/obj/vehicle/multitile/root/cm_armored/A = O
+					A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+					A.healthcheck()
 				return
 
 		var/obj/effect/xenomorph/spray/S = acid_splat_turf(T)
@@ -228,6 +236,10 @@
 						var/obj/structure/barricade/B = O
 						B.health -= rand(40,60) + 8 * upgrade
 						B.update_health(1)
+					else if(istype(O, /obj/vehicle/multitile/root/cm_armored) )
+						var/obj/vehicle/multitile/root/cm_armored/A = O
+						A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+						A.healthcheck()
 					normal_density_flag = 1
 					break
 
@@ -243,6 +255,10 @@
 							var/obj/structure/barricade/B = O
 							B.health -= rand(40,60) + 8 * upgrade
 							B.update_health(1)
+						else if(istype(O, /obj/vehicle/multitile/root/cm_armored) )
+							var/obj/vehicle/multitile/root/cm_armored/A = O
+							A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+							A.healthcheck()
 						normal_density_flag = 1
 						break
 
@@ -260,6 +276,10 @@
 						var/obj/structure/barricade/B = O
 						B.health -= rand(40,60) + 8 * upgrade
 						B.update_health(1)
+					else if(istype(O, /obj/vehicle/multitile/root/cm_armored) )
+						var/obj/vehicle/multitile/root/cm_armored/A = O
+						A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+						A.healthcheck()
 					inverse_normal_density_flag = 1
 					break
 
@@ -275,6 +295,10 @@
 							var/obj/structure/barricade/B = O
 							B.health -= rand(40,60) + 8 * upgrade
 							B.update_health(1)
+						else if(istype(O, /obj/vehicle/multitile/root/cm_armored) )
+							var/obj/vehicle/multitile/root/cm_armored/A = O
+							A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+							A.healthcheck()
 						inverse_normal_density_flag = 1
 						break
 
@@ -293,6 +317,10 @@
 			B.health -= rand(40,60) + 8 * upgrade
 			B.update_health(1)
 
+		for (var/obj/vehicle/multitile/root/cm_armored/A in T)
+			A.take_damage_type(rand(40,60) + 8 * upgrade, "acid", src)
+			A.healthcheck()
+
 		for (var/mob/living/carbon/C in T)
 			if (!ishuman(C) && !ismonkey(C))
 				continue
@@ -301,7 +329,15 @@
 				continue
 
 			round_statistics.praetorian_spray_direct_hits++
-			C.adjustFireLoss(rand(25,38) + 4 * upgrade)
+
+			C.no_acidprocess_flag = 2 //prevent the victim from being damaged by acid puddle process damage for 1 tick, so there's no chance they get immediately double dipped by it.
+			var/armor_block = C.run_armor_check("chest", "energy")
+			var/damage = rand(30,40) + 4 * upgrade
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				H.take_overall_damage(null, damage, null, null, null, armor_block)
+			else
+				C.apply_damage(damage, BURN, null, armor_block)
 			to_chat(C, "<span class='xenodanger'>\The [src] showers you in corrosive acid!</span>")
 
 			if (!isYautja(C))
@@ -1899,7 +1935,7 @@
 			M.emote("scream")
 			M.KnockDown(1)
 
-/mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 200, acid_d = acid_delay)
+/mob/living/carbon/Xenomorph/proc/acid_spray(atom/T, plasmacost = 250, acid_d = acid_delay)
 	if(!T)
 		to_chat(src, "<span class='warning'>You see nothing to spit at!</span>")
 		return
@@ -1920,6 +1956,9 @@
 
 	if(acid_cooldown)
 		to_chat(src, "<span class='xenowarning'>You're not yet ready to spray again! You can do so in [( (last_spray_used + acid_d) - world.time) * 0.1] seconds.</span>")
+		return
+
+	if(!do_after(src, 3, TRUE, 3, BUSY_ICON_HOSTILE))
 		return
 
 	var/turf/target

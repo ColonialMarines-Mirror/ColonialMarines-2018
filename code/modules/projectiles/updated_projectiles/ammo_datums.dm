@@ -1295,6 +1295,9 @@
 
 /datum/ammo/xeno/acid/heavy/on_hit_mob(mob/M,obj/item/projectile/P)
 	drop_acid(get_turf(M))
+	if(istype(M,/mob/living/carbon))
+		var/mob/living/carbon/C = M
+		C.no_acidprocess_flag = 2
 
 /datum/ammo/xeno/acid/heavy/on_hit_obj(obj/O,obj/item/projectile/P)
 	drop_acid(get_turf(P))

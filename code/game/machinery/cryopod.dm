@@ -9,7 +9,6 @@
 //Used for logging people entering cryosleep and important items they are carrying.
 var/global/list/frozen_crew = list()
 var/global/list/frozen_items = list("Alpha"=list(),"Bravo"=list(),"Charlie"=list(),"Delta"=list(),"MP"=list(),"REQ"=list(),"Eng"=list(),"Med"=list())
-var/num_respawn = 0
 
 //Main cryopod console.
 
@@ -482,20 +481,20 @@ var/num_respawn = 0
 	if(occupant != usr)
 		to_chat(usr, "<span class='warning'>You must be inside the [src] to do this.</span>")
 
-	if(num_respawn >= 4)
+	if(usr.client.num_respawn >= 1)
 		to_chat(usr, "<span class='warning'>You have returned to the lobby too many times. This has been logged.</span>")
 		log_admin("[usr.mind.assigned_role] [key_name(usr)] tried returning to the lobby using a cryopod. But has done so too many times.")
 		message_admins("\blue [usr.mind.assigned_role] [key_name(usr)] tried returning to the lobby using a cryopod. But has done so too many times.")
 
-	if((alert(usr, "Do you want to send yourself back to the lobby? This will be logged.","Message","Yes","No") == "Yes")  && (num_respawn <= 3))
-		log_admin("[usr.mind.assigned_role] [key_name(usr)] returned to the lobby using a cryopod. They have done this [num_respawn] times before.")
-		message_admins("\blue [usr.mind.assigned_role] [key_name(usr)] returned to the lobby using a cryopod. They have done this [num_respawn] times before.")
+	if((alert(usr, "Do you want to send yourself back to the lobby? This will be logged.","Message","Yes","No") == "Yes")  && (usr.client.num_respawn = 0))
+		log_admin("[usr.mind.assigned_role] [key_name(usr)] returned to the lobby using a cryopod. They have done this [usr.client.num_respawn] times before.")
+		message_admins("\blue [usr.mind.assigned_role] [key_name(usr)] returned to the lobby using a cryopod. They have done this [usr.client.num_respawn] times before.")
 		var/mob/new_player/NP = new()
 		NP.ckey = occupant.ckey
 		NP.client?.change_view(world.view)
-		num_respawn += 1
+		usr.client.num_respawn++ //Adds one to respawn counter.
 		cdel(occupant)
-		cleanup()
+		cleanup() //Runs cleanup script.
 
 /obj/machinery/cryopod/verb/eject()
 

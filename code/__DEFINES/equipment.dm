@@ -27,6 +27,11 @@
 #define INITIALIZED				64  	//Whether /atom/Initialize() has already run for the object
 //==========================================================================================
 
+//flags_barrier
+
+#define HANDLE_BARRIER_CHANCE 1
+#define HANDLE_BARRIER_BLOCK 2
+
 //flags_item
 //bitflags that were previously under flags_atom, these only apply to items.
 //clothing specific stuff uses flags_inventory.

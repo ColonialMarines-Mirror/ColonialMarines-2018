@@ -290,15 +290,19 @@ roles willy nilly.
 			for(m in unassigned_players)
 				M = m
 				if(!(M.client.prefs.GetJobDepartment(J, l) & J.flag)) 
+					message_admins("DEBUG: RA: Player doesn't want the job. Priority [l], Job [J], Flag [J.flag]")
 					continue //If they don't want the job. //TODO Change the name of the prefs proc?
 				//P = weighted && !(J.flags_startup_parameters & ROLE_WHITELISTED) ? unassigned_players[M] : 100 //Whitelists have no age requirement.
 				//if(prob(P) && assign_role(M, J))
 				if(assign_role(M, J))
+					message_admins("DEBUG: RA: Role assigned successfully [l] level, [M] mind, [J] job")
 					unassigned_players -= M
 					if(J.current_positions >= J.spawn_positions)
 						roles_to_iterate -= j //Remove the position, since we no longer need it.
+						message_admins("DEBUG: RA: Spawn positions limit reached [J] Job, [J.spawn_positions] Spawn positions")
 						break //Maximum position is reached?
 			if(!unassigned_players.len) 
+				message_admins("DEBUG: RA: Ran out of players.")
 				break //No players left to assign? Break.
 
 
@@ -330,6 +334,7 @@ roles willy nilly.
 /datum/authority/branch/role/proc/assign_role(mob/new_player/M, datum/job/J, latejoin=0)
 	if(ismob(M) && M.mind && istype(J))
 		if(check_role_entry(M, J, latejoin))
+			message_admins("DEBUG: RA: Assigning role to [M], job [J]")
 			M.mind.assigned_role 		= J.title
 			M.mind.set_cm_skills(J.skills_type)
 			M.mind.special_role 		= J.special_role
@@ -343,10 +348,13 @@ roles willy nilly.
 	if(jobban_isbanned(M, J.title)) 
 		return //TODO standardize this
 	if(!J.player_old_enough(M.client)) 
+		message_admins("DEBUG: RA: Player not old enough")
 		return
 	if(J.flags_startup_parameters & ROLE_WHITELISTED && !(roles_whitelist[M.ckey] & J.flags_whitelist)) 
+		message_admins("DEBUG: RA: Whitelist fucked")
 		return
 	if(J.total_positions != -1 && J.get_total_positions(latejoin) <= J.current_positions) 
+		message_admins("DEBUG: RA: Spawn fucked?")
 		return
 	return TRUE
 

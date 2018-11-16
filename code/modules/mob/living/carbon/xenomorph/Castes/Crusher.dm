@@ -1,24 +1,149 @@
+/datum/xeno_caste/crusher
+	caste_name = "Crusher"
+	display_name = "Crusher"
+	upgrade_name = "Young"
+	caste_desc = "A huge tanky xenomorph."
+	caste_type_path = /mob/living/carbon/Xenomorph/Crusher
+
+	tier = 3
+	upgrade = 0
+
+	// *** Melee Attacks *** //
+	melee_damage_lower = 20
+	melee_damage_upper = 35
+	attack_delay = 0.5 
+
+	// *** Tackle *** //
+	tackle_damage = 55 
+
+	// *** RNG Attacks *** //
+	tail_chance = 0 //Inherited from old code. Tail's too big
+
+	// *** Speed *** //
+	speed = 0.1
+
+	// *** Plasma *** //
+	plasma_max = 200
+	plasma_gain = 10
+
+	// *** Health *** //
+	max_health = 300
+
+	// *** Evolution *** //
+	evolution_allowed = FALSE 
+	upgrade_threshold = 400
+
+	deevolves_to = /mob/living/carbon/Xenomorph/Warrior
+
+	// *** Flags *** //
+	can_vent_crawl = FALSE
+
+	// *** Defense *** //
+	armor_deflection = 80
+
+/datum/xeno_caste/crusher/mature
+	upgrade_name = "Mature"
+	caste_desc = "A huge tanky xenomorph. It looks a little more dangerous."
+
+	upgrade = 1
+
+	// *** Melee Attacks *** //
+	melee_damage_lower = 20
+	melee_damage_upper = 35
+	attack_delay = 0.5 
+
+	// *** Tackle *** //
+	tackle_damage = 60
+
+	// *** Speed *** //
+	speed = 0.1
+
+	// *** Plasma *** //
+	plasma_max = 300
+	plasma_gain = 15
+
+	// *** Health *** //
+	max_health = 325
+
+	// *** Evolution *** //
+	upgrade_threshold = 800
+
+	deevolves_to = /mob/living/carbon/Xenomorph/Warrior
+
+	// *** Defense *** //
+	armor_deflection = 90 
+
+/datum/xeno_caste/crusher/elder
+	upgrade_name = "Elder"
+	caste_desc = "A huge tanky xenomorph. It looks pretty strong."
+
+	upgrade = 2
+
+	// *** Melee Attacks *** //
+	melee_damage_lower = 30
+	melee_damage_upper = 40
+	attack_delay = 0.5 
+
+	// *** Tackle *** //
+	tackle_damage = 65
+
+	// *** Speed *** //
+	speed = 0.1
+
+	// *** Plasma *** //
+	plasma_max = 400
+	plasma_gain = 30
+
+	// *** Health *** //
+	max_health = 340
+
+	// *** Evolution *** //
+	upgrade_threshold = 1600
+
+	deevolves_to = /mob/living/carbon/Xenomorph/Warrior
+
+	// *** Defense *** //
+	armor_deflection = 95 
+
+/datum/xeno_caste/crusher/ancient
+	upgrade_name = "Ancient"
+	caste_desc = "It always has the right of way."
+	ancient_message = "You are the physical manifestation of a Tank. Almost nothing can harm you."
+	upgrade = 3
+
+	// *** Melee Attacks *** //
+	melee_damage_lower = 35
+	melee_damage_upper = 45
+	attack_delay = 0.5 
+
+	// *** Tackle *** //
+	tackle_damage = 70
+
+	// *** Speed *** //
+	speed = 0.1
+
+	// *** Plasma *** //
+	plasma_max = 400
+	plasma_gain = 30
+
+	// *** Health *** //
+	max_health = 350
+
+	deevolves_to = /mob/living/carbon/Xenomorph/Warrior
+
+	// *** Defense *** //
+	armor_deflection = 100
+
 /mob/living/carbon/Xenomorph/Crusher
-	caste = "Crusher"
+	caste_name = "Crusher"
 	name = "Crusher"
 	desc = "A huge alien with an enormous armored head crest."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Crusher Walking"
-	melee_damage_lower = 20
-	melee_damage_upper = 35
-	tackle_damage = 55
-	attack_delay = 0.5
 	health = 300
 	maxHealth = 300
 	plasma_stored = 200
-	plasma_gain = 10
-	plasma_max = 200
-	upgrade_threshold = 400
-	evolution_allowed = FALSE
-	caste_desc = "A huge tanky xenomorph."
 	speed = 0.1
-	tail_chance = 0 //Inherited from old code. Tail's too big
-	armor_deflection = 80
 	tier = 3
 	upgrade = 0
 	drag_delay = 6 //pulling a big dead xeno is hard

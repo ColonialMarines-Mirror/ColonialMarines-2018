@@ -89,15 +89,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					speed = -0.4
 					armor_deflection = 50
 					tackle_damage = 45 // Prior was 40
-				if("Crusher")
-					tackle_damage = 55 // Prior was 50
-					health = 325
-					maxHealth = 325
-					plasma_gain = 15
-					plasma_max = 300
-					upgrade_threshold = 800
-					caste_desc = "A huge tanky xenomorph. It looks a little more dangerous."
-					armor_deflection = 90
 				if("Sentinel")
 					melee_damage_lower = 20
 					melee_damage_upper = 30
@@ -225,17 +216,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An alien with an armored carapace. It looks pretty strong."
 					speed = -0.4
 					armor_deflection = 50
-				if("Crusher")
-					melee_damage_lower = 30
-					melee_damage_upper = 40
-					tackle_damage = 65 // Prior was 60
-					health = 340
-					maxHealth = 340
-					plasma_gain = 30
-					plasma_max = 400
-					upgrade_threshold = 1600
-					caste_desc = "A huge tanky xenomorph. It looks pretty strong."
-					armor_deflection = 95
 				if("Sentinel")
 					melee_damage_lower = 25
 					melee_damage_upper = 30
@@ -363,17 +343,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An hulking beast capable of effortlessly breaking and tearing through its enemies."
 					speed = -0.5
 					armor_deflection = 55
-				if("Crusher")
-					to_chat(src, "<span class='xenoannounce'>You are the physical manifestation of a Tank. Almost nothing can harm you.</span>")
-					melee_damage_lower = 35
-					melee_damage_upper = 45
-					tackle_damage = 70 // Prior was 65
-					health = 350
-					maxHealth = 350
-					plasma_gain = 30
-					plasma_max = 400
-					caste_desc = "It always has the right of way."
-					armor_deflection = 100
 				if("Sentinel")
 					to_chat(src, "<span class='xenoannounce'>You are the stun master. Your stunning is legendary and causes massive quantities of salt.</span>")
 					melee_damage_lower = 25

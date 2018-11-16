@@ -166,23 +166,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_chance = 60
 					speed = 0.3
 					aura_strength = 1.5
-				if("Carrier")
-					melee_damage_lower = 25
-					melee_damage_upper = 35
-					health = 220
-					maxHealth = 220
-					plasma_max = 300
-					plasma_gain = 10
-					upgrade_threshold = 400
-					caste_desc = "A portable Love transport. It looks a little more dangerous."
-					armor_deflection = 10
-					tackle_damage = 35 // Prior was 30
-					speed = -0.1
-					aura_strength = 1.5
-					var/mob/living/carbon/Xenomorph/Carrier/CA = src
-					CA.huggers_max = 9
-					CA.hugger_delay = 20
-					CA.eggs_max = 4
 				if("Queen")
 					melee_damage_lower = 50
 					melee_damage_upper = 60
@@ -319,23 +302,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 40 // Prior was 35
 					speed = 0.2
 					aura_strength = 2
-				if("Carrier")
-					melee_damage_lower = 30
-					melee_damage_upper = 40
-					health = 220
-					maxHealth = 220
-					plasma_max = 350
-					plasma_gain = 12
-					upgrade_threshold = 800
-					caste_desc = "A portable Love transport. It looks pretty strong."
-					armor_deflection = 10
-					tackle_damage = 40 // Prior was 35
-					speed = -0.2
-					aura_strength = 2
-					var/mob/living/carbon/Xenomorph/Carrier/CA = src
-					CA.huggers_max = 10
-					CA.hugger_delay = 15
-					CA.eggs_max = 5
 				if("Queen")
 					melee_damage_lower = 55
 					melee_damage_upper = 65
@@ -473,23 +439,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 15
 					tackle_damage = 45 // Prior was 40
 					speed = 0.1
-				if("Carrier")
-					to_chat(src, "<span class='xenoannounce'>You are the master of huggers. Throw them like baseballs at the marines!</span>")
-					melee_damage_lower = 35
-					melee_damage_upper = 45
-					health = 250
-					maxHealth = 250
-					plasma_max = 400
-					plasma_gain = 15
-					caste_desc = "It's literally crawling with 11 huggers."
-					armor_deflection = 15
-					tackle_damage = 45 // Prior was 40
-					speed = -0.3
-					aura_strength = 2.5
-					var/mob/living/carbon/Xenomorph/Carrier/CA = src
-					CA.huggers_max = 11
-					CA.hugger_delay = 10
-					CA.eggs_max = 6
 				if("Queen")
 					to_chat(src, "<span class='xenoannounce'>You are the Alpha and the Omega. The beginning and the end.</span>")
 					melee_damage_lower = 60

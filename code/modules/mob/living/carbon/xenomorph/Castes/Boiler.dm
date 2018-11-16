@@ -138,9 +138,6 @@
 	// *** Health *** //
 	max_health = 245
 
-	// *** Evolution *** //
-	upgrade_threshold = 1600
-
 	// *** Defense *** //
 	armor_deflection = 35
 

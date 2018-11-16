@@ -129,19 +129,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 45 // Prior was 40
 					speed = 0.0
 					aura_strength = 2.5
-				if("Drone")
-					melee_damage_lower = 15
-					melee_damage_upper = 20
-					health = 150
-					maxHealth = 150
-					plasma_max = 800
-					plasma_gain = 30
-					upgrade_threshold = 200
-					caste_desc = "The workhorse of the hive. It looks a little more dangerous."
-					armor_deflection = 5
-					tackle_damage = 30 // Prior was 25
-					speed = -0.9
-					aura_strength = 1
 				if("Hivelord")
 					melee_damage_lower = 15
 					melee_damage_upper = 20
@@ -256,19 +243,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 50 // Prior was 45
 					speed = -0.1
 					aura_strength = 3.5
-				if("Drone")
-					melee_damage_lower = 15
-					melee_damage_upper = 20
-					health = 170
-					maxHealth = 170
-					plasma_max = 900
-					plasma_gain = 35
-					upgrade_threshold = 400
-					caste_desc = "The workhorse of the hive. It looks a little more dangerous."
-					armor_deflection = 10
-					tackle_damage = 35 // Prior was 30
-					speed = -1.0
-					aura_strength = 1.5
 				if("Hivelord")
 					melee_damage_lower = 15
 					melee_damage_upper = 20
@@ -383,19 +357,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 60 // Prior was 55
 					speed = -0.2
 					aura_strength = 4.5
-				if("Drone")
-					to_chat(src, "<span class='xenoannounce'>You are the ultimate worker of the Hive. Time to clock in, and clock the tallhosts out.</span>")
-					melee_damage_lower = 20
-					melee_damage_upper = 25
-					health = 180
-					maxHealth = 180
-					plasma_max = 1000
-					plasma_gain = 40
-					caste_desc = "A very mean architect."
-					armor_deflection = 15
-					tackle_damage = 40 // Prior was 35
-					speed = -1.1
-					aura_strength = 2
 				if("Hivelord")
 					to_chat(src, "<span class='xenoannounce'>You are the builder of walls. Ensure that the marines are the ones who pay for them.</span>")
 					melee_damage_lower = 20

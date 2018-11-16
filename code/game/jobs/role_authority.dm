@@ -475,7 +475,7 @@ roles willy nilly.
 	var/datum/squad/lowest = pick(squads)
 
 	var/datum/pref_squad_name
-	if(H?.client && H.client.prefs.preferred_squad && H.client.prefs.preferred_squad != "None")
+	if(H?.client?.prefs.preferred_squad && H.client.prefs.preferred_squad != "None")
 		pref_squad_name = H.client.prefs.preferred_squad
 
 	for(var/datum/squad/L in squads)

@@ -124,20 +124,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 35 // Prior was 30
 					armor_deflection = 25
 					speed = -0.6
-				if("Boiler")
-					melee_damage_lower = 25
-					melee_damage_upper = 30
-					health = 220
-					maxHealth = 220
-					plasma_gain = 35
-					plasma_max = 900
-					upgrade_threshold = 800
-					spit_delay = 30
-					bomb_strength = 1.5
-					caste_desc = "Some sort of abomination. It looks a little more dangerous."
-					tackle_damage = 25 // Prior was 20
-					armor_deflection = 35
-					speed = 0.6
 				if("Praetorian")
 					melee_damage_lower = 25
 					melee_damage_upper = 30
@@ -293,20 +279,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 30
 					tackle_damage = 40 // Prior was 35
 					speed = -0.7
-				if("Boiler")
-					melee_damage_lower = 30
-					melee_damage_upper = 35
-					health = 240
-					maxHealth = 240
-					plasma_gain = 40
-					plasma_max = 1000
-					upgrade_threshold = 1600
-					spit_delay = 20
-					bomb_strength = 2
-					caste_desc = "Some sort of abomination. It looks pretty strong."
-					armor_deflection = 35
-					tackle_damage = 30 // Prior was 25
-					speed = 0.5
 				if("Praetorian")
 					melee_damage_lower = 30
 					melee_damage_upper = 35
@@ -462,22 +434,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 30
 					tackle_damage = 45	 // Prior was 35
 					speed = -0.8
-				if("Boiler")
-					to_chat(src, "<span class='xenoannounce'>You are the master of ranged artillery. Bring death from above.</span>")
-					melee_damage_lower = 35
-					melee_damage_upper = 40
-					health = 245
-					maxHealth = 245
-					plasma_gain = 50
-					plasma_max = 1000
-					spit_delay = 10
-					bomb_strength = 2.5
-					caste_desc = "A devestating piece of alien artillery."
-					armor_deflection = 35
-					tacklemin = 4
-					tacklemax = 6
-					tackle_chance = 80
-					speed = 0.4
 				if("Praetorian")
 					to_chat(src, "<span class='xenoannounce'>You are the strongest range fighter around. Your spit is devestating and you can fire nearly a constant stream.</span>")
 					melee_damage_lower = 35

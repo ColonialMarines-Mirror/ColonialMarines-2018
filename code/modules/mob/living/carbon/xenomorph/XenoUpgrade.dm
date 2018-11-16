@@ -115,20 +115,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 35 // Prior was 30
 					armor_deflection = 25
 					speed = -0.6
-				if("Praetorian")
-					melee_damage_lower = 25
-					melee_damage_upper = 30
-					health = 225
-					maxHealth = 225
-					plasma_gain = 30
-					plasma_max = 900
-					upgrade_threshold = 800
-					spit_delay = 15
-					caste_desc = "A giant ranged monster. It looks a little more dangerous."
-					armor_deflection = 40
-					tackle_damage = 45 // Prior was 40
-					speed = 0.0
-					aura_strength = 2.5
 				if("Queen")
 					melee_damage_lower = 50
 					melee_damage_upper = 60
@@ -214,20 +200,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 30
 					tackle_damage = 40 // Prior was 35
 					speed = -0.7
-				if("Praetorian")
-					melee_damage_lower = 30
-					melee_damage_upper = 35
-					health = 250
-					maxHealth = 250
-					plasma_gain = 40
-					plasma_max = 1000
-					upgrade_threshold = 1600
-					spit_delay = 15
-					caste_desc = "A giant ranged monster. It looks pretty strong."
-					armor_deflection = 40
-					tackle_damage = 50 // Prior was 45
-					speed = -0.1
-					aura_strength = 3.5
 				if("Queen")
 					melee_damage_lower = 55
 					melee_damage_upper = 65
@@ -315,20 +287,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 30
 					tackle_damage = 45	 // Prior was 35
 					speed = -0.8
-				if("Praetorian")
-					to_chat(src, "<span class='xenoannounce'>You are the strongest range fighter around. Your spit is devestating and you can fire nearly a constant stream.</span>")
-					melee_damage_lower = 35
-					melee_damage_upper = 40
-					health = 250
-					maxHealth = 250
-					plasma_gain = 50
-					plasma_max = 1000
-					spit_delay = 10
-					caste_desc = "Its mouth looks like a minigun."
-					armor_deflection = 45
-					tackle_damage = 60 // Prior was 55
-					speed = -0.2
-					aura_strength = 4.5
 				if("Queen")
 					to_chat(src, "<span class='xenoannounce'>You are the Alpha and the Omega. The beginning and the end.</span>")
 					melee_damage_lower = 60

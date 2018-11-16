@@ -47,7 +47,7 @@
 
 //spec_weapons skill
 //increase or decrase accuracy, recoil, and firing delay of spec weapons
-#define SKILL_SPEC_DEFAULT		0 //marines
+#define SKILL_SPEC_DEFAULT		-3 //marines
 #define SKILL_SPEC_TRAINED		1 //special training
 
 

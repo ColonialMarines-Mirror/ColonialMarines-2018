@@ -129,21 +129,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 45 // Prior was 40
 					speed = 0.0
 					aura_strength = 2.5
-				if("Hivelord")
-					melee_damage_lower = 15
-					melee_damage_upper = 20
-					health = 270
-					maxHealth = 270
-					plasma_max = 900
-					plasma_gain = 50
-					upgrade_threshold = 400
-					caste_desc = "A builder of REALLY BIG hives. It looks a little more dangerous."
-					armor_deflection = 10
-					tacklemin = 3
-					tacklemax = 5
-					tackle_chance = 60
-					speed = 0.3
-					aura_strength = 1.5
 				if("Queen")
 					melee_damage_lower = 50
 					melee_damage_upper = 60
@@ -243,19 +228,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 50 // Prior was 45
 					speed = -0.1
 					aura_strength = 3.5
-				if("Hivelord")
-					melee_damage_lower = 15
-					melee_damage_upper = 20
-					health = 290
-					maxHealth = 290
-					plasma_max = 1000
-					plasma_gain = 55
-					upgrade_threshold = 800
-					caste_desc = "A builder of REALLY BIG hives. It looks pretty strong."
-					armor_deflection = 10
-					tackle_damage = 40 // Prior was 35
-					speed = 0.2
-					aura_strength = 2
 				if("Queen")
 					melee_damage_lower = 55
 					melee_damage_upper = 65
@@ -357,18 +329,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 60 // Prior was 55
 					speed = -0.2
 					aura_strength = 4.5
-				if("Hivelord")
-					to_chat(src, "<span class='xenoannounce'>You are the builder of walls. Ensure that the marines are the ones who pay for them.</span>")
-					melee_damage_lower = 20
-					melee_damage_upper = 30
-					health = 300
-					maxHealth = 300
-					plasma_max = 1200
-					plasma_gain = 60
-					caste_desc = "An extreme construction machine. It seems to be building walls..."
-					armor_deflection = 15
-					tackle_damage = 45 // Prior was 40
-					speed = 0.1
 				if("Queen")
 					to_chat(src, "<span class='xenoannounce'>You are the Alpha and the Omega. The beginning and the end.</span>")
 					melee_damage_lower = 60

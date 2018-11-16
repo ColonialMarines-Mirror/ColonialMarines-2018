@@ -4,7 +4,7 @@
 /mob/living/carbon/Xenomorph/can_ventcrawl()
 	if(mob_size == MOB_SIZE_BIG)
 		return FALSE
-	if(caste == "Warrior" || caste == "Defender")
+	if(isXenoWarrior(src) || isXenoDefender(src))
 		return FALSE
 	return TRUE
 

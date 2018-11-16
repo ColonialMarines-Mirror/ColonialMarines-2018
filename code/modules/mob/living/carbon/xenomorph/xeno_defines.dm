@@ -7,13 +7,14 @@
 	var/tier = 0
 	var/upgrade = 0
 
-	var/dead_icon = "Drone Dead"
 	var/language = "Xenomorph"
 
 	// *** Melee Attacks *** //
 	var/melee_damage_lower = 10
 	var/melee_damage_upper = 20
 	var/attack_delay = 0 //Bonus or pen to time in between attacks. + makes slashes slower.
+
+	var/savage_cooldown = 300
 
 	// *** Tackle *** //
 	var/tacklemin = 1
@@ -41,7 +42,7 @@
 	var/hardcore = FALSE //Set to 1 in New() when Whiskey Outpost is active. Prevents healing and queen evolution
 
 	// *** Evolution *** //
-	var/evolution_allowed = 1 //Are they allowed to evolve (and have their evolution progress group)
+	var/evolution_allowed = TRUE //Are they allowed to evolve (and have their evolution progress group)
 	var/evolution_threshold = 0 //Threshold to next evolution
 	var/upgrade_threshold = 0
 
@@ -56,13 +57,11 @@
 	var/can_denest_hosts = FALSE
 	var/can_be_queen_healed = TRUE
 
-	var/can_hold_facehuggers = 0
+	var/can_hold_facehuggers = FALSE
 	var/can_hold_eggs = CANNOT_HOLD_EGGS
 
 	// *** Defense *** //
 	var/armor_deflection = 0 //Chance of deflecting projectiles.
-
-	var/xeno_explosion_resistance = 0 //0 to 3. how explosions affects the xeno, can it stun it, etc...
 
 	var/fire_immune = FALSE //Boolean
 	var/fire_resist = 1 //0 to 1; lower is better as it is a multiplier.
@@ -74,15 +73,12 @@
 	var/charge_type = 0 //0: normal. 1: warrior/hunter style pounce. 2: ravager free attack.
 	var/pounce_delay = 40
 
-	var/acid_spray_range = 3
+	var/acid_spray_range = 0
 	var/acid_spray_cooldown = 150
 
 	// *** Pheromones *** //	
 	var/aura_strength = 0 //The strength of our aura. Zero means we can't emit one
 	var/aura_allowed = list("frenzy", "warding", "recovery") //"Evolving" removed for the time being
-
-	var/adjust_size_x = 1 //Adjust pixel size. 0.x is smaller, 1.x is bigger, percentage based.
-	var/adjust_size_y = 1
 
 	// *** Warrior Abilities *** //
 	var/agility_speed_increase = 0 // this opens up possibilities for balancing
@@ -98,7 +94,6 @@
 
 	// *** Carrier Abilities *** //
 	var/huggers_max = 0
-	var/throwspeed = 0
 	var/hugger_delay = 0
 	var/eggs_max = 0
 
@@ -107,6 +102,9 @@
 	var/tail_sweep_cooldown = 120
 	var/crest_defense_cooldown = 150
 	var/fortify_cooldown = 200
+	var/crest_defense_armor = 35
+	var/fortify_armor = 70
+	var/cresttoss_cooldown = 60
 
 	// *** Queen Abilities *** //
 	var/queen_leader_limit = 0 //Amount of leaders allowed
@@ -114,7 +112,7 @@
 /mob/living/carbon/Xenomorph
 	var/datum/xeno_caste/xeno_caste
 
-	var/dead_icon = "Drone Dead"
+	var/caste_name = ""
 	var/language = "Xenomorph"
 	var/obj/item/clothing/suit/wear_suit = null
 	var/obj/item/clothing/head/head = null
@@ -143,6 +141,10 @@
 	var/armor_bonus = 0 //Extra chance of deflecting projectiles due to temporary effects
 	var/armor_pheromone_bonus = 0 //
 
+	var/fire_resist_modifier = 0
+
+	var/xeno_explosion_resistance = 0 //0 to 3. how explosions affects the xeno, can it stun it, etc...
+
 	var/obj/structure/tunnel/start_dig = null
 	var/tunnel_delay = 0
 	var/datum/ammo/xeno/ammo = null //The ammo datum for our spit projectiles. We're born with this, it changes sometimes.
@@ -166,15 +168,12 @@
 	var/stagger = 0 //Temporary inability to use special actions. Regenerates each tick.
 	var/tier = 1 //This will track their "tier" to restrict/limit evolutions
 
-
 	var/emotedown = 0
 
 	var/datum/action/xeno_action/activable/selected_ability
 	var/selected_resin = "resin wall" //which resin structure to build when we secrete resin
 
 	//Naming variables
-	var/caste = ""
-	var/upgrade_name = "Young"
 	var/nicknumber = 0 //The number after the name. Saved right here so it transfers between castes.
 
 	//This list of inherent verbs lets us take any proc basically anywhere and add them.
@@ -220,11 +219,6 @@
 	var/used_punch = 0
 	var/used_toggle_agility = 0
 
-	var/lunge_cooldown = 120
-	var/fling_cooldown = 60
-	var/punch_cooldown = 40
-	var/toggle_agility_cooldown = 5
-
 	// Defender vars
 	var/fortify = 0
 	var/crest_defense = 0
@@ -234,21 +228,8 @@
 	var/used_crest_defense = 0
 	var/used_fortify = 0
 
-	var/headbutt_cooldown = 40
-	var/tail_sweep_cooldown = 120
-	var/crest_defense_cooldown = 10
-	var/crest_defense_armor = 35
-	var/fortify_cooldown = 10
-	var/fortify_armor = 70
-
-
 	//Praetorian vars
-	var/acid_spray_range = 3
-	var/acid_spray_cooldown = 150
 	var/used_acid_spray = 0
-
-	//Queen vars
-	var/queen_leader_limit = 1 //Amount of leaders allowed
 
 	//Leader vars
 	var/leader_aura_strength = 0 //Pheromone strength inherited from Queen
@@ -257,14 +238,12 @@
 	//Runner vars
 	var/savage = FALSE
 	var/savage_used = FALSE
-	var/savage_cooldown = 300
 
 	//Notification spam controls
 	var/recent_notice = 0
 	var/notice_delay = 20 //2 second between notices
 
 	var/cresttoss_used = FALSE
-	var/cresttoss_cooldown = 60
 
 /datum/hive_status
 	var/hivenumber = XENO_HIVE_NORMAL

@@ -10,9 +10,6 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			return 0
 	return 1
 
-// Vent crawling whitelisted items, whoo
-/mob/living
-	var/canEnterVentWith = "/obj/item/implant=0&/obj/item/clothing/mask/facehugger=0&/obj/item/device/radio/borg=0&/obj/machinery/camera=0&/obj/item/verbs=0"
 
 /mob/living/click(var/atom/A, var/list/mods)
 	if (..())
@@ -98,10 +95,12 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		return
 	visible_message("<span class='danger'>[src] scrambles into [vent_found]!</span>", \
 	"<span class='warning'>You climb into [vent_found].</span>")
-	pick(playsound(src, 'sound/effects/alien_ventpass1.ogg', 35, 1), playsound(src, 'sound/effects/alien_ventpass2.ogg', 35, 1))
+	if(!istype(src,/mob/living/carbon/Xenomorph/Hunter)) //Hunters silently enter/exit vents.
+		pick(playsound(src, 'sound/effects/alien_ventpass1.ogg', 35, 1), playsound(src, 'sound/effects/alien_ventpass2.ogg', 35, 1))
 	forceMove(vent_found)
 	add_ventcrawl(vent_found)
 	return
+
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
 	is_ventcrawling = TRUE
@@ -118,7 +117,9 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			if(client)
 				client.images += A.pipe_vision_img
 
-
+/mob/living/carbon/Xenomorph/Hunter/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+	. = ..()
+	cancel_stealth()
 
 /mob/living/proc/remove_ventcrawl()
 	is_ventcrawling = 0

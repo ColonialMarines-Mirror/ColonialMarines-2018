@@ -7,7 +7,7 @@
 /turf/closed/wall/almayer
 	name = "hull"
 	desc = "A huge chunk of metal used to seperate rooms and make up the ship."
-	icon = 'icons/turf/almayer.dmi'
+	icon = 'icons/turf/almayerwalls.dmi'
 	icon_state = "testwall0"
 	walltype = "testwall"
 
@@ -53,7 +53,7 @@
 
 
 /turf/closed/wall/almayer/research/can_be_dissolved()
-	return 0
+	return FALSE
 
 /turf/closed/wall/almayer/research/containment/wall
 	name = "cell wall"
@@ -67,7 +67,7 @@
 	icon_state = "containment_wall_divide"
 
 /turf/closed/wall/almayer/research/containment/wall/south
-	icon_state = "containment_wall_south"
+	icon_state = "containment_wall_s"
 
 /turf/closed/wall/almayer/research/containment/wall/west
 	icon_state = "containment_wall_w"
@@ -91,7 +91,6 @@
 	icon_state = "containment_wall_n"
 
 /turf/closed/wall/almayer/research/containment/wall/connect_e2
-	name = "\improper cell wall."
 	icon_state = "containment_wall_connect_e2"
 
 /turf/closed/wall/almayer/research/containment/wall/connect_s1
@@ -103,7 +102,7 @@
 /turf/closed/wall/almayer/research/containment/wall/purple
 	name = "cell window"
 	icon_state = "containment_window"
-	opacity = 0
+	opacity = FALSE
 
 
 
@@ -154,7 +153,7 @@
 	return
 
 /turf/closed/wall/sulaco/unmeltable/can_be_dissolved()
-	return 0
+	return FALSE
 
 
 
@@ -204,7 +203,7 @@
 /turf/closed/wall/indestructible/splashscreen/New()
 	..()
 	if(icon_state == "title_painting1")
-		icon_state = "title_painting[rand(1,8)]"
+		icon_state = "title_painting[rand(1,9)]"
 
 /turf/closed/wall/indestructible/other
 	icon_state = "r_wall"
@@ -469,16 +468,18 @@
 /turf/closed/wall/resin/attackby(obj/item/W, mob/living/user)
 	if(!(W.flags_item & NOBLUDGEON))
 		user.animation_attack_on(src)
-		var/power = W.force
+		var/damage = W.force
 		var/multiplier = 1
-		if(W.damtype == "burn") //Burn damage deals extra vs resin structures (mostly welders).
+		if(W.damtype == "fire") //Burn damage deals extra vs resin structures (mostly welders).
 			multiplier += 1
 			if(istype(W, /obj/item/tool/pickaxe/plasmacutter)) //Plasma cutters are particularly good at destroying resin structures.
 				var/obj/item/tool/pickaxe/plasmacutter/P = W
+				if(!P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD, null, null, SFX = FALSE))
+					return
 				multiplier += PLASMACUTTER_RESIN_MULTIPLIER
-				P.cut_apart(user, src.name, src, P.charge_cost * PLASMACUTTER_VLOW_MOD) //Minimal enregy cost.
-		power *= max(0,multiplier)
-		take_damage(power)
+				P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD) //Minimal energy cost.
+		damage *= max(0,multiplier)
+		take_damage(damage)
 		playsound(src, "alien_resin_break", 25)
 	else
 		return attack_hand(user)

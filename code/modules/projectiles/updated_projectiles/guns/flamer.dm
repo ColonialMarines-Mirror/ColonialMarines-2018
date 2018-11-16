@@ -206,10 +206,10 @@
 		if (S.slayer > 0)
 			S.slayer -= 1
 			S.update_icon(1, 0)
-	
+
 	for(var/obj/structure/jungle/vines/V in T)
 		cdel(V)
-		
+
 	for(var/mob/living/M in T) //Deal bonus damage if someone's caught directly in initial stream
 		if(M.stat == DEAD)
 			continue
@@ -229,7 +229,7 @@
 					log_combat(user, H, "shot", src)
 					msg_admin_attack("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[usr]'>FLW</a>) shot [key_name(H)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[H.x];Y=[H.y];Z=[H.z]'>JMP</a>) (<A HREF='?_src_=holder;adminplayerfollow=\ref[H]'>FLW</a>) with \a [name] in [get_area(user)]")
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro))) 
+			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro)))
 				continue
 
 		M.adjust_fire_stacks(rand(5,burn*2))
@@ -308,6 +308,8 @@
 	name = "\improper M240-T incinerator unit"
 	desc = "An improved version of the M240A1 incinerator unit, the M240-T model is capable of dispersing a larger variety of fuel types."
 	current_mag = /obj/item/ammo_magazine/flamer_tank/large
+	icon_state = "flamethrower"
+	item_state = "tflamer"
 	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY|GUN_SPECIALIST
 	req_access = list(ACCESS_MARINE_SPECPREP)
 

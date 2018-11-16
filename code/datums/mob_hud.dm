@@ -265,16 +265,16 @@ var/datum/mob_hud/huds = list(
 		holder2.icon_state = "hudsynth"
 		holder3.icon_state = "hudsynth"
 	else
-		var/revive_enabled = 1
+		var/revive_enabled = TRUE
 		var/stage = 1
-		if(world.time - timeofdeath > REVIVE_GRACE_PERIOD || undefibbable)
-			revive_enabled = 0
+		if(check_tod())
+			revive_enabled = FALSE
 		else if(!is_revivable())
-			revive_enabled = 0
+			revive_enabled = FALSE
 		else if(!client)
 			var/mob/dead/observer/G = get_ghost()
 			if(!istype(G))
-				revive_enabled = 0
+				revive_enabled = FALSE
 
 		if(stat == DEAD && !undefibbable)
 			if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.4) && (world.time - timeofdeath) < (REVIVE_GRACE_PERIOD * 0.8))

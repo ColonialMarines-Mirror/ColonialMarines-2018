@@ -84,7 +84,7 @@
 		return
 
 	var/mob/living/carbon/human/human_user
-	if(ishuman(loc))
+	if(ishuman(loc) && human_user.stat != DEAD)
 		human_user = loc
 	else
 		active = FALSE

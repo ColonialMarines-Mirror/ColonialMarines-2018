@@ -24,9 +24,9 @@
 		return (FIRELOSS)
 
 /mob/living/carbon/human/proc/check_tod()
-	if(!undefibbable && world.time <= timeofdeath + revive_grace_period)
-		return 1
-	return 0
+	if(!undefibbable && world.time <= timeofdeath + REVIVE_GRACE_PERIOD)
+		return TRUE
+	return FALSE
 
 /obj/item/device/defibrillator/New()
 	sparks.set_up(5, 0, src)

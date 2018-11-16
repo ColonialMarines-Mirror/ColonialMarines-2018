@@ -265,13 +265,11 @@ var/datum/mob_hud/huds = list(
 		holder2.icon_state = "hudsynth"
 		holder3.icon_state = "hudsynth"
 	else
-		var/datum/limb/head = get_limb("head")
-		var/datum/internal_organ/heart/heart = internal_organs_by_name["heart"]
 		var/revive_enabled = 1
 		var/stage = 1
-		if(world.time - timeofdeath > revive_grace_period || undefibbable)
+		if(world.time - timeofdeath > REVIVE_GRACE_PERIOD || undefibbable)
 			revive_enabled = 0
-		else if(suiciding || !head || !head.is_usable() || !heart || heart.is_broken() || !has_brain() || chestburst || (HUSK in mutations) || !mind)
+		else if(!is_revivable())
 			revive_enabled = 0
 		else if(!client)
 			var/mob/dead/observer/G = get_ghost()
@@ -279,9 +277,9 @@ var/datum/mob_hud/huds = list(
 				revive_enabled = 0
 
 		if(stat == DEAD && !undefibbable)
-			if((world.time - timeofdeath) > ((revive_grace_period / 4) * 2))
+			if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.4) && (world.time - timeofdeath) < (REVIVE_GRACE_PERIOD * 0.8))
 				stage = 2
-			else if((world.time - timeofdeath) > ((revive_grace_period / 4) * 3))
+			else if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.8))
 				stage = 3
 
 		var/holder2_set = 0
@@ -303,7 +301,7 @@ var/datum/mob_hud/huds = list(
 					holder2_set = 1
 			else
 				holder.icon_state = "huddead"
-				if(!holder2_set || world.time - timeofdeath > revive_grace_period || undefibbable)
+				if(!holder2_set || world.time - timeofdeath > REVIVE_GRACE_PERIOD || undefibbable)
 					holder2.icon_state = "huddead"
 					holder3.icon_state = "huddead"
 					holder2_set = 1

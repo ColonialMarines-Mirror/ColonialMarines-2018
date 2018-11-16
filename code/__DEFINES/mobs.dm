@@ -386,6 +386,8 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 #define HUMAN_MAX_PALENESS	30 //this is added to human skin tone to get value of pale_max variable
 
+#define REVIVE_GRACE_PERIOD 3000 //5 minutes to get revived
+
 
 //diseases
 

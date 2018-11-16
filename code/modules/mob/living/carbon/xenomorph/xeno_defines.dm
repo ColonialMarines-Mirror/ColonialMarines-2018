@@ -4,6 +4,10 @@
 	var/upgrade_name = "Young"
 	var/caste_desc = null
 
+	var/caste_type_path = null
+
+	var/ancient_message = ""
+
 	var/tier = 0
 	var/upgrade = 0
 

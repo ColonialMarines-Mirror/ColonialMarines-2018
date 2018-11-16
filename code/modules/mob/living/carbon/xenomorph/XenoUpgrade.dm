@@ -203,9 +203,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					upgrade_threshold = 400
 					caste_desc = "A builder of REALLY BIG hives. It looks a little more dangerous."
 					armor_deflection = 10
-					tacklemin = 3
-					tacklemax = 5
-					tackle_chance = 60
+					tackle_damage = 35
 					speed = 0.3
 					aura_strength = 1.5
 				if("Carrier")
@@ -452,8 +450,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					speed = -2.1
 					armor_deflection = 10
 					attack_delay = -4
-					tacklemin = 3
-					tacklemax = 5
 					tackle_damage = 40 // Prior was 30
 					pounce_delay = 30
 				if("Hunter")
@@ -557,9 +553,7 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					bomb_strength = 2.5
 					caste_desc = "A devestating piece of alien artillery."
 					armor_deflection = 35
-					tacklemin = 4
-					tacklemax = 6
-					tackle_chance = 80
+					tackle_damage = 35 // Prior was 30
 					speed = 0.4
 				if("Praetorian")
 					to_chat(src, "<span class='xenoannounce'>You are the strongest range fighter around. Your spit is devestating and you can fire nearly a constant stream.</span>")

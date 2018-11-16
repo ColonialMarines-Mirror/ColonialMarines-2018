@@ -217,7 +217,7 @@
 			R.recalculateChannels()
 		if(istype(old_lead.wear_id, /obj/item/card/id))
 			var/obj/item/card/id/ID = old_lead.wear_id
-			ID.access -= ACCESS_HARINE_LEADER
+			ID.access -= ACCESS_MARINE_LEADER
 	old_lead.hud_set_squad()
 	old_lead.update_inv_head() //updating marine helmet leader overlays
 	old_lead.update_inv_wear_suit()
@@ -225,7 +225,7 @@
 
 
 //Not a safe proc. Returns null if squads or jobs aren't set up.
-//Hostly used in the marine squad console in marine_consoles.dm.
+//Mostly used in the marine squad console in marine_consoles.dm.
 /proc/get_squad_by_name(var/text)
 	if(!RoleAuthority || RoleAuthority.squads.len == 0)
 		return null

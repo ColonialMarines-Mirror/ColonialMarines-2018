@@ -50,6 +50,7 @@
 /datum/xeno_caste/defender/mature
 	upgrade_name = "Mature"
 	caste_desc = "An alien with an armored head crest. It looks a little more dangerous."
+	upgrade = 1
 
 	// *** Melee Attacks *** //	
 	melee_damage_lower = 20
@@ -81,6 +82,7 @@
 /datum/xeno_caste/defender/elder
 	upgrade_name = "Elder"
 	caste_desc = "An alien with an armored head crest. It looks pretty strong."
+	upgrade = 2
 
 	// *** Melee Attacks *** //	
 	melee_damage_lower = 23
@@ -112,7 +114,7 @@
 /datum/xeno_caste/defender/ancient
 	upgrade_name = "Ancient"
 	caste_desc = "An unstoppable force that remains when others would fall."
-
+	upgrade = 3
 	ancient_message = "You are a incredibly resilient, you can control the battle through sheer force."
 
 	// *** Melee Attacks *** //	

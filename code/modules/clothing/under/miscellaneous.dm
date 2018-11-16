@@ -370,7 +370,7 @@
 	desc = "Created by an unknown corporation for high risk missions, made with several layers of a unknown nano-fiber that, while light, molds to the wearer's body shape and hardens protecting them."
 	icon_state = "pilot_spec"
 	item_state = "pilot_spec"
-	unacidable = 1
+	unacidable = TRUE
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 70, bio = 70, rad = 70)
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS

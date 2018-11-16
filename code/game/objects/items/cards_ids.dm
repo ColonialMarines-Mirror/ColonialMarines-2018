@@ -349,7 +349,7 @@
 		else
 			var/msg = "<span class='notice'> It reads: "
 			for(var/x = 1 to length(fallen_names))
-				if (x == length(fallen_names)):
+				if (x == length(fallen_names))
 					msg += "\"[fallen_names[x]] - [fallen_assignements[x]]\""
 				else
 					msg += "\"[fallen_names[x]] - [fallen_assignements[x]]\", "

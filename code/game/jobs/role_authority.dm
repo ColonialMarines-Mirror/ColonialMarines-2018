@@ -529,7 +529,7 @@ roles willy nilly.
 	//Ie. 8 squad medic jobs should be available, and total medics in squads should be 8.
 	if(H.mind.assigned_role != "Squad Marine")
 		var/pref_squad_name
-		if(H?.client && H.client.prefs.preferred_squad && H.client.prefs.preferred_squad != "None")
+		if(H?.client?.prefs.preferred_squad && H.client.prefs.preferred_squad != "None")
 			pref_squad_name = H.client.prefs.preferred_squad
 
 		var/datum/squad/lowest

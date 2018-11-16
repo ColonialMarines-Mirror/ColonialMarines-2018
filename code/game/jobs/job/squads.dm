@@ -81,25 +81,25 @@
 //Straight-up insert a marine into a squad.
 //This sets their ID, increments the total count, and so on. Everything else is done in job_controller.dm.
 //So it does not check if the squad is too full already, or randomize it, etc.
-/datum/squad/proc/put_marine_in_squad(var/mob/living/carbon/human/M)
-	if(!M || !istype(M,/mob/living/carbon/human))
+/datum/squad/proc/put_marine_in_squad(var/mob/living/carbon/human/H)
+	if(!H || !istype(H,/mob/living/carbon/human))
 		return FALSE
 	if(!usable)
 		return FALSE
-	if(!M.mind?.assigned_role)
+	if(!H.mind?.assigned_role)
 		return FALSE//Not yet
-	if(M.assigned_squad)
+	if(H.assigned_squad)
 		return FALSE //already in a squad
 
 	var/obj/item/card/id/C = null
 
-	C = M.wear_id
+	C = H.wear_id
 	if(!C)
-		C = M.get_active_hand()
+		C = H.get_active_hand()
 	if(!istype(C))
 		return FALSE//Abort, no ID found
 
-	switch(M.mind.assigned_role)
+	switch(H.mind.assigned_role)
 		if("Squad Engineer")
 			num_engineers++
 			C.claimedgear = 0
@@ -113,17 +113,17 @@
 		if("Squad Leader")
 			if(squad_leader && (!squad_leader.mind || squad_leader.mind.assigned_role != "Squad Leader")) //field promoted SL
 				demote_squad_leader() //replaced by the real one
-			squad_leader = M
-			if(M.mind.assigned_role == "Squad Leader") //field promoted SL don't count as real ones
+			squad_leader = H
+			if(H.mind.assigned_role == "Squad Leader") //field promoted SL don't count as real ones
 				num_leaders++
 
 	src.count++ //Add up the tally. This is important in even squad distribution.
 
-	if(M.mind.assigned_role != "Squad Marine")
-		log_admin("[key_name(M)] has been assigned as [name] [M.mind.assigned_role]") // we don't want to spam squad marines but the others are useful
+	if(H.mind.assigned_role != "Squad Marine")
+		log_admin("[key_name(H)] has been assigned as [name] [H.mind.assigned_role]") // we don't want to spam squad marines but the others are useful
 
-	marines_list += M
-	M.assigned_squad = src //Add them to the squad
+	marines_list += H
+	H.assigned_squad = src //Add them to the squad
 
 	var/c_oldass = C.assignment
 	C.access += src.access //Add their squad access to their ID
@@ -133,32 +133,32 @@
 
 
 //proc used by the overwatch console to transfer marine to another squad
-/datum/squad/proc/remove_marine_from_squad(mob/living/carbon/human/M)
-	if(!M.mind)
+/datum/squad/proc/remove_marine_from_squad(mob/living/carbon/human/H)
+	if(!H.mind)
 		return FALSE
-	if(!M.assigned_squad)
+	if(!H.assigned_squad)
 		return //not assigned to a squad
 	var/obj/item/card/id/C
-	C = M.wear_id
+	C = H.wear_id
 	if(!istype(C))
 		return FALSE//Abort, no ID found
 
 	C.access -= src.access
-	C.assignment = M.mind.assigned_role
+	C.assignment = H.mind.assigned_role
 	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 
 	count--
-	marines_list -= M
+	marines_list -= H
 
-	if(M.assigned_squad.squad_leader == M)
-		if(M.mind.assigned_role != "Squad Leader") //a field promoted SL, not a real one
+	if(H.assigned_squad.squad_leader == H)
+		if(H.mind.assigned_role != "Squad Leader") //a field promoted SL, not a real one
 			demote_squad_leader()
 		else
-			M.assigned_squad.squad_leader = null
+			H.assigned_squad.squad_leader = null
 
-	M.assigned_squad = null
+	H.assigned_squad = null
 
-	switch(M.mind.assigned_role)
+	switch(H.mind.assigned_role)
 		if("Squad Engineer")
 			num_engineers--
 		if("Squad Medic")
@@ -217,7 +217,7 @@
 			R.recalculateChannels()
 		if(istype(old_lead.wear_id, /obj/item/card/id))
 			var/obj/item/card/id/ID = old_lead.wear_id
-			ID.access -= ACCESS_MARINE_LEADER
+			ID.access -= ACCESS_HARINE_LEADER
 	old_lead.hud_set_squad()
 	old_lead.update_inv_head() //updating marine helmet leader overlays
 	old_lead.update_inv_wear_suit()
@@ -225,7 +225,7 @@
 
 
 //Not a safe proc. Returns null if squads or jobs aren't set up.
-//Mostly used in the marine squad console in marine_consoles.dm.
+//Hostly used in the marine squad console in marine_consoles.dm.
 /proc/get_squad_by_name(var/text)
 	if(!RoleAuthority || RoleAuthority.squads.len == 0)
 		return null

@@ -63,19 +63,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					speed = -0.4
 					armor_deflection = 50
 					tackle_damage = 45 // Prior was 40
-				if("Spitter")
-					melee_damage_lower = 25
-					melee_damage_upper = 35
-					health = 220
-					maxHealth = 220
-					plasma_gain = 25
-					plasma_max = 700
-					upgrade_threshold = 400
-					spit_delay = 20
-					caste_desc = "A ranged damage dealer. It looks a little more dangerous."
-					tackle_damage = 35 // Prior was 30
-					armor_deflection = 25
-					speed = -0.6
 
 		//SECOND UPGRADE
 		if(2)
@@ -94,19 +81,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An alien with an armored carapace. It looks pretty strong."
 					speed = -0.4
 					armor_deflection = 50
-				if("Spitter")
-					melee_damage_lower = 30
-					melee_damage_upper = 35
-					health = 240
-					maxHealth = 240
-					plasma_gain = 30
-					plasma_max = 800
-					upgrade_threshold = 800
-					spit_delay = 15
-					caste_desc = "A ranged damage dealer. It looks pretty strong."
-					armor_deflection = 30
-					tackle_damage = 40 // Prior was 35
-					speed = -0.7
 
 		//Final UPGRADE
 		if(3)
@@ -124,19 +98,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An hulking beast capable of effortlessly breaking and tearing through its enemies."
 					speed = -0.5
 					armor_deflection = 55
-				if("Spitter")
-					to_chat(src, "<span class='xenoannounce'>You are a master of ranged stuns and damage. Go fourth and generate salt.</span>")
-					melee_damage_lower = 30
-					melee_damage_upper = 40
-					health = 250
-					maxHealth = 250
-					plasma_gain = 50
-					plasma_max = 900
-					spit_delay = 15
-					caste_desc = "A ranged destruction machine."
-					armor_deflection = 30
-					tackle_damage = 45	 // Prior was 35
-					speed = -0.8
 
 	generate_name() //Give them a new name now
 

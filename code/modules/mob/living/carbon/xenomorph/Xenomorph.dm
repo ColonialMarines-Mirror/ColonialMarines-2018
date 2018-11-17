@@ -58,6 +58,8 @@
 /mob/living/carbon/Xenomorph/New()
 	verbs += /mob/living/proc/lay_down
 	..()
+
+	set_datum()
 	//WO GAMEMODE
 	if(map_tag == MAP_WHISKEY_OUTPOST)
 		hardcore = 1 //Prevents healing and queen evolution
@@ -89,6 +91,16 @@
 	regenerate_icons()
 
 	toggle_xeno_mobhud() //This is a verb, but fuck it, it just werks
+
+/mob/living/carbon/Xenomorph/proc/set_datum()
+	if(!caste_base_type)
+		error("xeno spawned without a caste_base_type set")
+		return
+	xeno_caste = xeno_caste_datums[caste_base_type][(upgrade > -1 ? upgrade + 1 : 1)]
+
+	plasma_stored = xeno_caste.plasma_max
+	maxHealth = xeno_caste.max_health
+	health = maxHealth
 
 //Off-load this proc so it can be called freely
 //Since Xenos change names like they change shoes, we need somewhere to hammer in all those legos

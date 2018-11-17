@@ -31,8 +31,8 @@
 	evolution_threshold = 200
 	upgrade_threshold = 200
 
-	evolves_to = list("Ravager")
-	deevolves_to = "Runner" 
+	evolves_to = list(/mob/living/carbon/Xenomorph/Ravager)
+	deevolves_to = /mob/living/carbon/Xenomorph/Runner
 
 	// *** Defense *** //
 	armor_deflection = 10 
@@ -140,6 +140,7 @@
 
 /mob/living/carbon/Xenomorph/Hunter
 	caste_name = "Hunter"
+	caste_base_type = /mob/living/carbon/Xenomorph/Hunter
 	name = "Hunter"
 	desc = "A beefy, fast alien with sharp claws."
 	icon = 'icons/Xeno/1x1_Xenos.dmi'

@@ -146,6 +146,7 @@
 
 /mob/living/carbon/Xenomorph/Praetorian
 	caste_name = "Praetorian"
+	caste_base_type = /mob/living/carbon/Xenomorph/Praetorian
 	name = "Praetorian"
 	desc = "A huge, looming beast of an alien."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'

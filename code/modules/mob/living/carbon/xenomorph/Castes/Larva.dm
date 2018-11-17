@@ -23,11 +23,12 @@
 	crit_health = -25
 
 	// *** Evolution *** //
-	evolves_to = list("Drone", "Runner", "Sentinel", "Defender")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Drone, /mob/living/carbon/Xenomorph/Runner, /mob/living/carbon/Xenomorph/Sentinel, /mob/living/carbon/Xenomorph/Defender)
 
 /mob/living/carbon/Xenomorph/Larva
 	name = "Bloody Larva"
 	caste_name = "Bloody Larva"
+	caste_base_type = /mob/living/carbon/Xenomorph/Larva
 	speak_emote = list("hisses")
 	icon_state = "Bloody Larva"
 	amount_grown = 0
@@ -50,11 +51,13 @@
 
 /datum/xeno_caste/larva/predalien
 	caste_name = "Predalien Larva"
-	evolves_to = list("Predalien")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Predalien)
+	caste_type_path = /mob/living/carbon/Xenomorph/Larva/predalien
 
 /mob/living/carbon/Xenomorph/Larva/predalien
 	icon_state = "Predalien Larva"
 	caste_name = "Predalien Larva"
+	caste_base_type = /mob/living/carbon/Xenomorph/Larva/predalien
 
 /mob/living/carbon/Xenomorph/Larva/UnarmedAttack(atom/A)
 	a_intent = "help" //Forces help intent for all interactions.

@@ -42,6 +42,7 @@
 
 /mob/living/carbon/Xenomorph/Xenoborg
 	caste_name = "Xenoborg"
+	caste_base_type = /mob/living/carbon/Xenomorph/Xenoborg
 	name = "Xenoborg"
 	desc = "What.. what is this monstrosity? A cyborg in the shape of a xenomorph?! What hath our science wrought?"
 	icon_state = "Xenoborg Walking"

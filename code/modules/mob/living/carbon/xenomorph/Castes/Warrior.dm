@@ -28,7 +28,7 @@
 	evolution_threshold = 200
 	upgrade_threshold = 200
 
-	evolves_to = list("Praetorian", "Crusher")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Praetorian, /mob/living/carbon/Xenomorph/Crusher)
 	deevolves_to = /mob/living/carbon/Xenomorph/Defender
 
 	// *** Defense *** //
@@ -151,6 +151,7 @@
 
 /mob/living/carbon/Xenomorph/Warrior
 	caste_name = "Warrior"
+	caste_base_type = /mob/living/carbon/Xenomorph/Warrior
 	name = "Warrior"
 	desc = "A beefy, alien with an armored carapace."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'

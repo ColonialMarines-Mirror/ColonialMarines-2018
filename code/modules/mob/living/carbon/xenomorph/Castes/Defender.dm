@@ -30,7 +30,7 @@
 	evolution_threshold = 100
 	upgrade_threshold = 100
 
-	evolves_to = list("Warrior")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Warrior)
 
 	// *** Defense *** //
 	armor_deflection = 20
@@ -146,6 +146,7 @@
 
 /mob/living/carbon/Xenomorph/Defender
 	caste_name = "Defender"
+	caste_base_type = /mob/living/carbon/Xenomorph/Defender
 	name = "Defender"
 	desc = "A alien with an armored head crest."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'

@@ -28,7 +28,7 @@
 	evolution_threshold = 200
 	upgrade_threshold = 200
 
-	evolves_to = list("Boiler")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Boiler)
 	deevolves_to = /mob/living/carbon/Xenomorph/Sentinel 
 
 	// *** Defense *** //
@@ -136,6 +136,7 @@
 
 /mob/living/carbon/Xenomorph/Spitter
 	caste_name = "Spitter"
+	caste_base_type = /mob/living/carbon/Xenomorph/Spitter
 	name = "Spitter"
 	desc = "A gross, oozing alien of some kind."
 	icon = 'icons/Xeno/1x1_Xenos.dmi'

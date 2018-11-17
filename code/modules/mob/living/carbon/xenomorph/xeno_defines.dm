@@ -50,8 +50,8 @@
 	var/evolution_threshold = 0 //Threshold to next evolution
 	var/upgrade_threshold = 0
 
-	var/list/evolves_to = list() //This is where you add castes to evolve into. "Seperated", "by", "commas"
-	var/deevolves_to // what caste to de-evolve to.
+	var/list/evolves_to = list() //type paths to the castes that can be evolved to
+	var/deevolves_to // type path to the caste to deevolve to
 
 	// *** Flags *** //
 	var/is_intelligent = FALSE //If they can use consoles, etc. Set on Queen
@@ -115,6 +115,7 @@
 
 /mob/living/carbon/Xenomorph
 	var/datum/xeno_caste/xeno_caste
+	var/caste_base_type
 
 	var/caste_name = ""
 	var/language = "Xenomorph"

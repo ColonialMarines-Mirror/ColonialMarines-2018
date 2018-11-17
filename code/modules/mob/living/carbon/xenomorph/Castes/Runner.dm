@@ -31,7 +31,7 @@
 	evolution_threshold = 100
 	upgrade_threshold = 100
 
-	evolves_to = list("Hunter") 
+	evolves_to = list(/mob/living/carbon/Xenomorph/Hunter) 
 
 	// *** Defense *** //
 	armor_deflection = 5
@@ -147,6 +147,7 @@
 
 /mob/living/carbon/Xenomorph/Runner
 	caste_name = "Runner"
+	caste_base_type = /mob/living/carbon/Xenomorph/Runner
 	name = "Runner"
 	desc = "A small red alien that looks like it could run fairly quickly..."
 	icon = 'icons/Xeno/2x2_Xenos.dmi' //They are now like, 2x1 or something

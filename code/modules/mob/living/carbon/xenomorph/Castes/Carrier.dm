@@ -161,6 +161,7 @@
 					
 /mob/living/carbon/Xenomorph/Carrier
 	caste_name = "Carrier"
+	caste_base_type = /mob/living/carbon/Xenomorph/Carrier
 	name = "Carrier"
 	desc = "A strange-looking alien creature. It carries a number of scuttling jointed crablike creatures."
 	icon = 'icons/Xeno/2x2_Xenos.dmi' //They are now like, 2x2

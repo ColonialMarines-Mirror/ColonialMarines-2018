@@ -28,7 +28,7 @@
 	evolution_threshold = 100
 	upgrade_threshold = 100
 
-	evolves_to = list("Spitter")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Spitter)
 
 	// *** Defense *** //
 	armor_deflection = 15
@@ -135,6 +135,7 @@
 
 /mob/living/carbon/Xenomorph/Sentinel
 	caste_name = "Sentinel"
+	caste_base_type = /mob/living/carbon/Xenomorph/Sentinel
 	name = "Sentinel"
 	desc = "A slithery, spitting kind of alien."
 	icon = 'icons/Xeno/1x1_Xenos.dmi'

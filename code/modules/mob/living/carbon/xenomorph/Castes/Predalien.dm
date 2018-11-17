@@ -2,7 +2,7 @@
 	caste_name = "Predalien"
 	display_name = "Abomination"
 	upgrade_name = ""
-
+	caste_type_path = /mob/living/carbon/Xenomorph/Predalien
 	tier = 1
 	upgrade = 0
 
@@ -47,6 +47,7 @@
 
 /mob/living/carbon/Xenomorph/Predalien
 	caste_name = "Predalien"
+	caste_base_type = /mob/living/carbon/Xenomorph/Predalien
 	name = "Abomination"
 	desc = "A strange looking creature with fleshy strands on its head. It appears like a mixture of armor and flesh, smooth, but well carapaced."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'

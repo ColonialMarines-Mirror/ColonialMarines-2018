@@ -151,6 +151,7 @@
 
 /mob/living/carbon/Xenomorph/Boiler
 	caste_name = "Boiler"
+	caste_base_type = /mob/living/carbon/Xenomorph/Boiler
 	name = "Boiler"
 	desc = "A huge, grotesque xenomorph covered in glowing, oozing acid slime."
 	icon = 'icons/Xeno/2x2_Xenos.dmi'

@@ -29,7 +29,7 @@
 	evolution_threshold = 100 
 	upgrade_threshold = 100
 
-	evolves_to = list("Queen", "Carrier", "Hivelord")
+	evolves_to = list(/mob/living/carbon/Xenomorph/Queen, /mob/living/carbon/Xenomorph/Carrier, /mob/living/carbon/Xenomorph/Hivelord)
 
 	can_hold_facehuggers = TRUE
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
@@ -136,6 +136,7 @@
 					
 /mob/living/carbon/Xenomorph/Drone
 	caste_name = "Drone"
+	caste_base_type = /mob/living/carbon/Xenomorph/Drone
 	name = "Drone"
 	desc = "An Alien Drone"
 	icon = 'icons/Xeno/1x1_Xenos.dmi'

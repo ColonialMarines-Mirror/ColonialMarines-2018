@@ -995,7 +995,7 @@
 
 /mob/living/carbon/Xenomorph/proc/xeno_salvage_plasma(atom/A, amount, salvage_delay, max_range)
 
-	if(!istype(A, /mob/living/carbon/Xenomorph) || !check_state())
+	if(!isXeno(A) || !check_state())
 		return
 
 	var/mob/living/carbon/Xenomorph/target = A

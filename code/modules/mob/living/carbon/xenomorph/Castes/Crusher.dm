@@ -197,7 +197,7 @@
 		if(isXeno(M) || M.stat == DEAD || ((M.status_flags & XENO_HOST) && istype(M.buckled, /obj/structure/bed/nest)))
 			continue
 		var/distance = get_dist(M, loc)
-		var/damage = (rand(melee_damage_lower, melee_damage_upper) * 1.5) / max(1,distance + 1)
+		var/damage = (rand(xeno_caste.melee_damage_lower, xeno_caste.melee_damage_upper) * 1.5) / max(1,distance + 1)
 		if(frenzy_aura > 0)
 			damage *= (1 + round(frenzy_aura * 0.1,0.01)) //+10% per level of Frenzy
 		if(distance == 0) //If we're on top of our victim, give him the full impact

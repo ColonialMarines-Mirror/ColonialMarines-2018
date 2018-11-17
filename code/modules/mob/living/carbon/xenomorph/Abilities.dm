@@ -60,12 +60,12 @@
 	var/mob/living/carbon/Xenomorph/X = owner
 	if(!X.check_state())
 		return
-	for(var/i in 1 to X.spit_types.len)
-		if(X.ammo == ammo_list[X.spit_types[i]])
-			if(i == X.spit_types.len)
-				X.ammo = ammo_list[X.spit_types[1]]
+	for(var/i in 1 to X.xeno_caste.spit_types.len)
+		if(X.ammo == ammo_list[X.xeno_caste.spit_types[i]])
+			if(i == X.xeno_caste.spit_types.len)
+				X.ammo = ammo_list[X.xeno_caste.spit_types[1]]
 			else
-				X.ammo = ammo_list[X.spit_types[i+1]]
+				X.ammo = ammo_list[X.xeno_caste.spit_types[i+1]]
 			break
 	to_chat(X, "<span class='notice'>You will now spit [X.ammo.name] ([X.ammo.spit_cost] plasma).</span>")
 	button.overlays.Cut()
@@ -375,7 +375,7 @@
 	else
 		if(!X.check_plasma(30))
 			return
-		var/choice = input(X, "Choose a pheromone") in X.aura_allowed + "help" + "cancel"
+		var/choice = input(X, "Choose a pheromone") in X.xeno_caste.aura_allowed + "help" + "cancel"
 		if(choice == "help")
 			to_chat(X, "<span class='notice'><br>Pheromones provide a buff to all Xenos in range at the cost of some stored plasma every second. Burning Xenos can neither emit nor benefit from pheromones. Effects are as follows:<br><B>Frenzy</B> - Increased run speed, damage and tackle chance.<br><B>Warding</B> - Increased armor, reduced incoming damage and critical bleedout.<br><B>Recovery</B> - Increased plasma and health regeneration.<br></span>")
 			return
@@ -867,7 +867,7 @@
 		if(X.queen_ability_cooldown > world.time)
 			to_chat(X, "<span class='xenowarning'>You're still recovering from your last overwatch ability. Wait [round((X.queen_ability_cooldown-world.time)*0.1)] seconds.</span>")
 			return
-		if(X.queen_leader_limit <= hive.xeno_leader_list.len && !X.observed_xeno.queen_chosen_lead)
+		if(X.xeno_caste.queen_leader_limit <= hive.xeno_leader_list.len && !X.observed_xeno.queen_chosen_lead)
 			to_chat(X, "<span class='xenowarning'>You currently have [hive.xeno_leader_list.len] promoted leaders. You may not maintain additional leaders until your power grows.</span>")
 			return
 		var/mob/living/carbon/Xenomorph/T = X.observed_xeno
@@ -943,7 +943,7 @@
 	if(X.observed_xeno)
 		var/mob/living/carbon/Xenomorph/target = X.observed_xeno
 		if(target.stat != DEAD)
-			if(target.plasma_stored < target.plasma_max)
+			if(target.plasma_stored < target.xeno_caste.plasma_max)
 				if(X.check_plasma(600))
 					X.use_plasma(600)
 					target.gain_plasma(100)

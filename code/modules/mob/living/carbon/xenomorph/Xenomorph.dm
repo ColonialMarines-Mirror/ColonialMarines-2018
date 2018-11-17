@@ -62,7 +62,7 @@
 	set_datum()
 	//WO GAMEMODE
 	if(map_tag == MAP_WHISKEY_OUTPOST)
-		hardcore = 1 //Prevents healing and queen evolution
+		xeno_caste.hardcore = 1 //Prevents healing and queen evolution
 	time_of_birth = world.time
 	add_language("Xenomorph") //xenocommon
 	add_language("Hivemind") //hivemind
@@ -74,8 +74,8 @@
 	see_in_dark = 8
 
 
-	if(spit_types && spit_types.len)
-		ammo = ammo_list[spit_types[1]]
+	if(xeno_caste.spit_types?.len)
+		ammo = ammo_list[xeno_caste.spit_types[1]]
 
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
@@ -224,7 +224,7 @@
 /mob/living/carbon/Xenomorph/pull_response(mob/puller)
 	var/mob/living/carbon/human/H = puller
 	if(stat == CONSCIOUS && H.species?.count_human) // If the Xeno is conscious, fight back against a grab/pull
-		puller.KnockDown(rand(tacklemin,tacklemax))
+		puller.KnockDown(rand(xeno_caste.tacklemin,xeno_caste.tacklemax))
 		playsound(puller.loc, 'sound/weapons/pierce.ogg', 25, 1)
 		puller.visible_message("<span class='warning'>[puller] tried to pull [src] but instead gets a tail swipe to the head!</span>")
 		puller.stop_pulling()

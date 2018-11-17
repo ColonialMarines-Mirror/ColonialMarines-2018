@@ -52,8 +52,8 @@
 	if(stat == DEAD)
 		return
 
-	if(health <= crit_health)
-		if(prob(gib_chance + 0.5*(crit_health - health)))
+	if(health <= xeno_caste.crit_health)
+		if(prob(gib_chance + 0.5*(xeno_caste.crit_health - health)))
 			gib()
 		else
 			death()
@@ -143,16 +143,16 @@
 		adjustFireLoss((fire_stacks + 3) * (xeno_caste.fire_resist + fire_resist_modifier)) // modifier is negative
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
-	if(health >= maxHealth || hardcore) //no damage, don't bother
+	if(health >= maxHealth || xeno_caste.hardcore) //no damage, don't bother
 		updatehealth() //Update health-related stats, like health itself (using brute and fireloss), health HUD and status.
 		return
 	var/turf/T = loc
-	if(!T || !istype(T) || hardcore)
+	if(!T || !istype(T) || xeno_caste.hardcore)
 		return
 	if(on_fire) //Can't regenerate while on fire
 		updatehealth()
 		return
-	if(innate_healing) //Larvas regenerate fast anywhere as long as not in crit.
+	if(xeno_caste.innate_healing) //Larvas regenerate fast anywhere as long as not in crit.
 		if(!(locate(/obj/effect/alien/weeds) in T) && health <= 0)
 			adjustBruteLoss(XENO_CRIT_DAMAGE)
 		else
@@ -190,16 +190,16 @@
 		return
 	if(current_aura)
 		plasma_stored -= 5
-	if(plasma_stored == plasma_max)
+	if(plasma_stored == xeno_caste.plasma_max)
 		return
 	if(locate(/obj/effect/alien/weeds) in T)
-		plasma_stored += plasma_gain
+		plasma_stored += xeno_caste.plasma_gain
 		if(recovery_aura)
-			plasma_stored += round(plasma_gain * recovery_aura * 0.25) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
+			plasma_stored += round(xeno_caste.plasma_gain * recovery_aura * 0.25) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
 	else
 		plasma_stored++
-	if(plasma_stored > plasma_max)
-		plasma_stored = plasma_max
+	if(plasma_stored > xeno_caste.plasma_max)
+		plasma_stored = xeno_caste.plasma_max
 	else if(plasma_stored < 0)
 		plasma_stored = 0
 		if(current_aura)
@@ -214,7 +214,7 @@
 		return
 	if(current_aura)
 		plasma_stored -= 5
-	if(plasma_stored == plasma_max)
+	if(plasma_stored == xeno_caste.plasma_max)
 		return
 	var/modifier = 1
 	if(stealth && last_move_intent > world.time - 20) //Stealth halves the rate of plasma recovery on weeds, and eliminates it entirely while moving
@@ -222,13 +222,13 @@
 	else
 		modifier = 0.5
 	if(locate(/obj/effect/alien/weeds) in T)
-		plasma_stored += plasma_gain * modifier
+		plasma_stored += xeno_caste.plasma_gain * modifier
 		if(recovery_aura)
-			plasma_stored += round(plasma_gain * recovery_aura * 0.25 * modifier) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
+			plasma_stored += round(xeno_caste.plasma_gain * recovery_aura * 0.25 * modifier) //Divided by four because it gets massive fast. 1 is equivalent to weed regen! Only the strongest pheromones should bypass weeds
 	else
 		plasma_stored++
-	if(plasma_stored > plasma_max)
-		plasma_stored = plasma_max
+	if(plasma_stored > xeno_caste.plasma_max)
+		plasma_stored = xeno_caste.plasma_max
 	else if(plasma_stored < 0)
 		plasma_stored = 0
 		if(current_aura)
@@ -260,33 +260,33 @@
 			var/atom/phero_center = Q
 			if(Q.observed_xeno)
 				phero_center = Q.observed_xeno
-			var/pheromone_range = round(6 + aura_strength * 2)
+			var/pheromone_range = round(6 + xeno_caste.aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, phero_center)) //Goes from 8 for Queen to 16 for Ancient Queen
 				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(current_aura)
 						if("frenzy")
-							if(aura_strength > Z.frenzy_new)
-								Z.frenzy_new = aura_strength
+							if(xeno_caste.aura_strength > Z.frenzy_new)
+								Z.frenzy_new = xeno_caste.aura_strength
 						if("warding")
-							if(aura_strength > Z.warding_new)
-								Z.warding_new = aura_strength
+							if(xeno_caste.aura_strength > Z.warding_new)
+								Z.warding_new = xeno_caste.aura_strength
 						if("recovery")
-							if(aura_strength > Z.recovery_new)
-								Z.recovery_new = aura_strength
+							if(xeno_caste.aura_strength > Z.recovery_new)
+								Z.recovery_new = xeno_caste.aura_strength
 		else
-			var/pheromone_range = round(6 + aura_strength * 2)
+			var/pheromone_range = round(6 + xeno_caste.aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, src)) //Goes from 7 for Young Drone to 16 for Ancient Queen
 				if(Z.stat != DEAD && hivenumber == Z.hivenumber && !Z.on_fire)
 					switch(current_aura)
 						if("frenzy")
-							if(aura_strength > Z.frenzy_new)
-								Z.frenzy_new = aura_strength
+							if(xeno_caste.aura_strength > Z.frenzy_new)
+								Z.frenzy_new = xeno_caste.aura_strength
 						if("warding")
-							if(aura_strength > Z.warding_new)
-								Z.warding_new = aura_strength
+							if(xeno_caste.aura_strength > Z.warding_new)
+								Z.warding_new = xeno_caste.aura_strength
 						if("recovery")
-							if(aura_strength > Z.recovery_new)
-								Z.recovery_new = aura_strength
+							if(xeno_caste.aura_strength > Z.recovery_new)
+								Z.recovery_new = xeno_caste.aura_strength
 		if(leader_current_aura && !stat)
 			var/pheromone_range = round(6 + leader_aura_strength * 2)
 			for(var/mob/living/carbon/Xenomorph/Z in range(pheromone_range, src)) //Goes from 7 for Young Drone to 16 for Ancient Queen
@@ -364,8 +364,8 @@
 
 	if(hud_used && hud_used.alien_plasma_display)
 		if(stat != DEAD)
-			if(plasma_max) //No divide by zeros please
-				switch(round(plasma_stored * 100 / plasma_max))
+			if(xeno_caste.plasma_max) //No divide by zeros please
+				switch(round(plasma_stored * 100 / xeno_caste.plasma_max))
 					if(100 to INFINITY)
 						hud_used.alien_plasma_display.icon_state = "power_display_full"
 					if(94 to 99)
@@ -444,7 +444,7 @@
 	else
 		return
 
-	if(!hive.living_xeno_queen || is_intelligent)
+	if(!hive.living_xeno_queen || xeno_caste.is_intelligent)
 		hud_used.locate_leader.icon_state = "trackoff"
 		return
 

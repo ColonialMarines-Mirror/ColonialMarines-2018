@@ -225,22 +225,12 @@
 
 			var/type_p = L[3]
 
-			if(type_p == /obj/item/device/radio/headset/almayer/marine)
-				type_p = headset_type
-
-			else if(type_p == /obj/item/clothing/gloves/marine)
-				type_p = gloves_type
-
-
 			var/obj/item/IT = new type_p(loc)
 			IT.add_fingerprint(usr)
 
 			if(bitf == MARINE_CAN_BUY_UNIFORM)
-				if(gives_webbing)
-					var/obj/item/clothing/under/U = IT
-					var/obj/item/clothing/tie/storage/webbing/W = new()
-					U.hastie = W
-					W.on_attached(U)
+				new headset_type(loc)
+				new gloves_type(loc)
 				//if(istype(ticker.mode, /datum/game_mode/ice_colony))//drop a coif with the uniform on ice colony
 				if(map_tag == MAP_ICE_COLONY)
 					new /obj/item/clothing/mask/rebreather/scarf(loc)
@@ -1006,25 +996,20 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/clothing/shoes/marine,
 						/obj/item/clothing/head/helmet/marine,
 						/obj/item/clothing/suit/storage/marine,
-						/obj/item/clothing/gloves/marine,
-						/obj/item/device/radio/headset/almayer/marine,
 						)
+
 
 /obj/effect/essentials_set/basic_smartgunner
 	spawned_gear_list = list(
 						/obj/item/clothing/under/marine,
 						/obj/item/clothing/shoes/marine,
 						/obj/item/clothing/head/helmet/marine,
-						/obj/item/clothing/gloves/marine,
-						/obj/item/device/radio/headset/almayer/marine,
 						)
 
 /obj/effect/essentials_set/basic_specialist
 	spawned_gear_list = list(
 						/obj/item/clothing/under/marine,
 						/obj/item/clothing/shoes/marine,
-						/obj/item/clothing/gloves/marine,
-						/obj/item/device/radio/headset/almayer/marine,
 						)
 
 /obj/effect/essentials_set/basic_squadleader
@@ -1033,8 +1018,6 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/clothing/shoes/marine,
 						/obj/item/clothing/head/helmet/marine/leader,
 						/obj/item/clothing/suit/storage/marine/leader,
-						/obj/item/clothing/gloves/marine,
-						/obj/item/device/radio/headset/almayer/marine,
 						/obj/item/clothing/glasses/hud/health,
 						)
 
@@ -1044,8 +1027,6 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/clothing/shoes/marine,
 						/obj/item/clothing/head/helmet/marine/medic,
 						/obj/item/clothing/suit/storage/marine,
-						/obj/item/clothing/gloves/marine,
-						/obj/item/device/radio/headset/almayer/marine,
 						/obj/item/clothing/glasses/hud/health,
 						)
 
@@ -1055,8 +1036,6 @@ var/list/available_specialist_sets = list("Scout Set", "Sniper Set", "Demolition
 						/obj/item/clothing/shoes/marine,
 						/obj/item/clothing/head/helmet/marine/tech,
 						/obj/item/clothing/suit/storage/marine,
-						/obj/item/clothing/gloves/marine,
-						/obj/item/device/radio/headset/almayer/marine,
 						/obj/item/clothing/glasses/welding,
 						)
 

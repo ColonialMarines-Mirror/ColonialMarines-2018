@@ -95,10 +95,10 @@
 
 //Deal with picking up facehuggers. "attack_alien" is the universal 'xenos click something while unarmed' proc.
 /obj/item/xeno_egg/attack_alien(mob/living/carbon/Xenomorph/user)
-	switch(user.caste)
-		if("Queen","Carrier")
+	switch(user.xeno_caste.can_hold_eggs)
+		if(CAN_HOLD_ONE_HAND)
 			attack_hand(user)
-		if("Drone","Hivelord")
+		if(CAN_HOLD_TWO_HANDS)
 			if(user.r_hand || user.l_hand)
 				to_chat(user, "<span class='xenowarning'>You need two hands to hold [src].</span>")
 			else

@@ -30,6 +30,9 @@
 
 	// *** Flags *** //
 	is_intelligent = TRUE
+	
+	can_hold_facehuggers = TRUE
+	can_hold_eggs = CAN_HOLD_TWO_HANDS
 
 	// *** Defense *** //
 	armor_deflection = 45 

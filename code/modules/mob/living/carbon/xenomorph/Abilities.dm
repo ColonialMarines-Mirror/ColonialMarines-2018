@@ -434,7 +434,7 @@ datum/action/xeno_action/activable/salvage_plasma/use_ability(atom/A)
 
 datum/action/xeno_action/activable/salvage_plasma/hivelord
 	plasma_salvage_amount = 80
-	salvage_delay = 30
+	salvage_delay = 3 SECONDS
 	max_range = 4
 
 //Boiler abilities

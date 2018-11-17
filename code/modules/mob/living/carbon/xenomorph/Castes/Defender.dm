@@ -32,6 +32,9 @@
 
 	evolves_to = list(/mob/living/carbon/Xenomorph/Warrior)
 
+	// *** Flags *** //
+	can_vent_crawl = FALSE
+	
 	// *** Defense *** //
 	armor_deflection = 20
 

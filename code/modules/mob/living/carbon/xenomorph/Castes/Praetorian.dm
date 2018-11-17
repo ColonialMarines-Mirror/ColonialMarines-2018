@@ -30,6 +30,9 @@
 
 	deevolves_to = /mob/living/carbon/Xenomorph/Drone
 
+	// *** Flags *** //
+	can_vent_crawl = FALSE
+	
 	// *** Defense *** //
 	armor_deflection = 35
 

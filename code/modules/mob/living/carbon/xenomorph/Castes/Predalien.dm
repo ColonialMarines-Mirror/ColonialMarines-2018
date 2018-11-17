@@ -38,7 +38,8 @@
 	is_intelligent = TRUE //If they can use consoles, etc. Set on Queen
 
 	can_be_queen_healed = FALSE
-
+	can_vent_crawl = FALSE
+	
 	// *** Defense *** //
 	armor_deflection = 50 //Chance of deflecting projectiles.
 

@@ -31,6 +31,9 @@
 	evolves_to = list(/mob/living/carbon/Xenomorph/Praetorian, /mob/living/carbon/Xenomorph/Crusher)
 	deevolves_to = /mob/living/carbon/Xenomorph/Defender
 
+	// *** Flags *** //
+	can_vent_crawl = FALSE
+
 	// *** Defense *** //
 	armor_deflection = 40
 

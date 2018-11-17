@@ -31,6 +31,9 @@
 
 	deevolves_to = /mob/living/carbon/Xenomorph/Hunter
 
+	// *** Flags *** //
+	can_vent_crawl = FALSE
+	
 	// *** Defense *** //
 	armor_deflection = 20
 

@@ -32,6 +32,9 @@
 
 	deevolves_to = /mob/living/carbon/Xenomorph/Spitter
 
+	// *** Flags *** //
+	can_vent_crawl = FALSE
+
 	// *** Defense *** //
 	armor_deflection = 30 
 

@@ -31,6 +31,8 @@
 	is_intelligent = TRUE
 	is_robotic = TRUE //Robots use charge, not plasma (same thing sort of), and can only be healed with welders.
 
+	can_vent_crawl = FALSE
+	
 	// *** Defense *** //
 	armor_deflection = 90 //Chance of deflecting projectiles.
 

@@ -34,6 +34,8 @@
 	can_hold_facehuggers = TRUE
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
 
+	can_vent_crawl = FALSE
+	
 	// *** Defense *** //
 	armor_deflection = 5
 

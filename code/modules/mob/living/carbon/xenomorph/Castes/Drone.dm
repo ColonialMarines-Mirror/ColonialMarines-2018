@@ -35,7 +35,7 @@
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
 
 	// *** Defense *** //
-	armor_deflection = 0 /
+	armor_deflection = 0
 
 	// *** Pheromones *** //	
 	aura_strength = 0.5 //Drone's aura is the weakest. At the top of their evolution, it's equivalent to a Young Queen Climbs by 0.5 to 2

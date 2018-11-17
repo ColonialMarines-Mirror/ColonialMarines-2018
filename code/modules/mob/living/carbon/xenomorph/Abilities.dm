@@ -998,7 +998,8 @@
 		return
 	
 	var/mob/living/carbon/Xenomorph/T = X.observed_xeno
-	if(!X.check_plasma(600)) return
+	if(!X.check_plasma(600)) // check plasma gives an error message itself
+		return
 
 	if(T.is_ventcrawling)
 		to_chat(X, "<span class='warning'>[T] can't be deevolved here.</span>")

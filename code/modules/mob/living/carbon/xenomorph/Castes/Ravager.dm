@@ -218,21 +218,53 @@
 	return 0
 
 //Super hacky firebreathing Halloween rav.
-/mob/living/carbon/Xenomorph/Ravager/ravenger
-	name = "Ravenger"
-	desc = "It's a goddamn dragon! Run! RUUUUN!"
-	is_intelligent = 1
-	hardcore = 1
+/datum/xeno_caste/ravager/ravenger
+	caste_name = "Ravenger"
+	display_name = "Ravenger"
+	upgrade_name = ""
+	caste_type_path = /mob/living/carbon/Xenomorph/Ravager/ravenger
+	tier = 3
+	upgrade = 3
+
+	// *** Melee Attacks *** //
 	melee_damage_lower = 70
 	melee_damage_upper = 90
-	tacklemin = 3
-	tacklemax = 6
-	tackle_chance = 85
-	health = 600
-	maxHealth = 600
-	plasma_stored = 200
-	plasma_gain = 15
+	attack_delay = -2 
+
+	// *** Tackle *** //
+	tackle_damage = 55
+
+	// *** Speed *** //
+	speed = -0.5
+
+	// *** Plasma *** //
 	plasma_max = 200
+	plasma_gain = 15
+
+	// *** Health *** //
+	max_health = 600
+
+	hardcore = TRUE
+
+	// *** Evolution *** //
+	evolution_allowed = FALSE
+
+	// *** Flags *** //
+	is_intelligent = TRUE
+
+	// *** Defense *** //
+	armor_deflection = 20
+
+	fire_resist = 0.5 //0 to 1; lower is better as it is a multiplier.
+
+	// *** Ranged Attack *** //
+	charge_type = 3 //Claw at end of charge
+
+/mob/living/carbon/Xenomorph/Ravager/ravenger
+	caste_name = "Ravenger"
+	caste_base_type = /mob/living/carbon/Xenomorph/Ravager/ravenger
+	desc = "It's a goddamn dragon! Run! RUUUUN!"
+	plasma_stored = 200
 	upgrade = 3
 	var/used_fire_breath = 0
 	actions = list(
@@ -292,9 +324,9 @@
 		fire_mod = 1
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
-			if(X.fire_immune)
+			if(X.xeno_caste.fire_immune)
 				continue
-			fire_mod = X.fire_resist
+			fire_mod = X.xeno_caste.fire_resist + X.fire_resist_modifier
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || istype(H.wear_suit, /obj/item/clothing/suit/space/rig/atmos))

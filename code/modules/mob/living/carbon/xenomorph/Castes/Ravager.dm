@@ -38,6 +38,7 @@
 	var/second_wind_used = FALSE
 	var/second_wind_delay = null
 	var/last_rage = null
+	var/last_damage = null
 	var/usedcharge = FALSE
 
 	actions = list(

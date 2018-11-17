@@ -65,18 +65,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					attack_delay = -4
 					tackle_damage = 30 // Prior was 25
 					pounce_delay = 35
-				if("Ravager")
-					melee_damage_lower = 50
-					melee_damage_upper = 70
-					health = 250
-					maxHealth = 250
-					plasma_gain = 13
-					plasma_max = 175
-					upgrade_threshold = 800
-					caste_desc = "A brutal, devastating front-line attacker. It looks a little more dangerous."
-					speed = -0.55
-					armor_deflection = 25
-					tackle_damage = 60 // Prior was 55
 				if ("Warrior")
 					melee_damage_lower = 35
 					melee_damage_upper = 45
@@ -135,18 +123,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					attack_delay = -4
 					tackle_damage = 35 // Prior was 30
 					pounce_delay = 30
-				if("Ravager")
-					melee_damage_lower = 55
-					melee_damage_upper = 75
-					health = 260
-					maxHealth = 260
-					plasma_gain = 14
-					plasma_max = 190
-					upgrade_threshold = 1600
-					caste_desc = "A brutal, devastating front-line attacker. It looks pretty strong."
-					speed = -0.58
-					armor_deflection = 28
-					tackle_damage = 65 // Prior was 60
 				if ("Warrior")
 					melee_damage_lower = 40
 					melee_damage_upper = 45
@@ -206,19 +182,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tacklemax = 5
 					tackle_damage = 40 // Prior was 30
 					pounce_delay = 30
-				if("Ravager")
-					to_chat(src, "<span class='xenoannounce'>You are death incarnate. All will tremble before you.</span>")
-					melee_damage_lower = 60
-					melee_damage_upper = 80
-					adjustBruteLoss(255)
-					health = 265
-					maxHealth = 265
-					plasma_gain = 15
-					plasma_max = 200
-					caste_desc = "As I walk through the valley of the shadow of death."
-					speed = -0.6
-					armor_deflection = 30
-					tackle_damage = 70 // Prior was 65
 				if ("Warrior")
 					to_chat(src, "<span class='xenoannounce'>None can stand before you. You will annihilate all weaklings who try.</span>")
 					melee_damage_lower = 45

@@ -825,7 +825,7 @@
 		return
 	var/list/possible_xenos = list()
 	for(var/mob/living/carbon/Xenomorph/T in living_mob_list)
-		if(T.z != ADMIN_Z_LEVEL && T.caste != "Queen" && X.hivenumber == T.hivenumber)
+		if(T.z != ADMIN_Z_LEVEL && !isXenoQueen(T) && X.hivenumber == T.hivenumber)
 			possible_xenos += T
 
 	var/mob/living/carbon/Xenomorph/selected_xeno = input(X, "Target", "Watch which xenomorph?") as null|anything in possible_xenos

@@ -1051,7 +1051,7 @@
 		to_chat(src, "<span class='xenowarning'>Your dexterous limbs fail to properly respond as you try to shake up the shock!</span>")
 		return
 	var/turf/current_turf = loc
-	if (caste == "Hivelord") //hivelords can thicken existing resin structures.
+	if (isXenoHivelord(src)) //hivelords can thicken existing resin structures.
 		if(get_dist(src,A) <= 1)
 			if(istype(A, /turf/closed/wall/resin))
 				var/turf/closed/wall/resin/WR = A
@@ -1182,12 +1182,12 @@
 
 	switch(selected_resin)
 		if("resin door")
-			if (caste == "Hivelord")
+			if (isXenoHivelord(src))
 				new_resin = new /obj/structure/mineral_door/resin/thick(current_turf)
 			else
 				new_resin = new /obj/structure/mineral_door/resin(current_turf)
 		if("resin wall")
-			if (caste == "Hivelord")
+			if (isXenoHivelord(src))
 				current_turf.ChangeTurf(/turf/closed/wall/resin/thick)
 			else
 				current_turf.ChangeTurf(/turf/closed/wall/resin)
@@ -1320,7 +1320,7 @@
 	set desc = "Check the status of your current hive."
 	set category = "Alien"
 
-	if(caste == "Queen" && anchored)
+	if(isXenoQueen(src) && anchored)
 		check_hive_status(src, anchored)
 	else
 		check_hive_status(src)
@@ -1397,7 +1397,7 @@
 		if(leader != "")
 			leader_list += xenoinfo
 
-		switch(X.caste)
+		switch(X.xeno_caste.caste_name) // TODO: replace with typecache
 			if("Queen")
 				queen_list += xenoinfo
 			if("Boiler")

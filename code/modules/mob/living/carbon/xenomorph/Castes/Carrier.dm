@@ -160,7 +160,6 @@
 	eggs_max = 6	
 					
 /mob/living/carbon/Xenomorph/Carrier
-	caste_name = "Carrier"
 	caste_base_type = /mob/living/carbon/Xenomorph/Carrier
 	name = "Carrier"
 	desc = "A strange-looking alien creature. It carries a number of scuttling jointed crablike creatures."

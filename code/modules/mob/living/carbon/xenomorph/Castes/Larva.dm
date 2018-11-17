@@ -26,8 +26,6 @@
 	evolves_to = list(/mob/living/carbon/Xenomorph/Drone, /mob/living/carbon/Xenomorph/Runner, /mob/living/carbon/Xenomorph/Sentinel, /mob/living/carbon/Xenomorph/Defender)
 
 /mob/living/carbon/Xenomorph/Larva
-	name = "Bloody Larva"
-	caste_name = "Bloody Larva"
 	caste_base_type = /mob/living/carbon/Xenomorph/Larva
 	speak_emote = list("hisses")
 	icon_state = "Bloody Larva"
@@ -56,7 +54,6 @@
 
 /mob/living/carbon/Xenomorph/Larva/predalien
 	icon_state = "Predalien Larva"
-	caste_name = "Predalien Larva"
 	caste_base_type = /mob/living/carbon/Xenomorph/Larva/predalien
 
 /mob/living/carbon/Xenomorph/Larva/UnarmedAttack(atom/A)

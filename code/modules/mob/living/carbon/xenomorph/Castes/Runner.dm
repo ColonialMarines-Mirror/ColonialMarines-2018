@@ -146,7 +146,6 @@
 	pounce_delay = 30
 
 /mob/living/carbon/Xenomorph/Runner
-	caste_name = "Runner"
 	caste_base_type = /mob/living/carbon/Xenomorph/Runner
 	name = "Runner"
 	desc = "A small red alien that looks like it could run fairly quickly..."

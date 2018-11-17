@@ -134,7 +134,6 @@
 	spit_delay = 15
 
 /mob/living/carbon/Xenomorph/Sentinel
-	caste_name = "Sentinel"
 	caste_base_type = /mob/living/carbon/Xenomorph/Sentinel
 	name = "Sentinel"
 	desc = "A slithery, spitting kind of alien."

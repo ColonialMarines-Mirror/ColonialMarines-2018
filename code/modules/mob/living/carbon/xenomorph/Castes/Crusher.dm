@@ -135,7 +135,6 @@
 	armor_deflection = 100
 
 /mob/living/carbon/Xenomorph/Crusher
-	caste_name = "Crusher"
 	caste_base_type = /mob/living/carbon/Xenomorph/Crusher
 	name = "Crusher"
 	desc = "A huge alien with an enormous armored head crest."

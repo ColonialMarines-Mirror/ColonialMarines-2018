@@ -136,7 +136,6 @@
 	fire_resist = 0.5 //0 to 1; lower is better as it is a multiplier.
 
 /mob/living/carbon/Xenomorph/Ravager
-	caste_name = "Ravager"
 	caste_base_type = /mob/living/carbon/Xenomorph/Ravager
 	name = "Ravager"
 	desc = "A huge, nasty red alien with enormous scythed claws."
@@ -261,7 +260,6 @@
 	charge_type = 3 //Claw at end of charge
 
 /mob/living/carbon/Xenomorph/Ravager/ravenger
-	caste_name = "Ravenger"
 	caste_base_type = /mob/living/carbon/Xenomorph/Ravager/ravenger
 	desc = "It's a goddamn dragon! Run! RUUUUN!"
 	plasma_stored = 200

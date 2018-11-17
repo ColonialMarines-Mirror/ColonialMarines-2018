@@ -145,7 +145,6 @@
 	fortify_armor = 90
 
 /mob/living/carbon/Xenomorph/Defender
-	caste_name = "Defender"
 	caste_base_type = /mob/living/carbon/Xenomorph/Defender
 	name = "Defender"
 	desc = "A alien with an armored head crest."

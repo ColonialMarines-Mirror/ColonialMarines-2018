@@ -145,7 +145,6 @@
 	aura_strength = 4.5 
 
 /mob/living/carbon/Xenomorph/Praetorian
-	caste_name = "Praetorian"
 	caste_base_type = /mob/living/carbon/Xenomorph/Praetorian
 	name = "Praetorian"
 	desc = "A huge, looming beast of an alien."

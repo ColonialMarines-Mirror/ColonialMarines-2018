@@ -136,7 +136,6 @@
 	aura_strength = 2
 					
 /mob/living/carbon/Xenomorph/Hivelord
-	caste_name = "Hivelord"
 	caste_base_type = /mob/living/carbon/Xenomorph/Hivelord
 	name = "Hivelord"
 	desc = "A huge ass xeno covered in weeds! Oh shit!"

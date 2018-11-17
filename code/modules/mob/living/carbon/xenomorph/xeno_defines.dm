@@ -116,8 +116,6 @@
 /mob/living/carbon/Xenomorph
 	var/datum/xeno_caste/xeno_caste
 	var/caste_base_type
-
-	var/caste_name = ""
 	var/language = "Xenomorph"
 	var/obj/item/clothing/suit/wear_suit = null
 	var/obj/item/clothing/head/head = null

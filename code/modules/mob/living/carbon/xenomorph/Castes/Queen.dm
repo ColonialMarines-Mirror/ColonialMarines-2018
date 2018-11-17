@@ -173,7 +173,6 @@
 
 
 /mob/living/carbon/Xenomorph/Queen
-	caste_name = "Queen"
 	caste_base_type = /mob/living/carbon/Xenomorph/Queen
 	name = "Queen"
 	desc = "A huge, looming alien creature. The biggest and the baddest."

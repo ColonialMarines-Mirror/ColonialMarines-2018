@@ -135,7 +135,6 @@
 	aura_strength = 2
 					
 /mob/living/carbon/Xenomorph/Drone
-	caste_name = "Drone"
 	caste_base_type = /mob/living/carbon/Xenomorph/Drone
 	name = "Drone"
 	desc = "An Alien Drone"

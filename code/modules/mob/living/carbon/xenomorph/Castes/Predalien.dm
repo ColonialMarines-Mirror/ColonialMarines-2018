@@ -46,7 +46,6 @@
 	pounce_delay = 40
 
 /mob/living/carbon/Xenomorph/Predalien
-	caste_name = "Predalien"
 	caste_base_type = /mob/living/carbon/Xenomorph/Predalien
 	name = "Abomination"
 	desc = "A strange looking creature with fleshy strands on its head. It appears like a mixture of armor and flesh, smooth, but well carapaced."

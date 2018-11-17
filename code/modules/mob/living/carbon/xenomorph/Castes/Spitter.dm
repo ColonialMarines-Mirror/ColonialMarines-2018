@@ -135,7 +135,6 @@
 	spit_delay = 15
 
 /mob/living/carbon/Xenomorph/Spitter
-	caste_name = "Spitter"
 	caste_base_type = /mob/living/carbon/Xenomorph/Spitter
 	name = "Spitter"
 	desc = "A gross, oozing alien of some kind."

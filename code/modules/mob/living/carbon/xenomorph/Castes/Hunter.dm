@@ -139,7 +139,6 @@
 	pounce_delay = 100	
 
 /mob/living/carbon/Xenomorph/Hunter
-	caste_name = "Hunter"
 	caste_base_type = /mob/living/carbon/Xenomorph/Hunter
 	name = "Hunter"
 	desc = "A beefy, fast alien with sharp claws."

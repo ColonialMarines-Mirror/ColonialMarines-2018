@@ -150,7 +150,6 @@
 	bomb_delay = 20 SECONDS //20 seconds per glob at Young, -2.5 per upgrade down to 10 seconds
 
 /mob/living/carbon/Xenomorph/Boiler
-	caste_name = "Boiler"
 	caste_base_type = /mob/living/carbon/Xenomorph/Boiler
 	name = "Boiler"
 	desc = "A huge, grotesque xenomorph covered in glowing, oozing acid slime."

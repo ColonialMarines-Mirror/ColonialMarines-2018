@@ -150,7 +150,6 @@
 	toggle_agility_cooldown = 5	
 
 /mob/living/carbon/Xenomorph/Warrior
-	caste_name = "Warrior"
 	caste_base_type = /mob/living/carbon/Xenomorph/Warrior
 	name = "Warrior"
 	desc = "A beefy, alien with an armored carapace."

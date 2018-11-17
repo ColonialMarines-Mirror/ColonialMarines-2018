@@ -121,7 +121,7 @@
 
 
 	//Larvas have their own, very weird naming conventions, let's not kick a beehive, not yet
-	if(caste == "Larva")
+	if(isXenoLarva(src))
 		return
 
 	var/name_prefix = ""
@@ -141,14 +141,13 @@
 		remove_language("English") // its hacky doing it here sort of
 
 	//Queens have weird, hardcoded naming conventions based on upgrade levels. They also never get nicknumbers
-	if(caste == "Queen")
+	if(isXenoQueen(src))
 		switch(upgrade)
 			if(0) name = "\improper [name_prefix]Queen"			 //Young
 			if(1) name = "\improper [name_prefix]Elder Queen"	 //Mature
 			if(2) name = "\improper [name_prefix]Elder Empress"	 //Elder
 			if(3) name = "\improper [name_prefix]Ancient Empress" //Ancient
-	else if(caste == "Predalien") name = "\improper [name_prefix][name] ([nicknumber])"
-	else name = "\improper [name_prefix][upgrade_name] [caste] ([nicknumber])"
+	else name = "\improper [name_prefix][xeno_caste.upgrade_name] [xeno_caste.display_name] ([nicknumber])"
 
 	//Update linked data so they show up properly
 	real_name = name
@@ -156,8 +155,8 @@
 
 /mob/living/carbon/Xenomorph/examine(mob/user)
 	..()
-	if(isXeno(user) && caste_desc)
-		to_chat(user, caste_desc)
+	if(isXeno(user) && xeno_caste.caste_desc)
+		to_chat(user, xeno_caste.caste_desc)
 
 	if(stat == DEAD)
 		to_chat(user, "It is DEAD. Kicked the bucket. Off to that great hive in the sky.")
@@ -255,7 +254,7 @@
 
 /mob/living/carbon/Xenomorph/point_to_atom(atom/A, turf/T)
 	//xeno leader get a bit arrow and less cooldown
-	if(queen_chosen_lead || caste == "Queen")
+	if(queen_chosen_lead || isXenoQueen(src))
 		recently_pointed_to = world.time + 10
 		new /obj/effect/overlay/temp/point/big(T)
 	else

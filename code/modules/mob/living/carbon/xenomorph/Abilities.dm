@@ -421,7 +421,7 @@
 	action_icon_state = "salvage_plasma"
 	ability_name = "salvage plasma"
 	var/plasma_salvage_amount = 40
-	var/salvage_delay = 50
+	var/salvage_delay = 5 SECONDS
 	var/max_range = 1
 
 datum/action/xeno_action/activable/salvage_plasma/use_ability(atom/A)

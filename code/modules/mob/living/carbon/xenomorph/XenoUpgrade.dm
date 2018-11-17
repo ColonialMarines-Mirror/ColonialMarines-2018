@@ -51,20 +51,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 			upgrade_name = "Mature"
 			to_chat(src, "<span class='xenodanger'>You feel a bit stronger.</span>")
 			switch(caste)
-				if("Runner")
-					melee_damage_lower = 20
-					melee_damage_upper = 30
-					health = 120
-					maxHealth = 120
-					plasma_gain = 2
-					plasma_max = 150
-					upgrade_threshold = 200
-					caste_desc = "A fast, four-legged terror, but weak in sustained combat. It looks a little more dangerous."
-					speed = -1.9
-					armor_deflection = 10
-					attack_delay = -4
-					tackle_damage = 30 // Prior was 25
-					pounce_delay = 35
 				if ("Warrior")
 					melee_damage_lower = 35
 					melee_damage_upper = 45
@@ -109,20 +95,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 			upgrade_name = "Elder"
 			to_chat(src, "<span class='xenodanger'>You feel a whole lot stronger.</span>")
 			switch(caste)
-				if("Runner")
-					melee_damage_lower = 20
-					melee_damage_upper = 35
-					health = 130
-					maxHealth = 150
-					plasma_gain = 2
-					plasma_max = 200
-					upgrade_threshold = 400
-					caste_desc = "A fast, four-legged terror, but weak in sustained combat. It looks pretty strong."
-					speed = -2.0
-					armor_deflection = 10
-					attack_delay = -4
-					tackle_damage = 35 // Prior was 30
-					pounce_delay = 30
 				if ("Warrior")
 					melee_damage_lower = 40
 					melee_damage_upper = 45
@@ -166,22 +138,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 		if(3)
 			upgrade_name = "Ancient"
 			switch(caste)
-				if("Runner")
-					to_chat(src, "<span class='xenoannounce'>You are the fastest assassin of all time. Your speed is unmatched.</span>")
-					melee_damage_lower = 25
-					melee_damage_upper = 35
-					health = 160
-					maxHealth = 160
-					plasma_gain = 2
-					plasma_max = 200
-					caste_desc = "Not what you want to run into in a dark alley. It looks fucking deadly."
-					speed = -2.1
-					armor_deflection = 10
-					attack_delay = -4
-					tacklemin = 3
-					tacklemax = 5
-					tackle_damage = 40 // Prior was 30
-					pounce_delay = 30
 				if ("Warrior")
 					to_chat(src, "<span class='xenoannounce'>None can stand before you. You will annihilate all weaklings who try.</span>")
 					melee_damage_lower = 45

@@ -494,7 +494,7 @@
 
 /obj/item/storage/backpack/marine/satchel/scout_cloak/proc/camo_off(var/mob/user)
 	if (!user)
-		camo_active = 0
+		camo_active = FALSE
 		wearer = null
 		processing_objects.Remove(src)
 		return 0

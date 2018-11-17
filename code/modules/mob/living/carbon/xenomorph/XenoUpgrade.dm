@@ -51,53 +51,17 @@ Queen		 0.0	 0.1	 0.2	 0.3
 			upgrade_name = "Mature"
 			to_chat(src, "<span class='xenodanger'>You feel a bit stronger.</span>")
 			switch(caste)
-				if ("Warrior")
-					melee_damage_lower = 35
-					melee_damage_upper = 45
-					health = 250
-					maxHealth = 250
-					plasma_gain = 8
-					plasma_max = 100
-					upgrade_threshold = 400
-					caste_desc = "An alien with an armored carapace. It looks a little more dangerous."
-					speed = -0.4
-					armor_deflection = 50
-					tackle_damage = 45 // Prior was 40
 
 		//SECOND UPGRADE
 		if(2)
 			upgrade_name = "Elder"
 			to_chat(src, "<span class='xenodanger'>You feel a whole lot stronger.</span>")
 			switch(caste)
-				if ("Warrior")
-					melee_damage_lower = 40
-					melee_damage_upper = 45
-					tackle_damage = 50 // Prior was 45
-					health = 260
-					maxHealth = 260
-					plasma_gain = 8
-					plasma_max = 100
-					upgrade_threshold = 800
-					caste_desc = "An alien with an armored carapace. It looks pretty strong."
-					speed = -0.4
-					armor_deflection = 50
 
 		//Final UPGRADE
 		if(3)
 			upgrade_name = "Ancient"
 			switch(caste)
-				if ("Warrior")
-					to_chat(src, "<span class='xenoannounce'>None can stand before you. You will annihilate all weaklings who try.</span>")
-					melee_damage_lower = 45
-					melee_damage_upper = 50
-					tackle_damage = 55 // Prior was 50
-					health = 265
-					maxHealth = 265
-					plasma_gain = 8
-					plasma_max = 100
-					caste_desc = "An hulking beast capable of effortlessly breaking and tearing through its enemies."
-					speed = -0.5
-					armor_deflection = 55
 
 	generate_name() //Give them a new name now
 

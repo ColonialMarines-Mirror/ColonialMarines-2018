@@ -48,6 +48,12 @@
 		/datum/action/xeno_action/second_wind,
 		)
 
+/mob/living/carbon/Xenomorph/Ravager/Stat()
+	if (!..())
+		return 0
+
+	stat(null, "Rage: [rage] / [RAVAGER_MAX_RAGE]")
+	return 1
 
 /mob/living/carbon/Xenomorph/Ravager/proc/charge(atom/T)
 	if(!T) return

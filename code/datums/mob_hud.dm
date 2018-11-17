@@ -267,7 +267,7 @@ var/datum/mob_hud/huds = list(
 	else
 		var/revive_enabled = TRUE
 		var/stage = 1
-		if(check_tod())
+		if(!check_tod())
 			revive_enabled = FALSE
 		else if(!is_revivable())
 			revive_enabled = FALSE

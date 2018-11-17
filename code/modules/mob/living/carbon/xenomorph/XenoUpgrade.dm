@@ -115,21 +115,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					tackle_damage = 35 // Prior was 30
 					armor_deflection = 25
 					speed = -0.6
-				if("Queen")
-					melee_damage_lower = 50
-					melee_damage_upper = 60
-					health = 325
-					maxHealth = 325
-					plasma_max = 800
-					plasma_gain = 40
-					upgrade_threshold = 1600
-					spit_delay = 20
-					caste_desc = "The biggest and baddest xeno. The Queen controls the hive and plants eggs."
-					armor_deflection = 50
-					tackle_damage = 60 // Prior was 55
-					speed = 0.5
-					aura_strength = 3
-					queen_leader_limit = 2
 
 		//SECOND UPGRADE
 		if(2)
@@ -200,21 +185,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 30
 					tackle_damage = 40 // Prior was 35
 					speed = -0.7
-				if("Queen")
-					melee_damage_lower = 55
-					melee_damage_upper = 65
-					health = 350
-					maxHealth = 350
-					plasma_max = 900
-					plasma_gain = 50
-					upgrade_threshold = 3200
-					spit_delay = 20
-					caste_desc = "The biggest and baddest xeno. The Empress controls multiple hives and planets."
-					armor_deflection = 55
-					tackle_damage = 65 // Prior was 60
-					speed = 0.4
-					aura_strength = 4
-					queen_leader_limit = 3
 
 		//Final UPGRADE
 		if(3)
@@ -287,21 +257,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					armor_deflection = 30
 					tackle_damage = 45	 // Prior was 35
 					speed = -0.8
-				if("Queen")
-					to_chat(src, "<span class='xenoannounce'>You are the Alpha and the Omega. The beginning and the end.</span>")
-					melee_damage_lower = 60
-					melee_damage_upper = 70
-					health = 375
-					maxHealth = 375
-					plasma_max = 1000
-					plasma_gain = 50
-					spit_delay = 15
-					caste_desc = "The most perfect Xeno form imaginable."
-					armor_deflection = 60
-					tackle_damage = 70 // Prior was 65
-					speed = 0.3
-					aura_strength = 5
-					queen_leader_limit = 4
 
 	generate_name() //Give them a new name now
 

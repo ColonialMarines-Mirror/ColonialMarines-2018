@@ -425,6 +425,22 @@ var/list/TANK_HARDPOINT_OFFSETS = list(
 		var/obj/structure/rack/R = A
 		R.visible_message("<span class='danger'>[root] smashes through the [R]!</span>")
 		R.destroy(TRUE)
+	else if(istype(A, /obj/machinery/disposal))
+		var/obj/machinery/disposal/S = A
+		S.visible_message("<span class='danger'>[root] bulldozes over [S]!</span>")
+		S.Dispose()
+	else if(istype(A, /obj/machinery/computer/secure_data))
+		var/obj/machinery/computer/secure_data/S = A
+		S.visible_message("<span class='danger'>[root] crushes [S]!</span>")
+		S.Dispose()
+	else if(istype(A, /obj/machinery/computer/security))
+		var/obj/machinery/computer/security/S = A
+		S.visible_message("<span class='danger'>[root] crushes [S]!</span>")
+		S.Dispose()
+	else if(istype(A, /obj/machinery/portable_atmospherics/hydroponics))
+		var/obj/machinery/portable_atmospherics/hydroponics/S = A
+		S.visible_message("<span class='danger'>[root] bulldozes over [S]!</span>")
+		S.Dispose()
 	else if(istype(A, /obj/structure/window/framed))
 		var/obj/structure/window/framed/W = A
 		W.visible_message("<span class='danger'>[root] crashes through the [W]!</span>")

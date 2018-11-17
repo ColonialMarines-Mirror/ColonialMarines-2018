@@ -993,146 +993,113 @@
 	var/mob/living/carbon/Xenomorph/Queen/X = owner
 	if(!X.check_state())
 		return
-	if(X.observed_xeno)
-		var/mob/living/carbon/Xenomorph/T = X.observed_xeno
-		if(!X.check_plasma(600)) return
-
-		if(T.is_ventcrawling)
-			to_chat(X, "<span class='warning'>[T] can't be deevolved here.</span>")
-			return
-
-		if(!isturf(T.loc))
-			to_chat(X, "<span class='warning'>[T] can't be deevolved here.</span>")
-			return
-
-		if(T.health <= 0)
-			to_chat(X, "<span class='warning'>[T] is too weak to be deevolved.</span>")
-			return
-
-		var/newcaste = ""
-
-		switch(T.caste)
-			if("Hivelord")
-				newcaste = "Drone"
-			if("Carrier")
-				newcaste = "Drone"
-			if("Crusher")
-				newcaste = "Warrior"
-			if("Ravager")
-				newcaste = "Hunter"
-			if("Praetorian")
-				newcaste = "Warrior"
-			if("Boiler")
-				newcaste = "Spitter"
-			if("Spitter")
-				newcaste = "Sentinel"
-			if("Hunter")
-				newcaste = "Runner"
-			if("Warrior")
-				newcaste = "Defender"
-
-		if(!newcaste)
-			to_chat(X, "<span class='xenowarning'>[T] can't be deevolved.</span>")
-			return
-
-		var/confirm = alert(X, "Are you sure you want to deevolve [T] from [T.caste] to [newcaste]?", , "Yes", "No")
-		if(confirm == "No")
-			return
-
-		var/reason = stripped_input(X, "Provide a reason for deevolving this xenomorph, [T]")
-		if(isnull(reason))
-			to_chat(X, "<span class='xenowarning'>You must provide a reason for deevolving [T].</span>")
-			return
-
-		if(!X.check_state() || !X.check_plasma(600) || X.observed_xeno != T)
-			return
-
-		if(T.is_ventcrawling)
-			return
-
-		if(!isturf(T.loc))
-			return
-
-		if(T.health <= 0)
-			return
-
-		to_chat(T, "<span class='xenowarning'>The queen is deevolving you for the following reason: [reason]</span>")
-
-		var/xeno_type
-
-		switch(newcaste)
-			if("Runner")
-				xeno_type = /mob/living/carbon/Xenomorph/Runner
-			if("Drone")
-				xeno_type = /mob/living/carbon/Xenomorph/Drone
-			if("Sentinel")
-				xeno_type = /mob/living/carbon/Xenomorph/Sentinel
-			if("Spitter")
-				xeno_type = /mob/living/carbon/Xenomorph/Spitter
-			if("Hunter")
-				xeno_type = /mob/living/carbon/Xenomorph/Hunter
-			if("Warrior")
-				xeno_type = /mob/living/carbon/Xenomorph/Warrior
-			if("Defender")
-				xeno_type = /mob/living/carbon/Xenomorph/Defender
-
-		//From there, the new xeno exists, hopefully
-		var/mob/living/carbon/Xenomorph/new_xeno = new xeno_type(get_turf(T))
-
-		if(!istype(new_xeno))
-			//Something went horribly wrong!
-			to_chat(X, "<span class='warning'>Something went terribly wrong here. Your new xeno is null! Tell a coder immediately!</span>")
-			if(new_xeno)
-				cdel(new_xeno)
-			return
-
-		if(T.mind)
-			T.mind.transfer_to(new_xeno)
-		else
-			new_xeno.key = T.key
-			if(new_xeno.client)
-				new_xeno.client.change_view(world.view)
-				new_xeno.client.pixel_x = 0
-				new_xeno.client.pixel_y = 0
-
-		//Pass on the unique nicknumber, then regenerate the new mob's name now that our player is inside
-		new_xeno.nicknumber = T.nicknumber
-		new_xeno.generate_name()
-
-		if(T.xeno_mobhud)
-			var/datum/mob_hud/H = huds[MOB_HUD_XENO_STATUS]
-			H.add_hud_to(new_xeno) //keep our mobhud choice
-			new_xeno.xeno_mobhud = TRUE
-
-		new_xeno.middle_mouse_toggle = T.middle_mouse_toggle //Keep our toggle state
-
-		for(var/obj/item/W in T.contents) //Drop stuff
-			T.drop_inv_item_on_ground(W)
-
-		T.empty_gut()
-		new_xeno.visible_message("<span class='xenodanger'>A [new_xeno.caste] emerges from the husk of \the [T].</span>", \
-		"<span class='xenodanger'>[X] makes you regress into your previous form.</span>")
-
-		if(T.queen_chosen_lead)
-			new_xeno.queen_chosen_lead = TRUE
-			new_xeno.hud_set_queen_overwatch()
-
-		var/datum/hive_status/hive = hive_datum[X.hivenumber]
-
-		if(hive.living_xeno_queen && hive.living_xeno_queen.observed_xeno == T)
-			hive.living_xeno_queen.set_queen_overwatch(new_xeno)
-
-		new_xeno.upgrade_xeno(TRUE, min(T.upgrade+1,3)) //a young Crusher de-evolves into a MATURE Hunter
-
-		message_admins("[key_name_admin(X)] has deevolved [key_name_admin(T)]. Reason: [reason]")
-		log_admin("[key_name_admin(X)] has deevolved [key_name_admin(T)]. Reason: [reason]")
-
-		round_statistics.total_xenos_created-- //so an evolved xeno doesn't count as two.
-		cdel(T)
-		X.use_plasma(600)
-
-	else
+	if(!X.observed_xeno)
 		to_chat(X, "<span class='warning'>You must overwatch the xeno you want to de-evolve.</span>")
+		return
+	
+	var/mob/living/carbon/Xenomorph/T = X.observed_xeno
+	if(!X.check_plasma(600)) return
+
+	if(T.is_ventcrawling)
+		to_chat(X, "<span class='warning'>[T] can't be deevolved here.</span>")
+		return
+
+	if(!isturf(T.loc))
+		to_chat(X, "<span class='warning'>[T] can't be deevolved here.</span>")
+		return
+
+	if(T.health <= 0)
+		to_chat(X, "<span class='warning'>[T] is too weak to be deevolved.</span>")
+		return
+
+	if(!T.xeno_caste.deevolves_to)
+		to_chat(X, "<span class='xenowarning'>[T] can't be deevolved.</span>")
+		return
+	
+	var/datum/xeno_caste/new_caste = xeno_caste_datums[T.xeno_caste.deevolves_to][1]
+
+	var/confirm = alert(X, "Are you sure you want to deevolve [T] from [T.xeno_caste.caste_name] to [new_caste.caste_name]?", , "Yes", "No")
+	if(confirm == "No")
+		return
+
+	var/reason = stripped_input(X, "Provide a reason for deevolving this xenomorph, [T]")
+	if(isnull(reason))
+		to_chat(X, "<span class='xenowarning'>You must provide a reason for deevolving [T].</span>")
+		return
+
+	if(!X.check_state() || !X.check_plasma(600) || X.observed_xeno != T)
+		return
+
+	if(T.is_ventcrawling)
+		return
+
+	if(!isturf(T.loc))
+		return
+
+	if(T.health <= 0)
+		return
+
+	to_chat(T, "<span class='xenowarning'>The queen is deevolving you for the following reason: [reason]</span>")
+
+	var/xeno_type = new_caste.caste_type_path
+
+	//From there, the new xeno exists, hopefully
+	var/mob/living/carbon/Xenomorph/new_xeno = new xeno_type(get_turf(T))
+
+	if(!istype(new_xeno))
+		//Something went horribly wrong!
+		to_chat(X, "<span class='warning'>Something went terribly wrong here. Your new xeno is null! Tell a coder immediately!</span>")
+		if(new_xeno)
+			cdel(new_xeno)
+		return
+
+	if(T.mind)
+		T.mind.transfer_to(new_xeno)
+	else
+		new_xeno.key = T.key
+		if(new_xeno.client)
+			new_xeno.client.change_view(world.view)
+			new_xeno.client.pixel_x = 0
+			new_xeno.client.pixel_y = 0
+
+	//Pass on the unique nicknumber, then regenerate the new mob's name now that our player is inside
+	new_xeno.nicknumber = T.nicknumber
+	new_xeno.generate_name()
+
+	if(T.xeno_mobhud)
+		var/datum/mob_hud/H = huds[MOB_HUD_XENO_STATUS]
+		H.add_hud_to(new_xeno) //keep our mobhud choice
+		new_xeno.xeno_mobhud = TRUE
+
+	new_xeno.middle_mouse_toggle = T.middle_mouse_toggle //Keep our toggle state
+
+	for(var/obj/item/W in T.contents) //Drop stuff
+		T.drop_inv_item_on_ground(W)
+
+	T.empty_gut()
+	new_xeno.visible_message("<span class='xenodanger'>A [new_xeno.xeno_caste.caste_name] emerges from the husk of \the [T].</span>", \
+	"<span class='xenodanger'>[X] makes you regress into your previous form.</span>")
+
+	if(T.queen_chosen_lead)
+		new_xeno.queen_chosen_lead = TRUE
+		new_xeno.hud_set_queen_overwatch()
+
+	var/datum/hive_status/hive = hive_datum[X.hivenumber]
+
+	if(hive.living_xeno_queen && hive.living_xeno_queen.observed_xeno == T)
+		hive.living_xeno_queen.set_queen_overwatch(new_xeno)
+
+	// this sets the right datum
+	new_xeno.upgrade_xeno(min(T.upgrade+1,3)) //a young Crusher de-evolves into a MATURE Hunter
+
+	message_admins("[key_name_admin(X)] has deevolved [key_name_admin(T)]. Reason: [reason]")
+	log_admin("[key_name_admin(X)] has deevolved [key_name_admin(T)]. Reason: [reason]")
+
+	round_statistics.total_xenos_created-- //so an evolved xeno doesn't count as two.
+	cdel(T)
+	X.use_plasma(600)
+
+	
 
 //Ravager Abilities
 

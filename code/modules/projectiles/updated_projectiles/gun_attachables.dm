@@ -873,9 +873,9 @@ obj/item/attachable/attack_hand(var/mob/user as mob)
 
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
-			if(X.fire_immune)
+			if(X.xeno_caste.fire_immune)
 				continue
-			fire_mod = X.fire_resist
+			fire_mod = X.xeno_caste.fire_resist + X.fire_resist_modifier
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 

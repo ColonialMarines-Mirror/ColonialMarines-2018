@@ -38,7 +38,7 @@
 		adjust_slowdown( round(-rage * 0.1,0.01) ) //Recover 0.1 more stagger stacks per unit of rage; min 0.1, max 5
 		adjust_stagger( round(-rage * 0.1,0.01) ) //Recover 0.1 more stagger stacks per unit of rage; min 0.1, max 5
 		rage_resist = CLAMP(1-round(rage * 0.014,0.01),0.3,1) //+1.4% damage resist per point of rage, max 70%
-		fire_resist = initial(fire_resist) - round(rage * 0.01,0.01) //+1% fire resistance per stack of rage, max +50%; initial resist is 50%
+		fire_resist_modifier = -round(rage * 0.01,0.01) //+1% fire resistance per stack of rage, max +50%; initial resist is 50%
 		attack_delay = initial(attack_delay) - round(rage * 0.05,0.01) //-0.05 attack delay to a maximum reduction of -2.5
 	return ..()
 
@@ -139,8 +139,8 @@
 	. = ..()
 	if(.)
 		return
-	if(!fire_immune && on_fire) //Sanity check; have to be on fire to actually take the damage.
-		adjustFireLoss((fire_stacks + 3) * fire_resist)
+	if(!xeno_caste.fire_immune && on_fire) //Sanity check; have to be on fire to actually take the damage.
+		adjustFireLoss((fire_stacks + 3) * (xeno_caste.fire_resist + fire_resist_modifier)) // modifier is negative
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
 	if(health >= maxHealth || hardcore) //no damage, don't bother
@@ -422,9 +422,9 @@
 
 /mob/living/carbon/Xenomorph/proc/handle_environment() //unused while atmos is not on
 	var/env_temperature = loc.return_temperature()
-	if(!fire_immune)
+	if(!xeno_caste.fire_immune)
 		if(env_temperature > (T0C + 66))
-			adjustFireLoss((env_temperature - (T0C + 66)) / 5 * fire_resist) //Might be too high, check in testing.
+			adjustFireLoss((env_temperature - (T0C + 66)) / 5 * xeno_caste.fire_resist) //Might be too high, check in testing.
 			updatehealth() //unused while atmos is off
 			if(hud_used && hud_used.fire_icon)
 				hud_used.fire_icon.icon_state = "fire2"

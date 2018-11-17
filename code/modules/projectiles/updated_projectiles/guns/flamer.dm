@@ -219,9 +219,9 @@
 
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
-			if(X.fire_immune)
+			if(X.xeno_caste.fire_immune)
 				continue
-			fire_mod = X.fire_resist
+			fire_mod = X.xeno_caste.fire_resist + X.fire_resist_modifier
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M //fixed :s
 
@@ -452,7 +452,7 @@
 			var/mob/living/carbon/human/H = M
 			if(isXeno(H.pulledby))
 				var/mob/living/carbon/Xenomorph/Z = H.pulledby
-				if(!Z.fire_immune)
+				if(!Z.xeno_caste.fire_immune)
 					Z.adjust_fire_stacks(burnlevel)
 					Z.IgniteMob()
 			if(istype(H.wear_suit, /obj/item/clothing/suit/fire) || (istype(H.wear_suit, /obj/item/clothing/suit/storage/marine/M35) && istype(H.head, /obj/item/clothing/head/helmet/marine/pyro)))
@@ -461,9 +461,9 @@
 				return
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
-			if(X.fire_immune)
+			if(X.xeno_caste.fire_immune)
 				return
-			fire_mod = X.fire_resist
+			fire_mod = X.xeno_caste.fire_resist + X.fire_resist_modifier
 		M.adjust_fire_stacks(burnlevel) //Make it possible to light them on fire later.
 		if (prob(firelevel + 2*M.fire_stacks)) //the more soaked in fire you are, the likelier to be ignited
 			M.IgniteMob()

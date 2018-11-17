@@ -193,7 +193,7 @@
 	return TRUE
 
 /mob/living/carbon/Xenomorph/Queen/handle_decay()
-	if(prob(20+abs(3*upgrade)) && plasma_stored)
+	if(prob(20+abs(3*upgrade)))
 		use_plasma(min(rand(1,2), plasma_stored))
 
 //Chance of insta limb amputation after a melee attack.

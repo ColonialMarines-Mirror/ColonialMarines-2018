@@ -53,12 +53,12 @@
 		/mob/living/carbon/Xenomorph/Predalien/proc/claim_trophy
 		)
 
-	New()
-		..()
-		announce_spawn()
+/mob/living/carbon/Xenomorph/Predalien/New()
+	.=..()
+	announce_spawn()
 
 /mob/living/carbon/Xenomorph/Predalien/handle_decay()
-	if(prob(20) && plasma_stored)
+	if(prob(20))
 		use_plasma(min(rand(1,2), plasma_stored))
 
 /mob/living/carbon/Xenomorph/Predalien/proc/announce_spawn()

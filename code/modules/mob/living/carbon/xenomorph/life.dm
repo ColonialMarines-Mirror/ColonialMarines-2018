@@ -11,7 +11,8 @@
 	..()
 
 	if(stat == DEAD) //Dead, nothing else to do but this.
-		handle_decay()
+		if(plasma_stored && !is_robotic)
+			handle_decay()
 		return
 	if(stat == UNCONSCIOUS)
 		if(is_zoomed)

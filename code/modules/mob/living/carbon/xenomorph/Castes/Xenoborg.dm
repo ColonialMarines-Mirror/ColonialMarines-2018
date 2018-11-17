@@ -49,9 +49,6 @@
 /mob/living/carbon/Xenomorph/Xenoborg/handle_living_plasma_updates()
 	return
 
-/mob/living/carbon/Xenomorph/Xenoborg/handle_decay()
-	return
-
 /mob/living/carbon/Xenomorph/Xenoborg/proc/fire_cannon(atom/T)
 	if(!T)
 		return

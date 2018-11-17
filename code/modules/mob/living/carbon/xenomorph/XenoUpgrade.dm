@@ -63,19 +63,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					speed = -0.4
 					armor_deflection = 50
 					tackle_damage = 45 // Prior was 40
-				if("Sentinel")
-					melee_damage_lower = 20
-					melee_damage_upper = 30
-					health = 180
-					maxHealth = 180
-					plasma_gain = 12
-					plasma_max = 400
-					upgrade_threshold = 200
-					spit_delay = 20
-					caste_desc = "A ranged combat alien. It looks a little more dangerous."
-					armor_deflection = 15
-					tackle_damage = 30 // Prior was 25
-					speed = -0.9
 				if("Spitter")
 					melee_damage_lower = 25
 					melee_damage_upper = 35
@@ -107,19 +94,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An alien with an armored carapace. It looks pretty strong."
 					speed = -0.4
 					armor_deflection = 50
-				if("Sentinel")
-					melee_damage_lower = 25
-					melee_damage_upper = 30
-					health = 190
-					maxHealth = 190
-					plasma_gain = 15
-					plasma_max = 500
-					upgrade_threshold = 400
-					spit_delay = 15
-					caste_desc = "A ranged combat alien. It looks pretty strong."
-					armor_deflection = 20
-					tackle_damage = 35 // Prior was 30
-					speed = -1.0
 				if("Spitter")
 					melee_damage_lower = 30
 					melee_damage_upper = 35
@@ -150,19 +124,6 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					caste_desc = "An hulking beast capable of effortlessly breaking and tearing through its enemies."
 					speed = -0.5
 					armor_deflection = 55
-				if("Sentinel")
-					to_chat(src, "<span class='xenoannounce'>You are the stun master. Your stunning is legendary and causes massive quantities of salt.</span>")
-					melee_damage_lower = 25
-					melee_damage_upper = 35
-					health = 195
-					maxHealth = 195
-					plasma_gain = 20
-					plasma_max = 600
-					spit_delay = 15
-					caste_desc = "Neurotoxin Factory, don't let it get you."
-					armor_deflection = 20
-					tackle_damage = 40	 // Prior was 35
-					speed = -1.1
 				if("Spitter")
 					to_chat(src, "<span class='xenoannounce'>You are a master of ranged stuns and damage. Go fourth and generate salt.</span>")
 					melee_damage_lower = 30

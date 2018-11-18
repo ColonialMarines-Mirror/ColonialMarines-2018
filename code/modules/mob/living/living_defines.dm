@@ -80,5 +80,5 @@
 
 	var/no_stun = 0
 
-	var/fire_immune = 0 //Boolean
+	var/fire_immune = FALSE
 	var/fire_resist = 1 //0 to 1; lower is better as it is a multiplier.

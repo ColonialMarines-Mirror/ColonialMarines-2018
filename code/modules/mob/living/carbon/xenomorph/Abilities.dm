@@ -1164,18 +1164,13 @@
 	return !X.ravage_used
 
 
-/datum/action/xeno_action/activable/second_wind
+/datum/action/xeno_action/second_wind
 	name = "Second Wind"
 	action_icon_state = "second_wind"
-	ability_name = "second wind"
 
-/datum/action/xeno_action/activable/second_wind/use_ability(atom/A)
+/datum/action/xeno_action/second_wind/action_activate()
 	var/mob/living/carbon/Xenomorph/Ravager/X = owner
-	X.Second_Wind(A)
-
-/datum/action/xeno_action/activable/second_wind/action_cooldown_check()
-	var/mob/living/carbon/Xenomorph/Ravager/X = owner
-	return !X.second_wind_used
+	X.Second_Wind()
 
 
 //Ravenger
@@ -1242,32 +1237,16 @@
 	return !X.cresttoss_used
 
 //Carrier abilities
-/datum/action/xeno_action/activable/stealth
+/datum/action/xeno_action/spawn_hugger
 	name = "Spawn Facehugger (100)"
 	action_icon_state = "spawn_hugger"
-	ability_name = "spawn facehugger"
 	plasma_cost = 100
 
-/datum/action/xeno_action/activable/stealth/action_activate()
+/datum/action/xeno_action/spawn_hugger/action_activate()
 	var/mob/living/carbon/Xenomorph/Carrier/X = owner
 	X.Spawn_Hugger()
 
-/datum/action/xeno_action/activable/stealth/action_cooldown_check()
-	var/mob/living/carbon/Xenomorph/Carrier/X = owner
-	return !X.used_spawn_facehugger
-
-//Carrier abilities
-/datum/action/xeno_action/activable/stealth
-	name = "Spawn Facehugger (100)"
-	action_icon_state = "spawn_hugger"
-	ability_name = "spawn facehugger"
-	plasma_cost = 100
-
-/datum/action/xeno_action/activable/stealth/action_activate()
-	var/mob/living/carbon/Xenomorph/Carrier/X = owner
-	X.Spawn_Hugger()
-
-/datum/action/xeno_action/activable/stealth/action_cooldown_check()
+/datum/action/xeno_action/spawn_hugger/action_cooldown_check()
 	var/mob/living/carbon/Xenomorph/Carrier/X = owner
 	return !X.used_spawn_facehugger
 

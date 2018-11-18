@@ -1270,19 +1270,19 @@
 	var/notice
 	switch(alert_code)
 		if(SENTRY_ALERT_AMMO)
-			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.x]).</b>"
+			notice = "<b>ALERT! [src]'s ammo depleted at: [get_area(src)]. Coordinates: (X: [x], Y: [y]).</b>"
 		if(SENTRY_ALERT_HOSTILE)
-			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)]. Coordinates: (X: [M.x], Y: [M.x]).</b>"
+			notice = "<b>ALERT! Hostile/unknown: [M] Detected at: [get_area(M)]. Coordinates: (X: [M.x], Y: [M.y]).</b>"
 		if(SENTRY_ALERT_FALLEN)
-			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.x]).</b>"
+			notice = "<b>ALERT! [src] has been knocked over at: [get_area(src)]. Coordinates: (X: [x], Y: [y]).</b>"
 		if(SENTRY_ALERT_DAMAGE)
 			var/percent = max(0,(health / max(1,health_max))*100)
 			if(percent)
-				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Coordinates: (X: [src.x], Y: [src.x]). Remaining Structural Integrity: [percent]%</b>"
+				notice = "<b>ALERT! [src] at: [get_area(src)] has taken damage. Coordinates: (X: [x], Y: [y]). Remaining Structural Integrity: [percent]%</b>"
 			else
-				notice = "<b>ALERT! [src] at: [get_area(src)], Coordinates: (X: [src.x], Y: [src.x]) has been destroyed.</b>"
+				notice = "<b>ALERT! [src] at: [get_area(src)], Coordinates: (X: [x], Y: [y]) has been destroyed.</b>"
 		if(SENTRY_ALERT_BATTERY)
-			notice = "<b>ALERT! [src]'s battery depleted at: [get_area(src)]. Coordinates: (X: [src.x], Y: [src.x]).</b>"
+			notice = "<b>ALERT! [src]'s battery depleted at: [get_area(src)]. Coordinates: (X: [x], Y: [y]).</b>"
 	var/mob/living/silicon/ai/AI = new/mob/living/silicon/ai(src, null, null, 1)
 	AI.SetName("Sentry Alert System")
 	AI.aiRadio.talk_into(AI,"[notice]","Almayer","announces")
@@ -1390,23 +1390,9 @@
 	var/turf/target = get_step(user.loc,user.dir)
 	if(!target)
 		return
-	var/blocked
-	if(target.density)
-		blocked = TRUE
 
-	if(!blocked) //allows us to stop checks and thus save resources if we find something that blocks placement
-		for(var/obj/machinery/MA in target)
-			if(MA.density)
-				blocked = TRUE
-				break //LoF Broken; stop checking; we can't proceed further.
-	if(!blocked)
-		for(var/obj/structure/S in target)
-			if(S.density)
-				blocked = TRUE
-				break //LoF Broken; stop checking; we can't proceed further.
-
-	if(blocked)
-		to_chat(user, "<span class='warning'>Insufficient room to deploy [src]!</span>")
+	if(check_blocked_turf(target)) //check if blocked
+		to_chat(user, "<span class='warning'>There is insufficient room to deploy [src]!</span>")
 		return
 	if(do_after(user, 30, TRUE, 5, BUSY_ICON_BUILD))
 		if(!src) //Make sure the sentry still exists

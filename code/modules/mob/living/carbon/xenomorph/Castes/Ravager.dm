@@ -17,7 +17,7 @@
 	upgrade_threshold = 400
 	evolution_allowed = FALSE
 	caste_desc = "A brutal, devastating front-line attacker."
-	speed = -0.7 //Not as fast as runners, but faster than other xenos.
+	speed = -0.5 //Not as fast as runners, but faster than other xenos.
 	charge_type = 3 //Claw at end of charge
 	fire_resist = 0.5
 	armor_deflection = 20
@@ -45,7 +45,7 @@
 		/datum/action/xeno_action/regurgitate,
 		/datum/action/xeno_action/activable/charge,
 		/datum/action/xeno_action/activable/ravage,
-		/datum/action/xeno_action/activable/second_wind,
+		/datum/action/xeno_action/second_wind,
 		)
 
 
@@ -78,7 +78,7 @@
 
 	spawn(RAV_CHARGECOOLDOWN)
 		usedPounce = FALSE
-		to_chat(src, "<span class='notice'><b>Your exoskeleton quivers as you get ready to use Eviscerating Charge again.</b></span>")
+		to_chat(src, "<span class='xenodanger'>Your exoskeleton quivers as you get ready to use Eviscerating Charge again.</span>")
 		playsound(src, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 		update_action_button_icons()
 

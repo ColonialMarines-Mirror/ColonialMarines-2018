@@ -96,7 +96,17 @@
 	if(!caste_base_type)
 		error("xeno spawned without a caste_base_type set")
 		return
-	xeno_caste = xeno_caste_datums[caste_base_type][(upgrade > -1 ? upgrade + 1 : 1)]
+	if(!xeno_caste_datums[caste_base_type])
+		error("error finding base type")
+		return
+	if(!xeno_caste_datums[caste_base_type][CLAMP(upgrade + 1, 1, 4)])
+		error("error finding datum")
+		return
+	var/datum/xeno_caste/X = xeno_caste_datums[caste_base_type][CLAMP(upgrade + 1, 1, 4)]
+	if(!istype(X))
+		error("error with caste datum")
+		return
+	xeno_caste = X
 
 	plasma_stored = xeno_caste.plasma_max
 	maxHealth = xeno_caste.max_health

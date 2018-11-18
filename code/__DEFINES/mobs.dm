@@ -493,7 +493,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 //defender defines
 
 #define DEFENDER_HEADBUTT_COST			20
-#define DEFENDER_HEADBUTT_COOLDOWN		40
+#define DEFENDER_HEADBUTT_COOLDOWN		4 SECONDS
 #define DEFENDER_TAILSWIPE_COST			30
 #define DEFENDER_TAILSWIPE_COOLDOWN		120
 #define DEFENDER_FORTIFY_COOLDOWN		10

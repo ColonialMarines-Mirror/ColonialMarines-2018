@@ -594,9 +594,9 @@
 		return
 
 	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
-		if (!check_plasma(20))
+		if (!check_plasma(DEFENDER_HEADBUTT_COST * 2))
 			return
-	else if (!check_plasma(10))
+	else if (!check_plasma(DEFENDER_HEADBUTT_COST))
 		return
 
 	if(stagger)
@@ -628,9 +628,9 @@
 
 	used_headbutt = 1
 	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
-		use_plasma(20)
+		use_plasma(DEFENDER_HEADBUTT_COST * 2)
 	else
-		use_plasma(10)
+		use_plasma(DEFENDER_HEADBUTT_COST)
 
 	face_atom(H) //Face towards the target so we don't look silly
 
@@ -680,9 +680,9 @@
 		return
 
 	if (crest_defense) //We can now use crest defense, but the plasma cost is doubled.
-		if (!check_plasma(30))
+		if (!check_plasma(DEFENDER_TAILSWIPE_COST * 2))
 			return
-	else if (!check_plasma(15))
+	else if (!check_plasma(DEFENDER_TAILSWIPE_COST))
 		return
 
 	if(stagger)
@@ -720,9 +720,9 @@
 		playsound(H,'sound/weapons/alien_claw_block.ogg', 50, 1)
 	used_tail_sweep = TRUE
 	if(crest_defense) //We can now use crest defense, but the plasma cost is doubled.
-		use_plasma(30)
+		use_plasma(DEFENDER_TAILSWIPE_COST * 2)
 	else
-		use_plasma(15)
+		use_plasma(DEFENDER_TAILSWIPE_COST)
 
 	spawn(xeno_caste.tail_sweep_cooldown)
 		used_tail_sweep = FALSE

@@ -44,7 +44,7 @@
 	// *** Defender Abilities *** //
 	headbutt_cooldown = 4 SECONDS
 	tail_sweep_cooldown = 12 SECONDS
-	crest_defense_cooldown = 15 SECONDS
+	crest_defense_cooldown = 1 SECONDS
 	fortify_cooldown = 200
 	crest_defense_armor = 35
 	fortify_armor = 70

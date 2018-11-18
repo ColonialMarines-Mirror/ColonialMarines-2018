@@ -69,7 +69,7 @@
 	var/pounce_delay = 4 SECONDS
 
 	var/acid_spray_range = 0
-	var/acid_spray_cooldown = 15 SECONDS
+	var/acid_spray_cooldown = 0
 
 	// *** Pheromones *** //	
 	var/aura_strength = 0 //The strength of our aura. Zero means we can't emit one
@@ -77,15 +77,15 @@
 
 	// *** Warrior Abilities *** //
 	var/agility_speed_increase = 0 // this opens up possibilities for balancing
-	var/lunge_cooldown = 4 SECONDS
-	var/fling_cooldown = 4 SECONDS
-	var/punch_cooldown = 4 SECONDS
-	var/toggle_agility_cooldown = 5
+	var/lunge_cooldown = 0
+	var/fling_cooldown = 0
+	var/punch_cooldown = 0
+	var/toggle_agility_cooldown = 0
 
 	// *** Boiler Abilities *** //
-	var/bomb_strength = 0 //Multiplier to the effectiveness of the boiler glob. Improves by 0.5 per upgrade
-	var/acid_delay = 9 SECONDS //9 seconds delay on acid. Reduced by -1 per upgrade down to 5 seconds
-	var/bomb_delay = 20 SECONDS //20 seconds per glob at Young, -2.5 per upgrade down to 10 seconds
+	var/bomb_strength = 0 
+	var/acid_delay = 0
+	var/bomb_delay = 0
 
 	// *** Carrier Abilities *** //
 	var/huggers_max = 0
@@ -93,13 +93,13 @@
 	var/eggs_max = 0
 
 	// *** Defender Abilities *** //
-	var/headbutt_cooldown = 4 SECONDS
-	var/tail_sweep_cooldown = 12 SECONDS
-	var/crest_defense_cooldown = 15 SECONDS
-	var/fortify_cooldown = 20 SECONDS
-	var/crest_defense_armor = 35
-	var/fortify_armor = 70
-	var/cresttoss_cooldown = 6 SECONDS
+	var/headbutt_cooldown = 0
+	var/tail_sweep_cooldown = 0
+	var/crest_defense_cooldown = 0
+	var/fortify_cooldown = 0
+	var/crest_defense_armor = 0
+	var/fortify_armor = 0
+	var/cresttoss_cooldown = 0
 
 	// *** Queen Abilities *** //
 	var/queen_leader_limit = 0 //Amount of leaders allowed

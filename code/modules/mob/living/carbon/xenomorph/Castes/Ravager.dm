@@ -16,7 +16,7 @@
 	tackle_damage = 55
 
 	// *** Speed *** //
-	speed = -0.5
+	speed = -0.4
 
 	// *** Plasma *** //
 	plasma_max = 150
@@ -56,7 +56,7 @@
 	tackle_damage = 60
 
 	// *** Speed *** //
-	speed = -0.55
+	speed = -0.45
 
 	// *** Plasma *** //
 	plasma_max = 175
@@ -88,7 +88,7 @@
 	tackle_damage = 65
 
 	// *** Speed *** //
-	speed = -0.58
+	speed = -0.48
 
 	// *** Plasma *** //
 	plasma_max = 190
@@ -120,7 +120,7 @@
 	tackle_damage = 70
 
 	// *** Speed *** //
-	speed = -0.6
+	speed = -0.5
 
 	// *** Plasma *** //
 	plasma_max = 200
@@ -162,6 +162,7 @@
 	var/second_wind_used = FALSE
 	var/second_wind_delay = null
 	var/last_rage = null
+	var/last_damage = null
 	var/usedcharge = FALSE
 
 	actions = list(
@@ -172,6 +173,12 @@
 		/datum/action/xeno_action/second_wind,
 		)
 
+/mob/living/carbon/Xenomorph/Ravager/Stat()
+	. = ..()
+	if(!.)
+		return
+
+	stat(null, "Rage: [rage] / [RAVAGER_MAX_RAGE]")
 
 /mob/living/carbon/Xenomorph/Ravager/proc/charge(atom/T)
 	if(!T) return

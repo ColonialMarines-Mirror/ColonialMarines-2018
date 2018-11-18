@@ -12,7 +12,7 @@
 	melee_damage_upper = 20
 	attack_delay = -4 
 
-	savage_cooldown = 300
+	savage_cooldown = 30 SECONDS
 
 	// *** Tackle *** //
 	tackle_damage = 25
@@ -41,7 +41,7 @@
 
 	// *** Ranged Attack *** //
 	charge_type = 1 //Pounce - Runner
-	pounce_delay = 35
+	pounce_delay = 3.5 SECONDS
 
 /datum/xeno_caste/runner/mature
 	upgrade_name = "Mature"
@@ -54,7 +54,7 @@
 	melee_damage_upper = 30
 	attack_delay = -4 
 
-	savage_cooldown = 300
+	savage_cooldown = 30 SECONDS
 
 	// *** Tackle *** //
 	tackle_damage = 30
@@ -76,7 +76,7 @@
 	armor_deflection = 10
 
 	// *** Ranged Attack *** //
-	pounce_delay = 35
+	pounce_delay = 3.5 SECONDS
 
 /datum/xeno_caste/runner/elder
 	upgrade_name = "Elder"
@@ -89,7 +89,7 @@
 	melee_damage_upper = 35
 	attack_delay = -4 
 
-	savage_cooldown = 300
+	savage_cooldown = 30 SECONDS
 
 	// *** Tackle *** //
 	tackle_damage = 35
@@ -111,7 +111,7 @@
 	armor_deflection = 10
 
 	// *** Ranged Attack *** //
-	pounce_delay = 30
+	pounce_delay = 3.0 SECONDS
 
 /datum/xeno_caste/runner/ancient
 	upgrade_name = "Ancient"
@@ -124,7 +124,7 @@
 	melee_damage_upper = 35
 	attack_delay = -4 
 
-	savage_cooldown = 300
+	savage_cooldown = 30 SECONDS
 
 	// *** Tackle *** //
 	tackle_damage = 40
@@ -146,7 +146,7 @@
 	armor_deflection = 10
 
 	// *** Ranged Attack *** //
-	pounce_delay = 30
+	pounce_delay = 3.0 SECONDS
 
 /mob/living/carbon/Xenomorph/Runner
 	caste_base_type = /mob/living/carbon/Xenomorph/Runner

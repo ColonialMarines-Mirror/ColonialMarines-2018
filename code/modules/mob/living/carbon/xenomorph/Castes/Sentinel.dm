@@ -37,7 +37,7 @@
 	armor_deflection = 15
 
 	// *** Ranged Attack *** //
-	spit_delay = 25
+	spit_delay = 2.5 SECONDS
 	spit_types = list(/datum/ammo/xeno/toxin)
 
 /datum/xeno_caste/sentinel/mature
@@ -70,7 +70,7 @@
 	armor_deflection = 15
 
 	// *** Ranged Attack *** //
-	spit_delay = 20
+	spit_delay = 2.0 SECONDS
 
 /datum/xeno_caste/sentinel/elder
 	upgrade_name = "Elder"
@@ -102,7 +102,7 @@
 	armor_deflection = 20
 
 	// *** Ranged Attack *** //
-	spit_delay = 15
+	spit_delay = 1.5 SECONDS
 
 /datum/xeno_caste/sentinel/ancient
 	upgrade_name = "Ancient"
@@ -134,7 +134,7 @@
 	armor_deflection = 20
 
 	// *** Ranged Attack *** //
-	spit_delay = 15
+	spit_delay = 1.5 SECONDS
 
 /mob/living/carbon/Xenomorph/Sentinel
 	caste_base_type = /mob/living/carbon/Xenomorph/Sentinel

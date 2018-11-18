@@ -39,10 +39,10 @@
 
 	// *** Warrior Abilities *** //
 	agility_speed_increase = 0
-	lunge_cooldown = 40
-	fling_cooldown = 40
-	punch_cooldown = 40
-	toggle_agility_cooldown = 5
+	lunge_cooldown = 4 SECONDS
+	fling_cooldown = 4 SECONDS
+	punch_cooldown = 4 SECONDS
+	toggle_agility_cooldown = 0.5 SECONDS
 
 /datum/xeno_caste/warrior/mature
 	upgrade_name = "Mature"
@@ -75,10 +75,10 @@
 
 	// *** Warrior Abilities *** //
 	agility_speed_increase = 0
-	lunge_cooldown = 40
-	fling_cooldown = 40
-	punch_cooldown = 40
-	toggle_agility_cooldown = 5	
+	lunge_cooldown = 4 SECONDS
+	fling_cooldown = 4 SECONDS
+	punch_cooldown = 4 SECONDS
+	toggle_agility_cooldown = 0.5 SECONDS
 
 /datum/xeno_caste/warrior/elder
 	upgrade_name = "Elder"
@@ -111,10 +111,10 @@
 
 	// *** Warrior Abilities *** //
 	agility_speed_increase = 0
-	lunge_cooldown = 40
-	fling_cooldown = 40
-	punch_cooldown = 40
-	toggle_agility_cooldown = 5	
+	lunge_cooldown = 4 SECONDS
+	fling_cooldown = 4 SECONDS
+	punch_cooldown = 4 SECONDS
+	toggle_agility_cooldown = 0.5 SECONDS
 
 /datum/xeno_caste/warrior/ancient
 	upgrade_name = "Ancient"
@@ -147,10 +147,10 @@
 
 	// *** Warrior Abilities *** //
 	agility_speed_increase = 0
-	lunge_cooldown = 40
-	fling_cooldown = 40
-	punch_cooldown = 40
-	toggle_agility_cooldown = 5	
+	lunge_cooldown = 4 SECONDS
+	fling_cooldown = 4 SECONDS
+	punch_cooldown = 4 SECONDS
+	toggle_agility_cooldown = 0.5 SECONDS
 
 /mob/living/carbon/Xenomorph/Warrior
 	caste_base_type = /mob/living/carbon/Xenomorph/Warrior

@@ -36,7 +36,7 @@
 	armor_deflection = 45 
 
 	// *** Ranged Attack *** //
-	spit_delay = 25
+	spit_delay = 2.5 SECONDS
 	spit_types = list(/datum/ammo/xeno/acid/medium)
 
 	// *** Pheromones *** //	
@@ -75,7 +75,7 @@
 	armor_deflection = 50
 
 	// *** Ranged Attack *** //
-	spit_delay = 20
+	spit_delay = 2.0 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 3 
@@ -112,7 +112,7 @@
 	armor_deflection = 55
 
 	// *** Ranged Attack *** //
-	spit_delay = 20
+	spit_delay = 2.0 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 4 
@@ -149,7 +149,7 @@
 	armor_deflection = 60
 
 	// *** Ranged Attack *** //
-	spit_delay = 15
+	spit_delay = 1.5 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 5 

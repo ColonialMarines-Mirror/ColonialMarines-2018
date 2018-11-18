@@ -18,7 +18,7 @@
 	var/melee_damage_upper = 20
 	var/attack_delay = 0 //Bonus or pen to time in between attacks. + makes slashes slower.
 
-	var/savage_cooldown = 300
+	var/savage_cooldown = 30 SECONDS
 
 	// *** Tackle *** //
 	var/tacklemin = 1
@@ -62,14 +62,14 @@
 	var/fire_resist = 1 //0 to 1; lower is better as it is a multiplier.
 
 	// *** Ranged Attack *** //
-	var/spit_delay = 60 //Delay timer for spitting
+	var/spit_delay = 6 SECONDS //Delay timer for spitting
 	var/list/spit_types //list of datum projectile types the xeno can use.
 
 	var/charge_type = 0 //0: normal. 1: warrior/hunter style pounce. 2: ravager free attack.
-	var/pounce_delay = 40
+	var/pounce_delay = 4 SECONDS
 
 	var/acid_spray_range = 0
-	var/acid_spray_cooldown = 150
+	var/acid_spray_cooldown = 15 SECONDS
 
 	// *** Pheromones *** //	
 	var/aura_strength = 0 //The strength of our aura. Zero means we can't emit one
@@ -77,15 +77,15 @@
 
 	// *** Warrior Abilities *** //
 	var/agility_speed_increase = 0 // this opens up possibilities for balancing
-	var/lunge_cooldown = 40
-	var/fling_cooldown = 40
-	var/punch_cooldown = 40
+	var/lunge_cooldown = 4 SECONDS
+	var/fling_cooldown = 4 SECONDS
+	var/punch_cooldown = 4 SECONDS
 	var/toggle_agility_cooldown = 5
 
 	// *** Boiler Abilities *** //
 	var/bomb_strength = 0 //Multiplier to the effectiveness of the boiler glob. Improves by 0.5 per upgrade
-	var/acid_delay = 90 //9 seconds delay on acid. Reduced by -1 per upgrade down to 5 seconds
-	var/bomb_delay = 200 //20 seconds per glob at Young, -2.5 per upgrade down to 10 seconds
+	var/acid_delay = 9 SECONDS //9 seconds delay on acid. Reduced by -1 per upgrade down to 5 seconds
+	var/bomb_delay = 20 SECONDS //20 seconds per glob at Young, -2.5 per upgrade down to 10 seconds
 
 	// *** Carrier Abilities *** //
 	var/huggers_max = 0
@@ -93,13 +93,13 @@
 	var/eggs_max = 0
 
 	// *** Defender Abilities *** //
-	var/headbutt_cooldown = 40
-	var/tail_sweep_cooldown = 120
-	var/crest_defense_cooldown = 150
-	var/fortify_cooldown = 200
+	var/headbutt_cooldown = 4 SECONDS
+	var/tail_sweep_cooldown = 12 SECONDS
+	var/crest_defense_cooldown = 15 SECONDS
+	var/fortify_cooldown = 20 SECONDS
 	var/crest_defense_armor = 35
 	var/fortify_armor = 70
-	var/cresttoss_cooldown = 60
+	var/cresttoss_cooldown = 6 SECONDS
 
 	// *** Queen Abilities *** //
 	var/queen_leader_limit = 0 //Amount of leaders allowed

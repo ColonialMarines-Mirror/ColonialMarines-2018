@@ -37,7 +37,7 @@
 	armor_deflection = 50 //Chance of deflecting projectiles.
 
 	charge_type = 4
-	pounce_delay = 40
+	pounce_delay = 4 SECONDS
 
 /mob/living/carbon/Xenomorph/Predalien
 	caste_base_type = /mob/living/carbon/Xenomorph/Predalien

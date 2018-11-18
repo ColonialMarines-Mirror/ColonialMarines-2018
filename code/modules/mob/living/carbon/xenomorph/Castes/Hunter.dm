@@ -42,7 +42,7 @@
 
 	// *** Ranged Attack *** //
 	charge_type = 2 //Pounce - Hunter
-	pounce_delay = 150
+	pounce_delay = 15 SECONDS
 
 /datum/xeno_caste/hunter/mature
 	upgrade_name = "Mature"
@@ -74,7 +74,7 @@
 	armor_deflection = 15
 
 	// *** Ranged Attack *** //
-	pounce_delay = 125
+	pounce_delay = 12.5 SECONDS
 
 /datum/xeno_caste/hunter/elder
 	upgrade_name = "Elder"
@@ -106,7 +106,7 @@
 	armor_deflection = 18
 
 	// *** Ranged Attack *** //
-	pounce_delay = 110
+	pounce_delay = 11.0 SECONDS
 
 /datum/xeno_caste/hunter/ancient
 	upgrade_name = "Ancient"
@@ -139,7 +139,7 @@
 	armor_deflection = 20
 
 	// *** Ranged Attack *** //
-	pounce_delay = 100	
+	pounce_delay = 10.0 SECONDS	
 
 /mob/living/carbon/Xenomorph/Hunter
 	caste_base_type = /mob/living/carbon/Xenomorph/Hunter

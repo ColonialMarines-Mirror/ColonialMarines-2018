@@ -38,7 +38,7 @@
 	armor_deflection = 30 
 
 	// *** Ranged Attack *** //
-	spit_delay = 40 
+	spit_delay = 4 SECONDS
 
 	// *** Boiler Abilities *** //
 	bomb_strength = 1 //Multiplier to the effectiveness of the boiler glob. Improves by 0.5 per upgrade
@@ -74,7 +74,7 @@
 	armor_deflection = 35
 
 	// *** Ranged Attack *** //
-	spit_delay = 30
+	spit_delay = 3 SECONDS
 
 	// *** Boiler Abilities *** //
 	bomb_strength = 1.5 
@@ -110,7 +110,7 @@
 	armor_deflection = 35
 
 	// *** Ranged Attack *** //
-	spit_delay = 20 
+	spit_delay = 2 SECONDS
 
 	// *** Boiler Abilities *** //
 	bomb_strength = 2 
@@ -144,7 +144,7 @@
 	armor_deflection = 35
 
 	// *** Ranged Attack *** //
-	spit_delay = 10 
+	spit_delay = 1 SECONDS
 
 	// *** Boiler Abilities *** //
 	bomb_strength = 2.5

@@ -42,13 +42,13 @@
 	charge_type = 2 //Pounce - Hunter
 
 	// *** Defender Abilities *** //
-	headbutt_cooldown = 40
-	tail_sweep_cooldown = 120
-	crest_defense_cooldown = 150
+	headbutt_cooldown = 4 SECONDS
+	tail_sweep_cooldown = 12 SECONDS
+	crest_defense_cooldown = 15 SECONDS
 	fortify_cooldown = 200
 	crest_defense_armor = 35
 	fortify_armor = 70
-	cresttoss_cooldown = 60
+	cresttoss_cooldown = 6 SECONDS
 
 /datum/xeno_caste/defender/mature
 	upgrade_name = "Mature"

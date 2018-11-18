@@ -32,7 +32,7 @@
 
 	// *** Ranged Attack *** //
 	charge_type = 1 //Pounce
-	pounce_delay = 40
+	pounce_delay = 4 SECONDS
 
 /mob/living/carbon/Xenomorph/Xenoborg
 	caste_base_type = /mob/living/carbon/Xenomorph/Xenoborg

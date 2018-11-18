@@ -3,7 +3,7 @@
 	display_name = "Bloody Larva"
 	upgrade_name = ""
 	caste_desc = "D'awwwww, so cute!"
-
+	caste_type_path = /mob/living/carbon/Xenomorph/Larva
 	tier = 0
 	upgrade = -1
 

@@ -125,7 +125,7 @@
 						src.temp = null
 
 				else
-					to_chat(usr, "\red Access Denied.")
+					to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 		if ("stop" in href_list)
 			src.temp = {"
@@ -167,7 +167,7 @@
 								log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
 								R.self_destruct()
 			else
-				to_chat(usr, "\red Access Denied.")
+				to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 		if ("stopbot" in href_list)
 			if(computer.allowed(usr))
@@ -189,7 +189,7 @@
 								to_chat(R, "You have been locked down!")
 
 			else
-				to_chat(usr, "\red Access Denied.")
+				to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 		if ("magbot" in href_list)
 			if(computer.allowed(usr))

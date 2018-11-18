@@ -29,17 +29,17 @@
 		else
 			if(program.human_controls)
 				if(!ishuman(user))
-					to_chat(user, "\red Your body can't work the controls!")
+					to_chat(user, "<span class='warning'>Your body can't work the controls!</span>")
 					return 0
 				if(user.is_mob_restrained())
-					to_chat(user, "\red You need a free hand!")
+					to_chat(user, "<span class='warning'>You need a free hand!</span>")
 					return 0
 
 			if(!in_range(src,user))
 				// telekinesis check
 				if(ishuman(user) && istype(user.get_active_hand(),/obj/item/tk_grab))
 					if(program.human_controls)
-						to_chat(user, "\red It's too complicated to work at a distance!")
+						to_chat(user, "<span class='warning'>It's too complicated to work at a distance!</span>")
 						return 0
 					add_fingerprint(user)
 					user.set_interaction(src)
@@ -115,7 +115,7 @@
 		switch(errorcode)
 			if(PROG_CRASH)
 				if(usr)
-					to_chat(usr, "\red The program crashed!")
+					to_chat(usr, "<span class='warning'>The program crashed!</span>")
 					usr << browse(null,"\ref[src]")
 					Reset()
 
@@ -148,7 +148,7 @@
 
 			else
 				if(usr)
-					to_chat(usr, "\red The program crashed!")
+					to_chat(usr, "<span class='warning'>The program crashed!</span>")
 					usr << browse(null,"\ref[src]")
 					testing("computer/Crash() - unknown error code [errorcode]")
 					Reset()

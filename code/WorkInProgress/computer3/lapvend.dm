@@ -204,7 +204,7 @@
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		var/datum/money_account/CH = get_account(C.associated_account_number)
 		if(!CH || isnull(CH) || !istype(CH))
-			to_chat(usr, "\red This card has no account data!")
+			to_chat(usr, "<span class='warning'>This card has no account data!</span>")
 			return
 		if(CH.security_level != 0) //If card requires pin authentication (ie seclevel 1 or 2)
 			if(vendor_account)

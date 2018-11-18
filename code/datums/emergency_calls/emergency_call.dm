@@ -65,7 +65,7 @@
 		break
 
 	if(!istype(chosen_call))
-		to_chat(world, "\red Something went wrong with emergency calls. Tell a coder!")
+		to_chat(world, "<span class='warning'>Something went wrong with emergency calls. Tell a coder!</span>")
 		return null
 	else
 		return chosen_call

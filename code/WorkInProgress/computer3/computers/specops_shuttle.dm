@@ -58,7 +58,7 @@ var/specops_shuttle_timeleft = 0
 	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 	if (!specops_can_move())
-		to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
+		to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 		return
 
 	//Begin Marauder launchpad.
@@ -153,7 +153,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		to_chat(M, "\red You have arrived to [station_name]. Commence operation!")
+		to_chat(M, "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>")
 
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return 0
@@ -176,11 +176,11 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer3/specops_shuttle/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		to_chat(user, "\red Access Denied.")
+		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return
 
 	if (sent_strike_team == 0)
-		to_chat(usr, "\red The strike team has not yet deployed.")
+		to_chat(usr, "<span class='warning'>The strike team has not yet deployed.</span>")
 		return
 
 	if(..())
@@ -221,7 +221,7 @@ var/specops_shuttle_timeleft = 0
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
+			to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 			return
 
 		to_chat(usr, "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.")

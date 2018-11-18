@@ -52,10 +52,9 @@
 /mob/living/carbon/Xenomorph/Ravager/Stat()
 	. = ..()
 	if(!.)
-		return FALSE
+		return
 
 	stat(null, "Rage: [rage] / [RAVAGER_MAX_RAGE]")
-	return TRUE
 
 /mob/living/carbon/Xenomorph/Ravager/proc/charge(atom/T)
 	if(!T) return

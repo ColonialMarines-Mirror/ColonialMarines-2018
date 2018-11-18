@@ -65,6 +65,6 @@
 	desc = "A heads-up display that scans any nearby xenomorph's data."
 	icon_state = "securityhud"
 	flags_armor_protection = 0
-	toggleable = 1
-	hud_type =MOB_HUD_XENO_STATUS
+	toggleable = TRUE
+	hud_type = MOB_HUD_XENO_STATUS
 	actions_types = list(/datum/action/item_action/toggle)

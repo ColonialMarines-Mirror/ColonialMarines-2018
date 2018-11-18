@@ -8,9 +8,7 @@
 	icon_state = "Boiler Walking"
 	melee_damage_lower = 20
 	melee_damage_upper = 25
-	tacklemin = 2
-	tacklemax = 4
-	tackle_chance = 60
+	tackle_damage = 25
 	health = 200
 	maxHealth = 200
 	plasma_stored = 450
@@ -139,9 +137,7 @@
 		spawn(bomb_delay) //20 seconds cooldown.
 			bomb_cooldown = 0
 			to_chat(src, "<span class='notice'>You feel your toxin glands swell. You are able to bombard an area again.</span>")
-			for(var/X in actions)
-				var/datum/action/A = X
-				A.update_button_icon()
+			update_action_button_icons()
 		return
 	else
 		bomb_cooldown = 0
@@ -193,9 +189,7 @@
 		spawn(acid_delay) //12 second cooldown.
 			acid_cooldown = 0
 			to_chat(src, "<span class='warning'>You feel your acid glands refill. You can spray <B>acid</b> again.</span>")
-			for(var/X in actions)
-				var/datum/action/A = X
-				A.update_button_icon()
+			update_action_button_icons()
 	else
 		to_chat(src, "<span class='warning'>You see nothing to spit at!</span>")
 

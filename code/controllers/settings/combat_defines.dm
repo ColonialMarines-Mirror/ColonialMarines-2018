@@ -11,7 +11,11 @@
 	var/base_armor_resist_low = 1.0
 	var/base_armor_resist_high = 2.0
 
+	var/xeno_armor_resist_min = 0.25
+	var/xeno_armor_resist_vlow = 0.33
 	var/xeno_armor_resist_low = 0.5
+	var/xeno_armor_resist_mlow = 0.66
+	var/xeno_armor_resist_lmed = 0.75
 	var/xeno_armor_resist_high = 1.5
 
 	var/min_hit_accuracy = 5
@@ -44,6 +48,8 @@
 	var/max_hit_damage = 90
 	var/super_hit_damage = 120
 	var/ultra_hit_damage = 150
+	var/aprocket_hit_damage = 250
+	var/ltb_hit_damage = 300
 
 	var/base_hit_damage_mult = 1
 	var/min_hit_damage_mult = 0.05
@@ -76,6 +82,7 @@
 	var/max_burst_value = 6
 
 	var/min_fire_delay = 1
+	var/vlow_fire_delay = 1.5
 	var/mlow_fire_delay = 2
 	var/low_fire_delay = 3
 	var/med_fire_delay = 4
@@ -115,6 +122,8 @@
 	var/mlong_shell_range = 35
 	var/max_shell_range = 40
 
+	var/min_shell_speed = 0.5
+	var/mslow_shell_speed = 0.75
 	var/slow_shell_speed = 1
 	var/reg_shell_speed = 2
 	var/fast_shell_speed = 3
@@ -131,6 +140,8 @@
 	var/mhigh_armor_penetration = 60
 	var/vhigh_armor_penetration = 70
 	var/max_armor_penetration = 80
+	var/aprocket_armor_penetration = 120 //It's an anti-tank weapon
+	var/ltb_armor_penetration = 150 //Can't stop the rock-et
 
 	var/min_proj_extra = 1
 	var/low_proj_extra = 2
@@ -142,8 +153,8 @@
 	var/max_proj_extra = 8
 
 	var/min_proj_variance = 1
-	var/low_proj_variance = 3
-	var/mlow_proj_variance = 5
+	var/mlow_proj_variance = 3
+	var/low_proj_variance = 5
 	var/med_proj_variance = 7
 	var/hmed_proj_variance = 8
 	var/high_proj_variance = 9
@@ -178,12 +189,22 @@
 			critical_chance_low = value
 		if("critical_chance_high")
 			critical_chance_high = value
+
 		if("base_armor_resist_low")
 			base_armor_resist_low = value
 		if("base_armor_resist_high")
 			base_armor_resist_high = value
+
+		if("xeno_armor_resist_min")
+			xeno_armor_resist_min = value
+		if("xeno_armor_resist_vlow")
+			xeno_armor_resist_vlow = value
 		if("xeno_armor_resist_low")
 			xeno_armor_resist_low = value
+		if("xeno_armor_resist_mlow")
+			xeno_armor_resist_low = value
+		if("xeno_armor_resist_lmed")
+			xeno_armor_resist_lmed = value
 		if("xeno_armor_resist_high")
 			xeno_armor_resist_high = value
 
@@ -245,6 +266,11 @@
 			super_hit_damage = value
 		if("ultra_hit_damage")
 			ultra_hit_damage = value
+		if("aprocket_hit_damage")
+			aprocket_hit_damage = value
+		if("ltb_hit_damage")
+			ltb_hit_damage = value
+
 
 		if("base_hit_damage_mult")
 			base_hit_damage_mult = value
@@ -304,6 +330,8 @@
 
 		if("min_fire_delay")
 			min_fire_delay = value
+		if("vlow_fire_delay")
+			vlow_fire_delay = value
 		if("mlow_fire_delay")
 			mlow_fire_delay = value
 		if("low_fire_delay")
@@ -377,6 +405,10 @@
 		if("max_shell_range")
 			max_shell_range = value
 
+		if("min_shell_speed")
+			min_shell_speed = value
+		if("mslow_shell_speed")
+			mslow_shell_speed = value
 		if("slow_shell_speed")
 			slow_shell_speed = value
 		if("reg_shell_speed")
@@ -408,6 +440,10 @@
 			vhigh_armor_penetration = value
 		if("max_armor_penetration")
 			max_armor_penetration = value
+		if("aprocket_armor_penetration")
+			aprocket_armor_penetration = value
+		if("ltb_armor_penetration")
+			ltb_armor_penetration = value
 
 		if("min_proj_extra")
 			min_proj_extra = value

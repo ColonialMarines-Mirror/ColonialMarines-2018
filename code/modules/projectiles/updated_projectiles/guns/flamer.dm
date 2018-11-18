@@ -12,7 +12,7 @@
 	fire_sound = 'sound/weapons/gun_flamethrower2.ogg'
 	aim_slowdown = SLOWDOWN_ADS_INCINERATOR
 	current_mag = /obj/item/ammo_magazine/flamer_tank
-	var/max_range = 5
+	var/max_range = 6
 	var/lit = 0 //Turn the flamer on/off
 
 	attachable_allowed = list( //give it some flexibility.
@@ -142,7 +142,7 @@
 		if("UT-Napthal Fuel") //This isn't actually Napalm actually
 			burnlevel = 24
 			burntime = 17
-			max_range = 5
+			max_range = 6
 
 		// Area denial, light damage, large AOE, long burntime
 		if("Napalm B")
@@ -154,14 +154,14 @@
 			return
 
 		if("Napalm X") //Probably can end up as a spec fuel or DS flamer fuel. Also this was the original fueltype, the madman i am.
-			burnlevel = 50
+			burnlevel = 45
 			burntime = 40
 			max_range = 7
 			fire_color = "blue"
 		if("Fuel") //This is welding fuel and thus pretty weak. Not ment to be exactly used for flamers either.
-			burnlevel = 10
+			burnlevel = 12
 			burntime = 10
-			max_range = 4
+			max_range = 5
 		else
 			return
 
@@ -210,14 +210,18 @@
 	for(var/obj/structure/jungle/vines/V in T)
 		cdel(V)
 
+	var/fire_mod
 	for(var/mob/living/M in T) //Deal bonus damage if someone's caught directly in initial stream
 		if(M.stat == DEAD)
 			continue
+
+		fire_mod = 1
 
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
 			if(X.fire_immune)
 				continue
+			fire_mod = X.fire_resist
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M //fixed :s
 
@@ -234,7 +238,7 @@
 
 		M.adjust_fire_stacks(rand(5,burn*2))
 		M.IgniteMob()
-		M.adjustFireLoss(rand(burn,(burn*2))) // Make it so its the amount of heat or twice it for the initial blast.
+		M.adjustFireLoss(rand(burn,(burn*2))* fire_mod)  // Make it so its the amount of heat or twice it for the initial blast.
 		to_chat(M, "[isXeno(M)?"<span class='xenodanger'>":"<span class='highdanger'>"]Augh! You are roasted by the flames!")
 
 /obj/item/weapon/gun/flamer/proc/triangular_flame(var/atom/target, var/mob/living/user, var/burntime, var/burnlevel)
@@ -312,6 +316,8 @@
 	item_state = "m240t"
 	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY|GUN_SPECIALIST
 	req_access = list(ACCESS_MARINE_SPECPREP)
+	var/max_water = 200
+	var/last_use
 
 /obj/item/weapon/gun/flamer/M240T/reload(mob/user, obj/item/ammo_magazine/magazine)
 	if(!magazine || !istype(magazine))
@@ -353,6 +359,42 @@
 	if(.)
 		if(!current_mag || !current_mag.current_rounds)
 			return
+
+/obj/item/weapon/gun/flamer/M240T/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Its hydro cannon contains [M240T_WATER_AMOUNT]/[max_water] units of water!</span>")
+
+
+/obj/item/weapon/gun/flamer/M240T/New()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(max_water)
+	reagents = R
+	R.my_atom = src
+	R.add_reagent("water", max_water)
+
+	var/obj/item/attachable/hydro_cannon/G = new(src)
+	G.icon_state = ""
+	G.Attach(src)
+	update_attachable(G.slot)
+	G.icon_state = initial(G.icon_state)
+
+/obj/item/weapon/gun/flamer/M240T/Fire(atom/target, mob/living/user, params, reflex)
+	if(active_attachable && istype(active_attachable, /obj/item/attachable/hydro_cannon) && (world.time > last_use + 10))
+		extinguish(target,user) //Fire it.
+		last_fired = world.time
+		last_use = world.time
+		return
+	return ..()
+
+/obj/item/weapon/gun/flamer/M240T/afterattack(atom/target, mob/user)
+	. = ..()
+	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(user,target) <= 1)
+		var/obj/o = target
+		o.reagents.trans_to(src, max_water)
+		to_chat(user, "\blue \The [src]'s hydro cannon is refilled with water.")
+		playsound(src.loc, 'sound/effects/refill.ogg', 25, 1, 3)
+		return
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //Time to redo part of abby's code.
@@ -407,6 +449,7 @@
 
 /obj/flamer_fire/Crossed(mob/living/M) //Only way to get it to reliable do it when you walk into it.
 	if(istype(M))
+		var/fire_mod = 1
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(isXeno(H.pulledby))
@@ -422,11 +465,12 @@
 			var/mob/living/carbon/Xenomorph/X = M
 			if(X.fire_immune)
 				return
+			fire_mod = X.fire_resist
 		M.adjust_fire_stacks(burnlevel) //Make it possible to light them on fire later.
 		if (prob(firelevel + 2*M.fire_stacks)) //the more soaked in fire you are, the likelier to be ignited
 			M.IgniteMob()
 
-		M.adjustFireLoss(round(burnlevel*0.5)) //This makes fire stronk.
+		M.adjustFireLoss(round(burnlevel*0.5)* fire_mod) //This makes fire stronk.
 		to_chat(M, "<span class='danger'>You are burned!</span>")
 		if(isXeno(M))
 			M.updatehealth()

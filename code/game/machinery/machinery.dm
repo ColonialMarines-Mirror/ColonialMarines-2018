@@ -114,8 +114,19 @@ Class Procs:
 	layer = OBJ_LAYER
 	var/machine_processing = 0 // whether the machine is busy and requires process() calls in scheduler.
 
+/obj/machinery/attackby(obj/item/C as obj, mob/user as mob)
+	. = ..()
+	if(istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && !unacidable)
+		var/obj/item/tool/pickaxe/plasmacutter/P = C
+		if(!P.start_cut(user, name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD))
+			return
+		if(do_after(user, P.calc_delay(user) * PLASMACUTTER_LOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+			P.cut_apart(user, name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_LOW_MOD)
+			cdel()
+		return
+
 /obj/machinery/New()
-	..()
+	. = ..()
 	machines += src
 	var/area/A = get_area(src)
 	if(A)
@@ -354,7 +365,7 @@ obj/machinery/proc/med_scan(mob/living/carbon/human/H, dat, var/list/known_impla
 		"bodytemp" = H.bodytemperature,
 		"inaprovaline_amount" = H.reagents.get_reagent_amount("inaprovaline"),
 		"dexalin_amount" = H.reagents.get_reagent_amount("dexalin"),
-		"stoxin_amount" = H.reagents.get_reagent_amount("stoxin"),
+		"sleeptoxin_amount" = H.reagents.get_reagent_amount("sleeptoxin"),
 		"bicaridine_amount" = H.reagents.get_reagent_amount("bicaridine"),
 		"dermaline_amount" = H.reagents.get_reagent_amount("dermaline"),
 		"blood_amount" = H.blood_volume,
@@ -395,7 +406,7 @@ obj/machinery/proc/med_scan(mob/living/carbon/human/H, dat, var/list/known_impla
 	dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (occ["blood_amount"] > 448 ?"<font color='blue'>" : "<font color='red'>"), occ["blood_amount"]*100 / 560, occ["blood_amount"])
 
 	dat += text("Inaprovaline: [] units<BR>", occ["inaprovaline_amount"])
-	dat += text("Soporific: [] units<BR>", occ["stoxin_amount"])
+	dat += text("Soporific: [] units<BR>", occ["sleeptoxin_amount"])
 	dat += text("[]\tDermaline: [] units</FONT><BR>", (occ["dermaline_amount"] < 30 ? "<font color='black'>" : "<font color='red'>"), occ["dermaline_amount"])
 	dat += text("[]\tBicaridine: [] units<BR>", (occ["bicaridine_amount"] < 30 ? "<font color='black'>" : "<font color='red'>"), occ["bicaridine_amount"])
 	dat += text("[]\tDexalin: [] units<BR>", (occ["dexalin_amount"] < 30 ? "<font color='black'>" : "<font color='red'>"), occ["dexalin_amount"])

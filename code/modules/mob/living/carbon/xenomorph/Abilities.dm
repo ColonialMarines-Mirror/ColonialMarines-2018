@@ -360,7 +360,7 @@
 
 /datum/action/xeno_action/emit_pheromones/can_use_action()
 	var/mob/living/carbon/Xenomorph/X = owner
-	if(X && !X.is_mob_incapacitated() && !X.lying && !X.buckled && (!X.current_aura || X.plasma_stored >= plasma_cost) && !X.stagger)
+	if(X && !X.is_mob_incapacitated() && !X.lying && !X.buckled && (!X.current_aura || X.plasma_stored >= plasma_cost) && !X.stagger && !X.on_fire) //Can't emit pheromones while on fire!
 		return TRUE
 
 /datum/action/xeno_action/emit_pheromones/action_activate()
@@ -377,7 +377,7 @@
 			return
 		var/choice = input(X, "Choose a pheromone") in X.aura_allowed + "help" + "cancel"
 		if(choice == "help")
-			to_chat(X, "<span class='notice'><br>Pheromones provide a buff to all Xenos in range at the cost of some stored plasma every second, as follows:<br><B>Frenzy</B> - Increased run speed, damage and tackle chance.<br><B>Warding</B> - Increased armor, reduced incoming damage and critical bleedout.<br><B>Recovery</B> - Increased plasma and health regeneration.<br></span>")
+			to_chat(X, "<span class='notice'><br>Pheromones provide a buff to all Xenos in range at the cost of some stored plasma every second. Burning Xenos can neither emit nor benefit from pheromones. Effects are as follows:<br><B>Frenzy</B> - Increased run speed, damage and tackle chance.<br><B>Warding</B> - Increased armor, reduced incoming damage and critical bleedout.<br><B>Recovery</B> - Increased plasma and health regeneration.<br></span>")
 			return
 		if(choice == "cancel") return
 		if(!X.check_state()) return
@@ -1137,7 +1137,7 @@
 //Ravager Abilities
 
 /datum/action/xeno_action/activable/charge
-	name = "Charge (20)"
+	name = "Eviscerating Charge (80)"
 	action_icon_state = "charge"
 	ability_name = "charge"
 
@@ -1148,6 +1148,30 @@
 /datum/action/xeno_action/activable/charge/action_cooldown_check()
 	var/mob/living/carbon/Xenomorph/Ravager/X = owner
 	return !X.usedPounce
+
+
+/datum/action/xeno_action/activable/ravage
+	name = "Ravage (40)"
+	action_icon_state = "ravage"
+	ability_name = "ravage"
+
+/datum/action/xeno_action/activable/ravage/use_ability(atom/A)
+	var/mob/living/carbon/Xenomorph/Ravager/X = owner
+	X.Ravage(A)
+
+/datum/action/xeno_action/activable/ravage/action_cooldown_check()
+	var/mob/living/carbon/Xenomorph/Ravager/X = owner
+	return !X.ravage_used
+
+
+/datum/action/xeno_action/second_wind
+	name = "Second Wind"
+	action_icon_state = "second_wind"
+
+/datum/action/xeno_action/second_wind/action_activate()
+	var/mob/living/carbon/Xenomorph/Ravager/X = owner
+	X.Second_Wind()
+
 
 //Ravenger
 
@@ -1197,6 +1221,49 @@
 		to_chat(X, "You ready yourself for a killing stroke. You will savage when pouncing.[X.savage_used ? " However, you're not quite yet able to savage again." : ""]")
 		button.overlays.Cut()
 		button.overlays += image('icons/mob/actions.dmi', button, "savage_on")
+
+// Crusher Crest Toss
+/datum/action/xeno_action/activable/cresttoss
+	name = "Crest Toss"
+	action_icon_state = "cresttoss"
+	ability_name = "crest toss"
+
+/datum/action/xeno_action/activable/cresttoss/use_ability(atom/A)
+	var/mob/living/carbon/Xenomorph/X = owner
+	X.cresttoss(A)
+
+/datum/action/xeno_action/activable/cresttoss/action_cooldown_check()
+	var/mob/living/carbon/Xenomorph/X = owner
+	return !X.cresttoss_used
+
+//Carrier abilities
+/datum/action/xeno_action/spawn_hugger
+	name = "Spawn Facehugger (100)"
+	action_icon_state = "spawn_hugger"
+	plasma_cost = 100
+
+/datum/action/xeno_action/spawn_hugger/action_activate()
+	var/mob/living/carbon/Xenomorph/Carrier/X = owner
+	X.Spawn_Hugger()
+
+/datum/action/xeno_action/spawn_hugger/action_cooldown_check()
+	var/mob/living/carbon/Xenomorph/Carrier/X = owner
+	return !X.used_spawn_facehugger
+
+//Hunter abilities
+/datum/action/xeno_action/activable/stealth
+	name = "Toggle Stealth"
+	action_icon_state = "stealth_on"
+	ability_name = "stealth"
+	plasma_cost = 0
+
+/datum/action/xeno_action/activable/stealth/action_activate()
+	var/mob/living/carbon/Xenomorph/Hunter/X = owner
+	X.Stealth()
+
+/datum/action/xeno_action/activable/stealth/action_cooldown_check()
+	var/mob/living/carbon/Xenomorph/Hunter/X = owner
+	return !X.used_stealth
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////

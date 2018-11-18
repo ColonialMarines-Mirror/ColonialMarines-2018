@@ -910,23 +910,26 @@
 	if(X.queen_ability_cooldown > world.time)
 		to_chat(X, "<span class='xenowarning'>You're still recovering from your last overwatch ability. Wait [round((X.queen_ability_cooldown-world.time)*0.1)] seconds.</span>")
 		return
-	if(X.observed_xeno)
-		var/mob/living/carbon/Xenomorph/target = X.observed_xeno
-		if(X.loc.z != target.loc.z)
-			to_chat(X, "<span class='xenowarning'>They are too far away to do this.</span>")
-			return
-		if(target.stat != DEAD)
-			if(target.health < target.maxHealth)
-				if(X.check_plasma(600))
-					X.use_plasma(600)
-					target.adjustBruteLoss(-50)
-					X.queen_ability_cooldown = world.time + 150 //15 seconds
-					to_chat(X, "<span class='xenonotice'>You channel your plasma to heal [target]'s wounds.</span>")
-			else
-
-				to_chat(X, "<span class='warning'>[target] is at full health.</span>")
-	else
+	if(!X.observed_xeno)
 		to_chat(X, "<span class='warning'>You must overwatch the xeno you want to give healing to.</span>")
+		return
+	var/mob/living/carbon/Xenomorph/target = X.observed_xeno
+	if(!(X.xeno_caste.caste_flags & CASTE_CAN_BE_QUEEN_HEALED))
+		to_chat(X, "<span class='xenowarning'>You can't heal that caste.</span>")
+		return
+	if(X.loc.z != target.loc.z)
+		to_chat(X, "<span class='xenowarning'>They are too far away to do this.</span>")
+		return
+	if(target.stat == DEAD)
+		return
+	if(target.health >= target.maxHealth)
+		to_chat(X, "<span class='warning'>[target] is at full health.</span>")
+		return
+	if(X.check_plasma(600))
+		X.use_plasma(600)
+		target.adjustBruteLoss(-50)
+		X.queen_ability_cooldown = world.time + 150 //15 seconds
+		to_chat(X, "<span class='xenonotice'>You channel your plasma to heal [target]'s wounds.</span>")
 
 /datum/action/xeno_action/queen_give_plasma
 	name = "Give Plasma (600)"

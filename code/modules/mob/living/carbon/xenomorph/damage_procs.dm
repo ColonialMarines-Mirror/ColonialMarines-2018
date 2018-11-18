@@ -99,9 +99,13 @@
 
 	if(damage > 12) //Light damage won't splash.
 		check_blood_splash(damage, damagetype, chancemod)
+		if(damage > 15 && stealth_router(HANDLE_STEALTH_CHECK)) //Any significant damage causes us to break stealth
+			stealth_router(HANDLE_STEALTH_CODE_CANCEL)
 
 	if(stat == DEAD)
 		return FALSE
+
+	damage = process_rage_damage(damage, src)
 
 	switch(damagetype)
 		if(BRUTE)
@@ -112,11 +116,24 @@
 	updatehealth()
 	return TRUE
 
+
 /mob/living/carbon/Xenomorph/adjustBruteLoss(amount)
 	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth - crit_health)
 
 /mob/living/carbon/Xenomorph/adjustFireLoss(amount)
 	fireloss = CLAMP(fireloss + amount, 0, maxHealth - crit_health)
+
+/mob/living/carbon/Xenomorph/proc/process_rage_damage(damage)
+	return damage
+
+/mob/living/carbon/Xenomorph/Ravager/process_rage_damage(damage)
+	if(!damage)
+		return damage
+	rage += round(damage * 0.3) //Gain Rage stacks equal to 30% of damage received.
+	last_rage = world.time //We incremented rage, so bookmark this.
+	damage *= rage_resist //reduce damage by rage resist %
+	rage_resist = CLAMP(1-round(rage * 0.014,0.01),0.3,1) //Update rage resistance _after_ we take damage
+	return damage
 
 /mob/living/carbon/Xenomorph/proc/check_blood_splash(damage = 0, damtype = BRUTE, chancemod = 0, radius = 1)
 	if(!damage)

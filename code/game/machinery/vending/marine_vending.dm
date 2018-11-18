@@ -52,6 +52,7 @@
 		if(MAP_ICE_COLONY)
 			products2 = list(
 						/obj/item/clothing/mask/rebreather/scarf = 10,
+						/obj/item/clothing/mask/rebreather = 10
 							)
 	build_inventory(products2)
 
@@ -81,7 +82,7 @@
 	desc = "A automated rack hooked up to a small supply of various firearms and explosives."
 	wrenchable = FALSE
 	products = list(
-					/obj/item/storage/backpack/marine = 15,
+					/obj/item/storage/backpack/marine/standard = 15,
 					/obj/item/storage/belt/marine = 15,
 					/obj/item/storage/belt/shotgun = 10,
 					/obj/item/clothing/tie/storage/webbing = 3,
@@ -590,7 +591,7 @@
 
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
-					/obj/item/storage/backpack/marine = 10,
+					/obj/item/storage/backpack/marine/standard = 10,
 					/obj/item/storage/backpack/marine/satchel = 10,
 					/obj/item/storage/belt/marine = 10,
 					/obj/item/storage/belt/shotgun = 10,
@@ -599,6 +600,7 @@
 					/obj/item/clothing/suit/storage/marine = 20,
 					/obj/item/clothing/head/helmet/marine = 20,
 					/obj/item/clothing/mask/rebreather/scarf = 10,
+					/obj/item/clothing/mask/rebreather = 10
 					)
 
 	prices = list()

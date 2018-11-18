@@ -68,28 +68,28 @@ Queen		 0.0	 0.1	 0.2	 0.3
 				if("Hunter")
 					melee_damage_lower = 30
 					melee_damage_upper = 40
-					health = 200
-					maxHealth = 200
-					plasma_gain = 10
+					health = 175
+					maxHealth = 175
+					plasma_gain = 15
 					plasma_max = 150
 					upgrade_threshold = 400
 					caste_desc = "A fast, powerful front line combatant. It looks a little more dangerous."
 					speed = -1.6
-					armor_deflection = 20
-					attack_delay = -2
+					armor_deflection = 15
+					attack_delay = -1.25
 					tackle_damage = 40 // Prior was 35
-					pounce_delay = 50
+					pounce_delay = 125
 				if("Ravager")
 					melee_damage_lower = 50
 					melee_damage_upper = 70
 					health = 250
 					maxHealth = 250
-					plasma_gain = 10
-					plasma_max = 150
+					plasma_gain = 13
+					plasma_max = 175
 					upgrade_threshold = 800
 					caste_desc = "A brutal, devastating front-line attacker. It looks a little more dangerous."
-					speed = -0.8
-					armor_deflection = 45
+					speed = -0.55
+					armor_deflection = 25
 					tackle_damage = 60 // Prior was 55
 				if ("Defender")
 					melee_damage_lower = 20
@@ -263,28 +263,28 @@ Queen		 0.0	 0.1	 0.2	 0.3
 				if("Hunter")
 					melee_damage_lower = 35
 					melee_damage_upper = 45
-					health = 200
-					maxHealth = 200
-					plasma_gain = 10
+					health = 190
+					maxHealth = 190
+					plasma_gain = 18
 					plasma_max = 200
 					upgrade_threshold = 800
 					caste_desc = "A fast, powerful front line combatant. It looks pretty strong."
 					speed = -1.7
-					armor_deflection = 25
-					attack_delay = -3
+					armor_deflection = 18
+					attack_delay = -1.4
 					tackle_damage = 45 // Prior was 40
-					pounce_delay = 45
+					pounce_delay = 110
 				if("Ravager")
 					melee_damage_lower = 55
 					melee_damage_upper = 75
 					health = 260
 					maxHealth = 260
-					plasma_gain = 15
-					plasma_max = 200
+					plasma_gain = 14
+					plasma_max = 190
 					upgrade_threshold = 1600
 					caste_desc = "A brutal, devastating front-line attacker. It looks pretty strong."
-					speed = -0.9
-					armor_deflection = 50
+					speed = -0.58
+					armor_deflection = 28
 					tackle_damage = 65 // Prior was 60
 				if ("Defender")
 					melee_damage_lower = 23
@@ -460,27 +460,28 @@ Queen		 0.0	 0.1	 0.2	 0.3
 					to_chat(src, "<span class='xenoannounce'>You are the epitome of the hunter. Few can stand against you in open combat.</span>")
 					melee_damage_lower = 40
 					melee_damage_upper = 50
-					health = 225
-					maxHealth = 225
-					plasma_gain = 20
-					plasma_max = 300
-					caste_desc = "A completly unmatched hunter. No, not even the Yautja can match you."
-					speed = -1.8
-					armor_deflection = 25
-					attack_delay = -3
-					tackle_damage = 50 // Prior was 45
-					pounce_delay = 45
+					health = 200
+					maxHealth = 200
+					plasma_gain = 18
+					plasma_max = 200
+					caste_desc = "A fast, powerful front line combatant. It looks pretty strong."
+					speed = -1.7
+					armor_deflection = 20
+					attack_delay = -1.5
+					tackle_damage = 50 // Prior was 40
+					pounce_delay = 100
 				if("Ravager")
 					to_chat(src, "<span class='xenoannounce'>You are death incarnate. All will tremble before you.</span>")
 					melee_damage_lower = 60
 					melee_damage_upper = 80
+					adjustBruteLoss(255)
 					health = 265
 					maxHealth = 265
 					plasma_gain = 15
 					plasma_max = 200
 					caste_desc = "As I walk through the valley of the shadow of death."
-					speed = -1.0
-					armor_deflection = 50
+					speed = -0.6
+					armor_deflection = 30
 					tackle_damage = 70 // Prior was 65
 				if ("Defender")
 					to_chat(src, "<span class='xenoannounce'>You are a incredibly resilient, you can control the battle through sheer force.</span>")

@@ -295,7 +295,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	var/obj/item/device/healthanalyzer/integrated/B18_analyzer = null
 	supporting_limbs = list(UPPER_TORSO, LOWER_TORSO, ARMS, LEGS, FEET) //B18 effectively auto-splints these.
 	unacidable = TRUE
-	req_access = list(ACCESS_MARINE_SPECPREP)
 
 	New(loc,expected_type 	= type,
 		new_name[] 		= list(MAP_ICE_COLONY = "\improper B18 defensive snow armor"))

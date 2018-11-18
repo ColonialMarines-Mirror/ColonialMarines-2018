@@ -1473,6 +1473,7 @@
 #include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\officer_stuff.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
+#include "goon\code\datums\browserOutput.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\Z.01.LV624.dmm"

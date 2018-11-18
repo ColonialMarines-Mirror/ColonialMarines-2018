@@ -22,3 +22,7 @@
 
 /var/static/global_unique_id = 1
 #define UNIQUEID (global_unique_id++)
+
+var/global/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))

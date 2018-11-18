@@ -337,7 +337,7 @@
 		if("thrower")
 			//edited version of obj/effect/step_trigger/thrower
 			var/throw_dir = pick(1,2,4,8)
-			M.visible_message("\red <b>The floor under [M] suddenly tips upward!</b>","\red <b>The floor tips upward under you!</b>")
+			M.visible_message("<span class='danger'>The floor under [M] suddenly tips upward!</b>","\red <b>The floor tips upward under you!</span>")
 
 			var/atom/myloc = src.loc
 			var/image/flicker = image('code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi',"throw[throw_dir]")

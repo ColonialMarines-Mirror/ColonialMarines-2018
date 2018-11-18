@@ -30,7 +30,7 @@
 	deevolves_to = /mob/living/carbon/Xenomorph/Drone
 
 	// *** Flags *** //
-	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_HOLD_FACEHUGGERS
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_BE_GIVEN_PLASMA
 
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
 	

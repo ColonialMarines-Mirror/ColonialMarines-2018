@@ -943,21 +943,23 @@
 	if(X.queen_ability_cooldown > world.time)
 		to_chat(X, "<span class='xenowarning'>You're still recovering from your last overwatch ability. Wait [round((X.queen_ability_cooldown-world.time)*0.1)] seconds.</span>")
 		return
-	if(X.observed_xeno)
-		var/mob/living/carbon/Xenomorph/target = X.observed_xeno
-		if(target.stat != DEAD)
-			if(target.plasma_stored < target.xeno_caste.plasma_max)
-				if(X.check_plasma(600))
-					X.use_plasma(600)
-					target.gain_plasma(100)
-					X.queen_ability_cooldown = world.time + 150 //15 seconds
-					to_chat(X, "<span class='xenonotice'>You transfer some plasma to [target].</span>")
-
-			else
-
-				to_chat(X, "<span class='warning'>[target] is at full plasma.</span>")
-	else
+	if(!X.observed_xeno)
 		to_chat(X, "<span class='warning'>You must overwatch the xeno you want to give plasma to.</span>")
+		return
+	var/mob/living/carbon/Xenomorph/target = X.observed_xeno
+	if(target.stat == DEAD)
+		return
+	if(!(target.xeno_caste.caste_flags & CASTE_CAN_BE_GIVEN_PLASMA))
+		to_chat(X, "<span class='warning'>You can't give that caste plasma.</span>")
+		return
+	if(target.plasma_stored >= target.xeno_caste.plasma_max)
+		to_chat(X, "<span class='warning'>[target] is at full plasma.</span>")
+		return
+	if(X.check_plasma(600))
+		X.use_plasma(600)
+		target.gain_plasma(100)
+		X.queen_ability_cooldown = world.time + 150 //15 seconds
+		to_chat(X, "<span class='xenonotice'>You transfer some plasma to [target].</span>")
 
 /datum/action/xeno_action/queen_order
 	name = "Give Order (100)"

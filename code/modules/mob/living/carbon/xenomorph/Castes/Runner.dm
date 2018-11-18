@@ -33,6 +33,9 @@
 
 	evolves_to = list(/mob/living/carbon/Xenomorph/Hunter) 
 
+	// *** Flags *** //
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_EVOLUTION_ALLOWED|CASTE_CAN_VENT_CRAWL|CASTE_CAN_BE_GIVEN_PLASMA
+
 	// *** Defense *** //
 	armor_deflection = 5
 

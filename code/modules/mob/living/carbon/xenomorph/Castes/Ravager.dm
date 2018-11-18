@@ -31,7 +31,7 @@
 	deevolves_to = /mob/living/carbon/Xenomorph/Hunter
 
 	// *** Flags *** //
-	caste_flags = CASTE_CAN_BE_QUEEN_HEALED
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA
 	
 	// *** Defense *** //
 	armor_deflection = 20

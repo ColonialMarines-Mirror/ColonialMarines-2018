@@ -40,13 +40,11 @@
 
 	// *** Health *** //
 	var/max_health = 100
-	var/innate_healing = FALSE //whether the xeno slowly heals even outside weeds.
 	var/crit_health = -100 // What negative healthy they die in.
 
 	var/hardcore = FALSE //Set to 1 in New() when Whiskey Outpost is active. Prevents healing and queen evolution
 
 	// *** Evolution *** //
-	var/evolution_allowed = TRUE //Are they allowed to evolve (and have their evolution progress group)
 	var/evolution_threshold = 0 //Threshold to next evolution
 	var/upgrade_threshold = 0
 
@@ -54,20 +52,13 @@
 	var/deevolves_to // type path to the caste to deevolve to
 
 	// *** Flags *** //
-	var/is_intelligent = FALSE //If they can use consoles, etc. Set on Queen
-	var/is_robotic = FALSE //Robots use charge, not plasma (same thing sort of), and can only be healed with welders.
+	var/caste_flags = CASTE_EVOLUTION_ALLOWED|CASTE_CAN_VENT_CRAWL|CASTE_CAN_BE_QUEEN_HEALED
 
-	var/can_vent_crawl = TRUE
-	var/can_denest_hosts = FALSE
-	var/can_be_queen_healed = TRUE
-
-	var/can_hold_facehuggers = FALSE
 	var/can_hold_eggs = CANNOT_HOLD_EGGS
 
 	// *** Defense *** //
 	var/armor_deflection = 0 //Chance of deflecting projectiles.
 
-	var/fire_immune = FALSE //Boolean
 	var/fire_resist = 1 //0 to 1; lower is better as it is a multiplier.
 
 	// *** Ranged Attack *** //

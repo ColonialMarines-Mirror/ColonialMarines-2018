@@ -25,20 +25,15 @@
 	max_health = 300
 
 	// *** Evolution *** //
-	evolution_allowed = FALSE
 	upgrade_threshold = 800
 
 	// *** Flags *** //
-	is_intelligent = TRUE
-	
-	can_hold_facehuggers = TRUE
+	caste_flags = CASTE_IS_INTELLIGENT|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_FIRE_IMMUNE
+
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
-	can_vent_crawl = FALSE
 	
 	// *** Defense *** //
 	armor_deflection = 45 
-
-	fire_immune = TRUE
 
 	// *** Ranged Attack *** //
 	spit_delay = 25

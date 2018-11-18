@@ -26,13 +26,12 @@
 	max_health = 200
 
 	// *** Evolution *** //
-	evolution_allowed = FALSE
 	upgrade_threshold = 400
 
 	deevolves_to = /mob/living/carbon/Xenomorph/Hunter
 
 	// *** Flags *** //
-	can_vent_crawl = FALSE
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED
 	
 	// *** Defense *** //
 	armor_deflection = 20
@@ -248,11 +247,8 @@
 
 	hardcore = TRUE
 
-	// *** Evolution *** //
-	evolution_allowed = FALSE
-
 	// *** Flags *** //
-	is_intelligent = TRUE
+	caste_flags = CASTE_IS_INTELLIGENT
 
 	// *** Defense *** //
 	armor_deflection = 20
@@ -325,7 +321,7 @@
 		fire_mod = 1
 		if(isXeno(M))
 			var/mob/living/carbon/Xenomorph/X = M
-			if(X.xeno_caste.fire_immune)
+			if(X.xeno_caste.caste_flags & CASTE_FIRE_IMMUNE)
 				continue
 			fire_mod = X.xeno_caste.fire_resist + X.fire_resist_modifier
 		else if(ishuman(M))

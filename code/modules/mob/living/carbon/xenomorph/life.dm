@@ -139,7 +139,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!xeno_caste.fire_immune && on_fire) //Sanity check; have to be on fire to actually take the damage.
+	if(!(xeno_caste.caste_flags & CASTE_FIRE_IMMUNE) && on_fire) //Sanity check; have to be on fire to actually take the damage.
 		adjustFireLoss((fire_stacks + 3) * (xeno_caste.fire_resist + fire_resist_modifier)) // modifier is negative
 
 /mob/living/carbon/Xenomorph/proc/handle_living_health_updates()
@@ -152,7 +152,7 @@
 	if(on_fire) //Can't regenerate while on fire
 		updatehealth()
 		return
-	if(xeno_caste.innate_healing) //Larvas regenerate fast anywhere as long as not in crit.
+	if(xeno_caste.caste_flags & CASTE_INNATE_HEALING) //Larvas regenerate fast anywhere as long as not in crit.
 		if(!(locate(/obj/effect/alien/weeds) in T) && health <= 0)
 			adjustBruteLoss(XENO_CRIT_DAMAGE)
 		else
@@ -422,9 +422,9 @@
 
 /mob/living/carbon/Xenomorph/proc/handle_environment() //unused while atmos is not on
 	var/env_temperature = loc.return_temperature()
-	if(!xeno_caste.fire_immune)
+	if(!(xeno_caste.caste_flags & CASTE_FIRE_IMMUNE))
 		if(env_temperature > (T0C + 66))
-			adjustFireLoss((env_temperature - (T0C + 66)) / 5 * xeno_caste.fire_resist) //Might be too high, check in testing.
+			adjustFireLoss((env_temperature - (T0C + 66)) / 5 * (xeno_caste.fire_resist + fire_resist_modifier)) //Might be too high, check in testing.
 			updatehealth() //unused while atmos is off
 			if(hud_used && hud_used.fire_icon)
 				hud_used.fire_icon.icon_state = "fire2"
@@ -444,7 +444,7 @@
 	else
 		return
 
-	if(!hive.living_xeno_queen || xeno_caste.is_intelligent)
+	if(!hive.living_xeno_queen || xeno_caste.caste_flags & CASTE_IS_INTELLIGENT)
 		hud_used.locate_leader.icon_state = "trackoff"
 		return
 

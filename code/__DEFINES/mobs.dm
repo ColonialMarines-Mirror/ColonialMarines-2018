@@ -505,3 +505,12 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define CANNOT_HOLD_EGGS 0
 #define CAN_HOLD_TWO_HANDS 1
 #define CAN_HOLD_ONE_HAND 2
+
+#define CASTE_CAN_HOLD_FACEHUGGERS 	(1<<0)
+#define CASTE_CAN_VENT_CRAWL		(1<<1)
+#define CASTE_CAN_BE_QUEEN_HEALED	(1<<2)
+#define CASTE_INNATE_HEALING		(1<<3)
+#define CASTE_FIRE_IMMUNE			(1<<4)
+#define CASTE_EVOLUTION_ALLOWED		(1<<5)
+#define CASTE_IS_INTELLIGENT		(1<<6)
+#define CASTE_IS_ROBOTIC			(1<<7)

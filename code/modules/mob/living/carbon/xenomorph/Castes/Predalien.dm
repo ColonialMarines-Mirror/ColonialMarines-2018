@@ -27,18 +27,11 @@
 
 	// *** Health *** //
 	max_health = 800
-	innate_healing = FALSE //whether the xeno slowly heals even outside weeds.
 
 	hardcore = TRUE //Set to 1 in New() when Whiskey Outpost is active. Prevents healing and queen evolution
 
-	// *** Evolution *** //
-	evolution_allowed = FALSE //Are they allowed to evolve (and have their evolution progress group)
-
 	// *** Flags *** //
-	is_intelligent = TRUE //If they can use consoles, etc. Set on Queen
-
-	can_be_queen_healed = FALSE
-	can_vent_crawl = FALSE
+	caste_flags = CASTE_IS_INTELLIGENT
 	
 	// *** Defense *** //
 	armor_deflection = 50 //Chance of deflecting projectiles.

@@ -24,19 +24,11 @@
 	// *** Health *** //
 	max_health = 300
 
-	// *** Evolution *** //
-	evolution_allowed = FALSE
-
 	// *** Flags *** //
-	is_intelligent = TRUE
-	is_robotic = TRUE //Robots use charge, not plasma (same thing sort of), and can only be healed with welders.
-
-	can_vent_crawl = FALSE
+	caste_flags = CASTE_IS_INTELLIGENT|CASTE_IS_ROBOTIC|CASTE_FIRE_IMMUNE
 	
 	// *** Defense *** //
 	armor_deflection = 90 //Chance of deflecting projectiles.
-
-	fire_immune = TRUE //Boolean
 
 	// *** Ranged Attack *** //
 	charge_type = 1 //Pounce

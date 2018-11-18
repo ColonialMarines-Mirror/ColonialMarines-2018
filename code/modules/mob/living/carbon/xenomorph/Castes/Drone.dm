@@ -31,7 +31,9 @@
 
 	evolves_to = list(/mob/living/carbon/Xenomorph/Queen, /mob/living/carbon/Xenomorph/Carrier, /mob/living/carbon/Xenomorph/Hivelord)
 
-	can_hold_facehuggers = TRUE
+	// *** Flags *** //
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_EVOLUTION_ALLOWED|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_VENT_CRAWL
+
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
 
 	// *** Defense *** //

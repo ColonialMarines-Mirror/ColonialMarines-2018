@@ -33,7 +33,7 @@
 	evolves_to = list(/mob/living/carbon/Xenomorph/Warrior)
 
 	// *** Flags *** //
-	can_vent_crawl = FALSE
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_EVOLUTION_ALLOWED
 	
 	// *** Defense *** //
 	armor_deflection = 20

@@ -23,7 +23,7 @@
 	if(hivenumber && hivenumber <= hive_datum.len)
 		hive = hive_datum[hivenumber]
 
-		if(!xeno_caste.evolution_allowed)
+		if(!(xeno_caste.caste_flags & CASTE_EVOLUTION_ALLOWED))
 			stat(null, "Evolve Progress (FINISHED)")
 		else if(!hive.living_xeno_queen)
 			stat(null, "Evolve Progress (HALTED - NO QUEEN)")
@@ -38,7 +38,7 @@
 			stat(null, "Upgrade Progress (FINISHED)")
 
 		if(xeno_caste.plasma_max > 0)
-			if(xeno_caste.is_robotic)
+			if(xeno_caste.caste_flags & CASTE_IS_ROBOTIC)
 				stat(null, "Charge: [plasma_stored]/[xeno_caste.plasma_max]")
 			else
 				stat(null, "Plasma: [plasma_stored]/[xeno_caste.plasma_max]")
@@ -104,7 +104,7 @@
 
 	if(value)
 		if(plasma_stored < value)
-			if(xeno_caste.is_robotic)
+			if(xeno_caste.caste_flags & CASTE_IS_ROBOTIC)
 				to_chat(src, "<span class='warning'>Beep. You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>")
 			else
 				to_chat(src, "<span class='warning'>You do not have enough plasma to do this. You require [value] plasma but have only [plasma_stored] stored.</span>")
@@ -210,7 +210,7 @@
 /mob/living/carbon/Xenomorph/proc/update_evolving()
 	if(!client || !ckey) // stop evolve progress for ssd/ghosted xenos
 		return
-	if(evolution_stored >= xeno_caste.evolution_threshold || !xeno_caste.evolution_allowed)
+	if(evolution_stored >= xeno_caste.evolution_threshold || !(xeno_caste.caste_flags & CASTE_EVOLUTION_ALLOWED))
 		return
 	if(!hivenumber || hivenumber > hive_datum.len) //something broke
 		return
@@ -293,7 +293,8 @@
 					frozen = TRUE
 					if(xeno_caste.charge_type == 2)
 						M.attack_alien(src, null, "disarm") //Hunters get a free throttle in exchange for lower initial stun.
-					if(!xeno_caste.is_robotic) playsound(loc, rand(0, 100) < 95 ? 'sound/voice/alien_pounce.ogg' : 'sound/voice/alien_pounce2.ogg', 25, 1)
+					if(!(xeno_caste.caste_flags & CASTE_IS_ROBOTIC)) 
+						playsound(loc, rand(0, 100) < 95 ? 'sound/voice/alien_pounce.ogg' : 'sound/voice/alien_pounce2.ogg', 25, 1)
 					spawn(xeno_caste.charge_type == 1 ? 5 : 15)
 						frozen = FALSE
 						update_canmove()

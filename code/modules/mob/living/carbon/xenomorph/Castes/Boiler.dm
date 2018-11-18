@@ -27,13 +27,12 @@
 	max_health = 200
 
 	// *** Evolution *** //
-	evolution_allowed = FALSE
 	upgrade_threshold = 400
 
 	deevolves_to = /mob/living/carbon/Xenomorph/Spitter
 
 	// *** Flags *** //
-	can_vent_crawl = FALSE
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED
 
 	// *** Defense *** //
 	armor_deflection = 30 

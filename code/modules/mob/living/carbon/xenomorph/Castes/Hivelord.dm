@@ -25,16 +25,14 @@
 	max_health = 250
 
 	// *** Evolution *** //
-	evolution_allowed = FALSE 
 	upgrade_threshold = 200
 
 	deevolves_to = /mob/living/carbon/Xenomorph/Drone
 
 	// *** Flags *** //
-	can_hold_facehuggers = TRUE
-	can_hold_eggs = CAN_HOLD_TWO_HANDS
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_HOLD_FACEHUGGERS
 
-	can_vent_crawl = FALSE
+	can_hold_eggs = CAN_HOLD_TWO_HANDS
 	
 	// *** Defense *** //
 	armor_deflection = 5

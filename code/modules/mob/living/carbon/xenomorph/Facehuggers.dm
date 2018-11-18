@@ -80,7 +80,7 @@
 /obj/item/clothing/mask/facehugger/attack_hand(user as mob)
 	if(isXeno(user))
 		var/mob/living/carbon/Xenomorph/X = user
-		if(X.xeno_caste.can_hold_facehuggers)
+		if(X.xeno_caste.caste_flags & CASTE_CAN_HOLD_FACEHUGGERS)
 			return ..() // These can pick up huggers.
 		else
 			return FALSE // The rest can't.

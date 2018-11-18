@@ -32,7 +32,7 @@
 	deevolves_to = /mob/living/carbon/Xenomorph/Defender
 
 	// *** Flags *** //
-	can_vent_crawl = FALSE
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_EVOLUTION_ALLOWED
 
 	// *** Defense *** //
 	armor_deflection = 40

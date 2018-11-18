@@ -42,7 +42,7 @@
 
 	var/list/total_calls = typesof(/datum/emergency_call)
 	if(!total_calls.len)
-		to_chat(world, "\red \b Error setting up emergency calls, no datums found.")
+		to_chat(world, "<span class='danger'>Error setting up emergency calls, no datums found.</span>")
 		return 0
 	for(var/S in total_calls)
 		var/datum/emergency_call/C= new S()

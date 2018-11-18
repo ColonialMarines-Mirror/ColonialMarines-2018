@@ -155,7 +155,7 @@ var/global/datum/controller/gameticker/ticker
 	//new random event system is handled from the MC.
 
 	if(config.autooocmute)
-		to_chat(world, "\red <B>The OOC channel has been globally disabled due to round start!</B>")
+		to_chat(world, "<span class='danger'>The OOC channel has been globally disabled due to round start!</span>")
 		ooc_allowed = !( ooc_allowed )
 
 //	var/admins_number = 0
@@ -250,7 +250,7 @@ var/global/datum/controller/gameticker/ticker
 					feedback_set_details("end_proper","proper completion")
 
 				if(config.autooocmute && !ooc_allowed)
-					to_chat(world, "\red <B>The OOC channel has been globally enabled due to round end!</B>")
+					to_chat(world, "<span class='danger'>The OOC channel has been globally enabled due to round end!</span>")
 					ooc_allowed = 1
 
 				if(blackbox)

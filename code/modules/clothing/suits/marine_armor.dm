@@ -322,13 +322,6 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 		wearer = user
 		b18automed_turn_on(user)
 
-/obj/item/clothing/suit/storage/marine/specialist/mob_can_equip(mob/M, slot, disable_warning = 0)
-	. = ..()
-	if(.)
-		if(!allowed(M))
-			to_chat(M, "<span class='warning'>[src] flashes a warning sign indicating unauthorized use!</span>")
-			return 0
-
 /obj/item/clothing/suit/storage/marine/specialist/proc/b18automed_turn_off(mob/living/carbon/human/user, silent = FALSE)
 	B18_automed_on = FALSE
 	processing_objects.Remove(src)

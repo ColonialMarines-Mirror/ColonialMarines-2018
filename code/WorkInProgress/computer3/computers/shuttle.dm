@@ -41,11 +41,11 @@
 					if (src.auth_need - src.authorized.len > 0)
 						message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 						log_game("[user.ckey] has authorized early shuttle launch")
-						to_chat(world, text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len))
+						to_chat(world, text("<span class='boldnotice'>Alert: [] authorizations needed until shuttle is launched early</span>", src.auth_need - src.authorized.len))
 					else
 						message_admins("[key_name_admin(user)] has launched the shuttle")
 						log_game("[user.ckey] has launched the shuttle early")
-						to_chat(world, "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>")
+						to_chat(world, "<span class='boldnotice'>Alert: Shuttle launch time shortened to 10 seconds!</span>")
 						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
 						//src.authorized = null
@@ -54,10 +54,10 @@
 
 				if("Repeal")
 					src.authorized -= W:registered_name
-					to_chat(world, text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len))
+					to_chat(world, text("<span class='boldnotice'>Alert: [] authorizations needed until shuttle is launched early</span>", src.auth_need - src.authorized.len))
 
 				if("Abort")
-					to_chat(world, "\blue <B>All authorizations to shorting time for shuttle launch have been revoked!</B>")
+					to_chat(world, "<span class='boldnotice'>All authorizations to shorting time for shuttle launch have been revoked!</span>")
 					src.authorized.len = 0
 					src.authorized = list(  )
 
@@ -67,7 +67,7 @@
 			if(!emagged && emergency_shuttle.location == 1 && user.get_active_hand() == W)
 				switch(choice)
 					if("Launch")
-						to_chat(world, "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>")
+						to_chat(world, "<span class='boldnotice'>Alert: Shuttle launch time shortened to 10 seconds!</span>")
 						emergency_shuttle.settimeleft( 10 )
 						emagged = 1
 					if("Cancel")

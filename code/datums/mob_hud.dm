@@ -267,9 +267,7 @@ var/datum/mob_hud/huds = list(
 	else
 		var/revive_enabled = TRUE
 		var/stage = 1
-		if(!check_tod())
-			revive_enabled = FALSE
-		else if(!is_revivable())
+		if(!check_tod() || !is_revivable())
 			revive_enabled = FALSE
 		else if(!client)
 			var/mob/dead/observer/G = get_ghost()
@@ -277,9 +275,9 @@ var/datum/mob_hud/huds = list(
 				revive_enabled = FALSE
 
 		if(stat == DEAD && !undefibbable)
-			if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.4) && (world.time - timeofdeath) < (REVIVE_GRACE_PERIOD * 0.8))
+			if((world.time - timeofdeath) > (config.revive_grace_period * 0.4) && (world.time - timeofdeath) < (config.revive_grace_period * 0.8))
 				stage = 2
-			else if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.8))
+			else if((world.time - timeofdeath) > (config.revive_grace_period * 0.8))
 				stage = 3
 
 		var/holder2_set = 0

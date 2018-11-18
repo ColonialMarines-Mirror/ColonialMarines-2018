@@ -63,9 +63,9 @@
 				if(timeofdeath < 5 || !check_tod())	//We are dead beyond revival, or we're junk mobs spawned like the clowns on the clown shuttle
 					undefibbable = TRUE
 					med_hud_set_status()
-				else if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.4) && (world.time - timeofdeath) < (REVIVE_GRACE_PERIOD * 0.8))
+				else if((world.time - timeofdeath) > (config.revive_grace_period * 0.4) && (world.time - timeofdeath) < (config.revive_grace_period * 0.8))
 					med_hud_set_status()
-				else if((world.time - timeofdeath) > (REVIVE_GRACE_PERIOD * 0.8))
+				else if((world.time - timeofdeath) > (config.revive_grace_period * 0.8))
 					med_hud_set_status()
 
 	else

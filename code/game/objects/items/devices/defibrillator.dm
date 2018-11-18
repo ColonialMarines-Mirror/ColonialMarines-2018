@@ -24,7 +24,7 @@
 		return (FIRELOSS)
 
 /mob/living/carbon/human/proc/check_tod()
-	if(!undefibbable && world.time <= timeofdeath + REVIVE_GRACE_PERIOD)
+	if(!undefibbable && world.time <= timeofdeath + config.revive_grace_period)
 		return TRUE
 	return FALSE
 

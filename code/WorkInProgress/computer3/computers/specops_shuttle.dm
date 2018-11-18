@@ -170,7 +170,7 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer3/specops_shuttle/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/card/emag))
-		to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
+		to_chat(user, "<span class='notice'>The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>")
 	else
 		return attack_hand(user)
 
@@ -214,7 +214,7 @@ var/specops_shuttle_timeleft = 0
 	if (href_list["sendtodock"])
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
-		to_chat(usr, "\blue Central Command will not allow the Special Operations shuttle to return.")
+		to_chat(usr, "<span class='notice'>Central Command will not allow the Special Operations shuttle to return.</span>")
 		return
 
 	else if (href_list["sendtostation"])
@@ -224,7 +224,7 @@ var/specops_shuttle_timeleft = 0
 			to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 			return
 
-		to_chat(usr, "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.")
+		to_chat(usr, "<span class='notice'>The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()

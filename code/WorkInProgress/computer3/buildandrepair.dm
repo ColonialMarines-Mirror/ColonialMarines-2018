@@ -82,7 +82,7 @@
 			if(istype(P, /obj/item/tool/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 25, 1)
 				if(do_after(user, 20, TRUE, 5, BUSY_ICON_BUILD))
-					to_chat(user, "\blue You wrench the frame into place.")
+					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
 			if(istype(P, /obj/item/tool/weldingtool))
@@ -93,31 +93,31 @@
 				playsound(src.loc, 'sound/items/Welder.ogg', 25, 1)
 				if(do_after(user, 20, TRUE, 5, BUSY_ICON_BUILD))
 					if(!src || !WT.isOn()) return
-					to_chat(user, "\blue You deconstruct the frame.")
+					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					cdel(src)
 		if(1)
 			if(istype(P, /obj/item/tool/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 25, 1)
 				if(do_after(user, 20, TRUE, 5, BUSY_ICON_BUILD))
-					to_chat(user, "\blue You unfasten the frame.")
+					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 25, 1)
-				to_chat(user, "\blue You place the circuit board inside the frame.")
+				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
 				user.drop_inv_item_to_loc(P, src)
 
 			if(istype(P, /obj/item/tool/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, 1)
-				to_chat(user, "\blue You screw the circuit board into place.")
+				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/tool/crowbar) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 25, 1)
-				to_chat(user, "\blue You remove the circuit board.")
+				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
@@ -125,7 +125,7 @@
 		if(2)
 			if(istype(P, /obj/item/tool/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, 1)
-				to_chat(user, "\blue You unfasten the circuit board.")
+				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
 
@@ -134,7 +134,7 @@
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 25, 1)
 					if(do_after(user, 10, TRUE, 5, BUSY_ICON_BUILD))
 						battery.loc = loc
-						to_chat(user, "\blue You remove [battery].")
+						to_chat(user, "<span class='notice'>You remove [battery].</span>")
 						battery = null
 				else
 					to_chat(user, "<span class='warning'>There's no battery to remove!</span>")
@@ -145,7 +145,7 @@
 					if(do_after(user, 5, TRUE, 5, BUSY_ICON_BUILD))
 						battery = P
 						P.loc = src
-						to_chat(user, "\blue You insert [battery].")
+						to_chat(user, "<span class='notice'>You insert [battery].</span>")
 				else
 					to_chat(user, "<span class='warning'>There's already \an [battery] in [src]!</span>")
 
@@ -157,7 +157,7 @@
 						if(P)
 							P:amount -= 5
 							if(!P:amount) cdel(P)
-							to_chat(user, "\blue You add cables to the frame.")
+							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							src.state = 3
 							src.icon_state = "3"
 		if(3)
@@ -166,7 +166,7 @@
 					to_chat(user, "There are parts in the way!")
 					return
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 25, 1)
-				to_chat(user, "\blue You remove the cables.")
+				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -181,19 +181,19 @@
 					if(do_after(user, 20, TRUE, 5, BUSY_ICON_BUILD))
 						if(P)
 							P:use(2)
-							to_chat(user, "\blue You put in the glass panel.")
+							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/tool/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 25, 1)
-				to_chat(user, "\blue You remove the glass panel.")
+				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/tool/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, 1)
-				to_chat(user, "\blue You connect the monitor.")
+				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer3/B = new src.circuit.build_path ( src.loc, built=1 )
 				/*if(circuit.powernet) B:powernet = circuit.powernet
 				if(circuit.id) B:id = circuit.id
@@ -255,7 +255,7 @@
 			else
 				warning("Erronous component in computerframe/remove_peripheral: [I]")
 				I.loc = loc
-			to_chat(usr, "\blue You remove [I]")
+			to_chat(usr, "<span class='notice'>You remove [I]</span>")
 			return 1
 	return 0
 /obj/structure/computer3frame/proc/insert_peripheral(var/obj/item/I)

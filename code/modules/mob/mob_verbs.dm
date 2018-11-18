@@ -85,13 +85,13 @@
 		is_admin = 1
 
 	if (!( abandon_allowed ) && !is_admin)
-		to_chat(usr, "\blue Respawn is disabled.")
+		to_chat(usr, "<span class='notice'>Respawn is disabled.</span>")
 		return
 	if ((stat != 2 || !( ticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic") //BS12 EDIT
-		to_chat(usr, "\blue Respawn is disabled for this roundtype.")
+		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
@@ -152,7 +152,7 @@
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		to_chat(usr, "\blue You must be observing to use this!")
+		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)

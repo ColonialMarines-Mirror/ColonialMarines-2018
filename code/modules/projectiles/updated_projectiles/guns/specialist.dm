@@ -361,7 +361,7 @@
 	..()
 	if(grenades.len)
 		if (get_dist(user, src) > 2 && user != loc) return
-		to_chat(user, "\blue It is loaded with <b>[grenades.len] / [max_grenades]</b> grenades.")
+		to_chat(user, "<span class='notice'>It is loaded with <b>[grenades.len] / [max_grenades]</b> grenades.</span>")
 
 /obj/item/weapon/gun/launcher/m92/attackby(obj/item/I, mob/user)
 	if((istype(I, /obj/item/explosive/grenade)))
@@ -470,7 +470,7 @@
 	..()
 	if(grenade)
 		if (get_dist(user, src) > 2 && user != loc) return
-		to_chat(user, "\blue It is loaded with a grenade.")
+		to_chat(user, "<span class='notice'>It is loaded with a grenade.</span>")
 
 /obj/item/weapon/gun/launcher/m81/attackby(obj/item/I, mob/user)
 	if((istype(I, /obj/item/explosive/grenade)))

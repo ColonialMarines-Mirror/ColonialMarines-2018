@@ -24,7 +24,7 @@
 
 		if(istype(user,/mob/living/silicon))
 			if(!program.ai_allowed)
-				to_chat(user, "\blue You are forbidden from accessing this program.")
+				to_chat(user, "<span class='notice'>You are forbidden from accessing this program.</span>")
 				return 0
 		else
 			if(program.human_controls)

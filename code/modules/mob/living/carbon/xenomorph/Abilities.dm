@@ -928,7 +928,7 @@
 	if(X.check_plasma(600))
 		X.use_plasma(600)
 		target.adjustBruteLoss(-50)
-		X.queen_ability_cooldown = world.time + 150 //15 seconds
+		X.queen_ability_cooldown = world.time + 15 SECONDS //15 seconds
 		to_chat(X, "<span class='xenonotice'>You channel your plasma to heal [target]'s wounds.</span>")
 
 /datum/action/xeno_action/queen_give_plasma
@@ -958,7 +958,7 @@
 	if(X.check_plasma(600))
 		X.use_plasma(600)
 		target.gain_plasma(100)
-		X.queen_ability_cooldown = world.time + 150 //15 seconds
+		X.queen_ability_cooldown = world.time + 15 SECONDS //15 seconds
 		to_chat(X, "<span class='xenonotice'>You transfer some plasma to [target].</span>")
 
 /datum/action/xeno_action/queen_order

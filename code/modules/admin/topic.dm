@@ -1569,7 +1569,7 @@
 		for(var/client/X in admins)
 			if((R_ADMIN|R_MOD) & X.holder.rights)
 				to_chat(X, "<b>ADMINS/MODS: \red [src.owner] replied to [key_name(H)]'s USCM message with: \blue \"[input]\"</b>")
-		to_chat(H, "<span class='warning'>You hear something crackle in your headset before a voice speaks, \"Please stand by for a message from USCM:\" \blue <b>\"[input]\"</b></span>")
+		to_chat(H, "<span class='warning'>You hear something crackle in your headset before a voice speaks, \"Please stand by for a message from USCM:\"</span> <span class='boldnotice'>\"[input]\"</span>")
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])

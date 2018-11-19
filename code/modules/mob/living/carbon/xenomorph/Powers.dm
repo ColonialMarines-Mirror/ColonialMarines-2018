@@ -330,7 +330,7 @@
 
 			round_statistics.praetorian_spray_direct_hits++
 
-			C.no_acidprocess_flag = 2 //prevent the victim from being damaged by acid puddle process damage for 1 tick, so there's no chance they get immediately double dipped by it.
+			C.acid_process_cooldown = 2 //prevent the victim from being damaged by acid puddle process damage for 1 tick, so there's no chance they get immediately double dipped by it.
 			var/armor_block = C.run_armor_check("chest", "energy")
 			var/damage = rand(30,40) + 4 * upgrade
 			if(ishuman(C))

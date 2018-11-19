@@ -12,5 +12,5 @@
 	return
 
 /mob/living/carbon/proc/handle_special()
-	if(no_acidprocess_flag)
-		no_acidprocess_flag = max(no_acidprocess_flag - 1, 0) //Your protection from the acid puddle process eventually goes away.
+	if(acid_process_cooldown)
+		acid_process_cooldown = max(acid_process_cooldown - 1, 0) //Your protection from the acid puddle process eventually goes away.

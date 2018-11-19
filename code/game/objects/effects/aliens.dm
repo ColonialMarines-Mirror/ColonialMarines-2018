@@ -92,8 +92,8 @@
 	for(var/mob/living/carbon/M in loc)
 		if(isXeno(M))
 			continue
-		if(M.no_acidprocess_flag)
-			M.no_acidprocess_flag = 0 //Enjoy your very temporary reprieve
+		if(M.acid_process_cooldown)
+			M.acid_process_cooldown = 0 //Enjoy your very temporary reprieve
 			continue
 		Crossed(M)
 

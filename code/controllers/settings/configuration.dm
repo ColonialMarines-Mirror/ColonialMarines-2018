@@ -119,7 +119,7 @@
 	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
-	var/revive_grace_period = 3000 // Humans are revivable for 5 minutes after death
+	var/revive_grace_period = 5 MINUTES // Humans are revivable for 5 minutes after death
 
 	var/comms_password = ""
 
@@ -480,7 +480,7 @@
 		if("gateway_delay")
 			config.gateway_delay = text2num(value)
 
-		if("gateway_delay")
+		if("revive_grace_period")
 			config.revive_grace_period = text2num(value)
 
 		if("continuous_rounds")

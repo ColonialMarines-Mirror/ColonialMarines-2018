@@ -18,8 +18,8 @@
 	speed = -0.5
 
 	// *** Plasma *** //
-	plasma_max = 600
-	plasma_gain = 20
+	plasma_max = 800
+	plasma_gain = 25
 
 	// *** Health *** //
 	max_health = 180
@@ -38,8 +38,8 @@
 	armor_deflection = 20 
 
 	// *** Ranged Attack *** //
-	spit_delay = 2.5 SECONDS
-	spit_types = list(/datum/ammo/xeno/toxin/medium, /datum/ammo/xeno/acid/medium)
+	spit_delay = 1 SECONDS
+	spit_types = list(/datum/ammo/xeno/acid/heavy) //Gotta give them their own version of heavy acid; kludgy but necessary as 100 plasma is way too costly.
 
 /datum/xeno_caste/spitter/mature
 	upgrade_name = "Mature"
@@ -58,8 +58,8 @@
 	speed = -0.6
 
 	// *** Plasma *** //
-	plasma_max = 700
-	plasma_gain = 25
+	plasma_max = 1000
+	plasma_gain = 30
 
 	// *** Health *** //
 	max_health = 220
@@ -72,6 +72,8 @@
 
 	// *** Ranged Attack *** //
 	spit_delay = 2.0 SECONDS
+
+	acid_delay = 30 SECONDS //30 second delay on acid spray. Reduced by -3/-2/-1 per upgrade.
 
 /datum/xeno_caste/spitter/elder
 	upgrade_name = "Elder"
@@ -90,8 +92,8 @@
 	speed = -0.7
 
 	// *** Plasma *** //
-	plasma_max = 800
-	plasma_gain = 30
+	plasma_max = 1100
+	plasma_gain = 33
 
 	// *** Health *** //
 	max_health = 240
@@ -122,8 +124,8 @@
 	speed = -0.8
 
 	// *** Plasma *** //
-	plasma_max = 900
-	plasma_gain = 50
+	plasma_max = 1150
+	plasma_gain = 35
 
 	// *** Health *** //
 	max_health = 250
@@ -151,13 +153,16 @@
 	old_x = 0
 	tier = 2
 	upgrade = 0
+	acid_cooldown = 0
+	
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/regurgitate,
 		/datum/action/xeno_action/activable/corrosive_acid,
-		/datum/action/xeno_action/shift_spits,
 		/datum/action/xeno_action/activable/xeno_spit,
+		/datum/action/xeno_action/activable/spray_acid,
 		)
 	inherent_verbs = list(
 		/mob/living/carbon/Xenomorph/proc/vent_crawl,
 		)
+

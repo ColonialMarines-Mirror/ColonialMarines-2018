@@ -36,11 +36,11 @@
 	armor_deflection = 35
 
 	// *** Ranged Attack *** //
-	spit_delay = 2 SECONDS 
+	spit_delay = 1 SECONDS 
 	spit_types = list(/datum/ammo/xeno/toxin/heavy, /datum/ammo/xeno/acid/heavy, /datum/ammo/xeno/sticky)
 
-	acid_spray_range = 3
-	acid_spray_cooldown = 15 SECONDS
+	acid_spray_range = 4
+	acid_spray_cooldown = 20 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 1.5 //Praetorian's aura starts strong. They are the Queen's right hand. Climbs by 1 to 4.5
@@ -75,7 +75,7 @@
 	armor_deflection = 40
 
 	// *** Ranged Attack *** //
-	spit_delay = 1.5 SECONDS 
+	spit_delay = 1 SECONDS 
 
 	// *** Pheromones *** //	
 	aura_strength = 2.5 
@@ -109,7 +109,7 @@
 	armor_deflection = 40
 
 	// *** Ranged Attack *** //
-	spit_delay = 1.5 SECONDS 
+	spit_delay = 1 SECONDS 
 
 	// *** Pheromones *** //	
 	aura_strength = 3.5 
@@ -141,7 +141,7 @@
 	armor_deflection = 45
 
 	// *** Ranged Attack *** //
-	spit_delay = 1.0 SECONDS
+	spit_delay = 1 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 4.5 

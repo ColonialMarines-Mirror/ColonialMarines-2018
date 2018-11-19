@@ -24,6 +24,7 @@
 
 	hud_set_queen_overwatch() //update the upgrade level insignia on our xeno hud.
 
+	update_spits() //Update spits to new/better ones
 
 //Tiered spawns.
 /mob/living/carbon/Xenomorph/Runner/mature

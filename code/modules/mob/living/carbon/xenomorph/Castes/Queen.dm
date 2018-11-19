@@ -36,8 +36,8 @@
 	armor_deflection = 45 
 
 	// *** Ranged Attack *** //
-	spit_delay = 2.5 SECONDS
-	spit_types = list(/datum/ammo/xeno/acid/medium)
+	spit_delay = 1 SECONDS
+	spit_types = list(/datum/ammo/xeno/toxin/medium, /datum/ammo/xeno/acid/medium)
 
 	// *** Pheromones *** //	
 	aura_strength = 2 //The Queen's aura is strong and stays so, and gets devastating late game. Climbs by 1 to 5
@@ -75,7 +75,7 @@
 	armor_deflection = 50
 
 	// *** Ranged Attack *** //
-	spit_delay = 2.0 SECONDS
+	spit_delay = 1 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 3 
@@ -112,7 +112,7 @@
 	armor_deflection = 55
 
 	// *** Ranged Attack *** //
-	spit_delay = 2.0 SECONDS
+	spit_delay = 1 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 4 
@@ -149,7 +149,7 @@
 	armor_deflection = 60
 
 	// *** Ranged Attack *** //
-	spit_delay = 1.5 SECONDS
+	spit_delay = 1 SECONDS
 
 	// *** Pheromones *** //	
 	aura_strength = 5 
@@ -214,6 +214,7 @@
 		/datum/action/xeno_action/emit_pheromones,
 		/datum/action/xeno_action/activable/gut,
 		/datum/action/xeno_action/psychic_whisper,
+		/datum/action/xeno_action/shift_spits,
 		/datum/action/xeno_action/activable/xeno_spit,
 		)
 	inherent_verbs = list(
@@ -649,6 +650,7 @@
 			/datum/action/xeno_action/emit_pheromones,
 			/datum/action/xeno_action/activable/gut,
 			/datum/action/xeno_action/psychic_whisper,
+		  /datum/action/xeno_action/shift_spits,
 			/datum/action/xeno_action/activable/xeno_spit,
 			)
 

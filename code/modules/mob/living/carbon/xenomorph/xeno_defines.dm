@@ -229,9 +229,14 @@
 	var/leader_aura_strength = 0 //Pheromone strength inherited from Queen
 	var/leader_current_aura = "" //Pheromone type inherited from Queen
 
+	var/acid_cooldown = 0
+
 	//Runner vars
 	var/savage = FALSE
 	var/savage_used = FALSE
+
+	//Acid spray
+	var/last_spray_used
 
 	//Notification spam controls
 	var/recent_notice = 0

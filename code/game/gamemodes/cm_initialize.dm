@@ -931,6 +931,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 						/obj/item/ammo_magazine/shotgun = round(scale * 10),
 						/obj/item/ammo_magazine/shotgunbox/buckshot = round(scale * 3),
 						/obj/item/ammo_magazine/shotgun/buckshot = round(scale * 10),
+						/obj/item/ammo_magazine/shotgunbox/flechette = round(scale * 3),
 						/obj/item/ammo_magazine/shotgun/flechette = round(scale * 15),
 						/obj/item/smartgun_powerpack = round(scale * 2)
 						)
@@ -1083,6 +1084,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 		if(map_tag == MAP_ICE_COLONY)
 			products2 = list(
 						/obj/item/clothing/mask/rebreather/scarf = round(scale * 30),
+						/obj/item/clothing/mask/rebreather = round(scale * 30),
 							)
 		M.build_inventory(products2)
 

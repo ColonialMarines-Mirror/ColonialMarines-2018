@@ -914,7 +914,7 @@
 		to_chat(X, "<span class='warning'>You must overwatch the xeno you want to give healing to.</span>")
 		return
 	var/mob/living/carbon/Xenomorph/target = X.observed_xeno
-	if(!(X.xeno_caste.caste_flags & CASTE_CAN_BE_QUEEN_HEALED))
+	if(!(target.xeno_caste.caste_flags & CASTE_CAN_BE_QUEEN_HEALED))
 		to_chat(X, "<span class='xenowarning'>You can't heal that caste.</span>")
 		return
 	if(X.loc.z != target.loc.z)

@@ -22,6 +22,14 @@
 #define ATMOS_DEFAULT_VOLUME_MIXER	200	//L
 #define ATMOS_DEFAULT_VOLUME_PIPE	70	//L
 
+#define	PIPE_COLOR_GREY		"#ffffff"	//yes white is grey
+#define	PIPE_COLOR_RED		"#ff0000"
+#define	PIPE_COLOR_BLUE		"#0000ff"
+#define	PIPE_COLOR_CYAN		"#00ffff"
+#define	PIPE_COLOR_GREEN	"#00ff00"
+#define	PIPE_COLOR_YELLOW	"#ffcc00"
+#define	PIPE_COLOR_PURPLE	"#5c1ec0"
+
 // channel numbers for power
 #define EQUIP	1
 #define LIGHT	2

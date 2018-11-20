@@ -477,7 +477,7 @@ var/global/list/frozen_items = list("Alpha"=list(),"Bravo"=list(),"Charlie"=list
 /obj/machinery/cryopod/verb/return_to_lobby()
 	set name = "Return to Lobby"
 	set category = "Object"
-	set src in oview(1)
+	set src in view(0)
 	if(occupant != usr)
 		to_chat(usr, "<span class='warning'>You must be inside the [src] to do this.</span>")
 

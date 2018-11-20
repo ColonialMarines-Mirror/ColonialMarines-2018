@@ -98,7 +98,7 @@
 		deactivate()
 		return
 
-	if(!loc == operator)
+	if(get_turf(src) != get_turf(operator))
 		deactivate()
 		return
 

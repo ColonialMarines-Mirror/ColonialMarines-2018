@@ -361,12 +361,6 @@
 	damage_mult = config.base_hit_damage_mult
 
 
-/obj/item/weapon/gun/launcher/m92/wield(mob/living/user)
-	. = ..()
-	if(user.mind?.cm_skills && user.mind.cm_skills.spec_weapons < 0)
-		do_after(user, 10, TRUE, 5, BUSY_ICON_HOSTILE)
-
-
 /obj/item/weapon/gun/launcher/m92/examine(mob/user)
 	. = ..()
 	if(grenades.len)
@@ -446,7 +440,7 @@
 		F.updateicon()
 		playsound(F.loc, fire_sound, 50, 1)
 		sleep(10)
-		if(F && F.loc) 
+		if(F?.loc) 
 			F.prime()
 
 
@@ -565,7 +559,7 @@
 		F.updateicon()
 		playsound(F.loc, fire_sound, 50, 1)
 		sleep(10)
-		if(F && F.loc) 
+		if(F?.loc) 
 			F.prime()
 
 
@@ -661,7 +655,7 @@
 	return TRUE
 
 
-/obj/item/weapon/gun/launcher/rocket/delete_bullet(obj/item/projectile/projectile_to_fire, refund = 0)
+/obj/item/weapon/gun/launcher/rocket/delete_bullet(obj/item/projectile/projectile_to_fire, refund = FALSE)
 	cdel(projectile_to_fire)
 	if(refund) 
 		current_mag.current_rounds++

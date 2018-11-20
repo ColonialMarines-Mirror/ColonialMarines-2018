@@ -127,17 +127,17 @@ DEFINES in setup.dm, referenced here.
 
 /obj/item/weapon/gun/attack_hand(mob/user)
 	var/obj/item/weapon/gun/in_hand = user.get_inactive_hand()
-	if( in_hand == src && (flags_item & TWOHANDED) )
+	if(in_hand == src && (flags_item & TWOHANDED))
 		unload(user)//It has to be held if it's a two hander.
 	else 
-		. = ..()
+		return ..()
 
 
 /obj/item/weapon/gun/throw_at(atom/target, range, speed, thrower)
 	if( harness_check(thrower) )
 		to_chat(usr, "<span class='warning'>\The [src] clanks on the ground.</span>")
 	else 
-		. = ..()
+		return ..()
 
 /*
 Note: pickup and dropped on weapons must have both the ..() to update zoom AND twohanded,
@@ -147,7 +147,7 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 	. = ..()
 
 	stop_aim()
-	if(user && user.client)
+	if(user?.client)
 		user.update_gun_icons()
 
 	turn_off_light(user)

@@ -248,7 +248,7 @@
 	icon = 'icons/Marine/marine-weapons.dmi'
 	icon_state = "grenade_case"
 	w_class = 5
-	storage_slots = 3
+	storage_slots = 2
 	slowdown = 1
 	can_hold = list() //Nada. Once you take the stuff out it doesn't fit back in.
 	foldable = null
@@ -257,8 +257,7 @@
 		..()
 		spawn(1)
 			new /obj/item/weapon/gun/launcher/m92(src)
-			new /obj/item/storage/belt/grenade(src)
-			new /obj/item/storage/belt/grenade(src)
+			new /obj/item/storage/belt/grenade/b18(src)
 
 
 /obj/item/storage/box/rocket_system
@@ -294,12 +293,12 @@
 
 /obj/item/storage/box/spec/demolitionist
 	name = "\improper Demolitionist equipment crate"
-	desc = "A large case containing light armor, a heavy-caliber antitank missile launcher, missiles, C4, and claymore mines. Drag this sprite into you to open it up!\nNOTE: You cannot put items back inside this case."
+	desc = "A large case containing light armor, a heavy-caliber antitank missile launcher, missiles, C4, detpacks, and claymore mines. Drag this sprite into you to open it up!\nNOTE: You cannot put items back inside this case."
 	icon = 'icons/Marine/marine-weapons.dmi'
 	icon_state = "rocket_case"
 	spec_set = "demolitionist"
 	w_class = 5
-	storage_slots = 12
+	storage_slots = 15
 	slowdown = 1
 	can_hold = list() //Nada. Once you take the stuff out it doesn't fit back in.
 	foldable = null
@@ -319,6 +318,9 @@
 			new /obj/item/explosive/mine(src)
 			new /obj/item/explosive/plastique(src)
 			new /obj/item/explosive/plastique(src)
+			new /obj/item/device/radio/detpack(src)
+			new /obj/item/device/radio/detpack(src)
+			new /obj/item/device/assembly/signaler(src)
 
 
 
@@ -366,7 +368,7 @@
 	icon = 'icons/Marine/marine-weapons.dmi'
 	icon_state = "sniper_case"
 	w_class = 5
-	storage_slots = 15
+	storage_slots = 21
 	slowdown = 1
 	can_hold = list() //Nada. Once you take the stuff out it doesn't fit back in.
 	foldable = null
@@ -392,8 +394,10 @@
 			new /obj/item/ammo_magazine/pistol/vp70(src)
 			new /obj/item/weapon/gun/rifle/m4ra(src)
 			new /obj/item/storage/backpack/marine/satchel/scout_cloak(src)
-			new /obj/item/explosive/plastique(src)
-			new /obj/item/explosive/plastique(src)
+			new /obj/item/device/motiondetector/scout(src)
+			new /obj/item/explosive/grenade/cloakbomb(src)
+			new /obj/item/explosive/grenade/cloakbomb(src)
+			new /obj/item/explosive/grenade/cloakbomb(src)
 
 
 

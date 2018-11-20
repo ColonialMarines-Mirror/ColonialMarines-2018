@@ -18,8 +18,9 @@
 
 //===========================================================================
 /atom/movable/Destroy()
-	for(var/atom/movable/I in contents) 
+	for(var/atom/movable/I in contents)
 		qdel(I)
+
 	if(pulledby) 
 		pulledby.stop_pulling()
 	if(throw_source) 
@@ -81,7 +82,6 @@
 		last_move_dir = get_dir(oldloc, loc)
 	if(.)
 		Moved(oldloc,direct)
-
 
 
 /atom/movable/Bump(atom/A, yes) //yes arg is to distinguish our calls of this proc from the calls native from byond.

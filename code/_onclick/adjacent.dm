@@ -11,7 +11,7 @@
 	to check that the mob is not inside of something
 */
 /atom/proc/Adjacent(var/atom/neighbor) // basic inheritance, unused
-	return 0
+	return FALSE
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
 /area/Adjacent(var/atom/neighbor)
@@ -76,11 +76,24 @@ Quick adjacency (to turf):
 	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(atom/neighbor)
+	var/turf/source_loc = get_turf(loc) // They could be inside containers
+	if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
+		return TRUE
+	return FALSE
+/*
+	Multi-tile adjacency:
+*/
+/obj/structure/Adjacent(atom/neighbor) // Several structures are multi-tiles
 	for(var/S in locs) // To account for multi-tiles
 		var/turf/source_loc = get_turf(S) // They could be inside containers
 		if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
 			return TRUE
-	return FALSE
+
+/mob/living/silicon/decoy/Adjacent(atom/neighbor) // The one multi-tile mob exception, an odd one
+	for(var/S in locs) // To account for multi-tiles
+		var/turf/source_loc = get_turf(S) // They could be inside containers
+		if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
+			return TRUE
 /*
 	Special case: This allows you to reach a door when it is visally on top of,
 	but technically behind, a fire door
@@ -92,12 +105,21 @@ Quick adjacency (to turf):
 /obj/machinery/door/Adjacent(atom/neighbor)
 	var/obj/machinery/door/firedoor/border_only/BOD = locate() in loc
 	if(BOD)
-		BOD.throwpass = TRUE // allow click to pass
-		. = ..()
-		BOD.throwpass = FALSE
-		return .
+		BOD.throwpass = TRUE // Allow click to pass
+		for(var/S in locs) // To account for multi-tiles
+			var/turf/source_loc = get_turf(S) // They could be inside containers
+			if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
+				BOD.throwpass = FALSE // Back to normal behavior
+				return TRUE
+		BOD.throwpass = FALSE // Back to normal behavior
+		return FALSE
 	else
-		return ..()
+		for(var/S in locs) // To account for multi-tiles
+			var/turf/source_loc = get_turf(S) // They could be inside containers
+			if(source_loc?.Adjacent(neighbor)) // Turf redefinition of the proc, not recursive
+				return TRUE
+		return FALSE
+	// TO DO: ADD locs handling
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.

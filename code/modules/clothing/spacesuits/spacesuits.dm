@@ -17,6 +17,7 @@
 	eye_protection = 2
 	species_restricted = list("exclude","Vox")
 
+
 /obj/item/clothing/suit/space
 	name = "Space suit"
 	desc = "A suit that protects against low pressure environments."

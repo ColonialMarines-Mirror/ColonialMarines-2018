@@ -1,5 +1,3 @@
-
-
 //Deathsquad suit
 /obj/item/clothing/head/helmet/space/deathsquad
 	name = "deathsquad helmet"
@@ -8,6 +6,7 @@
 	item_state = "deathsquad"
 	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
+
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
@@ -18,6 +17,7 @@
 	flags_inv_hide = HIDEEYES
 	siemens_coefficient = 0.9
 
+
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
@@ -27,6 +27,7 @@
 	flags_inv_hide = HIDEEYES
 	flags_armor_protection = HEAD
 
+
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
 	desc = "Festive!"
@@ -34,6 +35,7 @@
 	item_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents
+
 
 //Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
@@ -46,6 +48,7 @@
 	flags_inv_hide = HIDEEYES
 	flags_armor_protection = 0
 	siemens_coefficient = 0.9
+
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -60,7 +63,6 @@
 	flags_armor_protection = UPPER_TORSO|ARMS
 
 
-
 /obj/item/clothing/head/helmet/space/compression
 	name = "\improper MK.50 compression helmet"
 	desc = "A heavy space helmet, designed to be coupled with the MK.50 compression suit, though it is less resilient than the suit. Feels like you could hotbox in here."
@@ -68,6 +70,7 @@
 	icon_state = "compression"
 	armor = list(melee = 40, bullet = 45, laser = 40, energy = 55, bomb = 40, bio = 100, rad = 50)
 	unacidable = 1
+
 
 /obj/item/clothing/suit/space/compression
 	name = "\improper MK.50 compression suit"

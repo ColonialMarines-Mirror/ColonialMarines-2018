@@ -26,42 +26,51 @@
 		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
 		)
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			to_chat(user, "You cannot turn the light on while in [user.loc]")
-			return
-		on = !on
-		icon_state = "rig[on]-[rig_color]"
 
-		if(on)	user.SetLuminosity(brightness_on)
-		else	user.SetLuminosity(-brightness_on)
+/obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in [user.loc]")
+		return
 
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_head()
+	on = !on
+	icon_state = "rig[on]-[rig_color]"
 
-		update_action_button_icons()
+	if(on)	
+		user.SetLuminosity(brightness_on)
+	else	
+		user.SetLuminosity(-brightness_on)
 
-	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(0)
-		..()
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
 
-	dropped(mob/user)
-		if(on)
-			user.SetLuminosity(-brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
-		..()
+	update_action_button_icons()
 
-	Dispose()
-		if(ismob(src.loc))
-			src.loc.SetLuminosity(-brightness_on)
-		else
-			SetLuminosity(0)
-		. = ..()
+
+/obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
+	if(on)
+		user.SetLuminosity(brightness_on)
+		SetLuminosity(0)
+
+	return ..()
+
+
+/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
+	if(on)
+		user.SetLuminosity(-brightness_on)
+		SetLuminosity(brightness_on)
+
+	return ..()
+
+
+/obj/item/clothing/head/helmet/space/rig/Dispose()
+	if(ismob(loc))
+		loc.SetLuminosity(-brightness_on)
+	else
+		SetLuminosity(0)
+
+	return ..()
+
 
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
@@ -103,12 +112,13 @@
 	var/list/mounted_devices = null                   // Holder for the above device.
 	var/obj/item/active_device = null                 // Currently deployed device, if any.
 
-/obj/item/clothing/suit/space/rig/equipped(mob/M)
-	..()
 
+/obj/item/clothing/suit/space/rig/equipped(mob/M)
+	. = ..()
 	var/mob/living/carbon/human/H = M
 
-	if(!istype(H)) return
+	if(!istype(H)) 
+		return
 
 	if(H.wear_suit != src)
 		return
@@ -132,9 +142,9 @@
 			H.equip_to_slot(boots, WEAR_FEET)
 			boots.flags_item |= NODROP
 
-/obj/item/clothing/suit/space/rig/dropped()
-	..()
 
+/obj/item/clothing/suit/space/rig/dropped()
+	. = ..()
 	var/mob/living/carbon/human/H
 
 	if(helmet)
@@ -195,12 +205,12 @@
 */
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
-
 	set name = "Toggle Helmet"
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!istype(loc, /mob/living)) 
+		return
 
 	if(!helmet)
 		to_chat(usr, "There is no helmet installed.")
@@ -208,18 +218,23 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
-	if(H.stat) return
-	if(H.wear_suit != src) return
+	if(!istype(H)) 
+		return
+
+	if(H.stat) 
+		return
+
+	if(H.wear_suit != src) 
+		return
 
 	if(H.head == helmet)
 		helmet.flags_item &= ~NODROP
 		H.drop_inv_item_to_loc(helmet, src)
 		to_chat(H, "\blue You retract your hardsuit helmet.")
+	else if(H.head)
+		to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
+		return
 	else
-		if(H.head)
-			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
-			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
 		helmet.loc = H
 		helmet.pickup(H)
@@ -227,20 +242,19 @@
 		helmet.flags_item |= NODROP
 		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
 
-/obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
 
-	if(!istype(user,/mob/living)) return
+/obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
+	if(!istype(user,/mob/living)) 
+		return
 
 	if(user.a_intent == "help")
-
-		if(istype(src.loc,/mob/living))
+		if(istype(loc, /mob/living))
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 
 		var/target_zone = user.zone_selected
 
 		if(target_zone == "head")
-
 			//Installing a component into or modifying the contents of the helmet.
 			if(!attached_helmet)
 				to_chat(user, "\The [src] does not have a helmet mount.")
@@ -254,7 +268,8 @@
 					helmet.loc = get_turf(src)
 					src.helmet = null
 				return
-			else if(istype(W,/obj/item/clothing/head/helmet/space))
+
+			if(istype(W,/obj/item/clothing/head/helmet/space))
 				if(helmet)
 					to_chat(user, "\The [src] already has a helmet installed.")
 				else
@@ -263,11 +278,8 @@
 					W.loc = src
 					src.helmet = W
 				return
-			else
-				return ..()
 
 		else if(target_zone == "l_leg" || target_zone == "r_leg" || target_zone == "l_foot" || target_zone == "r_foot")
-
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)
 				to_chat(user, "\The [src] does not have boot mounts.")
@@ -281,7 +293,8 @@
 					boots.loc = get_turf(src)
 					boots = null
 				return
-			else if(istype(W,/obj/item/clothing/shoes/magboots))
+
+			if(istype(W,/obj/item/clothing/shoes/magboots))
 				if(boots)
 					to_chat(user, "\The [src] already has magboots installed.")
 				else
@@ -289,8 +302,6 @@
 					user.drop_held_item()
 					W.loc = src
 					boots = W
-			else
-				return ..()
 
 		/*
 		else if(target_zone == "l_arm" || target_zone == "r_arm" || target_zone == "l_hand" || target_zone == "r_hand")
@@ -305,10 +316,8 @@
 				return
 		*/
 
-		else //wat
-			return ..()
+	return ..()
 
-	..()
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -318,6 +327,7 @@
 	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 80)
 
+
 /obj/item/clothing/suit/space/rig/engineering
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
@@ -326,6 +336,7 @@
 	slowdown = 1
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/tool/pickaxe, /obj/item/device/rcd)
+
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
@@ -337,6 +348,7 @@
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
+
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
@@ -344,6 +356,7 @@
 	item_state = "ce_hardsuit"
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
+
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -353,6 +366,7 @@
 	item_state = "mining_helm"
 	rig_color = "mining"
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
+
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
@@ -377,7 +391,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
-		..(user)
+		. = ..(user)
 	else
 		camera = new /obj/machinery/camera(src)
 		camera.network = list("NUKE")
@@ -385,10 +399,12 @@
 		camera.c_tag = user.name
 		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
 
+
 /obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
-	..()
+	. = ..()
 	if(get_dist(user,src) <= 1)
 		to_chat(user, "This helmet has a built-in camera. It's [camera ? "" : "in"]active.")
+
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndie"
@@ -416,6 +432,7 @@
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
+
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
 	name = "gem-encrusted hardsuit"
@@ -429,6 +446,7 @@
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
+
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
 	name = "medical hardsuit helmet"
@@ -438,6 +456,7 @@
 	rig_color = "medical"
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 5, bomb = 25, bio = 100, rad = 50)
 
+
 /obj/item/clothing/suit/space/rig/medical
 	icon_state = "rig-medical"
 	name = "medical hardsuit"
@@ -446,7 +465,8 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 5, bomb = 25, bio = 100, rad = 50)
 
-	//Security
+
+//Security
 /obj/item/clothing/head/helmet/space/rig/security
 	name = "security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
@@ -455,6 +475,7 @@
 	rig_color = "sec"
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	siemens_coefficient = 0.7
+
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
@@ -475,6 +496,7 @@
 	rig_color = "atmos"
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRE_HELMET_max_heat_protection_temperature
+
 
 /obj/item/clothing/suit/space/rig/atmos
 	desc = "A special suit that protects against hazardous, low pressure environments. Has improved thermal protection and minor radiation shielding."

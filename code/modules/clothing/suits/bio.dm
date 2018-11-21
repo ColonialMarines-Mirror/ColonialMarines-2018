@@ -10,6 +10,7 @@
 	flags_armor_protection = HEAD|FACE|EYES
 	siemens_coefficient = 0.9
 
+
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
@@ -31,32 +32,39 @@
 	icon_state = "bio_general"
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/suit/bio_suit/general
 	icon_state = "bio_general"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv_hide = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
+
 //Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
 	icon_state = "bio_virology"
+
 
 /obj/item/clothing/suit/bio_suit/virology
 	icon_state = "bio_virology"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv_hide = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
+
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
 	icon_state = "bio_security"
+
 
 /obj/item/clothing/suit/bio_suit/security
 	icon_state = "bio_security"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv_hide = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
+
 //Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
+
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
@@ -68,16 +76,19 @@
 /obj/item/clothing/head/bio_hood/scientist
 	icon_state = "bio_scientist"
 
+
 /obj/item/clothing/suit/bio_suit/scientist
 	icon_state = "bio_scientist"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv_hide = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
+
 
 //CMO's biosuit, blue stripe
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv_hide = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
+
 
 /obj/item/clothing/head/bio_hood/cmo
 	icon_state = "bio_cmo"

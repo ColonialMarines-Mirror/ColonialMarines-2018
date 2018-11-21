@@ -12,9 +12,11 @@
 	var/eye_protection = 0 //used for headgear, masks, and glasses, to see how much they protect eyes from bright lights.
 	var/tint = 0 // headgear, mask and glasses, forvision impairment overlays
 
+
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()
 	return
+
 
 //BS12: Species-restricted clothing check.
 //CM Update : Restricting armor to specific uniform

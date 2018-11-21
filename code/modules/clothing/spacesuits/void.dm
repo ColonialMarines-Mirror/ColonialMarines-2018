@@ -1,4 +1,3 @@
-
 //NASA Voidsuit
 /obj/item/clothing/head/helmet/space/uscm
 	name = "\improper USCM Compression Helmet"
@@ -6,6 +5,7 @@
 	icon_state = "void"
 	item_state = "void"
 	anti_hug = 3
+
 
 /obj/item/clothing/suit/space/uscm
 	name = "\improper USCM Compression Suit"

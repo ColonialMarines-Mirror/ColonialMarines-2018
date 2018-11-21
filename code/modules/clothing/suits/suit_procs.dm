@@ -2,9 +2,11 @@
 	check_limb_support()
 	return ..()
 
+
 /obj/item/clothing/suit/dropped()
 	check_limb_support()
 	return ..()
+
 
 /obj/item/clothing/suit/Dispose()
 	check_limb_support()
@@ -15,7 +17,6 @@
 // I can see it being useful for other suits as we expand them. ~ Z
 // The actual splinting occurs in /datum/limb/proc/fracture()
 /obj/item/clothing/suit/proc/check_limb_support()
-
 	// If this isn't set, then we don't need to care.
 	if(!supporting_limbs?.len)
 		return

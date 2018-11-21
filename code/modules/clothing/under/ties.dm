@@ -492,8 +492,12 @@
 	name = "white webbing vest"
 	desc = "A clean white Nylon vest with large pockets specially designed for medical supplies"
 	icon_state = "vest_white"
-	can_hold = list("/obj/item/tool/surgery", "/obj/item/stack/medical/advanced/bruise_pack", "/obj/item/stack/medical/advanced/ointment", "/obj/item/stack/nanopaste")
-	slots = 6
+	slots = 8
+
+/obj/item/clothing/tie/storage/vest/white/New()
+	. = ..()
+	hold.can_hold = list("/obj/item/tool/surgery", "/obj/item/stack/medical/advanced/bruise_pack", "/obj/item/stack/medical/advanced/ointment", "/obj/item/stack/nanopaste")
+
 
 /obj/item/clothing/tie/storage/vest/black
 	name = "black webbing vest"

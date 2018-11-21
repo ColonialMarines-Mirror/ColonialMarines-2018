@@ -19,9 +19,9 @@
 //BS12: Species-restricted clothing check.
 //CM Update : Restricting armor to specific uniform
 /obj/item/clothing/mob_can_equip(M as mob, slot)
-
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 
 	if(ishuman(M))
@@ -53,6 +53,7 @@
 
 	return TRUE
 
+
 /obj/item/clothing/proc/refit_for_species(var/target_species)
 	//Set species_restricted list
 	switch(target_species)
@@ -62,15 +63,16 @@
 			species_restricted = list(target_species)
 
 	//Set icon
-	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+	if(sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
-	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+	if(sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
+
 
 /obj/item/clothing/head/helmet/refit_for_species(var/target_species)
 	//Set species_restricted list
@@ -104,8 +106,8 @@
 
 
 /obj/item/clothing/ears/update_clothing_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		M.update_inv_ears()
 
 
@@ -134,14 +136,15 @@
 
 
 /obj/item/clothing/suit/update_clothing_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		M.update_inv_wear_suit()
 
 
 /obj/item/clothing/suit/mob_can_equip(mob/M, slot, disable_warning = 0)
+	. = ..()
 	//if we can't equip the item anyway, don't bother with other checks.
-	if(!..())
+	if(!.)
 		return FALSE
 
 	if(ishuman(M))
@@ -179,8 +182,8 @@
 
 
 /obj/item/clothing/gloves/update_clothing_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		M.update_inv_gloves()
 
 
@@ -192,7 +195,7 @@
 			cell.charge = 0
 		if(cell.reliability != 100 && prob(50/severity))
 			cell.reliability -= 10 / severity
-	. = ..()
+	return ..()
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
@@ -229,8 +232,8 @@
 
 
 /obj/item/clothing/mask/update_clothing_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		M.update_inv_wear_mask()
 
 
@@ -259,6 +262,6 @@
 
 
 /obj/item/clothing/shoes/update_clothing_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		M.update_inv_shoes()

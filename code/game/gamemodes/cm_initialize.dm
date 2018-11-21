@@ -976,7 +976,7 @@ datum/game_mode/proc/initialize_post_queen_list()
 						/obj/item/storage/belt/marine = round(scale * 15),
 						/obj/item/storage/belt/shotgun = round(scale * 10),
 						/obj/item/clothing/tie/storage/webbing = round(scale * 3),
-						/obj/item/clothing/tie/storage/vest = round(scale * 1),
+						/obj/item/clothing/tie/storage/vest = round(scale * 3),
 						/obj/item/clothing/tie/holster = round(scale * 1),
 						/obj/item/storage/belt/gun/m4a3 = round(scale * 10),
 						/obj/item/storage/belt/gun/m44 = round(scale * 5),

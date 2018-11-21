@@ -274,7 +274,7 @@
 
 /obj/item/device/radio/headset/almayer/ce
 	name = "chief engineer's headset"
-	desc = "The headset of the guy who is in charge of morons. To access the logistics channel, use :l. For command, use :v."
+	desc = "The headset of the guy who is in charge of morons. To access the logistics channel, use :u. For command, use :v."
 	icon_state = "com_headset"
 	keyslot1 = new /obj/item/device/encryptionkey/ce
 
@@ -286,7 +286,7 @@
 
 /obj/item/device/radio/headset/almayer/tech
 	name = "technician radio headset"
-	desc = "A headset for the men who secretly run the ship. To access the logistics channel, use :l. "
+	desc = "A headset for the men who secretly run the ship. To access the logistics channel, use :u. "
 	icon_state = "cargo_headset"
 	keyslot1 = new /obj/item/device/encryptionkey/tech
 
@@ -298,7 +298,7 @@
 
 /obj/item/device/radio/headset/almayer/ro
 	name = "supply radio headset"
-	desc = "A headset used by the RO. To access the logistics channel, use :l. For command, use :v."
+	desc = "A headset used by the RO. To access the logistics channel, use :u. For command, use :v."
 	icon_state = "cargo_headset"
 	keyslot1 = new /obj/item/device/encryptionkey/ro
 

@@ -175,6 +175,7 @@
 	surgery = SKILL_SURGERY_AMATEUR
 	police = SKILL_POLICE_FLASH
 	powerloader = SKILL_POWERLOADER_TRAINED
+	melee_weapons = SKILL_MELEE_TRAINED //Officer academy fencing.
 
 /datum/skills/XO
 	name = "Executive Officer"
@@ -185,7 +186,23 @@
 	surgery = SKILL_SURGERY_AMATEUR
 	police = SKILL_POLICE_FLASH
 	powerloader = SKILL_POWERLOADER_TRAINED
+	melee_weapons = SKILL_MELEE_TRAINED //Officer academy fencing.
 
+
+/datum/skills/FO
+	name = "Field Officer"
+	engineer = SKILL_ENGINEER_ENGI
+	construction = SKILL_CONSTRUCTION_PLASTEEL
+	leadership = SKILL_LEAD_MASTER
+	medical = SKILL_MEDICAL_MEDIC
+	surgery = SKILL_SURGERY_AMATEUR
+	police = SKILL_POLICE_FLASH
+	powerloader = SKILL_POWERLOADER_TRAINED
+	melee_weapons = SKILL_MELEE_TRAINED //Officer academy fencing.
+	pistols = SKILL_PISTOLS_TRAINED
+	smgs = SKILL_SMGS_TRAINED
+	rifles = SKILL_RIFLES_TRAINED
+	shotguns = SKILL_SHOTGUNS_TRAINED
 
 /datum/skills/SO
 	name = "Staff Officer"

@@ -274,7 +274,7 @@
 
 /obj/item/device/radio/headset/almayer/ce
 	name = "chief engineer's headset"
-	desc = "The headset of the guy who is in charge of morons. To access the engineering channel, use :e. For command, use :v."
+	desc = "The headset of the guy who is in charge of morons. To access the logistics channel, use :l. For command, use :v."
 	icon_state = "com_headset"
 	keyslot1 = new /obj/item/device/encryptionkey/ce
 
@@ -284,11 +284,11 @@
 	icon_state = "com_headset"
 	keyslot1 = new /obj/item/device/encryptionkey/cmo
 
-/obj/item/device/radio/headset/almayer/mt
-	name = "engineering radio headset"
-	desc = "When the engineers wish to chat like girls. To access the engineering channel, use :e. "
-	icon_state = "eng_headset"
-	keyslot1 = new /obj/item/device/encryptionkey/engi
+/obj/item/device/radio/headset/almayer/tech
+	name = "technician radio headset"
+	desc = "A headset for the men who secretly run the ship. To access the logistics channel, use :l. "
+	icon_state = "cargo_headset"
+	keyslot1 = new /obj/item/device/encryptionkey/tech
 
 /obj/item/device/radio/headset/almayer/doc
 	name = "medical radio headset"
@@ -296,11 +296,11 @@
 	icon_state = "med_headset"
 	keyslot1 = new /obj/item/device/encryptionkey/med
 
-/obj/item/device/radio/headset/almayer/ct
+/obj/item/device/radio/headset/almayer/ro
 	name = "supply radio headset"
-	desc = "A headset used by the RO and his slave(s). To access the supply channel, use :u."
+	desc = "A headset used by the RO. To access the logistics channel, use :l. For command, use :v."
 	icon_state = "cargo_headset"
-	keyslot1 = new /obj/item/device/encryptionkey/req
+	keyslot1 = new /obj/item/device/encryptionkey/ro
 
 
 /obj/item/device/radio/headset/almayer/cmpcom

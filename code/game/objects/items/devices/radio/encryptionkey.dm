@@ -29,7 +29,7 @@
 	name = "AI Integrated Encryption Key"
 	desc = "Integrated encryption key"
 	icon_state = "cap_cypherkey"
-	channels = list("Almayer" = 1, "Command" = 1, "MP" = 1, "Engi" = 1, "MedSci" = 1)
+	channels = list("Almayer" = 1, "Command" = 1, "MP" = 1, "Logistics" = 1, "MedSci" = 1)
 
 /obj/item/device/encryptionkey/engi
 	name = "Engineering Radio Encryption Key"
@@ -49,17 +49,22 @@
 /obj/item/device/encryptionkey/ce
 	name = "Chief Engineer's Encryption Key"
 	icon_state = "ce_cypherkey"
-	channels = list("Engi" = 1, "Command" = 1)
+	channels = list("Logistics" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/cmo
 	name = "Chief Medical Officer's Encryption Key"
 	icon_state = "cmo_cypherkey"
 	channels = list("MedSci" = 1, "Command" = 1)
 
-/obj/item/device/encryptionkey/req
-	name = "Supply Radio Encryption Key"
+/obj/item/device/encryptionkey/ro
+	name = "Requisition Officer's Radio Encryption Key"
 	icon_state = "cargo_cypherkey"
-	channels = list("Req" = 1)
+	channels = list("Logistics" = 1, "Command" = 1)
+
+/obj/item/device/encryptionkey/tech
+	name = "Technician Radio Encryption Key"
+	icon_state = "eng_cypherkey"
+	channels = list("Logistics" = 1)
 
 /obj/item/device/encryptionkey/mmpo
 	name = "\improper Military Police radio encryption key"

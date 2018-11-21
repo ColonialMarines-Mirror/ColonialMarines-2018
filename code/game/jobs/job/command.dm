@@ -68,7 +68,7 @@ Come hell or high water, you are going to be there for them."}
 /datum/job/command/executive
 	title = "Executive Officer"
 	comm_title = "XO"
-	paygrade = "O3"
+	paygrade = "O4"
 	flag = ROLE_EXECUTIVE_OFFICER
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
 	skills_type = /datum/skills/XO
@@ -91,6 +91,35 @@ You may need to fill in for other duties if areas are understaffed, and you are 
 Make the USCM proud!"}
 
 	get_access() return get_all_marine_access()
+
+//Field Officer
+/datum/job/command/field
+	title = "Field Officer"
+	comm_title = "FO"
+	paygrade = "O3"
+	flag = ROLE_FIELD_OFFICER
+	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE|ROLE_ADMIN_NOTIFY
+	skills_type = /datum/skills/FO
+
+
+	generate_wearable_equipment()
+		. = list(
+				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
+				WEAR_BODY = /obj/item/clothing/under/marine/officer/exec,
+				WEAR_FEET = /obj/item/clothing/shoes/marine,
+				WEAR_WAIST = /obj/item/storage/belt/gun/m4a3/vp70,
+				WEAR_HEAD = /obj/item/clothing/head/cmcap,
+				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
+				WEAR_R_STORE = /obj/item/storage/pouch/general/large
+				)
+
+	generate_entry_message(mob/living/carbon/human/H)
+		. = {"CIC may direct the squads, but someone has to lead them. 
+		Someone has to be there to stand amongst the men and fight. 
+        You lead by example, so it better be a good one.
+		Reign in marines when they go charging in, push them forward when they shirk back.
+        Work with the rest of command to be their most valuable asset on the ground.
+        Do whatever the situation requires of you, but listen to your surperiors."}
 
 //Staff Officer
 /datum/job/command/bridge
@@ -136,7 +165,7 @@ You are in charge of logistics and the overwatch system. You are also in line to
 /datum/job/command/pilot
 	title = "Pilot Officer"
 	comm_title = "PO"
-	paygrade = "O1" //Technically Second Lieutenant equivalent, but 2ndLT doesn't exist in Marine pay grade, so Ensign
+	paygrade = "O1E"
 	flag = ROLE_PILOT_OFFICER
 	total_positions = 4
 	spawn_positions = 4
@@ -229,7 +258,7 @@ While you are an officer, your authority is limited to your own vehicle, where y
 /datum/job/command/police
 	title = "Military Police"
 	comm_title = "MP"
-	paygrade = "E6"
+	paygrade = "E7"
 	flag = ROLE_MILITARY_POLICE
 	total_positions = 5
 	spawn_positions = 5
@@ -271,7 +300,7 @@ In addition, you are tasked with the security of high-ranking personnel, includi
 /datum/job/command/warrant
 	title = "Chief MP"
 	comm_title = "CMP"
-	paygrade = "WO"
+	paygrade = "E8"
 	flag = ROLE_CHIEF_MP
 	selection_color = "#ffaaaa"
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_BRIG, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_PREP, ACCESS_MARINE_WO)

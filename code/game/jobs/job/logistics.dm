@@ -9,7 +9,7 @@
 /datum/job/logistics/engineering
 	title = "Chief Engineer"
 	comm_title = "CE"
-	paygrade = "O3"
+	paygrade = "WO"
 	flag = ROLE_CHIEF_ENGINEER
 	department_flag = ROLEGROUP_MARINE_ENGINEERING
 	selection_color = "#ffeeaa"
@@ -41,7 +41,7 @@ You are also next in the chain of command, should the bridge crew fall in the li
 /datum/job/logistics/requisition
 	title = "Requisitions Officer"
 	comm_title = "RO"
-	paygrade = "O2"
+	paygrade = "O1E"
 	flag = ROLE_REQUISITION_OFFICER
 	department_flag = ROLEGROUP_MARINE_ENGINEERING
 	selection_color = "#9990B2"
@@ -73,17 +73,17 @@ A happy ship is a well-functioning ship."}
 	minimal_player_age = 3
 
 //Maintenance Tech
-/datum/job/logistics/tech/maint
-	title = "Maintenance Tech"
-	comm_title = "MT"
-	paygrade = "E6E"
+/datum/job/logistics/tech
+	title = "Technician"
+	comm_title = "TECH"
+	paygrade = "E6T"
 	flag = ROLE_MAINTENANCE_TECH
 	department_flag = ROLEGROUP_MARINE_ENGINEERING
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 6
+	spawn_positions = 6
 	scaled = 1
-	supervisors = "the chief engineer"
+	supervisors = "the chief engineer, the requisition officer"
 	selection_color = "#fff5cc"
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_ENGINEERING, ACCESS_CIVILIAN_ENGINEERING)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_ENGINEERING, ACCESS_CIVILIAN_ENGINEERING)
@@ -98,13 +98,15 @@ A happy ship is a well-functioning ship."}
 
 	generate_wearable_equipment(mob/living/carbon/human/H)
 		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/mt,
-				WEAR_BODY = /obj/item/clothing/under/marine/officer/engi,
+				WEAR_EAR = /obj/item/device/radio/headset/almayer/tech,
+				WEAR_BODY = /obj/item/clothing/under/rank/cargotech,
 				WEAR_FEET = /obj/item/clothing/shoes/marine,
 				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
 				WEAR_WAIST = /obj/item/storage/belt/utility/full,
+				WEAR_HEAD = /obj/item/clothing/head/beanie,
 				WEAR_EYES = /obj/item/clothing/glasses/welding,
 				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
+				WEAR_L_STORE = /obj/item/storage/pouch/general/medium
 				WEAR_R_STORE = /obj/item/storage/pouch/general/medium
 				)
 
@@ -116,43 +118,3 @@ A happy ship is a well-functioning ship."}
 	generate_entry_message(mob/living/carbon/human/H)
 		. = {"Your job is to make sure the ship is clean and the powergrid is operational.
 Start with the ship's engine, and don't forget radiation equipment."}
-
-//Cargo Tech. Don't ask why this is in engineering
-/datum/job/logistics/tech/cargo
-	title = "Cargo Technician"
-	comm_title = "CT"
-	paygrade = "E5"
-	flag = ROLE_REQUISITION_TECH
-	department_flag = ROLEGROUP_MARINE_ENGINEERING
-	total_positions = 2
-	spawn_positions = 2
-	scaled = 1
-	supervisors = "the requisitions officer"
-	selection_color = "#BAAFD9"
-	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO)
-	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_CARGO)
-	flags_startup_parameters = ROLE_ADD_TO_DEFAULT|ROLE_ADD_TO_MODE
-	skills_type = /datum/skills/CT
-
-	set_spawn_positions(var/count)
-		spawn_positions = ct_slot_formula(count)
-
-	get_total_positions(var/latejoin = 0)
-		return (latejoin ? ct_slot_formula(get_total_marines()) : spawn_positions)
-
-	generate_wearable_equipment(mob/living/carbon/human/H)
-		. = list(
-				WEAR_EAR = /obj/item/device/radio/headset/almayer/ct,
-				WEAR_BODY = /obj/item/clothing/under/rank/cargotech,
-				WEAR_FEET = /obj/item/clothing/shoes/marine,
-				WEAR_HANDS = /obj/item/clothing/gloves/yellow,
-				WEAR_WAIST = /obj/item/storage/belt/gun/m4a3/full,
-				WEAR_HEAD = /obj/item/clothing/head/beanie,
-				WEAR_BACK = /obj/item/storage/backpack/marine/satchel,
-				WEAR_R_STORE = /obj/item/storage/pouch/general/medium
-				)
-
-	generate_entry_message(mob/living/carbon/human/H)
-		. = {"Your job is to dispense supplies to the marines, including weapon attachments.
-Stay in your department when possible to ensure the marines have full access to the supplies they may require.
-Listen to the radio in case someone requests a supply drop via the overwatch system."}

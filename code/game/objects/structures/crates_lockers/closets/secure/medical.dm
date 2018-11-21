@@ -96,7 +96,7 @@
 		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/clothing/under/rank/medical/green(src)
 		new /obj/item/clothing/head/surgery/green(src)
-		new /obj/item/clothing/suit/storage/labcoat(src)
+		new /obj/item/clothing/suit/storage/coat/lab(src)
 		new /obj/item/clothing/mask/surgical(src)
 		new /obj/item/clothing/mask/breath(src)
 		new /obj/item/device/radio/headset/almayer/cmo(src)

@@ -21,18 +21,17 @@
 /obj/item/clothing/mob_can_equip(M as mob, slot)
 
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
-	if (!..())
-		return 0
+	if(!..())
+		return FALSE
 
 	if(ishuman(M))
-
 		var/mob/living/carbon/human/H = M
 		var/obj/item/clothing/under/U = H.w_uniform
 
 		//some clothes can only be worn when wearing specific uniforms
 		if(uniform_restricted && (!is_type_in_list(U, uniform_restricted) || !U))
 			to_chat(H, "<span class='warning'>Your [U ? "[U.name]":"naked body"] doesn't allow you to wear this [name].</span>")
-			return 0
+			return FALSE
 
 		if(species_restricted)
 
@@ -43,18 +42,16 @@
 				exclusive = 1
 
 			if(H.species)
-				if(exclusive)
-					if(!(H.species.name in species_restricted))
-						wearable = 1
+				if(exclusive && H.species.name in species_restricted)
+					wearable = FALSE
 				else
-					if(H.species.name in species_restricted)
-						wearable = 1
+					wearable = TRUE
 
 				if(!wearable && (slot != 15 && slot != 16)) //Pockets.
 					to_chat(M, "\red Your species cannot wear [src].")
-					return 0
+					return FALSE
 
-	return 1
+	return TRUE
 
 /obj/item/clothing/proc/refit_for_species(var/target_species)
 	//Set species_restricted list
@@ -86,15 +83,16 @@
 			species_restricted = list(target_species)
 
 	//Set icon
-	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+	if(sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
-	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+	if(sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
+
 
 ///////////////////////////////////////////////////////////////////////
 // Ears: headsets, earmuffs and tiny objects
@@ -104,10 +102,12 @@
 	throwforce = 2
 	flags_equip_slot = SLOT_EAR
 
+
 /obj/item/clothing/ears/update_clothing_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_ears()
+
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -132,24 +132,32 @@
 	siemens_coefficient = 0.9
 	w_class = 3
 
+
 /obj/item/clothing/suit/update_clothing_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_wear_suit()
 
+
 /obj/item/clothing/suit/mob_can_equip(mob/M, slot, disable_warning = 0)
 	//if we can't equip the item anyway, don't bother with other checks.
-	if (!..())
-		return 0
+	if(!..())
+		return FALSE
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/clothing/under/U = H.w_uniform
+
+		if(!U)
+			to_chat(H, "<span class='warning'>You must be wearing something under it.</span>")
+			return FALSE
+
 		//some uniforms prevent you from wearing any suits but certain types
 		if(U?.suit_restricted && !is_type_in_list(src, U.suit_restricted))
 			to_chat(H, "<span class='warning'>[src] can't be worn with [U].</span>")
-			return 0
-	return 1
+			return FALSE
+
+	return TRUE
 
 
 /////////////////////////////////////////////////////////
@@ -171,27 +179,29 @@
 
 
 /obj/item/clothing/gloves/update_clothing_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_gloves()
+
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
 		cell.charge -= 1000 / severity
-		if (cell.charge < 0)
+		if(cell.charge < 0)
 			cell.charge = 0
 		if(cell.reliability != 100 && prob(50/severity))
 			cell.reliability -= 10 / severity
-	..()
+	. = ..()
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
-	return 0 // return 1 to cancel attack_hand()
+	return FALSE // return 1 to cancel attack_hand()
+
 
 /obj/item/clothing/gloves/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/tool/wirecutters) || istype(W, /obj/item/tool/surgery/scalpel))
-		if (clipped)
+		if(clipped)
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
 			update_icon()
 			return
@@ -206,8 +216,6 @@
 			species_restricted -= "Yautja"
 
 
-
-
 //////////////////////////////////////////////////////////////////
 //Mask
 /obj/item/clothing/mask
@@ -219,8 +227,9 @@
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/masks.dmi')
 	var/anti_hug = 0
 
+
 /obj/item/clothing/mask/update_clothing_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_wear_mask()
 
@@ -231,7 +240,6 @@
 		air_info[2] = T20C //heats/cools air to be breathable
 
 	return air_info
-
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -251,6 +259,6 @@
 
 
 /obj/item/clothing/shoes/update_clothing_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_shoes()

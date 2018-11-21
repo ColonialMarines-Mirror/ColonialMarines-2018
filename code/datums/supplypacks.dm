@@ -52,7 +52,7 @@ OPERATIONS
 					/obj/item/ammo_magazine/pistol/b92fstranq,
 					/obj/item/clothing/under/syndicate/combat,
 					/obj/item/clothing/mask/gas/swat,
-					/obj/item/clothing/tie/storage/black_vest
+					/obj/item/clothing/tie/storage/vest/black
 					)
 	cost = RO_PRICE_NORMAL
 	containertype = /obj/structure/closet/crate
@@ -1955,7 +1955,7 @@ CLOTHING
 	name = "webbings and holsters crate"
 	contains = list(
 					/obj/item/clothing/tie/holster,
-					/obj/item/clothing/tie/storage/brown_vest,
+					/obj/item/clothing/tie/storage/vest,
 					/obj/item/clothing/tie/storage/webbing,
 					/obj/item/clothing/tie/storage/webbing,
 					/obj/item/clothing/tie/storage/webbing,

@@ -15,7 +15,7 @@
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	flags_armor_protection = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun)
+	allowed = list(/obj/item/weapon/gun)
 	siemens_coefficient = 3.0
 
 /obj/item/clothing/suit/redtag
@@ -25,7 +25,7 @@
 	item_state = "redtag"
 	blood_overlay_type = "armor"
 	flags_armor_protection = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun)
+	allowed = list(/obj/item/weapon/gun)
 	siemens_coefficient = 3.0
 
 /*

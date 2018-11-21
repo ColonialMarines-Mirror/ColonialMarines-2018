@@ -13,7 +13,7 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/tie/storage/webbing(src)
-		new /obj/item/clothing/tie/storage/brown_vest(src)
+		new /obj/item/clothing/tie/storage/vest(src)
 		new /obj/item/clothing/head/hardhat/white(src)
 		new /obj/item/clothing/head/welding(src)
 		new /obj/item/clothing/gloves/yellow(src)
@@ -99,7 +99,7 @@
 
 	New()
 		..()
-		if (prob(70)) new /obj/item/clothing/tie/storage/brown_vest(src)
+		if (prob(70)) new /obj/item/clothing/tie/storage/vest(src)
 		else new /obj/item/clothing/tie/storage/webbing(src)
 		new /obj/item/storage/toolbox/mechanical(src)
 		if(z != 1) new /obj/item/device/radio/headset/almayer/mt(src)
@@ -138,7 +138,7 @@
 		..()
 		sleep(2)
 		if (prob(70))
-			new /obj/item/clothing/tie/storage/brown_vest(src)
+			new /obj/item/clothing/tie/storage/vest(src)
 		else
 			new /obj/item/clothing/tie/storage/webbing(src)
 		new /obj/item/clothing/suit/fire/firefighter(src)

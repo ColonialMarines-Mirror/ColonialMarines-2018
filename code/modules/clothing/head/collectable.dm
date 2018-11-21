@@ -1,9 +1,8 @@
-
 //Hat Station 13
-
 /obj/item/clothing/head/collectable
 	name = "collectable hat"
 	desc = "A rare collectable hat."
+
 
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare hat"
@@ -11,11 +10,13 @@
 	icon_state = "petehat"
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
 
+
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime cap!"
 	desc = "It just latches right in place!"
 	icon_state = "slime"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
@@ -23,17 +24,20 @@
 	icon_state = "xenom"
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
 	desc = "A rare Chef's Hat meant for hat collectors!"
 	icon_state = "hats"
 	item_state = "chefhat"
 
+
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
 	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire and Librarians."
 	icon_state = "paper"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/collectable/tophat
 	name = "collectable top hat"
@@ -42,6 +46,7 @@
 	item_state = "that"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/captain
 	name = "collectable captain's hat"
 	desc = "A Collectable Hat that'll make you look just like a real comdom!"
@@ -49,17 +54,20 @@
 	item_state = "caphat"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/police
 	name = "collectable police officer's hat"
 	desc = "A Collectable Police Officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
 	desc = "A Collectable red Beret. It smells faintly of Garlic."
 	icon_state = "beret"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/collectable/welding
 	name = "collectable welding helmet"
@@ -68,17 +76,20 @@
 	item_state = "welding"
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
 	desc = "Just like a real Brain Slug!"
 	icon_state = "headslime"
 	item_state = "headslime"
 
+
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
 	desc = "A Collectible farmer's Flat Cap!"
 	icon_state = "flat_cap"
 	item_state = "detective"
+
 
 /obj/item/clothing/head/collectable/pirate
 	name = "collectable pirate hat"
@@ -87,12 +98,14 @@
 	item_state = "pirate"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/kitty
 	name = "collectable kitty ears"
 	desc = "The fur feels.....a bit too realistic."
 	icon_state = "kitty"
 	item_state = "kitty"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/collectable/rabbitears
 	name = "collectable rabbit ears"
@@ -101,10 +114,12 @@
 	item_state = "bunny"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/wizard
 	name = "collectable wizard's hat"
-	desc = "NOTE:Any magical powers gained from wearing this hat are purely coincidental."
+	desc = "NOTE: Any magical powers gained from wearing this hat are purely coincidental."
 	icon_state = "wizard"
+
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
@@ -113,17 +128,20 @@
 	item_state = "hardhat0_yellow"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/HoS
 	name = "collectable HoS hat"
 	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
 	icon_state = "hoscap"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/collectable/thunderdome
 	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
+
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"

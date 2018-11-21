@@ -10,6 +10,7 @@
 	flags_heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_max_heat_protection_temperature
 
+
 /obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
 	name = "budget insulated gloves"
@@ -18,9 +19,11 @@
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 
+
 /obj/item/clothing/gloves/fyellow/New()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
-	..()
+	return ..()
+
 
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
@@ -39,11 +42,13 @@
 	icon_state = "orange"
 	item_state = "orangegloves"
 
+
 /obj/item/clothing/gloves/red
 	name = "red gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
 	item_state = "redgloves"
+
 
 /obj/item/clothing/gloves/rainbow
 	name = "rainbow gloves"
@@ -51,11 +56,13 @@
 	icon_state = "rainbow"
 	item_state = "rainbowgloves"
 
+
 /obj/item/clothing/gloves/blue
 	name = "blue gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
 	item_state = "bluegloves"
+
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
@@ -63,11 +70,13 @@
 	icon_state = "purple"
 	item_state = "purplegloves"
 
+
 /obj/item/clothing/gloves/green
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
 	item_state = "greengloves"
+
 
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
@@ -75,11 +84,13 @@
 	icon_state = "gray"
 	item_state = "graygloves"
 
+
 /obj/item/clothing/gloves/light_brown
 	name = "light brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
 	item_state = "lightbrowngloves"
+
 
 /obj/item/clothing/gloves/brown
 	name = "brown gloves"

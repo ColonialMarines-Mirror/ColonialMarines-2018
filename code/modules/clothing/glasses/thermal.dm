@@ -1,6 +1,4 @@
-
 // thermal goggles
-
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
 	desc = "Thermals in the shape of glasses."
@@ -14,6 +12,7 @@
 	deactive_state = "goggles_off"
 	fullscreen_vision = /obj/screen/fullscreen/thermal
 
+
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
@@ -24,7 +23,8 @@
 			M.disabilities |= NEARSIGHTED
 			spawn(100)
 				M.disabilities &= ~NEARSIGHTED
-	..()
+
+	return ..()
 
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
@@ -34,6 +34,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	origin_tech = "magnets=3;syndicate=4"
 
+
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"
 	desc = "A monocle thermal."
@@ -42,6 +43,7 @@
 	toggleable = 0
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"
 	desc = "An eyepatch with built-in thermal optics"
@@ -49,6 +51,7 @@
 	item_state = "eyepatch"
 	toggleable = 0
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "Optical Thermal Implants"
@@ -69,11 +72,12 @@
 	flags_item = NODROP|DELONDROP
 	toggleable = 0
 
-	Dispose()
-		..()
-		return TA_REVIVE_ME
 
-	Recycle()
-		var/blacklist[] = list("icon_state","item_state","name","desc","vision_flags","invisa_view","can_remove")
-		. = ..() + blacklist
+/obj/item/clothing/glasses/thermal/yautja/Dispose()
+	. = ..()
+	return TA_REVIVE_ME
 
+
+/obj/item/clothing/glasses/thermal/yautja/Recycle()
+	var/blacklist[] = list("icon_state","item_state","name","desc","vision_flags","invisa_view","can_remove")
+	. = ..() + blacklist

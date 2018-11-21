@@ -1,6 +1,4 @@
-
 // nightvision goggles
-
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
@@ -57,15 +55,15 @@
 	vision_flags = SEE_TURFS
 	fullscreen_vision = null //Nulled out due to general dislike for the overlay.
 
+
 /obj/item/clothing/glasses/night/m56_goggles/mob_can_equip(mob/user, slot)
 	if(slot == WEAR_EYES)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(!istype(H.back, /obj/item/smartgun_powerpack))
 				to_chat(user, "You must be wearing an M56 Powerpack on your back to wear these.")
-				return 0
+				return FALSE
 	return ..()
-
 
 
 /obj/item/clothing/glasses/night/yautja
@@ -80,10 +78,10 @@
 
 
 /obj/item/clothing/glasses/night/yautja/Dispose()
-	..()
+	. = ..()
 	return TA_REVIVE_ME
+
 
 /obj/item/clothing/glasses/night/yautja/Recycle()
 	var/blacklist[] = list("overlay","icon_state","item_state","name","desc","darkness_view","can_remove")
 	. = ..() + blacklist
-

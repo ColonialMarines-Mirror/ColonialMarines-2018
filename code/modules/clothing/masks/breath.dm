@@ -9,32 +9,33 @@
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 
-	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/masks.dmi'
-		)
+	sprite_sheets = list("Vox" = 'icons/mob/species/vox/masks.dmi')
 
 	var/hanging = 0
 
-	verb/toggle()
-		set category = "Object"
-		set name = "Adjust mask"
-		set src in usr
 
-		if(usr.canmove && !usr.stat && !usr.is_mob_restrained())
-			if(!src.hanging)
-				src.hanging = !src.hanging
-				gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-				flags_inventory &= ~(COVERMOUTH|ALLOWINTERNALS)
-				icon_state = "breathdown"
-				to_chat(usr, "Your mask is now hanging on your neck.")
+/obj/item/clothing/mask/breathverb/toggle()
+	set category = "Object"
+	set name = "Adjust mask"
+	set src in usr
 
-			else
-				src.hanging = !src.hanging
-				gas_transfer_coefficient = 0.10
-				flags_inventory |= COVERMOUTH|ALLOWINTERNALS
-				icon_state = "breath"
-				to_chat(usr, "You pull the mask up to cover your face.")
-			update_clothing_icon()
+	if(usr.canmove && !usr.stat && !usr.is_mob_restrained())
+		if(!src.hanging)
+			src.hanging = !src.hanging
+			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+			flags_inventory &= ~(COVERMOUTH|ALLOWINTERNALS)
+			icon_state = "breathdown"
+			to_chat(usr, "Your mask is now hanging on your neck.")
+
+		else
+			src.hanging = !src.hanging
+			gas_transfer_coefficient = 0.10
+			flags_inventory |= COVERMOUTH|ALLOWINTERNALS
+			icon_state = "breath"
+			to_chat(usr, "You pull the mask up to cover your face.")
+
+		update_clothing_icon()
+
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
@@ -44,9 +45,7 @@
 	permeability_coefficient = 0.01
 
 
-
 //REBREATHER
-
 /obj/item/clothing/mask/rebreather
 	name = "rebreather"
 	desc = "A close-fitting device that instantly heats or cools down air when you inhale so it doesn't damage your lungs."
@@ -56,6 +55,7 @@
 	flags_armor_protection = 0
 	flags_inventory = COVERMOUTH|ALLOWREBREATH
 	flags_inv_hide = HIDELOWHAIR
+
 
 /obj/item/clothing/mask/rebreather/scarf
 	name = "heat absorbent coif"

@@ -6,11 +6,11 @@
 	w_class = 2.0
 	var/anti_hug = 0
 
+
 /obj/item/clothing/head/update_clothing_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_head()
-
 
 
 /obj/item/clothing/head/cmbandana
@@ -21,9 +21,11 @@
 	icon_state = "band"
 	flags_inv_hide = HIDETOPHAIR
 
+
 /obj/item/clothing/head/cmbandana/New()
 	select_gamemode_skin(type, list(MAP_ICE_COLONY = "s_band") )
-	..()
+	return ..()
+
 
 /obj/item/clothing/head/cmbandana/tan
 	icon_state = "band2"
@@ -45,24 +47,30 @@
 	sprite_sheet_id = 1
 	icon_state = "beret"
 
+
 /obj/item/clothing/head/cmberet/New()
 	select_gamemode_skin(/obj/item/clothing/head/cmberet, list(MAP_ICE_COLONY = "s_beret"))
-	..()
+	return ..()
+
 
 /obj/item/clothing/head/cmberet/tan
 	icon_state = "berettan"
 
+
 /obj/item/clothing/head/cmberet/tan/New()
 	select_gamemode_skin(/obj/item/clothing/head/cmberet/tan)
-	..()
+	return ..()
+
 
 /obj/item/clothing/head/cmberet/red
 	icon_state = "beretred"
+
 
 /obj/item/clothing/head/cmberet/wo
 	name = "\improper USCM chief MP beret"
 	desc = "A beret with the lieutenant insignia emblazoned on it. It shines with the glow of corrupt authority and a smudge of doughnut."
 	icon_state = "beretwo"
+
 
 /obj/item/clothing/head/headband
 	name = "\improper USCM headband"
@@ -71,9 +79,10 @@
 	sprite_sheet_id = 1
 	icon_state = "headband"
 
+
 /obj/item/clothing/head/headband/New()
 	select_gamemode_skin(type, list(MAP_ICE_COLONY = "ushanka") )
-	..()
+	. = ..()
 	switch(icon_state)
 		if("ushanka") //Weird case, since the item basically transforms into another item.
 			name = "\improper USCM ushanka"
@@ -83,8 +92,10 @@
 			flags_inventory = BLOCKSHARPOBJ
 			flags_inv_hide = HIDEEARS|HIDETOPHAIR
 
+
 /obj/item/clothing/head/headband/red
 	icon_state = "headbandred"
+
 
 /obj/item/clothing/head/headband/rambo
 	name = "headband"
@@ -93,12 +104,14 @@
 	icon_state = "headband_rambo"
 	sprite_sheet_id = 0
 
+
 /obj/item/clothing/head/headset
 	name = "\improper USCM headset"
 	desc = "A headset typically found in use by radio-operators and officers. This one appears to be malfunctioning."
 	icon_state = "headset"
 	icon = 'icons/obj/clothing/cm_hats.dmi'
 	sprite_sheet_id = 1
+
 
 /obj/item/clothing/head/cmcap
 	name = "\improper USCM cap"
@@ -109,19 +122,25 @@
 	var/flipped_cap = FALSE
 	var/base_cap_icon
 
+
 /obj/item/clothing/head/cmcap/New()
 	select_gamemode_skin(/obj/item/clothing/head/cmcap)
 	base_cap_icon = icon_state
-	..()
+	return ..()
+
 
 /obj/item/clothing/head/cmcap/verb/fliphat()
 	set name = "Flip hat"
 	set category = "Object"
 	set src in usr
-	if(!isliving(usr)) return
-	if(usr.is_mob_incapacitated()) return
+
+	if(!isliving(usr)) 
+		return
+	if(usr.is_mob_incapacitated()) 
+		return
 
 	flipped_cap = !flipped_cap
+
 	if(flipped_cap)
 		to_chat(usr, "You spin the hat backwards! You look like a tool.")
 		icon_state = base_cap_icon + "_b"
@@ -131,20 +150,23 @@
 
 	update_clothing_icon()
 
+
 /obj/item/clothing/head/cmcap/ro
 	name = "\improper USCM officer cap"
 	desc = "A hat usually worn by officers in the USCM. While it has limited combat functionality, some prefer to wear it instead of the standard issue helmet."
 	icon_state = "rocap"
 
+
 /obj/item/clothing/head/cmcap/ro/New()
 	select_gamemode_skin(/obj/item/clothing/head/cmcap/ro)
-	..()
+	return ..()
 
 
 /obj/item/clothing/head/cmcap/req
 	name = "\improper USCM requisition cap"
 	desc = "It's a fancy hat for a not-so-fancy military supply clerk."
 	icon_state = "cargocap"
+
 
 /obj/item/clothing/head/cmo
 	name = "\improper Chief Medical hat"
@@ -162,29 +184,33 @@
 	armor = list(melee = 40, bullet = 40, laser = 40,energy = 20, bomb = 10, bio = 0, rad = 0)
 	flags_inventory = BLOCKSHARPOBJ
 
+
 /obj/item/clothing/head/beret/marine/commander
 	name = "marine commander beret"
 	desc = "A beret with the commander insignia emblazoned on it. Wearer may suffer the heavy weight of responsibility upon his head and shoulders."
 	icon_state = "centcomcaptain"
+
 
 /obj/item/clothing/head/beret/marine/chiefofficer
 	name = "chief officer beret"
 	desc = "A beret with the lieutenant-commander insignia emblazoned on it. It emits a dark aura and may corrupt the soul."
 	icon_state = "hosberet"
 
+
 /obj/item/clothing/head/beret/marine/techofficer
 	name = "technical officer beret"
 	desc = "A beret with the lieutenant insignia emblazoned on it. There's something inexplicably efficient about it..."
 	icon_state = "e_beret_badge"
+
 
 /obj/item/clothing/head/beret/marine/logisticsofficer
 	name = "logistics officer beret"
 	desc = "A beret with the lieutenant insignia emblazoned on it. It inspires a feeling of respect."
 	icon_state = "hosberet"
 
+
 //==========================//PROTECTIVE\\===============================\\
 //=======================================================================\\
-
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
@@ -197,15 +223,16 @@
 	flags_inv_hide = HIDEEARS|HIDETOPHAIR
 	anti_hug = 1
 
-	attack_self(mob/user as mob)
-		if(src.icon_state == "ushankadown")
-			src.icon_state = "ushankaup"
-			src.item_state = "ushankaup"
-			to_chat(user, "You raise the ear flaps on the ushanka.")
-		else
-			src.icon_state = "ushankadown"
-			src.item_state = "ushankadown"
-			to_chat(user, "You lower the ear flaps on the ushanka.")
+
+/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
+	if(icon_state == name + "down")
+		icon_state = "ushankaup"
+		item_state = "ushankaup"
+		to_chat(user, "You raise the ear flaps on the ushanka.")
+	else
+		icon_state = "ushankadown"
+		item_state = "ushankadown"
+		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 
 /obj/item/clothing/head/bearpelt
@@ -237,9 +264,11 @@
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS
 
+
 /obj/item/clothing/head/uppcap/beret
 	name = "\improper armored UPP beret"
 	icon_state = "upp_beret"
+
 
 /obj/item/clothing/head/frelancer
 	name = "\improper armored Freelancer cap"
@@ -255,9 +284,11 @@
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS
 
+
 /obj/item/clothing/head/frelancer/beret
 	name = "\improper armored Freelancer beret"
 	icon_state = "freelancer_beret"
+
 
 /obj/item/clothing/head/militia
 	name = "\improper armored militia cowl"
@@ -273,6 +304,7 @@
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS|HIDETOPHAIR
 
+
 /obj/item/clothing/head/admiral
 	name = "\improper armored Admiral cap"
 	desc = "A sturdy admiral's cap. More protective than it seems. Please don't ditch this for a helmet like a punk."
@@ -284,4 +316,3 @@
 	min_cold_protection_temperature = ICE_PLANET_min_cold_protection_temperature
 	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS
-

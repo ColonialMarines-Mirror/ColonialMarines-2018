@@ -1,5 +1,3 @@
-
-
 /obj/item/clothing/shoes/marine
 	name = "marine combat boots"
 	desc = "Standard issue combat boots for combat scenarios or combat situations. All combat, all the time."
@@ -14,11 +12,13 @@
 	var/obj/item/knife
 	var/armor_stage = 0
 
+
 /obj/item/clothing/shoes/marine/Dispose()
 	if(knife)
 		cdel(knife)
 		knife = null
-	. = ..()
+
+	return ..()
 
 /obj/item/clothing/shoes/marine/attack_hand(var/mob/living/M)
 	if(knife && src.loc == M && !M.is_mob_incapacitated()) //Only allow someone to take out the knife if it's being worn or held. So you can pick them up off the floor
@@ -28,11 +28,14 @@
 			knife = 0
 			update_icon()
 		return
-	..()
+
+	return ..()
+
 
 /obj/item/clothing/shoes/marine/attackby(var/obj/item/I, var/mob/living/M)
 	if(istype(I, /obj/item/weapon/combat_knife) || istype(I, /obj/item/weapon/throwing_knife))
-		if(knife)	return
+		if(knife)	
+			return
 		M.drop_held_item()
 		knife = I
 		I.loc = src
@@ -40,14 +43,13 @@
 		playsound(M, 'sound/weapons/gun_shotgun_shell_insert.ogg', 15, 1)
 		update_icon()
 
+
 /obj/item/clothing/shoes/marine/update_icon()
 	if(knife && !armor_stage)
 		icon_state = "marine-1"
 	else
 		if(!armor_stage)
 			icon_state = initial(icon_state)
-
-
 
 
 /obj/item/clothing/shoes/marinechief
@@ -58,12 +60,14 @@
 	flags_inventory = NOSLIPPING
 	siemens_coefficient = 0.6
 
+
 /obj/item/clothing/shoes/marinechief/commander
 	name = "commander shoes"
 	desc = "Has special soles for better trampling those underneath."
 
 
 /obj/item/clothing/shoes/veteran
+
 
 /obj/item/clothing/shoes/veteran/PMC
 	name = "polished shoes"
@@ -77,6 +81,7 @@
 	flags_heat_protection = FEET
 	flags_inventory = NOSLIPPING
 	siemens_coefficient = 0.6
+
 
 /obj/item/clothing/shoes/veteran/PMC/commando
 	name = "\improper PMC commando boots"

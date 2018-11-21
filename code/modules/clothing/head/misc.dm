@@ -1,5 +1,3 @@
-
-
 /obj/item/clothing/head/centhat
 	name = "\improper CentComm. hat"
 	icon_state = "centcom"
@@ -8,6 +6,7 @@
 	siemens_coefficient = 0.9
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/hairflower
 	name = "hair flower pin"
 	icon_state = "hairflower"
@@ -15,11 +14,13 @@
 	item_state = "hairflower"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."
 	icon_state = "pwig"
 	item_state = "pwig"
+
 
 /obj/item/clothing/head/that
 	name = "top-hat"
@@ -29,17 +30,20 @@
 	siemens_coefficient = 0.9
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	icon_state = "redcoat"
 	desc = "<i>'I guess it's a redhead.'</i>"
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/mailman
 	name = "station cap"
 	icon_state = "mailman"
 	desc = "<i>Choo-choo</i>!"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "plague doctor's hat"
@@ -49,6 +53,7 @@
 	siemens_coefficient = 0.9
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
 	desc = "It's unspeakably stylish"
@@ -57,12 +62,14 @@
 	flags_inv_hide = HIDEEARS|HIDEALLHAIR
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	siemens_coefficient = 0.9
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
@@ -75,6 +82,7 @@
 	flags_armor_protection = HEAD|FACE|EYES
 	anti_hug = 1
 
+
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
@@ -85,6 +93,7 @@
 	flags_inventory = 0
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/head/greenbandana
 	name = "green bandana"
 	desc = "It's a green bandana with some fine nanotech lining."
@@ -93,6 +102,7 @@
 	flags_inventory = NOFLAGS
 	flags_inv_hide = NOFLAGS
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
@@ -103,6 +113,7 @@
 	flags_inv_hide = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEALLHAIR
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "fight for what's righteous!"
@@ -111,27 +122,33 @@
 	flags_inventory = COVERMOUTH|COVEREYES
 	flags_inv_hide = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEALLHAIR
 
+
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
 	item_state = "justiceblue"
+
 
 /obj/item/clothing/head/justice/yellow
 	icon_state = "justiceyellow"
 	item_state = "justiceyellow"
 
+
 /obj/item/clothing/head/justice/green
 	icon_state = "justicegreen"
 	item_state = "justicegreen"
 
+
 /obj/item/clothing/head/justice/pink
 	icon_state = "justicepink"
 	item_state = "justicepink"
+
 
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
 	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -140,12 +157,14 @@
 	item_state = "detective"
 	siemens_coefficient = 0.9
 
+
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
@@ -155,16 +174,19 @@
 	flags_armor_protection = 0
 	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 50, bio = 0, rad = 0)
 
+
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
 	icon_state = "bandana"
 	item_state = "bandana"
 
+
 /obj/item/clothing/head/bandana/red
 	name = "red bandana"
 	desc = "For when it comes crashing down and it hurts inside."
 	icon_state = "bandana_red"
+
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
@@ -173,8 +195,8 @@
 	item_state = "bowler"
 	flags_armor_protection = 0
 
-//stylish bs12 hats
 
+//stylish bs12 hats
 /obj/item/clothing/head/bowlerhat
 	name = "bowler hat"
 	icon_state = "bowler_hat"
@@ -182,11 +204,13 @@
 	desc = "For the gentleman of distinction."
 	flags_armor_protection = 0
 
+
 /obj/item/clothing/head/beaverhat
 	name = "beaver hat"
 	icon_state = "beaver_hat"
 	item_state = "beaver_hat"
 	desc = "Soft felt makes this hat both comfortable and elegant."
+
 
 /obj/item/clothing/head/boaterhat
 	name = "boater hat"
@@ -194,11 +218,13 @@
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."
 
+
 /obj/item/clothing/head/fedora
 	name = "\improper fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A sharp, stylish hat."
+
 
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
@@ -206,13 +232,13 @@
 	item_state = "feather_trilby"
 	desc = "A sharp, stylish hat with a feather."
 
+
 /obj/item/clothing/head/fez
 	name = "\improper fez"
 	icon_state = "fez"
 	item_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
 
-//end bs12 hats
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -222,6 +248,7 @@
 	flags_inventory = NOFLAGS
 	flags_inv_hide = HIDEALLHAIR
 	siemens_coefficient = 2.0
+
 
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
@@ -233,6 +260,7 @@
 	siemens_coefficient = 2.0
 	flags_armor_protection = HEAD|FACE|EYES
 
+
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
 	icon_state = "xenos"
@@ -243,6 +271,7 @@
 	siemens_coefficient = 2.0
 	flags_armor_protection = HEAD|FACE|EYES
 	anti_hug = 10 //Lel
+
 
 /obj/item/clothing/head/boonie
 	name = "Boonie Hat"

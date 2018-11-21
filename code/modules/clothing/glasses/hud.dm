@@ -10,17 +10,21 @@
 	if(slot == WEAR_EYES && active)
 		var/datum/mob_hud/H = huds[hud_type]
 		H.add_hud_to(user)
-	..()
+
+	return ..()
+
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	if(istype(user) && active)
 		if(src == user.glasses) //dropped is called before the inventory reference is updated.
 			var/datum/mob_hud/H = huds[hud_type]
 			H.remove_hud_from(user)
-	..()
+
+	return ..()
+
 
 /obj/item/clothing/glasses/hud/attack_self(mob/user)
-	..()
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(toggleable && H.glasses == src) //toggleable and worn
@@ -40,6 +44,7 @@
 	hud_type = MOB_HUD_MEDICAL_ADVANCED
 	actions_types = list(/datum/action/item_action/toggle)
 
+
 /obj/item/clothing/glasses/hud/security
 	name = "\improper PatrolMate HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
@@ -50,6 +55,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	var/global/list/jobs[0]
 
+
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
@@ -59,6 +65,7 @@
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING // the define name is just misleading, don't worry
 	toggleable = 0
 	actions_types = list()
+
 
 /obj/item/clothing/glasses/hud/xenohud
 	name = "XenoMate HUD"

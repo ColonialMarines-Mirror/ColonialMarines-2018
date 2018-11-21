@@ -76,8 +76,9 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+
 /obj/item/New(loc)
-	..()
+	. = ..()
 	item_list += src
 	for(var/path in actions_types)
 		new path(src)
@@ -93,8 +94,7 @@
 		cdel(X)
 	master = null
 	item_list -= src
-	. = ..()
-
+	return ..()
 
 
 /obj/item/ex_act(severity)
@@ -119,6 +119,7 @@
 /obj/item/proc/suicide_act(mob/user)
 	return
 
+
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
 	set category = "Object"
@@ -142,9 +143,15 @@ cases. Override_icon_state should be a list.*/
 		var/new_icon_state
 		var/new_name
 		var/new_protection
-		if(override_icon_state && override_icon_state.len) new_icon_state = override_icon_state[map_tag]
-		if(override_name) new_name = override_name[map_tag]
-		if(override_protection && override_protection.len) new_protection = override_protection[map_tag]
+		if(override_icon_state && override_icon_state.len)
+			new_icon_state = override_icon_state[map_tag]
+
+		if(override_name)
+			new_name = override_name[map_tag]
+
+		if(override_protection && override_protection.len)
+			new_protection = override_protection[map_tag]
+
 		switch(map_tag)
 			if(MAP_ICE_COLONY) //Can easily add other states if needed.
 				icon_state = new_icon_state ? new_icon_state : "s_" + icon_state
@@ -157,25 +164,26 @@ cases. Override_icon_state should be a list.*/
 
 		item_state = icon_state
 
+
 /obj/item/attack_hand(mob/user as mob)
-	if (!user)
+	if(!user)
 		return
 
 	if(anchored)
 		to_chat(user, "[src] is anchored to the ground.")
 		return
 
-	if (istype(src.loc, /obj/item/storage))
+	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/S = src.loc
 		S.remove_from_storage(src, user.loc)
 
 	throwing = FALSE
 
-	if(loc == user)
-		if(!user.drop_inv_item_on_ground(src))
-			return
+	if(loc == user && !user.drop_inv_item_on_ground(src))
+		return
 	else
-		user.next_move = max(user.next_move+2,world.time + 2)
+		user.next_move = max(user.next_move+2, world.time + 2)
+
 	if(!disposed) //item may have been cdel'd by the drop above.
 		pickup(user)
 		add_fingerprint(user)
@@ -185,6 +193,7 @@ cases. Override_icon_state should be a list.*/
 
 /obj/item/attack_paw(mob/user as mob)
 	return attack_hand(user)
+
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -218,11 +227,14 @@ cases. Override_icon_state should be a list.*/
 
 	return
 
+
 /obj/item/proc/talk_into(mob/M as mob, text)
 	return
 
+
 /obj/item/proc/moved(mob/user as mob, old_loc as turf)
 	return
+
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 //the call happens after the item's potential loc change.
@@ -238,17 +250,21 @@ cases. Override_icon_state should be a list.*/
 	if(flags_item & DELONDROP)
 		cdel(src)
 
+
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
+
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/storage/S as obj)
 	return
 
+
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/storage/S as obj)
 	return
+
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder as mob)
@@ -265,9 +281,11 @@ cases. Override_icon_state should be a list.*/
 		if(item_action_slot_check(user, slot)) //some items only give their actions buttons when in a specific slot.
 			A.give_action(user)
 
+
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(mob/user, slot)
 	return TRUE
+
 
 // The mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 // If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -512,23 +530,30 @@ cases. Override_icon_state should be a list.*/
 
 	if(!(usr)) //BS12 EDIT
 		return
+
 	if(!usr.canmove || usr.stat || usr.is_mob_restrained() || !Adjacent(usr))
 		return
+
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/brain)))//Is humanoid, and is not a brain
 		to_chat(usr, "\red You can't pick things up!")
 		return
-	if( usr.stat || usr.is_mob_restrained() )//Is not asleep/dead and is not restrained
+
+	if(usr.stat || usr.is_mob_restrained())//Is not asleep/dead and is not restrained
 		to_chat(usr, "\red You can't pick things up!")
 		return
+
 	if(src.anchored) //Object isn't anchored
 		to_chat(usr, "\red You can't pick that up!")
 		return
+
 	if(!usr.hand && usr.r_hand) //Right hand is not full
 		to_chat(usr, "\red Your right hand is full.")
 		return
+
 	if(usr.hand && usr.l_hand) //Left hand is not full
 		to_chat(usr, "\red Your left hand is full.")
 		return
+
 	if(!istype(src.loc, /turf)) //Object is on a turf
 		to_chat(usr, "\red You can't pick that up!")
 		return
@@ -541,12 +566,13 @@ cases. Override_icon_state should be a list.*/
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if( src in usr )
+	if(src in usr)
 		attack_self(usr)
 
 
 /obj/item/proc/IsShield()
 	return FALSE
+
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc
@@ -558,6 +584,7 @@ cases. Override_icon_state should be a list.*/
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
 		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
@@ -576,6 +603,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/proc/zoom(mob/living/user, tileoffset = 11, viewsize = 12) //tileoffset is client view offset in the direction the user is facing. viewsize is how far out this thing zooms. 7 is normal view
 	if(!user)
 		return
+
 	var/zoom_device = zoomdevicename ? "\improper [zoomdevicename] of [src]" : "\improper [src]"
 	var/mob/living/carbon/human/H = user
 
@@ -637,6 +665,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 
+
 /obj/item/proc/eyecheck(mob/user)
 	if(!ishuman(user))
 		return TRUE
@@ -676,14 +705,15 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/attack_alien(mob/living/carbon/Xenomorph/M)
 	return FALSE
 
+
 /obj/item/proc/update_action_button_icons()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.update_button_icon()
 
-/obj/item/proc/extinguish(atom/target, mob/user)
 
-	if (reagents.total_volume < 1)
+/obj/item/proc/extinguish(atom/target, mob/user)
+	if(reagents.total_volume < 1)
 		to_chat(user, "\red \The [src]'s water reserves are empty.")
 		return
 

@@ -8,12 +8,14 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
+
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)
-	if (src == user.wear_mask)
+	if(src == user.wear_mask)
 		return
 	else
-		..()
+		return ..()
+
 	return
 
 
@@ -29,12 +31,14 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
 
+
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags_inv_hide = HIDEFACE
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/mask/snorkel
 	name = "Snorkel"
@@ -43,8 +47,8 @@
 	flags_inv_hide = HIDEFACE
 	flags_armor_protection = 0
 
-//scarves (fit in in mask slot)
 
+//scarves (fit in in mask slot)
 /obj/item/clothing/mask/bluescarf
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
@@ -54,6 +58,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
+
 /obj/item/clothing/mask/redscarf
 	name = "red scarf"
 	desc = "A red and white checkered neck scarf."
@@ -62,6 +67,7 @@
 	flags_inventory = COVERMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+
 
 /obj/item/clothing/mask/greenscarf
 	name = "green scarf"
@@ -82,6 +88,7 @@
 	gas_transfer_coefficient = 0.90
 	siemens_coefficient = 0
 
+
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."
@@ -92,6 +99,7 @@
 	w_class = 2
 	siemens_coefficient = 0.9
 	flags_armor_protection = HEAD|FACE|EYES
+
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
@@ -115,12 +123,14 @@
 	flags_armor_protection = FACE
 	w_class = 2
 
+
 /obj/item/clothing/mask/balaclava/tactical
 	name = "green balaclava"
 	desc = "Designed to both hide identities and keep your face comfy and warm."
 	icon_state = "swatclava"
 	item_state = "balaclava"
 	w_class = 2
+
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
@@ -132,11 +142,13 @@
 	w_class = 2
 	siemens_coefficient = 3.0
 
+
 /obj/item/clothing/mask/luchador/tecnicos
 	name = "Tecnicos Mask"
 	desc = "Worn by robust fighters who uphold justice and fight honorably."
 	icon_state = "luchador"
 	item_state = "luchador"
+
 
 /obj/item/clothing/mask/luchador/rudos
 	name = "Rudos Mask"

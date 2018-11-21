@@ -8,6 +8,7 @@
  *
  */
 
+
 /*
  * Welding mask
  */
@@ -30,6 +31,7 @@
 	eye_protection = 2
 	tint = 2
 	var/hug_memory = 0 //Variable to hold the "memory" of how many anti-hugs remain.  Because people were abusing the fuck out of it.
+
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -69,6 +71,7 @@
 
 		update_action_button_icons()
 
+
 /*
  * Cakehat
  */
@@ -89,9 +92,11 @@
 		return
 
 /obj/item/clothing/head/cakehat/attack_self(mob/user as mob)
-	if(status > 1)	return
-	src.onfire = !( src.onfire )
-	if (src.onfire)
+	if(status > 1)
+		return
+
+	src.onfire = !(src.onfire)
+	if(src.onfire)
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"
@@ -100,6 +105,7 @@
 		src.force = null
 		src.damtype = "brute"
 		src.icon_state = "cake0"
+
 	return
 
 
@@ -119,36 +125,44 @@
 	w_class = 3
 	anti_hug = 1
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			to_chat(user, "You cannot turn the light on while in [user.loc]")
-			return
-		on = !on
-		icon_state = "hardhat[on]_pumpkin"
 
-		if(on)	user.SetLuminosity(brightness_on)
-		else	user.SetLuminosity(-brightness_on)
+/obj/item/clothing/head/pumpkinhead/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in [user.loc]")
+		return
 
-	pickup(mob/user)
-		..()
-		if(on)
-			user.SetLuminosity(brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(0)
+	on = !on
+	icon_state = "hardhat[on]_pumpkin"
 
-	dropped(mob/user)
-		..()
-		if(on)
-			user.SetLuminosity(-brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+	if(on)
+		user.SetLuminosity(brightness_on)
+	else
+		user.SetLuminosity(-brightness_on)
 
-	Dispose()
-		if(ismob(src.loc))
-			src.loc.SetLuminosity(-brightness_on)
-		else
-			SetLuminosity(0)
-		. = ..()
+
+/obj/item/clothing/head/pumpkinhead/pickup(mob/user)
+	. = ..()
+	if(on)
+		user.SetLuminosity(brightness_on)
+		SetLuminosity(0)
+
+
+/obj/item/clothing/head/pumpkinhead/dropped(mob/user)
+	. = ..()
+	if(on)
+		user.SetLuminosity(-brightness_on)
+		SetLuminosity(brightness_on)
+
+
+/obj/item/clothing/head/pumpkinhead/Dispose()
+	if(ismob(src.loc))
+		src.loc.SetLuminosity(-brightness_on)
+	else
+		SetLuminosity(0)
+
+	return ..()
+
+
 /*
  * Kitty ears
  */
@@ -157,18 +171,21 @@
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	flags_armor_protection = 0
-	var/icon/mob
+	var/icon/mob1
 	var/icon/mob2
 	siemens_coefficient = 1.5
-/*
-	update_icon(var/mob/living/carbon/human/user)
-		if(!istype(user)) return
-		mob = new/icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kitty")
-		mob2 = new/icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kitty2")
-		mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
-		mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
 
-		var/icon/earbit = new/icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kittyinner")
-		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kittyinner2")
-		mob.Blend(earbit, ICON_OVERLAY)
-		mob2.Blend(earbit2, ICON_OVERLAY)*/
+
+/obj/item/clothing/head/kitty/update_icon(var/mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+
+	mob1 = new /icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kitty")
+	mob2 = new /icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kitty2")
+	mob1.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+	mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+
+	var/icon/earbit = new /icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kittyinner")
+	var/icon/earbit2 = new /icon("icon" = 'icons/mob/head_0.dmi', "icon_state" = "kittyinner2")
+	mob1.Blend(earbit, ICON_OVERLAY)
+	mob2.Blend(earbit2, ICON_OVERLAY)

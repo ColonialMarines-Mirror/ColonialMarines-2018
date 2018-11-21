@@ -21,7 +21,7 @@
 	icon_state = "surgical"
 	item_state = "surgical"
 	flags_armor_protection = UPPER_TORSO
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/suit.dmi')
 
 

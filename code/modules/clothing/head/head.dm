@@ -8,8 +8,8 @@
 
 
 /obj/item/clothing/head/update_clothing_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		M.update_inv_head()
 
 

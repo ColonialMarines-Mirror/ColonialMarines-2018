@@ -260,8 +260,6 @@
 	icon_state = "medgreen"
 
 
-
-
 //holsters
 /obj/item/clothing/tie/holster
 	name = "shoulder holster"
@@ -320,6 +318,7 @@
 		holstered.add_fingerprint(user)
 		holstered = null
 
+
 /obj/item/clothing/tie/holster/attack_hand(mob/user as mob)
 	if(has_suit && holstered)	//if we are part of a suit
 		unholster(user)
@@ -328,13 +327,16 @@
 
 	return ..()
 
+
 /obj/item/clothing/tie/holster/attackby(obj/item/W as obj, mob/user as mob)
 	holster(W, user)
+
 
 /obj/item/clothing/tie/holster/emp_act(severity)
 	if(holstered)
 		holstered.emp_act(severity)
 	return ..()
+
 
 /obj/item/clothing/tie/holster/examine(mob/user)
 	. = ..()
@@ -343,13 +345,16 @@
 	else
 		to_chat(user, "It is empty.")
 
+
 /obj/item/clothing/tie/holster/on_attached(obj/item/clothing/under/S, mob/user as mob)
 	. = ..()
 	has_suit.verbs += /obj/item/clothing/tie/holster/verb/holster_verb
 
+
 /obj/item/clothing/tie/holster/on_removed()
 	has_suit.verbs -= /obj/item/clothing/tie/holster/verb/holster_verb
 	return ..()
+
 
 //For the holster hotkey
 /obj/item/clothing/tie/holster/verb/holster_verb()
@@ -493,6 +498,7 @@
 	desc = "A clean white Nylon vest with large pockets specially designed for medical supplies"
 	icon_state = "vest_white"
 	slots = 8
+
 
 /obj/item/clothing/tie/storage/vest/white/New()
 	. = ..()

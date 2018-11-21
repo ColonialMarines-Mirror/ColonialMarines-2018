@@ -86,7 +86,7 @@
 	name = "Thermite"
 	id = "thermite"
 	results = list("thermite" = 3)
-	required_reagents = list("aluminum" = 10, "iron" = 10, "oxygen" = 10)
+	required_reagents = list("aluminum" = 10, "iron" = 10, "oxygen" = 10, "phoron" = 1)
 /
 
 /datum/chemical_reaction/lexorin

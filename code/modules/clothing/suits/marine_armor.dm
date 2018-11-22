@@ -201,26 +201,21 @@ var/list/squad_colors = list(rgb(230,25,25), rgb(255,195,45), rgb(200,100,200), 
 	icon_state = "3"
 	armor = list(melee = 30, bullet = 60, laser = 35, energy = 20, bomb = 60, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/storage/marine/M3HS
-	name = "\improper M3-HS pattern marine armor"
-	desc = "A standard Marine M3 Holster-Storage Pattern Chestplate. Increased encumbrance and carrying capacity due to extra pouches. Room for a sidearm."
+/obj/item/clothing/suit/storage/marine/M3IS
+	name = "\improper M3-IS pattern marine armor"
+	desc = "A standard Marine M3 Integrated Storage Pattern Chestplate. Increased encumbrance and carrying capacity."
 	icon_state = "4"
-	armor = list(melee = 50, bullet = 40, laser = 35, energy = 20, bomb = 25, bio = 0, rad = 0)
 	slowdown = SLOWDOWN_ARMOR_HEAVY
 	var/obj/item/weapon/gun/current_gun
 	var/sheatheSound = 'sound/weapons/gun_pistol_sheathe.ogg'
 	var/drawSound = 'sound/weapons/gun_pistol_draw.ogg'
 
-/obj/item/clothing/suit/storage/marine/M3HS/New(loc, expected_type = /obj/item/clothing/suit/storage/marine, new_name[] = list(MAP_ICE_COLONY = "\improper M3 pattern marine snow armor"))
+/obj/item/clothing/suit/storage/marine/M3IS/New(loc, expected_type = /obj/item/clothing/suit/storage/marine, new_name[] = list(MAP_ICE_COLONY = "\improper M3 pattern marine snow armor"))
 	. = ..()
-	pockets.can_hold = list(
-		"/obj/item/weapon/gun/pistol",
-		"/obj/item/weapon/gun/revolver/m44",
-		"/obj/item/ammo_magazine"
-		)
-	pockets.storage_slots = 4
-	pockets.max_storage_space = 11
-	pockets.max_w_class = 3	//fit larger items
+	pockets.bypass_w_limit = list()
+	pockets.storage_slots = null
+	pockets.max_w_class = 3 //Can fit larger items
+	pockets.max_storage_space = 14
 
 /obj/item/clothing/suit/storage/marine/M3E
 	name = "\improper M3-E pattern marine armor"

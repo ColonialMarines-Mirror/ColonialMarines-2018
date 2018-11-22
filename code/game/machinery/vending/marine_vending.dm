@@ -623,7 +623,10 @@
 					/obj/item/storage/pouch/medkit = 10,
 					/obj/item/storage/pouch/flare = 10,
 					/obj/item/storage/pouch/construction = 10,
-					/obj/item/storage/pouch/tools/full = 10
+					/obj/item/storage/pouch/tools/full = 10,
+					/obj/item/clothing/tie/storage/brown_vest = 10,
+					/obj/item/clothing/tie/storage/webbing = 10,
+					/obj/item/clothing/tie/holster = 10
 					)
 
 	prices = list()

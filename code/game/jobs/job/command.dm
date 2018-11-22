@@ -113,7 +113,7 @@ Make the USCM proud!"}
 				WEAR_R_STORE = /obj/item/storage/pouch/general/large
 				)
 
-	generate_entry_message(mob/living/carbon/human/H)
+/datum/job/command/field/generate_entry_message(mob/living/carbon/human/H)
 		. = {"CIC may direct the squads, but someone has to lead them. 
 		Someone has to be there to stand amongst the men and fight. 
         You lead by example, so it better be a good one.

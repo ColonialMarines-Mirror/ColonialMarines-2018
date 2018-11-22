@@ -102,7 +102,7 @@ Make the USCM proud!"}
 	skills_type = /datum/skills/FO
 
 
-	generate_wearable_equipment()
+/datum/job/command/field/generate_wearable_equipment()
 		. = list(
 				WEAR_EAR = /obj/item/device/radio/headset/almayer/mcom,
 				WEAR_BODY = /obj/item/clothing/under/marine/officer/exec,

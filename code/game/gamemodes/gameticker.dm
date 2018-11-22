@@ -46,8 +46,7 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/SpaceHero.ogg',
 	'sound/music/title1.ogg',
 	'sound/music/title2.ogg',
-	'sound/music/title3.ogg',
-	'sound/music/clown.ogg')
+	'sound/music/title3.ogg')
 
 	do
 		pregame_timeleft = 180

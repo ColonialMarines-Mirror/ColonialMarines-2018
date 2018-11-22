@@ -260,7 +260,7 @@ proc/get_all_job_icons() return joblist + list("Prisoner")//For all existing HUD
 		if("E6") . = size ? "SSGT " : "Staff Sergeant"
 		if("E6T") . = size ? "TSGT " : "Technical Sergeant"
 		if("E7") . = size ? "SFC " : "Sergeant First Class"
-		if("E7E") . = size ? "GSGT " : "Gunnery Sergeant"
+		if("E7E") . = size ? "GySGT " : "Gunnery Sergeant"
 		if("E8") . = size ? "MSGT " : "Master Sergeant"
 		if("E8E") . = size ? "FSGT " : "First Sergeant"
 		if("E9") . = size ? "SGM " : "Sergeant Major"

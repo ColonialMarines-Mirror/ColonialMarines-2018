@@ -83,7 +83,7 @@ A happy ship is a well-functioning ship."}
 	total_positions = 6
 	spawn_positions = 6
 	scaled = 1
-	supervisors = "the chief engineer, the requisition officer"
+	supervisors = "the requisitions officer and the chief engineer"
 	selection_color = "#fff5cc"
 	access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_ENGINEERING, ACCESS_CIVILIAN_ENGINEERING)
 	minimal_access = list(ACCESS_IFF_MARINE, ACCESS_MARINE_ENGINEERING, ACCESS_CIVILIAN_ENGINEERING)

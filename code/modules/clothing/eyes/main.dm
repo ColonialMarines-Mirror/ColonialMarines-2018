@@ -1,0 +1,392 @@
+/*
+
+Currently actively used in-game.
+
+Categories:
+	Welding
+	Meson
+	Sunglasses
+	Thermal
+	HUD Glasses
+	Night Vision
+*/
+/obj/item/clothing/eyes
+	name = "eyes"
+	icon = 'icons/obj/clothing/eyes.dmi'
+	w_class = 2.0
+	flags_inventory = COVEREYES
+	flags_equip_slot = SLOT_EYES
+	flags_armor_protection = EYES
+	var/vision_flags = 0
+	var/darkness_view = 0 //Base human is 2
+	var/see_invisible = TRUE
+	var/prescription = TRUE
+	var/toggleable = FALSE
+	var/active = TRUE
+	var/deactive_state
+	var/fullscreen_vision
+
+/obj/item/clothing/eyes/update_clothing_icon()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_eyes()
+
+/obj/item/clothing/eyes/attack_self(mob/user)
+	if(toggleable)
+		if(active)
+			active = FALSE
+			icon_state = deactive_state
+			to_chat(user, "You deactivate the optical matrix on [src].")
+		else
+			active = TRUE
+			icon_state = initial(icon_state)
+			user.update_inv_eyes()
+			to_chat(user, "You activate the optical matrix on [src].")
+
+		user.update_inv_eyes()
+
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.eyes == src)
+				H.update_tint()
+				H.update_sight()
+
+		update_action_button_icons()
+
+
+/obj/item/clothing/eyes/eyepatch
+	name = "eyepatch"
+	desc = "Yarr."
+	icon_state = "eyepatch"
+	flags_armor_protection = 0
+
+
+/obj/item/clothing/eyes/prescription
+	name = "Marine RPG glasses"
+	desc = "The Corps may call them Regulation Prescription Glasses but you know them as Rut Prevention Glasses."
+	icon_state = "prescription"
+	prescription = TRUE
+
+
+/obj/item/clothing/eyes/prescription/hipster
+	name = "Prescription Glasses"
+	desc = "Made by Uncool. Co."
+	icon_state = "hipster"
+
+
+/obj/item/clothing/eyes/ballistic
+	name = "marine ballistic goggles"
+	desc = "Standard issue USCM goggles. Mostly used to decorate one's helmet."
+	icon_state = "ballistic"
+	flags_equip_slot = SLOT_EYES|SLOT_FACE
+
+
+/obj/item/clothing/eyes/ballistic/prescription
+	name = "prescription marine ballistic goggles"
+	desc = "Standard issue USCM goggles. Mostly used to decorate one's helmet. Contains prescription lenses in case you weren't sure if they were lame or not."
+	prescription = TRUE
+
+
+/obj/item/clothing/eyes/blindfold
+	name = "blindfold"
+	desc = "Covers the eyes, preventing sight."
+	icon_state = "blindfold"
+	tint = 3
+	eye_protection = 2
+	darkness_view = -1
+
+
+
+//Welding
+/obj/item/clothing/eyes/welding_goggles
+	name = "welding goggles"
+	desc = "Protects the eyes from welders, approved by the mad scientist association."
+	icon_state = "welding"
+	actions_types = list(/datum/action/item_action/toggle)
+	flags_inventory = COVEREYES
+	flags_inv_hide = HIDEEYES
+	eye_protection = 2
+	tint = 2
+
+/obj/item/clothing/eyes/welding_goggles/attack_self()
+	toggle()
+
+/obj/item/clothing/eyes/welding_goggles/verb/toggle()
+	set category = "Object"
+	set name = "Adjust welding goggles"
+	set src in usr
+
+	if(usr.canmove && !usr.stat && !usr.is_mob_restrained())
+		if(active)
+			active = FALSE
+			flags_inventory &= ~COVEREYES
+			flags_inv_hide &= ~HIDEEYES
+			flags_armor_protection &= ~EYES
+			icon_state = "[initial(icon_state)]up"
+			eye_protection = 0
+			tint = 0
+			to_chat(usr, "You push [src] up out of your face.")
+		else
+			active = TRUE
+			flags_inventory |= COVEREYES
+			flags_inv_hide |= HIDEEYES
+			flags_armor_protection |= EYES
+			icon_state = initial(icon_state)
+			eye_protection = initial(eye_protection)
+			tint = initial(tint)
+			to_chat(usr, "You flip [src] down to protect your eyes.")
+
+
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.eyes == src)
+				H.update_tint()
+
+		update_clothing_icon()
+
+		update_action_button_icons()
+
+
+
+//Sunglasses
+/obj/item/clothing/eyes/sunglasses
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+	name = "sunglasses"
+	icon_state = "sunglasses"
+	darkness_view = -1
+
+
+/obj/item/clothing/eyes/sunglasses/prescription
+	name = "prescription sunglasses"
+	prescription = TRUE
+
+
+/obj/item/clothing/eyes/sunglasses/big
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
+	icon_state = "sunglassesbig"
+
+
+//Meson
+/obj/item/clothing/eyes/meson
+	name = "optical meson scanner"
+	desc = "Used to shield the user's eyes from harmful electromagnetic emissions, also used as general safety goggles. Not adequate as welding protection."
+	icon_state = "meson"
+	actions_types = list(/datum/action/item_action/toggle)
+	origin_tech = "magnets=2;engineering=2"
+	toggleable = TRUE
+	fullscreen_vision = /obj/screen/fullscreen/meson
+
+
+/obj/item/clothing/eyes/meson/prescription
+	name = "prescription optical meson scanner"
+	desc = "Used for shield the user's eyes from harmful electromagnetic emissions, can also be used as safety googles. Contains prescription lenses."
+	prescription = TRUE
+
+
+/obj/item/clothing/eyes/meson/yautja
+	name = "bio-mask x-ray"
+	desc = "A vision overlay generated by the Bio-Mask. Used to see through objects."
+	icon_state = "meson_y"
+	vision_flags = SEE_TURFS
+	flags_inventory = COVEREYES
+	flags_item = NODROP|DELONDROP
+
+/obj/item/clothing/eyes/meson/yautja/Dispose()
+	. = ..()
+	return TA_REVIVE_ME
+
+/obj/item/clothing/eyes/meson/yautja/Recycle()
+	var/blacklist[] = list("icon_state","item_state","name","desc","vision_flags","can_remove")
+	. = ..() + blacklist
+
+
+
+//Thermal
+/obj/item/clothing/eyes/thermal
+	name = "Optical Thermal Scanner"
+	desc = "Thermals in the shape of eyes."
+	icon_state = "thermal"
+	origin_tech = "magnets=3"
+	toggleable = TRUE
+	vision_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	eye_protection = -1
+	deactive_state = "goggles_off"
+	fullscreen_vision = /obj/screen/fullscreen/thermal
+
+/obj/item/clothing/eyes/thermal/emp_act(severity)
+	if(istype(src.loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src.loc
+		to_chat(M, "\red The Optical Thermal Scanner overloads and blinds you!")
+		if(M.eyes == src)
+			M.blind_eyes(3)
+			M.blur_eyes(5)
+			M.disabilities |= NEARSIGHTED
+			spawn(100)
+				M.disabilities &= ~NEARSIGHTED
+	return ..()
+
+
+/obj/item/clothing/eyes/thermal/yautja
+	name = "bio-mask thermal"
+	desc = "A vision overlay generated by the Bio-Mask. Used to sense the heat of prey."
+	icon_state = "thermal_y"
+	vision_flags = SEE_MOBS
+	flags_inventory = COVEREYES
+	flags_item = NODROP|DELONDROP
+	toggleable = FALSE
+
+/obj/item/clothing/eyes/thermal/yautja/Dispose()
+	. = ..()
+	return TA_REVIVE_ME
+
+/obj/item/clothing/eyes/thermal/yautja/Recycle()
+	var/blacklist[] = list("icon_state","item_state","name","desc","vision_flags","invisa_view","can_remove")
+	. = ..() + blacklist
+
+
+
+//HUD Glasses
+/obj/item/clothing/eyes/hud
+	name = "HUD"
+	desc = "A heads-up display that provides important info in real time."
+	flags_atom = null //Doesn't protect the eyes since it only covers one eye.
+	origin_tech = "magnets=3;biotech=2"
+	deactive_state = "hud_off"
+	var/hud_type
+
+/obj/item/clothing/eyes/hud/equipped(mob/living/carbon/human/user, slot)
+	if(slot == WEAR_EYES && active)
+		var/datum/mob_hud/H = huds[hud_type]
+		H.add_hud_to(user)
+	return ..()
+
+/obj/item/clothing/eyes/hud/dropped(mob/living/carbon/human/user)
+	if(istype(user) && active)
+		if(src == user.eyes) //Dropped is called before the inventory reference is updated.
+			var/datum/mob_hud/H = huds[hud_type]
+			H.remove_hud_from(user)
+	return ..()
+
+/obj/item/clothing/eyes/hud/attack_self(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(toggleable && H.eyes == src)
+			var/datum/mob_hud/MH = huds[hud_type]
+			if(active)
+				MH.add_hud_to(user)
+			else
+				MH.remove_hud_from(user)
+
+
+/obj/item/clothing/eyes/hud/health
+	name = "\improper HealthMate HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	icon_state = "health"
+	flags_armor_protection = 0
+	toggleable = 1
+	hud_type = MOB_HUD_MEDICAL_ADVANCED
+	actions_types = list(/datum/action/item_action/toggle)
+
+
+/obj/item/clothing/eyes/hud/xenohud
+	name = "\improper XenoMate HUD"
+	desc = "A heads-up display that scans any nearby xenomorph's data."
+	icon_state = "security"
+	icon_state = "security"
+	flags_armor_protection = 0
+	toggleable = TRUE
+	hud_type = MOB_HUD_XENO_STATUS
+	actions_types = list(/datum/action/item_action/toggle)
+
+
+/obj/item/clothing/eyes/hud/security
+	name = "\improper SecurityMate HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
+	icon_state = "security"
+	toggleable = TRUE
+	flags_armor_protection = 0
+	eye_protection = 1
+	hud_type = MOB_HUD_SECURITY_ADVANCED
+	actions_types = list(/datum/action/item_action/toggle)
+	var/global/list/jobs[0]
+
+
+/obj/item/clothing/eyes/hud/security/sunglasses
+	name = "Security HUDglasses"
+	desc = "The looks is what matters, the additional information provided is just a nice bonus."
+	icon_state = "securitysun"
+	deactive_state = "securitysun"
+
+
+
+//Night Vision
+/obj/item/clothing/eyes/night
+	name = "night vision goggles"
+	desc = "You can totally see in the dark now!"
+	icon_state = "night"
+	origin_tech = "magnets=2"
+	toggleable = TRUE
+	darkness_view = 7
+	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING //Needed for no darkness overlay
+	fullscreen_vision = /obj/screen/fullscreen/nvg
+	actions_types = list(/datum/action/item_action/toggle)
+
+
+/obj/item/clothing/eyes/night/M4RA
+	name = "\improper M4RA Battle sight"
+	desc = "Night vision goggles system for the M4RA Battle Rifle. Allows highlighted imaging of surroundings. Click it to toggle."
+	icon_state = "special"
+	deactive_state = "special_off"
+	darkness_view = 12
+	vision_flags = SEE_TURFS
+	fullscreen_vision = null
+	
+
+/obj/item/clothing/eyes/night/upp
+	name = "\improper Type 9 commando goggles"
+	desc = "Night vision goggles system used by UPP forces. Allows highlighted imaging of surroundings. Click it to toggle."
+	icon_state = "upp"
+	deactive_state = "upp_off"
+	darkness_view = 12
+	vision_flags = SEE_TURFS
+	fullscreen_vision = null
+
+
+/obj/item/clothing/eyes/night/m56_goggles
+	name = "\improper M56 head mounted sight"
+	desc = "Goggles system for the M56 Smartgun. Has a low-res short range imager, allowing for view of terrain."
+	icon_state = "special"
+	deactive_state = "special_off"
+	darkness_view = 5
+	vision_flags = SEE_TURFS
+	fullscreen_vision = null
+	
+
+/obj/item/clothing/eyes/night/m56_goggles/mob_can_equip(mob/user, slot)
+	if(slot == WEAR_EYES)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(!istype(H.back, /obj/item/smartgun_powerpack))
+				to_chat(user, "You must be wearing an M56 Powerpack on your back to wear these.")
+				return FALSE
+	return ..()
+
+
+/obj/item/clothing/eyes/night/yautja
+	name = "bio-mask nightvision"
+	desc = "A vision overlay generated by the Bio-Mask. Used for low-light conditions."
+	icon_state = "night_y"
+	darkness_view = 5 //Not quite as good as regular NVG.
+	flags_inventory = COVEREYES
+	flags_item = NODROP|DELONDROP
+	fullscreen_vision = null
+
+/obj/item/clothing/eyes/night/yautja/Dispose()
+	. = ..()
+	return TA_REVIVE_ME
+
+/obj/item/clothing/eyes/night/yautja/Recycle()
+	var/blacklist[] = list("overlay","icon_state","item_state","name","desc","darkness_view","can_remove")
+	. = ..() + blacklist

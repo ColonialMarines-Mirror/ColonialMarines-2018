@@ -7,7 +7,6 @@
 	flags_armor_protection = UPPER_TORSO|ARMS
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/suit.dmi')
 
-
 /obj/item/clothing/suit/storage/coat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
 	set category = "Object"
@@ -21,10 +20,10 @@
 
 	if(icon_state == item_state)
 		icon_state = "[item_state]_open"
-		to_chat(usr, "You unbutton the labcoat.")
+		to_chat(usr, "You unbutton the [src].")
 	else
 		icon_state = "[item_state]"
-		to_chat(usr, "You button up the labcoat.")
+		to_chat(usr, "You button up the [src].")
 
 	update_clothing_icon()
 

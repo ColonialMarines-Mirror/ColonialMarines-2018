@@ -22,20 +22,16 @@
 	var/list/suit_restricted //for uniforms that only accept to be combined with certain suits
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/uniform.dmi')
 
-
 /obj/item/clothing/under/Dispose()
 	if(hastie)
 		cdel(hastie)
 		hastie = null
-
 	return ..()
-
 
 /obj/item/clothing/under/update_clothing_icon()
 	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_w_uniform()
-
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(hastie)
@@ -54,7 +50,6 @@
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
-
 		return
 
 	if(loc == user && istype(I,/obj/item/clothing/under) && src != I)
@@ -64,9 +59,7 @@
 				H.drop_inv_item_on_ground(src)
 				if(H.equip_to_appropriate_slot(I))
 					H.put_in_active_hand(src)
-
 	return ..()
-
 
 /obj/item/clothing/under/attack_hand(mob/user as mob)
 	//only forward to the attached accessory if the clothing is equipped (not in a storage)
@@ -76,9 +69,7 @@
 
 	if((ishuman(usr) || ismonkey(usr)) && src.loc == user)	//make it harder to accidentally undress yourself
 		return
-
 	return ..()
-
 
 /obj/item/clothing/under/MouseDrop(obj/over_object as obj)
 	if(ishuman(usr) || ismonkey(usr))
@@ -97,7 +88,6 @@
 						usr.put_in_l_hand(src)
 				add_fingerprint(usr)
 
-
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
 	if(has_sensor)
@@ -112,7 +102,6 @@
 				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 	if(hastie)
 		to_chat(user, "\A [hastie] is clipped to it.")
-
 
 /obj/item/clothing/under/proc/set_sensors(mob/user)
 	if(istype(user, /mob/dead/)) 
@@ -167,13 +156,11 @@
 				for(var/mob/V in viewers(usr, 1))
 					V.show_message("[user] sets [src.loc]'s sensors to maximum.", 1)
 
-
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	set category = "Object"
 	set src in usr
 	set_sensors(usr)
-
 
 /obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"
@@ -208,7 +195,6 @@
 	else
 		to_chat(usr, "<span class='warning'>You cannot roll down the uniform!</span>")
 
-
 //proper proc to remove the uniform's tie (user optional)
 /obj/item/clothing/under/proc/remove_accessory(mob/user)
 	if(!hastie)
@@ -221,7 +207,6 @@
 	hastie = null
 	update_clothing_icon()
 
-
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"
 	set category = "Object"
@@ -233,7 +218,6 @@
 		return
 
 	src.remove_accessory(usr)
-
 
 /obj/item/clothing/under/emp_act(severity)
 	if(hastie)

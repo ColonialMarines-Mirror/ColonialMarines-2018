@@ -1018,7 +1018,7 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/colonist(H), WEAR_BODY, 1)
 
 				switch(rand(1,5))
-					if(1) H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), WEAR_JACKET, 1)
+					if(1) H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/coat/lab(H), WEAR_JACKET, 1)
 					if(2) H.equip_to_slot_or_del(new /obj/item/clothing/suit/apron(H), WEAR_JACKET, 1)
 					if(3) H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), WEAR_JACKET, 1)
 					if(4) H.equip_to_slot_or_del(new /obj/item/clothing/suit/apron/overalls(H), WEAR_JACKET, 1)

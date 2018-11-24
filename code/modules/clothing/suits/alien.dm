@@ -1,11 +1,11 @@
 //Unathi clothing.
-
 /obj/item/clothing/suit/unathi/robe
 	name = "roughspun robes"
 	desc = "A traditional Unathi garment."
 	icon_state = "robe-unathi"
 	item_state = "robe-unathi"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS
+
 
 /obj/item/clothing/suit/unathi/mantle
 	name = "hide mantle"
@@ -14,14 +14,15 @@
 	item_state = "mantle-unathi"
 	flags_armor_protection = UPPER_TORSO
 
-//Taj clothing.
 
+//Taj clothing.
 /obj/item/clothing/suit/tajaran/furs
 	name = "heavy furs"
 	desc = "A traditional Zhan-Khazan garment."
 	icon_state = "zhan_furs"
 	item_state = "zhan_furs"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+
 
 /obj/item/clothing/head/tajaran/scarf
 	name = "headscarf"

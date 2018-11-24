@@ -439,24 +439,30 @@
 	icon_broken = "secure_broken_medical"
 	icon_off = "secure_closed_medical"
 
-	New()
-		..()
-		new /obj/item/storage/backpack/marine/satchel(src)
-		if(z != 1) new /obj/item/device/radio/headset/almayer/doc(src)
-		new /obj/item/clothing/shoes/white(src)
-		new /obj/item/clothing/shoes/white(src)
-		new /obj/item/storage/belt/medical(src)
-		new /obj/item/clothing/under/rank/medical/green(src)
-		new /obj/item/clothing/under/rank/medical/green(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/head/surgery/green(src)
-		new /obj/item/clothing/glasses/hud/health(src)
 
-	select_gamemode_equipment(gamemode)
-		switch(map_tag)
-			if(MAP_ICE_COLONY)
-				new /obj/item/clothing/suit/storage/snow_suit/doctor(src)
-				new /obj/item/clothing/mask/rebreather/scarf(src)
+/obj/structure/closet/secure_closet/medical_doctor/New()
+	. = ..()
+
+	new /obj/item/storage/backpack/marine/satchel(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/storage/belt/medical(src)
+	new /obj/item/clothing/under/rank/medical/green(src)
+	new /obj/item/clothing/under/rank/medical/green(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/clothing/head/surgery/green(src)
+	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/clothing/suit/surgical(src)
+	if(z != 1) 
+		new /obj/item/device/radio/headset/almayer/doc(src)
+	return
+
+
+/obj/structure/closet/secure_closet/medical_doctor/select_gamemode_equipment(gamemode)
+	switch(map_tag)
+		if(MAP_ICE_COLONY)
+			new /obj/item/clothing/suit/storage/snow_suit/doctor(src)
+			new /obj/item/clothing/mask/rebreather/scarf(src)
 
 
 

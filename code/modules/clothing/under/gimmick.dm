@@ -1,8 +1,8 @@
-
 /obj/item/clothing/under/gimmick
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 10, rad = 10)
 	has_sensor = 0
 	displays_id = 0
+
 
 //JASON
 /obj/item/clothing/under/gimmick/jason
@@ -10,11 +10,13 @@
 	desc = "Perfect thing to wear when digging graves."
 	icon_state = "jason_suit"
 
+
 /obj/item/clothing/mask/gimmick/jason
 	name = "hockey mask"
 	desc = "It smells like teenage spirit."
 	icon_state = "jason_mask"
 	anti_hug = 100
+
 
 /obj/item/clothing/suit/gimmick/jason
 	name = "musty jacket"
@@ -22,6 +24,7 @@
 	icon_state = "jason_jacket"
 	item_state = "jason_jacket"
 	armor = list(melee = 13, bullet = 13, laser = 13, energy = 13, bomb = 13, bio = 13, rad = 13)
+
 
 //RAMBO
 /obj/item/clothing/under/gimmick/rambo
@@ -32,6 +35,7 @@
 	flags_cold_protection = LEGS|LOWER_TORSO
 	flags_heat_protection = LEGS|LOWER_TORSO
 
+
 /obj/item/clothing/suit/gimmick/rambo
 	name = "pendant"
 	desc = "It's a precious stone and something of a talisman of protection."
@@ -39,6 +43,7 @@
 	flags_cold_protection = UPPER_TORSO
 	flags_heat_protection = UPPER_TORSO
 	icon_state = "rambo_pendant"
+
 
 //MCCLANE
 /obj/item/clothing/under/gimmick/mcclane
@@ -49,6 +54,7 @@
 	flags_cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS
 	flags_heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS
 
+
 //DUTCH
 /obj/item/clothing/under/gimmick/dutch
 	name = "combat fatigues"
@@ -57,6 +63,7 @@
 	flags_armor_protection = LEGS|LOWER_TORSO
 	flags_cold_protection = LEGS|LOWER_TORSO
 	flags_heat_protection = LEGS|LOWER_TORSO
+
 
 /obj/item/clothing/suit/armor/gimmick/dutch
 	name = "armored jacket"
@@ -78,12 +85,14 @@
 			/obj/item/storage/sparepouch,
 			/obj/item/storage/large_holster/machete)
 
+
 //ROBOCOP
 /obj/item/clothing/under/gimmick/robocop
 	name = "metal body"
 	desc = "It may be metallic, but it contains the heart and soul of Alex J. Murphy."
 	icon_state = "robocop_suit"
 	flags_atom = CONDUCT
+
 
 /obj/item/clothing/shoes/gimmick/robocop
 	name = "polished metal boots"
@@ -92,12 +101,14 @@
 	armor = list(melee = 87, bullet = 87, laser = 87, energy = 87, bomb = 87, bio = 50, rad = 50)
 	flags_inventory = CONDUCT|NOSLIPPING
 
+
 /obj/item/clothing/gloves/gimmick/robocop
 	name = "metal hands"
 	desc = "The cold, unfeeling hands of the law."
 	icon_state = "robocop_gloves"
 	flags_atom = CONDUCT
 	armor = list(melee = 87, bullet = 87, laser = 87,energy = 87, bomb = 87, bio = 50, rad = 50)
+
 
 /obj/item/clothing/head/helmet/gimmick/robocop
 	name = "polished metal helm"
@@ -108,6 +119,7 @@
 	flags_inventory = COVEREYES|BLOCKSHARPOBJ
 	flags_inv_hide = HIDEEARS|HIDEEYES|HIDETOPHAIR
 	anti_hug = 100
+
 
 /obj/item/clothing/suit/armor/gimmick/robocop
 	name = "polished metal armor"
@@ -123,11 +135,13 @@
 	allowed = list(/obj/item/weapon/gun/pistol/auto9)
 	armor = list(melee = 87, bullet = 87, laser = 87, energy = 87, bomb = 87, bio = 50, rad = 50)
 
+
 //LUKE
 /obj/item/clothing/under/gimmick/skywalker
 	name = "black jumpsuit"
 	desc = "A simple, utilitarian jumpsuit worn by one who has mastered the force."
 	icon_state = "skywalker_suit"
+
 
 /obj/item/clothing/shoes/gimmick/skywalker
 	name = "black boots"
@@ -135,11 +149,11 @@
 	icon_state = "skywalker_shoes"
 	flags_inventory = NOSLIPPING
 
+
 /obj/item/clothing/gloves/gimmick/skywalker
 	name = "black glove"
 	desc = "Something to cover up that artificial hand... Who says heroes can't be self-conscious?"
 	icon_state = "skywalker_gloves"
-
 
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
@@ -147,6 +161,7 @@
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
 	item_state = "dg_suit"
+
 
 /obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
 	name = "head of personnel's suit"

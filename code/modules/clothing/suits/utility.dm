@@ -5,16 +5,16 @@
  *		Radiation protection
  */
 
+
 /*
  * Fire protection
  */
-
 /obj/item/clothing/suit/fire
 	name = "firesuit"
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
-	w_class = 4//bulky item
+	w_class = 4
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -37,8 +37,9 @@
 	desc = "A suit that protects against extreme fire and heat."
 	//icon_state = "thermal"
 	item_state = "ro_suit"
-	w_class = 4//bulky item
+	w_class = 4
 	slowdown = 1.5
+
 
 /*
  * Bomb protection
@@ -75,11 +76,13 @@
 	item_state = "bombsuitsec"
 	flags_armor_protection = HEAD
 
+
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/baton,/obj/item/handcuffs)
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+
 
 /*
  * Radiation protection

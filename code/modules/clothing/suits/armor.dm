@@ -1,4 +1,3 @@
-
 /obj/item/clothing/suit/armor
 	flags_inventory = BLOCKSHARPOBJ
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO
@@ -12,9 +11,7 @@
 	uniform_restricted = list(/obj/item/clothing/under)
 
 
-
 //armored vest
-
 /obj/item/clothing/suit/armor/vest
 	name = "armored vest"
 	desc = "An armored vest that protects against some damage."
@@ -24,6 +21,7 @@
 	permeability_coefficient = 0.8
 	flags_armor_protection = UPPER_TORSO
 	armor = list(melee = 20, bullet = 30, laser = 25, energy = 10, bomb = 15, bio = 0, rad = 0)
+
 
 /obj/item/clothing/suit/armor/vest/pilot
 	name = "\improper M70 flak jacket"
@@ -51,9 +49,12 @@
 		/obj/item/storage/large_holster/machete,
 		/obj/item/storage/belt/gun/m4a3,
 		/obj/item/storage/belt/gun/m44)
-	New()
-		select_gamemode_skin(/obj/item/clothing/suit/armor/vest/pilot)
-		..()
+
+
+/obj/item/clothing/suit/armor/vest/pilot/New()
+	select_gamemode_skin(/obj/item/clothing/suit/armor/vest/pilot)
+	return ..()
+
 
 /obj/item/clothing/suit/armor/vest/dutch
 	name = "armored jacket"
@@ -61,6 +62,7 @@
 	icon = 'icons/obj/clothing/cm_suits.dmi'
 	icon_state = "dutch_armor"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO
+
 
 /obj/item/clothing/suit/armor/vest/admiral
 	name = "admiral's jacket"
@@ -70,6 +72,7 @@
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS
 	w_class = 3
 
+
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
 	desc = "An armored vest that protects against some damage."
@@ -77,12 +80,14 @@
 	item_state = "armor"
 	slowdown = SLOWDOWN_ARMOR_MEDIUM //prevents powergaming marine by swapping armor.
 
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with silver rank pips and livery."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "Ablative Armor Vest"
@@ -92,6 +97,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
+
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof vest"
@@ -105,6 +111,7 @@
 	permeability_coefficient = 0.9
 	time_to_unequip = 20
 	time_to_equip = 20
+
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -121,6 +128,7 @@
 	time_to_unequip = 20
 	time_to_equip = 20
 
+
 /obj/item/clothing/suit/armor/riot/marine
 	name = "\improper M5 riot control armor"
 	desc = "A heavily modified suit of M2 MP Armor used to supress riots from buckethead marines. Slows you down a lot."
@@ -128,6 +136,7 @@
 	item_state = "swat"
 	slowdown = SLOWDOWN_ARMOR_VERY_HEAVY
 	armor = list(melee = 70, bullet = 70, laser = 35, energy = 20, bomb = 35, bio = 10, rad = 10)
+
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
@@ -181,38 +190,34 @@
 	flags_atom = CONDUCT
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
+
 /obj/item/clothing/suit/armor/reactive/IsShield()
 	if(active)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user as mob)
-	src.active = !( src.active )
-	if (src.active)
+	active = !(active)
+	if(active)
 		to_chat(user, "\blue The reactive armor is now active.")
-		src.icon_state = "reactive"
-		src.item_state = "reactive"
+		icon_state = "reactive"
+		item_state = "reactive"
 	else
 		to_chat(user, "\blue The reactive armor is now inactive.")
-		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
-		src.add_fingerprint(user)
+		icon_state = "reactiveoff"
+		item_state = "reactiveoff"
+		add_fingerprint(user)
 	return
+
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	active = 0
-	src.icon_state = "reactiveoff"
-	src.item_state = "reactiveoff"
-	..()
-
-
-
-
+	icon_state = "reactiveoff"
+	item_state = "reactiveoff"
+	return ..()
 
 
 //All of the armor below is mostly unused
-
-
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
 	desc = "A suit that protects against some damage."
@@ -227,6 +232,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_min_cold_protection_temperature
 	siemens_coefficient = 0
 
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
@@ -239,9 +245,11 @@
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 0
 
+
 /obj/item/clothing/suit/armor/tdome
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "Thunderdome suit (red)"
@@ -250,12 +258,14 @@
 	item_state = "tdred"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/suit/armor/tdome/green
 	name = "Thunderdome suit (green)"
 	desc = "Pukish armor."
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 	siemens_coefficient = 1
+
 
 /obj/item/clothing/suit/armor/tactical
 	name = "tactical armor"
@@ -268,17 +278,23 @@
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 20, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 
+
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+
+	if(!istype(usr, /mob/living)) 
+		return
+
+	if(usr.stat) 
+		return
 
 	if(!holstered)
 		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
 			to_chat(usr, "\blue You need your gun equiped to holster it.")
 			return
+			
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		if (W.w_class > 3)
 			to_chat(usr, "\red This gun won't fit in \the belt!")
@@ -300,6 +316,7 @@
 			usr.put_in_hands(holstered)
 		holstered = null
 
+
 //Non-hardsuit ERT armor.
 /obj/item/clothing/suit/armor/vest/ert
 	name = "emergency response team armor"
@@ -308,10 +325,12 @@
 	item_state = "armor"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 20, bio = 0, rad = 0)
 
+
 //Commander
 /obj/item/clothing/suit/armor/vest/ert/command
 	name = "emergency response team commander armor"
 	desc = "A set of armor worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights."
+
 
 //Security
 /obj/item/clothing/suit/armor/vest/ert/security
@@ -319,21 +338,19 @@
 	desc = "A set of armor worn by security members of the NanoTrasen Emergency Response Team. Has red highlights."
 	icon_state = "ertarmor_sec"
 
+
 //Engineer
 /obj/item/clothing/suit/armor/vest/ert/engineer
 	name = "emergency response team engineer armor"
 	desc = "A set of armor worn by engineering members of the NanoTrasen Emergency Response Team. Has orange highlights."
 	icon_state = "ertarmor_eng"
 
+
 //Medical
 /obj/item/clothing/suit/armor/vest/ert/medical
 	name = "emergency response team medical armor"
 	desc = "A set of armor worn by medical members of the NanoTrasen Emergency Response Team. Has red and white highlights."
 	icon_state = "ertarmor_med"
-
-
-
-
 
 
 /obj/item/clothing/suit/armor/hos
@@ -346,6 +363,7 @@
 	flags_inventory = NOFLAGS
 	flags_inv_hide = HIDEJUMPSUIT
 	siemens_coefficient = 0.6
+
 
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchcoat"

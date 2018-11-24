@@ -214,7 +214,7 @@
 /obj/effect/landmark/corpsespawner/doctor
 	name = "Doctor"
 	corpseuniform = /obj/item/clothing/under/colonist
-	corpsesuit = /obj/item/clothing/suit/storage/labcoat
+	corpsesuit = /obj/item/clothing/suit/storage/coat/lab
 	corpseback = /obj/item/storage/backpack/medic
 	corpsepocket1 = /obj/item/device/flashlight/pen
 	corpseshoes = /obj/item/clothing/shoes/black
@@ -255,7 +255,7 @@
 /obj/effect/landmark/corpsespawner/scientist
 	name = "Scientist"
 	corpseuniform = /obj/item/clothing/under/marine/officer/researcher
-	corpsesuit = /obj/item/clothing/suit/storage/labcoat
+	corpsesuit = /obj/item/clothing/suit/storage/coat/lab
 	corpseback = /obj/item/storage/backpack
 	corpseshoes = /obj/item/clothing/shoes/white
 	corpseid = 1

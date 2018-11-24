@@ -15,8 +15,9 @@
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	flags_armor_protection = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun)
+	allowed = list(/obj/item/weapon/gun)
 	siemens_coefficient = 3.0
+
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armour"
@@ -25,8 +26,9 @@
 	item_state = "redtag"
 	blood_overlay_type = "armor"
 	flags_armor_protection = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun)
+	allowed = list(/obj/item/weapon/gun)
 	siemens_coefficient = 3.0
+
 
 /*
  * Costume
@@ -65,11 +67,13 @@
 	icon_state = "nazi"
 	item_state = "nazi"
 
+
 /obj/item/clothing/suit/johnny_coat
 	name = "johnny~~ coat"
 	desc = "Johnny~~"
 	icon_state = "johnny"
 	item_state = "johnny"
+
 
 /obj/item/clothing/suit/justice
 	name = "justice suit"
@@ -79,6 +83,7 @@
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
 
+
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
@@ -87,6 +92,7 @@
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/storage/fancy/cigarettes,/obj/item/spacecash)
 	flags_inv_hide = HIDEJUMPSUIT
+
 
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
@@ -114,6 +120,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+
 
 /obj/item/clothing/suit/hastur
 	name = "Hastur's Robes"
@@ -182,13 +189,15 @@
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
-	equipped(var/mob/user, var/slot)
-		if(slot == WEAR_JACKET && ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.drop_inv_item_on_ground(H.handcuffed)
-			H.drop_l_hand()
-			H.drop_r_hand()
-		..()
+
+/obj/item/clothing/suit/straight_jacket/equipped(var/mob/user, var/slot)
+	if(slot == WEAR_JACKET && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.drop_inv_item_on_ground(H.handcuffed)
+		H.drop_l_hand()
+		H.drop_r_hand()
+	return ..()
+
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
@@ -196,6 +205,7 @@
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
 	flags_armor_protection = UPPER_TORSO|ARMS
+
 
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
@@ -219,15 +229,16 @@
 		return
 	update_clothing_icon()
 
+
 //pyjamas
 //originally intended to be pinstripes >.>
-
 /obj/item/clothing/under/bluepyjamas
 	name = "blue pyjamas"
 	desc = "Slightly old-fashioned sleepwear."
 	icon_state = "blue_pyjamas"
 	item_state = "blue_pyjamas"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
 
 /obj/item/clothing/under/redpyjamas
 	name = "red pyjamas"
@@ -236,13 +247,14 @@
 	item_state = "red_pyjamas"
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
-//coats
 
+//coats
 /obj/item/clothing/suit/leathercoat
 	name = "leather coat"
 	desc = "A long, thick black leather coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
+
 
 /obj/item/clothing/suit/browncoat
 	name = "brown leather coat"
@@ -250,15 +262,18 @@
 	icon_state = "browncoat"
 	item_state = "browncoat"
 
+
 /obj/item/clothing/suit/neocoat
 	name = "black coat"
 	desc = "A flowing, black coat."
 	icon_state = "neocoat"
 	item_state = "neocoat"
 
+
 //stripper
 /obj/item/clothing/under/stripper
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/under/stripper/stripper_pink
 	name = "pink swimsuit"
@@ -266,11 +281,13 @@
 	icon_state = "stripper_p_under"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g_under"
 	siemens_coefficient = 1
+
 
 /obj/item/clothing/suit/stripper/stripper_pink
 	name = "pink skimpy dress"
@@ -278,17 +295,20 @@
 	icon_state = "stripper_p_over"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/suit/stripper/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
 	icon_state = "stripper_g_over"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/under/stripper/mankini
 	name = "the mankini"
 	desc = "No honest man would wear this abomination"
 	icon_state = "mankini"
 	siemens_coefficient = 1
+
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
@@ -298,10 +318,13 @@
 	flags_armor_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags_inv_hide = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
+
+
 //swimsuit
 /obj/item/clothing/under/swimsuit/
 	siemens_coefficient = 1
 	flags_armor_protection = 0
+
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
@@ -309,11 +332,13 @@
 	icon_state = "swim_black"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/under/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
 	siemens_coefficient = 1
+
 
 /obj/item/clothing/under/swimsuit/purple
 	name = "purple swimsuit"
@@ -321,11 +346,13 @@
 	icon_state = "swim_purp"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/under/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
 	icon_state = "swim_green"
 	siemens_coefficient = 1
+
 
 /obj/item/clothing/under/swimsuit/red
 	name = "red swimsuit"
@@ -333,20 +360,24 @@
 	icon_state = "swim_red"
 	siemens_coefficient = 1
 
+
 /obj/item/clothing/suit/poncho
 	name = "poncho"
 	desc = "A simple, comfortable poncho."
 	icon_state = "classicponcho"
+
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."
 	icon_state = "greenponcho"
 
+
 /obj/item/clothing/suit/poncho/red
 	name = "red poncho"
 	desc = "Your classic, non-racist poncho. This one is red."
 	icon_state = "redponcho"
+
 
 /obj/item/clothing/suit/bomber
 	name = "bomber jacket"

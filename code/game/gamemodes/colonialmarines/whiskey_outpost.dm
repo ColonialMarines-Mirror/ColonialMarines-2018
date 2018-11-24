@@ -375,7 +375,7 @@
 		//DOCTORS
 		if("Doctor") //Then, the doctors
 			custom_message = 1
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), WEAR_JACKET)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/coat/lab(H), WEAR_JACKET)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), WEAR_FEET)
 			H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), WEAR_J_STORE)
 			H.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/doc(H), WEAR_EAR)

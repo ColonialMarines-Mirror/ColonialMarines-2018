@@ -1,5 +1,4 @@
 /* SURGERY STEPS */
-
 /datum/surgery_step
 	var/priority = 0 //Steps with higher priority will be attempted first. Accepts decimals
 
@@ -27,27 +26,29 @@
 		for(var/T in allowed_tools)
 			if(istype(tool, T))
 				return allowed_tools[T]
-		return 0
+		return FALSE
+
 
 //Checks if this step applies to the user mob at all
 /datum/surgery_step/proc/is_valid_target(mob/living/carbon/target)
 	if(!hasorgans(target))
-		return 0
+		return FALSE
 	if(allowed_species)
 		for(var/species in allowed_species)
 			if(target.species.name == species)
-				return 1
+				return TRUE
 
 	if(disallowed_species)
 		for(var/species in disallowed_species)
 			if(target.species.name == species)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 
 //Checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/limb/affected, only_checks)
-	return 0
+	return FALSE
+
 
 //Does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/limb/affected)
@@ -61,56 +62,76 @@
 			H.bloody_body(target, 0)
 	return
 
+
 //Does stuff to end the step, which is normally print a message + do whatever this step changes
 /datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/limb/affected)
 	return
+
 
 //Stuff that happens when the step fails
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/limb/affected)
 	return null
 
+
 proc/spread_germs_to_organ(datum/limb/E, mob/living/carbon/human/user)
-	if(!istype(user) || !istype(E)) return
+	if(!istype(user) || !istype(E)) 
+		return
 
 	//Gloves
 	if(user.gloves)
-		if(user.gloves.germ_level && user.gloves.germ_level > 60)
-			E.germ_level += user.gloves.germ_level / 2
+		if(user.germ_level && istype(user.gloves, /obj/item/clothing/gloves/latex))
+			E.germ_level -= user.gloves.germ_level * 0.5
+		else if(user.gloves.germ_level && user.gloves.germ_level > 60)
+			E.germ_level += user.gloves.germ_level * 0.5
 	else if(user.germ_level)
-		E.germ_level += user.germ_level / 2
+		E.germ_level += user.germ_level * 0.5
 
 	//Masks
 	if(user.wear_mask)
 		if(user.germ_level && istype(user.wear_mask, /obj/item/clothing/mask/cigarette))
 			E.germ_level += user.germ_level + 200  // fuck you smoking doctors
-		else if(user.wear_mask.germ_level && !istype(user.wear_mask, /obj/item/clothing/mask/surgical) && prob(30))
-			E.germ_level += user.wear_mask.germ_level / 2
+		else if(user.wear_mask.germ_level && istype(user.wear_mask, /obj/item/clothing/mask/surgical))
+			E.germ_level -= user.wear_mask.germ_level * 0.5
+		else
+			E.germ_level += user.wear_mask.germ_level * 0.5
 	else if(user.germ_level && prob(60))
-		E.germ_level += user.germ_level / 2
+		E.germ_level += user.germ_level * 0.5
+
+	//Suits
+	if(user.wear_suit)
+		if(user.germ_level && istype(user.wear_suit, /obj/item/clothing/suit/surgical))
+			E.germ_level -= user.germ_level * 0.5
 
 	if(locate(/obj/structure/bed/roller, E.owner.loc))
 		E.germ_level += 100
 	else if(locate(/obj/structure/table/, E.owner.loc))
 		E.germ_level += 200
 
+
 proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
-		return 0
+		return FALSE
+
 	if(user.a_intent == "harm") //Check for Hippocratic Oath
-		return 0
+		return FALSE
+
 	if(user.action_busy) //already doing an action
-		return 1
+		return TRUE
+
 	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.surgery < SKILL_SURGERY_PROFESSIONAL)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to operate [M].</span>",
 		"<span class='notice'>You fumble around figuring out how to operate [M].</span>")
 		var/fumbling_time = SKILL_TASK_FORMIDABLE - ( SKILL_TASK_AVERAGE * user.mind.cm_skills.surgery ) // 20 secs non-trained, 15 amateur, 10 semi-prof
-		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) return
+		if(!do_after(user, fumbling_time, TRUE, 5, BUSY_ICON_BUILD)) 
+			return
+
 	var/datum/limb/affected = M.get_limb(user.zone_selected)
 	if(!affected)
-		return 0
+		return FALSE
+
 	if(affected.in_surgery_op) //two surgeons can't work on same limb at same time
 		to_chat(user, "<span class='warning'>You can't operate on the patient's [affected.display_name] while it's already being operated on.</span>")
-		return 1
+		return TRUE
 
 	for(var/datum/surgery_step/S in surgery_steps)
 		//Check if tool is right or close enough, and the target mob valid, and if this step is possible
@@ -118,7 +139,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 			var/step_is_valid = S.can_use(user, M, user.zone_selected, tool, affected)
 			if(step_is_valid)
 				if(step_is_valid == SPECIAL_SURGERY_INVALID) //This is a failure that already has a message for failing.
-					return 1
+					return TRUE
 				affected.in_surgery_op = TRUE
 				S.begin_step(user, M, user.zone_selected, tool, affected) //Start on it
 				//We had proper tools! (or RNG smiled.) and user did not move or change hands.
@@ -140,7 +161,8 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 							multipler += 0.40
 					if(M.shock_stage > 100) //Being near to unconsious is good in this case
 						multipler += 0.25
-				if(isSynth(M) || isYautja(M)) multipler = 1
+				if(isSynth(M) || isYautja(M)) 
+					multipler = 1
 
 				//calculate step duration
 				var/step_duration = rand(S.min_duration, S.max_duration)
@@ -164,12 +186,13 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 				else //This failing silently was a pain.
 					to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 				affected.in_surgery_op = FALSE
-				return 1				   //Don't want to do weapony things after surgery
+				return TRUE			   //Don't want to do weapony things after surgery
 
 	if(user.a_intent == "help")
 		to_chat(user, "<span class='warning'>You can't see any useful way to use \the [tool] on [M].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
+
 
 //Comb Sort. This works apparently, so we're keeping it that way
 proc/sort_surgeries()
@@ -187,7 +210,6 @@ proc/sort_surgeries()
 			if(l.priority < r.priority)
 				surgery_steps.Swap(i, gap + i)
 				swapped = 1
-
 
 
 /datum/surgery_status/

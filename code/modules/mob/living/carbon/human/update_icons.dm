@@ -773,7 +773,7 @@ var/global/list/damage_icon_parts = list()
 		else
 			standing = image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]", "layer" =-FACEMASK_LAYER)
 
-		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
+		if(!istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 			bloodsies.color = wear_mask.blood_color
 			standing.overlays	+= bloodsies
@@ -862,6 +862,7 @@ var/global/list/damage_icon_parts = list()
 
 			apply_overlay(TAIL_LAYER)
 
+
 //Adds a collar overlay above the helmet layer if the suit has one
 //	Suit needs an identically named sprite in icons/mob/collar.dmi
 /mob/living/carbon/human/proc/update_collar()
@@ -876,7 +877,6 @@ var/global/list/damage_icon_parts = list()
 	overlays_standing[COLLAR_LAYER]	= standing
 
 	apply_overlay(COLLAR_LAYER)
-
 
 
 // Used mostly for creating head items
@@ -914,6 +914,7 @@ var/global/list/damage_icon_parts = list()
 	var/image/face_lying_image = new /image(icon = face_lying)
 	return face_lying_image
 
+
 /mob/living/carbon/human/update_burst()
 	remove_overlay(BURST_LAYER)
 	var/image/standing
@@ -924,6 +925,7 @@ var/global/list/damage_icon_parts = list()
 
 	overlays_standing[BURST_LAYER]	= standing
 	apply_overlay(BURST_LAYER)
+
 
 /mob/living/carbon/human/update_fire()
 	remove_overlay(FIRE_LAYER)

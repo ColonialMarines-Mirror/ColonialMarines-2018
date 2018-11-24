@@ -7,8 +7,10 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
+
 /obj/item/clothing/under/syndicate/combat
 	name = "combat turtleneck"
+
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "\improper Tacticool turtleneck"
@@ -16,5 +18,3 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	siemens_coefficient = 1
-
-

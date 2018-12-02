@@ -149,3 +149,66 @@
 			return
 	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.")
 	return
+
+
+/client/proc/getfolderlogs()
+	set name = "Get Server Logs Folder"
+	set desc = "Yeah okay."
+	set category = "Admin"
+
+	var/path = "data/logs/"
+	path = browse_folders(path)
+	
+	to_chat(world, "Path [path]")
+
+
+	iterate_download(path)
+
+
+
+/client/proc/iterate_download(var/folder)
+	var/files = flist(folder)
+	to_chat(world, "Starting iterate_download [folder]")
+	for(var/thing in files)
+		if(copytext(thing, -1, 0) == "/")
+			to_chat(world, "Going deeper [folder][thing]")
+			iterate_download(folder+thing)
+		else
+			to_chat(world, "Downloading [folder][thing]")
+			var/fil = replacetext("[folder][thing]", "/", "_")
+			src << ftp(file(folder+thing),fil)
+
+
+
+/client/proc/browse_folders(root="data/logs/", max_iterations=100)
+	var/path = root
+
+	for(var/i=0, i<max_iterations, i++)
+		var/list/choices = flist(path)
+		if(path != root)
+			choices.Insert(1,"/")
+
+		var/choice = input(src,"Choose a folder to access:","Download",null) as null|anything in choices
+		switch(choice)
+			if(null)
+				return
+			if("/")
+				path = root
+				continue
+
+		path += choice
+		
+
+		if(copytext(path,-1,0) != "/")		//didn't choose a directory, no need to iterate again
+			return FALSE
+		else
+			var/choicee = input(src,"Is this the folder you want to download?:","Download",null) as null|anything in list("Yes", "No")
+			switch(choicee)
+				if("Yes")
+					to_chat(world, "Chosen final folder")
+					break
+				if("No")
+					to_chat(world, "Continuing the loop")
+					continue
+
+	return path

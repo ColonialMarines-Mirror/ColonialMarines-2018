@@ -176,7 +176,8 @@
 		else
 			to_chat(world, "Downloading [folder][thing]")
 			var/fil = replacetext("[folder][thing]", "/", "_")
-			src << ftp(file(folder+thing),fil)
+			spawn(10)
+				src << ftp(file(folder+thing),fil)
 
 
 

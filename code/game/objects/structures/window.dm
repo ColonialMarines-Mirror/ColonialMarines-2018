@@ -7,6 +7,7 @@
 	anchored = TRUE
 	layer = WINDOW_LAYER
 	flags_atom = ON_BORDER
+	var/dismantle = FALSE //If we're dismantling the window properly no smashy smashy
 	var/health = 15
 	var/state = 2
 	var/reinf = FALSE
@@ -115,7 +116,7 @@
 		"<span class='warning'>You creepily tap on [src].</span>", \
 		"<span class='warning'>You hear a glass tapping sound.</span>", 5)
 	else
-		attack_generic(M, M.melee_damage_lower)
+		attack_generic(M, M.xeno_caste.melee_damage_lower)
 
 /obj/structure/window/attack_hand(mob/user as mob)
 	if(HULK in user.mutations)
@@ -180,11 +181,17 @@
 			switch(state)
 				if(GRAB_PASSIVE)
 					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
+					log_admin("[key_name(usr)] slams [key_name(M)] against \the [src].")
+					log_combat(user, M, "slammed", "", "against \the [src]")
+					msg_admin_attack("[key_name(usr)] slammed [key_name(M)]'s face' against \the [src].")
 					M.apply_damage(7)
 					if(damageable) //Possible to destroy
 						health -= 10
 				if(GRAB_AGGRESSIVE)
 					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
+					log_admin("[key_name(usr)] bashes [key_name(M)] against \the [src].")
+					log_combat(user, M, "bashed", "", "against \the [src]")
+					msg_admin_attack("[key_name(usr)] bashed [key_name(M)]'s face' against \the [src].")
 					if(prob(50))
 						M.KnockDown(1)
 					M.apply_damage(10)
@@ -192,6 +199,9 @@
 						health -= 25
 				if(GRAB_NECK)
 					M.visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
+					log_admin("[key_name(usr)] crushes [key_name(M)] against \the [src].")
+					log_combat(user, M, "crushed", "", "against \the [src]")
+					msg_admin_attack("[key_name(usr)] crushed [key_name(M)]'s face' against \the [src].")
 					M.KnockDown(5)
 					M.apply_damage(20)
 					if(damageable) //Possible to destroy
@@ -202,7 +212,17 @@
 	if(W.flags_item & NOBLUDGEON)
 		return
 
-	if(istype(W, /obj/item/tool/screwdriver) && deconstructable)
+	if(istype(W, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && deconstructable)
+		var/obj/item/tool/pickaxe/plasmacutter/P = W
+		if(P.start_cut(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD))
+			if(do_after(user, P.calc_delay(user) * PLASMACUTTER_VLOW_MOD, TRUE, 5, BUSY_ICON_HOSTILE) && P)
+				P.cut_apart(user, src.name, src, PLASMACUTTER_BASE_COST * PLASMACUTTER_VLOW_MOD)
+				health = 0
+				healthcheck(0, 0, 1)
+				return
+
+	else if(istype(W, /obj/item/tool/screwdriver) && deconstructable)
+		dismantle = TRUE
 		if(reinf && state >= 1)
 			state = 3 - state
 			playsound(loc, 'sound/items/Screwdriver.ogg', 25, 1)
@@ -220,19 +240,20 @@
 		else if(static_frame && state == 0)
 			disassemble_window()
 	else if(istype(W, /obj/item/tool/crowbar) && reinf && state <= 1 && deconstructable)
+		dismantle = TRUE
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 25, 1)
 		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
-	else
-		if(damageable) //Possible to destroy
-			health -= W.force
-			if(health <= 7  && !reinf && !static_frame && deconstructable)
-				anchored = FALSE
-				update_nearby_icons()
-				step(src, get_dir(user, src))
+
+	if(damageable && dismantle == FALSE) //Possible to destroy
+		health -= W.force
+		if(health <= 7  && !reinf && !static_frame && deconstructable)
+			anchored = FALSE
+			update_nearby_icons()
+			step(src, get_dir(user, src))
 		healthcheck(1, 1, 1, user, W)
-		..()
-	return
+	dismantle = FALSE
+	return ..()
 
 
 /obj/structure/window/proc/disassemble_window()
@@ -508,7 +529,8 @@
 /obj/structure/window/framed/almayer/requisitions
 	name = "kevlar-weave infused bulletproof window"
 	desc = "A borosilicate glass window infused with kevlar fibres and mounted within a special shock-absorbing frame, this is gonna be seriously hard to break through."
-	health = 400
+	health = 2000
+	deconstructable = FALSE
 	window_frame = /obj/structure/window_frame/almayer/requisitions
 
 /obj/structure/window/framed/almayer/white

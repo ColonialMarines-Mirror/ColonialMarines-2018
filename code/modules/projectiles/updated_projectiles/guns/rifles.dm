@@ -75,7 +75,7 @@
 /obj/item/weapon/gun/rifle/m41a/set_gun_config_values()
 	fire_delay = config.med_fire_delay
 	burst_amount = config.med_burst_value
-	burst_delay = config.mlow_fire_delay
+	burst_delay = config.vlow_fire_delay
 	accuracy_mult = config.base_hit_accuracy_mult
 	accuracy_mult_unwielded = config.base_hit_accuracy_mult - config.high_hit_accuracy_mult
 	scatter = config.med_scatter_value
@@ -98,7 +98,7 @@
 	item_state = "m41a2"
 	origin_tech = "combat=7;materials=5"
 	current_mag = /obj/item/ammo_magazine/rifle/ap
-	flags_gun_features = GUN_AUTO_EJECTOR|GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_WY_RESTRICTED
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER
 
 
 /obj/item/weapon/gun/rifle/m41a/elite/set_gun_config_values()

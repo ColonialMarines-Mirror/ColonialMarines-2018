@@ -380,7 +380,8 @@ Turn() or Shift() as there is virtually no overhead. ~N
 		icon_state = "[base_icon_state]_empty"
 
 /obj/item/ammobox/examine(mob/user)
-	to_chat(user, "It contains [magazine_amount] out of [max_magazine_amount] magazines\s.")
+	. = ..()
+	to_chat(user, "It contains [magazine_amount] out of [max_magazine_amount] magazines.")
 
 /obj/item/ammobox/attackby(obj/item/I, mob/user)
 	var/obj/item/ammo_magazine/MG = I
@@ -478,6 +479,7 @@ Turn() or Shift() as there is virtually no overhead. ~N
 			cdel(src)
 
 /obj/item/ammo_magazine/shotgunbox/examine(mob/user)
+	. = ..()
 	to_chat(user, "It contains [current_rounds] out of [max_rounds] rounds.")
 
 /obj/item/ammo_magazine/shotgunbox/attack_hand(mob/user)
@@ -600,3 +602,49 @@ Turn() or Shift() as there is virtually no overhead. ~N
 	max_rounds = 100
 	current_rounds = 100
 	base = /obj/item/ammo_magazine/shotgunbox/buckshot
+
+/obj/item/ammo_magazine/shotgunbox/flechette
+	name = "Flechette Ammo Box"
+	icon_state = "ammoboxflechette"
+	item_state = "ammoboxflechette"
+	base_icon_state = "ammoboxflechette"
+	default_ammo = /datum/ammo/bullet/shotgun/flechette
+	max_rounds = 100
+	current_rounds = 100
+	base = /obj/item/ammo_magazine/shotgunbox/flechette
+
+/obj/item/ammobox/m4a3
+	name = "M4A3 Ammo Box"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "ammoboxm4a3"
+	item_state = "ammoboxm4a3"
+	base_icon_state = "ammoboxm4a3"
+	max_magazine_amount = 10
+	max_magazine_rounds = 12
+	ammo_type = /datum/ammo/bullet/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol
+	base = /obj/item/ammobox/m4a3
+
+/obj/item/ammobox/m4a3ext
+	name = "M4A3 Extended Ammo Box"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "ammoboxm4a3ext"
+	item_state = "ammoboxm4a3ext"
+	base_icon_state = "ammoboxm4a3ext"
+	max_magazine_amount = 10
+	max_magazine_rounds = 22
+	ammo_type = /datum/ammo/bullet/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol/extended
+	base = /obj/item/ammobox/m4a3ext
+
+/obj/item/ammobox/m4a3ap
+	name = "M4A3 AP Ammo Box"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "ammoboxm4a3ap"
+	item_state = "ammoboxm4a3ap"
+	base_icon_state = "ammoboxm4a3ap"
+	max_magazine_amount = 10
+	max_magazine_rounds = 12
+	ammo_type = /datum/ammo/bullet/pistol/ap
+	magazine_type = /obj/item/ammo_magazine/pistol/ap
+	base = /obj/item/ammobox/m4a3ap

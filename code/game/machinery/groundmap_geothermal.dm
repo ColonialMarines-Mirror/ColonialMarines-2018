@@ -195,7 +195,7 @@
 //Putting these here since it's power-related
 /obj/machinery/colony_floodlight_switch
 	name = "Colony Floodlight Switch"
-	icon = 'icons/turf/ground_map.dmi'
+	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "panelnopower"
 	desc = "This switch controls the floodlights surrounding the archaeology complex. It only functions when there is power."
 	density = 0
@@ -280,7 +280,7 @@
 
 /obj/machinery/colony_floodlight
 	name = "Colony Floodlight"
-	icon = 'icons/turf/ground_map.dmi'
+	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "floodoff"
 	density = 1
 	anchored = 1
@@ -322,7 +322,7 @@
 	else
 		M.animation_attack_on(src)
 		M.visible_message("[M] slashes away at [src]!","You slash and claw at the bright light!", null, null, 5)
-		health  = max(health - rand(M.melee_damage_lower, M.melee_damage_upper), 0)
+		health  = max(health - rand(M.xeno_caste.melee_damage_lower, M.xeno_caste.melee_damage_upper), 0)
 		if(!health)
 			playsound(src, "shatter", 70, 1)
 			damaged = TRUE

@@ -179,7 +179,7 @@
 	unacidable = 1
 
 /obj/structure/prop/almayer/name_stencil
-	name = "\improper The DMCA, a DMCA-Class Marine Carrier Arsenal Ship"
+	name = "\improper The TGMC, a TGMC-Class Marine Carrier Arsenal Ship"
 	desc = "The name of the ship stenciled on the hull."
 	icon = 'icons/Marine/almayer_props64.dmi'
 	icon_state = "DMCA1"
@@ -197,25 +197,6 @@
 	icon_state = "dropship1"
 	density = 0
 	layer = ABOVE_TURF_LAYER
-
-/obj/structure/prop/almayer/anti_air_cannon
-	name = "\improper Anti-air Cannon"
-	desc = "An anti-air cannon for shooting spaceships. It looks broken."
-	icon = 'icons/obj/machines/artillery.dmi'
-	icon_state = "anti_air_cannon"
-	density = 1
-	anchored = 1
-	layer = LADDER_LAYER
-	bound_width = 128
-	bound_height = 64
-	bound_y = 64
-
-
-/obj/structure/prop/almayer/anti_air_cannon/ex_act()
-	return
-
-/obj/structure/prop/almayer/anti_air_cannon/bullet_act()
-	return
 
 
 /obj/structure/prop/almayer/cannon_cables

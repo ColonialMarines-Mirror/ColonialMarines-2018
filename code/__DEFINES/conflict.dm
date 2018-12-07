@@ -31,12 +31,11 @@
 #define GUN_BURST_ON			256
 #define GUN_BURST_FIRING		512
 #define GUN_FLASHLIGHT_ON		1024
-#define GUN_WY_RESTRICTED		2048
-#define GUN_SPECIALIST			4096
-#define GUN_WIELDED_FIRING_ONLY	8192
-#define GUN_HAS_FULL_AUTO		16384
-#define GUN_FULL_AUTO_ON		32768
-#define GUN_POLICE				65536
+#define GUN_WIELDED_FIRING_ONLY	2048
+#define GUN_HAS_FULL_AUTO		4096
+#define GUN_FULL_AUTO_ON		8192
+#define GUN_POLICE				16384
+
 
 //Gun attachable related flags.
 #define ATTACH_REMOVABLE	1
@@ -44,6 +43,7 @@
 #define ATTACH_PROJECTILE	4 //for attachments that fire bullets
 #define ATTACH_RELOADABLE	8
 #define ATTACH_WEAPON		16 //is a weapon that fires stuff
+#define ATTACH_UTILITY		32 //for attachments with utility that trigger by 'shooting'
 
 //Ammo magazine defines, for flags_magazine
 #define AMMUNITION_REFILLABLE	1
@@ -73,3 +73,10 @@
 #define WIELD_DELAY_VERY_SLOW		16
 #define WIELD_DELAY_HORRIBLE		20
 //=================================================
+
+//Define detpack
+#define DETPACK_TIMER_MIN			5
+#define DETPACK_TIMER_MAX			300
+
+//Define flamer
+#define M240T_WATER_AMOUNT 			reagents.get_reagent_amount("water")

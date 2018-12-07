@@ -76,10 +76,6 @@
 		throw_item(A)
 		return
 
-	// Last thing clicked is tracked for something somewhere.
-	if(!istype(A,/obj/item/weapon/gun) && !isturf(A) && !istype(A,/obj/screen))
-		last_target_click = world.time
-
 	var/obj/item/W = get_active_hand()
 
 	// Special gun mode stuff.
@@ -139,8 +135,7 @@
 
 	if (mods["shift"] && !mods["middle"])
 		if(user.client && user.client.eye == user)
-			examine(user)
-			user.face_atom(src)
+			user.examinate(src)
 		return 1
 
 	if (mods["alt"])

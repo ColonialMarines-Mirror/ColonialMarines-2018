@@ -4,6 +4,7 @@
 	var/climb_delay = 50
 	var/breakable
 	var/parts
+	var/flags_barrier = 0
 	anchored = TRUE
 
 /obj/structure/New()
@@ -20,6 +21,9 @@
 	density = FALSE
 	cdel(src)
 
+/obj/structure/proc/handle_barrier_chance(mob/living/M)
+	return FALSE
+
 /obj/structure/attack_hand(mob/user)
 	..()
 	if(breakable)
@@ -27,6 +31,17 @@
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
 			destroy()
+
+/obj/structure/attackby(obj/item/C as obj, mob/user as mob)
+	. = ..()
+	if(istype(C, /obj/item/tool/pickaxe/plasmacutter) && !user.action_busy && breakable && !unacidable)
+		var/obj/item/tool/pickaxe/plasmacutter/P = C
+		if(!P.start_cut(user, name, src))
+			return
+		if(do_after(user, P.calc_delay(user), TRUE, 5, BUSY_ICON_HOSTILE) && P)
+			P.cut_apart(user, name, src)
+			cdel()
+		return
 
 //Default "structure" proc. This should be overwritten by sub procs.
 /obj/structure/attack_alien(mob/living/carbon/Xenomorph/M)

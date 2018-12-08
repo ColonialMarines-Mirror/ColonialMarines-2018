@@ -2,36 +2,24 @@
 				BLOOD SYSTEM
 ****************************************************/
 
-
-/mob/living
-	var/blood_volume = 0 //how much blood the mob has
-	var/heart_multi = 1
-
-/mob/living/carbon
-	blood_volume = BLOOD_VOLUME_NORMAL
-
-
-
-
 /mob/living/proc/handle_blood()
 	return
 
-/mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= 225) //cryosleep people do not pump the blood.
-		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL)
-			blood_volume += 0.1 // regenerate blood VERY slowly
-
+/mob/living/carbon/handle_blood()
+	if(bodytemperature < 170)	//cryosleep people do not pump the blood.
+		return FALSE
+	if(blood_volume < BLOOD_VOLUME_NORMAL)
+		blood_volume += 0.1 // regenerate blood VERY slowly
+	return TRUE
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
-
 	if(NO_BLOOD in species.flags)
 		return
 
-	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
-
-
+	. = ..()
+	if(!.)
+		return
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)

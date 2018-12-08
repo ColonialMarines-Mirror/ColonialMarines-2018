@@ -6,6 +6,8 @@
 	if(stat != DEAD) //Chemicals in body and some other stuff.
 		handle_organs()
 
+		handle_blood()
+
 	. = ..()
 
 	handle_fire() //Check if we're on fire

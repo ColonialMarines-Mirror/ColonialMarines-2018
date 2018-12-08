@@ -39,9 +39,6 @@
 			//Mutations and radiation
 			handle_mutations_and_radiation()
 
-			//blood
-			handle_blood()
-
 			//Random events (vomiting etc)
 			handle_random_events()
 

@@ -341,7 +341,7 @@
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
-	adj_temp = -15
+	adj_temp = - 10
 
 /datum/reagent/consumable/drink/cold/space_cola
 	name = "Space Cola"
@@ -433,7 +433,6 @@
 /datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M)
 	if(prob(1))
 		M.emote("shiver")
-	M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
 	holder.remove_reagent("capsaicin", 5)
 	..()
 

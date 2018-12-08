@@ -74,6 +74,9 @@
 	var/reagent_shock_modifier = 0 //negative values reduce shock/pain
 	var/reagent_pain_modifier = 0 //same as above, except can potentially mask damage
 
+	var/blood_volume = BLOOD_VOLUME_NORMAL
+	var/heart_multi = 1
+
 	var/smokecloaked = FALSE //For the new Smoke Grenade
 
 	var/canEnterVentWith = "/obj/item/implant=0&/obj/item/clothing/mask/facehugger=0&/obj/item/device/radio/borg=0&/obj/machinery/camera=0&/obj/item/verbs=0" // Vent crawling whitelisted items, whoo

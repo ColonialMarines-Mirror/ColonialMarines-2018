@@ -16,12 +16,8 @@
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	M.nutrition += nutriment_factor * REAGENTS_METABOLISM
-	if(adj_temp != 0 && M.bodytemperature != targ_temp)
-		if(adj_temp)
-			M.bodytemperature = min(targ_temp, M.bodytemperature + (adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT))
-		else
-			M.bodytemperature = max(targ_temp, M.bodytemperature + (adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT))
-	holder.remove_reagent(src.id, custom_metabolism)
+	if(adj_temp != 0)
+		M.adjust_bodytemperature(adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = (adj_temp < 0 ? targ_temp : 0), max_temp = (adj_temp > 0 ? targ_temp : INFINITY))
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"

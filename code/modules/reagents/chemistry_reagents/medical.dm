@@ -171,9 +171,9 @@
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/M)
 	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, 310)
+	else if(M.bodytemperature < (310 + 1))
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, 310)
 	..()
 
 /datum/reagent/medicine/leporazine/overdose_process(mob/living/M, alien)

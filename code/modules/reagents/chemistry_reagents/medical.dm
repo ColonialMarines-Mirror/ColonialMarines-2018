@@ -170,10 +170,11 @@
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/M)
-	if(M.bodytemperature > 310)
-		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, 310)
-	else if(M.bodytemperature < (310 + 1))
-		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, 310)
+	var/target_temp = M.get_standard_bodytemperature()
+	if(M.bodytemperature > target_temp)
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
+	else if(M.bodytemperature < (target_temp + 1))
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 	..()
 
 /datum/reagent/medicine/leporazine/overdose_process(mob/living/M, alien)

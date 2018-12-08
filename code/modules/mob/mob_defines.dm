@@ -63,7 +63,7 @@
 
 	var/timeofdeath = 0.0//Living
 
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/old_x = 0
 	var/old_y = 0
 	var/drowsyness = 0.0//Carbon

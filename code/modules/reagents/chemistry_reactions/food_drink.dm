@@ -55,8 +55,7 @@
 	name = "Condensed Capsaicin"
 	id = "condensedcapsaicin"
 	results = list("condensedcapsaicin" = 1)
-	required_reagents = list("capsaicin" = 2)
-	required_catalysts = list("phoron" = 5)
+	required_reagents = list("capsaicin" = 1, "ethanol" = 5)
 
 /datum/chemical_reaction/sodiumchloride
 	name = "Sodium Chloride"

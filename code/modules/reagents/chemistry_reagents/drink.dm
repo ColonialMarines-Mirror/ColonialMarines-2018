@@ -10,7 +10,7 @@
 	id = "drink"
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 1
 	color = "#E78108" // rgb: 231, 129, 8
 	var/adj_dizzy = 0
 	var/adj_drowsy = 0
@@ -173,7 +173,8 @@
 /datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_limb_damage(1,0)
-	holder.remove_reagent("capsaicin", 10*REAGENTS_METABOLISM)
+	if(holder.has_reagent("capsaicin"))
+		holder.remove_reagent("capsaicin", 2)
 	..()
 
 /datum/reagent/consumable/drink/milk/soymilk
@@ -201,9 +202,9 @@
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
-	nutriment_factor = 2 * FOOD_METABOLISM
+	nutriment_factor = 2
 	color = "#403010" // rgb: 64, 48, 16
-	adj_temp = 20
+	adj_temp = 15
 	taste_description = "creamy chocolate"
 
 /datum/reagent/consumable/drink/coffee
@@ -217,14 +218,14 @@
 	adj_dizzy = -5
 	adj_drowsy = -3
 	adj_sleepy = -2
-	adj_temp = 25
+	adj_temp = 20
 	taste_description = "bitterness"
 
 /datum/reagent/consumable/drink/coffee/on_mob_life(mob/living/M)
 	M.Jitter(2)
-	if(adj_temp > 0)
-		holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
-	..()
+	if(adj_temp > 0 && holder.has_reagent("frostoil"))
+		holder.remove_reagent("frostoil", 5)
+	return ..()
 
 /datum/reagent/consumable/drink/coffee/overdose_process(mob/living/M, alien)
 	M.Jitter(5)
@@ -239,9 +240,9 @@
 /datum/reagent/consumable/drink/coffee/overdose_crit_process(mob/living/M, alien)
 	M.apply_damage(0.2, TOX)
 	M.Jitter(5)
-	if(prob(5) && !M.stat)
-		M.KnockOut(5)
+	if(prob(5) && M.stat == CONSCIOUS)
 		to_chat(M, "<span class='warning'>You spasm and pass out!</span>")
+		M.KnockOut(5)
 	if(ishuman(M))
 		if(prob(5))
 			var/mob/living/carbon/human/H = M
@@ -269,7 +270,7 @@
 /datum/reagent/consumable/drink/coffee/soy_latte/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_limb_damage(1,0)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/coffee/cafe_latte
 	name = "Cafe Latte"
@@ -283,7 +284,7 @@
 /datum/reagent/consumable/drink/coffee/cafe_latte/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_limb_damage(1,0)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/tea
 	name = "Tea"
@@ -300,7 +301,7 @@
 /datum/reagent/consumable/drink/tea/on_mob_life(mob/living/M)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/tea/icetea
 	name = "Iced Tea"
@@ -341,7 +342,8 @@
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
-	adj_temp = - 10
+	adj_temp = - 7
+	targ_temp = BODYTEMP_NORMAL - 10
 
 /datum/reagent/consumable/drink/cold/space_cola
 	name = "Space Cola"
@@ -365,7 +367,7 @@
 /datum/reagent/consumable/drink/cold/nuka_cola/on_mob_life(mob/living/M)
 	M.Jitter(10)
 	M.set_drugginess(30)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/cold/spacemountainwind
 	name = "Mountain Wind"
@@ -433,8 +435,9 @@
 /datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M)
 	if(prob(1))
 		M.emote("shiver")
-	holder.remove_reagent("capsaicin", 5)
-	..()
+	if(holder.has_reagent("capsaicin"))
+		holder.remove_reagent("capsaicin", 2)
+	return ..()
 
 /datum/reagent/consumable/drink/cold/rewriter
 	name = "Rewriter"
@@ -445,7 +448,7 @@
 
 /datum/reagent/consumable/drink/cold/rewriter/on_mob_life(mob/living/M)
 	M.Jitter(5)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/doctor_delight
 	name = "The Doctor's Delight"
@@ -467,7 +470,7 @@
 	if(M.getToxLoss() && prob(50))
 		M.adjustToxLoss(-2)
 	M.confused = max(M.confused - 5, 0)
-	..()
+	return ..()
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
@@ -491,7 +494,7 @@
 		if(201 to INFINITY)
 			M.Sleeping(3)
 			M.adjustToxLoss(2)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/gargle_blaster
 	name = "Pan-Galactic Gargle Blaster"
@@ -526,7 +529,7 @@
 			if(prob(10))
 				M.vomit()
 			M.Sleeping(3)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/neurotoxin
 	name = "Neurotoxin"
@@ -551,7 +554,7 @@
 		if(201 to INFINITY)
 			M.set_drugginess(30)
 			M.adjustToxLoss(2)
-	..()
+	return ..()
 
 /datum/reagent/consumable/drink/hippies_delight
 	name = "Hippies' Delight"
@@ -590,4 +593,4 @@
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
 				M.adjustToxLoss(2)
-	..()
+	return ..()

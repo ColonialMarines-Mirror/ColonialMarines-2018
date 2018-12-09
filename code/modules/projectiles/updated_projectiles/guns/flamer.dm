@@ -325,7 +325,6 @@
 	desc = "An improved version of the M240A1 incinerator unit, the M240-T model is capable of dispersing a larger variety of fuel types. Contains an underbarrel fire extinguisher!"
 	current_mag = /obj/item/ammo_magazine/flamer_tank/large
 	icon_state = "m240t"
-	item_state = "m240t"
 	flags_gun_features = GUN_UNUSUAL_DESIGN|GUN_WIELDED_FIRING_ONLY
 	var/max_water = 200
 	var/last_use
